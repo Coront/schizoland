@@ -1,0 +1,8 @@
+"aftershock"
+{
+	"base"			"base"
+	"title"			"Aftershock"
+	"maps"			"^as_"
+	"menusystem"	"1"
+	"category"		"pve"
+}
