@@ -58,96 +58,114 @@ function Verify( callback )
     end
 end
 
+function GM:OnPlayerChat( ply, txt, team, dead )
+	local tab = {}
+
+	if ( IsValid( ply ) ) then
+		table.insert( tab, COLHUD_DEFAULT )
+		table.insert( tab, ply:Nickname() )
+		table.insert( tab, color_white )
+		table.insert( tab, ": " .. txt )
+	else
+		table.insert( tab, Color( 0, 180, 195 ) )
+		table.insert( tab, txt )
+	end
+
+	chat.AddText( unpack(tab) )
+
+	return true
+end
+
 COLHUD_DEFAULT = Color(GetConVar("as_hud_color_default_r"):GetInt(), GetConVar("as_hud_color_default_g"):GetInt(), GetConVar("as_hud_color_default_b"):GetInt(), 255) or Color(255,255,255,255)
 COLHUD_GOOD = Color(GetConVar("as_hud_color_good_r"):GetInt(), GetConVar("as_hud_color_good_g"):GetInt(), GetConVar("as_hud_color_good_b"):GetInt(), 255) or Color(255,255,255,255)
 COLHUD_BAD = Color(GetConVar("as_hud_color_bad_r"):GetInt(), GetConVar("as_hud_color_bad_g"):GetInt(), GetConVar("as_hud_color_bad_b"):GetInt(), 255) or Color(255,255,255,255)
 
 surface.CreateFont( "AftershockTitle", {
-    font = "TargetID",
-	extended = false,
-	size = 100,
-	weight = 1000,
-	blursize = 0,
-	scanlines = 0,
-	antialias = true,
-	underline = false,
-	italic = false,
-	strikeout = false,
-	symbol = false,
-	rotary = false,
-	shadow = false,
-	additive = false,
-	outline = true,
+    font 		= "TargetID",
+	extended 	= false,
+	size 		= 100,
+	weight 		= 1000,
+	blursize 	= 0,
+	scanlines 	= 0,
+	antialias 	= true,
+	underline 	= false,
+	italic 		= false,
+	strikeout 	= false,
+	symbol 		= false,
+	rotary 		= false,
+	shadow 		= false,
+	additive 	= false,
+	outline 	= false,
 })
 
 surface.CreateFont( "AftershockButton", {
-    font = "TargetID",
-	extended = false,
-	size = 30,
-	weight = 1000,
-	blursize = 0,
-	scanlines = 0,
-	antialias = true,
-	underline = false,
-	italic = false,
-	strikeout = false,
-	symbol = false,
-	rotary = false,
-	shadow = false,
-	additive = false,
-	outline = true,
+    font 		= "TargetID",
+	extended 	= false,
+	size 		= 30,
+	weight 		= 1000,
+	blursize 	= 0,
+	scanlines 	= 0,
+	antialias 	= true,
+	underline 	= false,
+	italic 		= false,
+	strikeout 	= false,
+	symbol 		= false,
+	rotary 		= false,
+	shadow 		= false,
+	additive 	= false,
+	outline 	= false,
 })
 
 surface.CreateFont( "AftershockButtonSmall", {
-    font = "TargetID",
-	extended = false,
-	size = 20,
-	weight = 1000,
-	blursize = 0,
-	scanlines = 0,
-	antialias = true,
-	underline = false,
-	italic = false,
-	strikeout = false,
-	symbol = false,
-	rotary = false,
-	shadow = false,
-	additive = false,
-	outline = true,
+    font 		= "TargetID",
+	extended 	= false,
+	size 		= 20,
+	weight 		= 1000,
+	blursize 	= 0,
+	scanlines 	= 0,
+	antialias 	= true,
+	underline 	= false,
+	italic 		= false,
+	strikeout 	= false,
+	symbol 		= false,
+	rotary 		= false,
+	shadow 		= false,
+	additive 	= false,
+	outline 	= false,
 })
 
 surface.CreateFont( "AftershockText", {
-    font = "TargetID",
-	extended = false,
-	size = 20,
-	weight = 1000,
-	blursize = 0,
-	scanlines = 0,
-	antialias = true,
-	underline = false,
-	italic = false,
-	strikeout = false,
-	symbol = false,
-	rotary = false,
-	shadow = false,
-	additive = false,
-	outline = false,
+    font 		= "TargetID",
+	extended 	= false,
+	size 		= 20,
+	weight 		= 1000,
+	blursize 	= 0,
+	scanlines 	= 0,
+	antialias 	= true,
+	underline 	= false,
+	italic 		= false,
+	strikeout 	= false,
+	symbol 		= false,
+	rotary 		= false,
+	shadow 		= false,
+	additive 	= false,
+	outline 	= false,
 })
 
 surface.CreateFont( "AftershockHUD", {
-    font = "TargetID",
-	extended = false,
-	size = 24,
-	weight = 400,
-	blursize = 0,
-	scanlines = 0,
-	antialias = true,
-	underline = false,
-	italic = false,
-	strikeout = false,
-	symbol = false,
-	rotary = false,
-	shadow = false,
-	additive = false,
-	outline = false,
+    font 		= "TargetID",
+	extended 	= false,
+	size 		= 24,
+	weight 		= 400,
+	blursize 	= 0,
+	scanlines 	= 0,
+	antialias 	= true,
+	underline 	= false,
+	italic 		= false,
+	strikeout 	= false,
+	symbol 		= false,
+	rotary 		= false,
+	shadow 		= false,
+	additive 	= false,
+	outline 	= false,
 })

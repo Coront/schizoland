@@ -4,7 +4,9 @@ SET = AS.Settings
 --Game Settings
 SET.MaxCharacters = 5 --Maximum characters players are allowed to have.
 SET.MinNameLength = 3 --Minimal length of a players name.
-SET.BankWeight = 1000 --Maximum space a player's bank can hold.
+SET.BankWeight = 1000 --Maximum weight a player's bank can hold.
+SET.BaseLevelExperience = 100 --The base experience required to level up.
+SET.LevelExperiencePower = 2 --The power that multiplies experience required to level up.
 SET.SelectableModels = {
     --All of the models in here are models that the player is allowed to select during character creation.
     ["models/player/group01/male_01.mdl"] = true,
@@ -31,7 +33,7 @@ SET.SelectableModels = {
 SET.Skills = {}
 SKL = SET.Skills
 SKL.Health = 10 --Player starts with 10 hp.
-SKL.Movement = 165 --Player starts with 150 move speed.
+SKL.Movement = 165 --Player starts with 165 move speed.
 SKL.DefaultCarryWeight = 20 --Player starts with 20 carry weight.
 
 

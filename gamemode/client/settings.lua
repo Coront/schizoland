@@ -73,6 +73,12 @@ function AS.Settings.BuildOptions()
     addSpace( 20, 20 )
 
     ToggleButton("Enable Crosshair", xpos, ypos, frame_settings, "as_hud_crosshair")
+    addSpace( 20, 20 )
+
+    ToggleButton("Multiple Dots Crosshair", xpos, ypos, frame_settings, "as_hud_crosshair_multidots")
+    addSpace( -20, 20 )
+
+    ToggleButton("Enable Player Info", xpos, ypos, frame_settings, "as_hud_playerinfo")
     addSpace( 0, 20 )
 
     ToggleButton("Enable Healthbar", xpos, ypos, frame_settings, "as_hud_healthbar")
@@ -92,4 +98,6 @@ function AS.Settings.BuildOptions()
 
     ValueSlider( "Healthbar Height", xpos, ypos, 5, 50, frame_settings, "as_hud_healthbar_height" )
     addSpace( 0, 20 )
+
+    resetX()
 end

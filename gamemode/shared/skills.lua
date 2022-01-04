@@ -6,22 +6,32 @@
 -- ╚══════╝╚═╝  ╚═╝╚═╝╚══════╝╚══════╝╚══════╝
 -- Desc: Functionality for the skills base.
 
-local PlayerMeta = FindMetaTable("Player")
-
 -- Overall Leveling and Experience
-
 function PlayerMeta:GetLevel()
-    local level = self:GetExperience() / 100 --This second value will be 'experience to level' which will be its own thing. Not finished.
+    local experience = self:GetExperience()
+    local level = 1
+    while experience >= SET.BaseLevelExperience * ( SET.LevelExperiencePower ^ level) do
+        level = level + 1
+    end
     return level
 end
 
-function PlayerMeta:SetExperience( exp )
-    exp = math.Round(exp)
-    self.Experience = exp
+function PlayerMeta:ExpToLevel()
+    local expreq = SET.BaseLevelExperience * ( SET.LevelExperiencePower ^ self:GetLevel())
+    return expreq
+end
+
+function CalcExpForLevel( lvl ) --Will calculate the XP required for a specific level.
+    return SET.BaseLevelExperience * ( SET.LevelExperiencePower ^ lvl )
+end
+
+function PlayerMeta:SetExperience( amt )
+    amt = amt and math.Round(amt) or 0
+    self.Experience = amt
 end
 
 function PlayerMeta:GetExperience()
-    return self.Experience 
+    return 200--self.Experience or 0
 end
 
 function PlayerMeta:IncreaseExperience( amt )
@@ -34,8 +44,7 @@ function PlayerMeta:DecreaseExperience( amt ) --I don't foresee any need for thi
     self:SetExperience( self:GetExperience() - amt )
 end
 
--- Skills
-
+-- Individual Skills
 function PlayerMeta:SetSkills( tbl ) --Set ALL skills, this will only be used for initialization.
     tbl = tbl or {}
     self.Skills = tbl

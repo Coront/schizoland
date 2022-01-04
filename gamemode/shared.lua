@@ -11,6 +11,21 @@ AS = {}
 DeriveGamemode("base")
 GM.Name = "Aftershock"
 
+AS.Colors = {}
+AS.Colors.Primary = Color( 100, 100, 100, 255 )
+AS.Colors.Secondary = Color( 50, 50, 50, 255 )
+AS.Colors.Tertiary = Color( 0, 100, 225, 255 )
+AS.Colors.Quaternary = Color( 0, 0, 0, 255 )
+AS.Colors.Quinary = Color( 0, 0, 0, 255 )
+
+COLHUD_PRIMARY = AS.Colors.Primary
+COLHUD_SECONDARY = AS.Colors.Secondary
+COLHUD_TERTIARY = AS.Colors.Tertiary
+COLHUD_QUATERNARY = AS.Colors.Quaternary
+COLHUD_QUINARY = AS.Colors.Quinary
+
+PlayerMeta = FindMetaTable("Player")
+
 if SERVER then
 	AddCSLuaFile("tablebase.lua")
 else
@@ -41,8 +56,6 @@ for k, v in pairs( file.Find("aftershock/gamemode/tables/items/*.lua", "LUA") ) 
 	end
 end
 
-AS.Functions = {}
-
 function AS.LuaError( message )
     ErrorNoHaltWithStack( "[AS] Error: " .. message .. "\n" )
 end
@@ -52,4 +65,8 @@ function GM:Move( ply, mv )
     ply:SetRunSpeed( movespeed )
     ply:SetWalkSpeed( movespeed )
     ply:SetSlowWalkSpeed( 75 )
+end
+
+function PlayerMeta:Nickname() --Will return the name of the player. Use this over self:Nick().
+    return self.name or self:Nick()
 end

@@ -1,6 +1,7 @@
-AS.AddBaseItem("currency_money", {
-    name = "Money",
-    desc = "One of the few currencies still used.",
-    model = "",
+AS.AddBaseItem("currency_dollar", {
+    name = "Dollar",
+    desc = "One of the few if not only currency that is still used.",
+    model = "models/props/cs_assault/Dollar.mdl",
     value = 1,
+    weight = 0,
 })

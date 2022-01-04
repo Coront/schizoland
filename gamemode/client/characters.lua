@@ -31,8 +31,7 @@ function AS.CharacterSelect.Menu()
     scroll_characters:SetPos(5, 5)
     scroll_characters:SetSize(frame_characters:GetWide() - 10, frame_characters:GetTall() - 65)
     scroll_characters.Paint = function(_,w,h)
-        local col = COLHUD_DEFAULT:ToTable()
-        surface.SetDrawColor(col[1] - 50, col[2] - 50, col[3] - 50, 255)
+        surface.SetDrawColor( COLHUD_SECONDARY )
         surface.DrawRect(0, 0, w, h)
     end
 
@@ -228,8 +227,7 @@ function AS.CharacterSelect.BuildCharacters( characters, chardata )
             if selectedChar and selectedChar == v.pid then
                 surface.SetDrawColor( COLHUD_GOOD )
             else
-                local col = COLHUD_DEFAULT:ToTable()
-                surface.SetDrawColor( col[1] - 25, col[2] - 25, col[3] - 25, 255 )
+                surface.SetDrawColor( COLHUD_PRIMARY )
             end
             surface.DrawRect( 0, 0, w, h )
         end
@@ -240,25 +238,25 @@ function AS.CharacterSelect.BuildCharacters( characters, chardata )
         CharacterIcon( v.model, 5, 5, 75, 75, panel, function() panel.DoClick() end)
 
         local name = vgui.Create("DLabel", panel)
-        name:SetPos( 85, 5 )
+        name:SetPos( 85, 0 )
         name:SetFont("AftershockText")
         name:SetText(v.name)
         name:SizeToContents()
 
         local health = vgui.Create("DLabel", panel)
-        health:SetPos( 85, 25 )
+        health:SetPos( 85, 20 )
         health:SetFont("AftershockText")
         health:SetText("Health: " .. chardata[v.pid].health)
         health:SizeToContents()
 
-        local level = vgui.Create("DLabel", panel)
-        level:SetPos( 85, 45 )
-        level:SetFont("AftershockText")
-        level:SetText("Level " .. chardata[v.pid].level)
-        level:SizeToContents()
+        local experience = vgui.Create("DLabel", panel)
+        experience:SetPos( 85, 40 )
+        experience:SetFont("AftershockText")
+        experience:SetText("Experience: " .. chardata[v.pid].exp)
+        experience:SizeToContents()
 
         local playtime = vgui.Create("DLabel", panel)
-        playtime:SetPos( 85, 65 )
+        playtime:SetPos( 85, 60 )
         playtime:SetFont("AftershockText")
         playtime:SetText("Playtime: N/A")
         playtime:SizeToContents()
@@ -304,6 +302,7 @@ function AS.CharacterSelect.BuildButtons(characters)
 end
 
 function AS.CharacterSelect.BuildCharacterDisplay( characters )
+    if IsValid(Character) then Character:Remove() end
     local realchars = {}
     for k, v in pairs( characters ) do
         realchars[v.pid] = {}

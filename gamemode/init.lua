@@ -44,10 +44,10 @@ end
 DATABASECHECKED = DATABASECHECKED or false
 local function DatabaseCheck()
 	MsgC( Color(0,0,255), "[AS] Checking Databases...\n" )
-	sql.Query("CREATE TABLE IF NOT EXISTS as_characters (pid INTEGER PRIMARY KEY AUTOINCREMENT, steamid TEXT, name TEXT, model TEXT)")
-	sql.Query("CREATE TABLE IF NOT EXISTS as_characters_stats (pid INTEGER PRIMARY KEY AUTOINCREMENT, health INTEGER, level INTEGER, exp INTEGER)")
-	sql.Query("CREATE TABLE IF NOT EXISTS as_characters_skills (pid INTEGER PRIMARY KEY AUTOINCREMENT, skills TEXT)")
-	sql.Query("CREATE TABLE IF NOT EXISTS as_characters_inventory (pid INTEGER PRIMARY KEY AUTOINCREMENT, inv TEXT, bank TEXT)")
+	sql.Query("CREATE TABLE IF NOT EXISTS as_characters (pid INTEGER PRIMARY KEY AUTOINCREMENT, steamid TEXT, name TEXT, model TEXT, created TEXT, laston TEXT, deleted TEXT)")
+	sql.Query("CREATE TABLE IF NOT EXISTS as_characters_stats (pid INTEGER, health INTEGER, hunger INTEGER, thirst INTEGER, exp INTEGER)")
+	sql.Query("CREATE TABLE IF NOT EXISTS as_characters_skills (pid INTEGER, skills TEXT)")
+	sql.Query("CREATE TABLE IF NOT EXISTS as_characters_inventory (pid INTEGER, inv TEXT, bank TEXT)")
 	DATABASECHECKED = true --Don't see the purpose of reloading this multiple times, just restart the server, it's a new table anyways.
 end
 if not DATABASECHECKED then DatabaseCheck() end

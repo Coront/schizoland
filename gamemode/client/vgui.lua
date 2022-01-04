@@ -4,15 +4,21 @@ function MainMenuButton( text, x, y, width, height, parent, callback )
     button:SetPos(x, y)
     button:SetFont("AftershockButton")
     button:SetText( text )
+    button:SetColor( COLHUD_SECONDARY )
     button.DoClick = function()
         surface.PlaySound("buttons/button15.wav")
         callback()
     end
-    button.Paint = function(_, w, h)
-        surface.SetDrawColor( COLHUD_DEFAULT )
-        local thickness = 3
+    button.Paint = function(self, w, h)
+        local thickness = 1
         local gap = 1
+        surface.SetDrawColor( COLHUD_TERTIARY )
         surface.DrawOutlinedRect( 0, 0, w, h, thickness)
+        if self:IsHovered() then
+            surface.SetDrawColor( COLHUD_TERTIARY )
+        else
+            surface.SetDrawColor( COLHUD_DEFAULT )
+        end
         surface.DrawRect( thickness + gap, thickness + gap, w - ((thickness + gap) * 2), h - ((thickness + gap) * 2) )
     end
 end

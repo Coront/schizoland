@@ -31,4 +31,23 @@ function GM:PlayerSpawn( ply )
     else
         if ply:IsAdmin() then ply:ChatPrint("[AS] There is no proper map data set up! Players will spawn at a random point!") end
     end
+
+    ply:SetHealth(SKL.Health)
+    ply:SetMaxHealth(SKL.Health)
+end
+
+function GM:OnPlayerHitGround( ply, water, floater, speed )
+    if water and speed > 525 then
+        ply:TakeDamage( GAMEMODE:GetFallDamage( ply, speed ) )
+        local num = {1, 3} --Because fallpain doesnt have a 2...
+        ply:EmitSound( "player/pl_fallpain" .. table.Random( num ) .. ".wav" )
+    end
+end
+
+function GM:GetFallDamage( ply, speed )
+    return math.max(1, ( speed - 526.5 ) * ( ply:GetMaxHealth() / 396 ))
+end
+
+function GM:PlayerDeathSound( ply )
+    return true --Will hide the player death sound.
 end

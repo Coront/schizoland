@@ -15,37 +15,37 @@ util.AddNetworkString("as_characters_syncdata")
 -- ╚═╝      ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚══════╝
 
 function PlayerMeta:CreateCharacter( name, model )
-    local characters = sql.Query( "SELECT * FROM as_characters WHERE steamid = " .. SQLStr(self:SteamID()) ) or {}
+    local characters = sql.Query( "SELECT * FROM as_characters WHERE steamid = " .. SQLStr(self:SteamID()) .. " AND deleted IS NULL" ) or {}
     if #characters >= SET.MaxCharacters then self:ChatPrint("You have reached the character limit!") return end
 
-    sql.Query( "INSERT INTO as_characters VALUES ( NULL, " .. SQLStr(self:SteamID()) .. ", " .. SQLStr(name) .. ", " .. SQLStr(model) .. " )" )
-    sql.Query( "INSERT INTO as_characters_inventory VALUES ( NULL, NULL, NULL )" )
-    sql.Query( "INSERT INTO as_characters_skills VALUES ( NULL, NULL )" )
-    sql.Query( "INSERT INTO as_characters_stats VALUES ( NULL, " .. SKL.Health .. ", 1, 0 )" )
+    sql.Query( "INSERT INTO as_characters VALUES ( NULL, " .. SQLStr(self:SteamID()) .. ", " .. SQLStr(name) .. ", " .. SQLStr(model) .. ", " .. SQLStr( os.date( "%m/%d/%y - %I:%M %p", os.time() ) ) .. ", NULL, NULL )" )
+    local newpid = tonumber(sql.Query("SELECT pid FROM as_characters")[1]["pid"])
+    sql.Query( "INSERT INTO as_characters_inventory VALUES ( " .. newpid .. ", NULL, NULL )" )
+    sql.Query( "INSERT INTO as_characters_skills VALUES ( " .. newpid .. ", NULL )" )
+    sql.Query( "INSERT INTO as_characters_stats VALUES ( " .. newpid .. ", " .. SKL.Health .. ", 100, 100, 0 )" )
 
     self:ConCommand("as_characters")
 end
 
 function PlayerMeta:DeleteCharacter( pid )
-    sql.Query( "DELETE FROM as_characters WHERE pid = " .. pid )
-    sql.Query( "DELETE FROM as_characters_inventory WHERE pid = " .. pid )
-    sql.Query( "DELETE FROM as_characters_skills WHERE pid = " .. pid )
-    sql.Query( "DELETE FROM as_characters_stats WHERE pid = " .. pid )
-
+    sql.Query( "UPDATE as_characters SET deleted = " .. SQLStr( os.date( "%m/%d/%y - %I:%M %p", os.time() ) ) .. " WHERE pid = " .. pid )
     self:ConCommand("as_characters")
 end
 
 function PlayerMeta:SaveCharacter()
     local pid = self.pid
+    if not pid then return false end
 
     sql.Query( "UPDATE as_characters_inventory SET inv = " .. SQLStr(util.TableToJSON( self:GetInventory(), true )) .. ", bank = " .. SQLStr(util.TableToJSON( self:GetBank() )) .. " WHERE pid = " .. pid )
     sql.Query( "UPDATE as_characters_skills SET skills = " .. SQLStr(util.TableToJSON( self:GetSkills(), true )) .. " WHERE pid = " .. pid )
-    sql.Query( "UPDATE as_characters_stats SET health = " .. self:Health() .. ", exp = " .. self:GetExperience() .. " WHERE pid = " .. pid )
+    sql.Query( "UPDATE as_characters_stats SET health = " .. self:Health() .. ", hunger = " .. self:GetHunger() .. ", thirst = " .. self:GetThirst() .. ", exp = " .. self:GetExperience() .. " WHERE pid = " .. pid )
+    return true --Saving was successful.
 end
 
 function ManualSave( ply )
-    ply:SaveCharacter()
-    ply:ChatPrint("Player Saved.")
+    if ply:SaveCharacter() then
+        ply:ChatPrint("Player Saved.")
+    end
 end
 concommand.Add("as_save", ManualSave)
 
@@ -57,7 +57,7 @@ concommand.Add("as_save", ManualSave)
 -- ╚═╝  ╚═══╝╚══════╝   ╚═╝    ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝ ╚═════╝
 
 function RequestCharacters(len, ply)
-    local characters = sql.Query( "SELECT * FROM as_characters WHERE steamid = " .. SQLStr(ply:SteamID()) )
+    local characters = sql.Query( "SELECT * FROM as_characters WHERE steamid = " .. SQLStr(ply:SteamID()) .. "AND deleted IS NULL" )
 
     net.Start("as_characters_senddata")
     if characters then
@@ -65,7 +65,7 @@ function RequestCharacters(len, ply)
         for k, v in pairs(characters) do
             stats[v.pid] = {}
             stats[v.pid].health = sql.QueryValue( "SELECT health FROM as_characters_stats WHERE pid = " .. SQLStr(v.pid) )
-            stats[v.pid].level = sql.QueryValue( "SELECT level FROM as_characters_stats WHERE pid = " .. SQLStr(v.pid) )
+            stats[v.pid].exp = sql.QueryValue( "SELECT exp FROM as_characters_stats WHERE pid = " .. SQLStr(v.pid) )
         end
 
         net.WriteBit( true )
