@@ -246,13 +246,15 @@ function AS.CharacterSelect.BuildCharacters( characters, chardata )
         local health = vgui.Create("DLabel", panel)
         health:SetPos( 85, 20 )
         health:SetFont("AftershockText")
-        health:SetText("Health: " .. chardata[v.pid].health)
+        local hp = chardata[v.pid] and chardata[v.pid].health or "char?health"
+        health:SetText("Health: " .. hp)
         health:SizeToContents()
 
         local experience = vgui.Create("DLabel", panel)
         experience:SetPos( 85, 40 )
         experience:SetFont("AftershockText")
-        experience:SetText("Experience: " .. chardata[v.pid].exp)
+        local exp = chardata[v.pid] and chardata[v.pid].exp or "char?exp"
+        experience:SetText("Experience: " .. exp)
         experience:SizeToContents()
 
         local playtime = vgui.Create("DLabel", panel)

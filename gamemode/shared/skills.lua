@@ -10,19 +10,21 @@
 function PlayerMeta:GetLevel()
     local experience = self:GetExperience()
     local level = 1
-    while experience >= SET.BaseLevelExperience * ( SET.LevelExperiencePower ^ level) do
+    while experience >= SET.BaseLevelExperience * (SET.LevelExperiencePower ^ level) do
+        if experience < 1 then break end --Precaution
         level = level + 1
+        if level >= SET.MaxLevel then break end --Precaution
     end
     return level
 end
 
 function PlayerMeta:ExpToLevel()
-    local expreq = SET.BaseLevelExperience * ( SET.LevelExperiencePower ^ self:GetLevel())
+    local expreq = SET.BaseLevelExperience * (SET.LevelExperiencePower ^ self:GetLevel())
     return expreq
 end
 
 function CalcExpForLevel( lvl ) --Will calculate the XP required for a specific level.
-    return SET.BaseLevelExperience * ( SET.LevelExperiencePower ^ lvl )
+    return SET.BaseLevelExperience * (SET.LevelExperiencePower ^ lvl)
 end
 
 function PlayerMeta:SetExperience( amt )
@@ -31,7 +33,7 @@ function PlayerMeta:SetExperience( amt )
 end
 
 function PlayerMeta:GetExperience()
-    return 200--self.Experience or 0
+    return self.Experience or 0
 end
 
 function PlayerMeta:IncreaseExperience( amt )

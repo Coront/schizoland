@@ -24,6 +24,7 @@ if SERVER then
         self:SetThirst(stats.thirst)
         self:SetSkills(skills)
         self:SetInventory(inv)
+        self:ValidateInventory()
 
         net.Start("as_characters_syncdata")
             net.WriteString(self.name)
@@ -44,8 +45,8 @@ elseif CLIENT then
         ply:SetExperience(net.ReadInt(32))
         ply:SetHunger(net.ReadInt(32))
         ply:SetThirst(net.ReadInt(32))
-        ply:SetSkills(net.ReadTable())
         ply:SetInventory(net.ReadTable())
+        ply:SetSkills(net.ReadTable())
     end
     net.Receive("as_characters_syncdata", LoadCharacter)
 

@@ -18,7 +18,9 @@ timer.Create( "as_autosave", 300, 0, function()
 end)
 
 function Verify( callback )
-	local frame_verify = vgui.Create("DFrame")
+	if IsValid(frame_verify) then frame_verify:Close() end
+
+	frame_verify = vgui.Create("DFrame")
 	frame_verify:SetSize(300, 200)
     frame_verify:Center()
     frame_verify:MakePopup()
@@ -55,6 +57,40 @@ function Verify( callback )
     no.DoClick = function()
         surface.PlaySound("buttons/button15.wav")
 		frame_verify:Close()
+    end
+end
+
+function VerifyAmount( callback )
+	if IsValid(frame_verifyamount) then frame_verifyamount:Close() end
+
+	frame_verifyamount = vgui.Create("DFrame")
+	frame_verifyamount:SetSize(300, 200)
+    frame_verifyamount:Center()
+    frame_verifyamount:MakePopup()
+    frame_verifyamount:SetDraggable( false )
+    frame_verifyamount:SetTitle( "" )
+    frame_verifyamount:ShowCloseButton( true )
+    frame_verifyamount.Paint = function(_,w,h)
+        surface.SetDrawColor( COLHUD_DEFAULT )
+        surface.DrawRect( 0, 0, w, h )
+    end
+
+	local infotext = vgui.Create("DLabel", frame_verifyamount)
+    infotext:SetText("Select an amount.\n")
+    infotext:SizeToContents()
+	infotext:SetContentAlignment(5)
+    infotext:SetPos( frame_verifyamount:GetWide() / 2 - infotext:GetWide() / 2, frame_verifyamount:GetTall() / 2.5)
+
+	local confirm = vgui.Create("DButton", frame_verifyamount)
+    confirm:SetSize(100, 20)
+    confirm:SetPos(30, frame_verifyamount:GetTall() * 0.8)
+	confirm:SetText("Confirm")
+    confirm.DoClick = function()
+        surface.PlaySound("buttons/button15.wav")
+		if callback then
+			callback()
+		end
+		frame_verifyamount:Close()
     end
 end
 

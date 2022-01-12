@@ -55,7 +55,11 @@ function ItemMenu()
                 LocalPlayer():AddItemToInventory( k, 1 )
             end
             panel.Paint = function(self,w,h)
-                surface.SetDrawColor( COLHUD_PRIMARY )
+                if v.color then
+                    surface.SetDrawColor( v.color )
+                else
+                    surface.SetDrawColor( COLHUD_DEFAULT )
+                end
                 surface.DrawRect( 0, 0, w, h )
             end
 

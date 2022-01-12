@@ -19,7 +19,8 @@ function PlayerMeta:CreateCharacter( name, model )
     if #characters >= SET.MaxCharacters then self:ChatPrint("You have reached the character limit!") return end
 
     sql.Query( "INSERT INTO as_characters VALUES ( NULL, " .. SQLStr(self:SteamID()) .. ", " .. SQLStr(name) .. ", " .. SQLStr(model) .. ", " .. SQLStr( os.date( "%m/%d/%y - %I:%M %p", os.time() ) ) .. ", NULL, NULL )" )
-    local newpid = tonumber(sql.Query("SELECT pid FROM as_characters")[1]["pid"])
+    local pids = sql.Query("SELECT pid FROM as_characters")
+    local newpid = tonumber(sql.Query("SELECT pid FROM as_characters")[#pids]["pid"])
     sql.Query( "INSERT INTO as_characters_inventory VALUES ( " .. newpid .. ", NULL, NULL )" )
     sql.Query( "INSERT INTO as_characters_skills VALUES ( " .. newpid .. ", NULL )" )
     sql.Query( "INSERT INTO as_characters_stats VALUES ( " .. newpid .. ", " .. SKL.Health .. ", 100, 100, 0 )" )

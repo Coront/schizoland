@@ -8,9 +8,10 @@
 
 AS = {}
 
-DeriveGamemode("base")
+DeriveGamemode("sandbox")
 GM.Name = "Aftershock"
 
+--Shared Variables
 AS.Colors = {}
 AS.Colors.Primary = Color( 100, 100, 100, 255 )
 AS.Colors.Secondary = Color( 50, 50, 50, 255 )
@@ -23,6 +24,16 @@ COLHUD_SECONDARY = AS.Colors.Secondary
 COLHUD_TERTIARY = AS.Colors.Tertiary
 COLHUD_QUATERNARY = AS.Colors.Quaternary
 COLHUD_QUINARY = AS.Colors.Quinary
+
+--Clientside
+if CLIENT then
+
+    KEYBIND_INV = input.LookupBinding("+showscores") or '"+showscores" -Unbound'
+    KEYBIND_SKL = input.LookupBinding("+menu") or '"+menu" -Unbound'
+    KEYBIND_MSN = input.LookupBinding("+menu_context") or '"+menu_context" -Unbound'
+    KEYBIND_USE = input.LookupBinding("+use") or '"+use" -Unbound'
+
+end
 
 PlayerMeta = FindMetaTable("Player")
 
@@ -69,4 +80,24 @@ end
 
 function PlayerMeta:Nickname() --Will return the name of the player. Use this over self:Nick().
     return self.name or self:Nick()
+end
+
+function PlayerMeta:TracePosFromEyes( dist ) --Will return just a position.
+    local trace = util.TraceLine({
+        start = self:GetShootPos(),
+        endpos = self:GetShootPos() + (self:GetAimVector() * dist),
+        filter = self,
+    })
+
+	return trace.HitPos
+end
+
+function PlayerMeta:TraceFromEyes( dist ) --Will return the trace table.
+    local trace = util.TraceLine({
+        start = self:GetShootPos(),
+        endpos = self:GetShootPos() + (self:GetAimVector() * dist),
+        filter = self,
+    })
+
+	return trace
 end

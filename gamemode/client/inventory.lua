@@ -112,66 +112,13 @@ function AS.Inventory.BuildInventory()
     itemlist:SetSpaceX( 5 )
 
     for k, v in SortedPairs( LocalPlayer():GetInventory() ) do
-        local panel = itemlist:Add("DButton")
-        panel:SetSize( 60, 60 )
-        panel:SetText("")
         local info = AS.Items[k]
         local name = info.name or "name?" .. k
         local desc = info.desc or "desc?" .. k
         local weight = info.weight or "weight?" .. k
-        local TTtext = v > 1 and name .. "\n" .. desc .. "\nWeight: " .. weight .. " [" .. (isnumber(weight) and weight * v or "w?") .. "]" or name .. "\n" .. desc .. "\nWeight: " .. weight
-        panel:SetTooltip(TTtext)
-        panel.DoClick = function()
-            LocalPlayer():ChatPrint("useditem")
-        end
-        panel.DoRightClick = function()
-            local options = vgui.Create("DMenu")
-            --Use
-            options:AddOption("Use", function()
-                LocalPlayer():ChatPrint("useditem")
-            end)
-            --Drop
-            local function dropItem( item, amt )
-                LocalPlayer():TakeItemFromInventory( item, amt )
-                net.Start("as_inventory_dropitem")
-                    net.WriteString( item )
-                    net.WriteInt( amt, 32 )
-                net.SendToServer()
-            end
-            options:AddOption("Drop 1", function()
-                dropItem( k, 1 )
-            end)
-            options:AddOption("Drop X", function()
-                LocalPlayer():ChatPrint("droppeditem = x")
-                --[[
-                    local function callback( amt )
-                        dropItem( item, amt )
-                    end
-                    VerifyAmount( callback )
-                ]]
-            end)
-            options:AddOption("Drop All", function()
-                dropItem( k, v )
-            end)
-            --Destroy
-            options:AddOption("Destroy 1", function()
-                LocalPlayer():ChatPrint("destroyeditem")
-            end)
-            options:AddOption("Destroy X", function()
-                LocalPlayer():ChatPrint("destroyeditem")
-            end)
-            options:AddOption("Destroy All", function()
-                LocalPlayer():ChatPrint("destroyeditem")
-            end)
-            options:Open()
-            function options:Think()
-                if not IsValid( frame_inventory ) then options:Hide() end
-            end
-        end
-        panel.Paint = function(self,w,h)
-            surface.SetDrawColor( COLHUD_PRIMARY )
-            surface.DrawRect( 0, 0, w, h )
-        end
+
+        local panel = itemlist:Add("DButton")
+        panel:SetSize( 60, 60 )
 
         local image = vgui.Create("DImage", panel)
         image:SetSize(panel:GetWide(), panel:GetTall())
@@ -184,6 +131,87 @@ function AS.Inventory.BuildInventory()
         itemamt:SetContentAlignment( 3 )
         itemamt:SizeToContents()
         itemamt:SetPos( (panel:GetWide() - itemamt:GetWide()) - 2, panel:GetTall() - itemamt:GetTall() )
+        local function itemamtUpdate()
+            if LocalPlayer():GetInventory()[k] then
+                itemamt:SetText( LocalPlayer():GetInventory()[k] )
+            else
+                panel:Remove()
+            end
+        end
+
+        panel:SetText("")
+        local TTtext = v > 1 and name .. "\n" .. desc .. "\nWeight: " .. weight .. " [" .. (isnumber(weight) and weight * v or "w?") .. "]" or name .. "\n" .. desc .. "\nWeight: " .. weight
+        panel:SetTooltip(TTtext)
+        panel.DoClick = function()
+            if AS.Items[k].use then
+                LocalPlayer():TakeItemFromInventory( k, 1 )
+                itemamtUpdate()
+                net.Start("as_inventory_useitem")
+                    net.WriteString( k )
+                net.SendToServer()
+            end
+        end
+        panel.DoRightClick = function()
+            local options = vgui.Create("DMenu")
+            --Use
+            if AS.Items[k].use then
+                options:AddOption("Use", function()
+                    LocalPlayer():TakeItemFromInventory( k, 1 )
+                    itemamtUpdate()
+                    net.Start("as_inventory_useitem")
+                        net.WriteString( k )
+                    net.SendToServer()
+                end)
+            end
+            --Drop
+            local function dropItem( item, amt )
+                LocalPlayer():TakeItemFromInventory( item, amt )
+                itemamtUpdate()
+                net.Start("as_inventory_dropitem")
+                    net.WriteString( item )
+                    net.WriteInt( amt, 32 )
+                net.SendToServer()
+            end
+            options:AddOption("Drop 1", function()
+                dropItem( k, 1 )
+            end)
+            options:AddOption("Drop X", function()
+                LocalPlayer():ChatPrint("droppeditem = x")
+            end)
+            options:AddOption("Drop All", function()
+                dropItem( k, v )
+            end)
+            --Destroy
+            local function destroyItem( item, amt )
+                LocalPlayer():TakeItemFromInventory( item, amt )
+                itemamtUpdate()
+                net.Start("as_inventory_destroyitem")
+                    net.WriteString( item )
+                    net.WriteInt( amt, 32 )
+                net.SendToServer()
+            end
+            options:AddOption("Destroy 1", function()
+                Verify( destroyItem )
+            end)
+            options:AddOption("Destroy X", function()
+                LocalPlayer():ChatPrint("destroyeditem = x")
+            end)
+            options:AddOption("Destroy All", function()
+                Verify( destroyItem )
+            end)
+            options:Open()
+            function options:Think()
+                if not IsValid( frame_inventory ) then options:Hide() end
+            end
+        end
+        panel.Paint = function(self,w,h)
+            if info.color then
+                surface.SetDrawColor( info.color )
+            else
+                surface.SetDrawColor( COLHUD_DEFAULT )
+            end
+            surface.DrawRect( 0, 0, w, h )
+        end
     end
 
     --Character and info
@@ -222,20 +250,31 @@ function AS.Inventory.BuildInventory()
         end
     end
 
-    local exp = vgui.Create("DLabel", characterdisplay)
-    exp:SetPos( 0, 525 )
-    exp:SetFont("TargetID")
-    exp:SetText( "Experience: " .. LocalPlayer():GetExperience() .. " / " .. LocalPlayer():ExpToLevel() )
-    exp:SizeToContents()
-
     local expbg = vgui.Create("DPanel", characterdisplay)
     expbg:SetSize( characterdisplay:GetWide(), 10 )
     expbg:SetPos( 0, 544 )
-    function expbg:Paint(w, h)
+
+    local exp = vgui.Create("DLabel", characterdisplay)
+    exp:SetFont("TargetID")
+    exp:SetText( LocalPlayer():GetExperience() .. " / " .. LocalPlayer():ExpToLevel() )
+    exp:SizeToContents()
+    exp:SetPos( characterdisplay:GetWide() / 2 - exp:GetWide() / 2, 540 )
+
+    function expbg:Paint(w, h) --Calling the paint after so that exp can be drawn over the contents.
         surface.SetDrawColor( AS.Colors.Secondary )
         surface.DrawOutlinedRect( 0, 0, w, h, 1 )
         surface.SetDrawColor( AS.Colors.Tertiary )
-        surface.DrawRect( 1, 1, ( (LocalPlayer():GetExperience() - CalcExpForLevel(LocalPlayer():GetLevel() - 1)) / (LocalPlayer():ExpToLevel() - CalcExpForLevel(LocalPlayer():GetLevel() - 1)) ) * 263, h - 2 )
+        local maxlength = 263
+        local ply = LocalPlayer()
+        local plylvl = ply:GetLevel() > 1 and ply:GetLevel() - 1 or 1
+        local barlength = ply:GetLevel() > 1 and (ply:GetExperience() - CalcExpForLevel( plylvl )) / (ply:ExpToLevel() - CalcExpForLevel( plylvl )) * maxlength or (ply:GetExperience() / ply:ExpToLevel()) * maxlength
+        surface.DrawRect( 1, 1, barlength, h - 2 )
+
+        if expbg:IsHovered() then
+            exp:Show()
+        else
+            exp:Hide()
+        end
     end
 
     local name = vgui.Create("DLabel", characterdisplay)
@@ -243,7 +282,7 @@ function AS.Inventory.BuildInventory()
     name:SetFont("TargetID")
     name:SetText( LocalPlayer():Nickname() )
     name:SizeToContents()
-
+    
     local level = vgui.Create("DLabel", characterdisplay)
     level:SetPos( 0, 20 )
     level:SetFont("TargetID")

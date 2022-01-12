@@ -5,8 +5,9 @@ SET = AS.Settings
 SET.MaxCharacters = 5 --Maximum characters players are allowed to have.
 SET.MinNameLength = 3 --Minimal length of a players name.
 SET.BankWeight = 1000 --Maximum weight a player's bank can hold.
-SET.BaseLevelExperience = 100 --The base experience required to level up.
+SET.BaseLevelExperience = 25 --The base experience required to level up.
 SET.LevelExperiencePower = 2 --The power that multiplies experience required to level up.
+SET.MaxLevel = 150 --Max level of characters.
 SET.SelectableModels = {
     --All of the models in here are models that the player is allowed to select during character creation.
     ["models/player/group01/male_01.mdl"] = true,

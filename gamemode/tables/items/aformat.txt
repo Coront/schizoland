@@ -11,4 +11,13 @@ AS.AddBaseItem("my_item", {
     weight = 1, --Item's game weight
     nodrop = true, --Item cannot be dropped by players (optional)
     notrade = true, --Item cannot be traded by players (optional)
+    use = { --A table that will contain settings of what to do when used.
+        health = 0, --Will give the player heath. Can be negative to retract health.
+        hunger = 0, --Will give the player hunger (as in make them less hungry). Can be negative to retract hunger.
+        thirst = 0, --Will give the player thirst (as in make them less thirsty). Can be negative to retract thirst.
+        stat = "", --Will give the player a status effect.
+        sound = "", --Will emit a sound from the player (serverside/clientside)
+        soundcs = "", --Will emit a sound from the player (clientside)
+        func = function() end --Will hold and run a function if ever needed. It is recommended to avoid using this unless under special circumstances.
+    },
 })
