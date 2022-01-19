@@ -37,7 +37,7 @@ function ItemMenu()
         itemlist:SetSpaceX( 5 )
 
         for k, v in SortedPairs( AS.Items ) do
-            if not string.find( string.lower(v.name), searchbar:GetValue() ) then continue end
+            if not string.find( string.lower(v.name), searchbar:GetValue() ) and not string.find( string.lower(k), searchbar:GetValue() ) then continue end
 
             local panel = itemlist:Add("DButton")
             panel:SetSize( 60, 60 )

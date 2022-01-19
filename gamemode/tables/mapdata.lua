@@ -11,6 +11,16 @@ AS.AddMapData( "gm_flatgrass", {
     },
 })
 
+AS.AddMapData( "gm_devroom", {
+    Load = {
+        pos = Vector(-451.61, -475.97, 177.31),
+        ang = Angle(12.78, 44.20),
+    },
+    Spawns = {
+        Vector(-336.01, -336.75, 64.03),
+    },
+})
+
 AS.AddMapData( "gm_aftermath_day_v1_0", {
     Load = {
         pos = Vector(2334.46, 8383.56, 145.10),

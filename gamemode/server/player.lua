@@ -12,7 +12,7 @@ function GM:PlayerInitialSpawn( ply ) --Player's first spawn.
 end
 
 function GM:PlayerSpawn( ply )
-    if ply:GetNW2Bool("as_spawned", false) == false then --Prevent players from spawning in, as they havent loaded a character yet.
+    if not ply:IsLoaded() then --Prevent players from spawning in, as they havent loaded a character yet.
         ply:Spectate(OBS_MODE_ROAMING)
         ply:Freeze(true)
         if AS.Maps[game.GetMap()] and AS.Maps[game.GetMap()].Load then

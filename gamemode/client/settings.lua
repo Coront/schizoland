@@ -78,22 +78,40 @@ function AS.Settings.BuildOptions()
     ToggleButton("Enable Player Info", xpos, ypos, settings_scroll, "as_hud_playerinfo")
     addSpace( 0, 20 )
 
-    ToggleButton("Enable Healthbar", xpos, ypos, settings_scroll, "as_hud_healthbar")
+    ToggleButton("Enable Health Bar", xpos, ypos, settings_scroll, "as_hud_healthbar")
     addSpace( 20, 20 )
 
-    ToggleButton("Enable Healthbar Amounts", xpos, ypos, settings_scroll, "as_hud_healthbar_amount")
+    ToggleButton("Enable Health Bar Amounts", xpos, ypos, settings_scroll, "as_hud_healthbar_amount")
+    addSpace( 0, 20 )
+
+    ValueSlider( "Health Bar X-Pos", xpos, ypos, -2000, 2000, settings_scroll, "as_hud_healthbar_xadd" )
+    addSpace( 0, 20 )
+
+    ValueSlider( "Health Bar Y-Pos", xpos, ypos, -2000, 2000, settings_scroll, "as_hud_healthbar_yadd" )
+    addSpace( 0, 20 )
+
+    ValueSlider( "Health Bar Width", xpos, ypos, 5, 2000, settings_scroll, "as_hud_healthbar_width" )
+    addSpace( 0, 20 )
+
+    ValueSlider( "Health Bar Height", xpos, ypos, 5, 50, settings_scroll, "as_hud_healthbar_height" )
+    addSpace( -20, 20 )
+
+    ToggleButton("Enable Satiation Bars", xpos, ypos, settings_scroll, "as_hud_satiationbars")
     addSpace( 20, 20 )
 
-    ValueSlider( "Healthbar X-Pos", xpos, ypos, -2000, 2000, settings_scroll, "as_hud_healthbar_xadd" )
+    ToggleButton("Enable Satiation Bars Amount", xpos, ypos, settings_scroll, "as_hud_satiationbars_amount")
     addSpace( 0, 20 )
 
-    ValueSlider( "Healthbar Y-Pos", xpos, ypos, -2000, 2000, settings_scroll, "as_hud_healthbar_yadd" )
+    ValueSlider( "Satiation Bars X-Pos", xpos, ypos, -2000, 2000, settings_scroll, "as_hud_satiationbars_xadd" )
     addSpace( 0, 20 )
 
-    ValueSlider( "Healthbar Width", xpos, ypos, 5, 2000, settings_scroll, "as_hud_healthbar_width" )
+    ValueSlider( "Satiation Bars Y-Pos", xpos, ypos, -2000, 2000, settings_scroll, "as_hud_satiationbars_yadd" )
     addSpace( 0, 20 )
 
-    ValueSlider( "Healthbar Height", xpos, ypos, 5, 50, settings_scroll, "as_hud_healthbar_height" )
+    ValueSlider( "Satiation Bars Width", xpos, ypos, 5, 2000, settings_scroll, "as_hud_satiationbars_width" )
+    addSpace( 0, 20 )
+
+    ValueSlider( "Satiation Bars Height", xpos, ypos, 5, 50, settings_scroll, "as_hud_satiationbars_height" )
     addSpace( 0, 20 )
 
     resetX()

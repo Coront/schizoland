@@ -11,7 +11,7 @@ CharacterSelectOpen = false
 function AS.CharacterSelect.Menu()
     if IsValid(frame_characters) then frame_characters:Close() end
     if IsValid(CharacterNew) then CharacterNew:Remove() end
-    if LocalPlayer():GetNW2Bool( "as_spawned", false ) then LocalPlayer():ChatPrint("You have already loaded a character. Relog to switch characters.") return end
+    if LocalPlayer():IsLoaded() then LocalPlayer():ChatPrint("You have already loaded a character. Relog to switch characters.") return end
 
     selectedChar = nil
 

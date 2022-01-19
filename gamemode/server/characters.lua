@@ -99,7 +99,7 @@ function DeleteCharacter(len, ply)
 
     local owner = sql.QueryValue("SELECT steamid FROM as_characters WHERE pid = " .. pid)
     if ply:SteamID() != owner then ply:Kick("This isn't your character") return end
-    if ply:GetNW2Bool("as_spawned", false) == true then ply:ChatPrint("You cannot do this while loaded in.") return end
+    if ply:IsLoaded() then ply:ChatPrint("You cannot do this while loaded in.") return end
 
     ply:DeleteCharacter( pid )
 end

@@ -26,11 +26,20 @@ function PlayerMeta:UseItem( item )
         self:SetHealth( math.Clamp( self:Health() + use.health, 1, self:GetMaxHealth() ) )
     end
     if use.hunger then
-        --self:IncreaseHunger( use.hunger )
+        if use.hunger > 0 then
+            self:AddHunger( use.hunger )
+        else
+            self:TakeHunger( use.hunger )
+        end
     end
     if use.thirst then
-        --self:IncreaseThirst( use.thirst )
+        if use.thirst > 0 then
+            self:AddThirst( use.thirst )
+        else
+            self:TakeThirst( use.thirst )
+        end
     end
+    if use.hunger or use.thirst then self:ResyncSatiation() end
     if use.stat then
         --self:GiveStatus( use.stat )
     end

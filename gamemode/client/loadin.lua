@@ -2,7 +2,7 @@ AS.LoadIn = {}
 
 function AS.LoadIn.SpawnMenu()
     if IsValid(frame_spawnmenu) then frame_spawnmenu:Close() end
-    if LocalPlayer():GetNW2Bool( "as_spawned", false ) then LocalPlayer():ChatPrint("You have already loaded a character. Relog to switch characters.") return end
+    if LocalPlayer():IsLoaded() then LocalPlayer():ChatPrint("You have already loaded a character. Relog to switch characters.") return end
     surface.PlaySound("buttons/button1.wav") --Just to notify the player that they have loaded into the server.
 
     frame_spawnmenu = vgui.Create("DFrame")
@@ -50,5 +50,6 @@ function AS.LoadIn.BuildMenu()
     MainMenuButton( "Start Playing", xpos, ypos, width, height, frame_spawnmenu, function()
         RunConsoleCommand("as_characters")
         frame_spawnmenu:Close()
+        if IsValid( frame_settings ) then frame_settings:Close() end
     end)
 end

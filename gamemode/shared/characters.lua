@@ -1,4 +1,6 @@
-local PlayerMeta = FindMetaTable("Player")
+function PlayerMeta:IsLoaded()
+    return self:GetNW2Bool("as_spawned", false)
+end
 
 if SERVER then
 

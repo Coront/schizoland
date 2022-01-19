@@ -17,10 +17,9 @@ hook.Add( "HUDPaint", "AS_ItemInfo", function()
         local trace = util.TraceLine({
             start = LocalPlayer():EyePos(),
             endpos = v:GetPos() + v:OBBCenter(),
-            filter = {LocalPlayer(), v},
-            mask = MASK_SHOT,
+            filter = LocalPlayer(),
         })
-        if trace.HitPos != v:GetPos() + v:OBBCenter() then continue end
+        if trace.Entity != v then continue end
 
         local pos = v:GetPos():ToScreen()
         local id = v:GetItem()

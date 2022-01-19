@@ -36,6 +36,16 @@ SKL = SET.Skills
 SKL.Health = 10 --Player starts with 10 hp.
 SKL.Movement = 165 --Player starts with 165 move speed.
 SKL.DefaultCarryWeight = 20 --Player starts with 20 carry weight.
+--Satiation Settings
+SET.Satiation = {}
+SAT = SET.Satiation
+SAT.HungerUpdate = 50 --Timer in seconds that the player's hunger will update
+SAT.HungerLoss = 1 --Hunger loss on update
+SAT.ThirstUpdate = 35 --Timer in seconds that the player's thirst will update
+SAT.ThirstLoss = 1 --Thirst loss on update
+SAT.StarveDamage = 2 --How much damage starvation should deal on next hunger update
+SAT.DehydratedDamage = 1 --How much damage dehydration should deal on next thirst update
+SAT.SatBuffs = 80 --The amount of hunger + thirst a player must remain above in order to receive the passive buffs.
 
 
 

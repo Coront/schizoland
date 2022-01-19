@@ -1,0 +1,5 @@
+ENT.Type 			= "anim"
+ENT.Base 			= "base_entity"
+ENT.PrintName		= "Base Container"
+ENT.Author			= "Tampy"
+ENT.Purpose			= "A workbench, for crafting items."

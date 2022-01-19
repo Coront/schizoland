@@ -26,13 +26,20 @@ CreateClientConVar( "as_hud_healthbar_xadd", "0", true, false ) --X position add
 CreateClientConVar( "as_hud_healthbar_yadd", "0", true, false ) --Y position add
 CreateClientConVar( "as_hud_healthbar_width", "200", true, false ) --Width
 CreateClientConVar( "as_hud_healthbar_height", "20", true, false ) --Height
+-- Satiation Bars
+CreateClientConVar( "as_hud_satiationbars", "1", true, false ) --Enable?
+CreateClientConVar( "as_hud_satiationbars_amount", "0", true, false ) --Enable amount?
+CreateClientConVar( "as_hud_satiationbars_xadd", "0", true, false ) --X position add
+CreateClientConVar( "as_hud_satiationbars_yadd", "0", true, false ) --Y position add
+CreateClientConVar( "as_hud_satiationbars_width", "150", true, false ) --Width
+CreateClientConVar( "as_hud_satiationbars_height", "10", true, false ) --Height
 -- Player Info
 CreateClientConVar( "as_hud_playerinfo", "1", true, false )
 
 function AftershockHUD()
     local ply = LocalPlayer()
 
-    if ply:GetNW2Bool("as_spawned", false) == false or not ply:Alive() then return end
+    if not ply:IsLoaded() or not ply:Alive() then return end
 
     local bar = tobool(GetConVar("as_hud_healthbar"):GetInt())
     if bar then
@@ -42,15 +49,46 @@ function AftershockHUD()
         local ypos = GetConVar("as_hud_healthbar_yadd"):GetInt()
         local width = GetConVar("as_hud_healthbar_width"):GetInt()
         local height = GetConVar("as_hud_healthbar_height"):GetInt()
-        local barx, bary, width, height, outline = (100 + xpos), (math.Clamp((ScrH() * 0.91) + ypos, 0, ScrH())), (width), (height), (1)
-        surface.SetDrawColor(COLHUD_DEFAULT)
+        local barx, bary, width, height, outline = (math.Clamp(100 + xpos, 0, ScrW() - width)), (math.Clamp((ScrH() * 0.91) + ypos, 0, ScrH() - height)), (width), (height), (1)
+
+        surface.SetDrawColor(COLHUD_DEFAULT) --Set color to hud color
         surface.DrawOutlinedRect(barx, bary, width, height, outline) --Health bar outline
         surface.DrawRect(barx + 2, bary + 2, (health / maxhealth) * (width - 4), height - 4) --Health bar
 
         local amt = tobool(GetConVar("as_hud_healthbar_amount"):GetInt())
-        if amt then
-            local hp, amtx, amty, outline = (health), (xpos + width + 110), (math.Clamp((ScrH() * 0.928) + ypos, 0, ScrH())), (1)
+        if amt then --Will draw health amount if enabled
+            local hp, amtx, amty, outline = (health), (math.Clamp(xpos + width + 110, width + 10, ScrW())), (math.Clamp((ScrH() * 0.928) + ypos, 0, ScrH())), (1)
             draw.SimpleTextOutlined(hp, "AftershockHUD", amtx, amty, COLHUD_DEFAULT, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM, outline, Color(0,0,0))
+        end
+    end
+
+    local satiation = tobool(GetConVar("as_hud_satiationbars"):GetInt())
+    if satiation then
+        local hunger = ply:GetHunger()
+        local thirst = ply:GetThirst()
+        local maxhunger = ply:GetMaxHunger()
+        local maxthirst = ply:GetMaxThirst()
+        local xpos = GetConVar("as_hud_satiationbars_xadd"):GetInt()
+        local ypos = GetConVar("as_hud_satiationbars_yadd"):GetInt()
+        local width = GetConVar("as_hud_satiationbars_width"):GetInt()
+        local height = GetConVar("as_hud_satiationbars_height"):GetInt()
+        local barx, bary, width, height, outline = (math.Clamp(100 + xpos, 0, ScrW() - width)), (math.Clamp((ScrH() * 0.929) + ypos, 0, ScrH() - (height * 2) + 1)), (width), (height), (1)
+
+        surface.SetDrawColor(COLHUD_DEFAULT) --Set color to hud color
+        --Hunger Bar
+        surface.DrawOutlinedRect(barx, bary, width, height, outline) --Hunger bar outline
+        surface.DrawRect(barx + 2, bary + 2, (hunger / maxhunger) * (width - 4), height - 4) --Hunger bar
+        --Thirst Bar
+        bary = bary + (height + 1)
+        surface.DrawOutlinedRect(barx, bary, width, height) --Thirst bar outline
+        surface.DrawRect( barx + 2, bary + 2, (thirst / maxthirst) * (width - 4), height - 4) --Thirst bar
+
+        local amt = tobool(GetConVar("as_hud_satiationbars_amount"):GetInt())
+        if amt then --Will draw satiation amount if enabled
+            local hunger, thirst, amtx, amty, outline = (hunger), (thirst), (math.Clamp(xpos + width + 103, width + 10, ScrW())), (math.Clamp((ScrH() * 0.938) + ypos, 0, ScrH())), (1)
+            draw.SimpleTextOutlined(hunger, "AftershockHUDVerySmall", amtx, amty, COLHUD_DEFAULT, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM, outline, Color(0,0,0))
+            amty = amty + 10
+            draw.SimpleTextOutlined(thirst, "AftershockHUDVerySmall", amtx, amty, COLHUD_DEFAULT, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM, outline, Color(0,0,0))
         end
     end
 
@@ -59,7 +97,7 @@ function AftershockHUD()
         for k, v in pairs( player.GetAll() ) do
             if v == LocalPlayer() then continue end --Don't show us to ourself.
             if v:GetPos():Distance(LocalPlayer():GetPos()) > 250 then continue end --Hide people's labels who are far away.
-            if v:GetNW2Bool( "as_spawned", false ) == false then continue end --Don't show us info of players who are just spawning.
+            if not v:IsLoaded() then continue end --Don't show us info of players who are just spawning.
             if not v:Alive() or not IsValid(v) then continue end
             local trace = util.TraceLine( {
                 start = LocalPlayer():EyePos(),

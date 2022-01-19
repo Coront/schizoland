@@ -11,6 +11,10 @@ AS.AddBaseItem("food_beans", {
     model = "models/props_junk/garbage_metalcan001a.mdl",
     value = 1,
     weight = 0.5,
+    use = {
+        hunger = 15,
+        sound = "npc/headcrab/headbite.wav",
+    },
 })
 
 AS.AddBaseItem("food_melon", {
@@ -19,6 +23,11 @@ AS.AddBaseItem("food_melon", {
     model = "models/props_junk/watermelon01_chunk01b.mdl",
     value = 1,
     weight = 0.4,
+    use = {
+        hunger = 5,
+        thirst = 15,
+        sound = "npc/headcrab/headbite.wav",
+    },
 })
 
 AS.AddBaseItem("food_orange", {
@@ -27,6 +36,11 @@ AS.AddBaseItem("food_orange", {
     model = "models/props/cs_italy/orange.mdl",
     value = 1,
     weight = 0.2,
+    use = {
+        hunger = 4,
+        thirst = 10,
+        sound = "npc/headcrab/headbite.wav",
+    },
 })
 
 AS.AddBaseItem("food_takeout", {
@@ -35,6 +49,10 @@ AS.AddBaseItem("food_takeout", {
     model = "models/props_junk/garbage_takeoutcarton001a.mdl",
     value = 1,
     weight = 1,
+    use = {
+        hunger = 25,
+        sound = "npc/headcrab/headbite.wav",
+    },
 })
 
 -- ████████╗██╗  ██╗██╗██████╗ ███████╗████████╗    ██╗████████╗███████╗███╗   ███╗███████╗
@@ -50,6 +68,10 @@ AS.AddBaseItem("food_dirty_water", {
     model = "models/props_junk/garbage_plasticbottle003a.mdl",
     value = 1,
     weight = 1,
+    use = {
+        thirst = 15,
+        sound = "npc/barnacle/barnacle_gulp1.wav",
+    },
 })
 
 AS.AddBaseItem("food_clean_water", {
@@ -58,6 +80,10 @@ AS.AddBaseItem("food_clean_water", {
     model = "models/props_junk/garbage_plasticbottle003a.mdl",
     value = 1,
     weight = 1,
+    use = {
+        thirst = 15,
+        sound = "npc/barnacle/barnacle_gulp1.wav",
+    },
 })
 
 AS.AddBaseItem("food_milk", {
@@ -66,6 +92,10 @@ AS.AddBaseItem("food_milk", {
     model = "models/props_junk/garbage_milkcarton002a.mdl",
     value = 1,
     weight = 1,
+    use = {
+        thirst = 15,
+        sound = "npc/barnacle/barnacle_gulp1.wav",
+    },
 })
 
 AS.AddBaseItem("food_soda", {
@@ -74,6 +104,10 @@ AS.AddBaseItem("food_soda", {
     model = "models/props_junk/PopCan01a.mdl",
     value = 1,
     weight = 1,
+    use = {
+        thirst = 10,
+        sound = "npc/barnacle/barnacle_gulp1.wav",
+    },
 })
 
 AS.AddBaseItem("food_coffee", {
@@ -82,4 +116,8 @@ AS.AddBaseItem("food_coffee", {
     model = "models/props_junk/garbage_coffeemug001a.mdl",
     value = 1,
     weight = 0.8,
+    use = {
+        thirst = 15,
+        sound = "npc/barnacle/barnacle_gulp1.wav",
+    },
 })
