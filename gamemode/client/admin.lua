@@ -58,7 +58,7 @@ function ItemMenu()
                 if v.color then
                     surface.SetDrawColor( v.color )
                 else
-                    surface.SetDrawColor( COLHUD_DEFAULT )
+                    surface.SetDrawColor( COLHUD_PRIMARY )
                 end
                 surface.DrawRect( 0, 0, w, h )
             end

@@ -20,11 +20,11 @@ end
 
 function PlayerMeta:ExpToLevel()
     local expreq = SET.BaseLevelExperience * (SET.LevelExperiencePower ^ self:GetLevel())
-    return expreq
+    return math.Round(expreq)
 end
 
 function CalcExpForLevel( lvl ) --Will calculate the XP required for a specific level.
-    return SET.BaseLevelExperience * (SET.LevelExperiencePower ^ lvl)
+    return math.Round(SET.BaseLevelExperience * (SET.LevelExperiencePower ^ lvl))
 end
 
 function PlayerMeta:SetExperience( amt )
@@ -64,7 +64,26 @@ end
 
 function PlayerMeta:GetSkillExperience( skill ) --Get a specific skill
     if not AS.Skills[skill] then AS.LuaError("Attempting to index a non-existant skill - " .. skill) return end
-    return self.Skills[skill]
+    return self.Skills[skill] or 0
+end
+
+function PlayerMeta:ExpToLevelSkill( skill )
+    if not AS.Skills[skill] then AS.LuaError("Attempting to index a non-existant skill - " .. skill) return end
+    local expreq = AS.Skills[skill].basexp * (SET.SkillExperiencePower ^ self:GetSkillLevel( skill ))
+    return math.Round(expreq)
+end
+
+function PlayerMeta:GetSkillLevel( skill )
+    if not AS.Skills[skill] then AS.LuaError("Attempting to index a non-existant skill - " .. skill) return end
+
+    local experience = self:GetSkillExperience( skill )
+    local level = 1
+    while experience >= AS.Skills[skill].basexp * (SET.SkillExperiencePower ^ level) do
+        if experience < 1 then break end --Precaution
+        level = level + 1
+        if level >= AS.Skills[skill].max then break end --Precaution
+    end
+    return level
 end
 
 function PlayerMeta:IncreaseSkillExperience( skill, amt )

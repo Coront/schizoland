@@ -13,7 +13,7 @@ AS.AddBaseItem("food_beans", {
     weight = 0.5,
     use = {
         hunger = 15,
-        sound = "npc/headcrab/headbite.wav",
+        soundcs = "npc/headcrab/headbite.wav",
     },
 })
 
@@ -26,7 +26,7 @@ AS.AddBaseItem("food_melon", {
     use = {
         hunger = 5,
         thirst = 15,
-        sound = "npc/headcrab/headbite.wav",
+        soundcs = "npc/headcrab/headbite.wav",
     },
 })
 
@@ -39,7 +39,7 @@ AS.AddBaseItem("food_orange", {
     use = {
         hunger = 4,
         thirst = 10,
-        sound = "npc/headcrab/headbite.wav",
+        soundcs = "npc/headcrab/headbite.wav",
     },
 })
 
@@ -51,7 +51,7 @@ AS.AddBaseItem("food_takeout", {
     weight = 1,
     use = {
         hunger = 25,
-        sound = "npc/headcrab/headbite.wav",
+        soundcs = "npc/headcrab/headbite.wav",
     },
 })
 
@@ -70,7 +70,7 @@ AS.AddBaseItem("food_dirty_water", {
     weight = 1,
     use = {
         thirst = 15,
-        sound = "npc/barnacle/barnacle_gulp1.wav",
+        soundcs = "npc/barnacle/barnacle_gulp1.wav",
     },
 })
 
@@ -82,7 +82,7 @@ AS.AddBaseItem("food_clean_water", {
     weight = 1,
     use = {
         thirst = 15,
-        sound = "npc/barnacle/barnacle_gulp1.wav",
+        soundcs = "npc/barnacle/barnacle_gulp1.wav",
     },
 })
 
@@ -94,7 +94,7 @@ AS.AddBaseItem("food_milk", {
     weight = 1,
     use = {
         thirst = 15,
-        sound = "npc/barnacle/barnacle_gulp1.wav",
+        soundcs = "npc/barnacle/barnacle_gulp1.wav",
     },
 })
 
@@ -106,7 +106,7 @@ AS.AddBaseItem("food_soda", {
     weight = 1,
     use = {
         thirst = 10,
-        sound = "npc/barnacle/barnacle_gulp1.wav",
+        soundcs = "npc/barnacle/barnacle_gulp1.wav",
     },
 })
 
@@ -118,6 +118,6 @@ AS.AddBaseItem("food_coffee", {
     weight = 0.8,
     use = {
         thirst = 15,
-        sound = "npc/barnacle/barnacle_gulp1.wav",
+        soundcs = "npc/barnacle/barnacle_gulp1.wav",
     },
 })

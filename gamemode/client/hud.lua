@@ -5,9 +5,9 @@ COLHUD_BAD = nil
 -- Enable HUD
 CreateClientConVar( "as_hud", "1", true, false )
 -- Default Colors
-CreateClientConVar( "as_hud_color_default_r", "200", true, false )
-CreateClientConVar( "as_hud_color_default_g", "200", true, false )
-CreateClientConVar( "as_hud_color_default_b", "200", true, false )
+CreateClientConVar( "as_hud_color_default_r", "0", true, false )
+CreateClientConVar( "as_hud_color_default_g", "105", true, false )
+CreateClientConVar( "as_hud_color_default_b", "185", true, false )
 -- Good Colors
 CreateClientConVar( "as_hud_color_good_r", "0", true, false )
 CreateClientConVar( "as_hud_color_good_g", "145", true, false )
@@ -72,7 +72,7 @@ function AftershockHUD()
         local ypos = GetConVar("as_hud_satiationbars_yadd"):GetInt()
         local width = GetConVar("as_hud_satiationbars_width"):GetInt()
         local height = GetConVar("as_hud_satiationbars_height"):GetInt()
-        local barx, bary, width, height, outline = (math.Clamp(100 + xpos, 0, ScrW() - width)), (math.Clamp((ScrH() * 0.929) + ypos, 0, ScrH() - (height * 2) + 1)), (width), (height), (1)
+        local barx, bary, width, height, outline = (math.Clamp(100 + xpos, 0, ScrW() - width)), (math.Clamp((ScrH() * 0.91) + ypos + 21, 0, ScrH() - (height * 2) + 1)), (width), (height), (1)
 
         surface.SetDrawColor(COLHUD_DEFAULT) --Set color to hud color
         --Hunger Bar
@@ -85,7 +85,7 @@ function AftershockHUD()
 
         local amt = tobool(GetConVar("as_hud_satiationbars_amount"):GetInt())
         if amt then --Will draw satiation amount if enabled
-            local hunger, thirst, amtx, amty, outline = (hunger), (thirst), (math.Clamp(xpos + width + 103, width + 10, ScrW())), (math.Clamp((ScrH() * 0.938) + ypos, 0, ScrH())), (1)
+            local hunger, thirst, amtx, amty, outline = (hunger), (thirst), (math.Clamp(xpos + width + 103, width + 10, ScrW())), (math.Clamp((ScrH() * 0.91) + ypos + 30, 0, ScrH())), (1)
             draw.SimpleTextOutlined(hunger, "AftershockHUDVerySmall", amtx, amty, COLHUD_DEFAULT, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM, outline, Color(0,0,0))
             amty = amty + 10
             draw.SimpleTextOutlined(thirst, "AftershockHUDVerySmall", amtx, amty, COLHUD_DEFAULT, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM, outline, Color(0,0,0))

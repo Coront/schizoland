@@ -34,6 +34,8 @@ function GM:PlayerSpawn( ply )
 
     ply:SetHealth(SKL.Health)
     ply:SetMaxHealth(SKL.Health)
+    ply:SetupHands()
+    ply:Give( "as_mainwep" )
 end
 
 function GM:OnPlayerHitGround( ply, water, floater, speed )

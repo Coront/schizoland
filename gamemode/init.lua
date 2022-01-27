@@ -32,12 +32,10 @@ for k, v in pairs( file.Find("aftershock/gamemode/shared/*.lua",  "LUA") ) do
 	include("shared/" .. v)
 end
 
-for k, v in pairs( file.Find("aftershock/gamemode/tables/*.lua",  "LUA") ) do
-	include("tables/" .. v)
-end
-
-for k, v in pairs( file.Find("aftershock/gamemode/tables/items/*.lua",  "LUA") ) do
-	include("tables/items/" .. v)
+for k, v in pairs( AS.FileIncludes ) do
+    for k2, v2 in pairs( file.Find("aftershock/gamemode/" .. v .. "*.lua", "LUA") ) do
+        include( v .. v2 )
+    end
 end
 
 -- Databases
@@ -45,7 +43,7 @@ DATABASECHECKED = DATABASECHECKED or false
 local function DatabaseCheck()
 	MsgC( Color(0,0,255), "[AS] Checking Databases...\n" )
 	sql.Query("CREATE TABLE IF NOT EXISTS as_characters (pid INTEGER PRIMARY KEY AUTOINCREMENT, steamid TEXT, name TEXT, model TEXT, created TEXT, laston TEXT, deleted TEXT)")
-	sql.Query("CREATE TABLE IF NOT EXISTS as_characters_stats (pid INTEGER, health INTEGER, hunger INTEGER, thirst INTEGER, exp INTEGER)")
+	sql.Query("CREATE TABLE IF NOT EXISTS as_characters_stats (pid INTEGER, health INTEGER, hunger INTEGER, thirst INTEGER, exp INTEGER, playtime INTEGER)")
 	sql.Query("CREATE TABLE IF NOT EXISTS as_characters_skills (pid INTEGER, skills TEXT)")
 	sql.Query("CREATE TABLE IF NOT EXISTS as_characters_inventory (pid INTEGER, inv TEXT, bank TEXT)")
 	DATABASECHECKED = true --Don't see the purpose of reloading this multiple times, just restart the server, it's a new table anyways.

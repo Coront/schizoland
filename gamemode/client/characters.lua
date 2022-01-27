@@ -23,7 +23,7 @@ function AS.CharacterSelect.Menu()
     frame_characters:SetTitle( "" )
     frame_characters:ShowCloseButton( false )
     frame_characters.Paint = function(_,w,h)
-        surface.SetDrawColor( COLHUD_DEFAULT )
+        surface.SetDrawColor( COLHUD_PRIMARY )
         surface.DrawRect( 0, 0, w, h )
     end
 

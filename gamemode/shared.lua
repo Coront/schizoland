@@ -51,20 +51,21 @@ for k, v in pairs( file.Find("aftershock/gamemode/shared/*.lua", "LUA") ) do
     end
 end
 
-for k, v in pairs( file.Find("aftershock/gamemode/tables/*.lua", "LUA") ) do
-	if SERVER then 
-        AddCSLuaFile("tables/" .. v)
-    else
-		include("tables/" .. v)
-	end
-end
+AS.FileIncludes = {
+    "tables/",
+    "tables/items/",
+    "tables/characters/",
+    "tables/characters/jackson/",
+}
 
-for k, v in pairs( file.Find("aftershock/gamemode/tables/items/*.lua", "LUA") ) do
-	if SERVER then 
-        AddCSLuaFile("tables/items/" .. v)
-    else
-		include("tables/items/" .. v)
-	end
+for k, v in pairs( AS.FileIncludes ) do
+    for k2, v2 in pairs( file.Find("aftershock/gamemode/" .. v .. "*.lua", "LUA") ) do
+        if SERVER then
+            AddCSLuaFile( v .. v2 )
+        else
+            include( v  .. v2 )
+        end
+    end
 end
 
 function AS.LuaError( message )

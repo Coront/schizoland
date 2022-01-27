@@ -54,8 +54,7 @@ function Button( text, x, y, width, height, parent, callback )
         callback()
     end
     button.Paint = function(_, w, h)
-        local col = COLHUD_DEFAULT:ToTable()
-        surface.SetDrawColor(col[1] - 50, col[2] - 50, col[3] - 50, 255)
+        surface.SetDrawColor( COLHUD_SECONDARY )
         surface.DrawRect( 0, 0, w, h )
     end
 end
@@ -68,8 +67,15 @@ function SectionLabel( text, x, y, parent )
     label:SizeToContents()
 end
 
-function ValueSlider( text, x, y, min, max, parent, convar, color )
+function SmallLabel( text, x, y, parent )
+    local label = vgui.Create("DLabel", parent)
+    label:SetFont( "AftershockText" )
+    label:SetText(text)
+    label:SetPos(x, y)
+    label:SizeToContents()
+end
 
+function ValueSlider( text, x, y, min, max, parent, convar, color )
     local slider = vgui.Create("DNumSlider", parent)
     slider:SetPos( x, y )
     slider:SetSize( 300, 15 )

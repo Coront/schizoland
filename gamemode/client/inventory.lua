@@ -53,7 +53,7 @@ function AS.Inventory.Open( tab )
     frame_inventory:SetTitle( "" )
     frame_inventory:ShowCloseButton( false )
     frame_inventory.Paint = function(_,w,h)
-        surface.SetDrawColor( COLHUD_DEFAULT )
+        surface.SetDrawColor( COLHUD_PRIMARY )
         surface.DrawRect( 0, 0, w, h )
     end
 
@@ -62,6 +62,19 @@ function AS.Inventory.Open( tab )
     sheets:SetFadeTime( 0 )
     sheets:SetSize( frame_inventory:GetWide() - (sheets:GetX() * 2), frame_inventory:GetTall() - (sheets:GetY() * 2))
     sheets.Paint = function() end
+
+    local closebutton = vgui.Create("DButton", frame_inventory)
+    closebutton:SetSize( 25, 25 )
+    closebutton:SetPos( frame_inventory:GetWide() - closebutton:GetWide(), 0)
+    closebutton:SetFont("TargetID")
+    closebutton:SetText("X")
+    closebutton:SetColor( COLHUD_SECONDARY )
+    closebutton.Paint = function( _, w, h ) end
+    closebutton.DoClick = function()
+        if IsValid(frame_inventory) then
+            frame_inventory:Close()
+        end
+    end
 
     sheets:AddSheet("Inventory", AS.Inventory.BuildInventory(), "icon16/box.png")
     sheets:AddSheet("Skills", AS.Inventory.BuildSkills(), "icon16/user.png")
@@ -134,6 +147,9 @@ function AS.Inventory.BuildInventory()
         local function itemamtUpdate()
             if LocalPlayer():GetInventory()[k] then
                 itemamt:SetText( LocalPlayer():GetInventory()[k] )
+                itemamt:SizeToContents()
+                weight:SetText( "Weight: " .. LocalPlayer():GetCarryWeight() .. " / " .. LocalPlayer():MaxCarryWeight() )
+                weight:SizeToContents()
             else
                 panel:Remove()
             end
@@ -208,7 +224,7 @@ function AS.Inventory.BuildInventory()
             if info.color then
                 surface.SetDrawColor( info.color )
             else
-                surface.SetDrawColor( COLHUD_DEFAULT )
+                surface.SetDrawColor( COLHUD_PRIMARY )
             end
             surface.DrawRect( 0, 0, w, h )
         end
@@ -311,8 +327,15 @@ function AS.Inventory.BuildSkills()
         itempanel:DockMargin( 5, 5, 5, 0 )
         itempanel:SetSize( 0, 100 )
         itempanel.Paint = function(_,w,h)
-            surface.SetDrawColor( COLHUD_DEFAULT )
+            surface.SetDrawColor( COLHUD_PRIMARY )
             surface.DrawRect( 0, 0, w, h )
+            --Bar Background
+            surface.SetDrawColor( COLHUD_SECONDARY )
+            local width, height = (w - (5 * 2)), 20
+            surface.DrawRect( (w - width) - 5, (h - height) - 5, width, height )
+            --Bar
+            surface.SetDrawColor( COLHUD_TERTIARY )
+            surface.DrawRect( (w - width) - 5, (h - height) - 5, math.Clamp((LocalPlayer():GetSkillExperience( k ) / LocalPlayer():ExpToLevelSkill( k )) * 740, 0, 740), 20)
         end
 
         local skillname = vgui.Create("DLabel", itempanel)
@@ -320,6 +343,24 @@ function AS.Inventory.BuildSkills()
         skillname:SetFont("TargetID")
         skillname:SetText( v.name )
         skillname:SizeToContents()
+
+        local skilldesc = vgui.Create("DLabel", itempanel)
+        skilldesc:SetPos( 20, 22 )
+        skilldesc:SetFont("TargetIDSmall")
+        skilldesc:SetText( v.desc )
+        skilldesc:SizeToContents()
+
+        local skilllevel = vgui.Create("DLabel", itempanel)
+        skilllevel:SetPos( 5, 55 )
+        skilllevel:SetFont("TargetID")
+        skilllevel:SetText( "Level " .. LocalPlayer():GetSkillLevel( k ) )
+        skilllevel:SizeToContents()
+
+        local experience = vgui.Create("DLabel", itempanel)
+        experience:SetPos( 8, 76 )
+        experience:SetFont("TargetID")
+        experience:SetText( LocalPlayer():GetSkillExperience( k ) .. " / " .. LocalPlayer():ExpToLevelSkill( k ) )
+        experience:SizeToContents()
     end
 
     return skills
@@ -335,6 +376,22 @@ end
 function AS.Inventory.BuildStats()
     local stats = vgui.Create("DPanel", sheet)
     stats.Paint = function() end
+
+    local scroll_stats = vgui.Create("DScrollPanel", stats)
+    scroll_stats:SetSize( 774, 0 )
+    scroll_stats:Dock( FILL )
+    scroll_stats:DockMargin( 0, 0, 0, 0 )
+    scroll_stats.Paint = function(_,w,h)
+        surface.SetDrawColor( COLHUD_SECONDARY )
+        surface.DrawRect(0, 0, w, h)
+    end
+
+    SmallLabel( "Playtime", 5, 0, scroll_stats )
+    local playtimelabel = vgui.Create("DLabel", scroll_stats)
+    playtimelabel:SetFont( "AftershockText" )
+    playtimelabel:SetText(LocalPlayer():GetPlaytimeHourMin())
+    playtimelabel:SetPos(200, 0)
+    playtimelabel:SizeToContents()
 
     return stats
 end

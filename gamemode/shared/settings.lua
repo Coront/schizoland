@@ -7,6 +7,7 @@ SET.MinNameLength = 3 --Minimal length of a players name.
 SET.BankWeight = 1000 --Maximum weight a player's bank can hold.
 SET.BaseLevelExperience = 25 --The base experience required to level up.
 SET.LevelExperiencePower = 2 --The power that multiplies experience required to level up.
+SET.SkillExperiencePower = 2 --The power that multiplies experience required to level up for skills.
 SET.MaxLevel = 150 --Max level of characters.
 SET.SelectableModels = {
     --All of the models in here are models that the player is allowed to select during character creation.

@@ -44,10 +44,10 @@ function PlayerMeta:UseItem( item )
         --self:GiveStatus( use.stat )
     end
     if use.sound then
-        self:EmitSound( use.sound )
+        self:EmitSound( use.sound, 40 )
     end
     if use.soundcs then
-        self:SendLua( "surface.PlaySound('" .. use.soundcs .. "')" )
+        self:SendLua( "LocalPlayer():EmitSound('" .. use.soundcs .. "', 40)" )
     end
     if use.func then
         use.func()
