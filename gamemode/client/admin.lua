@@ -1,5 +1,5 @@
 function ItemMenu()
-    --if not LocalPlayer():IsAdmin() then LocalPlayer():ChatPrint("You are not an admin!") return end
+    if not LocalPlayer():IsAdmin() then LocalPlayer():ChatPrint("You are not an admin!") return end
     if IsValid(frame_itemmenu) then frame_itemmenu:Close() end
 
     frame_itemmenu = vgui.Create("DFrame")

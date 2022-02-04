@@ -14,6 +14,7 @@ if SERVER then
         local stats = sql.Query("SELECT * FROM as_characters_stats WHERE pid = " .. self.pid)[1]
         local skills = util.JSONToTable(sql.QueryValue("SELECT skills FROM as_characters_skills WHERE pid = " .. self.pid)) or {}
         local inv = util.JSONToTable(sql.QueryValue("SELECT inv FROM as_characters_inventory WHERE pid = " .. self.pid)) or {}
+        local bank = util.JSONToTable(sql.QueryValue("SELECT bank FROM as_characters_inventory WHERE pid = " .. self.pid)) or {}
         self:Spawn()
 
         self:SetNW2String( "as_name", name ) --Temp, will find a simpler solution.
@@ -26,8 +27,10 @@ if SERVER then
         self:SetThirst(stats.thirst)
         self:SetSkills(skills)
         self:SetInventory(inv)
+        self:SetBank(bank)
         self:SetPlaytime(stats.playtime)
         self:ValidateInventory()
+        self:ValidateStorage()
 
         net.Start("as_characters_syncdata")
             net.WriteString(self.name)

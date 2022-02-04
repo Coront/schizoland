@@ -10,7 +10,7 @@ function PlayerMeta:ValidateInventory() --This function will cycle through a pla
     end
     self:SetInventory( inv )
 
-    if #invaliditems > 1 then
+    if #invaliditems > 0 then
         self:ChatPrint("Invalid items have been detected in your inventory, and have been cleared:")
         for k, v in pairs(invaliditems) do
             self:ChatPrint(k .. "(x" .. v .. ")")
@@ -82,7 +82,6 @@ end
 -- ╚═╝  ╚═══╝╚══════╝   ╚═╝    ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝ ╚═════╝
 -- To quickly explain, I run net messages through 2 functions. The receiver function is used to verify information, and then the actual function is to do the things I want it to do.
 
-util.AddNetworkString("as_inventory_validate")
 util.AddNetworkString("as_inventory_useitem")
 util.AddNetworkString("as_inventory_dropitem")
 util.AddNetworkString("as_inventory_destroyitem")

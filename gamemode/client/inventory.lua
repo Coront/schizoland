@@ -33,8 +33,6 @@ end
 
 AS.Inventory = {}
 
-InventoryOpen = false
-
 -- ███╗   ███╗███████╗███╗   ██╗██╗   ██╗
 -- ████╗ ████║██╔════╝████╗  ██║██║   ██║
 -- ██╔████╔██║█████╗  ██╔██╗ ██║██║   ██║
@@ -111,12 +109,12 @@ function AS.Inventory.BuildInventory()
         surface.DrawRect(0, 0, w, h)
     end
 
-    local weight = vgui.Create("DLabel", scroll_items)
-    weight:SetFont("TargetID")
-    weight:SetText( "Weight: " .. LocalPlayer():GetCarryWeight() .. " / " .. LocalPlayer():MaxCarryWeight() )
-    weight:SetContentAlignment( 3 )
-    weight:SizeToContents()
-    weight:SetPos( 5, 3 )
+    local weightlbl = vgui.Create("DLabel", scroll_items)
+    weightlbl:SetFont("TargetID")
+    weightlbl:SetText( "Weight: " .. LocalPlayer():GetCarryWeight() .. " / " .. LocalPlayer():MaxCarryWeight() )
+    weightlbl:SetContentAlignment( 3 )
+    weightlbl:SizeToContents()
+    weightlbl:SetPos( 5, 3 )
 
     local itemlist = vgui.Create("DIconLayout", scroll_items)
     itemlist:SetPos( 5, 25 )
@@ -148,10 +146,12 @@ function AS.Inventory.BuildInventory()
             if LocalPlayer():GetInventory()[k] then
                 itemamt:SetText( LocalPlayer():GetInventory()[k] )
                 itemamt:SizeToContents()
-                weight:SetText( "Weight: " .. LocalPlayer():GetCarryWeight() .. " / " .. LocalPlayer():MaxCarryWeight() )
-                weight:SizeToContents()
+                weightlbl:SetText( "Weight: " .. LocalPlayer():GetCarryWeight() .. " / " .. LocalPlayer():MaxCarryWeight() )
+                weightlbl:SizeToContents()
             else
                 panel:Remove()
+                weightlbl:SetText( "Weight: " .. LocalPlayer():GetCarryWeight() .. " / " .. LocalPlayer():MaxCarryWeight() )
+                weightlbl:SizeToContents()
             end
         end
 

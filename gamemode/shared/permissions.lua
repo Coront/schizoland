@@ -7,7 +7,7 @@
 -- Desc: I usually throw base permissions in here.
 
 function GM:PlayerNoClip( ply, state )
-    return true--if ply:IsAdmin() then return true else return false end
+    if ply:IsAdmin() then return true else return false end
 end
 
 function GM:PlayerCanSeePlayersChat( text, team, listener, speaker )

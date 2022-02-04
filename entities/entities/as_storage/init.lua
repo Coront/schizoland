@@ -2,6 +2,8 @@ AddCSLuaFile( "shared.lua" )
 AddCSLuaFile( "cl_init.lua" )
 include( "shared.lua" )
 
+util.AddNetworkString( "as_storage_open" )
+
 function ENT:Initialize()
 	self:SetModel( "models/Items/ammocrate_ar2.mdl" )
 	self:PhysicsInit( SOLID_VPHYSICS )
@@ -11,5 +13,6 @@ function ENT:Initialize()
 end
 
 function ENT:Use( ply )
-    ply:ChatPrint("test")
+    net.Start( "as_storage_open" )
+	net.Send( ply )
 end
