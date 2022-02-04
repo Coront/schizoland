@@ -58,6 +58,16 @@ function PlayerMeta:MaxBankWeight()
     return SET.BankWeight
 end
 
+function PlayerMeta:CanStoreItem( item, amt )
+    if self:GetBankWeight() + (AS.Items[item].weight * amt) > self:MaxBankWeight() then return false end
+    return true
+end
+
+function PlayerMeta:CanWithdrawItem( item, amt )
+    if self:GetCarryWeight() + (AS.Items[item].weight * amt) > self:MaxCarryWeight() then return false end
+    return true
+end
+
 -- ███╗   ██╗███████╗████████╗██╗    ██╗ ██████╗ ██████╗ ██╗  ██╗██╗███╗   ██╗ ██████╗
 -- ████╗  ██║██╔════╝╚══██╔══╝██║    ██║██╔═══██╗██╔══██╗██║ ██╔╝██║████╗  ██║██╔════╝
 -- ██╔██╗ ██║█████╗     ██║   ██║ █╗ ██║██║   ██║██████╔╝█████╔╝ ██║██╔██╗ ██║██║  ███╗

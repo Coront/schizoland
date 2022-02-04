@@ -44,6 +44,11 @@ function PlayerMeta:MaxCarryWeight()
     return SKL.DefaultCarryWeight
 end
 
+function PlayerMeta:CanCarryItem( item, amt )
+    if self:GetCarryWeight() + (AS.Items[item].weight * amt) > self:MaxCarryWeight() then return false end
+    return true
+end
+
 -- ███╗   ██╗███████╗████████╗██╗    ██╗ ██████╗ ██████╗ ██╗  ██╗██╗███╗   ██╗ ██████╗
 -- ████╗  ██║██╔════╝╚══██╔══╝██║    ██║██╔═══██╗██╔══██╗██║ ██╔╝██║████╗  ██║██╔════╝
 -- ██╔██╗ ██║█████╗     ██║   ██║ █╗ ██║██║   ██║██████╔╝█████╔╝ ██║██╔██╗ ██║██║  ███╗

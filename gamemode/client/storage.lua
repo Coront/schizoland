@@ -2,6 +2,7 @@ AS.Storage = {}
 
 function AS.Storage.Menu()
     if IsValid(frame_storage) then frame_storage:Close() end
+    LocalPlayer():EmitSound(STORAGECUE.OPEN)
 
     frame_storage = vgui.Create("DFrame")
     frame_storage:SetSize(800, 600)
@@ -25,6 +26,7 @@ function AS.Storage.Menu()
     closebutton.DoClick = function()
         if IsValid(frame_storage) then
             frame_storage:Close()
+            LocalPlayer():EmitSound(STORAGECUE.CLOSE)
         end
     end
 
@@ -164,9 +166,13 @@ function AS.Storage.BuildInventory()
         end
 
         panel.DoClick = function( self )
+            if not LocalPlayer():CanStoreItem( k, v ) then LocalPlayer():ChatPrint("You storage is too full to deposit this item.") return end
+
             LocalPlayer():DepositItem( k, v )
             self:Remove()
             itemamtUpdate()
+            LocalPlayer():EmitSound(STORAGECUE.TRANSFER)
+
             storageitemlist:Clear()
             AS.Storage.BuildStorage()
 
@@ -245,9 +251,13 @@ function AS.Storage.BuildStorage()
         end
 
         panel.DoClick = function( self )
+            if not LocalPlayer():CanWithdrawItem( k, v ) then LocalPlayer():ChatPrint("You are too overweight to withdraw this item.") return end
+
             LocalPlayer():WithdrawItem( k, v )
             self:Remove()
             itemamtUpdate()
+            LocalPlayer():EmitSound(STORAGECUE.TRANSFER)
+
             inventoryitemlist:Clear()
             AS.Storage.BuildInventory()
 

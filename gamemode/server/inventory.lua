@@ -64,14 +64,14 @@ function PlayerMeta:DropItem( item, amt )
     ent:Spawn()
     ent:PhysWake()
     self:ChatPrint("Dropped " .. itemname .. " (x" .. amt .. ")")
-    ent:EmitSound("items/ammo_pickup.wav")
+    ent:EmitSound(CUE.ITEM.DROP)
 end
 
 function PlayerMeta:DestroyItem( item, amt )
     local itemname = AS.Items[item].name
     self:TakeItemFromInventory( item, amt )
     self:ChatPrint("Destroyed " .. itemname .. " (x" .. amt .. ")")
-    self:EmitSound("physics/cardboard/cardboard_box_break1.wav")
+    self:EmitSound(CUE.ITEM.DESTROY)
 end
 
 -- ███╗   ██╗███████╗████████╗██╗    ██╗ ██████╗ ██████╗ ██╗  ██╗██╗███╗   ██╗ ██████╗

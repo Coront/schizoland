@@ -68,6 +68,21 @@ for k, v in pairs( AS.FileIncludes ) do
     end
 end
 
+AS.SoundCues = {}
+CUE = AS.SoundCues
+
+CUE.ITEM = {}
+ITEMCUE = CUE.ITEM
+ITEMCUE.EQUIPARMOR = ""
+ITEMCUE.DROP = "items/ammo_pickup.wav"
+ITEMCUE.DESTROY = "physics/cardboard/cardboard_box_break1.wav"
+
+CUE.STORAGE = {}
+STORAGECUE = CUE.STORAGE
+STORAGECUE.TRANSFER = "physics/body/body_medium_impact_soft1.wav"
+STORAGECUE.OPEN = "items/ammocrate_open.wav"
+STORAGECUE.CLOSE = "items/ammocrate_close.wav"
+
 function AS.LuaError( message )
     ErrorNoHaltWithStack( "[AS] Error: " .. message .. "\n" )
 end

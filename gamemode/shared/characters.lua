@@ -39,6 +39,7 @@ if SERVER then
             net.WriteInt(self:GetThirst(), 32)
             net.WriteInt(self:GetPlaytime(), 32)
             net.WriteTable(self:GetInventory())
+            net.WriteTable(self:GetBank())
             net.WriteTable(self:GetSkills())
         net.Send(self)
     end
@@ -54,6 +55,7 @@ elseif CLIENT then
         ply:SetThirst(net.ReadInt(32))
         ply:SetPlaytime(net.ReadInt(32))
         ply:SetInventory(net.ReadTable())
+        ply:SetBank(net.ReadTable())
         ply:SetSkills(net.ReadTable())
     end
     net.Receive("as_characters_syncdata", LoadCharacter)

@@ -5,10 +5,10 @@ function PlayerMeta:ValidateStorage() --This function will cycle through a playe
     for k, v in pairs(storage) do
         if not AS.Items[k] then
             invaliditems[k] = v
-            inv[k] = nil
+            storage[k] = nil
         end
     end
-    self:SetBank( inv )
+    self:SetBank( storage )
 
     if #invaliditems > 0 then
         self:ChatPrint("Invalid items have been detected in your stash, and have been cleared:")
