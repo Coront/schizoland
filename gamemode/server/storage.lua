@@ -39,6 +39,7 @@ net.Receive( "as_storage_tostore", function( _, ply )
     local inv = ply:GetInventory()
     if amt > inv[item] then amt = inv[item] end --Person might try higher numbers than what they actually have
     amt = math.Round(amt) --Person might try decimals
+    ply:CanStoreItem( item, amt ) --This is just some default checks, like do they have enough room in their storage.
 
     --Everything is verified, we'll run the function.
     ply:DepositItem( item, amt )
@@ -55,6 +56,7 @@ net.Receive( "as_storage_toinventory", function( _, ply )
     local bank = ply:GetBank()
     if amt > bank[item] then amt = bank[item] end --Person might try higher numbers than what they actually have
     amt = math.Round(amt) --Person might try decimals
+    ply:CanWithdrawItem( item, amt )
 
     --It's all verified.
     ply:WithdrawItem( item, amt )
