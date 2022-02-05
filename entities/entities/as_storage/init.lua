@@ -14,5 +14,6 @@ end
 
 function ENT:Use( ply )
     net.Start( "as_storage_open" )
+		net.WriteEntity(self)
 	net.Send( ply )
 end

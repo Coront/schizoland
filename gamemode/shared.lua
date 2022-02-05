@@ -73,6 +73,14 @@ end
 AS.SoundCues = {}
 CUE = AS.SoundCues
 
+CUE.UI = {}
+UICUE = CUE.UI
+UICUE.PRESS = "ui/buttonclick.wav"
+UICUE.HOVER = "ui/buttonrollover.wav"
+UICUE.ACCEPT = "buttons/button15.wav"
+UICUE.DECLINE = "buttons/button16.wav"
+UICUE.SELECT = "buttons/lightswitch2.wav"
+
 CUE.ITEM = {}
 ITEMCUE = CUE.ITEM
 ITEMCUE.EQUIPARMOR = ""

@@ -49,7 +49,7 @@ end
 function PlayerMeta:GetBankWeight()
     local weight = 0
     for k, v in pairs(self:GetBank()) do
-        weight = weight + (AS.Items[k].weight or 1) 
+        weight = weight + ((AS.Items[k].weight or 1) * v)
     end
     return weight
 end
@@ -59,12 +59,12 @@ function PlayerMeta:MaxBankWeight()
 end
 
 function PlayerMeta:CanStoreItem( item, amt )
-    if self:GetBankWeight() + (AS.Items[item].weight * amt) > self:MaxBankWeight() then return false end
+    if self:GetBankWeight() + (AS.Items[item].weight * amt) >= self:MaxBankWeight() then self:ChatPrint("Your storage is too full to hold this.") return false end
     return true
 end
 
 function PlayerMeta:CanWithdrawItem( item, amt )
-    if self:GetCarryWeight() + (AS.Items[item].weight * amt) > self:MaxCarryWeight() then return false end
+    if self:GetCarryWeight() + (AS.Items[item].weight * amt) > self:MaxCarryWeight() then self:ChatPrint("You are too overweight to withdraw this.") return false end
     return true
 end
 

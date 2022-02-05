@@ -42,16 +42,16 @@ end
 ]]
 
 function ENT:Use( ply )
-	if ply:CanCarryItem( self:GetItem(), self:GetAmount() ) then
-		self:Remove()
-		self:EmitSound("physics/body/body_medium_impact_soft1.wav")
-		ply:AddItemToInventory( self:GetItem(), self:GetAmount() )
+	if not ply:CanCarryItem( self:GetItem(), self:GetAmount() ) then return end
 
-		net.Start("as_item_pickup")
-			net.WriteString( self:GetItem() )
-			net.WriteInt( self:GetAmount(), 32 )
-		net.Send(ply)
-	end
+	self:Remove()
+	self:EmitSound("physics/body/body_medium_impact_soft1.wav")
+	ply:AddItemToInventory( self:GetItem(), self:GetAmount() )
+
+	net.Start("as_item_pickup")
+		net.WriteString( self:GetItem() )
+		net.WriteInt( self:GetAmount(), 32 )
+	net.Send(ply)
 end
 
 function ENT:Think()

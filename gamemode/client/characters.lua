@@ -59,7 +59,7 @@ function AS.CharacterSelect.NewCharacter( new )
     frame_newcharacter:SetTitle( "" )
     frame_newcharacter:ShowCloseButton( false )
     frame_newcharacter.Paint = function(_,w,h)
-        surface.SetDrawColor( COLHUD_DEFAULT )
+        surface.SetDrawColor( COLHUD_PRIMARY )
         surface.DrawRect( 0, 0, w, h )
     end
 
@@ -67,8 +67,7 @@ function AS.CharacterSelect.NewCharacter( new )
     scroll:SetPos(10, 10)
     scroll:SetSize(frame_characters:GetWide() - 20, frame_characters:GetTall() - 125)
     scroll.Paint = function(_,w,h)
-        local col = COLHUD_DEFAULT:ToTable()
-        surface.SetDrawColor(col[1] - 50, col[2] - 50, col[3] - 50, 255)
+        surface.SetDrawColor( COLHUD_SECONDARY )
         surface.DrawRect(0, 0, w, h)
     end
 
@@ -158,8 +157,7 @@ The following features will be disabled while active:
         net.SendToServer()
     end
     button.Paint = function(_, w, h)
-        local col = COLHUD_DEFAULT:ToTable()
-        surface.SetDrawColor(col[1] - 50, col[2] - 50, col[3] - 50, 255)
+        surface.SetDrawColor( COLHUD_SECONDARY )
         surface.DrawRect( 0, 0, w, h )
     end
     button.Think = function()
@@ -233,6 +231,7 @@ function AS.CharacterSelect.BuildCharacters( characters, chardata )
         end
         function panel:DoClick()
             selectedChar = v.pid
+            surface.PlaySound(UICUE.SELECT)
         end
 
         CharacterIcon( v.model, 5, 5, 75, 75, panel, function() panel.DoClick() end)
@@ -260,7 +259,12 @@ function AS.CharacterSelect.BuildCharacters( characters, chardata )
         local playtime = vgui.Create("DLabel", panel)
         playtime:SetPos( 85, 60 )
         playtime:SetFont("AftershockText")
-        playtime:SetText("Playtime: N/A")
+        local pt = chardata[v.pid] and chardata[v.pid].playtime or "char?playtime"
+        if pt == "NULL" then
+            playtime:SetText("Playtime: None")
+        else
+            playtime:SetText("Playtime: " .. GetPlaytimeHourMin( pt ) )
+        end
         playtime:SizeToContents()
     end
 end
@@ -299,7 +303,7 @@ function AS.CharacterSelect.BuildButtons(characters)
             net.SendToServer()
             frame_characters:Close()
             Character:Remove()
-        end)
+        end, true)
     end)
 end
 

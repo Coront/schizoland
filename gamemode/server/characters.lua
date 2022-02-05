@@ -23,7 +23,7 @@ function PlayerMeta:CreateCharacter( name, model )
     local newpid = tonumber(sql.Query("SELECT pid FROM as_characters")[#pids]["pid"])
     sql.Query( "INSERT INTO as_characters_inventory VALUES ( " .. newpid .. ", NULL, NULL )" )
     sql.Query( "INSERT INTO as_characters_skills VALUES ( " .. newpid .. ", NULL )" )
-    sql.Query( "INSERT INTO as_characters_stats VALUES ( " .. newpid .. ", " .. SKL.Health .. ", 100, 100, 0 )" )
+    sql.Query( "INSERT INTO as_characters_stats VALUES ( " .. newpid .. ", " .. SKL.Health .. ", 100, 100, 0, 0 )" )
 
     self:ConCommand("as_characters")
 end
@@ -67,6 +67,7 @@ function RequestCharacters(len, ply)
             stats[v.pid] = {}
             stats[v.pid].health = sql.QueryValue( "SELECT health FROM as_characters_stats WHERE pid = " .. SQLStr(v.pid) )
             stats[v.pid].exp = sql.QueryValue( "SELECT exp FROM as_characters_stats WHERE pid = " .. SQLStr(v.pid) )
+            stats[v.pid].playtime = sql.QueryValue( "SELECT playtime FROM as_characters_stats WHERE pid = " .. SQLStr(v.pid) )
         end
 
         net.WriteBit( true )

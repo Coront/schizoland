@@ -45,7 +45,7 @@ function PlayerMeta:MaxCarryWeight()
 end
 
 function PlayerMeta:CanCarryItem( item, amt )
-    if self:GetCarryWeight() + (AS.Items[item].weight * amt) > self:MaxCarryWeight() then return false end
+    if self:GetCarryWeight() + (AS.Items[item].weight * amt) > self:MaxCarryWeight() then self:ChatPrint("You are too overweight to carry this.") return false end
     return true
 end
 

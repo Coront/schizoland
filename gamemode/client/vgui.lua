@@ -6,9 +6,10 @@ function MainMenuButton( text, x, y, width, height, parent, callback )
     button:SetText( text )
     button:SetColor( COLHUD_SECONDARY )
     button.DoClick = function()
-        surface.PlaySound("buttons/button15.wav")
+        surface.PlaySound( UICUE.PRESS )
         callback()
     end
+    button.HoveredOnce = false
     button.Paint = function(self, w, h)
         local thickness = 1
         local gap = 1
@@ -16,7 +17,14 @@ function MainMenuButton( text, x, y, width, height, parent, callback )
         surface.DrawOutlinedRect( 0, 0, w, h, thickness)
         if self:IsHovered() then
             surface.SetDrawColor( COLHUD_TERTIARY )
+            if not self.HoveredOnce then
+                surface.PlaySound( UICUE.HOVER )
+                self.HoveredOnce = true
+            end
         else
+            if self.HoveredOnce then
+                self.HoveredOnce = false
+            end
             surface.SetDrawColor( COLHUD_DEFAULT )
         end
         surface.DrawRect( thickness + gap, thickness + gap, w - ((thickness + gap) * 2), h - ((thickness + gap) * 2) )
@@ -75,14 +83,14 @@ function SmallLabel( text, x, y, parent )
     label:SizeToContents()
 end
 
-function ValueSlider( text, x, y, min, max, parent, convar, color )
+function ValueSlider( text, x, y, min, max, parent, convar, color, decimals )
     local slider = vgui.Create("DNumSlider", parent)
     slider:SetPos( x, y )
     slider:SetSize( 300, 15 )
     slider:SetText("")
     slider:SetMin(min)
     slider:SetMax(max)
-    slider:SetDecimals( 0 )
+    slider:SetDecimals( decimals and 1 or 0 )
     slider:SetConVar( convar )
 
     local label = vgui.Create("DLabel", parent)

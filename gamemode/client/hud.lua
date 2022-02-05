@@ -36,6 +36,16 @@ CreateClientConVar( "as_hud_satiationbars_height", "10", true, false ) --Height
 -- Player Info
 CreateClientConVar( "as_hud_playerinfo", "1", true, false )
 
+-- Connection Information
+CreateClientConVar( "as_connectioninfo", "1", true, false ) --Show connection information?
+CreateClientConVar( "as_connectioninfo_update", "1", true, false ) --How fast should information update?
+CreateClientConVar( "as_connectioninfo_ping", "1", true, false ) --Show ping?
+CreateClientConVar( "as_connectioninfo_ping_warning", "1", true, false ) --Only show ping when spiking?
+CreateClientConVar( "as_connectioninfo_ping_warning_amt", "140", true, false ) --Above what ping is considered spiking?
+CreateClientConVar( "as_connectioninfo_fps", "1", true, false ) --Show framerate?
+CreateClientConVar( "as_connectioninfo_fps_warning", "1", true, false ) --Only show fps when dropping?
+CreateClientConVar( "as_connectioninfo_fps_warning_amt", "40", true, false ) --Below what rate is considered dropping?
+
 function AftershockHUD()
     local ply = LocalPlayer()
 
@@ -146,6 +156,46 @@ function AftershockHUD()
     end
 end
 
+function ConnectionInformation()
+    if CurTime() > (NextConnectionUpdate or 0) then
+        LastFrameTime = FrameTime()
+        LastPing = LocalPlayer():Ping()
+
+        NextConnectionUpdate = CurTime() + GetConVar("as_connectioninfo_update"):GetFloat()
+    end
+
+    local ypos = 0
+    local function addYspace()
+        ypos = ypos + 16
+    end
+    --Ping
+    if tobool(GetConVar("as_connectioninfo_ping"):GetInt()) then
+        local ping = LastPing
+        if not tobool(GetConVar("as_connectioninfo_ping_warning"):GetInt()) or tobool(GetConVar("as_connectioninfo_ping_warning"):GetInt()) and ping >= GetConVar("as_connectioninfo_ping_warning_amt"):GetInt() then
+            local pingicon = Material("icon16/feed.png")
+            local pingcolor = ping < GetConVar("as_connectioninfo_ping_warning_amt"):GetInt() and COLHUD_GOOD or COLHUD_BAD
+            surface.SetMaterial( pingicon )
+            surface.SetDrawColor( 255, 255, 255, 255 )
+            surface.DrawTexturedRect( 1, ypos + 1, 16, 16 )
+            draw.SimpleTextOutlined( ping, "TargetID", 20, ypos, pingcolor, TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP, 1, Color(0,0,0) )
+            addYspace()
+        end
+    end
+    --FPS
+    if tobool(GetConVar("as_connectioninfo_fps"):GetInt()) then
+        local fps = math.Round( 1 / (LastFrameTime or 1) )
+        if not tobool(GetConVar("as_connectioninfo_fps_warning"):GetInt()) or tobool(GetConVar("as_connectioninfo_fps_warning"):GetInt()) and fps <= GetConVar("as_connectioninfo_fps_warning_amt"):GetInt() then
+            local fpsicon = Material("icon16/monitor.png")
+            local fpscolor = fps > GetConVar("as_connectioninfo_fps_warning_amt"):GetInt() and COLHUD_GOOD or COLHUD_BAD
+            surface.SetMaterial( fpsicon )
+            surface.SetDrawColor( 255, 255, 255, 255 )
+            surface.DrawTexturedRect( 1, ypos + 1, 16, 16 )
+            draw.SimpleTextOutlined( fps, "TargetID", 20, ypos, fpscolor, TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP, 1, Color(0,0,0) )
+            addYspace()
+        end
+    end
+end
+
 function GM:HUDShouldDraw( type )
     local hideHud = {
         ["CHudAmmo"] = true,
@@ -192,7 +242,12 @@ function GM:HUDPaint()
     COLHUD_GOOD = Color(GetConVar("as_hud_color_good_r"):GetInt(), GetConVar("as_hud_color_good_g"):GetInt(), GetConVar("as_hud_color_good_b"):GetInt(), 255)
     COLHUD_BAD = Color(GetConVar("as_hud_color_bad_r"):GetInt(), GetConVar("as_hud_color_bad_g"):GetInt(), GetConVar("as_hud_color_bad_b"):GetInt(), 255)
 
+    if tobool(GetConVar("as_connectioninfo"):GetInt()) then
+        ConnectionInformation()
+    end
+
     if tobool(GetConVar("as_hud"):GetInt()) then
         AftershockHUD()
     end
+
 end

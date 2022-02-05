@@ -3,5 +3,5 @@ AS.AddBaseItem("armor_makeshift", {
     desc = "Some old clothes sewed together. Hopefully it helps protect you.",
     model = "models/props_junk/Shoe001a.mdl",
     value = 50,
-    weight = 20,
+    weight = 2,
 })

@@ -1,8 +1,12 @@
 AS.Storage = {}
 
+local ent
+
 function AS.Storage.Menu()
+    ent = net.ReadEntity()
+
     if IsValid(frame_storage) then frame_storage:Close() end
-    LocalPlayer():EmitSound(STORAGECUE.OPEN)
+    ent:EmitSound(STORAGECUE.OPEN)
 
     frame_storage = vgui.Create("DFrame")
     frame_storage:SetSize(800, 600)
@@ -26,7 +30,7 @@ function AS.Storage.Menu()
     closebutton.DoClick = function()
         if IsValid(frame_storage) then
             frame_storage:Close()
-            LocalPlayer():EmitSound(STORAGECUE.CLOSE)
+            ent:EmitSound(STORAGECUE.CLOSE)
         end
     end
 
@@ -165,24 +169,42 @@ function AS.Storage.BuildInventory()
             end
         end
 
-        panel.DoClick = function( self )
-            if not LocalPlayer():CanStoreItem( k, v ) then LocalPlayer():ChatPrint("You storage is too full to deposit this item.") return end
-
-            LocalPlayer():DepositItem( k, v )
-            self:Remove()
+        local function depositItem( item, amt )
+            LocalPlayer():DepositItem( item, amt )
             itemamtUpdate()
-            LocalPlayer():EmitSound(STORAGECUE.TRANSFER)
+            surface.PlaySound(STORAGECUE.TRANSFER)
 
             storageitemlist:Clear()
             AS.Storage.BuildStorage()
 
             net.Start("as_storage_tostore")
-                net.WriteString( k )
-                net.WriteInt( v, 32 )
+                net.WriteString( item )
+                net.WriteInt( amt, 32 )
+                net.WriteEntity( ent )
             net.SendToServer()
         end
+
+        panel.DoClick = function( self )
+            if not LocalPlayer():CanStoreItem( k, v ) then surface.PlaySound( UICUE.DECLINE ) return end
+            depositItem( k, v )
+        end
         panel.DoRightClick = function( self )
-            LocalPlayer():ChatPrint( "deposititem = x" )
+            local options = vgui.Create("DMenu")
+            if v > 1 then
+                options:AddOption("Deposit 1", function()
+                    depositItem( k, 1 )
+                end)
+                options:AddOption("Deposit X", function()
+                    VerifySlider( v, function( amt )
+                        if not LocalPlayer():CanStoreItem( k, amt ) then surface.PlaySound( UICUE.DECLINE ) return end
+                        depositItem( k, amt )
+                    end )
+                end)
+            end
+            options:AddOption("Deposit All", function()
+                depositItem( k, v )
+            end)
+            options:Open()
         end
     end
 end
@@ -234,8 +256,8 @@ function AS.Storage.BuildStorage()
         itemamt:SetPos( (panel:GetWide() - itemamt:GetWide()) - 2, panel:GetTall() - itemamt:GetTall() )
 
         local function itemamtUpdate()
-            if LocalPlayer():GetInventory()[k] then
-                itemamt:SetText( LocalPlayer():GetInventory()[k] )
+            if LocalPlayer():GetBank()[k] then
+                itemamt:SetText( LocalPlayer():GetBank()[k] )
                 itemamt:SizeToContents()
                 weightlbl:SetText( "Weight: " .. LocalPlayer():GetCarryWeight() .. " / " .. LocalPlayer():MaxCarryWeight() )
                 weightlbl:SizeToContents()
@@ -250,24 +272,42 @@ function AS.Storage.BuildStorage()
             end
         end
 
-        panel.DoClick = function( self )
-            if not LocalPlayer():CanWithdrawItem( k, v ) then LocalPlayer():ChatPrint("You are too overweight to withdraw this item.") return end
-
-            LocalPlayer():WithdrawItem( k, v )
-            self:Remove()
+        local function withdrawItem( item, amt )
+            LocalPlayer():WithdrawItem( item, amt )
             itemamtUpdate()
-            LocalPlayer():EmitSound(STORAGECUE.TRANSFER)
+            surface.PlaySound(STORAGECUE.TRANSFER)
 
             inventoryitemlist:Clear()
             AS.Storage.BuildInventory()
 
             net.Start("as_storage_toinventory")
-                net.WriteString( k )
-                net.WriteInt( v, 32 )
+                net.WriteString( item )
+                net.WriteInt( amt, 32 )
+                net.WriteEntity( ent )
             net.SendToServer()
         end
+
+        panel.DoClick = function( self )
+            if not LocalPlayer():CanWithdrawItem( k, v ) then surface.PlaySound( UICUE.DECLINE ) return end
+            withdrawItem( k, v )
+        end
         panel.DoRightClick = function( self )
-            LocalPlayer():ChatPrint( "withdrawitem = x" )
+            local options = vgui.Create("DMenu")
+            if v > 1 then
+                options:AddOption("Withdraw 1", function()
+                    withdrawItem( k, 1 )
+                end)
+                options:AddOption("Withdraw X", function()
+                    VerifySlider( v, function( amt )
+                        if not LocalPlayer():CanWithdrawItem( k, amt ) then surface.PlaySound( UICUE.DECLINE ) return end
+                        withdrawItem( k, amt )
+                    end )
+                end)
+            end
+            options:AddOption("Withdraw All", function()
+                withdrawItem( k, v )
+            end)
+            options:Open()
         end
     end
 end

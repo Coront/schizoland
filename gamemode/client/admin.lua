@@ -47,12 +47,20 @@ function ItemMenu()
             local value = v.value or "value?" .. k
             local weight = v.weight or "weight?" .. k
             panel:SetTooltip(name .. "\n" .. desc .. "\nValue: " .. value .. "\nWeight: " .. weight)
-            panel.DoClick = function()
+            local function giveItem( item, amt )
+                LocalPlayer():AddItemToInventory( item, amt )
                 net.Start("as_admin_spawnitem")
-                    net.WriteString(k)
-                    net.WriteInt( 1, 32 )
+                    net.WriteString(item)
+                    net.WriteInt( amt, 32 )
                 net.SendToServer()
-                LocalPlayer():AddItemToInventory( k, 1 )
+            end
+            panel.DoClick = function()
+                giveItem( k, 1 )
+            end
+            panel.DoRightClick = function()
+                VerifySlider( 1000, function( amt ) 
+                    giveItem( k, amt )
+                end )
             end
             panel.Paint = function(self,w,h)
                 if v.color then

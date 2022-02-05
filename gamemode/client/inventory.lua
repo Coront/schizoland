@@ -144,14 +144,18 @@ function AS.Inventory.BuildInventory()
         itemamt:SetPos( (panel:GetWide() - itemamt:GetWide()) - 2, panel:GetTall() - itemamt:GetTall() )
         local function itemamtUpdate()
             if LocalPlayer():GetInventory()[k] then
-                itemamt:SetText( LocalPlayer():GetInventory()[k] )
-                itemamt:SizeToContents()
-                weightlbl:SetText( "Weight: " .. LocalPlayer():GetCarryWeight() .. " / " .. LocalPlayer():MaxCarryWeight() )
-                weightlbl:SizeToContents()
+                if IsValid( itemamt ) and IsValid( weightlbl ) then
+                    itemamt:SetText( LocalPlayer():GetInventory()[k] )
+                    itemamt:SizeToContents()
+                    weightlbl:SetText( "Weight: " .. LocalPlayer():GetCarryWeight() .. " / " .. LocalPlayer():MaxCarryWeight() )
+                    weightlbl:SizeToContents()
+                end
             else
-                panel:Remove()
-                weightlbl:SetText( "Weight: " .. LocalPlayer():GetCarryWeight() .. " / " .. LocalPlayer():MaxCarryWeight() )
-                weightlbl:SizeToContents()
+                if IsValid( panel ) and IsValid( weightlbl ) then
+                    panel:Remove()
+                    weightlbl:SetText( "Weight: " .. LocalPlayer():GetCarryWeight() .. " / " .. LocalPlayer():MaxCarryWeight() )
+                    weightlbl:SizeToContents()
+                end
             end
         end
 
@@ -188,12 +192,16 @@ function AS.Inventory.BuildInventory()
                     net.WriteInt( amt, 32 )
                 net.SendToServer()
             end
-            options:AddOption("Drop 1", function()
-                dropItem( k, 1 )
-            end)
-            options:AddOption("Drop X", function()
-                LocalPlayer():ChatPrint("droppeditem = x")
-            end)
+            if v > 1 then
+                options:AddOption("Drop 1", function()
+                    dropItem( k, 1 )
+                end)
+                options:AddOption("Drop X", function()
+                    VerifySlider( v, function( amt )
+                        dropItem( k, amt )
+                    end )
+                end)
+            end
             options:AddOption("Drop All", function()
                 dropItem( k, v )
             end)
@@ -206,14 +214,22 @@ function AS.Inventory.BuildInventory()
                     net.WriteInt( amt, 32 )
                 net.SendToServer()
             end
-            options:AddOption("Destroy 1", function()
-                Verify( destroyItem )
-            end)
-            options:AddOption("Destroy X", function()
-                LocalPlayer():ChatPrint("destroyeditem = x")
-            end)
+            if v > 1 then
+                options:AddOption("Destroy 1", function()
+                    Verify( function() 
+                        destroyItem( k, 1 )
+                    end )
+                end)
+                options:AddOption("Destroy X", function()
+                    VerifySlider( v, function( amt )
+                        destroyItem( k, amt )
+                    end )
+                end)
+            end
             options:AddOption("Destroy All", function()
-                Verify( destroyItem )
+                Verify( function() 
+                    destroyItem( k, v )
+                end )
             end)
             options:Open()
             function options:Think()

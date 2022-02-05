@@ -63,6 +63,14 @@ function AS.Settings.BuildOptions()
 
     resetX()
 
+    SectionLabel( "Gameplay", xpos, ypos, settings_scroll )
+    addSpace( 0, 35 )
+
+    ToggleButton("Verify certain actions - Example: Destroying Items", xpos, ypos, settings_scroll, "as_gameplay_verify")
+    addSpace( 20, 20 )
+
+    resetX()
+
     SectionLabel( "HUD / VGUI", xpos, ypos, settings_scroll )
     addSpace( 0, 35 )
 
@@ -112,6 +120,30 @@ function AS.Settings.BuildOptions()
     addSpace( 0, 20 )
 
     ValueSlider( "Satiation Bars Height", xpos, ypos, 5, 50, settings_scroll, "as_hud_satiationbars_height" )
+    addSpace( -40, 20 )
+
+    ToggleButton("Enable Connection Information", xpos, ypos, settings_scroll, "as_connectioninfo")
+    addSpace( 20, 20 )
+
+    ValueSlider( "Update Rate", xpos, ypos, 0, 3, settings_scroll, "as_connectioninfo_update", nil, true )
+    addSpace( 0, 20 )
+
+    ToggleButton("Show Ping", xpos, ypos, settings_scroll, "as_connectioninfo_ping")
+    addSpace( 20, 20 )
+
+    ToggleButton("Only show Ping when spiking", xpos, ypos, settings_scroll, "as_connectioninfo_ping_warning")
+    addSpace( 0, 20 )
+
+    ValueSlider( "Spiking Ping", xpos, ypos, 30, 400, settings_scroll, "as_connectioninfo_ping_warning_amt" )
+    addSpace( -20, 20 )
+
+    ToggleButton("Show FPS", xpos, ypos, settings_scroll, "as_connectioninfo_fps")
+    addSpace( 20, 20 )
+
+    ToggleButton("Only show FPS when dropping", xpos, ypos, settings_scroll, "as_connectioninfo_fps_warning")
+    addSpace( 0, 20 )
+
+    ValueSlider( "Dropping FPS", xpos, ypos, 1, 200, settings_scroll, "as_connectioninfo_fps_warning_amt" )
     addSpace( 0, 20 )
 
     resetX()

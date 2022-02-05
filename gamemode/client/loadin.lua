@@ -2,6 +2,7 @@ AS.LoadIn = {}
 
 function AS.LoadIn.SpawnMenu()
     if IsValid(frame_spawnmenu) then frame_spawnmenu:Close() end
+    if IsValid(frame_characters) then print("What are you doing! There is no need for that! Just select your character and start playing!!!") return end
     if LocalPlayer():IsLoaded() then LocalPlayer():ChatPrint("You have already loaded a character. Relog to switch characters.") return end
     surface.PlaySound("buttons/button1.wav") --Just to notify the player that they have loaded into the server.
 

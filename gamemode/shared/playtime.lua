@@ -27,6 +27,19 @@ function PlayerMeta:GetPlaytimeHourMin() --Solely returns hours/minutes
     return hours .. ":" .. minutes
 end
 
+function GetPlaytimeHourMin( seconds ) --Will return hours/minutes based off an argument number (useful if you just want to convert to hours/minutes).
+    local minutes = math.floor( seconds / 60 )
+    local hours = math.floor( minutes / 60 )
+    minutes = minutes - (hours * 60)
+    if hours < 10 then
+        hours = 0 .. hours
+    end
+    if minutes < 10 then
+        minutes = 0 .. minutes
+    end
+    return hours .. ":" .. minutes
+end
+
 hook.Add( "Think", "AS_PlaytimeUpdate", function()
     for k, v in pairs(player.GetAll()) do
         if not v:IsLoaded() then continue end
