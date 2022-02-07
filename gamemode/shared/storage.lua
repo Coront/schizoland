@@ -59,7 +59,7 @@ function PlayerMeta:MaxBankWeight()
 end
 
 function PlayerMeta:CanStoreItem( item, amt )
-    if self:GetBankWeight() + (AS.Items[item].weight * amt) >= self:MaxBankWeight() then self:ChatPrint("Your storage is too full to hold this.") return false end
+    if self:GetBankWeight() + (AS.Items[item].weight * amt) > self:MaxBankWeight() then self:ChatPrint("Your storage is too full to hold this.") return false end
     return true
 end
 

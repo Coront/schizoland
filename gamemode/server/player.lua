@@ -6,6 +6,8 @@
 -- ╚═╝     ╚══════╝╚═╝  ╚═╝   ╚═╝   ╚══════╝╚═╝  ╚═╝
 -- Desc: Player functionality managed here, i.e. creating/loading information, etc.
 
+function GM:ShowSpare2( ply ) ply:ConCommand( "as_settings" ) end --Settings menu
+
 function GM:PlayerInitialSpawn( ply ) --Player's first spawn. 
     ply:SetNW2Bool( "as_spawned", false ) --Player just loaded in, they have not selected their profile yet.
     ply:ConCommand("as_spawnmenu")

@@ -156,6 +156,7 @@ function AS.Storage.BuildInventory()
             if LocalPlayer():GetInventory()[k] then
                 itemamt:SetText( LocalPlayer():GetInventory()[k] )
                 itemamt:SizeToContents()
+                itemamt:SetPos( (panel:GetWide() - itemamt:GetWide()) - 2, panel:GetTall() - itemamt:GetTall() )
                 weightlbl:SetText( "Weight: " .. LocalPlayer():GetCarryWeight() .. " / " .. LocalPlayer():MaxCarryWeight() )
                 weightlbl:SizeToContents()
                 bankweightlbl:SetText( "Weight: " .. LocalPlayer():GetBankWeight() .. " / " .. LocalPlayer():MaxBankWeight() )
@@ -185,8 +186,8 @@ function AS.Storage.BuildInventory()
         end
 
         panel.DoClick = function( self )
-            if not LocalPlayer():CanStoreItem( k, v ) then surface.PlaySound( UICUE.DECLINE ) return end
-            depositItem( k, v )
+            if not LocalPlayer():CanStoreItem( k, LocalPlayer():GetInventory()[k] ) then surface.PlaySound( UICUE.DECLINE ) return end
+            depositItem( k, LocalPlayer():GetInventory()[k] )
         end
         panel.DoRightClick = function( self )
             local options = vgui.Create("DMenu")
@@ -195,14 +196,14 @@ function AS.Storage.BuildInventory()
                     depositItem( k, 1 )
                 end)
                 options:AddOption("Deposit X", function()
-                    VerifySlider( v, function( amt )
+                    VerifySlider( LocalPlayer():GetInventory()[k], function( amt )
                         if not LocalPlayer():CanStoreItem( k, amt ) then surface.PlaySound( UICUE.DECLINE ) return end
                         depositItem( k, amt )
                     end )
                 end)
             end
             options:AddOption("Deposit All", function()
-                depositItem( k, v )
+                depositItem( k, LocalPlayer():GetInventory()[k] )
             end)
             options:Open()
         end
@@ -259,6 +260,7 @@ function AS.Storage.BuildStorage()
             if LocalPlayer():GetBank()[k] then
                 itemamt:SetText( LocalPlayer():GetBank()[k] )
                 itemamt:SizeToContents()
+                itemamt:SetPos( (panel:GetWide() - itemamt:GetWide()) - 2, panel:GetTall() - itemamt:GetTall() )
                 weightlbl:SetText( "Weight: " .. LocalPlayer():GetCarryWeight() .. " / " .. LocalPlayer():MaxCarryWeight() )
                 weightlbl:SizeToContents()
                 bankweightlbl:SetText( "Weight: " .. LocalPlayer():GetBankWeight() .. " / " .. LocalPlayer():MaxBankWeight() )
@@ -288,8 +290,8 @@ function AS.Storage.BuildStorage()
         end
 
         panel.DoClick = function( self )
-            if not LocalPlayer():CanWithdrawItem( k, v ) then surface.PlaySound( UICUE.DECLINE ) return end
-            withdrawItem( k, v )
+            if not LocalPlayer():CanWithdrawItem( k, LocalPlayer():GetBank()[k] ) then surface.PlaySound( UICUE.DECLINE ) return end
+            withdrawItem( k, LocalPlayer():GetBank()[k] )
         end
         panel.DoRightClick = function( self )
             local options = vgui.Create("DMenu")
@@ -298,14 +300,14 @@ function AS.Storage.BuildStorage()
                     withdrawItem( k, 1 )
                 end)
                 options:AddOption("Withdraw X", function()
-                    VerifySlider( v, function( amt )
+                    VerifySlider( LocalPlayer():GetBank()[k], function( amt )
                         if not LocalPlayer():CanWithdrawItem( k, amt ) then surface.PlaySound( UICUE.DECLINE ) return end
                         withdrawItem( k, amt )
                     end )
                 end)
             end
             options:AddOption("Withdraw All", function()
-                withdrawItem( k, v )
+                withdrawItem( k, LocalPlayer():GetBank()[k] )
             end)
             options:Open()
         end
