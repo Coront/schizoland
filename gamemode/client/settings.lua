@@ -67,7 +67,7 @@ function AS.Settings.BuildOptions()
     addSpace( 0, 35 )
 
     ToggleButton("Verify certain actions - Example: Destroying Items", xpos, ypos, settings_scroll, "as_gameplay_verify")
-    addSpace( 20, 20 )
+    addSpace( 0, 20 )
 
     resetX()
 
@@ -152,5 +152,25 @@ function AS.Settings.BuildOptions()
     addSpace( 0, 35 )
 
     ValueSlider( "Item Render Distance", xpos, ypos, 100, 1000, settings_scroll, "as_item_renderdist" )
+    addSpace( 0, 20 )
+
+    resetX()
+
+    SectionLabel( "Key Binds", xpos, ypos, settings_scroll )
+    addSpace( 0, 30 )
+
+    SmallLabel( "Left click the button to start a bind, press any button to\nset the bind. Press 'Escape' to cancel a bind.", xpos, ypos, settings_scroll )
+    addSpace( 0, 40 )
+
+    KeyBind( "Inventory", xpos, ypos, settings_scroll, "as_bind_inventory" )
+    addSpace( 0, 20 )
+
+    KeyBind( "Skills", xpos, ypos, settings_scroll, "as_bind_skills" )
+    addSpace( 0, 20 )
+
+    KeyBind( "Missions", xpos, ypos, settings_scroll, "as_bind_missions" )
+    addSpace( 0, 20 )
+
+    KeyBind( "Statistics", xpos, ypos, settings_scroll, "as_bind_stats" )
     addSpace( 0, 20 )
 end

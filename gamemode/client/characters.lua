@@ -86,10 +86,10 @@ function AS.CharacterSelect.NewCharacter( new )
     name:SetPos(scroll:GetWide() / 2 - name:GetWide() / 2, 50 )
 
     local nameinfo = scroll:Add("DLabel")
-    nameinfo:SetSize(400, 60)
+    nameinfo:SetSize(400, 70)
     nameinfo:SetPos(scroll:GetWide() / 2 - nameinfo:GetWide() / 2, 70 )
     nameinfo:SetWrap(true)
-    nameinfo:SetText("Your character name will be publicly displayed to other players. Your name is not allowed to contain any special characters or numbers. Please make sure your name is appropriate too. You can still change your name in the future, but will cost in-game currency.")
+    nameinfo:SetText("Remember that the name you enter will be displayed to other players on the game. This name cannot contain special characters or numbers. Please also make sure that your name is appropriate for everyone.\n\nYou will not be able to change your name freely.")
 
     local modellist = scroll:Add("DListView")
     modellist:SetSize(400, 150)
@@ -102,25 +102,26 @@ function AS.CharacterSelect.NewCharacter( new )
     local _, selectedModel = table.Random(SET.SelectableModels)
     function modellist:OnRowSelected( _, row )
         selectedModel = row:GetValue(1)
+        surface.PlaySound(UICUE.SELECT)
     end
 
     local modelinfo = scroll:Add("DLabel")
-    modelinfo:SetSize(400, 30)
-    modelinfo:SetPos(scroll:GetWide() / 2 - modelinfo:GetWide() / 2, 325 )
+    modelinfo:SetSize(400, 55)
+    modelinfo:SetPos(scroll:GetWide() / 2 - modelinfo:GetWide() / 2, 330 )
     modelinfo:SetWrap(true)
-    modelinfo:SetText("Your character model is how you will appear to other players. You can change your model in the future, but will also cost in-game currency.")
+    modelinfo:SetText("Your character model will be your physical appearance to other players on the game.\n\nYou will not be able to freely change your character model.")
 
     local tutorial = scroll:Add("DCheckBoxLabel")
-    tutorial:SetPos(scroll:GetWide() / 2 - tutorial:GetWide() / 2, 410)
-    tutorial:SetText("Enable Tutorial")
+    tutorial:SetText("Enable Tutorial (WIP)")
     tutorial:SizeToContents()
+    tutorial:SetPos((scroll:GetWide() / 2) - (tutorial:GetWide() / 2), 410)
 
     local tutorialinfo = scroll:Add("DLabel")
+    tutorialinfo:SetText("The tutorial offers to players an explaination on certain basics of the game. It is recommended to have this turned on if you are new entirely, as some systems may be complicated.")
     tutorialinfo:SetSize(400, 60)
-    tutorialinfo:SetPos(scroll:GetWide() / 2 - tutorialinfo:GetWide() / 2, 425 )
+    tutorialinfo:SetPos((scroll:GetWide() / 2) - (tutorialinfo:GetWide() / 2), 425 )
     tutorialinfo:SetWrap(true)
-    tutorialinfo:SetText("The tutorial explains to players how to play the game. It is recommended to have this turned on if you are new to the gamemode or have no idea what's going on. Aftershock has a steep learning curve, and this helps break down how systems in the game work for easier understanding.")
-
+--[[
     local hardcore = scroll:Add("DCheckBoxLabel")
     hardcore:SetPos(scroll:GetWide() / 2 - hardcore:GetWide() / 2, 500)
     hardcore:SetText("Hardcore Mode")
@@ -130,19 +131,8 @@ function AS.CharacterSelect.NewCharacter( new )
     hardcoreinfo:SetSize(400, 165)
     hardcoreinfo:SetPos(scroll:GetWide() / 2 - hardcoreinfo:GetWide() / 2, 525 )
     hardcoreinfo:SetWrap(true)
-    hardcoreinfo:SetText(
-[[
-(W.I.P) Hardcore mode is a character-specific mode which disable features and puts you in a gameplay loop that excludes the impact that other players have during your experience. Your friends cannot help you, as you cannot help them either while progressing throughout the world. This mode will remain enabled permanently for the characters that your turn it on for during their creation.
-
-The following features will be disabled while active:
--Trading
--Flea Market
--Teams
--Shared XP
--Other Players Dropped Loot/Items
+    hardcoreinfo:SetText("nil")
 ]]
-    )
-
     local button = vgui.Create("DButton", frame_newcharacter)
     button:SetSize(200, 50)
     button:SetPos(frame_newcharacter:GetWide() / 2 - button:GetWide() / 2, frame_newcharacter:GetTall() * 0.9)

@@ -31,7 +31,7 @@ concommand.Add("as_spawnmenu", AS.LoadIn.SpawnMenu)
 
 function AS.LoadIn.BuildMenu()
     local width = 400
-    local height = 60
+    local height = 55
     local xpos = 100
     local ypos = ScrH() * 0.85
     local function addSpace() ypos = (ypos - height) - 1 end
@@ -39,6 +39,12 @@ function AS.LoadIn.BuildMenu()
     -- I do this in opposite order so it can accend in height instead.
     MainMenuButton( "Disconnect", xpos, ypos, width, height, frame_spawnmenu, function()
         RunConsoleCommand("disconnect")
+    end)
+    addSpace()
+
+    MainMenuButton( "Discord", xpos, ypos, width, height, frame_spawnmenu, function()
+        LocalPlayer():ChatPrint("discord.gg/nil\nPLEASEUPDATETHISWHENEVER")
+        input.SetCursorPos( ScrW() / 2, ScrH() / 2)
     end)
     addSpace()
 

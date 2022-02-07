@@ -1,3 +1,4 @@
+--[[
 --Skills Tab
 function GM:OnSpawnMenuOpen() 
     AS.Inventory.Open( 2 )
@@ -30,6 +31,7 @@ function GM:OnContextMenuClose()
         frame_inventory:Close()
     end
 end
+]]
 
 AS.Inventory = {}
 
@@ -81,10 +83,6 @@ function AS.Inventory.Open( tab )
 
     if tab then
         sheets:SetActiveTab( sheets:GetItems()[tab].Tab )
-    end
-
-    function frame_inventory:OnClose()
-        InventoryOpen = false
     end
 end
 
@@ -403,11 +401,7 @@ function AS.Inventory.BuildStats()
     end
 
     SmallLabel( "Playtime", 5, 0, scroll_stats )
-    local playtimelabel = vgui.Create("DLabel", scroll_stats)
-    playtimelabel:SetFont( "AftershockText" )
-    playtimelabel:SetText(LocalPlayer():GetPlaytimeHourMin())
-    playtimelabel:SetPos(200, 0)
-    playtimelabel:SizeToContents()
+    SmallLabel( LocalPlayer():GetPlaytimeHourMin(), 200, 0, scroll_stats )
 
     return stats
 end

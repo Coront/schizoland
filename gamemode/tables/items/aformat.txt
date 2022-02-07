@@ -4,6 +4,7 @@ you actually make them function.
 AS.AddBaseItem("my_item", {
     name = "My Item!", --Name of your item
     desc = "This is the new item I created.", --Description of item
+    category = "misc", --The category your item will fall under (weapon, armor, ammo, food, med, misc, currency), will default to misc if unassigned.
     model = "models/weapons/w_pistol.mdl", --Model that will be assigned
     icon = "" --A displayed material of the icon, will default to the model if nothing else. (optional)
     color = Color( 255, 255, 255 ) --Item's background color (optional)

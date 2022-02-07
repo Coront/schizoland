@@ -34,7 +34,7 @@ SET.SelectableModels = {
 --Skill Settings
 SET.Skills = {}
 SKL = SET.Skills
-SKL.Health = 10 --Player starts with 10 hp.
+SKL.Health = 100 --Player starts with 100 hp.
 SKL.Movement = 165 --Player starts with 165 move speed.
 SKL.DefaultCarryWeight = 20 --Player starts with 20 carry weight.
 --Satiation Settings

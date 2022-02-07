@@ -8,7 +8,7 @@
 
 AS = {}
 
-DeriveGamemode("sandbox")
+DeriveGamemode("base")
 GM.Name = "Aftershock"
 
 --Shared Variables

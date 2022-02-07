@@ -77,7 +77,7 @@ end
 
 function SmallLabel( text, x, y, parent )
     local label = vgui.Create("DLabel", parent)
-    label:SetFont( "AftershockText" )
+    label:SetFont( "TargetID" )
     label:SetText(text)
     label:SetPos(x, y)
     label:SizeToContents()
@@ -111,5 +111,26 @@ function ToggleButton( text, x, y, parent, convar )
     local label = vgui.Create("DLabel", parent)
     label:SetText(text)
     label:SetPos(x + 20, y)
+    label:SizeToContents()
+end
+
+function KeyBind( text, x, y, parent, convar )
+    local binder = vgui.Create("DBinder", parent)
+    binder:SetSize( 100, 20 )
+    binder:SetPos( x, y )
+    binder:SetValue( input.GetKeyCode(GetConVarString(convar)) )
+    function binder:OnChange( button )
+        if GetKeyName( button ) == "MOUSE1" or GetKeyName( button ) == "MOUSE2" or GetKeyName( button ) == "MOUSE3" or GetKeyName( button ) == "MWHEELUP" or GetKeyName( button ) == "MWHEELDOWN" or GetKeyName( button ) == "`" then 
+            LocalPlayer():ChatPrint("You cannot bind to '" .. GetKeyName( button ) .. "', as it may cause confliction issues.")
+            button = 0
+            binder:SetValue( button )
+            return
+        end 
+        RunConsoleCommand( convar, GetKeyName(button) )
+    end
+
+    local label = vgui.Create("DLabel", parent)
+    label:SetText(text)
+    label:SetPos(x + 110, y + 2)
     label:SizeToContents()
 end

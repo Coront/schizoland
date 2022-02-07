@@ -6,162 +6,30 @@
 -- ╚════██║██║     ██╔══██╗██╔══██║██╔═══╝     ██║   ██║   ██╔══╝  ██║╚██╔╝██║╚════██║
 -- ███████║╚██████╗██║  ██║██║  ██║██║         ██║   ██║   ███████╗██║ ╚═╝ ██║███████║
 -- ╚══════╝ ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝         ╚═╝   ╚═╝   ╚══════╝╚═╝     ╚═╝╚══════╝
--- For items that are raw resources.
+-- Scrap items are raw resources, basically as base of a resource you can get.
 
 AS.AddBaseItem("misc_scrapmetal", {
     name = "Scrap Metal",
     desc = "Metal, salvaged from various objects. Useful for crafting.",
     model = "models/gibs/scanner_gib02.mdl",
     value = 1,
-    weight = 0.1,
+    weight = 0.01,
 })
 
-AS.AddBaseItem("misc_scrapwood", {
-    name = "Scrap Wood",
-    desc = "Wood, gathered from various objects. Useful for crafting.",
-    model = "models/Gibs/wood_gib01c.mdl",
+AS.AddBaseItem("misc_smallparts", {
+    name = "Small Parts",
+    desc = "A bunch of small parts, gathered from various objects. Useful for crafting.",
+    model = "models/props_wasteland/gear02.mdl",
     value = 1,
-    weight = 0.2,
+    weight = 0.01,
 })
 
-AS.AddBaseItem("misc_scrapaluminum", {
-    name = "Scrap Aluminum",
-    desc = "Aluminum (Al), gathered from various objects. Useful for crafting.",
-    model = "models/props_debris/metal_panelshard01b.mdl",
-    value = 2,
-    weight = 0.1,
-})
-
-AS.AddBaseItem("misc_scraptin", {
-    name = "Scrap Tin",
-    desc = "Tin (Sn), gathered from various objects. Useful for crafting.",
-    model = "models/gibs/metal_gib1.mdl",
-    value = 2,
-    weight = 0.2,
-})
-
-AS.AddBaseItem("misc_copper", {
-    name = "Copper Ingot",
-    desc = "An ingot that contains the pure element Copper (Cu). Useful for crafting.",
-    model = "models/props_junk/cardboard_box004a.mdl",
-    color = Color( 125, 75, 0 ),
-    value = 5,
-    weight = 1,
-})
-
-AS.AddBaseItem("misc_sulfur", {
-    name = "Sulfur Chunk",
-    desc = "A rough-chunky rock that contains the pure element Sulfur (S). Useful for crafting.",
-    model = "models/props_junk/cardboard_box004a.mdl",
-    color = Color( 100, 100, 0 ),
-    value = 4,
-    weight = 1,
-})
-
-AS.AddBaseItem("misc_lead", {
-    name = "Lead Ingot",
-    desc = "An ingot that contains the pure element Lead (Pb). Useful for crafting.",
-    model = "models/props_junk/cardboard_box004a.mdl",
-    color = Color( 75, 75, 75 ),
-    value = 6,
-    weight = 2,
-})
-
-AS.AddBaseItem("misc_iron", {
-    name = "Iron Ingot",
-    desc = "An ingot that contains the pure element Iron (Fe). Useful for crafting.",
-    model = "models/props_junk/cardboard_box004a.mdl",
-    color = Color( 150, 150, 150 ),
-    value = 12,
-    weight = 2,
-})
-
-AS.AddBaseItem("misc_gold", {
-    name = "Gold Ingot",
-    desc = "An ingot that contains the pure element Gold (Au). Useful for crafting.",
-    model = "models/props_junk/cardboard_box004a.mdl",
-    color = Color( 150, 150, 0 ),
-    value = 20,
-    weight = 3,
-})
-
-AS.AddBaseItem("misc_titanium", {
-    name = "Titanium Ingot",
-    desc = "An ingot that contains the pure element Titanium (Ti). Useful for crafting.",
-    model = "models/props_junk/cardboard_box004a.mdl",
-    color = Color( 175, 175, 175 ),
-    value = 18,
-    weight = 2,
-})
-
---  ██████╗ ██████╗ ███████╗    ██╗████████╗███████╗███╗   ███╗███████╗
--- ██╔═══██╗██╔══██╗██╔════╝    ██║╚══██╔══╝██╔════╝████╗ ████║██╔════╝
--- ██║   ██║██████╔╝█████╗      ██║   ██║   █████╗  ██╔████╔██║███████╗
--- ██║   ██║██╔══██╗██╔══╝      ██║   ██║   ██╔══╝  ██║╚██╔╝██║╚════██║
--- ╚██████╔╝██║  ██║███████╗    ██║   ██║   ███████╗██║ ╚═╝ ██║███████║
---  ╚═════╝ ╚═╝  ╚═╝╚══════╝    ╚═╝   ╚═╝   ╚══════╝╚═╝     ╚═╝╚══════╝
--- For items that are harvested from mining.
-
-AS.AddBaseItem("misc_stone", {
-    name = "Stone",
-    desc = "Raw stone, doubt it has much value.",
-    model = "models/props_junk/rock001a.mdl",
+AS.AddBaseItem("misc_chemical", {
+    name = "Chemical Nugget",
+    desc = "A chemical nugget. Found from salvaging chemical objects. Useful for crafting.",
+    model = "models/spitball_medium.mdl",
     value = 1,
-    weight = 1,
-})
-
-AS.AddBaseItem("misc_copperore", {
-    name = "Copper Ore",
-    desc = "A ore that contains copper, can be smelted to obtain the raw element.",
-    model = "models/props_junk/rock001a.mdl",
-    color = Color( 125, 75, 0 ),
-    value = 1,
-    weight = 1,
-})
-
-AS.AddBaseItem("misc_sulfurore", {
-    name = "Sulfur Ore",
-    desc = "A ore that contains sulfur, can be smelted to obtain the raw element.",
-    model = "models/props_junk/rock001a.mdl",
-    color = Color( 100, 100, 0 ),
-    value = 1,
-    weight = 1,
-})
-
-AS.AddBaseItem("misc_leadore", {
-    name = "Lead Ore",
-    desc = "A ore that contains lead, can be smelted to obtain the raw element.",
-    model = "models/props_junk/rock001a.mdl",
-    color = Color( 75, 75, 75 ),
-    value = 1,
-    weight = 1,
-})
-
-AS.AddBaseItem("misc_ironore", {
-    name = "Iron Ore",
-    desc = "A ore that contains iron, can be smelted to obtain the raw element.",
-    model = "models/props_junk/rock001a.mdl",
-    color = Color( 150, 150, 150 ),
-    value = 1,
-    weight = 1,
-})
-
-AS.AddBaseItem("misc_goldore", {
-    name = "Gold Ore",
-    desc = "A ore that contains gold, can be smelted to obtain the raw element.",
-    model = "models/props_junk/rock001a.mdl",
-    color = Color( 150, 150, 0 ),
-    value = 1,
-    weight = 1,
-})
-
-AS.AddBaseItem("misc_titaniumore", {
-    name = "Titanium Ore",
-    desc = "A ore that contains titanium, can be smelted to obtain the raw element.",
-    model = "models/props_junk/rock001a.mdl",
-    color = Color( 175, 175, 175 ),
-    value = 1,
-    weight = 1,
+    weight = 0.01,
 })
 
 -- ██████╗  █████╗ ██████╗ ████████╗    ██╗████████╗███████╗███╗   ███╗███████╗
@@ -170,7 +38,7 @@ AS.AddBaseItem("misc_titaniumore", {
 -- ██╔═══╝ ██╔══██║██╔══██╗   ██║       ██║   ██║   ██╔══╝  ██║╚██╔╝██║╚════██║
 -- ██║     ██║  ██║██║  ██║   ██║       ██║   ██║   ███████╗██║ ╚═╝ ██║███████║
 -- ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝       ╚═╝   ╚═╝   ╚══════╝╚═╝     ╚═╝╚══════╝
--- For items that are required for crafting.
+-- Part items are items that are generally required in crafting of other items, usually the player will have to scavenge these.
 
 AS.AddBaseItem("misc_mechanicalparts", {
     name = "Mechanical Parts",
@@ -228,13 +96,30 @@ AS.AddBaseItem("misc_paintcan", {
     weight = 2,
 })
 
+AS.AddBaseItem("misc_hydrogen", {
+    name = "Bottle of Hydrogen Peroxide",
+    desc = "A bottle that contains H2O2, or hydrogren peroxide, which is good for preventing minor cuts, scrapes, or burns from becoming infected.",
+    model = "models/props_junk/glassjug01.mdl",
+    value = 5,
+    weight = 1,
+})
+
+AS.AddBaseItem("misc_isopropyl", {
+    name = "Bottle of Isopropyl Alcohol",
+    desc = "A bottle that contains C3H8O, or Isopropyl Alcohol, which is good as a rubbing alcohol, and to stop minor cuts from becoming infected.",
+    model = "models/props_junk/glassjug01.mdl",
+    color = Color( 50, 100, 0 ),
+    value = 5,
+    weight = 1,
+})
+
 -- ████████╗ ██████╗  ██████╗ ██╗         ██╗████████╗███████╗███╗   ███╗███████╗
 -- ╚══██╔══╝██╔═══██╗██╔═══██╗██║         ██║╚══██╔══╝██╔════╝████╗ ████║██╔════╝
 --    ██║   ██║   ██║██║   ██║██║         ██║   ██║   █████╗  ██╔████╔██║███████╗
 --    ██║   ██║   ██║██║   ██║██║         ██║   ██║   ██╔══╝  ██║╚██╔╝██║╚════██║
 --    ██║   ╚██████╔╝╚██████╔╝███████╗    ██║   ██║   ███████╗██║ ╚═╝ ██║███████║
 --    ╚═╝    ╚═════╝  ╚═════╝ ╚══════╝    ╚═╝   ╚═╝   ╚══════╝╚═╝     ╚═╝╚══════╝
--- For items that are required for crafting but are not taken.
+-- Tool items are items that are required in crafting but are never actually consumed, meaning it's constantly reusable.
 
 AS.AddBaseItem("misc_tools", {
     name = "Set of Tools",
@@ -250,20 +135,12 @@ AS.AddBaseItem("misc_tools", {
 -- ╚════██║██╔══██║██║    ╚██╗ ██╔╝██╔══██║██║   ██║██╔══╝      ██║   ██║   ██╔══╝  ██║╚██╔╝██║╚════██║
 -- ███████║██║  ██║███████╗╚████╔╝ ██║  ██║╚██████╔╝███████╗    ██║   ██║   ███████╗██║ ╚═╝ ██║███████║
 -- ╚══════╝╚═╝  ╚═╝╚══════╝ ╚═══╝  ╚═╝  ╚═╝ ╚═════╝ ╚══════╝    ╚═╝   ╚═╝   ╚══════╝╚═╝     ╚═╝╚══════╝
--- For items that are just junk. They can be salvaged for raw parts.
+-- Salvage items are just junk items. They don't do anything and cannot be used for crafting, but can be salvaged for raw resources.
 
 AS.AddBaseItem("misc_shoe", {
     name = "Shoe",
     desc = "A leather shoe. Can be salvaged for raw resources.",
     model = "models/props_junk/Shoe001a.mdl",
-    value = 1,
-    weight = 0.4,
-})
-
-AS.AddBaseItem("misc_can", {
-    name = "Empty Aluminum Can",
-    desc = "An empty aluminum can. Can be salvaged for raw resources.",
-    model = "models/props_junk/garbage_metalcan002a.mdl",
     value = 1,
     weight = 0.4,
 })
