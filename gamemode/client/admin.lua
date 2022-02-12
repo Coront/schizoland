@@ -7,7 +7,7 @@ function ItemMenu()
     frame_itemmenu:Center()
     frame_itemmenu:MakePopup()
     frame_itemmenu:SetDraggable( false )
-    frame_itemmenu:SetTitle( "Left Click an item to give a single to yourself. Right Click an item to give yourself a bulk." )
+    frame_itemmenu:SetTitle( "Left Click an item to give a single to yourself. Right Click an item to give yourself a bulk. Middle Click to fetch item's ID." )
     frame_itemmenu:ShowCloseButton( true )
 
     local itemscrollpanel = vgui.Create("DScrollPanel", frame_itemmenu)
@@ -39,9 +39,9 @@ function ItemMenu()
         for k, v in SortedPairs( AS.Items ) do
             if not string.find( string.lower(v.name), searchbar:GetValue() ) and not string.find( string.lower(k), searchbar:GetValue() ) then continue end
 
-            local panel = itemlist:Add("DButton")
+            local panel = itemlist:Add("SpawnIcon")
             panel:SetSize( 60, 60 )
-            panel:SetText("")
+            panel:SetModel( v.model )
             local name = v.name or "name?" .. k
             local desc = v.desc or "desc?" .. k
             local value = v.value or "value?" .. k
@@ -57,6 +57,10 @@ function ItemMenu()
             panel.DoClick = function()
                 giveItem( k, 1 )
             end
+            panel.DoMiddleClick = function()
+                SetClipboardText( k )
+                LocalPlayer():ChatPrint( k )
+            end
             panel.DoRightClick = function()
                 VerifySlider( 1000, function( amt ) 
                     giveItem( k, amt )
@@ -70,11 +74,6 @@ function ItemMenu()
                 end
                 surface.DrawRect( 0, 0, w, h )
             end
-
-            local image = vgui.Create("DImage", panel)
-            image:SetSize(panel:GetWide(), panel:GetTall())
-            local model = v and "spawnicons/" .. string.Replace( v.model, ".mdl", ".png" ) or ""
-            image:SetImage( model )
 
             local itemname = vgui.Create("DLabel", panel)
             itemname:SetSize( panel:GetWide(), 14)

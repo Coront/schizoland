@@ -6,28 +6,27 @@
 --    ╚═╝   ╚═╝  ╚═╝╚═════╝ ╚══════╝╚══════╝╚═════╝ ╚═╝  ╚═╝╚══════╝╚══════╝
 -- Desc: This file will contain all of the tables of information for the gamemode.
 
+--Maps
+AS.Maps = {}
+function AS.AddMapData( id, data )
+    AS.Maps = AS.Maps or {}
+
+    AS.Maps[id] = data
+end
+
+AS.Loot = {}
+function AS.AddLootTable( id, data )
+    AS.Loot = AS.Loot or {}
+
+    AS.Loot[id] = data
+end
+
 --Items
 AS.Items = {}
 function AS.AddBaseItem( id, data )
     AS.Items = AS.Items or {}
 
     AS.Items[id] = data
-end
-
---Workbenches
-AS.Workbenches = {}
-function AS.AddWorkbench( id, data )
-    AS.Workbenches = AS.Workbenches or {}
-    
-    AS.Workbenches[id] = data
-end
-
-function AS.AddWorkbenchRecipe( workbenchid, data )
-    if not AS.Workbenches[workbenchid] then AS.LuaError( "Attempt to index a non-existant workbench id - " .. workbenchid ) return end
-    AS.Workbenches[workbenchid].recipes = AS.Workbenches[workbenchid].recipes or {}
-    local num = #AS.Workbenches[workbenchid].recipes + 1
-    
-    AS.Workbenches[workbenchid].recipes[num] = data
 end
 
 --Skills
@@ -38,21 +37,6 @@ function AS.AddBaseSkill( id, data )
     AS.Skills[id] = data
 end
 
---Statistics
-AS.Statistics = {}
-function AS.AddBaseStatistic( id, data )
-    AS.Statistics = AS.Statistics or {}
-
-    AS.Statistics[id] = data
-end
-
---Maps
-AS.Maps = {}
-function AS.AddMapData( id, data )
-    AS.Maps = AS.Maps or {}
-
-    AS.Maps[id] = data
-end
 
 --Characters
 AS.Characters = {}

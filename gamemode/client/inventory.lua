@@ -126,13 +126,8 @@ function AS.Inventory.BuildInventory()
         local desc = info.desc or "desc?" .. k
         local weight = info.weight or "weight?" .. k
 
-        local panel = itemlist:Add("DButton")
+        local panel = itemlist:Add("SpawnIcon")
         panel:SetSize( 60, 60 )
-
-        local image = vgui.Create("DImage", panel)
-        image:SetSize(panel:GetWide(), panel:GetTall())
-        local model = info and "spawnicons/" .. string.Replace( info.model, ".mdl", ".png" ) or ""
-        image:SetImage( model )
 
         local itemamt = vgui.Create("DLabel", panel)
         itemamt:SetFont("TargetID")
@@ -157,7 +152,7 @@ function AS.Inventory.BuildInventory()
             end
         end
 
-        panel:SetText("")
+        panel:SetModel( AS.Items[k].model )
         local TTtext = v > 1 and name .. "\n" .. desc .. "\nWeight: " .. weight .. " [" .. (isnumber(weight) and weight * v or "w?") .. "]" or name .. "\n" .. desc .. "\nWeight: " .. weight
         panel:SetTooltip(TTtext)
         panel.DoClick = function()

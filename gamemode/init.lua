@@ -42,13 +42,24 @@ end
 DATABASECHECKED = DATABASECHECKED or false
 local function DatabaseCheck()
 	MsgC( Color(0,0,255), "[AS] Checking Databases...\n" )
+	--Character Information
 	sql.Query("CREATE TABLE IF NOT EXISTS as_characters (pid INTEGER PRIMARY KEY AUTOINCREMENT, steamid TEXT, name TEXT, model TEXT, created TEXT, laston TEXT, deleted TEXT)")
 	sql.Query("CREATE TABLE IF NOT EXISTS as_characters_stats (pid INTEGER, health INTEGER, hunger INTEGER, thirst INTEGER, exp INTEGER, playtime INTEGER)")
 	sql.Query("CREATE TABLE IF NOT EXISTS as_characters_skills (pid INTEGER, skills TEXT)")
 	sql.Query("CREATE TABLE IF NOT EXISTS as_characters_inventory (pid INTEGER, inv TEXT, bank TEXT)")
+	--Other
+	sql.Query("CREATE TABLE IF NOT EXISTS as_chatlog (steamid TEXT, name TEXT, str TEXT, time TEXT)")
 	DATABASECHECKED = true --Don't see the purpose of reloading this multiple times, just restart the server, it's a new table anyways.
 end
 if not DATABASECHECKED then DatabaseCheck() end
 
 MsgC( Color(0,0,255), "[AS] Finished Loading!\n" )
 GAMEMODEFIRSTLOAD = true
+
+hook.Add( "PlayerSay", "AS_PlayerChatLog", function( ply, text )
+	if ply and IsValid( ply ) then
+		sql.Query("INSERT INTO as_chatlog VALUES ( " .. SQLStr(ply:SteamID()) .. ", " .. SQLStr(ply:Nickname()) .. ", " .. SQLStr(text) .. ", " .. SQLStr( os.date("%m/%d/%y - %I:%M %p", os.time()) ) .. ")")
+	else
+		sql.Query("INSERT INTO as_chatlog VALUES ( '-1', 'ERROR_NOUSER', " .. SQLStr(text) .. ", " .. SQLStr( os.date("%m/%d/%y - %I:%M %p", os.time()) ) .. ")")
+	end
+end)

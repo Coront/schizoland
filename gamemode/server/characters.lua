@@ -40,6 +40,7 @@ function PlayerMeta:SaveCharacter()
     sql.Query( "UPDATE as_characters_inventory SET inv = " .. SQLStr(util.TableToJSON( self:GetInventory(), true )) .. ", bank = " .. SQLStr(util.TableToJSON( self:GetBank(), true )) .. " WHERE pid = " .. pid )
     sql.Query( "UPDATE as_characters_skills SET skills = " .. SQLStr(util.TableToJSON( self:GetSkills(), true )) .. " WHERE pid = " .. pid )
     sql.Query( "UPDATE as_characters_stats SET health = " .. self:Health() .. ", hunger = " .. self:GetHunger() .. ", thirst = " .. self:GetThirst() .. ", exp = " .. self:GetExperience() .. ", playtime = " .. self:GetPlaytime() .. " WHERE pid = " .. pid )
+    sql.Query( "UPDATE as_characters SET laston = " .. SQLStr( os.date( "%m/%d/%y - %I:%M %p", os.time() ) ) .. " WHERE pid = " .. pid )
     return true --Saving was successful.
 end
 

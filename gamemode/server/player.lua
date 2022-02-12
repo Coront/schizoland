@@ -6,6 +6,7 @@
 -- ╚═╝     ╚══════╝╚═╝  ╚═╝   ╚═╝   ╚══════╝╚═╝  ╚═╝
 -- Desc: Player functionality managed here, i.e. creating/loading information, etc.
 
+function GM:ShowSpare1( ply ) ply:SendLua( "gui.OpenURL( GAMEMODE.Discord )" ) end --Discord
 function GM:ShowSpare2( ply ) ply:ConCommand( "as_settings" ) end --Settings menu
 
 function GM:PlayerInitialSpawn( ply ) --Player's first spawn. 
@@ -37,6 +38,12 @@ function GM:PlayerSpawn( ply )
     ply:SetHealth(SKL.Health)
     ply:SetMaxHealth(SKL.Health)
     ply:SetupHands()
+end
+
+function GM:PlayerDisconnected( ply )
+    if not ply:IsLoaded() and not ply.pid then return end
+
+    ply:SaveCharacter()
 end
 
 function GM:OnPlayerHitGround( ply, water, floater, speed )

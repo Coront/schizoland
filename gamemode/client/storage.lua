@@ -125,9 +125,9 @@ function AS.Storage.BuildInventory()
         local desc = info.desc or "desc?" .. k
         local weight = info.weight or "weight?" .. k
 
-        local panel = inventoryitemlist:Add("DButton")
+        local panel = inventoryitemlist:Add("SpawnIcon")
         panel:SetSize( 58, 58 )
-        panel:SetText("")
+        panel:SetModel( info.model )
         local TTtext = v > 1 and name .. "\n" .. desc .. "\nWeight: " .. weight .. " [" .. (isnumber(weight) and weight * v or "w?") .. "]" or name .. "\n" .. desc .. "\nWeight: " .. weight
         tooltipadd = tooltipadd or ""
         panel:SetTooltip(TTtext .. tooltipadd)
@@ -171,6 +171,7 @@ function AS.Storage.BuildInventory()
         end
 
         local function depositItem( item, amt )
+            if not LocalPlayer():CanStoreItem( k, amt ) then surface.PlaySound( UICUE.DECLINE ) return end
             LocalPlayer():DepositItem( item, amt )
             itemamtUpdate()
             surface.PlaySound(STORAGECUE.TRANSFER)
@@ -186,7 +187,6 @@ function AS.Storage.BuildInventory()
         end
 
         panel.DoClick = function( self )
-            if not LocalPlayer():CanStoreItem( k, LocalPlayer():GetInventory()[k] ) then surface.PlaySound( UICUE.DECLINE ) return end
             depositItem( k, LocalPlayer():GetInventory()[k] )
         end
         panel.DoRightClick = function( self )
@@ -197,7 +197,6 @@ function AS.Storage.BuildInventory()
                 end)
                 options:AddOption("Deposit X", function()
                     VerifySlider( LocalPlayer():GetInventory()[k], function( amt )
-                        if not LocalPlayer():CanStoreItem( k, amt ) then surface.PlaySound( UICUE.DECLINE ) return end
                         depositItem( k, amt )
                     end )
                 end)
@@ -229,9 +228,9 @@ function AS.Storage.BuildStorage()
         local desc = info.desc or "desc?" .. k
         local weight = info.weight or "weight?" .. k
 
-        local panel = storageitemlist:Add("DButton")
+        local panel = storageitemlist:Add("SpawnIcon")
         panel:SetSize( 58, 58 )
-        panel:SetText("")
+        panel:SetModel( info.model )
         local TTtext = v > 1 and name .. "\n" .. desc .. "\nWeight: " .. weight .. " [" .. (isnumber(weight) and weight * v or "w?") .. "]" or name .. "\n" .. desc .. "\nWeight: " .. weight
         tooltipadd = tooltipadd or ""
         panel:SetTooltip(TTtext .. tooltipadd)
@@ -243,11 +242,6 @@ function AS.Storage.BuildStorage()
             end
             surface.DrawRect( 0, 0, w, h )
         end
-
-        local image = vgui.Create("DImage", panel)
-        image:SetSize(panel:GetWide(), panel:GetTall())
-        local model = v and "spawnicons/" .. string.Replace( AS.Items[k].model, ".mdl", ".png" ) or ""
-        image:SetImage( model )
 
         local itemamt = vgui.Create("DLabel", panel)
         itemamt:SetFont("TargetID")
@@ -275,6 +269,7 @@ function AS.Storage.BuildStorage()
         end
 
         local function withdrawItem( item, amt )
+            if not LocalPlayer():CanWithdrawItem( k, amt ) then surface.PlaySound( UICUE.DECLINE ) return end
             LocalPlayer():WithdrawItem( item, amt )
             itemamtUpdate()
             surface.PlaySound(STORAGECUE.TRANSFER)
@@ -290,7 +285,6 @@ function AS.Storage.BuildStorage()
         end
 
         panel.DoClick = function( self )
-            if not LocalPlayer():CanWithdrawItem( k, LocalPlayer():GetBank()[k] ) then surface.PlaySound( UICUE.DECLINE ) return end
             withdrawItem( k, LocalPlayer():GetBank()[k] )
         end
         panel.DoRightClick = function( self )
@@ -301,7 +295,6 @@ function AS.Storage.BuildStorage()
                 end)
                 options:AddOption("Withdraw X", function()
                     VerifySlider( LocalPlayer():GetBank()[k], function( amt )
-                        if not LocalPlayer():CanWithdrawItem( k, amt ) then surface.PlaySound( UICUE.DECLINE ) return end
                         withdrawItem( k, amt )
                     end )
                 end)

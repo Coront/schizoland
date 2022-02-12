@@ -149,7 +149,10 @@ function AS.Settings.BuildOptions()
     resetX()
 
     SectionLabel( "Performance", xpos, ypos, settings_scroll )
-    addSpace( 0, 35 )
+    addSpace( 0, 30 )
+
+    ToggleButton("GMod Multi-Core", xpos, ypos, settings_scroll, "gmod_mcore_test")
+    addSpace( 0, 20 )
 
     ValueSlider( "Item Render Distance", xpos, ypos, 100, 1000, settings_scroll, "as_item_renderdist" )
     addSpace( 0, 20 )

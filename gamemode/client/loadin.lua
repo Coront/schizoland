@@ -43,8 +43,7 @@ function AS.LoadIn.BuildMenu()
     addSpace()
 
     MainMenuButton( "Discord", xpos, ypos, width, height, frame_spawnmenu, function()
-        LocalPlayer():ChatPrint("discord.gg/nil\nPLEASEUPDATETHISWHENEVER")
-        input.SetCursorPos( ScrW() / 2, ScrH() / 2)
+        gui.OpenURL( GAMEMODE.Discord )
     end)
     addSpace()
 

@@ -10,6 +10,7 @@ AS = {}
 
 DeriveGamemode("base")
 GM.Name = "Aftershock"
+GM.Discord = "https://www.google.com/"
 
 --Shared Variables
 AS.Colors = {}
