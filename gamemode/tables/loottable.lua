@@ -1,6 +1,8 @@
 AS.AddLootTable( "drawer", {
     name = "Drawers", --Name of container (This won't be displayed to players)
     model = "models/props_c17/FurnitureDrawer001a.mdl", --Model of container
+    opensound = "physics/wood/wood_plank_impact_soft1.wav", --Sound played when player opens the container
+    closesound = "physics/wood/wood_plank_impact_soft3.wav", --Sound played when the player closes the container
     generation = {
         time = 300, --Time to regenerate
         chance = 80, --Chance to regenerate on timer call

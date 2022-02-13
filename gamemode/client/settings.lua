@@ -69,6 +69,9 @@ function AS.Settings.BuildOptions()
     ToggleButton("Verify certain actions - Example: Destroying Items", xpos, ypos, settings_scroll, "as_gameplay_verify")
     addSpace( 0, 20 )
 
+    ToggleButton("Play container sounds", xpos, ypos, settings_scroll, "as_container_sounds")
+    addSpace( 0, 20 )
+
     resetX()
 
     SectionLabel( "HUD / VGUI", xpos, ypos, settings_scroll )

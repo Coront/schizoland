@@ -2,16 +2,6 @@ AddCSLuaFile( "shared.lua" )
 AddCSLuaFile( "cl_init.lua" )
 include( "shared.lua" )
 
-function ENT:Initialize()
-	self:SetContainer( "drawer" )
-
-	self:SetModel( AS.Loot[self:GetContainer()].model )
-	self:PhysicsInit( SOLID_VPHYSICS )
-	self:SetUseType( SIMPLE_USE )
-	self:SetSolid( SOLID_VPHYSICS )
-	self:SetMoveType( MOVETYPE_VPHYSICS )
-end
-
 function ENT:Think()
 	if CurTime() > self:GetNextGeneration() then
 		self:GenerateLoot()

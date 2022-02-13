@@ -4,6 +4,18 @@ ENT.PrintName		= "Base Container"
 ENT.Author			= "Tampy"
 ENT.Purpose			= "A container. It holds items."
 
+function ENT:Initialize()
+    self:SetContainer( "drawer" )
+
+    self:SetModel( AS.Loot[self:GetContainer()].model ) 
+    self:SetSolid( SOLID_VPHYSICS )
+    self:SetMoveType( MOVETYPE_VPHYSICS )
+    if SERVER then
+        self:PhysicsInit( SOLID_VPHYSICS )
+        self:SetUseType( SIMPLE_USE )
+    end
+end
+
 function ENT:SetContainer( id )
     self.ContainerID = id
 end
@@ -17,7 +29,7 @@ function ENT:SetInventory( tbl )
 end
 
 function ENT:GetInventory()
-    return self.Inventory
+    return self.Inventory or {}
 end
 
 function ENT:AddItemToInventory( itemid, amt )
