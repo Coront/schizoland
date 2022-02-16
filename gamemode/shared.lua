@@ -8,7 +8,7 @@
 
 AS = {}
 
-DeriveGamemode("base")
+DeriveGamemode("sandbox")
 GM.Name = "Aftershock"
 GM.Discord = "https://www.google.com/"
 

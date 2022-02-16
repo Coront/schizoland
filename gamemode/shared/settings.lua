@@ -31,6 +31,34 @@ SET.SelectableModels = {
     ["models/player/group01/female_05.mdl"] = true,
     ["models/player/group01/female_06.mdl"] = true,
 }
+SET.DefaultWeapons = {
+    ["weapon_physgun"] = true,
+    ["gmod_tool"] = true,
+}
+--Permission Settings
+SET.PERM = {}
+PERM = SET.PERM
+PERM.Physgunable = { --Entities that are allowed to be physgunned by normal players.
+    ["prop_physics"] = true,
+}
+PERM.MaxProps = 50 --Maximum props a player can spawn.
+PERM.PropBlacklist = { --Props that are forbidden from being spawned
+    ["models/props_c17/oildrum001_explosive.mdl"] = true, --Explosive
+    ["models/Combine_Helicopter/helicopter_bomb01.mdl"] = true, --Explosive
+    ["models/props_junk/propane_tank001a.mdl"] = true, --Explosive
+    ["models/props_junk/gascan001a.mdl"] = true, --Explosive
+    ["models/props_phx/oildrum001_explosive.mdl"] = true, --Explosive
+    ["models/props_phx/amraam.mdl"] = true, --Explosive
+    ["models/props_phx/cannonball.mdl"] = true, --Explosive
+    ["models/props_phx/cannonball_solid.mdl"] = true, --Explosive
+    ["models/props_phx/misc/smallcannonball.mdl"] = true, --Explosive
+    ["models/props_phx/mk-82.mdl"] = true, --Explosive
+    ["models/props_phx/rocket1.mdl"] = true, --Explosive
+    ["models/props_phx/torpedo.mdl"] = true, --Explosive
+    ["models/props_phx/ww2bomb.mdl"] = true, --Explosive
+    ["models/props_phx/misc/flakshell_big.mdl"] = true, --Explosive
+    ["models/props_phx/misc/potato_launcher_explosive.mdl"] = true, --Explosive
+}
 --Skill Settings
 SET.Skills = {}
 SKL = SET.Skills
@@ -112,4 +140,5 @@ SET.BannedWords = {
     "semen",
     "condom",
     "tampon",
+    "cunny",
 }

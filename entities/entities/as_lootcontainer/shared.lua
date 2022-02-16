@@ -1,8 +1,10 @@
 ENT.Type 			= "anim"
 ENT.Base 			= "base_entity"
-ENT.PrintName		= "Base Container"
+ENT.PrintName		= "Loot Container"
 ENT.Author			= "Tampy"
 ENT.Purpose			= "A container. It holds items."
+ENT.Category		= "Aftershock"
+ENT.Spawnable		= true
 
 function ENT:Initialize()
     self:SetContainer( "drawer" )

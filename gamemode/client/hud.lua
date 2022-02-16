@@ -212,7 +212,6 @@ function GM:HUDShouldDraw( type )
         ["CHudTrain"] = true,
         ["CHudVehicle"] = true,
         ["CHudWeapon"] = true,
-        ["CHudWeaponSelection"] = true,
         ["CHudZoom"] = true,
         ["CHudQuickInfo"] = true,
         ["CHudSuitPower"] = true,

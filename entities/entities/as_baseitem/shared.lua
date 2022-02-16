@@ -1,8 +1,10 @@
 ENT.Type 			= "anim"
 ENT.Base 			= "base_entity"
-ENT.PrintName		= "Base Item"
+ENT.PrintName		= "Item Base"
 ENT.Author			= "Tampy"
 ENT.Purpose			= "Base item that contains data"
+ENT.Category		= "Aftershock"
+ENT.Spawnable		= true
 
 function ENT:SetItem( item )
 	self:SetNW2String( "ItemID", item )

@@ -38,6 +38,9 @@ function GM:PlayerSpawn( ply )
     ply:SetHealth(SKL.Health)
     ply:SetMaxHealth(SKL.Health)
     ply:SetupHands()
+    for k, v in pairs( SET.DefaultWeapons ) do
+        ply:Give( k )
+    end
 end
 
 function GM:PlayerDisconnected( ply )

@@ -1,6 +1,6 @@
 CreateClientConVar( "as_bind_inventory", "TAB", true, false )
-CreateClientConVar( "as_bind_skills", "q", true, false )
-CreateClientConVar( "as_bind_missions", "c", true, false )
+CreateClientConVar( "as_bind_skills", "b", true, false )
+CreateClientConVar( "as_bind_missions", "m", true, false )
 CreateClientConVar( "as_bind_stats", "t", true, false )
 
 function GetConVarString( convar )
