@@ -96,6 +96,10 @@ if SERVER then
         if ply:IsAdmin() then return true else ply:ChatPrint("Weapon Spawning is disabled.") return false end
     end
 
+    function GM:PlayerGiveSWEP( ply, weapon, info )
+        if ply:IsAdmin() then return true else ply:ChatPrint("Weapon Spawning is disabled.") return false end
+    end
+
     function GM:PlayerSpawnVehicle( ply, model, name, info )
         if ply:IsAdmin() then return true else ply:ChatPrint("Vehicle Spawning is disabled.") return false end
     end

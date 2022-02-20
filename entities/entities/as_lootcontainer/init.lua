@@ -40,3 +40,33 @@ function ENT:GenerateLoot()
 	self:SetInventory( newinv ) --We'll then take the new table and set it as our new inventory!
 	self:ResyncInventory() --We also need to sync this information, so we'll take care of that too.
 end
+
+-- ███╗   ██╗███████╗████████╗██╗    ██╗ ██████╗ ██████╗ ██╗  ██╗██╗███╗   ██╗ ██████╗
+-- ████╗  ██║██╔════╝╚══██╔══╝██║    ██║██╔═══██╗██╔══██╗██║ ██╔╝██║████╗  ██║██╔════╝
+-- ██╔██╗ ██║█████╗     ██║   ██║ █╗ ██║██║   ██║██████╔╝█████╔╝ ██║██╔██╗ ██║██║  ███╗
+-- ██║╚██╗██║██╔══╝     ██║   ██║███╗██║██║   ██║██╔══██╗██╔═██╗ ██║██║╚██╗██║██║   ██║
+-- ██║ ╚████║███████╗   ██║   ╚███╔███╔╝╚██████╔╝██║  ██║██║  ██╗██║██║ ╚████║╚██████╔╝
+-- ╚═╝  ╚═══╝╚══════╝   ╚═╝    ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝ ╚═════╝
+
+util.AddNetworkString( "as_container_takeitem" )
+
+net.Receive( "as_container_takeitem", function(_, ply) 
+	local ent = net.ReadEntity()
+	local item = net.ReadString()
+	local amt = net.ReadInt( 32 )
+
+	--We are going to take an item from a container. We need to make sure that the container actually CONTAINS the item, and the right amount.
+	if not AS.Items[item] then ply:ChatPrint("This isnt a valid item.") ply:ResyncInventory() ent:ResyncInventory() return end --Person might try an invalid item
+    if not ent:HasInInventory( item, amt ) then ply:ChatPrint("This item isn't in the container.") ply:ResyncInventory() ent:ResyncInventory() return end --Person might try running without the container actually having the item
+    if not ent:PlayerCanTakeItem( ply, item, amt ) then return end
+    if amt < 1 then amt = 1 end --Person might try negative numbers
+    local inv = ent:GetInventory()
+    if amt > inv[item] then amt = inv[item] end --Person might try higher numbers than what they actually have
+    amt = math.Round(amt) --Person might try decimals
+
+    --It's all verified.
+    ent:PlayerTakeItem( ply, item, amt )
+	ply:ChatPrint( AS.Items[item].name .. " (" .. amt  .. "x) added to inventory." )
+
+	ent:ResyncInventory() --We need to resync the inventory to all clients.
+end)

@@ -1,5 +1,4 @@
 AS.CharacterSelect = {}
-CharacterSelectOpen = false
 
 -- ███╗   ███╗███████╗███╗   ██╗██╗   ██╗
 -- ████╗ ████║██╔════╝████╗  ██║██║   ██║
@@ -43,10 +42,6 @@ function AS.CharacterSelect.Menu()
 
     net.Start("as_characters_requestdata")
     net.SendToServer()
-
-    function frame_characters:OnClose()
-        CharacterSelectOpen = false
-    end
 end
 concommand.Add("as_characters", AS.CharacterSelect.Menu)
 

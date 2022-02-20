@@ -5,7 +5,7 @@ AS.AddBaseItem("med_vial", {
     value = 15,
     weight = 1.5,
     use = {
-        health = 5,
+        health = 15,
         sound = "items/medshot4.wav",
     },
 })
@@ -18,7 +18,7 @@ AS.AddBaseItem("med_kit", {
     value = 25,
     weight = 2.5,
     use = {
-        health = 10,
+        health = 25,
         sound = "items/smallmedkit1.wav",
     }
 })

@@ -66,6 +66,9 @@ function AS.Settings.BuildOptions()
     SectionLabel( "Gameplay", xpos, ypos, settings_scroll )
     addSpace( 0, 35 )
 
+    ToggleButton("Hold-To-Open Inventory", xpos, ypos, settings_scroll, "as_menu_holdtoopen")
+    addSpace( 0, 20 )
+
     ToggleButton("Verify certain actions - Example: Destroying Items", xpos, ypos, settings_scroll, "as_gameplay_verify")
     addSpace( 0, 20 )
 

@@ -171,7 +171,7 @@ function AS.Storage.BuildInventory()
         end
 
         local function depositItem( item, amt )
-            if not LocalPlayer():CanStoreItem( k, amt ) then surface.PlaySound( UICUE.DECLINE ) return end
+            if not LocalPlayer():CanStoreItem( ent, k, amt ) then surface.PlaySound( UICUE.DECLINE ) return end
             LocalPlayer():DepositItem( item, amt )
             itemamtUpdate()
             surface.PlaySound(STORAGECUE.TRANSFER)
@@ -269,7 +269,7 @@ function AS.Storage.BuildStorage()
         end
 
         local function withdrawItem( item, amt )
-            if not LocalPlayer():CanWithdrawItem( k, amt ) then surface.PlaySound( UICUE.DECLINE ) return end
+            if not LocalPlayer():CanWithdrawItem( ent, k, amt ) then surface.PlaySound( UICUE.DECLINE ) return end
             LocalPlayer():WithdrawItem( item, amt )
             itemamtUpdate()
             surface.PlaySound(STORAGECUE.TRANSFER)

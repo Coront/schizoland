@@ -58,12 +58,14 @@ function PlayerMeta:MaxBankWeight()
     return SET.BankWeight
 end
 
-function PlayerMeta:CanStoreItem( item, amt )
+function PlayerMeta:CanStoreItem( ent, item, amt )
+    if self:GetPos():Distance(ent:GetPos()) > 200 then self:ChatPrint("You are too far to store anything.") return false end --Dont try storing stuff miles away wtf???
     if self:GetBankWeight() + (AS.Items[item].weight * amt) > self:MaxBankWeight() then self:ChatPrint("Your storage is too full to hold this.") return false end
     return true
 end
 
-function PlayerMeta:CanWithdrawItem( item, amt )
+function PlayerMeta:CanWithdrawItem( ent, item, amt )
+    if self:GetPos():Distance(ent:GetPos()) > 200 then self:ChatPrint("You are too far to withdraw anything.") return false end
     if self:GetCarryWeight() + (AS.Items[item].weight * amt) > self:MaxCarryWeight() then self:ChatPrint("You are too overweight to withdraw this.") return false end
     return true
 end

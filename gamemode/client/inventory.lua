@@ -42,6 +42,8 @@ AS.Inventory = {}
 -- ██║ ╚═╝ ██║███████╗██║ ╚████║╚██████╔╝
 -- ╚═╝     ╚═╝╚══════╝╚═╝  ╚═══╝ ╚═════╝
 
+CreateClientConVar( "as_menu_holdtoopen", "1", true, false )
+
 function AS.Inventory.Open( tab )
     if IsValid(frame_inventory) then frame_inventory:Close() end
 
@@ -55,6 +57,13 @@ function AS.Inventory.Open( tab )
     frame_inventory.Paint = function(_,w,h)
         surface.SetDrawColor( COLHUD_PRIMARY )
         surface.DrawRect( 0, 0, w, h )
+    end
+    if GetConVar("as_menu_holdtoopen"):GetInt() > 0 then
+        frame_inventory.Think = function( self )
+            if not input.IsButtonDown( input.GetKeyCode( GetConVarString("as_bind_inventory") ) ) and not input.IsButtonDown( input.GetKeyCode( GetConVarString("as_bind_stats") ) ) and not input.IsButtonDown( input.GetKeyCode( GetConVarString("as_bind_skills") ) ) and not input.IsButtonDown( input.GetKeyCode( GetConVarString("as_bind_missions") ) ) then
+                self:Close()
+            end
+        end
     end
 
     local sheets = vgui.Create("DPropertySheet", frame_inventory)

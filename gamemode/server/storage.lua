@@ -34,10 +34,9 @@ net.Receive( "as_storage_tostore", function( _, ply )
     local ent = net.ReadEntity()
 
     --We are going to store an item into our stash. We need to make sure the player actually has the item on them, and the right amount of it.
-    if ply:GetPos():Distance(ent:GetPos()) > 200 then ply:ChatPrint("You are too far to store anything.") ply:ResyncInventory() ply:ResyncBank() return end --Dont try storing stuff miles away wtf???
     if not AS.Items[item] then ply:ChatPrint("This isnt a valid item.") ply:ResyncInventory() ply:ResyncBank() return end --Person might try an invalid item
-    if not ply:HasInInventory( item ) then ply:ChatPrint("You don't have this item.") ply:ResyncInventory() ply:ResyncBank() return end --Person might try running without actually having item
-    if not ply:CanStoreItem( item, amt ) then return end --This is just some default checks, like do they have enough room in their storage.
+    if not ply:HasInInventory( item, amt ) then ply:ChatPrint("You don't have this item.") ply:ResyncInventory() ply:ResyncBank() return end --Person might try running without actually having item
+    if not ply:CanStoreItem( ent, item, amt ) then return end --This is just some default checks, like do they have enough room in their storage.
     if amt < 1 then amt = 1 end --Person might try negative numbers
     local inv = ply:GetInventory()
     if amt > inv[item] then amt = inv[item] end --Person might try higher numbers than what they actually have
@@ -53,10 +52,9 @@ net.Receive( "as_storage_toinventory", function( _, ply )
     local ent = net.ReadEntity()
 
     --We are going to withdraw an item from our stash. We need to make sure the stash actually has the item, and the right amount.
-    if ply:GetPos():Distance(ent:GetPos()) > 200 then ply:ChatPrint("You are too far to withdraw anything.") ply:ResyncInventory() ply:ResyncBank() return end
     if not AS.Items[item] then ply:ChatPrint("This isnt a valid item.") ply:ResyncInventory() ply:ResyncBank() return end --Person might try an invalid item
-    if not ply:HasInBank( item ) then ply:ChatPrint("You don't have this item.") ply:ResyncInventory() ply:ResyncBank() return end --Person might try running without actually having item
-    if not ply:CanWithdrawItem( item, amt ) then return end
+    if not ply:HasInBank( item, amt ) then ply:ChatPrint("You don't have this item.") ply:ResyncInventory() ply:ResyncBank() return end --Person might try running without actually having item
+    if not ply:CanWithdrawItem( ent, item, amt ) then return end
     if amt < 1 then amt = 1 end --Person might try negative numbers
     local bank = ply:GetBank()
     if amt > bank[item] then amt = bank[item] end --Person might try higher numbers than what they actually have

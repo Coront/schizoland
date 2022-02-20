@@ -34,6 +34,7 @@ SET.SelectableModels = {
 SET.DefaultWeapons = {
     ["weapon_physgun"] = true,
     ["gmod_tool"] = true,
+    ["weapon_fists"] = true,
 }
 --Permission Settings
 SET.PERM = {}
