@@ -2,7 +2,7 @@ CreateClientConVar( "as_container_sounds", "1", true, false )
 
 function ContainerMenu( ent )
     if IsValid(frame_container) then frame_container:Close() end
-    if tobool(GetConVar("as_container_sounds"):GetInt()) then
+    if tobool(GetConVar("as_container_sounds"):GetInt()) and AS.Loot[ent:GetContainer()] and AS.Loot[ent:GetContainer()].opensound then
         ent:EmitSound(AS.Loot[ent:GetContainer()].opensound)
     end
 
@@ -18,7 +18,7 @@ function ContainerMenu( ent )
         surface.DrawRect( 0, 0, w, h )
     end
     function frame_container:OnClose()
-        if tobool(GetConVar("as_container_sounds"):GetInt()) and IsValid( frame_container.ent ) then
+        if tobool(GetConVar("as_container_sounds"):GetInt()) and IsValid( frame_container.ent ) and AS.Loot[ent:GetContainer()] and AS.Loot[ent:GetContainer()].closesound then
             ent:EmitSound(AS.Loot[ent:GetContainer()].closesound)
         end
     end

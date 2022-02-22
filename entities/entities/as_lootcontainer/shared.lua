@@ -5,25 +5,26 @@ ENT.Author			= "Tampy"
 ENT.Purpose			= "A container. It holds items."
 ENT.Category		= "Aftershock"
 ENT.Spawnable		= true
+ENT.Editable        = true
 
-function ENT:Initialize()
-    self:SetContainer( "drawer" )
+local loottables = {}
+for k, v in SortedPairs( AS.Loot ) do
+    loottables[v.name] = k
+end
 
-    self:SetModel( AS.Loot[self:GetContainer()].model ) 
-    self:SetSolid( SOLID_VPHYSICS )
-    self:SetMoveType( MOVETYPE_VPHYSICS )
+function ENT:SetupDataTables()
+    self:NetworkVar( "String", 0, "Container", {
+        KeyName = "Loot Table",
+        Edit = {
+            type = "Combo",
+            text = "Test",
+            values = loottables,
+        }
+    } )
+
     if SERVER then
-        self:PhysicsInit( SOLID_VPHYSICS )
-        self:SetUseType( SIMPLE_USE )
+        self:NetworkVarNotify( "Container", self.OnLootTableChanged )
     end
-end
-
-function ENT:SetContainer( id )
-    self.ContainerID = id
-end
-
-function ENT:GetContainer( id )
-    return self.ContainerID
 end
 
 function ENT:SetInventory( tbl )

@@ -1,13 +1,20 @@
 include( "shared.lua" )
 
+local RenderDistance = 2000
+
 function ENT:Draw()
-    self:DrawModel()
+    if LocalPlayer():GetPos():Distance(self:GetPos()) < RenderDistance then
+        self:DrawModel()
+        self:DrawShadow(true)
+    else
+        self:DrawShadow(false)
+    end
 end
 
 function ENT:Think()
     local ply = LocalPlayer()
 
-    if ply:GetEyeTrace().Entity == self and ply:GetPos():Distance(self:GetPos()) < 100 then
+    if ply:GetEyeTrace().Entity == self and ply:GetPos():Distance(self:GetPos()) < 100 and not ply:IsDeveloping() then
         if not IsValid( frame_container ) then
             ContainerMenu( self )
         end

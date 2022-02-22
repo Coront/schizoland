@@ -2,8 +2,28 @@ AddCSLuaFile( "shared.lua" )
 AddCSLuaFile( "cl_init.lua" )
 include( "shared.lua" )
 
+function ENT:Initialize()
+	self:SetContainer( "drawer" )
+	self:SetModel( AS.Loot[self:GetContainer()].model )
+    self:SetSolid( SOLID_VPHYSICS )
+    self:SetMoveType( MOVETYPE_VPHYSICS )
+    self:PhysicsInit( SOLID_VPHYSICS )
+    self:SetUseType( SIMPLE_USE )
+end
+
+function ENT:OnLootTableChanged( name, old, new )
+	if old == "" then return end
+	self:GenerateLoot()
+	self:SetNextGeneration( CurTime() + AS.Loot[new].generation.time )
+	self:SetModel( AS.Loot[new].model )
+	self:SetSolid( SOLID_VPHYSICS )
+    self:SetMoveType( MOVETYPE_VPHYSICS )
+    self:PhysicsInit( SOLID_VPHYSICS )
+    self:SetUseType( SIMPLE_USE )
+end
+
 function ENT:Think()
-	if CurTime() > self:GetNextGeneration() then
+	if self:GetContainer() != "" and CurTime() > self:GetNextGeneration() then
 		self:GenerateLoot()
 		self:SetNextGeneration( CurTime() + AS.Loot[self:GetContainer()].generation.time )
 	end
@@ -12,7 +32,8 @@ end
 function ENT:GenerateLoot()
 	--To explain how this generation works, we will take all of the items that were put into the item's table for the storageid and put them on a number line.
 	local newinv = {} --This will be our new inventory.
-	local gentbl = AS.Loot[self:GetContainer()].generation
+	local gentbl = AS.Loot[self:GetContainer()] and AS.Loot[self:GetContainer()].generation
+	if not gentbl then AS.LuaError("Container doesn't have a valid generation table - " .. self:GetContainer()) return end
 	local generate = math.random(0, 100)
 	local generatechance = gentbl.chance
 	if generate > generatechance then return end --We failed to generate, so we won't do anything.

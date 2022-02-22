@@ -1,3 +1,15 @@
+AS.AddBaseItem("med_bag", {
+    name = "Bag of Medical Supplies",
+    desc = "An old garbage bag that contains some bandages, a potential tourniquet, and maybe a few other things to help with your personal health.",
+    model = "models/props_junk/garbage_bag001a.mdl",
+    value = 1,
+    weight = 0.4,
+    use = {
+        health = 15,
+        sound = "physics/body/body_medium_impact_soft4.wav",
+    }
+})
+
 AS.AddBaseItem("med_vial", {
     name = "Health Vial",
     desc = "A vial that contains a strange green liquid that will heal some of your health back.",

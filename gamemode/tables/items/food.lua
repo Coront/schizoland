@@ -10,6 +10,18 @@ AS.AddBaseItem("food_beans", {
     },
 })
 
+AS.AddBaseItem("food_potato", {
+    name = "Potato",
+    desc = "It's a potato. Apparently these are still grown.",
+    model = "models/props_phx/misc/potato.mdl",
+    value = 1,
+    weight = 0.5,
+    use = {
+        hunger = 15,
+        soundcs = "npc/headcrab/headbite.wav",
+    },
+})
+
 AS.AddBaseItem("food_melon", {
     name = "Melon Slice",
     desc = "One of multiple slices from a melon. Manually grown and harvested.",
@@ -44,6 +56,18 @@ AS.AddBaseItem("food_takeout", {
     weight = 1,
     use = {
         hunger = 25,
+        soundcs = "npc/headcrab/headbite.wav",
+    },
+})
+
+AS.AddBaseItem("food_soup", {
+    name = "Soup",
+    desc = "A thermos that still contains some warm soup. Everybody's favorite.",
+    model = "models/props_c17/pottery01a.mdl",
+    value = 1,
+    weight = 1,
+    use = {
+        hunger = 30,
         soundcs = "npc/headcrab/headbite.wav",
     },
 })

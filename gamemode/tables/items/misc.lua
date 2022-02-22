@@ -6,7 +6,7 @@
 -- ╚════██║██║     ██╔══██╗██╔══██║██╔═══╝     ██║   ██║   ██╔══╝  ██║╚██╔╝██║╚════██║
 -- ███████║╚██████╗██║  ██║██║  ██║██║         ██║   ██║   ███████╗██║ ╚═╝ ██║███████║
 -- ╚══════╝ ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝         ╚═╝   ╚═╝   ╚══════╝╚═╝     ╚═╝╚══════╝
--- Scrap items are raw resources, basically as base of a resource you can get.
+-- Scrap items are raw resources.
 
 AS.AddBaseItem("misc_scrapmetal", {
     name = "Scrap Metal",
@@ -40,6 +40,30 @@ AS.AddBaseItem("misc_chemical", {
 -- ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝       ╚═╝   ╚═╝   ╚══════╝╚═╝     ╚═╝╚══════╝
 -- Part items are items that are generally required in crafting of other items, usually the player will have to scavenge these.
 
+AS.AddBaseItem("misc_hide_antlion", {
+    name = "Antlion Hide",
+    desc = "A hide, harvested from an antlion. Useful in the creation of some items.",
+    model = "models/gibs/antlion_gib_large_2.mdl",
+    value = 1,
+    weight = 0.2,
+})
+
+AS.AddBaseItem("misc_hide_guard", {
+    name = "Antlion Guard Hide",
+    desc = "A hide, harvested from a antlion guard. Useful in the creation of very protective armor.",
+    model = "models/gibs/strider_gib2.mdl",
+    value = 1,
+    weight = 0.2,
+})
+
+AS.AddBaseItem("misc_heavyplate", {
+    name = "Heavy Armor Plate",
+    desc = "A heavy plate that is incredibly durable against elements. Required in the creation of some very efficient armors.",
+    model = "models/gibs/shield_scanner_gib2.mdl",
+    value = 1,
+    weight = 0.2,
+})
+
 AS.AddBaseItem("misc_mechanicalparts", {
     name = "Mechanical Parts",
     desc = "A mechanical part salvaged from old technology.",
@@ -50,15 +74,55 @@ AS.AddBaseItem("misc_mechanicalparts", {
 
 AS.AddBaseItem("misc_electronicparts", {
     name = "Electronic Parts",
-    desc = "Parts of electronics salvaged from old technology.",
+    desc = "A bunch of circuits, useful for constructing something that requires conduction of electricity.",
+    model = "models/props/cs_office/computer_caseb_p2a.mdl",
+    value = 1,
+    weight = 0.2,
+})
+
+AS.AddBaseItem("misc_saw", {
+    name = "Diamond-Edged Saw",
+    desc = "A saw that has been tipped with diamond. Useful for cutting through metals.",
+    model = "models/props/cs_militia/circularsaw01.mdl",
+    value = 1,
+    weight = 0.2,
+})
+
+AS.AddBaseItem("misc_electronicreceiver", {
+    name = "Electronic Receiver",
+    desc = "An outdated receiver, maybe it still works?",
     model = "models/props_lab/reciever01c.mdl",
+    value = 1,
+    weight = 0.2,
+})
+
+AS.AddBaseItem("misc_seed_orange", {
+    name = "Orange Seeds",
+    desc = "A packet that contains orange seeds. Can be used to grow an orange plant, to harvest oranges.",
+    model = "models/props_lab/box01a.mdl",
+    value = 1,
+    weight = 0.2,
+})
+
+AS.AddBaseItem("misc_seed_melon", {
+    name = "Melon Seeds",
+    desc = "A packet that contains melon seeds. Can be used to grow a melon plant, to harvest melons.",
+    model = "models/props_junk/cardboard_box004a.mdl",
+    value = 1,
+    weight = 0.2,
+})
+
+AS.AddBaseItem("misc_solarfilmroll", {
+    name = "Thin Rollable Solar Film",
+    desc = "A very thin roll that containers copper, indium, gallium, and selenide. Can absorb energy from the sun to be converted into electricity.",
+    model = "models/props/de_nuke/wall_light.mdl",
     value = 1,
     weight = 0.2,
 })
 
 AS.AddBaseItem("misc_carbattery", {
     name = "Car Battery",
-    desc = "A battery salvaged from a vehicle.",
+    desc = "A still functional battery salvaged from a vehicle. One of the many parts required to make a vehicle.",
     model = "models/items/car_battery01.mdl",
     value = 1,
     weight = 2,
@@ -66,10 +130,26 @@ AS.AddBaseItem("misc_carbattery", {
 
 AS.AddBaseItem("misc_wheel", {
     name = "Wheel",
-    desc = "A wheel salvaged from a car.",
+    desc = "A wheel salvaged from a car. One of the many parts required to make a vehicle.",
     model = "models/props_vehicles/carparts_wheel01a.mdl",
     value = 1,
     weight = 5,
+})
+
+AS.AddBaseItem("misc_axel", {
+    name = "Axel",
+    desc = "An old axel that is still in good condition. One of the many parts required to make a vehicle.",
+    model = "models/props_vehicles/carparts_axel01a.mdl",
+    value = 1,
+    weight = 2,
+})
+
+AS.AddBaseItem("misc_engine", {
+    name = "Makeshift Engine",
+    desc = "An engine made from found scraps. One of the many parts required to make a vehicle.",
+    model = "models/props_c17/trappropeller_engine.mdl",
+    value = 1,
+    weight = 2,
 })
 
 AS.AddBaseItem("misc_propane", {
@@ -82,7 +162,7 @@ AS.AddBaseItem("misc_propane", {
 
 AS.AddBaseItem("misc_gasoline", {
     name = "Gasoline",
-    desc = "A jerry can that holds a homogeneous mixture of petroleum oil and many other substances, commonly referred to as gasoline.",
+    desc = "A jerry can that holds a homogeneous mixture of petroleum oil and many other substances, commonly referred to as gasoline. Used to power generators.",
     model = "models/props_junk/metalgascan.mdl",
     value = 1,
     weight = 4,
@@ -119,12 +199,20 @@ AS.AddBaseItem("misc_isopropyl", {
 --    ██║   ██║   ██║██║   ██║██║         ██║   ██║   ██╔══╝  ██║╚██╔╝██║╚════██║
 --    ██║   ╚██████╔╝╚██████╔╝███████╗    ██║   ██║   ███████╗██║ ╚═╝ ██║███████║
 --    ╚═╝    ╚═════╝  ╚═════╝ ╚══════╝    ╚═╝   ╚═╝   ╚══════╝╚═╝     ╚═╝╚══════╝
--- Tool items are items that are required in crafting but are never actually consumed, meaning it's constantly reusable.
+-- Tool items are items that are required in crafting but are never actually consumed, meaning it's reusable.
 
 AS.AddBaseItem("misc_tools", {
     name = "Set of Tools",
     desc = "A bag that contains a bunch of tools that would be required for assembling anything advanced.",
     model = "models/props_c17/BriefCase001a.mdl",
+    value = 1,
+    weight = 2,
+})
+
+AS.AddBaseItem("misc_munitionpress", {
+    name = "Munition Press",
+    desc = "A press that allows you to handcraft some basic ammunition wherever you are!",
+    model = "models/props/cs_militia/reloadingpress01.mdl",
     value = 1,
     weight = 2,
 })
@@ -149,6 +237,14 @@ AS.AddBaseItem("misc_emptybottle", {
     name = "Empty Bottle",
     desc = "An empty bottle. Can be filled with water or salvaged for resources.",
     model = "models/props_junk/garbage_plasticbottle003a.mdl",
+    value = 1,
+    weight = 0.4,
+})
+
+AS.AddBaseItem("misc_metalcan", {
+    name = "Metal Can",
+    desc = "A empty aluminum can. Not sure what this could be used for.",
+    model = "models/props_junk/garbage_metalcan002a.mdl",
     value = 1,
     weight = 0.4,
 })
