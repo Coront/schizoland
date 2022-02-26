@@ -1,38 +1,3 @@
---[[
---Skills Tab
-function GM:OnSpawnMenuOpen() 
-    AS.Inventory.Open( 2 )
-end
-
-function GM:OnSpawnMenuClose() 
-    if IsValid(frame_inventory) then 
-        frame_inventory:Close() 
-    end 
-end
-
---Inventory Tab
-function GM:ScoreboardShow() 
-    AS.Inventory.Open( 1 )
-end
-
-function GM:ScoreboardHide() 
-    if IsValid(frame_inventory) then 
-        frame_inventory:Close() 
-    end 
-end
-
---Missions Tab
-function GM:OnContextMenuOpen()
-    AS.Inventory.Open( 3 )
-end
-
-function GM:OnContextMenuClose()
-    if IsValid(frame_inventory) then
-        frame_inventory:Close()
-    end
-end
-]]
-
 AS.Inventory = {}
 
 -- ███╗   ███╗███████╗███╗   ██╗██╗   ██╗
@@ -42,13 +7,14 @@ AS.Inventory = {}
 -- ██║ ╚═╝ ██║███████╗██║ ╚████║╚██████╔╝
 -- ╚═╝     ╚═╝╚══════╝╚═╝  ╚═══╝ ╚═════╝
 
-CreateClientConVar( "as_menu_holdtoopen", "1", true, false )
+CreateClientConVar( "as_menu_inventory_holdtoopen", "1", true, false )
+CreateClientConVar( "as_menu_inventory_singlepanel", "0", true, false )
 
 function AS.Inventory.Open( tab )
     if IsValid(frame_inventory) then frame_inventory:Close() end
 
     frame_inventory = vgui.Create("DFrame")
-    frame_inventory:SetSize(800, 600)
+    frame_inventory:SetSize(1000, 600)
     frame_inventory:Center()
     frame_inventory:MakePopup()
     frame_inventory:SetDraggable( false )
@@ -58,7 +24,7 @@ function AS.Inventory.Open( tab )
         surface.SetDrawColor( COLHUD_PRIMARY )
         surface.DrawRect( 0, 0, w, h )
     end
-    if GetConVar("as_menu_holdtoopen"):GetInt() > 0 then
+    if GetConVar("as_menu_inventory_holdtoopen"):GetInt() > 0 then
         frame_inventory.Think = function( self )
             if not input.IsButtonDown( input.GetKeyCode( GetConVarString("as_bind_inventory") ) ) and not input.IsButtonDown( input.GetKeyCode( GetConVarString("as_bind_stats") ) ) and not input.IsButtonDown( input.GetKeyCode( GetConVarString("as_bind_skills") ) ) and not input.IsButtonDown( input.GetKeyCode( GetConVarString("as_bind_missions") ) ) then
                 self:Close()
@@ -103,162 +69,200 @@ end
 -- ╚═════╝  ╚═════╝ ╚═╝╚══════╝╚═════╝ ╚══════╝
 
 function AS.Inventory.BuildInventory()
-    local inventory = vgui.Create("DPanel", sheet)
-    inventory.Paint = function() end
+    local inventory = vgui.Create("DPanel", sheets)
+    inventory.Paint = function(_,w,h) end
 
-    --Items
-    local scroll_items = vgui.Create("DScrollPanel", inventory)
-    scroll_items:SetSize( 500, 0 )
-    scroll_items:Dock( LEFT )
-    scroll_items:DockMargin( 0, 0, 0, 0 )
-    scroll_items.Paint = function(_,w,h)
+-- Items Panel
+    local itempanel = vgui.Create( "DPanel", inventory )
+    itempanel:SetSize( 665, 554 )
+    itempanel:Dock( LEFT )
+    itempanel:DockMargin( 0, 0, 0, 0 )
+    function itempanel:Paint(w,h)
         surface.SetDrawColor( COLHUD_SECONDARY )
-        surface.DrawRect(0, 0, w, h)
+        surface.DrawRect( 0, 0, w, h )
     end
 
-    local weightlbl = vgui.Create("DLabel", scroll_items)
+    local weightlbl = vgui.Create("DLabel", itempanel)
     weightlbl:SetFont("TargetID")
     weightlbl:SetText( "Weight: " .. LocalPlayer():GetCarryWeight() .. " / " .. LocalPlayer():MaxCarryWeight() )
     weightlbl:SetContentAlignment( 3 )
     weightlbl:SizeToContents()
     weightlbl:SetPos( 5, 3 )
 
-    local itemlist = vgui.Create("DIconLayout", scroll_items)
-    itemlist:SetPos( 5, 25 )
-    itemlist:SetSize( scroll_items:GetWide() - 10, scroll_items:GetTall() - 30)
-    itemlist:SetSpaceY( 5 )
-    itemlist:SetSpaceX( 5 )
+    local sheets_items = vgui.Create("DPropertySheet", itempanel)
+    sheets_items:SetPos(0, 25)
+    sheets_items:SetFadeTime( 0 )
+    sheets_items:SetSize( sheets_items:GetParent():GetWide(), sheets_items:GetParent():GetTall() - sheets_items:GetPos() )
+    sheets_items.Paint = function() end
 
-    for k, v in SortedPairs( LocalPlayer():GetInventory() ) do
-        local info = AS.Items[k]
-        local name = info.name or "name?" .. k
-        local desc = info.desc or "desc?" .. k
-        local weight = info.weight or "weight?" .. k
+    function BuildItemList( parent, category )
+        local scroll_items = vgui.Create("DScrollPanel", parent)
+        scroll_items:SetSize( scroll_items:GetParent():GetWide(), 0 )
+        scroll_items.Paint = function() end
 
-        local panel = itemlist:Add("SpawnIcon")
-        panel:SetSize( 60, 60 )
+        local itemlist = vgui.Create("DIconLayout", scroll_items)
+        itemlist:SetSize(scroll_items:GetWide() - 10, scroll_items:GetTall())
+        itemlist:SetSpaceY( 5 )
+        itemlist:SetSpaceX( 5 )
 
-        local itemamt = vgui.Create("DLabel", panel)
-        itemamt:SetFont("TargetID")
-        itemamt:SetText( v )
-        itemamt:SetContentAlignment( 3 )
-        itemamt:SizeToContents()
-        itemamt:SetPos( (panel:GetWide() - itemamt:GetWide()) - 2, panel:GetTall() - itemamt:GetTall() )
-        local function itemamtUpdate()
-            if LocalPlayer():GetInventory()[k] then
-                if IsValid( itemamt ) and IsValid( weightlbl ) then
-                    itemamt:SetText( LocalPlayer():GetInventory()[k] )
-                    itemamt:SizeToContents()
-                    weightlbl:SetText( "Weight: " .. LocalPlayer():GetCarryWeight() .. " / " .. LocalPlayer():MaxCarryWeight() )
-                    weightlbl:SizeToContents()
-                end
-            else
-                if IsValid( panel ) and IsValid( weightlbl ) then
-                    panel:Remove()
-                    weightlbl:SetText( "Weight: " .. LocalPlayer():GetCarryWeight() .. " / " .. LocalPlayer():MaxCarryWeight() )
-                    weightlbl:SizeToContents()
+        for k, v in SortedPairs( LocalPlayer():GetInventory() ) do
+            local info = AS.Items[k]
+            if category then
+                if info.category != category then continue end
+            end
+            local name = info.name or "name?" .. k
+            local desc = info.desc or "desc?" .. k
+            local weight = info.weight or "weight?" .. k
+
+            local panel = itemlist:Add("SpawnIcon")
+            panel:SetSize( 60, 60 )
+
+            local itemamt = vgui.Create("DLabel", panel)
+            itemamt:SetFont("TargetID")
+            itemamt:SetText( v )
+            itemamt:SetContentAlignment( 3 )
+            itemamt:SizeToContents()
+            itemamt:SetPos( (panel:GetWide() - itemamt:GetWide()) - 2, panel:GetTall() - itemamt:GetTall() )
+            local function itemamtUpdate()
+                if LocalPlayer():GetInventory()[k] then
+                    if IsValid( itemamt ) and IsValid( weightlbl ) then
+                        itemamt:SetText( LocalPlayer():GetInventory()[k] )
+                        itemamt:SizeToContents()
+                        itemamt:SetPos( (panel:GetWide() - itemamt:GetWide()) - 2, panel:GetTall() - itemamt:GetTall() )
+                        weightlbl:SetText( "Weight: " .. LocalPlayer():GetCarryWeight() .. " / " .. LocalPlayer():MaxCarryWeight() )
+                        weightlbl:SizeToContents()
+                    end
+                else
+                    if IsValid( panel ) and IsValid( weightlbl ) then
+                        panel:Remove()
+                        weightlbl:SetText( "Weight: " .. LocalPlayer():GetCarryWeight() .. " / " .. LocalPlayer():MaxCarryWeight() )
+                        weightlbl:SizeToContents()
+                    end
                 end
             end
-        end
 
-        panel:SetModel( AS.Items[k].model )
-        local TTtext = v > 1 and name .. "\n" .. desc .. "\nWeight: " .. weight .. " [" .. (isnumber(weight) and weight * v or "w?") .. "]" or name .. "\n" .. desc .. "\nWeight: " .. weight
-        panel:SetTooltip(TTtext)
-        panel.DoClick = function()
-            if AS.Items[k].use then
-                LocalPlayer():TakeItemFromInventory( k, 1 )
-                itemamtUpdate()
-                net.Start("as_inventory_useitem")
-                    net.WriteString( k )
-                net.SendToServer()
-            end
-        end
-        panel.DoRightClick = function()
-            local options = vgui.Create("DMenu")
-            --Use
-            if AS.Items[k].use then
-                options:AddOption("Use", function()
+            panel:SetModel( AS.Items[k].model )
+            local TTtext = v > 1 and name .. "\n" .. desc .. "\nWeight: " .. weight .. " [" .. (isnumber(weight) and weight * v or "w?") .. "]" or name .. "\n" .. desc .. "\nWeight: " .. weight
+            panel:SetTooltip(TTtext)
+            panel.DoClick = function()
+                if AS.Items[k].use then
                     LocalPlayer():TakeItemFromInventory( k, 1 )
                     itemamtUpdate()
                     net.Start("as_inventory_useitem")
                         net.WriteString( k )
                     net.SendToServer()
+                end
+            end
+            panel.DoRightClick = function()
+                local options = vgui.Create("DMenu")
+                --Use
+                if AS.Items[k].use then
+                    options:AddOption("Use", function()
+                        LocalPlayer():TakeItemFromInventory( k, 1 )
+                        itemamtUpdate()
+                        net.Start("as_inventory_useitem")
+                            net.WriteString( k )
+                        net.SendToServer()
+                    end)
+                end
+                --Drop
+                local function dropItem( item, amt )
+                    LocalPlayer():TakeItemFromInventory( item, amt )
+                    itemamtUpdate()
+                    net.Start("as_inventory_dropitem")
+                        net.WriteString( item )
+                        net.WriteInt( amt, 32 )
+                    net.SendToServer()
+                end
+                if v > 1 then
+                    options:AddOption("Drop 1", function()
+                        dropItem( k, 1 )
+                    end)
+                    options:AddOption("Drop X", function()
+                        VerifySlider( LocalPlayer():GetInventory()[k], function( amt )
+                            dropItem( k, amt )
+                        end )
+                    end)
+                end
+                options:AddOption("Drop All", function()
+                    dropItem( k, v )
                 end)
-            end
-            --Drop
-            local function dropItem( item, amt )
-                LocalPlayer():TakeItemFromInventory( item, amt )
-                itemamtUpdate()
-                net.Start("as_inventory_dropitem")
-                    net.WriteString( item )
-                    net.WriteInt( amt, 32 )
-                net.SendToServer()
-            end
-            if v > 1 then
-                options:AddOption("Drop 1", function()
-                    dropItem( k, 1 )
-                end)
-                options:AddOption("Drop X", function()
-                    VerifySlider( LocalPlayer():GetInventory()[k], function( amt )
-                        dropItem( k, amt )
-                    end )
-                end)
-            end
-            options:AddOption("Drop All", function()
-                dropItem( k, v )
-            end)
-            --Destroy
-            local function destroyItem( item, amt )
-                LocalPlayer():TakeItemFromInventory( item, amt )
-                itemamtUpdate()
-                net.Start("as_inventory_destroyitem")
-                    net.WriteString( item )
-                    net.WriteInt( amt, 32 )
-                net.SendToServer()
-            end
-            if v > 1 then
-                options:AddOption("Destroy 1", function()
+                --Destroy
+                local function destroyItem( item, amt )
+                    LocalPlayer():TakeItemFromInventory( item, amt )
+                    itemamtUpdate()
+                    net.Start("as_inventory_destroyitem")
+                        net.WriteString( item )
+                        net.WriteInt( amt, 32 )
+                    net.SendToServer()
+                end
+                if v > 1 then
+                    options:AddOption("Destroy 1", function()
+                        Verify( function() 
+                            destroyItem( k, 1 )
+                        end )
+                    end)
+                    options:AddOption("Destroy X", function()
+                        VerifySlider( LocalPlayer():GetInventory()[k], function( amt )
+                            destroyItem( k, amt )
+                        end )
+                    end)
+                end
+                options:AddOption("Destroy All", function()
                     Verify( function() 
-                        destroyItem( k, 1 )
+                        destroyItem( k, v )
                     end )
                 end)
-                options:AddOption("Destroy X", function()
-                    VerifySlider( LocalPlayer():GetInventory()[k], function( amt )
-                        destroyItem( k, amt )
-                    end )
-                end)
+                options:Open()
+                function options:Think()
+                    if not IsValid( frame_inventory ) then options:Hide() end
+                end
             end
-            options:AddOption("Destroy All", function()
-                Verify( function() 
-                    destroyItem( k, v )
-                end )
-            end)
-            options:Open()
-            function options:Think()
-                if not IsValid( frame_inventory ) then options:Hide() end
+            panel.Paint = function(self,w,h)
+                if info.color then
+                    surface.SetDrawColor( info.color )
+                else
+                    surface.SetDrawColor( COLHUD_PRIMARY )
+                end
+                surface.DrawRect( 0, 0, w, h )
             end
         end
-        panel.Paint = function(self,w,h)
-            if info.color then
-                surface.SetDrawColor( info.color )
-            else
-                surface.SetDrawColor( COLHUD_PRIMARY )
-            end
-            surface.DrawRect( 0, 0, w, h )
-        end
+
+        return scroll_items
     end
 
-    --Character and info
-    local characterdisplay = vgui.Create( "DModelPanel", inventory )
-    characterdisplay:SetSize( 265, 0 )
-    characterdisplay:Dock( RIGHT )
-    characterdisplay:DockMargin( 5, 0, 0, 0 )
-    characterdisplay:SetFOV( 17 )
+    if GetConVar("as_menu_inventory_singlepanel"):GetInt() < 1 then
+        sheets_items:AddSheet("Weapons", BuildItemList(sheets_items, "weapon"), "icon16/gun.png")
+        sheets_items:AddSheet("Armor", BuildItemList(sheets_items, "armor"), "icon16/user.png")
+        sheets_items:AddSheet("Ammo", BuildItemList(sheets_items, "ammo"), "icon16/briefcase.png")
+        sheets_items:AddSheet("Medical", BuildItemList(sheets_items, "med"), "icon16/heart.png")
+        sheets_items:AddSheet("Food", BuildItemList(sheets_items, "food"), "icon16/cup.png")
+        sheets_items:AddSheet("Vehicle", BuildItemList(sheets_items, "vehicle"), "icon16/car.png")
+        sheets_items:AddSheet("Tool", BuildItemList(sheets_items, "tool"), "icon16/wrench.png")
+        sheets_items:AddSheet("Misc", BuildItemList(sheets_items, "misc"), "icon16/cog.png")
+        sheets_items:AddSheet("All", BuildItemList(sheets_items), "icon16/basket.png")
+    else
+        sheets_items:AddSheet("All", BuildItemList(sheets_items), "icon16/basket.png")
+    end
+
+--Character Panel
+    local characterpanel = vgui.Create( "DPanel", inventory )
+    characterpanel:SetSize( 300, 434 )
+    characterpanel:Dock( RIGHT )
+    characterpanel:DockMargin( 5, 0, 0, 120 )
+    function characterpanel:Paint(w,h)
+        surface.SetDrawColor( COLHUD_SECONDARY )
+        surface.DrawRect( 0, 0, w, h )
+    end
+
+    local characterdisplay = vgui.Create( "DModelPanel", characterpanel )
+    characterdisplay:SetSize( characterpanel:GetWide(), characterpanel:GetTall() )
+    characterdisplay:SetFOV( 22 )
     characterdisplay:SetModel(LocalPlayer():GetModel())
     local eyepos = characterdisplay.Entity:GetBonePosition(characterdisplay.Entity:LookupBone("ValveBiped.Bip01_Head1")) or Vector(0,0,0)
-    eyepos:Add(Vector(0,0,-20))
+    eyepos:Add(Vector(0,0,-23))
 	characterdisplay:SetLookAt( eyepos )
-    characterdisplay:SetCamPos( eyepos - Vector(-150,0,0) )
+    characterdisplay:SetCamPos( eyepos - Vector(-140,0,-10) )
     characterdisplay.Angles = Angle( 0, 70, 90 )
     function characterdisplay:DragMousePress()
         self.PressX, self.PressY = gui.MousePos()
@@ -284,44 +288,47 @@ function AS.Inventory.BuildInventory()
         end
     end
 
-    local expbg = vgui.Create("DPanel", characterdisplay)
-    expbg:SetSize( characterdisplay:GetWide(), 10 )
-    expbg:SetPos( 0, 544 )
+    local charname = vgui.Create("DLabel", characterdisplay)
+    charname:SetPos( 5, 5 )
+    charname:SetFont("TargetID")
+    charname:SetText( LocalPlayer():Nickname() )
+    charname:SizeToContents()
 
-    local exp = vgui.Create("DLabel", characterdisplay)
-    exp:SetFont("TargetID")
-    exp:SetText( LocalPlayer():GetExperience() .. " / " .. LocalPlayer():ExpToLevel() )
-    exp:SizeToContents()
-    exp:SetPos( characterdisplay:GetWide() / 2 - exp:GetWide() / 2, 540 )
-
-    function expbg:Paint(w, h) --Calling the paint after so that exp can be drawn over the contents.
-        surface.SetDrawColor( AS.Colors.Secondary )
-        surface.DrawOutlinedRect( 0, 0, w, h, 1 )
-        surface.SetDrawColor( AS.Colors.Tertiary )
-        local maxlength = 263
-        local ply = LocalPlayer()
-        local plylvl = ply:GetLevel() > 1 and ply:GetLevel() - 1 or 1
-        local barlength = ply:GetLevel() > 1 and (ply:GetExperience() - CalcExpForLevel( plylvl )) / (ply:ExpToLevel() - CalcExpForLevel( plylvl )) * maxlength or (ply:GetExperience() / ply:ExpToLevel()) * maxlength
-        surface.DrawRect( 1, 1, barlength, h - 2 )
-
-        if expbg:IsHovered() then
-            exp:Show()
-        else
-            exp:Hide()
-        end
+--Weapons Panel
+    local weaponpanel = vgui.Create( "DPanel", inventory )
+    weaponpanel:SetPos( 674, 440 )
+    weaponpanel:SetSize( 300, 115 )
+    function weaponpanel:Paint(w,h)
+        surface.SetDrawColor( COLHUD_SECONDARY )
+        surface.DrawRect( 0, 0, w, h )
     end
 
-    local name = vgui.Create("DLabel", characterdisplay)
-    name:SetPos( 0, 0 )
-    name:SetFont("TargetID")
-    name:SetText( LocalPlayer():Nickname() )
-    name:SizeToContents()
-    
-    local level = vgui.Create("DLabel", characterdisplay)
-    level:SetPos( 0, 20 )
-    level:SetFont("TargetID")
-    level:SetText( "Level " .. LocalPlayer():GetLevel() )
-    level:SizeToContents()
+    local weaponscroll = vgui.Create( "DHorizontalScroller", weaponpanel )
+    weaponscroll:SetSize( weaponscroll:GetParent():GetWide() - 5, weaponscroll:GetParent():GetTall() - 5 )
+    weaponscroll:SetPos( 2, 2 )
+    weaponscroll:SetOverlap( -2 )
+
+    for k, v in SortedPairs( LocalPlayer():GetWeapons() ) do
+        local weaponinfopanel = vgui.Create("DPanel")
+        weaponinfopanel:SetSize( 70, weaponscroll:GetTall() )
+        function weaponinfopanel:Paint(w,h)
+            surface.SetDrawColor( COLHUD_PRIMARY )
+            surface.DrawRect( 0, 0, w, h )
+        end
+
+        local weaponname = vgui.Create("DLabel", weaponinfopanel)
+        weaponname:SetPos( 0, 0 )
+        weaponname:SetFont("TargetIDSmall")
+        weaponname:SetText( v:GetPrintName() )
+        weaponname:SizeToContents()
+
+        local unequipwep = vgui.Create("DButton", weaponinfopanel)
+        unequipwep:SetSize( weaponinfopanel:GetWide() - 2, 18  )
+        unequipwep:SetPos( 1, weaponinfopanel:GetTall() - unequipwep:GetTall() - 2)
+        unequipwep:SetText("Unequip")
+
+        weaponscroll:AddPanel( weaponinfopanel )
+    end
 
     return inventory
 end

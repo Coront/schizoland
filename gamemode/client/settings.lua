@@ -66,9 +66,6 @@ function AS.Settings.BuildOptions()
     SectionLabel( "Gameplay", xpos, ypos, settings_scroll )
     addSpace( 0, 35 )
 
-    ToggleButton("Hold-To-Open Inventory", xpos, ypos, settings_scroll, "as_menu_holdtoopen")
-    addSpace( 0, 20 )
-
     ToggleButton("Verify certain actions - Example: Destroying Items", xpos, ypos, settings_scroll, "as_gameplay_verify")
     addSpace( 0, 20 )
 
@@ -77,7 +74,18 @@ function AS.Settings.BuildOptions()
 
     resetX()
 
-    SectionLabel( "HUD / VGUI", xpos, ypos, settings_scroll )
+    SectionLabel( "GUI", xpos, ypos, settings_scroll )
+    addSpace( 0, 35 )
+
+    ToggleButton("Inventory: Hold-To-Open", xpos, ypos, settings_scroll, "as_menu_inventory_holdtoopen")
+    addSpace( 0, 20 )
+
+    ToggleButton("Inventory: Disable Categorization", xpos, ypos, settings_scroll, "as_menu_inventory_singlepanel")
+    addSpace( 0, 20 )
+
+    resetX()
+
+    SectionLabel( "HUD", xpos, ypos, settings_scroll )
     addSpace( 0, 35 )
 
     ToggleButton("Enable HUD", xpos, ypos, settings_scroll, "as_hud")
@@ -181,5 +189,8 @@ function AS.Settings.BuildOptions()
     addSpace( 0, 20 )
 
     KeyBind( "Statistics", xpos, ypos, settings_scroll, "as_bind_stats" )
+    addSpace( 0, 20 )
+
+    KeyBind( "Crafting", xpos, ypos, settings_scroll, "as_bind_craft" )
     addSpace( 0, 20 )
 end
