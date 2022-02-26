@@ -7,11 +7,14 @@ AS.AddLootTable( "drawer", {
         time = 300, --Time to regenerate
         chance = 80, --Chance to regenerate on timer call
         minitem = 1, --Minimal items that will spawn on regenerate call
-        maxitem = 5, --Maximum items that will spawn on regenerate call (item stacks not included)
+        maxitem = 4, --Maximum items that will spawn on regenerate call (item stacks not included)
         items = {
             ["misc_scrapmetal"] = {tickets = 100, min = 1, max = 6}, --key is itemid, tickets is drawing chance, min is minimal stack, max is maximum stack
-            ["misc_smallparts"] = {tickets = 95, min = 1, max = 4},
-            ["misc_shoe"] = {tickets = 90, min = 1, max = 1},
+            ["misc_smallparts"] = {tickets = 95, min = 1, max = 6},
+            ["misc_chemical"] = {tickets = 90, min = 1, max = 4},
+            ["misc_emptysodacan"] = {tickets = 85, min = 1, max = 1},
+            ["misc_shoe"] = {tickets = 80, min = 1, max = 1},
+            ["misc_mechanicalparts"] = {tickets = 80, min = 1, max = 1},
         },
     },
 } )

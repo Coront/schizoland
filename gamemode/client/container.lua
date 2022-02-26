@@ -92,7 +92,7 @@ function ContainerMenu( ent )
             end
         end
 
-        icon:SetModel( AS.Items[k].model )
+        icon:SetModel( AS.Items[k].model, AS.Items[k].skin or 0 )
         icon:SetTooltip( "Left Click to take all.\nRight Click to take amount." )
         icon.DoClick = function( self )
             if frame_container.ent:PlayerCanTakeItem( LocalPlayer(), k, frame_container.ent:GetInventory()[k] ) then

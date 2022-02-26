@@ -54,7 +54,7 @@ AS.AddBaseItem("tool_plant_orange", {
     category = "tool",
     model = "models/props/cs_office/plant01.mdl",
     value = 1,
-    weight = 0.4,
+    weight = 1,
 })
 
 AS.AddBaseItem("tool_plant_melon", {

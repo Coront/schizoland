@@ -141,7 +141,7 @@ function AS.Inventory.BuildInventory()
                 end
             end
 
-            panel:SetModel( AS.Items[k].model )
+            panel:SetModel( AS.Items[k].model, AS.Items[k].skin or 0 )
             local TTtext = v > 1 and name .. "\n" .. desc .. "\nWeight: " .. weight .. " [" .. (isnumber(weight) and weight * v or "w?") .. "]" or name .. "\n" .. desc .. "\nWeight: " .. weight
             panel:SetTooltip(TTtext)
             panel.DoClick = function()

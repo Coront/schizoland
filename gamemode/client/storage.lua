@@ -127,7 +127,7 @@ function AS.Storage.BuildInventory()
 
         local panel = inventoryitemlist:Add("SpawnIcon")
         panel:SetSize( 58, 58 )
-        panel:SetModel( info.model )
+        panel:SetModel( info.model, info.skin or 0 )
         local TTtext = v > 1 and name .. "\n" .. desc .. "\nWeight: " .. weight .. " [" .. (isnumber(weight) and weight * v or "w?") .. "]" or name .. "\n" .. desc .. "\nWeight: " .. weight
         tooltipadd = tooltipadd or ""
         panel:SetTooltip(TTtext .. tooltipadd)
@@ -139,11 +139,6 @@ function AS.Storage.BuildInventory()
             end
             surface.DrawRect( 0, 0, w, h )
         end
-
-        local image = vgui.Create("DImage", panel)
-        image:SetSize(panel:GetWide(), panel:GetTall())
-        local model = v and "spawnicons/" .. string.Replace( AS.Items[k].model, ".mdl", ".png" ) or ""
-        image:SetImage( model )
 
         local itemamt = vgui.Create("DLabel", panel)
         itemamt:SetFont("TargetID")
@@ -230,7 +225,7 @@ function AS.Storage.BuildStorage()
 
         local panel = storageitemlist:Add("SpawnIcon")
         panel:SetSize( 58, 58 )
-        panel:SetModel( info.model )
+        panel:SetModel( info.model, info.skin or 0 )
         local TTtext = v > 1 and name .. "\n" .. desc .. "\nWeight: " .. weight .. " [" .. (isnumber(weight) and weight * v or "w?") .. "]" or name .. "\n" .. desc .. "\nWeight: " .. weight
         tooltipadd = tooltipadd or ""
         panel:SetTooltip(TTtext .. tooltipadd)

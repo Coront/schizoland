@@ -41,7 +41,7 @@ function ItemMenu()
 
             local panel = itemlist:Add("SpawnIcon")
             panel:SetSize( 60, 60 )
-            panel:SetModel( v.model )
+            panel:SetModel( v.model, v.skin or 0 )
             local name = v.name or "name?" .. k
             local desc = v.desc or "desc?" .. k
             local value = v.value or "value?" .. k

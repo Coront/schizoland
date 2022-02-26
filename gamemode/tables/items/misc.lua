@@ -14,7 +14,7 @@ AS.AddBaseItem("misc_scrapmetal", {
     category = "misc",
     model = "models/gibs/scanner_gib02.mdl",
     value = 1,
-    weight = 0.01,
+    weight = 0.02,
 })
 
 AS.AddBaseItem("misc_smallparts", {
@@ -23,7 +23,7 @@ AS.AddBaseItem("misc_smallparts", {
     category = "misc",
     model = "models/props_wasteland/gear02.mdl",
     value = 1,
-    weight = 0.01,
+    weight = 0.02,
 })
 
 AS.AddBaseItem("misc_chemical", {
@@ -32,7 +32,7 @@ AS.AddBaseItem("misc_chemical", {
     category = "misc",
     model = "models/spitball_medium.mdl",
     value = 1,
-    weight = 0.01,
+    weight = 0.02,
 })
 
 -- ██████╗  █████╗ ██████╗ ████████╗    ██╗████████╗███████╗███╗   ███╗███████╗
@@ -57,6 +57,15 @@ AS.AddBaseItem("misc_hide_guard", {
     desc = "A hide, harvested from a antlion guard. Useful in the creation of very protective armor.",
     category = "misc",
     model = "models/gibs/strider_gib2.mdl",
+    value = 1,
+    weight = 0.2,
+})
+
+AS.AddBaseItem("misc_gunpowder", {
+    name = "Gunpowder",
+    desc = "A black powder that pops when ignited. An important requirement for crafting ammunition.",
+    category = "misc",
+    model = "models/props_lab/jar01b.mdl",
     value = 1,
     weight = 0.2,
 })
@@ -214,6 +223,15 @@ AS.AddBaseItem("misc_isopropyl", {
     weight = 1,
 })
 
+AS.AddBaseItem("misc_emptybottle", {
+    name = "Empty Bottle",
+    desc = "An empty bottle. Can be filled with water or salvaged for resources.",
+    category = "misc",
+    model = "models/props_junk/garbage_plasticbottle003a.mdl",
+    value = 1,
+    weight = 0.4,
+})
+
 -- ████████╗ ██████╗  ██████╗ ██╗         ██╗████████╗███████╗███╗   ███╗███████╗
 -- ╚══██╔══╝██╔═══██╗██╔═══██╗██║         ██║╚══██╔══╝██╔════╝████╗ ████║██╔════╝
 --    ██║   ██║   ██║██║   ██║██║         ██║   ██║   █████╗  ██╔████╔██║███████╗
@@ -257,13 +275,14 @@ AS.AddBaseItem("misc_shoe", {
     weight = 0.4,
 })
 
-AS.AddBaseItem("misc_emptybottle", {
-    name = "Empty Bottle",
-    desc = "An empty bottle. Can be filled with water or salvaged for resources.",
+AS.AddBaseItem("misc_emptysodacan", {
+    name = "Empty Soda Can",
+    desc = "An empty soda can. Can be salvaged for raw resources.",
     category = "misc",
-    model = "models/props_junk/garbage_plasticbottle003a.mdl",
+    model = "models/props_junk/PopCan01a.mdl",
+    skin = 2,
     value = 1,
-    weight = 0.4,
+    weight = 0.1,
 })
 
 AS.AddBaseItem("misc_metalcan", {
@@ -272,5 +291,14 @@ AS.AddBaseItem("misc_metalcan", {
     category = "misc",
     model = "models/props_junk/garbage_metalcan002a.mdl",
     value = 1,
-    weight = 0.4,
+    weight = 0.125,
+})
+
+AS.AddBaseItem("misc_checmicalbucket", {
+    name = "Chemical Bucket",
+    desc = "A bucket that has some random chemicals inside of it. Probably not really useful for much.",
+    category = "misc",
+    model = "models/props_junk/plasticbucket001a.mdl",
+    value = 1,
+    weight = 1,
 })
