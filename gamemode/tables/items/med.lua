@@ -8,7 +8,12 @@ AS.AddBaseItem("med_bag", {
     use = {
         health = 15,
         sound = "physics/body/body_medium_impact_soft4.wav",
-    }
+    },
+    craft = {
+        ["misc_scrap"] = 20,
+        ["misc_smallparts"] = 15,
+        ["misc_chemical"] = 35,
+    },
 })
 
 AS.AddBaseItem("med_vial", {

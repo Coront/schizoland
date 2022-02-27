@@ -7,11 +7,17 @@
 
 AS.AddBaseItem("tool_armor", {
     name = "Armor Station",
-    desc = "A station that allows wastelanders to craft armors.",
+    desc = "A station that allows mercenaries to craft armors.",
     category = "tool",
     model = "models/props_wasteland/controlroom_desk001b.mdl",
     value = 1,
     weight = 0.4,
+    class = "mercenary",
+    craft = {
+        ["misc_scrap"] = 300,
+        ["misc_smallparts"] = 400,
+        ["misc_chemical"] = 350,
+    },
 })
 
 AS.AddBaseItem("tool_stove", {
@@ -21,6 +27,12 @@ AS.AddBaseItem("tool_stove", {
     model = "models/props_c17/furnitureStove001a.mdl",
     value = 1,
     weight = 0.4,
+    class = "cultivator",
+    craft = {
+        ["misc_scrap"] = 400,
+        ["misc_smallparts"] = 300,
+        ["misc_chemical"] = 450,
+    },
 })
 
 AS.AddBaseItem("tool_workbench", {
@@ -30,6 +42,13 @@ AS.AddBaseItem("tool_workbench", {
     model = "models/props_canal/winch02.mdl",
     value = 1,
     weight = 0.4,
+    class = "engineer",
+    craft = {
+        ["misc_scrap"] = 325,
+        ["misc_smallparts"] = 300,
+        ["misc_chemical"] = 350,
+        ["misc_saw"] = 1,
+    },
 })
 
 AS.AddBaseItem("tool_pulse", {
@@ -39,6 +58,12 @@ AS.AddBaseItem("tool_pulse", {
     model = "models/props_combine/combine_interface002.mdl",
     value = 1,
     weight = 0.4,
+    class = "scientist",
+    craft = {
+        ["misc_scrap"] = 500,
+        ["misc_smallparts"] = 600,
+        ["misc_chemical"] = 450,
+    },
 })
 
 -- ██████╗ ██╗      █████╗ ███╗   ██╗████████╗███████╗

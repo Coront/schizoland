@@ -32,6 +32,16 @@ function PlayerMeta:HasInInventory( item, amt )
     return false
 end
 
+function PlayerMeta:GetItemCount( item )
+    if not AS.Items[item] then AS.LuaError("Attempt to request a non-existant item - " .. item) return end
+    local inv = self:GetInventory()
+    if inv and inv[item] then
+        return inv[item]
+    else
+        return 0
+    end
+end
+
 function PlayerMeta:GetCarryWeight()
     local weight = 0
     for k, v in pairs(self:GetInventory()) do

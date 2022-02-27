@@ -11,7 +11,13 @@ AS.AddBaseItem("wep_peashooter", {
     category = "weapon",
     model = "models/weapons/w_pistol.mdl",
     value = 10,
-    weight = 0.8
+    weight = 0.8,
+    class = "engineer",
+    craft = {
+        ["misc_scrap"] = 40,
+        ["misc_smallparts"] = 50,
+        ["misc_chemical"] = 35,
+    },
 })
 
 AS.AddBaseItem("wep_p228", {
@@ -20,7 +26,13 @@ AS.AddBaseItem("wep_p228", {
     category = "weapon",
     model = "models/weapons/w_pist_p228.mdl",
     value = 15,
-    weight = 0.8
+    weight = 0.8,
+    class = "engineer",
+    craft = {
+        ["misc_scrap"] = 60,
+        ["misc_smallparts"] = 50,
+        ["misc_chemical"] = 40,
+    },
 })
 
 AS.AddBaseItem("wep_usp", {

@@ -8,7 +8,7 @@
 -- ╚══════╝ ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝         ╚═╝   ╚═╝   ╚══════╝╚═╝     ╚═╝╚══════╝
 -- Scrap items are raw resources.
 
-AS.AddBaseItem("misc_scrapmetal", {
+AS.AddBaseItem("misc_scrap", {
     name = "Scrap Metal",
     desc = "Metal, salvaged from various objects. Useful for crafting.",
     category = "misc",
@@ -27,8 +27,8 @@ AS.AddBaseItem("misc_smallparts", {
 })
 
 AS.AddBaseItem("misc_chemical", {
-    name = "Chemical Nugget",
-    desc = "A chemical nugget. Found from salvaging chemical objects. Useful for crafting.",
+    name = "Chemicals",
+    desc = "A nugget with chemicals. Found from salvaging chemical objects. Useful for crafting.",
     category = "misc",
     model = "models/spitball_medium.mdl",
     value = 1,
@@ -85,6 +85,12 @@ AS.AddBaseItem("misc_mechanicalparts", {
     model = "models/gibs/scanner_gib04.mdl",
     value = 1,
     weight = 0.2,
+    class = "engineer",
+    craft = {
+        ["misc_scrap"] = 25,
+        ["misc_smallparts"] = 30,
+        ["misc_chemical"] = 10,
+    },
 })
 
 AS.AddBaseItem("misc_electronicparts", {
@@ -94,6 +100,12 @@ AS.AddBaseItem("misc_electronicparts", {
     model = "models/props/cs_office/computer_caseb_p2a.mdl",
     value = 1,
     weight = 0.2,
+    class = "scientist",
+    craft = {
+        ["misc_scrap"] = 30,
+        ["misc_smallparts"] = 25,
+        ["misc_chemical"] = 20,
+    },
 })
 
 AS.AddBaseItem("misc_saw", {
@@ -112,6 +124,12 @@ AS.AddBaseItem("misc_electronicreceiver", {
     model = "models/props_lab/reciever01c.mdl",
     value = 1,
     weight = 0.2,
+    class = "scientist",
+    craft = {
+        ["misc_scrap"] = 50,
+        ["misc_smallparts"] = 40,
+        ["misc_chemical"] = 25,
+    },
 })
 
 AS.AddBaseItem("misc_seed_orange", {
@@ -193,6 +211,12 @@ AS.AddBaseItem("misc_gasoline", {
     model = "models/props_junk/metalgascan.mdl",
     value = 1,
     weight = 4,
+    class = "cultivator",
+    craft = {
+        ["misc_scrap"] = 15,
+        ["misc_smallparts"] = 20,
+        ["misc_chemical"] = 35,
+    },
 })
 
 AS.AddBaseItem("misc_paintcan", {
@@ -256,6 +280,12 @@ AS.AddBaseItem("misc_munitionpress", {
     model = "models/props/cs_militia/reloadingpress01.mdl",
     value = 1,
     weight = 2,
+    class = "engineer",
+    craft = {
+        ["misc_scrap"] = 40,
+        ["misc_smallparts"] = 50,
+        ["misc_chemical"] = 25,
+    },
 })
 
 -- ███████╗ █████╗ ██╗    ██╗   ██╗ █████╗  ██████╗ ███████╗    ██╗████████╗███████╗███╗   ███╗███████╗

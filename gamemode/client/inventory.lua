@@ -11,6 +11,7 @@ CreateClientConVar( "as_menu_inventory_holdtoopen", "1", true, false )
 CreateClientConVar( "as_menu_inventory_singlepanel", "0", true, false )
 
 function AS.Inventory.Open( tab )
+    if not LocalPlayer():IsLoaded() then return end
     if IsValid(frame_inventory) then frame_inventory:Close() end
 
     frame_inventory = vgui.Create("DFrame")

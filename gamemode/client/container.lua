@@ -66,14 +66,14 @@ function ContainerMenu( ent )
 
         local name = vgui.Create("DLabel", panel[k])
         name:SetFont("TargetID")
-        name:SetText( info.name .. " (" .. v .. "x)" )
+        name:SetText( info.name .. " (" .. v .. ")" )
         name:SetContentAlignment( 3 )
         name:SizeToContents()
         name:SetPos( icon:GetWide() + 5, 0 )
         function frame_container.containeritemamtUpdate( key )
             if frame_container.ent:GetInventory()[key] then
                 if IsValid( name ) then
-                    name:SetText( info.name .. " (" .. frame_container.ent:GetInventory()[k] .. "x)" )
+                    name:SetText( info.name .. " (" .. frame_container.ent:GetInventory()[k] .. ")" )
                     name:SizeToContents()
                 end
             else

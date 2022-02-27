@@ -13,7 +13,7 @@ function PlayerMeta:ValidateInventory() --This function will cycle through a pla
     if #invaliditems > 0 then
         self:ChatPrint("Invalid items have been detected in your inventory, and have been cleared:")
         for k, v in pairs(invaliditems) do
-            self:ChatPrint(k .. "(x" .. v .. ")")
+            self:ChatPrint(k .. "(" .. v .. ")")
         end
     end
 end
@@ -64,14 +64,14 @@ function PlayerMeta:DropItem( item, amt )
     ent:SetPos( self:TracePosFromEyes(200) + Vector( 0, 0, 20 ) )
     ent:Spawn()
     ent:PhysWake()
-    self:ChatPrint("Dropped " .. itemname .. " (x" .. amt .. ")")
+    self:ChatPrint("Dropped " .. itemname .. " (" .. amt .. ")")
     ent:EmitSound(ITEMCUE.DROP)
 end
 
 function PlayerMeta:DestroyItem( item, amt )
     local itemname = AS.Items[item].name
     self:TakeItemFromInventory( item, amt )
-    self:ChatPrint("Destroyed " .. itemname .. " (x" .. amt .. ")")
+    self:ChatPrint("Destroyed " .. itemname .. " (" .. amt .. ")")
     self:EmitSound(ITEMCUE.DESTROY)
 end
 

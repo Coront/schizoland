@@ -11,6 +11,6 @@ function AdminSpawnItem( _, ply )
     end
 
     ply:AddItemToInventory( item, amt )
-    ply:ChatPrint("You have received " .. AS.Items[item].name .. " (x" .. amt .. ").")
+    ply:ChatPrint("You have received " .. AS.Items[item].name .. " (" .. amt .. ").")
 end
 net.Receive("as_admin_spawnitem", AdminSpawnItem)

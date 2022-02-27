@@ -21,4 +21,8 @@ AS.AddBaseItem("my_item", {
         soundcs = "", --Will emit a sound from the player (clientside)
         func = function() end --Will hold and run a function if ever needed. It is recommended to avoid using this unless under special circumstances.
     },
+    class = "mercenary", --The class (by ID) that the player must be to craft an item (if it's craftable). Removing this key while craft table is present makes it craftable for everyone.
+    craft = { --A table that will allow this item to be hand-crafting (via crafting menu).
+        ["misc_scrap"] = 1, --Key will always be item id, value will be amount. If the value is 0, it means the player must have the item but it will not be consumed.
+    },
 })

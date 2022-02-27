@@ -9,7 +9,7 @@ AS.AddLootTable( "drawer", {
         minitem = 1, --Minimal items that will spawn on regenerate call
         maxitem = 4, --Maximum items that will spawn on regenerate call (item stacks not included)
         items = {
-            ["misc_scrapmetal"] = {tickets = 100, min = 1, max = 6}, --key is itemid, tickets is drawing chance, min is minimal stack, max is maximum stack
+            ["misc_scrap"] = {tickets = 100, min = 1, max = 6}, --key is itemid, tickets is drawing chance, min is minimal stack, max is maximum stack
             ["misc_smallparts"] = {tickets = 95, min = 1, max = 6},
             ["misc_chemical"] = {tickets = 90, min = 1, max = 4},
             ["misc_emptysodacan"] = {tickets = 85, min = 1, max = 1},
@@ -30,7 +30,7 @@ AS.AddLootTable( "drawer2", {
         minitem = 1,
         maxitem = 5,
         items = {
-            ["misc_scrapmetal"] = {tickets = 100, min = 1, max = 6},
+            ["misc_scrap"] = {tickets = 100, min = 1, max = 6},
             ["misc_smallparts"] = {tickets = 95, min = 1, max = 4},
             ["misc_shoe"] = {tickets = 90, min = 1, max = 1},
         },
@@ -48,7 +48,7 @@ AS.AddLootTable( "desk", {
         minitem = 1,
         maxitem = 5,
         items = {
-            ["misc_scrapmetal"] = {tickets = 100, min = 1, max = 6},
+            ["misc_scrap"] = {tickets = 100, min = 1, max = 6},
             ["misc_smallparts"] = {tickets = 95, min = 1, max = 4},
             ["misc_shoe"] = {tickets = 90, min = 1, max = 1},
         },
@@ -66,7 +66,7 @@ AS.AddLootTable( "desk2", {
         minitem = 1,
         maxitem = 5,
         items = {
-            ["misc_scrapmetal"] = {tickets = 100, min = 1, max = 6},
+            ["misc_scrap"] = {tickets = 100, min = 1, max = 6},
             ["misc_smallparts"] = {tickets = 95, min = 1, max = 4},
             ["misc_shoe"] = {tickets = 90, min = 1, max = 1},
         },
@@ -84,7 +84,7 @@ AS.AddLootTable( "dresser", {
         minitem = 1,
         maxitem = 5,
         items = {
-            ["misc_scrapmetal"] = {tickets = 100, min = 1, max = 6},
+            ["misc_scrap"] = {tickets = 100, min = 1, max = 6},
             ["misc_smallparts"] = {tickets = 95, min = 1, max = 4},
             ["misc_shoe"] = {tickets = 90, min = 1, max = 1},
         },
@@ -102,7 +102,7 @@ AS.AddLootTable( "computer", {
         minitem = 1,
         maxitem = 5,
         items = {
-            ["misc_scrapmetal"] = {tickets = 100, min = 1, max = 6},
+            ["misc_scrap"] = {tickets = 100, min = 1, max = 6},
             ["misc_smallparts"] = {tickets = 95, min = 1, max = 4},
             ["misc_shoe"] = {tickets = 90, min = 1, max = 1},
         },
@@ -120,7 +120,7 @@ AS.AddLootTable( "stove", {
         minitem = 1,
         maxitem = 5,
         items = {
-            ["misc_scrapmetal"] = {tickets = 100, min = 1, max = 6},
+            ["misc_scrap"] = {tickets = 100, min = 1, max = 6},
             ["misc_smallparts"] = {tickets = 95, min = 1, max = 4},
             ["misc_shoe"] = {tickets = 90, min = 1, max = 1},
         },
@@ -138,7 +138,7 @@ AS.AddLootTable( "fridge", {
         minitem = 1,
         maxitem = 5,
         items = {
-            ["misc_scrapmetal"] = {tickets = 100, min = 1, max = 6},
+            ["misc_scrap"] = {tickets = 100, min = 1, max = 6},
             ["misc_smallparts"] = {tickets = 95, min = 1, max = 4},
             ["misc_shoe"] = {tickets = 90, min = 1, max = 1},
         },
@@ -156,7 +156,7 @@ AS.AddLootTable( "vending", {
         minitem = 1,
         maxitem = 5,
         items = {
-            ["misc_scrapmetal"] = {tickets = 100, min = 1, max = 6},
+            ["misc_scrap"] = {tickets = 100, min = 1, max = 6},
             ["misc_smallparts"] = {tickets = 95, min = 1, max = 4},
             ["misc_shoe"] = {tickets = 90, min = 1, max = 1},
         },
@@ -174,7 +174,7 @@ AS.AddLootTable( "box", {
         minitem = 1,
         maxitem = 2,
         items = {
-            ["misc_scrapmetal"] = {tickets = 100, min = 1, max = 6},
+            ["misc_scrap"] = {tickets = 100, min = 1, max = 6},
             ["misc_paintcan"] = {tickets = 95, min = 1, max = 4},
             ["misc_emptybottle"] = {tickets = 90, min = 1, max = 1},
         },
@@ -192,7 +192,7 @@ AS.AddLootTable( "crate", {
         minitem = 1,
         maxitem = 5,
         items = {
-            ["misc_scrapmetal"] = {tickets = 100, min = 1, max = 6},
+            ["misc_scrap"] = {tickets = 100, min = 1, max = 6},
             ["misc_smallparts"] = {tickets = 95, min = 1, max = 4},
             ["misc_shoe"] = {tickets = 90, min = 1, max = 1},
         },
@@ -210,7 +210,7 @@ AS.AddLootTable( "file", {
         minitem = 1,
         maxitem = 5,
         items = {
-            ["misc_scrapmetal"] = {tickets = 100, min = 1, max = 6},
+            ["misc_scrap"] = {tickets = 100, min = 1, max = 6},
             ["misc_smallparts"] = {tickets = 95, min = 1, max = 4},
             ["misc_shoe"] = {tickets = 90, min = 1, max = 1},
         },
@@ -228,7 +228,7 @@ AS.AddLootTable( "file2", {
         minitem = 1,
         maxitem = 5,
         items = {
-            ["misc_scrapmetal"] = {tickets = 100, min = 1, max = 6},
+            ["misc_scrap"] = {tickets = 100, min = 1, max = 6},
             ["misc_smallparts"] = {tickets = 95, min = 1, max = 4},
             ["misc_shoe"] = {tickets = 90, min = 1, max = 1},
         },
@@ -246,7 +246,7 @@ AS.AddLootTable( "lockers", {
         minitem = 1,
         maxitem = 5,
         items = {
-            ["misc_scrapmetal"] = {tickets = 100, min = 1, max = 6},
+            ["misc_scrap"] = {tickets = 100, min = 1, max = 6},
             ["misc_smallparts"] = {tickets = 95, min = 1, max = 4},
             ["misc_shoe"] = {tickets = 90, min = 1, max = 1},
         },
@@ -264,7 +264,7 @@ AS.AddLootTable( "storagelocker", {
         minitem = 1,
         maxitem = 5,
         items = {
-            ["misc_scrapmetal"] = {tickets = 100, min = 1, max = 6},
+            ["misc_scrap"] = {tickets = 100, min = 1, max = 6},
             ["misc_smallparts"] = {tickets = 95, min = 1, max = 4},
             ["misc_shoe"] = {tickets = 90, min = 1, max = 1},
         },
@@ -282,7 +282,7 @@ AS.AddLootTable( "footlocker", {
         minitem = 1,
         maxitem = 5,
         items = {
-            ["misc_scrapmetal"] = {tickets = 100, min = 1, max = 6},
+            ["misc_scrap"] = {tickets = 100, min = 1, max = 6},
             ["misc_smallparts"] = {tickets = 95, min = 1, max = 4},
             ["misc_shoe"] = {tickets = 90, min = 1, max = 1},
         },
@@ -300,7 +300,7 @@ AS.AddLootTable( "guncabinet", {
         minitem = 1,
         maxitem = 5,
         items = {
-            ["misc_scrapmetal"] = {tickets = 100, min = 1, max = 6},
+            ["misc_scrap"] = {tickets = 100, min = 1, max = 6},
             ["misc_smallparts"] = {tickets = 95, min = 1, max = 4},
             ["misc_shoe"] = {tickets = 90, min = 1, max = 1},
         },
@@ -318,7 +318,7 @@ AS.AddLootTable( "stash", {
         minitem = 1,
         maxitem = 5,
         items = {
-            ["misc_scrapmetal"] = {tickets = 100, min = 1, max = 6},
+            ["misc_scrap"] = {tickets = 100, min = 1, max = 6},
             ["misc_smallparts"] = {tickets = 95, min = 1, max = 4},
             ["misc_shoe"] = {tickets = 90, min = 1, max = 1},
         },

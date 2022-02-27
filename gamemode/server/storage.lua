@@ -13,7 +13,7 @@ function PlayerMeta:ValidateStorage() --This function will cycle through a playe
     if #invaliditems > 0 then
         self:ChatPrint("Invalid items have been detected in your stash, and have been cleared:")
         for k, v in pairs(invaliditems) do
-            self:ChatPrint(k .. "(x" .. v .. ")")
+            self:ChatPrint(k .. "(" .. v .. ")")
         end
     end
 end

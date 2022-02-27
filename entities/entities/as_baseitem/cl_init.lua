@@ -27,7 +27,7 @@ hook.Add( "HUDPaint", "AS_ItemInfo", function()
         local name = AS.Items[id] and AS.Items[id].name or "item?name"
 
         local pickupkey = LocalPlayer():GetPos():Distance(v:GetPos()) < 100 and "\n[" .. string.upper(KEYBIND_USE) .. "] Pickup" or ""
-        draw.DrawText( name .. " (x" .. amt .. ")" .. pickupkey, "TargetID", pos.x, pos.y, Color(255,255,255,255), TEXT_ALIGN_CENTER )
+        draw.DrawText( name .. " (" .. amt .. ")" .. pickupkey, "TargetID", pos.x, pos.y, Color(255,255,255,255), TEXT_ALIGN_CENTER )
     end
 end)
 

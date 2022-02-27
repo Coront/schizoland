@@ -87,7 +87,7 @@ net.Receive( "as_container_takeitem", function(_, ply)
 
     --It's all verified.
     ent:PlayerTakeItem( ply, item, amt )
-	ply:ChatPrint( AS.Items[item].name .. " (" .. amt  .. "x) added to inventory." )
+	ply:ChatPrint( AS.Items[item].name .. " (" .. amt  .. ") added to inventory." )
 
 	ent:ResyncInventory() --We need to resync the inventory to all clients.
 end)

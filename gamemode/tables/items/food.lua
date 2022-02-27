@@ -74,7 +74,8 @@ AS.AddBaseItem("food_soup", {
     weight = 1,
     use = {
         hunger = 30,
-        soundcs = "npc/headcrab/headbite.wav",
+        thirst = 40,
+        soundcs = "npc/barnacle/barnacle_gulp1.wav",
     },
 })
 

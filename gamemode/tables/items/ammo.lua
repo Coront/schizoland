@@ -5,6 +5,14 @@ AS.AddBaseItem("ammo_pistol", {
     model = "models/Items/BoxSRounds.mdl",
     value = 5,
     weight = 1,
+    class = "engineer",
+    craft = {
+        ["misc_scrap"] = 10,
+        ["misc_smallparts"] = 5,
+        ["misc_chemical"] = 15,
+        ["misc_munitionpress"] = 0,
+        ["misc_gunpowder"] = 1,
+    },
 })
 
 AS.AddBaseItem("ammo_smg", {
@@ -14,6 +22,14 @@ AS.AddBaseItem("ammo_smg", {
     model = "models/Items/BoxMRounds.mdl",
     value = 8,
     weight = 1.25,
+    class = "engineer",
+    craft = {
+        ["misc_scrap"] = 20,
+        ["misc_smallparts"] = 15,
+        ["misc_chemical"] = 25,
+        ["misc_munitionpress"] = 0,
+        ["misc_gunpowder"] = 1,
+    },
 })
 
 AS.AddBaseItem("ammo_rifle", {

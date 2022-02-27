@@ -31,7 +31,7 @@ hook.Add( "PlayerButtonDown", "AS_Binds", function( ply, button )
         elseif button == GetConVarString("as_bind_stats") then
             AS.Inventory.Open( 4 )
         elseif button == GetConVarString("as_bind_craft") then
-            LocalPlayer():ChatPrint("open;craftmenu")
+            AS.Craft.Open()
         end
     end
 end )
