@@ -171,6 +171,9 @@ function AS.Settings.BuildOptions()
     ValueSlider( "Item Render Distance", xpos, ypos, 100, 1000, settings_scroll, "as_item_renderdist" )
     addSpace( 0, 20 )
 
+    ValueSlider( "Entity Render Distance", xpos, ypos, 500, 8000, settings_scroll, "as_entity_renderdist" )
+    addSpace( 0, 20 )
+
     resetX()
 
     SectionLabel( "Key Binds", xpos, ypos, settings_scroll )

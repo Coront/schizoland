@@ -1,9 +1,7 @@
 include( "shared.lua" )
 
-local RenderDistance = 2000
-
 function ENT:Draw()
-    if LocalPlayer():GetPos():Distance(self:GetPos()) < RenderDistance then
+    if LocalPlayer():GetPos():Distance(self:GetPos()) < GetConVar("as_entity_renderdist"):GetInt() then
         self:DrawModel()
         self:DrawShadow(true)
     else

@@ -12,6 +12,7 @@ for k, v in pairs( file.Find("aftershock/gamemode/client/*.lua", "LUA") ) do
 end
 
 CreateClientConVar( "as_gameplay_verify", "1", true, false )
+CreateClientConVar( "as_entity_renderdist", "2000", true, false )
 
 timer.Create( "as_autosave", 300, 0, function()
 	if LocalPlayer():IsLoaded() then
@@ -153,19 +154,19 @@ COLHUD_BAD = Color(GetConVar("as_hud_color_bad_r"):GetInt(), GetConVar("as_hud_c
 surface.CreateFont( "AftershockTitle", {
     font 		= "TargetID",
 	extended 	= false,
-	size 		= 100,
+	size 		= 102,
 	weight 		= 1000,
 	blursize 	= 0,
 	scanlines 	= 0,
-	antialias 	= true,
+	antialias 	= false,
 	underline 	= false,
 	italic 		= false,
 	strikeout 	= false,
 	symbol 		= false,
 	rotary 		= false,
-	shadow 		= false,
+	shadow 		= true,
 	additive 	= false,
-	outline 	= false,
+	outline 	= true,
 })
 
 surface.CreateFont( "AftershockButton", {
