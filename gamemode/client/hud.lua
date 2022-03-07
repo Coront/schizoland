@@ -134,7 +134,8 @@ function AftershockHUD()
     end
 
     local crosshair = tobool(GetConVar("as_hud_crosshair"):GetInt())
-    if crosshair then
+    local weaponcrosshair = tobool(GetConVar("as_hud_crosshair_weaponcrosshair"):GetInt())
+    if crosshair and not (weaponcrosshair and LocalPlayer():GetActiveWeapon().Base == "as_basewep" and not LocalPlayer():GetActiveWeapon().DefaultCrosshair) then
         local multidots = tobool(GetConVar("as_hud_crosshair_multidots"):GetInt())
         local x, y = ScrW() / 2, ScrH() / 2
         surface.SetDrawColor(Color(0,0,0))
@@ -199,6 +200,7 @@ end
 function GM:HUDShouldDraw( type )
     local hideHud = {
         ["CHudAmmo"] = true,
+        ["CHudSecondaryAmmo"] = true,
         ["CHudBattery"] = true,
         ["CHudCrosshair"] = true,
         ["CHudCloseCaption"] = true,

@@ -13,7 +13,7 @@ end
 
 hook.Add( "HUDPaint", "AS_ItemInfo", function()
     for k, v in pairs( ents.FindByClass("as_baseitem") ) do
-        if LocalPlayer():GetPos():Distance(v:GetPos()) > GetConVar("as_item_renderdist"):GetInt() then continue end
+        if LocalPlayer():GetPos():Distance(v:GetPos()) > 250 then continue end
         local trace = util.TraceLine({
             start = LocalPlayer():EyePos(),
             endpos = v:GetPos() + v:OBBCenter(),

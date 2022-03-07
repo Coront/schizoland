@@ -46,3 +46,15 @@ AS.AddMapData( "gm_valley", {
         Vector(-4508.03, -3779.64, 163.04),
     },
 })
+
+AS.AddMapData( "gm_postnuke_beta_4", {
+    Load = {
+        pos = Vector(-1429.20, 1270.12, 590.14),
+        ang = Angle(16.54, -48.93),
+    },
+    Spawns = {
+        Vector(-1211.22, 406.15, 156.03),
+        Vector(-1211.22, 342.85, 156.03),
+        Vector(-1211.22, 286.12, 156.03),
+    },
+})
