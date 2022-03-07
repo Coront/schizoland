@@ -26,8 +26,8 @@ Stat.ClipSize = 30 --Mag size
 Stat.Firerate = 60/780 --Attack Rate
 Stat.Spread = 0.02 --Spread Cone
 Stat.SpreadC = 0.017 --Spread Cone while crouching
-Stat.RecoilVertical = 0.03 --Veritcal recoil
-Stat.RecoilHorizontal = 0.06 --Horizontal recoil
+Stat.RecoilVertical = 0.5 --vertical recoil
+Stat.RecoilHorizontal = 0.65 --Horizontal recoil
 Stat.Sound = "weapons/mp5navy/mp5-1.wav"
 Stat.ReloadTime = 2.6
 

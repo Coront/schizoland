@@ -26,8 +26,8 @@ Stat.ClipSize = 10 --Mag size
 Stat.Firerate = 60/30 --Attack Rate
 Stat.Spread = 0.06 --Spread Cone
 Stat.SpreadC = 0.02 --Spread Cone while crouching
-Stat.RecoilVertical = 2 --Veritcal recoil
-Stat.RecoilHorizontal = 2 --Horizontal recoil
+Stat.RecoilVertical = 4 --vertical recoil
+Stat.RecoilHorizontal = 4 --Horizontal recoil
 Stat.Sound = "weapons/awp/awp1.wav"
 Stat.ReloadTime = 3.7
 

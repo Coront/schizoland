@@ -1,4 +1,4 @@
-SWEP.PrintName = "Spas-12"
+SWEP.PrintName = "SPAS-12"
 SWEP.Category = "Aftershock"
 SWEP.Spawnable = true
 SWEP.Base = "as_basewep"
@@ -31,8 +31,8 @@ Stat.ClipSize = 6 --Mag size
 Stat.Firerate = 60/420 --Attack Rate
 Stat.Spread = 0.06 --Spread Cone
 Stat.SpreadC = 0.035 --Spread Cone while crouching
-Stat.RecoilVertical = 1.75 --Veritcal recoil
-Stat.RecoilHorizontal = 5 --Horizontal recoil
+Stat.RecoilVertical = 6.3 --vertical recoil
+Stat.RecoilHorizontal = 7 --Horizontal recoil
 Stat.Sound = "weapons/shotgun/shotgun_fire6.wav"
 Stat.Reload = "weapons/shotgun/shotgun_reload3.wav"
 Stat.ReloadTime = 0.3

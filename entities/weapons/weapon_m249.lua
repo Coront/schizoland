@@ -23,11 +23,11 @@ Stat.Bullets = 1 --Bullets to fire
 Stat.Automatic = true
 Stat.Ammo = "ar2" --Ammo Type
 Stat.ClipSize = 100 --Mag size
-Stat.Firerate = 60/720 --Attack Rate
+Stat.Firerate = 60/650 --Attack Rate
 Stat.Spread = 0.06 --Spread Cone
 Stat.SpreadC = 0.03 --Spread Cone while crouching
-Stat.RecoilVertical = 0.11 --Veritcal recoil
-Stat.RecoilHorizontal = 0.13 --Horizontal recoil
+Stat.RecoilVertical = 1.2 --Vertical recoil
+Stat.RecoilHorizontal = 1.1 --Horizontal recoil
 Stat.Sound = "weapons/m249/m249-1.wav"
 Stat.ReloadTime = 5.4
 

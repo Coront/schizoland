@@ -149,6 +149,9 @@ function AS.Settings.BuildOptions()
     ToggleButton("Enable Weapon Ammo", xpos, ypos, settings_scroll, "as_hud_ammo")
     addSpace( 20, 20 )
 
+    ToggleButton("Show Background", xpos, ypos, settings_scroll, "as_hud_ammo_background")
+    addSpace( 0, 20 )
+
     ValueSlider( "Ammo X-Pos", xpos, ypos, -2000, 2000, settings_scroll, "as_hud_ammo_xadd" )
     addSpace( 0, 20 )
 

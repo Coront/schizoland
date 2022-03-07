@@ -291,14 +291,22 @@ function SWEP:Think()
         if CurTime() > self:GetNextReload() and self:GetNextReload() != 0 then
             if not self.ReloadOneByOne then
                 self:SetNextReload( 0 )
-                self:SetClip1( self.Primary.ClipSize )
+                local ammoMissing = self.Primary.ClipSize - self:Clip1()
+                if self:Ammo1() >= ammoMissing then
+                    self.Owner:SetAmmo( self:Ammo1() - ammoMissing, self:GetPrimaryAmmoType() )
+                    self:SetClip1( self:Clip1() + ammoMissing )
+                elseif self:Ammo1() < ammoMissing then
+                    self:SetClip1( self:Clip1() + self:Ammo1() )
+                    self.Owner:SetAmmo( 0, self:GetPrimaryAmmoType() )
+                end
             else
-                if self:Clip1() >= self.Primary.ClipSize or not self.Owner:KeyDown( IN_RELOAD ) then
+                if self:Clip1() >= self.Primary.ClipSize or self:Ammo1() <= 0 or not self.Owner:KeyDown( IN_RELOAD ) then
                     self:PlaySequence( self.Anim.Reload[3] )
                     self:SetNextReload( 0 )
                 else
                     self:PlaySequence( self.Anim.Reload[2] )
                     self:SetClip1( self:Clip1() + 1 )
+                    self.Owner:SetAmmo( self:Ammo1() - 1, self:GetPrimaryAmmoType())
                     self:SetNextReload( CurTime() + self.Primary.InsertReloadTime )
                     if self.Primary.Reload then
                         self:EmitSound( self.Primary.Reload )
@@ -327,7 +335,7 @@ function SWEP:DrawHUD()
 
         local crosshair = tobool(GetConVar("as_hud_crosshair"):GetInt())
         local crosshairwep = tobool(GetConVar("as_hud_crosshair_weaponcrosshair"):GetInt())
-        if hud and crosshair and crosshairwep and not self.DefaultCrosshair then
+        if hud and crosshair and crosshairwep and not self.DefaultCrosshair and CurTime() > self:GetNextReload() then
             local centerdot = tobool(GetConVar("as_hud_crosshair_weaponcrosshair_centerdot"):GetInt())
             local centerdotsize = GetConVar("as_hud_crosshair_weaponcrosshair_centerdot_size"):GetInt()
             local length = GetConVar("as_hud_crosshair_weaponcrosshair_length"):GetInt()
@@ -399,5 +407,21 @@ function SWEP:DrawWorldModel( flags )
             self:DrawModel( flags )
         end
 
+    end
+end
+
+function SWEP:CalcViewModelView( vm, oldpos, oldang, pos, ang )
+    if CLIENT then
+        local EP, EA = pos, ang
+
+        if self.VMOffset then
+            EP = EP + self.VMOffset
+        end
+        if self.VMOffsetAng then
+            EA = EA + self.VMOffsetAng
+        end
+
+        vm:SetRenderOrigin( EP )
+        vm:SetRenderAngles( EA )
     end
 end

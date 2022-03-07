@@ -26,8 +26,8 @@ Stat.ClipSize = 30 --Mag size
 Stat.Firerate = 60/700 --Attack Rate
 Stat.Spread = 0.017 --Spread Cone
 Stat.SpreadC = 0.01 --Spread Cone while crouching
-Stat.RecoilVertical = 0.2 --Veritcal recoil
-Stat.RecoilHorizontal = 0.02 --Horizontal recoil
+Stat.RecoilVertical = 0.7 --vertical recoil
+Stat.RecoilHorizontal = 0.3 --Horizontal recoil
 Stat.Sound = "weapons/m4a1/m4a1_unsil-1.wav"
 Stat.ReloadTime = 2.8
 

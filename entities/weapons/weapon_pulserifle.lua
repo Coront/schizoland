@@ -26,8 +26,8 @@ Stat.ClipSize = 30 --Mag size
 Stat.Firerate = 60/600 --Attack Rate
 Stat.Spread = 0.03 --Spread Cone
 Stat.SpreadC = 0.009 --Spread Cone while crouching
-Stat.RecoilVertical = 0.2 --Veritcal recoil
-Stat.RecoilHorizontal = 0.02 --Horizontal recoil
+Stat.RecoilVertical = 0.9 --vertical recoil
+Stat.RecoilHorizontal = 0.6 --Horizontal recoil
 Stat.Sound = "weapons/ar2/fire1.wav"
 Stat.ReloadTime = 1.1
 

@@ -26,8 +26,8 @@ Stat.ClipSize = 10 --Mag size
 Stat.Firerate = 60/40 --Attack Rate
 Stat.Spread = 0.04 --Spread Cone
 Stat.SpreadC = 0.01 --Spread Cone while crouching
-Stat.RecoilVertical = 0.4 --Veritcal recoil
-Stat.RecoilHorizontal = 0.4 --Horizontal recoil
+Stat.RecoilVertical = 1.3 --vertical recoil
+Stat.RecoilHorizontal = 1 --Horizontal recoil
 Stat.Sound = "weapons/scout/scout_fire-1.wav"
 Stat.ReloadTime = 2.8
 

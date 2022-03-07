@@ -26,8 +26,8 @@ Stat.ClipSize = 30 --Mag size
 Stat.Firerate = 60/1500 --Attack Rate
 Stat.Spread = 0.04 --Spread Cone
 Stat.SpreadC = 0.031 --Spread Cone while crouching
-Stat.RecoilVertical = 0.01 --Veritcal recoil
-Stat.RecoilHorizontal = 0.15 --Horizontal recoil
+Stat.RecoilVertical = 0.1 --vertical recoil
+Stat.RecoilHorizontal = 1.3 --Horizontal recoil
 Stat.Sound = "weapons/mac10/mac10-1.wav"
 Stat.ReloadTime = 2.8
 
