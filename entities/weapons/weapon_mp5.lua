@@ -9,6 +9,8 @@ SWEP.ViewModelFOV = 55
 SWEP.ViewModel = "models/weapons/cstrike/c_smg_mp5.mdl"
 SWEP.WorldModel = "models/weapons/w_smg_mp5.mdl"
 
+SWEP.ASID = "wep_mp5" --Aftershock item ID
+
 SWEP.Anim = {}
 Anim = SWEP.Anim
 Anim.Idle = "idle"

@@ -409,19 +409,3 @@ function SWEP:DrawWorldModel( flags )
 
     end
 end
-
-function SWEP:CalcViewModelView( vm, oldpos, oldang, pos, ang )
-    if CLIENT then
-        local EP, EA = pos, ang
-
-        if self.VMOffset then
-            EP = EP + self.VMOffset
-        end
-        if self.VMOffsetAng then
-            EA = EA + self.VMOffsetAng
-        end
-
-        vm:SetRenderOrigin( EP )
-        vm:SetRenderAngles( EA )
-    end
-end

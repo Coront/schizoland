@@ -12,6 +12,8 @@ SWEP.WorldModel = "models/weapons/w_crowbar.mdl"
 SWEP.DefaultCrosshair = true
 SWEP.NoAmmo = true
 
+SWEP.ASID = "wep_crowbar" --Aftershock item ID
+
 SWEP.Anim = {}
 Anim = SWEP.Anim
 Anim.Idle = {"fists_idle_01", "fists_idle_02"}

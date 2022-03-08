@@ -208,7 +208,6 @@ function GM:HUDShouldDraw( type )
         ["CHudGeiger"] = true,
         ["CHudHealth"] = true,
         ["CHudHintDisplay"] = true,
-        ["CHudMessage"] = true,
         ["CHudPoisonDamageIndicator"] = true,
         ["CHudSquadStatus"] = true,
         ["CHudTrain"] = true,

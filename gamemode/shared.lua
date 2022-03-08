@@ -104,7 +104,7 @@ function GM:Move( ply, mv )
     ply:SetRunSpeed( movespeed )
     ply:SetWalkSpeed( movespeed )
     ply:SetSlowWalkSpeed( 75 )
-    ply:SetDuckSpeed( 0.3 )
+    ply:SetDuckSpeed( 0.4 )
     ply:SetViewOffset( Vector( 0, 0, 65 ) )
     ply:SetViewOffsetDucked( Vector( 0, 0, 45 ) )
 end

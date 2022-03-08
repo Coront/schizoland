@@ -10,6 +10,8 @@ SWEP.ViewModel = "models/weapons/c_shotgun.mdl"
 SWEP.WorldModel = "models/weapons/w_shotgun.mdl"
 SWEP.ReloadOneByOne = true
 
+SWEP.ASID = "wep_spas" --Aftershock item ID
+
 SWEP.Anim = {}
 Anim = SWEP.Anim
 Anim.Idle = "idle"

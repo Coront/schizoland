@@ -55,7 +55,22 @@ function PlayerMeta:MaxCarryWeight()
 end
 
 function PlayerMeta:CanCarryItem( item, amt )
+    amt = amt and amt > 0 and math.Round(amt) or 1
     if self:GetCarryWeight() + (AS.Items[item].weight * amt) > self:MaxCarryWeight() then self:ChatPrint("You are too overweight to carry this.") return false end
+    return true
+end
+
+function PlayerMeta:CanUseItem( item )
+    return true
+end
+
+function PlayerMeta:CanEquipItem( item )
+    if self:HasWeapon( AS.Items[item].wep ) then self:ChatPrint("You already have this weapon equipped.") return false end
+    return true
+end
+
+function PlayerMeta:CanUnequipItem( item )
+    if not self:CanCarryItem( item ) then return false end --Player needs room in their inventory to unequip.
     return true
 end
 

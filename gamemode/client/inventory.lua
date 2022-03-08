@@ -69,6 +69,33 @@ end
 -- ██████╔╝╚██████╔╝██║███████╗██████╔╝███████║
 -- ╚═════╝  ╚═════╝ ╚═╝╚══════╝╚═════╝ ╚══════╝
 
+--[[
+
+--This isnt finished, trying to make a function that builds an item individually.
+
+function AS.Inventory.BuildItem( parent, id, amt )
+    local Info = AS.Items[id]
+    local itemName = Info.name or "name?" .. id
+    local itemDesc = Info.desc or "desc?" .. id
+    local itemModel = Info.model or "model?" .. id
+    local itemSkin = Info.skin or 0
+    local itemWeight = Info.weight or 0
+    local ToolTip = v > 1 and itemName .. "\n" .. itemDesc .. "\nWeight: " .. itemWeight .. " [" .. (isnumber(itemWeight) and Weight * amt or "w?") .. "]" or itemName .. "\n" .. itemDesc .. "\nWeight: " .. itemWeight
+
+    local itempanel = vgui.Create("SpawnIcon", parent)
+    itempanel:SetModel( itemModel, itemSkin or 0 )
+    itempanel:SetTooltip( ToolTip )
+    function itempanel:Paint = function( w, h )
+        if info.color then
+            surface.SetDrawColor( info.color )
+        else
+            surface.SetDrawColor( COLHUD_PRIMARY )
+        end
+        surface.DrawRect( 0, 0, w, h )
+    end
+end
+]]
+
 function AS.Inventory.BuildInventory()
     local inventory = vgui.Create("DPanel", sheets)
     inventory.Paint = function(_,w,h) end
@@ -147,9 +174,17 @@ function AS.Inventory.BuildInventory()
             panel:SetTooltip(TTtext)
             panel.DoClick = function()
                 if AS.Items[k].use then
+                    if not LocalPlayer():CanUseItem( k ) then return end
                     LocalPlayer():TakeItemFromInventory( k, 1 )
                     itemamtUpdate()
                     net.Start("as_inventory_useitem")
+                        net.WriteString( k )
+                    net.SendToServer()
+                elseif AS.Items[k].wep then
+                    if not LocalPlayer():CanEquipItem( k ) then return end
+                    LocalPlayer():TakeItemFromInventory( k, 1 )
+                    itemamtUpdate()
+                    net.Start("as_inventory_equipitem")
                         net.WriteString( k )
                     net.SendToServer()
                 end
@@ -159,9 +194,21 @@ function AS.Inventory.BuildInventory()
                 --Use
                 if AS.Items[k].use then
                     options:AddOption("Use", function()
+                        if not LocalPlayer():CanUseItem( k ) then return end
                         LocalPlayer():TakeItemFromInventory( k, 1 )
                         itemamtUpdate()
                         net.Start("as_inventory_useitem")
+                            net.WriteString( k )
+                        net.SendToServer()
+                    end)
+                end
+                --Equip
+                if AS.Items[k].wep then
+                    options:AddOption("Equip", function()
+                        if not LocalPlayer():CanEquipItem( k ) then return end
+                        LocalPlayer():TakeItemFromInventory( k, 1 )
+                        itemamtUpdate()
+                        net.Start("as_inventory_equipitem")
                             net.WriteString( k )
                         net.SendToServer()
                     end)
@@ -232,7 +279,7 @@ function AS.Inventory.BuildInventory()
         return scroll_items
     end
 
-    if GetConVar("as_menu_inventory_singlepanel"):GetInt() < 1 then
+    function BuildAllSheets()
         sheets_items:AddSheet("Weapons", BuildItemList(sheets_items, "weapon"), "icon16/gun.png")
         sheets_items:AddSheet("Armor", BuildItemList(sheets_items, "armor"), "icon16/user.png")
         sheets_items:AddSheet("Ammo", BuildItemList(sheets_items, "ammo"), "icon16/briefcase.png")
@@ -242,6 +289,10 @@ function AS.Inventory.BuildInventory()
         sheets_items:AddSheet("Tool", BuildItemList(sheets_items, "tool"), "icon16/wrench.png")
         sheets_items:AddSheet("Misc", BuildItemList(sheets_items, "misc"), "icon16/cog.png")
         sheets_items:AddSheet("All", BuildItemList(sheets_items), "icon16/basket.png")
+    end
+
+    if GetConVar("as_menu_inventory_singlepanel"):GetInt() < 1 then
+        BuildAllSheets()
     else
         sheets_items:AddSheet("All", BuildItemList(sheets_items), "icon16/basket.png")
     end
@@ -310,6 +361,9 @@ function AS.Inventory.BuildInventory()
     weaponscroll:SetOverlap( -2 )
 
     for k, v in SortedPairs( LocalPlayer():GetWeapons() ) do
+        if SET.DefaultWeapons[v:GetClass()] then continue end --Default weapons arent real get out of my walls
+        if not v.ASID then continue end --stupid method but it works, need to tie an id to the weapons
+
         local weaponinfopanel = vgui.Create("DPanel")
         weaponinfopanel:SetSize( 70, weaponscroll:GetTall() )
         function weaponinfopanel:Paint(w,h)
@@ -320,13 +374,27 @@ function AS.Inventory.BuildInventory()
         local weaponname = vgui.Create("DLabel", weaponinfopanel)
         weaponname:SetPos( 0, 0 )
         weaponname:SetFont("TargetIDSmall")
-        weaponname:SetText( v:GetPrintName() )
+        weaponname:SetText( AS.Items[v.ASID].name )
         weaponname:SizeToContents()
+
+        local model = vgui.Create("SpawnIcon", weaponinfopanel)
+        model:SetPos( 0, 15 )
+        model:SetSize( weaponinfopanel:GetWide(), weaponinfopanel:GetWide() )
+        model:SetModel( AS.Items[v.ASID].model, AS.Items[v.ASID].skin or 0 )
+        model:SetTooltip(AS.Items[v.ASID].name)
 
         local unequipwep = vgui.Create("DButton", weaponinfopanel)
         unequipwep:SetSize( weaponinfopanel:GetWide() - 2, 18  )
         unequipwep:SetPos( 1, weaponinfopanel:GetTall() - unequipwep:GetTall() - 2)
         unequipwep:SetText("Unequip")
+        function unequipwep:DoClick()
+            if not LocalPlayer():CanUnequipItem( v.ASID ) then return end
+            LocalPlayer():AddItemToInventory( v.ASID )
+            self:GetParent():Remove()
+            net.Start("as_inventory_unequipitem")
+                net.WriteString( v.ASID )
+            net.SendToServer()
+        end
 
         weaponscroll:AddPanel( weaponinfopanel )
     end

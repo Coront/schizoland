@@ -6,6 +6,10 @@ AS.AddBaseItem("ammo_pistol", {
     value = 5,
     weight = 1,
     class = "engineer",
+    use = {
+        ammotype = "pistol",
+        ammoamt = 40,
+    },
     craft = {
         ["misc_scrap"] = 10,
         ["misc_smallparts"] = 5,
@@ -23,6 +27,10 @@ AS.AddBaseItem("ammo_smg", {
     value = 8,
     weight = 1.25,
     class = "engineer",
+    use = {
+        ammotype = "smg1",
+        ammoamt = 75,
+    },
     craft = {
         ["misc_scrap"] = 20,
         ["misc_smallparts"] = 15,

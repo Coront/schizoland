@@ -10,6 +10,8 @@ SWEP.ViewModel = "models/weapons/cstrike/c_shot_xm1014.mdl"
 SWEP.WorldModel = "models/weapons/w_shot_xm1014.mdl"
 SWEP.ReloadOneByOne = true
 
+SWEP.ASID = "wep_xm1014" --Aftershock item ID
+
 SWEP.Anim = {}
 Anim = SWEP.Anim
 Anim.Idle = "idle"

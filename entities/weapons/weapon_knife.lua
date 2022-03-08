@@ -13,6 +13,8 @@ SWEP.DefaultCrosshair = true
 SWEP.NoAmmo = true
 SWEP.NoHolster = true
 
+SWEP.ASID = "wep_knife" --Aftershock item ID
+
 SWEP.Anim = {}
 Anim = SWEP.Anim
 Anim.Idle = "idle_cycle"

@@ -19,9 +19,15 @@ function PlayerMeta:ValidateInventory() --This function will cycle through a pla
 end
 
 function PlayerMeta:UseItem( item )
+    if not self:CanUseItem( item ) then return end
+
     self:TakeItemFromInventory( item )
     local use = AS.Items[item].use
 
+    if use.ammotype then
+        local amt = use.ammoamt
+        self:GiveAmmo( amt, use.ammotype, false )
+    end
     if use.health then
         self:SetHealth( math.Clamp( self:Health() + use.health, 1, self:GetMaxHealth() ) )
     end
@@ -54,6 +60,22 @@ function PlayerMeta:UseItem( item )
     end
 end
 
+function PlayerMeta:EquipItem( item )
+    if not self:CanEquipItem( item ) then return end
+
+    self:TakeItemFromInventory( item )
+    self:Give( AS.Items[item].wep )
+    self:ChatPrint("Equipped " .. AS.Items[item].name .. ".")
+end
+
+function PlayerMeta:UnequipItem( item )
+    if not self:CanUnequipItem( item ) then return end
+
+    self:AddItemToInventory( item )
+    self:StripWeapon( AS.Items[item].wep )
+    self:ChatPrint("Holstered " .. AS.Items[item].name .. ".")
+end
+
 function PlayerMeta:DropItem( item, amt )
     local itemname = AS.Items[item].name
     self:TakeItemFromInventory( item, amt )
@@ -84,6 +106,8 @@ end
 -- To quickly explain, I run net messages through 2 functions. The receiver function is used to verify information, and then the actual function is to do the things I want it to do.
 
 util.AddNetworkString("as_inventory_useitem")
+util.AddNetworkString("as_inventory_equipitem")
+util.AddNetworkString("as_inventory_unequipitem")
 util.AddNetworkString("as_inventory_dropitem")
 util.AddNetworkString("as_inventory_destroyitem")
 
@@ -97,6 +121,30 @@ net.Receive("as_inventory_useitem", function( _, ply )
 
     --We're verified, so run the actual function.
     ply:UseItem( item )
+end)
+
+net.Receive("as_inventory_equipitem", function( _, ply ) 
+    local item = net.ReadString()
+
+    --We are equipping a item, and players will only be equipping a item once, so we need to verify that its a valid item and that the player has it.
+    if not AS.Items[item] then ply:ChatPrint("This isnt a valid item.") ply:ResyncInventory() return end --Invalid item
+    if not AS.Items[item].wep then ply:ChatPrint("This item doesn't have any linked weapons.") ply:ResyncInventory() return end --Person tried to equip an item but the item isnt linked to a weapon.
+    if not ply:HasInInventory( item ) then ply:ChatPrint("You don't have this item.") ply:ResyncInventory() return end --Person doesnt have item
+
+    --We're verified, so run the actual function.
+    ply:EquipItem( item )
+end)
+
+net.Receive("as_inventory_unequipitem", function( _, ply ) 
+    local item = net.ReadString()
+
+    --We are unequipping a item (usually will be weapon), so we have to verify that the player has the weapon before we return it to their inventory.
+    if not AS.Items[item] then ply:ChatPrint("This isnt a valid item.") return end --The weapon the player tried to unequip isnt an item? plus there is nothing to resync.
+    if not AS.Items[item].wep then ply:ChatPrint("This weapon doesn't have any linked items.") return end --The weapon isn't linked to any items, so this would be impossible but just incase.
+    if not ply:HasWeapon( AS.Items[item].wep ) then ply:ChatPrint("You don't have this item equipped.") return end --Player doesn't actually have this equipped.
+
+    --We're verified, so run the actual function.
+    ply:UnequipItem( item )
 end)
 
 net.Receive("as_inventory_dropitem", function( _, ply )
