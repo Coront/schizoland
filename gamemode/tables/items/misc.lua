@@ -14,7 +14,7 @@ AS.AddBaseItem("misc_scrap", {
     category = "misc",
     model = "models/gibs/scanner_gib02.mdl",
     value = 1,
-    weight = 0.02,
+    weight = 0.001,
 })
 
 AS.AddBaseItem("misc_smallparts", {
@@ -23,16 +23,16 @@ AS.AddBaseItem("misc_smallparts", {
     category = "misc",
     model = "models/props_wasteland/gear02.mdl",
     value = 1,
-    weight = 0.02,
+    weight = 0.001,
 })
 
 AS.AddBaseItem("misc_chemical", {
     name = "Chemicals",
     desc = "A nugget with chemicals. Found from salvaging chemical objects. Useful for crafting.",
     category = "misc",
-    model = "models/spitball_medium.mdl",
+    model = "models/grub_nugget_small.mdl",
     value = 1,
-    weight = 0.02,
+    weight = 0.001,
 })
 
 -- ██████╗  █████╗ ██████╗ ████████╗    ██╗████████╗███████╗███╗   ███╗███████╗

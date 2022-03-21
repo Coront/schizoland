@@ -1,49 +1,37 @@
 -- Skills
 
-AS.AddBaseSkill( "hitpoints", {
-    name = "Hitpoints", --Name
-    desc = "Determines the total amount of damage you can take before dying.", --Description
+AS.AddBaseSkill( "health", {
+    name = "Health", --Name
+    desc = "Increases your maximum health. Leveled by special circumstances.", --Description
     icon = "", --Icon defaulted to, use silkicons
-    max = 100, --Level capacity, we will not gain any more experience one we reach this.
-    basexp = 25, --Base Experience
-})
+    max = 10, --Level capacity, we will not gain any more experience one we reach this.
+    basexp = 5, --Base Experience
+    power = 2 --How much the next xp req will be powered by. Defaults to 2.
+} )
 
-AS.AddBaseSkill( "melee", {
-    name = "Melee",
-    desc = "Determines the effectiveness of melee weapons.",
+AS.AddBaseSkill( "strength", {
+    name = "Strength",
+    desc = "Increases your carry capacity as well as the ability to deal damage with melee weapons. Leveled by use of melee weapons.",
     icon = "",
-    max = 100,
-    basexp = 25,
-})
-
-AS.AddBaseSkill( "firearms", {
-    name = "Firearms",
-    desc = "Determines the effectiveness of firearms.",
-    icon = "",
-    max = 100,
-    basexp = 25,
-})
-
-AS.AddBaseSkill( "crafting", {
-    name = "Crafting",
-    desc = "Increases chance of successful crafts and unlocks new recipes.",
-    icon = "",
-    max = 100,
-    basexp = 25,
-})
+    max = 50,
+    basexp = 1,
+    power = 1.5,
+} )
 
 AS.AddBaseSkill( "endurance", {
     name = "Endurance",
-    desc = "Increases base run speed.",
+    desc = "Increases overall movement speed. Leveled by actively moving.",
     icon = "",
-    max = 100,
-    basexp = 25,
-})
+    max = 50,
+    basexp = 1,
+    power = 1.4,
+} )
 
-AS.AddBaseSkill( "mining", {
-    name = "Mining",
-    desc = "Increases the chance of obtaining items from mining and unlocks new resources.",
+AS.AddBaseSkill( "weaponhandling", {
+    name = "Weapon Handling",
+    desc = "Reduces overall weapon recoil and increases reload speed. Leveled by use of firearms.",
     icon = "",
-    max = 100,
-    basexp = 25,
-})
+    max = 25,
+    basexp = 1,
+    power = 2,
+} )

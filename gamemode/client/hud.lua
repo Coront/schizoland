@@ -237,7 +237,11 @@ function GM:ScoreboardHide()
     return false
 end
 
-function GM:HUDPaint()
+function GM:DrawDeathNotice()
+    return false 
+end
+
+hook.Add( "HUDPaint", "AS_HUD", function()
     COLHUD_DEFAULT = Color(GetConVar("as_hud_color_default_r"):GetInt(), GetConVar("as_hud_color_default_g"):GetInt(), GetConVar("as_hud_color_default_b"):GetInt(), 255)
     COLHUD_GOOD = Color(GetConVar("as_hud_color_good_r"):GetInt(), GetConVar("as_hud_color_good_g"):GetInt(), GetConVar("as_hud_color_good_b"):GetInt(), 255)
     COLHUD_BAD = Color(GetConVar("as_hud_color_bad_r"):GetInt(), GetConVar("as_hud_color_bad_g"):GetInt(), GetConVar("as_hud_color_bad_b"):GetInt(), 255)
@@ -249,5 +253,4 @@ function GM:HUDPaint()
     if tobool(GetConVar("as_hud"):GetInt()) then
         AftershockHUD()
     end
-
-end
+end)

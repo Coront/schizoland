@@ -14,6 +14,7 @@ function AS.AddMapData( id, data )
     AS.Maps[id] = data
 end
 
+--Loot tables
 AS.Loot = {}
 function AS.AddLootTable( id, data )
     AS.Loot = AS.Loot or {}
@@ -29,6 +30,14 @@ function AS.AddBaseItem( id, data )
     AS.Items[id] = data
 end
 
+--Classes
+AS.Classes = {}
+function AS.AddBaseClass( id, data )
+    AS.Classes = AS.Classes or {}
+
+    AS.Classes[id] = data
+end
+
 --Skills
 AS.Skills = {}
 function AS.AddBaseSkill( id, data )
@@ -36,7 +45,6 @@ function AS.AddBaseSkill( id, data )
 
     AS.Skills[id] = data
 end
-
 
 --Characters
 AS.Characters = {}

@@ -3,6 +3,7 @@ function PlayerMeta:CanCraftItem( item, amt )
     if not AS.Items[item].craft then AS.LuaError("Attempt to check 'CanCraftItem' with no crafting table - " .. item) return end
     amt = amt and amt > 0 and math.Round(amt) or 1
 
+    if AS.Items[item].class and self:GetClass() != AS.Items[item].class then return false end
     for k, v in pairs( AS.Items[item].craft ) do
         if not self:HasInInventory( k, v * amt ) then return false end
     end
@@ -18,6 +19,7 @@ function PlayerMeta:CanCraftAmount( item ) --This function just returns the amou
     local inv = self:GetInventory()
     for k, v in pairs( AS.Items[item].craft ) do
         if v == 0 then continue end
+        if not inv[k] then return 0 end
         local canmakeamount = math.floor(inv[k] / v)
         amts[k] = canmakeamount
     end
@@ -33,7 +35,7 @@ end
 
 function PlayerMeta:CraftItem( item, amt )
     for k, v in pairs( AS.Items[item].craft ) do
-        if v != 0 then
+        if v != 0 then --This stops items than aren't supposed to be taken from a recipe.
             self:TakeItemFromInventory( k, v * amt )
         end
     end

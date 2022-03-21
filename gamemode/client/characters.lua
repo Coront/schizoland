@@ -106,28 +106,39 @@ function AS.CharacterSelect.NewCharacter( new )
     modelinfo:SetWrap(true)
     modelinfo:SetText("Your character model will be your physical appearance to other players on the game.\n\nYou will not be able to freely change your character model.")
 
+    local selectedClass = "mercenary"
+
+    local classdesc = scroll:Add("DLabel")
+    classdesc:SetSize(400, 100)
+    classdesc:SetPos(scroll:GetWide() / 2 - classdesc:GetWide() / 2, 570 )
+    classdesc:SetWrap(true)
+    classdesc:SetText( "Selected Class: " .. translateClassNameID( selectedClass ) .. "\n\n" .. AS.Classes[selectedClass].desc )
+
+    local classlist = scroll:Add("DListView")
+    classlist:SetSize(400, 150)
+    classlist:SetPos( scroll:GetWide() / 2 - classlist:GetWide() / 2, 420)
+    classlist:SetMultiSelect( false )
+    classlist:AddColumn( "Classes" )
+    for k, v in SortedPairs(AS.Classes) do
+        classlist:AddLine(v.name)
+    end
+    function classlist:OnRowSelected( _, row )
+        selectedClass = translateClassNameID( row:GetValue(1) )
+        surface.PlaySound(UICUE.SELECT)
+        classdesc:SetText( "Selected Class: " .. translateClassNameID( selectedClass ) .. "\n\n" .. AS.Classes[selectedClass].desc )
+    end
+
     local tutorial = scroll:Add("DCheckBoxLabel")
     tutorial:SetText("Enable Tutorial (WIP)")
     tutorial:SizeToContents()
-    tutorial:SetPos((scroll:GetWide() / 2) - (tutorial:GetWide() / 2), 410)
+    tutorial:SetPos((scroll:GetWide() / 2) - (tutorial:GetWide() / 2), 750)
 
     local tutorialinfo = scroll:Add("DLabel")
-    tutorialinfo:SetText("The tutorial offers to players an explaination on certain basics of the game. It is recommended to have this turned on if you are new entirely, as some systems may be complicated.")
+    tutorialinfo:SetText("The tutorial offers to players an explaination on certain basics of the game. It is recommended for newer players to have this enabled if you need help understanding certain systems when first interacting with them. Even with this disabled, there will be a in-game booklet that you can reference for help.")
     tutorialinfo:SetSize(400, 60)
-    tutorialinfo:SetPos((scroll:GetWide() / 2) - (tutorialinfo:GetWide() / 2), 425 )
+    tutorialinfo:SetPos((scroll:GetWide() / 2) - (tutorialinfo:GetWide() / 2), 765 )
     tutorialinfo:SetWrap(true)
---[[
-    local hardcore = scroll:Add("DCheckBoxLabel")
-    hardcore:SetPos(scroll:GetWide() / 2 - hardcore:GetWide() / 2, 500)
-    hardcore:SetText("Hardcore Mode")
-    hardcore:SizeToContents()
 
-    local hardcoreinfo = scroll:Add("DLabel")
-    hardcoreinfo:SetSize(400, 165)
-    hardcoreinfo:SetPos(scroll:GetWide() / 2 - hardcoreinfo:GetWide() / 2, 525 )
-    hardcoreinfo:SetWrap(true)
-    hardcoreinfo:SetText("nil")
-]]
     local button = vgui.Create("DButton", frame_newcharacter)
     button:SetSize(200, 50)
     button:SetPos(frame_newcharacter:GetWide() / 2 - button:GetWide() / 2, frame_newcharacter:GetTall() * 0.9)
@@ -139,6 +150,7 @@ function AS.CharacterSelect.NewCharacter( new )
         net.Start("as_characters_finishcharacter")
             net.WriteString(name:GetValue())
             net.WriteString(selectedModel)
+            net.WriteString(selectedClass)
         net.SendToServer()
     end
     button.Paint = function(_, w, h)
@@ -224,7 +236,8 @@ function AS.CharacterSelect.BuildCharacters( characters, chardata )
         local name = vgui.Create("DLabel", panel)
         name:SetPos( 85, 0 )
         name:SetFont("AftershockText")
-        name:SetText(v.name)
+        name:SetText(v.name .. " (" .. translateClassNameID( chardata[v.pid].class ) .. ")")
+        name:SetColor( AS.Classes[ chardata[v.pid].class ].color )
         name:SizeToContents()
 
         local health = vgui.Create("DLabel", panel)
@@ -234,15 +247,8 @@ function AS.CharacterSelect.BuildCharacters( characters, chardata )
         health:SetText("Health: " .. hp)
         health:SizeToContents()
 
-        local experience = vgui.Create("DLabel", panel)
-        experience:SetPos( 85, 40 )
-        experience:SetFont("AftershockText")
-        local exp = chardata[v.pid] and chardata[v.pid].exp or "char?exp"
-        experience:SetText("Experience: " .. exp)
-        experience:SizeToContents()
-
         local playtime = vgui.Create("DLabel", panel)
-        playtime:SetPos( 85, 60 )
+        playtime:SetPos( 85, 40 )
         playtime:SetFont("AftershockText")
         local pt = chardata[v.pid] and chardata[v.pid].playtime or "char?playtime"
         if pt == "NULL" then

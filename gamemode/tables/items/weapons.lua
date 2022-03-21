@@ -116,6 +116,7 @@ AS.AddBaseItem("wep_deagle", {
     desc = "A large and heavy handcannon that holds 7 rounds and shoots at a very slow rate. Deals a significant amount of damage. Uses pistol ammo.",
     category = "weapon",
     model = "models/weapons/w_pist_deagle.mdl",
+    wep = "weapon_deagle",
     value = 15,
     weight = 2.1
 })

@@ -137,19 +137,23 @@ function SWEP:Reload()
     else
 
         if not self:CanReload() then return end
-        
+
         self.Owner:SetAnimation( PLAYER_RELOAD )
         if not self.ReloadOneByOne then
-            self:SetNextReload( CurTime() + self.Primary.ReloadTime )
+            local reloadtime = math.Clamp(self.Primary.ReloadTime * (1 - (self.Owner:GetSkillLevel( "weaponhandling" ) * SKL.WeaponHandling.reloadmultinc)), 0.2, 10)
+            self:SetNextReload( CurTime() + reloadtime )
             if self.Primary.Reload then
                 self:EmitSound( self.Primary.Reload )
             end
             if SERVER then
                 self:PlaySequence( self.Anim.Reload )
             end
+            self.Owner:GetViewModel():SetPlaybackRate( 1 + (self.Owner:GetSkillLevel( "weaponhandling" ) * SKL.WeaponHandling.reloadmultinc) )
         else
             self:PlaySequence( self.Anim.Reload[1] )
-            self:SetNextReload( CurTime() + self.Primary.ReloadTime )
+            local reloadtime = math.Clamp(self.Primary.ReloadTime * (1 - (self.Owner:GetSkillLevel( "weaponhandling" ) * SKL.WeaponHandling.reloadmultinc)), 0.1, 10)
+            self:SetNextReload( CurTime() + reloadtime )
+            self.Owner:GetViewModel():SetPlaybackRate( 1 + (self.Owner:GetSkillLevel( "weaponhandling" ) * SKL.WeaponHandling.reloadmultinc) )
         end
 
     end
@@ -189,14 +193,18 @@ function SWEP:MeleeDamage()
         self:EmitSound( snd )
     end
 
-    if SERVER and (trace.Entity and IsValid( trace.Entity )) and (trace.Entity:IsNPC() or trace.Entity:IsPlayer() or trace.Entity:Health() > 0) then
-        local dmginfo = DamageInfo()
-        dmginfo:SetInflictor( self )
-        dmginfo:SetAttacker( self.Owner )
-        dmginfo:SetDamage( self.Primary.Damage )
-        trace.Entity:TakeDamageInfo( dmginfo )
-        local snd = istable(self.Primary.ImpactFlesh) and table.Random(self.Primary.ImpactFlesh) or self.Primary.ImpactFlesh
-        self:EmitSound( snd )
+    if (trace.Entity and IsValid( trace.Entity )) and (trace.Entity:IsNPC() or trace.Entity:IsPlayer() or trace.Entity:Health() > 0) then
+        if SERVER then
+            local dmginfo = DamageInfo()
+            dmginfo:SetInflictor( self )
+            dmginfo:SetAttacker( self.Owner )
+            dmginfo:SetDamage( self.Primary.Damage )
+            dmginfo:SetDamageForce( self.Owner:GetAimVector() )
+            trace.Entity:TakeDamageInfo( dmginfo )
+            local snd = istable(self.Primary.ImpactFlesh) and table.Random(self.Primary.ImpactFlesh) or self.Primary.ImpactFlesh
+            self:EmitSound( snd )
+        end
+        self.Owner:IncreaseSkillExperience( "strength", SKL.Strength.incamt )
     end
 end
 
@@ -219,11 +227,14 @@ function SWEP:ShootGun()
     local snd = istable( self.Primary.Sound ) and table.Random( self.Primary.Sound ) or self.Primary.Sound
     self:EmitSound( snd )
     self.Owner:SetAnimation( PLAYER_ATTACK1 )
-    if CLIENT and IsFirstTimePredicted() then
-        self:Recoil()
-    end
     if SERVER then 
         self:PlaySequence( self.Anim.Attack ) 
+    end
+    if IsFirstTimePredicted() then
+        self.Owner:IncreaseSkillExperience( "weaponhandling", SKL.WeaponHandling.incamt )
+    end
+    if CLIENT and IsFirstTimePredicted() then
+        self:Recoil()
     end
 
     self:SetNextPrimaryFire( CurTime() + self.Primary.Firerate )
@@ -232,7 +243,7 @@ end
 
 function SWEP:Recoil()
     ang = LocalPlayer():EyeAngles()
-    ang = ang + Angle( -self.Primary.RecoilVertical, math.random( -self.Primary.RecoilHorizontal, self.Primary.RecoilHorizontal ), 0 )
+    ang = ang + Angle( -self.Primary.RecoilVertical * (1 - ( SKL.WeaponHandling.recoilmultloss * self.Owner:GetSkillLevel( "weaponhandling" ) )), math.random( -self.Primary.RecoilHorizontal, self.Primary.RecoilHorizontal ) * (1 - ( SKL.WeaponHandling.recoilmultloss * self.Owner:GetSkillLevel( "weaponhandling" ) )), 0 )
     LocalPlayer():SetEyeAngles(ang)
 end
 
@@ -304,10 +315,11 @@ function SWEP:Think()
                     self:PlaySequence( self.Anim.Reload[3] )
                     self:SetNextReload( 0 )
                 else
+                    local reloadtime = math.Clamp(self.Primary.InsertReloadTime * (1 - (self.Owner:GetSkillLevel( "weaponhandling" ) * SKL.WeaponHandling.reloadmultinc)), 0.1, 10)
                     self:PlaySequence( self.Anim.Reload[2] )
                     self:SetClip1( self:Clip1() + 1 )
                     self.Owner:SetAmmo( self:Ammo1() - 1, self:GetPrimaryAmmoType())
-                    self:SetNextReload( CurTime() + self.Primary.InsertReloadTime )
+                    self:SetNextReload( CurTime() + reloadtime )
                     if self.Primary.Reload then
                         self:EmitSound( self.Primary.Reload )
                     end

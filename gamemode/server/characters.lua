@@ -14,16 +14,16 @@ util.AddNetworkString("as_characters_syncdata")
 -- ██║     ╚██████╔╝██║ ╚████║╚██████╗   ██║   ██║╚██████╔╝██║ ╚████║███████║
 -- ╚═╝      ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚══════╝
 
-function PlayerMeta:CreateCharacter( name, model )
+function PlayerMeta:CreateCharacter( name, model, class )
     local characters = sql.Query( "SELECT * FROM as_characters WHERE steamid = " .. SQLStr(self:SteamID()) .. " AND deleted IS NULL" ) or {}
     if #characters >= SET.MaxCharacters then self:ChatPrint("You have reached the character limit!") return end
 
-    sql.Query( "INSERT INTO as_characters VALUES ( NULL, " .. SQLStr(self:SteamID()) .. ", " .. SQLStr(name) .. ", " .. SQLStr(model) .. ", " .. SQLStr( os.date( "%m/%d/%y - %I:%M %p", os.time() ) ) .. ", NULL, NULL )" )
+    sql.Query( "INSERT INTO as_characters VALUES ( NULL, " .. SQLStr(self:SteamID()) .. ", " .. SQLStr(name) .. ", " .. SQLStr(model) .. ", " .. SQLStr(class) .. ", " .. SQLStr( os.date( "%m/%d/%y - %I:%M %p", os.time() ) ) .. ", NULL, NULL )" )
     local pids = sql.Query("SELECT pid FROM as_characters")
     local newpid = tonumber(sql.Query("SELECT pid FROM as_characters")[#pids]["pid"])
-    sql.Query( "INSERT INTO as_characters_inventory VALUES ( " .. newpid .. ", NULL, NULL )" )
+    sql.Query( "INSERT INTO as_characters_inventory VALUES ( " .. newpid .. ", NULL, NULL, NULL )" )
     sql.Query( "INSERT INTO as_characters_skills VALUES ( " .. newpid .. ", NULL )" )
-    sql.Query( "INSERT INTO as_characters_stats VALUES ( " .. newpid .. ", " .. SKL.Health .. ", 100, 100, 0, 0 )" )
+    sql.Query( "INSERT INTO as_characters_stats VALUES ( " .. newpid .. ", " .. SKL.Health .. ", 100, 100, 0 )" )
 
     self:ConCommand("as_characters")
 end
@@ -37,9 +37,15 @@ function PlayerMeta:SaveCharacter()
     local pid = self.pid
     if not pid then return false end
 
-    sql.Query( "UPDATE as_characters_inventory SET inv = " .. SQLStr(util.TableToJSON( self:GetInventory(), true )) .. ", bank = " .. SQLStr(util.TableToJSON( self:GetBank(), true )) .. " WHERE pid = " .. pid )
+    local weps = {}
+    for k, v in pairs(self:GetWeapons()) do
+        if v.ASID then
+            weps[#weps + 1] = v:GetClass()
+        end
+    end
+    sql.Query( "UPDATE as_characters_inventory SET inv = " .. SQLStr(util.TableToJSON( self:GetInventory(), true )) .. ", bank = " .. SQLStr(util.TableToJSON( self:GetBank(), true )) .. ", equipped = " .. SQLStr(util.TableToJSON( weps, true )) .. " WHERE pid = " .. pid )
     sql.Query( "UPDATE as_characters_skills SET skills = " .. SQLStr(util.TableToJSON( self:GetSkills(), true )) .. " WHERE pid = " .. pid )
-    sql.Query( "UPDATE as_characters_stats SET health = " .. self:Health() .. ", hunger = " .. self:GetHunger() .. ", thirst = " .. self:GetThirst() .. ", exp = " .. self:GetExperience() .. ", playtime = " .. self:GetPlaytime() .. " WHERE pid = " .. pid )
+    sql.Query( "UPDATE as_characters_stats SET health = " .. self:Health() .. ", hunger = " .. self:GetHunger() .. ", thirst = " .. self:GetThirst() .. ", playtime = " .. self:GetPlaytime() .. " WHERE pid = " .. pid )
     sql.Query( "UPDATE as_characters SET laston = " .. SQLStr( os.date( "%m/%d/%y - %I:%M %p", os.time() ) ) .. " WHERE pid = " .. pid )
     return true --Saving was successful.
 end
@@ -67,8 +73,8 @@ function RequestCharacters(len, ply)
         for k, v in pairs(characters) do
             stats[v.pid] = {}
             stats[v.pid].health = sql.QueryValue( "SELECT health FROM as_characters_stats WHERE pid = " .. SQLStr(v.pid) )
-            stats[v.pid].exp = sql.QueryValue( "SELECT exp FROM as_characters_stats WHERE pid = " .. SQLStr(v.pid) )
             stats[v.pid].playtime = sql.QueryValue( "SELECT playtime FROM as_characters_stats WHERE pid = " .. SQLStr(v.pid) )
+            stats[v.pid].class = sql.QueryValue( "SELECT class FROM as_characters WHERE pid = " .. SQLStr(v.pid) )
         end
 
         net.WriteBit( true )
@@ -84,15 +90,18 @@ net.Receive("as_characters_requestdata", RequestCharacters)
 function FinishCharacter(len, ply)
     local name = net.ReadString()
     local model = net.ReadString()
+    local class = net.ReadString()
 
     if string.len(name:lower()) < SET.MinNameLength then ply:Kick("You must have a longer name") return end
     if string.find(name:lower(), "[%/%\\%!%@%#%$%%%^%&%*%(%)%+%=%.%'%\"]") then ply:Kick("Your character's name cannot have special characters in it") return end
     for k, v in pairs(SET.BannedWords) do
         if string.find(name:lower(), v) then ply:Kick("Inappropriate name usage") return end
     end
-    if not SET.SelectableModels[model] then ply:Kick("This model doesn't exist as a selectable model") return end
+    if not SET.SelectableModels[model] then model = table.Random(SET.SelectableModels) ply:ChatPrint("Model validation failed. One was automatically assigned to you.") end --Dude literally tried to use a model that doesn't exist. We'll pick one for them.
+    local _, classbackup = table.Random(AS.Classes)
+    if not AS.Classes[class] then class = classbackup ply:ChatPrint("Class validation failed. One was automatically assigned to you.") return end --Apparently tried to use a invalid class. We will also pick one for them.
 
-    ply:CreateCharacter( name, model )
+    ply:CreateCharacter( name, model, class )
 end
 net.Receive("as_characters_finishcharacter", FinishCharacter)
 

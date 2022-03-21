@@ -99,14 +99,22 @@ function AS.Craft.BuildList( parent, category )
         name:SetPos( 70, 10 )
 
         local scroll_desc = vgui.Create("DScrollPanel", panel)
-        scroll_desc:SetSize( 325, 55 )
+        scroll_desc:SetSize( 325, 45 )
         scroll_desc:SetPos( 85, 25 )
 
         local desc = vgui.Create("DLabel", scroll_desc)
         desc:SetText( itemdesc )
         desc:SetSize( scroll_desc:GetWide() - 15, scroll_desc:GetTall() )
-        desc:SetAutoStretchVertical( true )
         desc:SetWrap( true )
+        desc:SetAutoStretchVertical( true )
+
+        if AS.Items[k].class then
+            local classreq = vgui.Create("DLabel", panel)
+            classreq:SetText( "Class needed to craft: " .. translateClassNameID(AS.Items[k].class) )
+            classreq:SetContentAlignment(4)
+            classreq:SizeToContents()
+            classreq:SetPos( 100, 72 )
+        end
 
         local scroll_reqs = vgui.Create("DScrollPanel", panel)
         scroll_reqs:SetSize( 125, 60 )
@@ -124,7 +132,8 @@ function AS.Craft.BuildList( parent, category )
         local craft = vgui.Create("DButton", panel)
         craft:SetSize( 125, 20 )
         craft:SetPos( panel:GetWide() - (craft:GetWide() + 5), panel:GetTall() - (craft:GetTall() + 5) )
-        craft:SetText("Craft")
+        local btntxt = LocalPlayer():CanCraftAmount( k ) > 0 and "Craft (" .. LocalPlayer():CanCraftAmount( k ) .. ")" or "Unable to craft"
+        craft:SetText(btntxt)
         craft:SetEnabled( false )
         function craft:DoClick()
             VerifySlider( LocalPlayer():CanCraftAmount( k ), function( amt ) 
@@ -152,9 +161,7 @@ function AS.Craft.BuildList( parent, category )
         for k2, v2 in pairs( v.craft ) do
             local panel = reqlist:Add("DPanel")
             panel:SetSize( reqlist:GetWide() - 16, 20 )
-            function panel:Paint(w,h)
-                
-            end
+            function panel:Paint(w,h) end
 
             local name = vgui.Create("DLabel", panel)
             name:SetText( "(" .. v2 .. ") " .. AS.Items[k2].name )

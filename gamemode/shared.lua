@@ -100,7 +100,7 @@ function AS.LuaError( message )
 end
 
 function GM:Move( ply, mv )
-    local movespeed = SKL.Movement
+    local movespeed = SKL.Movement + math.floor(ply:GetSkillLevel( "endurance" ) * SKL.Endurance.runspeed)
     ply:SetRunSpeed( movespeed )
     ply:SetWalkSpeed( movespeed )
     ply:SetSlowWalkSpeed( 75 )

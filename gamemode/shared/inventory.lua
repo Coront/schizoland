@@ -51,7 +51,7 @@ function PlayerMeta:GetCarryWeight()
 end
 
 function PlayerMeta:MaxCarryWeight()
-    return SKL.DefaultCarryWeight
+    return SKL.DefaultCarryWeight + (SKL.Strength.carryweight * self:GetSkillLevel("strength"))
 end
 
 function PlayerMeta:CanCarryItem( item, amt )

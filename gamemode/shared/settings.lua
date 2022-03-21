@@ -5,9 +5,6 @@ SET = AS.Settings
 SET.MaxCharacters = 5 --Maximum characters players are allowed to have.
 SET.MinNameLength = 3 --Minimal length of a players name.
 SET.BankWeight = 1000 --Maximum weight a player's bank can hold.
-SET.BaseLevelExperience = 25 --The base experience required to level up.
-SET.LevelExperiencePower = 2 --The power that multiplies experience required to level up.
-SET.SkillExperiencePower = 2 --The power that multiplies experience required to level up for skills.
 SET.MaxLevel = 150 --Max level of characters.
 SET.SelectableModels = {
     --All of the models in here are models that the player is allowed to select during character creation.
@@ -64,8 +61,22 @@ PERM.PropBlacklist = { --Props that are forbidden from being spawned
 SET.Skills = {}
 SKL = SET.Skills
 SKL.Health = 100 --Player starts with 100 hp.
-SKL.Movement = 165 --Player starts with 165 move speed.
-SKL.DefaultCarryWeight = 20 --Player starts with 20 carry weight.
+SKL.Movement = 163.5 --Player starts with 165 move speed.
+SKL.DefaultCarryWeight = 18.8 --Player starts with 20 carry weight.
+SKL.Strength = {
+    incamt = 0.02, --Amount to increase per melee impact
+    carryweight = 1.2, --Max weight increase per level
+}
+SKL.Endurance = {
+    updatetime = 1.5, --Every second until updates again
+    incamt = 0.01, --Amount to increase per update
+    runspeed = 1.5, --Run speed increase per level
+}
+SKL.WeaponHandling = {
+    incamt = 0.01, --Amount to increase per shot
+    recoilmultloss = 0.036, --(1-(level*recoilmultloss)) The number to mult overall recoil by per level, as in higher means less recoil per level.
+    reloadmultinc = 0.013, --(1+(level*reloadmultinc)) The number to mult reload speed by per level, as in higher means faster reloading per level.
+}
 --Satiation Settings
 SET.Satiation = {}
 SAT = SET.Satiation
@@ -76,6 +87,18 @@ SAT.ThirstLoss = 1 --Thirst loss on update
 SAT.StarveDamage = 2 --How much damage starvation should deal on next hunger update
 SAT.DehydratedDamage = 1 --How much damage dehydration should deal on next thirst update
 SAT.SatBuffs = 80 --The amount of hunger + thirst a player must remain above in order to receive the passive buffs.
+--Mobs
+SET.Mobs = {}
+MOB = SET.Mobs
+MOB.NPCs = {
+    ["npc_antlion"] = 10, --Key is NPC class, value is maximum spawned
+    ["npc_zombie"] = 12,
+    ["npc_fastzombie"] = 8,
+    ["npc_poisonzombie"] = 6,
+    ["npc_combine_s"] = 5,
+}
+MOB.SpawnMult = 1 --Multiplier for the amount of NPCs that will spawn. This is rounded down if decimal.
+MOB.RespawnTime = 60 --Time it takes for NPCs to respawn.
 
 
 

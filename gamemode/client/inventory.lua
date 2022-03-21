@@ -346,6 +346,13 @@ function AS.Inventory.BuildInventory()
     charname:SetText( LocalPlayer():Nickname() )
     charname:SizeToContents()
 
+    local class = vgui.Create("DLabel", characterdisplay)
+    class:SetPos( 5, 25 )
+    class:SetFont("TargetID")
+    class:SetText( translateClassNameID( LocalPlayer():GetASClass() ) )
+    class:SetColor( AS.Classes[LocalPlayer():GetASClass()].color )
+    class:SizeToContents()
+
 --Weapons Panel
     local weaponpanel = vgui.Create( "DPanel", inventory )
     weaponpanel:SetPos( 674, 440 )
@@ -429,7 +436,7 @@ function AS.Inventory.BuildSkills()
             surface.DrawRect( (w - width) - 5, (h - height) - 5, width, height )
             --Bar
             surface.SetDrawColor( COLHUD_TERTIARY )
-            surface.DrawRect( (w - width) - 5, (h - height) - 5, math.Clamp((LocalPlayer():GetSkillExperience( k ) / LocalPlayer():ExpToLevelSkill( k )) * 740, 0, 740), 20)
+            surface.DrawRect( (w - width) - 5, (h - height) - 5, (LocalPlayer():GetSkillExperience( k ) / LocalPlayer():ExpToLevelSkill( k )) * 740, 20)
         end
 
         local skillname = vgui.Create("DLabel", itempanel)
@@ -447,7 +454,7 @@ function AS.Inventory.BuildSkills()
         local skilllevel = vgui.Create("DLabel", itempanel)
         skilllevel:SetPos( 5, 55 )
         skilllevel:SetFont("TargetID")
-        skilllevel:SetText( "Level " .. LocalPlayer():GetSkillLevel( k ) )
+        skilllevel:SetText( "Level " .. LocalPlayer():GetSkillLevel( k ) .. " / " .. AS.Skills[k].max )
         skilllevel:SizeToContents()
 
         local experience = vgui.Create("DLabel", itempanel)
@@ -455,6 +462,12 @@ function AS.Inventory.BuildSkills()
         experience:SetFont("TargetID")
         experience:SetText( LocalPlayer():GetSkillExperience( k ) .. " / " .. LocalPlayer():ExpToLevelSkill( k ) )
         experience:SizeToContents()
+        function experience:Think()
+            if self:GetText() != LocalPlayer():GetSkillExperience( k ) .. " / " .. LocalPlayer():ExpToLevelSkill( k ) then
+                self:SetText( LocalPlayer():GetSkillExperience( k ) .. " / " .. LocalPlayer():ExpToLevelSkill( k ) )
+                self:SizeToContents()
+            end
+        end
     end
 
     return skills
