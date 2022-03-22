@@ -84,7 +84,7 @@ if SERVER then
         net.Broadcast() --Broadcasting, because everyone needs this info.
     end
 
-    function ResyncAllInventories( ply )
+    function ResyncAllContainerInventories( ply )
         for k, v in pairs( ents.FindByClass("as_lootcontainer") ) do
             net.Start("as_lootcontainer_syncinventory")
                 net.WriteEntity(v)
@@ -92,13 +92,15 @@ if SERVER then
             net.Send( ply )
         end
     end
-    concommand.Add("as_resynccontainers", ResyncAllInventories)
+    concommand.Add("as_resynccontainers", ResyncAllContainerInventories)
 
 elseif CLIENT then
 
     function ContainerInventorySync()
         local self = net.ReadEntity()
-        self:SetInventory( net.ReadTable() )
+        if self.SetInventory then --ugh what the fuck is this dumb shit
+            self:SetInventory( net.ReadTable() )
+        end
     end
     net.Receive( "as_lootcontainer_syncinventory", ContainerInventorySync )
 

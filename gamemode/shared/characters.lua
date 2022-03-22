@@ -8,6 +8,7 @@ if SERVER then
         self:SetNW2Bool("as_spawned", true)
         self:Freeze(false)
         self:UnSpectate()
+        self:AllowFlashlight( true )
         self.pid = playerid
         local name = sql.QueryValue("SELECT name FROM as_characters WHERE pid = " .. self.pid)
         local model = sql.QueryValue("SELECT model FROM as_characters WHERE pid = " .. self.pid)
@@ -48,6 +49,8 @@ if SERVER then
             net.WriteTable(self:GetBank())
             net.WriteTable(self:GetSkills())
         net.Send(self)
+
+        ResyncAllContainerInventories( self )
     end
 
 elseif CLIENT then

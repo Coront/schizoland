@@ -201,7 +201,7 @@ AS.AddBaseItem("wep_famas", {
 })
 
 AS.AddBaseItem("wep_sg552", {
-    name = "SG 552",
+    name = "SG-552",
     desc = "An average sized rifle that holds 30 rounds and shoots at a moderate rate. Deals slightly above average damage. Has an attached scope for sighting. Uses rifle ammo.",
     category = "weapon",
     model = "models/weapons/w_rif_sg552.mdl",
@@ -273,16 +273,6 @@ AS.AddBaseItem("wep_m3super", {
     weight = 2.9
 })
 
-AS.AddBaseItem("wep_spas", {
-    name = "SPAS-12",
-    desc = "A large shotgun that holds 8 rounds and shoots very fast. Deals large amounts of damage. Uses shotgun ammo.",
-    category = "weapon",
-    model = "models/weapons/w_shotgun.mdl",
-    wep = "weapon_spas",
-    value = 15,
-    weight = 2.8
-})
-
 AS.AddBaseItem("wep_xm1014", {
     name = "XM1014",
     desc = "A large shotgun that holds 8 rounds and shoots at a moderate rate. Deals significant amounts of damage. Uses shotgun ammo.",
@@ -291,6 +281,17 @@ AS.AddBaseItem("wep_xm1014", {
     wep = "weapon_xm",
     value = 15,
     weight = 2.9
+})
+
+AS.AddBaseItem("wep_spas", {
+    name = "SPAS-12",
+    desc = "A large shotgun that holds 8 rounds and shoots very fast. Deals large amounts of damage. Uses shotgun ammo.",
+    category = "weapon",
+    model = "models/weapons/w_shotgun.mdl",
+    color = Color( 120, 40, 40 ),
+    wep = "weapon_spas",
+    value = 15,
+    weight = 2.8
 })
 
 -- ██╗     ███╗   ███╗ ██████╗ ███████╗
@@ -332,6 +333,7 @@ AS.AddBaseItem("wep_g3sg1", {
     desc = "A heavy sniper rifle that holds 10 rounds and shoots at a slow rate. Deals above average damage. Has an attached scope for sighting. Uses sniper ammo.",
     category = "weapon",
     model = "models/weapons/w_snip_g3sg1.mdl",
+    color = Color( 120, 40, 40 ),
     value = 15,
     weight = 3.1
 })
@@ -340,7 +342,8 @@ AS.AddBaseItem("wep_sg550", {
     name = "SG-550",
     desc = "A heavy sniper rifle that holds 20 rounds and shoots at a medium rate. Deals average damage. Has an attached scope for sighting. Uses sniper ammo.",
     category = "weapon",
-    model = "models/weapons/w_snip_g3sg1.mdl",
+    model = "models/weapons/w_snip_sg550.mdl",
+    color = Color( 120, 40, 40 ),
     value = 15,
     weight = 3
 })
@@ -350,6 +353,7 @@ AS.AddBaseItem("wep_awp", {
     desc = "A very rare and heavy sniper rifle that holds 10 rounds and shoots at very slow bolt-action rate. Deals significant amounts of damage. Uses sniper ammo.",
     category = "weapon",
     model = "models/weapons/w_snip_awp.mdl",
+    color = Color( 150, 120, 60 ),
     wep = "weapon_awp",
     value = 15,
     weight = 3.9

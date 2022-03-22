@@ -13,7 +13,7 @@ end
 
 function ENT:OnLootTableChanged( name, old, new )
 	if old == "" then return end
-	self:GenerateLoot()
+	self:SetInventory( {} )
 	self:SetNextGeneration( CurTime() + AS.Loot[new].generation.time )
 	self:SetModel( AS.Loot[new].model )
 	self:SetSolid( SOLID_VPHYSICS )
@@ -22,7 +22,28 @@ function ENT:OnLootTableChanged( name, old, new )
     self:SetUseType( SIMPLE_USE )
 end
 
+function ENT:ShouldStopTimer()
+	for k, v in pairs( player.GetAll() ) do
+		if not v:IsLoaded() then continue end
+		if v:GetPos():Distance(self:GetPos()) < 1500 then --A player is too close, we should stop the timer.
+			return true
+		end
+	end
+	for k, v in pairs( ents.FindByClass("prop_physics") ) do
+		if not v.Owner then continue end
+		if v:GetPos():Distance(self:GetPos()) < 1500 then --A player's prop is too close, assuming they're building in the area.
+			return true 
+		end
+	end
+
+	return false
+end
+
 function ENT:Think()
+	if self:GetContainer() != "" and self:ShouldStopTimer() then
+		self:SetNextGeneration( CurTime() + (self:GetNextGeneration() - CurTime()) ) --based programming skills
+	end
+
 	if self:GetContainer() != "" and CurTime() > self:GetNextGeneration() then
 		self:GenerateLoot()
 		self:SetNextGeneration( CurTime() + AS.Loot[self:GetContainer()].generation.time )

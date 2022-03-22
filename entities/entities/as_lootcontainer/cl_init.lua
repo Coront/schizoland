@@ -48,3 +48,17 @@ hook.Add( "PlayerButtonDown", "AS_LootContainer", function( ply, button )
         end
     end
 end )
+
+hook.Add( "PreDrawHalos", "AS_Container_Indicator", function()
+    if LocalPlayer():IsDeveloping() then return end
+
+    local container = {}
+    for k, v in pairs( ents.FindByClass("as_lootcontainer") ) do
+        if LocalPlayer():GetPos():Distance(v:GetPos()) > 250 then continue end
+        if v and IsValid(v) and v.Inventory and table.Count(v.Inventory) > 0 then
+            container[#container + 1] = v
+        end
+    end
+
+    halo.Add( container, COLHUD_DEFAULT, 1, 1, 1, true, false )
+end)

@@ -95,7 +95,6 @@ MOB.NPCs = {
     ["npc_zombie"] = 12,
     ["npc_fastzombie"] = 8,
     ["npc_poisonzombie"] = 6,
-    ["npc_combine_s"] = 5,
 }
 MOB.SpawnMult = 1 --Multiplier for the amount of NPCs that will spawn. This is rounded down if decimal.
 MOB.RespawnTime = 60 --Time it takes for NPCs to respawn.

@@ -58,3 +58,16 @@ AS.AddMapData( "gm_postnuke_beta_4", {
         Vector(-1211.22, 286.12, 156.03),
     },
 })
+
+AS.AddMapData( "rp_cscdesert_v4b2", {
+    MobMult = 1,
+    NodeMult = 1,
+    Load = {
+        pos = Vector( 889.94, 4903.31, 558.71 ),
+        ang = Angle( 9.68, 133.98 ),
+    },
+    Spawns = {
+        Vector( -1192.67, 6215.72, 73.03 ),
+        Vector( -1192.67, 6298.56, 73.03 ),
+    },
+})

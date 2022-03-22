@@ -6,13 +6,14 @@
 -- ╚════██║██║     ██╔══██╗██╔══██║██╔═══╝     ██║   ██║   ██╔══╝  ██║╚██╔╝██║╚════██║
 -- ███████║╚██████╗██║  ██║██║  ██║██║         ██║   ██║   ███████╗██║ ╚═╝ ██║███████║
 -- ╚══════╝ ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝         ╚═╝   ╚═╝   ╚══════╝╚═╝     ╚═╝╚══════╝
--- Scrap items are raw resources.
+-- Scrap items are raw resources. They will be used in almost everything.
 
 AS.AddBaseItem("misc_scrap", {
     name = "Scrap Metal",
     desc = "Metal, salvaged from various objects. Useful for crafting.",
     category = "misc",
     model = "models/gibs/scanner_gib02.mdl",
+    color = Color( 125, 125, 125 ),
     value = 1,
     weight = 0.001,
 })
@@ -22,6 +23,7 @@ AS.AddBaseItem("misc_smallparts", {
     desc = "A bunch of small parts, gathered from various objects. Useful for crafting.",
     category = "misc",
     model = "models/props_wasteland/gear02.mdl",
+    color = Color( 125, 125, 125 ),
     value = 1,
     weight = 0.001,
 })
@@ -31,6 +33,7 @@ AS.AddBaseItem("misc_chemical", {
     desc = "A nugget with chemicals. Found from salvaging chemical objects. Useful for crafting.",
     category = "misc",
     model = "models/grub_nugget_small.mdl",
+    color = Color( 125, 125, 125 ),
     value = 1,
     weight = 0.001,
 })
@@ -70,6 +73,15 @@ AS.AddBaseItem("misc_gunpowder", {
     weight = 0.2,
 })
 
+AS.AddBaseItem("misc_gunpowderten", {
+    name = "Gunpowder 10x",
+    desc = "Everything you could possibly want. A large jar that contains enough gunpowder to be split into ten smaller jars.",
+    category = "misc",
+    model = "models/props_lab/jar01a.mdl",
+    value = 1,
+    weight = 0.2,
+})
+
 AS.AddBaseItem("misc_heavyplate", {
     name = "Heavy Armor Plate",
     desc = "A heavy plate that is incredibly durable against elements. Required in the creation of some very efficient armors.",
@@ -79,9 +91,9 @@ AS.AddBaseItem("misc_heavyplate", {
     weight = 0.2,
 })
 
-AS.AddBaseItem("misc_mechanicalparts", {
-    name = "Mechanical Parts",
-    desc = "A mechanical part salvaged from old technology.",
+AS.AddBaseItem("misc_servo", {
+    name = "Servo",
+    desc = "A servomotor. A common requirement for automated tools.",
     model = "models/gibs/scanner_gib04.mdl",
     value = 1,
     weight = 0.2,
@@ -118,8 +130,8 @@ AS.AddBaseItem("misc_saw", {
 })
 
 AS.AddBaseItem("misc_electronicreceiver", {
-    name = "Electronic Receiver",
-    desc = "An outdated receiver, maybe it still works?",
+    name = "Damaged Receiver",
+    desc = "A damaged receiver. Maybe if you find enough parts you could get it working again.",
     category = "misc",
     model = "models/props_lab/reciever01c.mdl",
     value = 1,
@@ -130,6 +142,15 @@ AS.AddBaseItem("misc_electronicreceiver", {
         ["misc_smallparts"] = 40,
         ["misc_chemical"] = 25,
     },
+})
+
+AS.AddBaseItem("misc_sensorpod", {
+    name = "Sensorpod",
+    desc = "An old but still intact sensorpod that was salvaged from another object. Useful for relaying information that was gathered from a scan.",
+    category = "misc",
+    model = "models/gibs/shield_scanner_gib5.mdl",
+    value = 1,
+    weight = 0.2,
 })
 
 AS.AddBaseItem("misc_seed_orange", {
@@ -233,6 +254,7 @@ AS.AddBaseItem("misc_hydrogen", {
     desc = "A bottle that contains H2O2, or hydrogren peroxide, which is good for preventing minor cuts, scrapes, or burns from becoming infected.",
     category = "misc",
     model = "models/props_junk/glassjug01.mdl",
+    color = Color( 75, 100, 100),
     value = 5,
     weight = 1,
 })
@@ -242,14 +264,23 @@ AS.AddBaseItem("misc_isopropyl", {
     desc = "A bottle that contains C3H8O, or Isopropyl Alcohol, which is good as a rubbing alcohol, and to stop minor cuts from becoming infected.",
     category = "misc",
     model = "models/props_junk/glassjug01.mdl",
-    color = Color( 50, 100, 0 ),
+    color = Color( 50, 75, 0 ),
     value = 5,
     weight = 1,
 })
 
+AS.AddBaseItem("misc_egg", {
+    name = "Grub Egg",
+    desc = "An egg that contains an unborn antlion grub inside of it.",
+    category = "misc",
+    model = "models/props_hive/egg.mdl",
+    value = 1,
+    weight = 0.4,
+})
+
 AS.AddBaseItem("misc_emptybottle", {
     name = "Empty Bottle",
-    desc = "An empty bottle. Can be filled with water or salvaged for resources.",
+    desc = "An empty bottle. Can be filled with water if dropped into a water source.",
     category = "misc",
     model = "models/props_junk/garbage_plasticbottle003a.mdl",
     value = 1,
@@ -264,11 +295,11 @@ AS.AddBaseItem("misc_emptybottle", {
 --    ╚═╝    ╚═════╝  ╚═════╝ ╚══════╝    ╚═╝   ╚═╝   ╚══════╝╚═╝     ╚═╝╚══════╝
 -- Tool items are items that are required in crafting but are never actually consumed, meaning it's reusable.
 
-AS.AddBaseItem("misc_tools", {
-    name = "Set of Tools",
-    desc = "A bag that contains a bunch of tools that would be required for assembling anything advanced.",
+AS.AddBaseItem("misc_tool", {
+    name = "Multitool",
+    desc = "A small tool with the ability to perform multiple tasks. Useful for making smaller objects.",
     category = "misc",
-    model = "models/props_c17/BriefCase001a.mdl",
+    model = "models/gibs/shield_scanner_gib4.mdl",
     value = 1,
     weight = 2,
 })
@@ -301,6 +332,7 @@ AS.AddBaseItem("misc_shoe", {
     desc = "A leather shoe. Can be salvaged for raw resources.",
     category = "misc",
     model = "models/props_junk/Shoe001a.mdl",
+    color = Color( 70, 70, 70 ),
     value = 1,
     weight = 0.4,
 })
@@ -310,7 +342,7 @@ AS.AddBaseItem("misc_emptysodacan", {
     desc = "An empty soda can. Can be salvaged for raw resources.",
     category = "misc",
     model = "models/props_junk/PopCan01a.mdl",
-    skin = 2,
+    color = Color( 70, 70, 70 ),
     value = 1,
     weight = 0.1,
 })
@@ -320,15 +352,47 @@ AS.AddBaseItem("misc_metalcan", {
     desc = "A empty aluminum can. Not sure what this could be used for.",
     category = "misc",
     model = "models/props_junk/garbage_metalcan002a.mdl",
+    color = Color( 70, 70, 70 ),
     value = 1,
     weight = 0.125,
 })
 
-AS.AddBaseItem("misc_checmicalbucket", {
+AS.AddBaseItem("misc_mug", {
+    name = "Coffee Mug",
+    desc = "A coffee mug. Not really used for, well, anything.",
+    category = "misc",
+    model = "models/props/cs_office/coffee_mug.mdl",
+    color = Color( 70, 70, 70 ),
+    value = 1,
+    weight = 0.125,
+})
+
+AS.AddBaseItem("misc_towels", {
+    name = "Paper Towels",
+    desc = "Useful if you need to clean up a spilled drink.",
+    category = "misc",
+    model = "models/props/cs_office/paper_towels.mdl",
+    color = Color( 70, 70, 70 ),
+    value = 1,
+    weight = 0.125,
+})
+
+AS.AddBaseItem("misc_chemicalbucket", {
     name = "Chemical Bucket",
     desc = "A bucket that has some random chemicals inside of it. Probably not really useful for much.",
     category = "misc",
     model = "models/props_junk/plasticbucket001a.mdl",
+    color = Color( 70, 70, 70 ),
+    value = 1,
+    weight = 1,
+})
+
+AS.AddBaseItem("misc_leadpipe", {
+    name = "Lead Pipe",
+    desc = "There's not much this can be used for. It's pretty heavy though.",
+    category = "misc",
+    model = "models/props_canal/mattpipe.mdl",
+    color = Color( 70, 70, 70 ),
     value = 1,
     weight = 1,
 })
