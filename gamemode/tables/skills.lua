@@ -35,3 +35,12 @@ AS.AddBaseSkill( "weaponhandling", {
     basexp = 1,
     power = 2,
 } )
+
+AS.AddBaseSkill( "salvaging", {
+    name = "Salvaging",
+    desc = "Increases your chances of successfully finding resources from salvaging a node, increases the minimal and maximum amount that can be found, and increases your chances of finding items. Leveled by salvaging nodes.",
+    icon = "",
+    max = 20,
+    basexp = 1,
+    power = 1.85,
+} )

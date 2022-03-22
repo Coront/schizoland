@@ -198,7 +198,7 @@ end)
 -- ╚═╝     ╚═╝  ╚═╝╚══════╝    ╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚═════╝ ╚═╝╚═╝  ╚═══╝ ╚═════╝
 
 if (SERVER) then
-    hook.Add( "Initialize", "AS_Persists_Spawn", function()
+    hook.Add( "InitPostEntity", "AS_Persists_Spawn", function()
         local dataExists = sql.QueryValue( "SELECT * FROM as_persists WHERE map = " .. SQLStr(game.GetMap()) )
         if not dataExists then
             MsgC( Color(255,0,55), "[AS] There is no persist data for " .. game.GetMap() .. ", meaning the map likely doesn't have any perma propped contents.\n" )

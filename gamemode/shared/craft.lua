@@ -3,7 +3,7 @@ function PlayerMeta:CanCraftItem( item, amt )
     if not AS.Items[item].craft then AS.LuaError("Attempt to check 'CanCraftItem' with no crafting table - " .. item) return end
     amt = amt and amt > 0 and math.Round(amt) or 1
 
-    if AS.Items[item].class and self:GetClass() != AS.Items[item].class then return false end
+    if AS.Items[item].class and self:GetASClass() != AS.Items[item].class then return false end
     for k, v in pairs( AS.Items[item].craft ) do
         if not self:HasInInventory( k, v * amt ) then return false end
     end
@@ -42,7 +42,7 @@ function PlayerMeta:CraftItem( item, amt )
 
     if SERVER then
         local itemname = AS.Items[item].name
-        ent = ents.Create("as_baseitem")
+        local ent = ents.Create("as_baseitem")
         ent:SetItem( item )
         ent:SetAmount( amt )
         ent:SetSkin( AS.Items[item].skin or 0 )

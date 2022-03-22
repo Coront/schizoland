@@ -77,6 +77,14 @@ SKL.WeaponHandling = {
     recoilmultloss = 0.036, --(1-(level*recoilmultloss)) The number to mult overall recoil by per level, as in higher means less recoil per level.
     reloadmultinc = 0.013, --(1+(level*reloadmultinc)) The number to mult reload speed by per level, as in higher means faster reloading per level.
 }
+SKL.Salvaging = {
+    incamt = 0.02, --Amount to increase per salvage
+    decsalvtime = 0.06, --Decreases the amount of time to salvage per level
+    incscavsuccess = 1, --Increases the chance of successful scavenges per level
+    incscavitem = 0.6, --Increases the chance of finding an item per level
+    incminres = 0.25, --Increases the minimal amount of resources found
+    incmaxres = 0.3, --Increases the maximum amount of resources found
+}
 --Satiation Settings
 SET.Satiation = {}
 SAT = SET.Satiation
@@ -90,15 +98,56 @@ SAT.SatBuffs = 80 --The amount of hunger + thirst a player must remain above in 
 --Mobs
 SET.Mobs = {}
 MOB = SET.Mobs
+MOB.SpawnMult = 1 --Multiplier for the amount of NPCs that will spawn. This is rounded down if decimal.
+MOB.RespawnTime = 60 --Time it takes for NPCs to respawn.
 MOB.NPCs = {
     ["npc_antlion"] = 10, --Key is NPC class, value is maximum spawned
     ["npc_zombie"] = 12,
     ["npc_fastzombie"] = 8,
     ["npc_poisonzombie"] = 6,
 }
-MOB.SpawnMult = 1 --Multiplier for the amount of NPCs that will spawn. This is rounded down if decimal.
-MOB.RespawnTime = 60 --Time it takes for NPCs to respawn.
-
+--Nodes
+SET.Nodes = {}
+NOD = SET.Nodes
+NOD.Maximum = 20 --Maximum nodes
+NOD.SpawnMult = 1 --Multiplier for the maximum number of nodes
+NOD.BaseScavTime = 3 --Base time length to scavenge
+NOD.ScavengeChance = 44 --Base chance for a successful scavenge
+NOD.ItemChance = 25 --Chance per scavenge to find an item, need to have a successful scavenge roll first
+NOD.ScrapMinScavs = 8 --Minimal scavenges of a scrap node before despawning
+NOD.ScrapMaxScavs = 18 --Maximum scavenges of a scrap node before despawning
+NOD.ChemMinScavs = 6 --Minimal scavenges of a chem node before despawning
+NOD.ChemMaxScavs = 14 --Maximum scavenges of a chem node before despawning
+NOD.ResBaseMin = 1 --Base minimum resources found in a successful scavenge
+NOD.ResBaseMax = 6 --Base maximum resources found in a successful scavenge
+NOD.ScrapNodeModels = {
+    ["models/props_vehicles/car001a_hatchback.mdl"] = true,
+    ["models/props_vehicles/car001b_hatchback.mdl"] = true,
+    ["models/props_vehicles/car002a_physics.mdl"] = true,
+    ["models/props_vehicles/car002b_physics.mdl"] = true,
+    ["models/props_vehicles/car003a_physics.mdl"] = true,
+    ["models/props_vehicles/car003b_physics.mdl"] = true,
+    ["models/props_vehicles/car004a_physics.mdl"] = true,
+    ["models/props_vehicles/car004b_physics.mdl"] = true,
+    ["models/props_vehicles/car005a_physics.mdl"] = true,
+    ["models/props_vehicles/car005b_physics.mdl"] = true,
+}
+NOD.ScrapNodeModelsIndoor = {
+    ["models/props_c17/tv_monitor01.mdl"] = true,
+    ["models/props_c17/FurnitureWashingMachine001a.mdl"] = true,
+    ["models/props_interiors/Radiator01a.mdl"] = true,
+    ["models/props_junk/bicycle01a.mdl"] = true,
+    ["models/props_lab/harddrive01.mdl"] = true,
+    ["models/props_lab/partsbin01.mdl"] = true,
+}
+NOD.ChemicalNodeModels = { --There is multiple skins for some of these models, so it may seem lacking in diversity.
+    ["models/props_c17/oildrum001.mdl"] = true,
+    ["models/props/de_train/barrel.mdl"] = true,
+    ["models/props/de_train/pallet_barrels.mdl"] = true,
+}
+NOD.ScavItems = { --Table containing potential items that will spawn if a item is scavenged. Key is itemid, value is tickets.
+    ["misc_servo"] = 50,
+}
 
 
 

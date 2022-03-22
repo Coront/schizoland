@@ -140,12 +140,42 @@ concommand.Add( "as_mobs_clear", AS.GridEnts.ClearMobs )
 -- Nodes
 
 function AS.GridEnts.CountNodes( ply ) --This will count all of the nodes that are spawned and make a detailed report in the console.
+    local overallNodes = 0
+    for k, v in pairs( ents.FindByClass("as_lootnode") ) do
+        overallNodes = overallNodes + 1
+    end
 
+    if ply and IsValid( ply ) then
+        ply:PrintMessage( HUD_PRINTCONSOLE, "[[============================================================================]]" )
+        ply:PrintMessage( HUD_PRINTCONSOLE, "||                                Node Report                                 ||")
+        ply:PrintMessage( HUD_PRINTCONSOLE, "[[============================================================================]]" )
+        ply:PrintMessage( HUD_PRINTCONSOLE, "|| Total Nodes: " .. overallNodes )
+        ply:PrintMessage( HUD_PRINTCONSOLE, "[[============================================================================]]" )
+    else
+        print( "[[============================================================================]]" )
+        print( "||                                 Mob Report                                 ||")
+        print( "[[============================================================================]]" )
+        print( "|| Total Nodes: " .. overallNodes )
+        print( "[[============================================================================]]" )
+    end
 end
 concommand.Add( "as_nodes_count", AS.GridEnts.CountNodes )
 
 function AS.GridEnts.ClearNodes( ply ) --This will clear all of the nodes.
+    if ply and IsValid(ply) and not ply:IsAdmin() then ply:ChatPrint("You are not an admin.") return end
 
+    local totalnodes = 0
+    for k, v in pairs( ents.FindByClass("as_lootnode") ) do
+        if not v.ASGridNode then continue end
+        v:Remove()
+        totalnodes = totalnodes + 1
+    end
+
+    if ply and IsValid( ply ) then
+        ply:PrintMessage( HUD_PRINTCONSOLE, "Cleared " .. totalnodes .. " nodes.")
+    else
+        print( "Cleared " .. totalnodes .. " nodes." )
+    end
 end
 concommand.Add( "as_nodes_clear", AS.GridEnts.ClearNodes )
 
@@ -169,13 +199,12 @@ concommand.Add( "as_events_clear", AS.GridEnts.ClearEvents )
 -- ╚══════╝╚═╝     ╚═╝  ╚═╝ ╚══╝╚══╝ ╚═╝  ╚═══╝╚═╝╚═╝  ╚═══╝ ╚═════╝
 -- Automatic Spawning.
 
-function AS.Grid.SpawnMobs()
-    --We need to find a valid spawn for NPCs first. We'll go through all of the spawns and see what's available.
+function AS.Grid.FetchValidSpawners()
     local ValidSpawners = {}
     for _, info in pairs( ActiveGrid ) do
-        local ValidSpawn = true --By default, lets assume all of the spawners work. We will need to add checks in which case they may not work.
+        local ValidSpawn = true
 
-        --If a player is in the radius of a spawner, it shouldn't be valid. This prevents NPCS from spawning on top of players.
+        --A spawner shouldnt be valid if a player is nearby. This prevents nodes or npcs from spawning on them directly.
         for k, v in pairs( ents.FindByClass( "player" ) ) do
             if info["pos"]:Distance(v:GetPos()) < info["distance"] * 1.5 then
                 ValidSpawn = false 
@@ -187,11 +216,18 @@ function AS.Grid.SpawnMobs()
             ValidSpawners[#ValidSpawners + 1] = info
         end
     end
+
+    return ValidSpawners
+end
+
+function AS.Grid.SpawnMobs()
+    --We need to find a valid spawn for NPCs first. We'll go through all of the spawns and see what's available.
+    local ValidSpawners = AS.Grid.FetchValidSpawners()
     if #ValidSpawners <= 0 then return end --No valid spawners. Although extremely rare, still a precaution to have.
 
     --Now, since we have a table containing valid spawn points, we need to spawn NPCs on them.
     for mob, amt in pairs( MOB.NPCs ) do
-        local maxMobs = math.floor( amt * MOB.SpawnMult )
+        local maxMobs = math.floor( (amt * MOB.SpawnMult) * (AS.Maps[game.GetMap()] and AS.Maps[game.GetMap()].MobMult or 1) )
         if #ents.FindByClass(mob) >= maxMobs then continue end --We've already capped this NPC, skip to the next one.
         local mobsToSpawn = maxMobs - #ents.FindByClass(mob) --How many NPCs we need to spawn.
 
@@ -204,9 +240,6 @@ function AS.Grid.SpawnMobs()
                 local ent = ents.Create(mob)
                 ent:SetPos( position )
                 ent:Spawn()
-                if mob == "npc_combine_s" then
-                    ent:Give("weapon_ar2")
-                end
                 ent.ASGridMob = true
             end
         end
@@ -215,7 +248,33 @@ end
 concommand.Add( "as_mobs_spawn", AS.Grid.SpawnMobs )
 
 function AS.Grid.SpawnNodes()
+    --Similar with mobs, we need to find a valid spawn location.
+    local ValidSpawners = AS.Grid.FetchValidSpawners()
+    if #ValidSpawners <= 0 then return end --None are valid
 
+    --Now we place nodes.
+    local maxnodes = math.floor( NOD.Maximum * NOD.SpawnMult )
+    local nodesToSpawn = maxnodes - #ents.FindByClass("as_lootnode")
+    for i = 1, nodesToSpawn do
+        local spawnPoint = ValidSpawners[math.random(1, #ValidSpawners)] --Random spawner
+        local spawnPointPos = spawnPoint["pos"]:ToTable()
+        local position = Vector( spawnPointPos[1] + math.random( spawnPoint["distance"] * -1, spawnPoint["distance"] ), spawnPointPos[2] + math.random(spawnPoint["distance"] * -1 , spawnPoint["distance"] ), spawnPointPos[3] )
+
+        if util.IsInWorld( position ) then
+            local ent = ents.Create("as_lootnode")
+            ent:SetPos(position)
+            ent:SetAngles( Angle(0, math.random( 0, 360 ), 0) )
+            ent:Spawn()
+            ent:DropToFloor()
+            local physobj = ent:GetPhysicsObject()
+            physobj:Wake()
+            timer.Simple( 5, function()
+                if ent and IsValid(ent) then
+                    physobj:EnableMotion( false )
+                end
+            end)
+        end
+    end
 end
 concommand.Add( "as_nodes_spawn", AS.Grid.SpawnNodes )
 
@@ -223,6 +282,7 @@ hook.Add( "Think", "AS_GridSpawn", function() --This is just for automatically s
     if CurTime() > (NextSpawn or 0) then
         NextSpawn = CurTime() + MOB.RespawnTime
         AS.Grid.SpawnMobs()
+        AS.Grid.SpawnNodes()
     end
 end)
 

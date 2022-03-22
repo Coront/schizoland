@@ -21,6 +21,6 @@ hook.Add( "HUDPaint", "AS_StorageBox", function()
 
         local pos = v:GetPos():ToScreen()
         local usekey = LocalPlayer():GetPos():Distance(v:GetPos()) < 120 and "\n[" .. string.upper(KEYBIND_USE) .. "] Access Storage" or ""
-        draw.DrawText( "Storage Container" .. usekey, "TargetID", pos.x, pos.y, Color(255,255,255,255), TEXT_ALIGN_CENTER )
+        draw.DrawText( "Storage Container" .. usekey, "TargetID", pos.x, pos.y, COLHUD_DEFAULT, TEXT_ALIGN_CENTER )
     end
 end)

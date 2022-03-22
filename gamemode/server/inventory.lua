@@ -79,7 +79,7 @@ end
 function PlayerMeta:DropItem( item, amt )
     local itemname = AS.Items[item].name
     self:TakeItemFromInventory( item, amt )
-    ent = ents.Create("as_baseitem")
+    local ent = ents.Create("as_baseitem")
     ent:SetItem( item )
     ent:SetAmount( amt )
     ent:SetSkin( AS.Items[item].skin or 0 )
