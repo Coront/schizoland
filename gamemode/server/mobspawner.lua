@@ -103,6 +103,7 @@ function AS.GridEnts.CountMobs( ply ) --This will count all of the mobs that are
             ply:PrintMessage( HUD_PRINTCONSOLE, "|| " .. k .. " = " .. v )
         end
         ply:PrintMessage( HUD_PRINTCONSOLE, "||------------------------------------------------------------------------------" )
+        ply:PrintMessage( HUD_PRINTCONSOLE, "|| Current Mob Mult: " .. MOB.SpawnMult * (AS.Maps[game.GetMap()] and AS.Maps[game.GetMap()].MobMult or 1) )
         ply:PrintMessage( HUD_PRINTCONSOLE, "|| Overall Mobs: " .. overallMobs )
         ply:PrintMessage( HUD_PRINTCONSOLE, "[[============================================================================]]" )
     else
@@ -113,6 +114,7 @@ function AS.GridEnts.CountMobs( ply ) --This will count all of the mobs that are
             print( "|| " .. k .. " = " .. v )
         end
         print( "||------------------------------------------------------------------------------" )
+        print( "|| Current Mob Multiplier: " .. MOB.SpawnMult * (AS.Maps[game.GetMap()] and AS.Maps[game.GetMap()].NodeMult or 1) )
         print( "|| Overall Mobs: " .. overallMobs )
         print( "[[============================================================================]]" )
     end
@@ -149,12 +151,14 @@ function AS.GridEnts.CountNodes( ply ) --This will count all of the nodes that a
         ply:PrintMessage( HUD_PRINTCONSOLE, "[[============================================================================]]" )
         ply:PrintMessage( HUD_PRINTCONSOLE, "||                                Node Report                                 ||")
         ply:PrintMessage( HUD_PRINTCONSOLE, "[[============================================================================]]" )
+        ply:PrintMessage( HUD_PRINTCONSOLE, "|| Current Node Multiplier: " .. NOD.SpawnMult * (AS.Maps[game.GetMap()] and AS.Maps[game.GetMap()].NodeMult or 1) )
         ply:PrintMessage( HUD_PRINTCONSOLE, "|| Total Nodes: " .. overallNodes )
         ply:PrintMessage( HUD_PRINTCONSOLE, "[[============================================================================]]" )
     else
         print( "[[============================================================================]]" )
-        print( "||                                 Mob Report                                 ||")
+        print( "||                                Node Report                                 ||")
         print( "[[============================================================================]]" )
+        print( "|| Current Node Multiplier: " .. NOD.SpawnMult * (AS.Maps[game.GetMap()] and AS.Maps[game.GetMap()].NodeMult or 1) )
         print( "|| Total Nodes: " .. overallNodes )
         print( "[[============================================================================]]" )
     end
@@ -253,7 +257,7 @@ function AS.Grid.SpawnNodes()
     if #ValidSpawners <= 0 then return end --None are valid
 
     --Now we place nodes.
-    local maxnodes = math.floor( NOD.Maximum * NOD.SpawnMult )
+    local maxnodes = math.floor( (NOD.Maximum * NOD.SpawnMult) * (AS.Maps[game.GetMap()] and AS.Maps[game.GetMap()].NodeMult or 1) )
     local nodesToSpawn = maxnodes - #ents.FindByClass("as_lootnode")
     for i = 1, nodesToSpawn do
         local spawnPoint = ValidSpawners[math.random(1, #ValidSpawners)] --Random spawner

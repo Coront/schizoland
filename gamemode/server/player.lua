@@ -35,8 +35,14 @@ function GM:PlayerSpawn( ply )
         if ply:IsAdmin() then ply:ChatPrint("[AS] There is no proper map data set up! Players will spawn at a random point!") end
     end
 
-    ply:SetHealth(SKL.Health)
-    ply:SetMaxHealth(SKL.Health)
+    local health = SKL.Health
+    if ply:GetASClass() == "mercenary" then
+        health = health * 1.4
+    elseif ply:GetASClass() == "scavenger" then
+        health = health * 0.85
+    end
+    ply:SetHealth(health)
+    ply:SetMaxHealth(health)
     ply:SetupHands()
     for k, v in pairs( SET.DefaultWeapons ) do
         ply:Give( k )

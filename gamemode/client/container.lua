@@ -48,6 +48,7 @@ function ContainerMenu( ent )
     panel = {}
     for k, v in SortedPairs( ent:GetInventory() ) do
         local info = AS.Items[k]
+        if not info then AS.LuaError("Attempt to index an invalid item in container inventory - " .. k) continue end
         if not frame_container.selectedItem then frame_container.selectedItem = {ID = k, amt = v} end
 
         panel[k] = itemlist:Add("DPanel")

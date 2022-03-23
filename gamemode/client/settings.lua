@@ -271,6 +271,9 @@ function AS.Settings.BuildOptions()
     KeyBind( "Statistics", xpos, ypos, settings_scroll, "as_bind_stats" )
     addSpace( 0, 20 )
 
+    KeyBind( "Classes", xpos, ypos, settings_scroll, "as_bind_class" )
+    addSpace( 0, 20 )
+
     KeyBind( "Crafting", xpos, ypos, settings_scroll, "as_bind_craft" )
     addSpace( 0, 20 )
 end

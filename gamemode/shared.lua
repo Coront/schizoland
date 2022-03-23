@@ -99,6 +99,12 @@ function AS.LuaError( message )
     ErrorNoHaltWithStack( "[AS] Error: " .. message .. "\n" )
 end
 
+hook.Add( "OnReloaded", "AS_Reload", function()
+    if (CLIENT) then
+        LocalPlayer():PrintMessage( HUD_PRINTCENTER, "Gamemode reloaded at " .. math.Round(CurTime()) .. "!" )
+    end
+end)
+
 function GM:Move( ply, mv )
     local movespeed = SKL.Movement + math.floor(ply:GetSkillLevel( "endurance" ) * SKL.Endurance.runspeed)
     ply:SetRunSpeed( movespeed )
@@ -110,7 +116,7 @@ function GM:Move( ply, mv )
 end
 
 function PlayerMeta:Nickname() --Will return the name of the player. Use this over self:Nick().
-    return self.name or self:Nick()
+    return self:GetNW2String("as_name", self.name) or self:Nick()
 end
 
 function PlayerMeta:TracePosFromEyes( dist ) --Will return just a position.

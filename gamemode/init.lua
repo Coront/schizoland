@@ -25,15 +25,15 @@ print("Server File: shared.lua")
 include("tablebase.lua")
 print("Server File: tablebase.lua")
 
-for k, v in pairs( file.Find("aftershock/gamemode/server/*.lua", "LUA") ) do
-	include("server/" .. v)
-end
-print("Server Folder: server/*.lua")
-
 for k, v in pairs( file.Find("aftershock/gamemode/client/*.lua",  "LUA") ) do
 	AddCSLuaFile("client/" .. v)
 end
 print("CS Folder: client/*.lua")
+
+for k, v in pairs( file.Find("aftershock/gamemode/server/*.lua", "LUA") ) do
+	include("server/" .. v)
+end
+print("Server Folder: server/*.lua")
 
 for k, v in pairs( file.Find("aftershock/gamemode/shared/*.lua",  "LUA") ) do
 	include("shared/" .. v)

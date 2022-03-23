@@ -4,7 +4,7 @@ ENT.PrintName		= "Item Base"
 ENT.Author			= "Tampy"
 ENT.Purpose			= "Base item that contains data"
 ENT.Category		= "Aftershock"
-ENT.Spawnable		= true
+ENT.Spawnable		= false
 
 function ENT:SetItem( item )
 	self:SetNW2String( "ItemID", item )

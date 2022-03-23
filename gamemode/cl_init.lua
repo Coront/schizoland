@@ -5,11 +5,15 @@
 -- ╚██████╗███████╗██║███████╗██║ ╚████║   ██║   ███████║██║██████╔╝███████╗    ██║██║ ╚████║██║   ██║   ██║██║  ██║███████╗██║███████╗██║  ██║   ██║   ██║╚██████╔╝██║ ╚████║
 --  ╚═════╝╚══════╝╚═╝╚══════╝╚═╝  ╚═══╝   ╚═╝   ╚══════╝╚═╝╚═════╝ ╚══════╝    ╚═╝╚═╝  ╚═══╝╚═╝   ╚═╝   ╚═╝╚═╝  ╚═╝╚══════╝╚═╝╚══════╝╚═╝  ╚═╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝
 
+MsgC( Color(0,0,255), "[AS] Loading Clientside Files...\n" )
 include("shared.lua")
 
 for k, v in pairs( file.Find("aftershock/gamemode/client/*.lua", "LUA") ) do
 	include("client/" .. v)
+	print("CS File: client/" .. v)
 end
+
+MsgC( Color(0,0,255), "[AS] Finished Loading!\n" )
 
 CreateClientConVar( "as_gameplay_verify", "1", true, false )
 CreateClientConVar( "as_entity_renderdist", "2000", true, false )
@@ -133,7 +137,7 @@ function GM:OnPlayerChat( ply, txt, team, dead )
 	local tab = {}
 
 	if ( IsValid( ply ) ) then
-		table.insert( tab, COLHUD_DEFAULT )
+		table.insert( tab, AS.Classes[ply:GetNW2String("as_class")].color )
 		table.insert( tab, ply:Nickname() )
 		table.insert( tab, color_white )
 		table.insert( tab, ": " .. txt )

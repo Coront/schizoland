@@ -21,10 +21,11 @@ if SERVER then
         local equipment = util.JSONToTable(sql.QueryValue("SELECT equipped FROM as_characters_inventory WHERE pid = " .. self.pid)) or {}
         self:Spawn()
 
-        self:SetNW2String( "as_name", name ) --Temp, will find a simpler solution.
+        self:SetNW2String( "as_name", name )
         self.name = name
         self:SetModel(model)
-        self:SetClass(class)
+        self:SetASClass(class)
+        self:SetNW2String( "as_class", self:GetASClass() )
         self:SetHealth(stats.health)
         self:SetMaxHealth(SKL.Health)
         self:SetHunger(stats.hunger)
@@ -59,7 +60,7 @@ elseif CLIENT then
         local ply = LocalPlayer()
 
         ply.name = net.ReadString()
-        ply:SetClass(net.ReadString())
+        ply:SetASClass(net.ReadString())
         ply:SetHunger(net.ReadInt(32))
         ply:SetThirst(net.ReadInt(32))
         ply:SetPlaytime(net.ReadInt(32))

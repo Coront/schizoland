@@ -2,6 +2,7 @@ CreateClientConVar( "as_bind_inventory", "TAB", true, false )
 CreateClientConVar( "as_bind_skills", "b", true, false )
 CreateClientConVar( "as_bind_missions", "m", true, false )
 CreateClientConVar( "as_bind_stats", "t", true, false )
+CreateClientConVar( "as_bind_class", "F3", true, false )
 CreateClientConVar( "as_bind_craft", "F4", true, false )
 
 function GetConVarString( convar )
@@ -30,6 +31,8 @@ hook.Add( "PlayerButtonDown", "AS_Binds", function( ply, button )
             AS.Inventory.Open( 3 )
         elseif button == GetConVarString("as_bind_stats") then
             AS.Inventory.Open( 4 )
+        elseif button == GetConVarString("as_bind_class") then
+            AS.Class.Open()
         elseif button == GetConVarString("as_bind_craft") then
             AS.Craft.Open()
         end
