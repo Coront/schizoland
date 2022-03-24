@@ -36,6 +36,7 @@ end
 function PlayerMeta:SaveCharacter()
     local pid = self.pid
     if not pid then return false end
+    if not (self.FullyLoadedCharacter or false) then print("Stopped player: " .. self:Nickname() .. "'s data from saving, encountered an error while loading profile.") return false end
 
     local equipped = {}
     for k, v in pairs(self:GetAmmo()) do

@@ -60,6 +60,8 @@ if SERVER then
             net.WriteTable(self:GetSkills())
         net.Send(self)
 
+        self.FullyLoadedCharacter = true --Don't touch this, although it looks pointless it's a failsafe to prevent character's data from getting wiped should they ever encounter an error while loading.
+
         ResyncAllContainerInventories( self )
     end
 
