@@ -5,15 +5,15 @@ AS.AddBaseItem("ammo_pistol", {
     model = "models/Items/BoxSRounds.mdl",
     value = 5,
     weight = 1,
-    class = "engineer",
     use = {
         ammotype = "pistol",
         ammoamt = 40,
     },
+    class = "engineer",
     craft = {
-        ["misc_scrap"] = 10,
-        ["misc_smallparts"] = 5,
-        ["misc_chemical"] = 15,
+        ["misc_scrap"] = 5,
+        ["misc_smallparts"] = 15,
+        ["misc_chemical"] = 10,
         ["misc_munitionpress"] = 0,
         ["misc_gunpowder"] = 1,
     },
@@ -24,17 +24,18 @@ AS.AddBaseItem("ammo_smg", {
     desc = "Ammunition that is constructed to work in any weapon labeled as an SMG.",
     category = "ammo",
     model = "models/Items/BoxMRounds.mdl",
-    value = 8,
-    weight = 1.25,
-    class = "engineer",
+    value = 10,
+    weight = 1,
     use = {
         ammotype = "smg1",
         ammoamt = 75,
     },
+    hidden = true,
+    class = "engineer",
     craft = {
-        ["misc_scrap"] = 20,
-        ["misc_smallparts"] = 15,
-        ["misc_chemical"] = 25,
+        ["misc_scrap"] = 10,
+        ["misc_smallparts"] = 20,
+        ["misc_chemical"] = 15,
         ["misc_munitionpress"] = 0,
         ["misc_gunpowder"] = 1,
     },
@@ -46,7 +47,20 @@ AS.AddBaseItem("ammo_rifle", {
     category = "ammo",
     model = "models/Items/combine_rifle_cartridge01.mdl",
     value = 15,
-    weight = 1.5,
+    weight = 1.2,
+    use = {
+        ammotype = "ar2",
+        ammoamt = 60,
+    },
+    hidden = true,
+    class = "engineer",
+    craft = {
+        ["misc_scrap"] = 15,
+        ["misc_smallparts"] = 25,
+        ["misc_chemical"] = 20,
+        ["misc_munitionpress"] = 0,
+        ["misc_gunpowder"] = 1,
+    },
 })
 
 AS.AddBaseItem("ammo_shotgun", {
@@ -54,8 +68,21 @@ AS.AddBaseItem("ammo_shotgun", {
     desc = "Ammunition that is constructed to work in any weapon labeled as a shotgun.",
     category = "ammo",
     model = "models/Items/BoxBuckshot.mdl",
-    value = 15,
+    value = 20,
     weight = 1.5,
+    use = {
+        ammotype = "buckshot",
+        ammoamt = 20,
+    },
+    hidden = true,
+    class = "engineer",
+    craft = {
+        ["misc_scrap"] = 20,
+        ["misc_smallparts"] = 25,
+        ["misc_chemical"] = 20,
+        ["misc_munitionpress"] = 0,
+        ["misc_gunpowder"] = 2,
+    },
 })
 
 AS.AddBaseItem("ammo_sniper", {
@@ -64,5 +91,18 @@ AS.AddBaseItem("ammo_sniper", {
     category = "ammo",
     model = "models/props_lab/box01a.mdl",
     value = 20,
-    weight = 1.75,
+    weight = 1.5,
+    use = {
+        ammotype = "sniperround",
+        ammoamt = 20,
+    },
+    hidden = true,
+    class = "engineer",
+    craft = {
+        ["misc_scrap"] = 20,
+        ["misc_smallparts"] = 30,
+        ["misc_chemical"] = 25,
+        ["misc_munitionpress"] = 0,
+        ["misc_gunpowder"] = 2,
+    },
 })

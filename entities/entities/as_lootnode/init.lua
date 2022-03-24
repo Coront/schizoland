@@ -91,12 +91,13 @@ function ENT:Use( ply )
             if roll > (NOD.ScavengeChance + (SKL.Salvaging.incscavsuccess * ply:GetSkillLevel("salvaging"))) then return end --Player failed to find anything this time
 
             --Adding Resources to inventory.
+            local scavbonus = ply:GetASClass() == "scavenger" and CLS.Scavenger.scavresinc or 0
             if self:GetResourceType() == "Scrap" then
                 local item = "misc_scrap"
                 if math.random( 1, 10 ) > 5 then
                     item = "misc_smallparts"
                 end
-                local amt = math.random( math.floor(NOD.ResBaseMin + (SKL.Salvaging.incminres * ply:GetSkillLevel("salvaging")) ), math.floor(NOD.ResBaseMax + (SKL.Salvaging.incmaxres * ply:GetSkillLevel("salvaging")) ) )
+                local amt = math.random( math.floor(NOD.ResBaseMin + (SKL.Salvaging.incminres * ply:GetSkillLevel("salvaging")) ) + scavbonus, math.floor(NOD.ResBaseMax + (SKL.Salvaging.incmaxres * ply:GetSkillLevel("salvaging")) ) + scavbonus )
                 if ply:CanCarryItem( item, amt ) then
                     self:GiveItemToPlayer( ply, item, amt )
                 else
@@ -104,7 +105,7 @@ function ENT:Use( ply )
                 end
             elseif self:GetResourceType() == "Chemical" then
                 local item = "misc_chemical"
-                local amt = math.random( math.floor(NOD.ResBaseMin + (SKL.Salvaging.incminres * ply:GetSkillLevel("salvaging")) ), math.floor(NOD.ResBaseMax + (SKL.Salvaging.incmaxres * ply:GetSkillLevel("salvaging")) ) )
+                local amt = math.random( math.floor(NOD.ResBaseMin + (SKL.Salvaging.incminres * ply:GetSkillLevel("salvaging")) ) + scavbonus, math.floor(NOD.ResBaseMax + (SKL.Salvaging.incmaxres * ply:GetSkillLevel("salvaging")) ) + scavbonus )
                 if ply:CanCarryItem( item, amt ) then
                     self:GiveItemToPlayer( ply, item, amt )
                 else

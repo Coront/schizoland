@@ -396,7 +396,7 @@ function SWEP:DrawHUD()
             end
 
             draw.SimpleTextOutlined(self:Clip1() .. "/" .. self:GetMaxClip1(), "AftershockHUD", ScrW() * 0.871 + xpos, ScrH() * 0.91 + ypos, COLHUD_DEFAULT, TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP, 1, Color(0,0,0))
-            draw.SimpleTextOutlined(game.GetAmmoName( self:GetPrimaryAmmoType() ) .. ": " .. self:Ammo1(), "AftershockHUD", ScrW() * 0.871 + xpos, ScrH() * 0.93 + ypos, COLHUD_DEFAULT, TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP, 1, Color(0,0,0))
+            draw.SimpleTextOutlined(AS.Items[translateAmmoNameID(game.GetAmmoName( self:GetPrimaryAmmoType() ))].name .. ": " .. self:Ammo1(), "TargetIDSmall", ScrW() * 0.871 + xpos, ScrH() * 0.955 + ypos, COLHUD_DEFAULT, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM, 1, Color(0,0,0))
         end
 
         local debugreload = tobool(GetConVar("aswep_debug_reloading"):GetInt())

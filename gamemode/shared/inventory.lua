@@ -51,7 +51,8 @@ function PlayerMeta:GetCarryWeight()
 end
 
 function PlayerMeta:MaxCarryWeight()
-    return SKL.DefaultCarryWeight + (SKL.Strength.carryweight * self:GetSkillLevel("strength"))
+    local scavbonus = self:GetASClass() == "scavenger" and CLS.Scavenger.carryweightinc or 0
+    return SKL.DefaultCarryWeight + (SKL.Strength.carryweight * self:GetSkillLevel("strength")) + scavbonus
 end
 
 function PlayerMeta:CanCarryItem( item, amt )
@@ -72,6 +73,21 @@ end
 function PlayerMeta:CanUnequipItem( item )
     if not self:CanCarryItem( item ) then return false end --Player needs room in their inventory to unequip.
     return true
+end
+
+function translateAmmoNameID( ammo ) --This function translates an itemid/ammoid to its opposite. I know it kinda sucks but whatever.
+    if AS.Items[ammo] then --we were given a AS.itemid.
+        return AS.Items[ammo].use.ammotype --we will convert the itemid to the ammoid and send it back.
+    else --We were not given an AS.itemid. (assuming we were fed an ammoid and not an itemid.)
+        ammo = string.lower(ammo)
+        for k, v in pairs(AS.Items) do
+            if not string.find( k, "ammo_" ) then continue end --Ignore everything thats not an ammo.
+            if AS.Items[k].use.ammotype == ammo then
+                return k --We'll feed back the itemid
+            end
+        end
+    end
+    return nil
 end
 
 -- ███╗   ██╗███████╗████████╗██╗    ██╗ ██████╗ ██████╗ ██╗  ██╗██╗███╗   ██╗ ██████╗

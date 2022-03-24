@@ -48,18 +48,17 @@ hook.Add( "Think", "AS_SatiationUpdate", function()
     for k, v in pairs(player.GetAll()) do
         if not v:IsLoaded() then continue end --We skip players who arent loaded for this check.
         if CLIENT and v != LocalPlayer() then continue end --This will make it so that while clientside, it will not update information for everyone, just the local player specifically.
-        
+
         v.NextHungerUpdate = v.NextHungerUpdate or CurTime() + SAT.HungerUpdate
         v.NextThirstUpdate = v.NextThirstUpdate or CurTime() + SAT.ThirstUpdate
         local hungerupdate = v.NextHungerUpdate
         local thirstupdate = v.NextThirstUpdate
-        
+
         if CurTime() > hungerupdate then
             if v:GetHunger() > 0 then
                 v:SetHunger( math.Clamp(v:GetHunger() - SAT.HungerLoss, 0, v:GetMaxHunger()) )
             else
                 if SERVER then
-                    print("here")
                     v:TakeDamage( SAT.StarveDamage, v )
                 end
             end

@@ -27,14 +27,23 @@ if SERVER then
         self:SetASClass(class)
         self:SetNW2String( "as_class", self:GetASClass() )
         self:SetHealth(stats.health)
-        self:SetMaxHealth(SKL.Health)
+        local health = SKL.Health
+        if self:GetASClass() == "mercenary" then
+            health = health * CLS.Mercenary.healthmult
+        elseif self:GetASClass() == "scavenger" then
+            health = health * CLS.Scavenger.healthmult
+        end
+        self:SetMaxHealth(health)
         self:SetHunger(stats.hunger)
         self:SetThirst(stats.thirst)
         self:SetSkills(skills)
         self:SetInventory(inv)
         self:SetBank(bank)
-        for k, v in pairs(equipment) do
+        for k, v in pairs(equipment.weps) do
             self:Give( v )
+        end
+        for k, v in pairs(equipment.ammo) do
+            self:GiveAmmo( v, k )
         end
         self:SetPlaytime(stats.playtime)
         self:ValidateInventory()

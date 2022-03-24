@@ -170,7 +170,6 @@ function AS.GridEnts.ClearNodes( ply ) --This will clear all of the nodes.
 
     local totalnodes = 0
     for k, v in pairs( ents.FindByClass("as_lootnode") ) do
-        if not v.ASGridNode then continue end
         v:Remove()
         totalnodes = totalnodes + 1
     end
@@ -269,14 +268,26 @@ function AS.Grid.SpawnNodes()
             ent:SetPos(position)
             ent:SetAngles( Angle(0, math.random( 0, 360 ), 0) )
             ent:Spawn()
-            ent:DropToFloor()
-            local physobj = ent:GetPhysicsObject()
-            physobj:Wake()
-            timer.Simple( 5, function()
-                if ent and IsValid(ent) then
-                    physobj:EnableMotion( false )
-                end
-            end)
+            if ent:GetResourceType() == "Scrap" or ent:GetModel() == "models/props/de_train/pallet_barrels.mdl" then
+                ent:DropToFloor()
+                local physobj = ent:GetPhysicsObject()
+                physobj:Wake()
+                timer.Simple( 5, function()
+                    if ent and IsValid(ent) then
+                        physobj:EnableMotion( false )
+                    end
+                end)
+            elseif ent:GetResourceType() == "Chemical" then
+                local trace = util.TraceLine({
+                    start = ent:GetPos() + ent:OBBCenter(),
+                    endpos = ent:GetPos() + Vector( 0, 0, -9999 ),
+                    filter = {ent},
+                })
+                ent:SetPos(trace.HitPos - Vector( 0, 0, 17 ))
+                ent:SetAngles( ent:GetAngles() - Angle( math.random( 5, 20 ), 0, 0 ) )
+                local physobj = ent:GetPhysicsObject()
+                physobj:EnableMotion( false )
+            end
         end
     end
 end

@@ -12,8 +12,7 @@ AS.AddBaseItem("wep_knife", {
     model = "models/weapons/w_knife_t.mdl",
     wep = "weapon_knife",
     value = 5,
-    weight = 0.5,
-    class = "scavenger",
+    weight = 0.3,
     craft = {
         ["misc_scrap"] = 15,
         ["misc_smallparts"] = 10,
@@ -28,7 +27,7 @@ AS.AddBaseItem("wep_crowbar", {
     model = "models/weapons/w_crowbar.mdl",
     wep = "weapon_crowbar",
     value = 10,
-    weight = 1,
+    weight = 0.75,
     class = "scavenger",
     craft = {
         ["misc_scrap"] = 25,
@@ -50,13 +49,13 @@ AS.AddBaseItem("wep_peashooter", {
     category = "weapon",
     model = "models/weapons/w_pistol.mdl",
     wep = "weapon_peashooter",
-    value = 10,
+    value = 25,
     weight = 0.8,
     class = "engineer",
     craft = {
-        ["misc_scrap"] = 40,
-        ["misc_smallparts"] = 50,
-        ["misc_chemical"] = 35,
+        ["misc_scrap"] = 35,
+        ["misc_smallparts"] = 45,
+        ["misc_chemical"] = 30,
     },
 })
 
@@ -65,41 +64,15 @@ AS.AddBaseItem("wep_p228", {
     desc = "A small pistol that holds 13 rounds and shoots at a moderate rate. Deals average damage. Uses pistol ammo.",
     category = "weapon",
     model = "models/weapons/w_pist_p228.mdl",
-    value = 15,
+    wep = "weapon_p228",
+    value = 30,
     weight = 0.8,
     class = "engineer",
     craft = {
-        ["misc_scrap"] = 60,
-        ["misc_smallparts"] = 50,
-        ["misc_chemical"] = 40,
+        ["misc_scrap"] = 45,
+        ["misc_smallparts"] = 60,
+        ["misc_chemical"] = 30,
     },
-})
-
-AS.AddBaseItem("wep_usp", {
-    name = "USP",
-    desc = "A small pistol that holds 18 rounds and shoots at a less than moderate rate. Deals average damage. Has the ability to attach a muzzle suppressor, which reduces recoil and improves accuracy, but lowers damage. Uses pistol ammo.",
-    category = "weapon",
-    model = "models/weapons/w_pist_usp.mdl",
-    value = 15,
-    weight = 1
-})
-
-AS.AddBaseItem("wep_glock", {
-    name = "Glock-18",
-    desc = "A small pistol that holds 19 rounds and has full-auto compatibility. Semi-auto shoots at a moderate rate, while full-auto shoots at an extremely fast rate. Deals slightly less than average damage. Uses pistol ammo.",
-    category = "weapon",
-    model = "models/weapons/w_pist_glock18.mdl",
-    value = 15,
-    weight = 0.9
-})
-
-AS.AddBaseItem("wep_fiveseven", {
-    name = "Five-Seven",
-    desc = "A small pistol that holds 20 rounds and shoots at a moderate rate. Deals slightly above average damage. Uses pistol ammo.",
-    category = "weapon",
-    model = "models/weapons/w_pist_fiveseven.mdl",
-    value = 15,
-    weight = 1.1
 })
 
 AS.AddBaseItem("wep_magnum", {
@@ -107,8 +80,15 @@ AS.AddBaseItem("wep_magnum", {
     desc = "A large magnum that holds 6 rounds and shoots at a slow rate. Deals above average damage. Uses pistol ammo.",
     category = "weapon",
     model = "models/weapons/w_357.mdl",
-    value = 15,
-    weight = 1.8
+    value = 100,
+    weight = 1.8,
+    hidden = true,
+    class = "engineer",
+    craft = {
+        ["misc_scrap"] = 120,
+        ["misc_smallparts"] = 150,
+        ["misc_chemical"] = 60,
+    },
 })
 
 AS.AddBaseItem("wep_deagle", {
@@ -117,8 +97,15 @@ AS.AddBaseItem("wep_deagle", {
     category = "weapon",
     model = "models/weapons/w_pist_deagle.mdl",
     wep = "weapon_deagle",
-    value = 15,
-    weight = 2.1
+    value = 120,
+    weight = 2.1,
+    hidden = true,
+    class = "engineer",
+    craft = {
+        ["misc_scrap"] = 150,
+        ["misc_smallparts"] = 180,
+        ["misc_chemical"] = 100,
+    },
 })
 
 -- ███████╗███╗   ███╗ ██████╗ ███████╗
@@ -133,35 +120,15 @@ AS.AddBaseItem("wep_mp7", {
     desc = "A medium sized SMG that holds 30 rounds and shoots fast. Deals below average damage. Uses SMG ammo.",
     category = "weapon",
     model = "models/weapons/w_smg1.mdl",
-    value = 15,
-    weight = 2
-})
-
-AS.AddBaseItem("wep_ump", {
-    name = "UMP",
-    desc = "A medium sized SMG that holds 25 rounds and shoots slightly less than fast. Deals average damage. Uses SMG ammo.",
-    category = "weapon",
-    model = "models/weapons/w_smg_ump45.mdl",
-    value = 15,
-    weight = 2
-})
-
-AS.AddBaseItem("wep_tmp", {
-    name = "TMP",
-    desc = "A medium sized SMG that holds 40 rounds and shoots very fast. Deals below average damage. Uses SMG ammo.",
-    category = "weapon",
-    model = "models/weapons/w_smg_tmp.mdl",
-    value = 15,
-    weight = 2.1
-})
-
-AS.AddBaseItem("wep_p90", {
-    name = "P90",
-    desc = "A large sized SMG that holds 50 rounds and shoots very fast. Deals below average damage. Uses SMG ammo.",
-    category = "weapon",
-    model = "models/weapons/w_smg_p90.mdl",
-    value = 15,
-    weight = 2.5
+    value = 50,
+    weight = 2,
+    hidden = true,
+    class = "engineer",
+    craft = {
+        ["misc_scrap"] = 90,
+        ["misc_smallparts"] = 130,
+        ["misc_chemical"] = 125,
+    },
 })
 
 AS.AddBaseItem("wep_mp5", {
@@ -170,8 +137,15 @@ AS.AddBaseItem("wep_mp5", {
     category = "weapon",
     model = "models/weapons/w_smg_mp5.mdl",
     wep = "weapon_mp5",
-    value = 15,
-    weight = 2.3
+    value = 50,
+    weight = 2.3,
+    hidden = true,
+    class = "engineer",
+    craft = {
+        ["misc_scrap"] = 120,
+        ["misc_smallparts"] = 130,
+        ["misc_chemical"] = 125,
+    },
 })
 
 AS.AddBaseItem("wep_mac", {
@@ -180,8 +154,15 @@ AS.AddBaseItem("wep_mac", {
     category = "weapon",
     model = "models/weapons/w_smg_mac10.mdl",
     wep = "weapon_mac10",
-    value = 15,
-    weight = 1.9
+    value = 65,
+    weight = 1.9,
+    hidden = true,
+    class = "engineer",
+    craft = {
+        ["misc_scrap"] = 120,
+        ["misc_smallparts"] = 210,
+        ["misc_chemical"] = 130,
+    },
 })
 
 -- ██████╗ ██╗███████╗██╗     ███████╗███████╗
@@ -191,50 +172,21 @@ AS.AddBaseItem("wep_mac", {
 -- ██║  ██║██║██║     ███████╗███████╗███████║
 -- ╚═╝  ╚═╝╚═╝╚═╝     ╚══════╝╚══════╝╚══════╝
 
-AS.AddBaseItem("wep_famas", {
-    name = "Famas",
-    desc = "A medium sized rifle that holds 25 rounds and shoots very fast. Deals average damage. Uses rifle ammo.",
-    category = "weapon",
-    model = "models/weapons/w_rif_famas.mdl",
-    value = 15,
-    weight = 2.4
-})
-
-AS.AddBaseItem("wep_sg552", {
-    name = "SG-552",
-    desc = "An average sized rifle that holds 30 rounds and shoots at a moderate rate. Deals slightly above average damage. Has an attached scope for sighting. Uses rifle ammo.",
-    category = "weapon",
-    model = "models/weapons/w_rif_sg552.mdl",
-    value = 15,
-    weight = 2.5
-})
-
-AS.AddBaseItem("wep_galil", {
-    name = "IMI Galil",
-    desc = "An average sized rifle that holds 30 rounds and shoots at an above moderate rate. Deals slightly above average damage. Uses rifle ammo.",
-    category = "weapon",
-    model = "models/weapons/w_rif_galil.mdl",
-    value = 15,
-    weight = 2.7
-})
-
-AS.AddBaseItem("wep_aug", {
-    name = "Steyr AUG",
-    desc = "An average sized rifle that holds 30 rounds and shoots at a moderate rate. Deals slightly above average damage. Has an attached scope for sighting. Uses rifle ammo.",
-    category = "weapon",
-    model = "models/weapons/w_rif_aug.mdl",
-    value = 15,
-    weight = 2.7
-})
-
 AS.AddBaseItem("wep_m4a1", {
     name = "M4A1",
     desc = "An average sized rifle that holds 30 rounds and shoots at an above moderate rate. Deals slightly above average damage. Uses rifle ammo.",
     category = "weapon",
     model = "models/weapons/w_rif_m4a1.mdl",
     wep = "weapon_m4a1",
-    value = 15,
-    weight = 2.6
+    value = 80,
+    weight = 2.6,
+    hidden = true,
+    class = "engineer",
+    craft = {
+        ["misc_scrap"] = 160,
+        ["misc_smallparts"] = 210,
+        ["misc_chemical"] = 150,
+    },
 })
 
 AS.AddBaseItem("wep_ak47", {
@@ -242,8 +194,46 @@ AS.AddBaseItem("wep_ak47", {
     desc = "An average sized rifle that holds 30 rounds and shoots at a moderate rate. Deals above average damage. Uses rifle ammo.",
     category = "weapon",
     model = "models/weapons/w_rif_ak47.mdl",
-    value = 15,
-    weight = 2.7
+    value = 80,
+    weight = 2.7,
+    hidden = true,
+    class = "engineer",
+    craft = {
+        ["misc_scrap"] = 180,
+        ["misc_smallparts"] = 190,
+        ["misc_chemical"] = 140,
+    },
+})
+AS.AddBaseItem("wep_sg552", {
+    name = "SG-552",
+    desc = "An average sized rifle that holds 30 rounds and shoots at a moderate rate. Deals slightly above average damage. Has an attached scope for sighting. Uses rifle ammo.",
+    category = "weapon",
+    model = "models/weapons/w_rif_sg552.mdl",
+    value = 100,
+    weight = 2.5,
+    hidden = true,
+    class = "engineer",
+    craft = {
+        ["misc_scrap"] = 210,
+        ["misc_smallparts"] = 250,
+        ["misc_chemical"] = 150,
+    },
+})
+
+AS.AddBaseItem("wep_aug", {
+    name = "Steyr AUG",
+    desc = "An average sized rifle that holds 30 rounds and shoots at a moderate rate. Deals slightly above average damage. Has an attached scope for sighting. Uses rifle ammo.",
+    category = "weapon",
+    model = "models/weapons/w_rif_aug.mdl",
+    value = 100,
+    weight = 2.7,
+    hidden = true,
+    class = "engineer",
+    craft = {
+        ["misc_scrap"] = 200,
+        ["misc_smallparts"] = 260,
+        ["misc_chemical"] = 170,
+    },
 })
 
 AS.AddBaseItem("wep_pulserifle", {
@@ -252,8 +242,16 @@ AS.AddBaseItem("wep_pulserifle", {
     category = "weapon",
     model = "models/weapons/w_irifle.mdl",
     wep = "weapon_pulserifle",
-    value = 15,
-    weight = 3
+    value = 250,
+    weight = 3,
+    hidden = true,
+    class = "scientist",
+    craft = {
+        ["misc_scrap"] = 300,
+        ["misc_smallparts"] = 200,
+        ["misc_chemical"] = 280,
+        ["misc_pulsepod"] = 1,
+    },
 })
 
 -- ███████╗██╗  ██╗ ██████╗ ████████╗ ██████╗ ██╗   ██╗███╗   ██╗███████╗
@@ -269,8 +267,15 @@ AS.AddBaseItem("wep_m3super", {
     category = "weapon",
     model = "models/weapons/w_shot_m3super90.mdl",
     wep = "weapon_m3super",
-    value = 15,
-    weight = 2.9
+    value = 80,
+    weight = 2.9,
+    hidden = true,
+    class = "engineer",
+    craft = {
+        ["misc_scrap"] = 230,
+        ["misc_smallparts"] = 180,
+        ["misc_chemical"] = 280,
+    },
 })
 
 AS.AddBaseItem("wep_xm1014", {
@@ -279,8 +284,15 @@ AS.AddBaseItem("wep_xm1014", {
     category = "weapon",
     model = "models/weapons/w_shot_xm1014.mdl",
     wep = "weapon_xm",
-    value = 15,
-    weight = 2.9
+    value = 100,
+    weight = 2.9,
+    hidden = true,
+    class = "engineer",
+    craft = {
+        ["misc_scrap"] = 250,
+        ["misc_smallparts"] = 200,
+        ["misc_chemical"] = 300,
+    },
 })
 
 AS.AddBaseItem("wep_spas", {
@@ -290,8 +302,8 @@ AS.AddBaseItem("wep_spas", {
     model = "models/weapons/w_shotgun.mdl",
     color = Color( 120, 40, 40 ),
     wep = "weapon_spas",
-    value = 15,
-    weight = 2.8
+    value = 150,
+    weight = 2.8,
 })
 
 -- ██╗     ███╗   ███╗ ██████╗ ███████╗
@@ -303,12 +315,19 @@ AS.AddBaseItem("wep_spas", {
 
 AS.AddBaseItem("wep_m249", {
     name = "M249",
-    desc = "A very heavy light machine gun that holds 100 rounds and shoots very fast. Deals average damage. Uses rifle ammo.",
+    desc = "A light machine gun that holds 100 rounds and shoots very fast. Deals average damage. Uses rifle ammo.",
     category = "weapon",
     model = "models/weapons/w_mach_m249para.mdl",
     wep = "weapon_m249",
-    value = 15,
-    weight = 4
+    value = 200,
+    weight = 4,
+    hidden = true,
+    class = "engineer",
+    craft = {
+        ["misc_scrap"] = 350,
+        ["misc_smallparts"] = 300,
+        ["misc_chemical"] = 285,
+    },
 })
 
 -- ███████╗███╗   ██╗██╗██████╗ ███████╗██████╗ ███████╗
@@ -324,8 +343,15 @@ AS.AddBaseItem("wep_scout", {
     category = "weapon",
     model = "models/weapons/w_snip_scout.mdl",
     wep = "weapon_scout",
-    value = 15,
-    weight = 2.6
+    value = 125,
+    weight = 2.6,
+    hidden = true,
+    class = "engineer",
+    craft = {
+        ["misc_scrap"] = 220,
+        ["misc_smallparts"] = 240,
+        ["misc_chemical"] = 175,
+    },
 })
 
 AS.AddBaseItem("wep_g3sg1", {
@@ -334,8 +360,15 @@ AS.AddBaseItem("wep_g3sg1", {
     category = "weapon",
     model = "models/weapons/w_snip_g3sg1.mdl",
     color = Color( 120, 40, 40 ),
-    value = 15,
-    weight = 3.1
+    value = 180,
+    weight = 3.1,
+    hidden = true,
+    class = "engineer",
+    craft = {
+        ["misc_scrap"] = 250,
+        ["misc_smallparts"] = 275,
+        ["misc_chemical"] = 200,
+    },
 })
 
 AS.AddBaseItem("wep_sg550", {
@@ -344,8 +377,15 @@ AS.AddBaseItem("wep_sg550", {
     category = "weapon",
     model = "models/weapons/w_snip_sg550.mdl",
     color = Color( 120, 40, 40 ),
-    value = 15,
-    weight = 3
+    value = 180,
+    weight = 3,
+    hidden = true,
+    class = "engineer",
+    craft = {
+        ["misc_scrap"] = 280,
+        ["misc_smallparts"] = 245,
+        ["misc_chemical"] = 210,
+    },
 })
 
 AS.AddBaseItem("wep_awp", {
@@ -355,8 +395,8 @@ AS.AddBaseItem("wep_awp", {
     model = "models/weapons/w_snip_awp.mdl",
     color = Color( 150, 120, 60 ),
     wep = "weapon_awp",
-    value = 15,
-    weight = 3.9
+    value = 500,
+    weight = 3.9,
 })
 
 -- ███╗   ███╗██╗███████╗ ██████╗

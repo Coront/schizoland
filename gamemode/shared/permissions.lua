@@ -108,7 +108,7 @@ if SERVER then
 
     hook.Add("EntityTakeDamage", "AS_PropDamageBlock", function( target, dmginfo)
         --This prevents both getting damaged by props and crushed by them
-        if target:IsPlayer() and (dmginfo:GetInflictor():GetClass() == "prop_physics" or (dmginfo:GetInflictor():GetClass() == "worldspawn" and not dmginfo:IsFallDamage())) then dmginfo:SetDamage( 0 ) end
+        --if target:IsPlayer() and (dmginfo:GetInflictor():GetClass() == "prop_physics" or (dmginfo:GetInflictor():GetClass() == "worldspawn" and not dmginfo:IsFallDamage())) then dmginfo:SetDamage( 0 ) end
     end)
 
 end

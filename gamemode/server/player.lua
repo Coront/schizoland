@@ -37,9 +37,9 @@ function GM:PlayerSpawn( ply )
 
     local health = SKL.Health
     if ply:GetASClass() == "mercenary" then
-        health = health * 1.4
+        health = health * CLS.Mercenary.healthmult
     elseif ply:GetASClass() == "scavenger" then
-        health = health * 0.85
+        health = health * CLS.Scavenger.healthmult
     end
     ply:SetHealth(health)
     ply:SetMaxHealth(health)
@@ -70,3 +70,24 @@ end
 function GM:PlayerDeathSound( ply )
     return true --Will hide the player death sound.
 end
+
+hook.Add( "Think", "AS_PassiveHealing", function()
+    for k, v in pairs(player.GetAll()) do
+        if not v:IsLoaded() then continue end --We skip players who arent loaded for this check.
+        if v:Health() >= v:GetMaxHealth() then continue end --Skip players at full hp, no reason for them to have this check.
+
+        local hpToHeal = 0
+        if v:GetHunger() >= SAT.SatBuffs and v:GetThirst() >= SAT.SatBuffs then
+            hpToHeal = hpToHeal + 1
+        end
+        if hpToHeal == 0 then continue end --We skip this player because they cannot be healed.
+
+        if CurTime() > (v.NextHealthUpdate or 0) then
+            v.NextHealthUpdate = CurTime() + SET.HealthUpdating
+            v:SetHealth( v:Health() + hpToHeal )
+            if v:Health() >= v:GetMaxHealth() then
+                v:SetHealth( v:GetMaxHealth() )
+            end
+        end
+    end
+end)

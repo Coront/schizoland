@@ -37,13 +37,23 @@ function PlayerMeta:SaveCharacter()
     local pid = self.pid
     if not pid then return false end
 
-    local weps = {}
-    for k, v in pairs(self:GetWeapons()) do
-        if v.ASID then
-            weps[#weps + 1] = v:GetClass()
+    local equipped = {}
+    for k, v in pairs(self:GetAmmo()) do
+        equipped.ammo = equipped.ammo or {}
+        if AS.Items[translateAmmoNameID( game.GetAmmoName( k ) )] then
+            equipped.ammo[string.lower(game.GetAmmoName( k ))] = v
         end
     end
-    sql.Query( "UPDATE as_characters_inventory SET inv = " .. SQLStr(util.TableToJSON( self:GetInventory(), true )) .. ", bank = " .. SQLStr(util.TableToJSON( self:GetBank(), true )) .. ", equipped = " .. SQLStr(util.TableToJSON( weps, true )) .. " WHERE pid = " .. pid )
+    for k, v in pairs(self:GetWeapons()) do
+        equipped.weps = equipped.weps or {}
+        if v.ASID then
+            equipped.weps[#equipped.weps + 1] = v:GetClass()
+            if v:Clip1() > 0 then
+                equipped.ammo[string.lower(game.GetAmmoName(v:GetPrimaryAmmoType()))] = (equipped.ammo[string.lower(game.GetAmmoName(v:GetPrimaryAmmoType()))] or 0) + v:Clip1()
+            end
+        end
+    end
+    sql.Query( "UPDATE as_characters_inventory SET inv = " .. SQLStr(util.TableToJSON( self:GetInventory(), true )) .. ", bank = " .. SQLStr(util.TableToJSON( self:GetBank(), true )) .. ", equipped = " .. SQLStr(util.TableToJSON( equipped, true )) .. " WHERE pid = " .. pid )
     sql.Query( "UPDATE as_characters_skills SET skills = " .. SQLStr(util.TableToJSON( self:GetSkills(), true )) .. " WHERE pid = " .. pid )
     sql.Query( "UPDATE as_characters_stats SET health = " .. self:Health() .. ", hunger = " .. self:GetHunger() .. ", thirst = " .. self:GetThirst() .. ", playtime = " .. self:GetPlaytime() .. " WHERE pid = " .. pid )
     sql.Query( "UPDATE as_characters SET class = " .. SQLStr( self:GetASClass() ) .. ", laston = " .. SQLStr( os.date( "%m/%d/%y - %I:%M %p", os.time() ) ) .. " WHERE pid = " .. pid )
@@ -53,6 +63,8 @@ end
 function ManualSave( ply )
     if ply:SaveCharacter() then
         ply:ChatPrint("Player Saved.")
+    else
+        ply:ChatPrint("Error in saving character.")
     end
 end
 concommand.Add("as_save", ManualSave)

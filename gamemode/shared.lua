@@ -106,7 +106,8 @@ hook.Add( "OnReloaded", "AS_Reload", function()
 end)
 
 function GM:Move( ply, mv )
-    local movespeed = SKL.Movement + math.floor(ply:GetSkillLevel( "endurance" ) * SKL.Endurance.runspeed)
+    local scavbonus = ply:GetASClass() == "scavenger" and CLS.Scavenger.movespeedmult or 1
+    local movespeed = (SKL.Movement + math.floor(ply:GetSkillLevel( "endurance" ) * SKL.Endurance.runspeed)) * scavbonus
     ply:SetRunSpeed( movespeed )
     ply:SetWalkSpeed( movespeed )
     ply:SetSlowWalkSpeed( 75 )

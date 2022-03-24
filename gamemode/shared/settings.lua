@@ -5,6 +5,7 @@ SET = AS.Settings
 SET.MaxCharacters = 5 --Maximum characters players are allowed to have.
 SET.MinNameLength = 3 --Minimal length of a players name.
 SET.BankWeight = 1000 --Maximum weight a player's bank can hold.
+SET.HealthUpdating = 3 --Seconds until passive health updates
 SET.ClassChange = true --Players able to change classes?
 SET.ClassChangeCost = true --Player have to pay to change classes?
 SET.ClassChangeCostTbl = { --If classchangecost is on, what do player's have to pay to change?
@@ -63,6 +64,18 @@ PERM.PropBlacklist = { --Props that are forbidden from being spawned
     ["models/props_phx/misc/flakshell_big.mdl"] = true, --Explosive
     ["models/props_phx/misc/potato_launcher_explosive.mdl"] = true, --Explosive
 }
+--Class Settings
+SET.Classes = {}
+CLS = SET.Classes
+CLS.Mercenary = {
+    healthmult = 1.4,
+}
+CLS.Scavenger = {
+    healthmult = 0.85,
+    carryweightinc = 20,
+    movespeedmult = 1.15,
+    scavresourceinc = 1,
+}
 --Skill Settings
 SET.Skills = {}
 SKL = SET.Skills
@@ -107,10 +120,8 @@ MOB = SET.Mobs
 MOB.SpawnMult = 1 --Multiplier for the amount of NPCs that will spawn. This is rounded down if decimal.
 MOB.RespawnTime = 60 --Time it takes for NPCs to respawn.
 MOB.NPCs = {
-    ["npc_antlion"] = 10, --Key is NPC class, value is maximum spawned
-    ["npc_zombie"] = 12,
-    ["npc_fastzombie"] = 8,
-    ["npc_poisonzombie"] = 6,
+    ["npc_as_zombie"] = 10, --Key is NPC class, value is maximum spawned
+    ["npc_as_bandit"] = 6,
 }
 --Nodes
 SET.Nodes = {}
@@ -152,7 +163,35 @@ NOD.ChemicalNodeModels = { --There is multiple skins for some of these models, s
     ["models/props/de_train/pallet_barrels.mdl"] = true,
 }
 NOD.ScavItems = { --Table containing potential items that will spawn if a item is scavenged. Key is itemid, value is tickets.
+    ["wep_p228"] = 50,
+    ["ammo_pistol"] = 50,
+    ["food_beans"] = 50,
+    ["food_dirty_water"] = 50,
+    ["food_clean_water"] = 50,
+    ["food_soda"] = 50,
+    ["food_milk"] = 50,
+    ["med_bag"] = 50,
+    ["med_vial"] = 50,
+    ["misc_gunpowder"] = 50,
+    ["misc_gunpowderten"] = 50,
     ["misc_servo"] = 50,
+    ["misc_electronicparts"] = 50,
+    ["misc_saw"] = 50,
+    ["misc_sensorpod"] = 50,
+    ["misc_seed_orange"] = 50,
+    ["misc_seed_melon"] = 50,
+    ["misc_solarfilmroll"] = 50,
+    ["misc_carbattery"] = 50,
+    ["misc_wheel"] = 50,
+    ["misc_axel"] = 50,
+    ["misc_propane"] = 50,
+    ["misc_paintcan"] = 50,
+    ["misc_emptybottle"] = 50,
+    ["misc_shoe"] = 50,
+    ["misc_emptysodacan"] = 50,
+    ["misc_metalcan"] = 50,
+    ["misc_chemicalbucket"] = 50,
+    ["misc_leadpipe"] = 50,
 }
 
 

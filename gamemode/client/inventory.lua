@@ -353,7 +353,7 @@ function AS.Inventory.BuildInventory()
     class:SetColor( AS.Classes[LocalPlayer():GetASClass()].color )
     class:SizeToContents()
 
---Weapons Panel
+--Weapons/Ammo Panel
     local weaponpanel = vgui.Create( "DPanel", inventory )
     weaponpanel:SetPos( 674, 440 )
     weaponpanel:SetSize( 300, 115 )
@@ -404,6 +404,56 @@ function AS.Inventory.BuildInventory()
         end
 
         weaponscroll:AddPanel( weaponinfopanel )
+    end
+
+    for k, v in SortedPairs( LocalPlayer():GetAmmo() ) do
+        local ammoid, itemid = game.GetAmmoID( k ), translateAmmoNameID( game.GetAmmoName( k ) )
+        if not itemid then continue end --doesnt have any item information, not a real item please leave my walls
+
+        local ammoinfopanel = vgui.Create("DPanel")
+        ammoinfopanel:SetSize( 70, weaponscroll:GetTall() )
+        function ammoinfopanel:Paint(w,h)
+            surface.SetDrawColor( COLHUD_PRIMARY )
+            surface.DrawRect( 0, 0, w, h )
+        end
+
+        local ammoname = vgui.Create("DLabel", ammoinfopanel)
+        ammoname:SetPos( 0, 0 )
+        ammoname:SetFont("TargetIDSmall")
+        ammoname:SetText( AS.Items[itemid].name )
+        ammoname:SizeToContents()
+
+        local model = vgui.Create("SpawnIcon", ammoinfopanel)
+        model:SetPos( 0, 15 )
+        model:SetSize( ammoinfopanel:GetWide(), ammoinfopanel:GetWide() )
+        model:SetModel( AS.Items[itemid].model, AS.Items[itemid].skin or 0 )
+        model:SetTooltip(AS.Items[itemid].name)
+
+        local ammoamt = vgui.Create("DLabel", ammoinfopanel)
+        ammoamt:SetPos( 0, 75 )
+        ammoamt:SetFont("TargetIDSmall")
+        ammoamt:SetText( "x" .. v )
+        ammoamt:SizeToContents()
+
+        local amttopackage = math.floor(v / AS.Items[itemid].use.ammoamt)
+        if amttopackage > 0 then
+            local unequipammo = vgui.Create("DButton", ammoinfopanel)
+            unequipammo:SetSize( ammoinfopanel:GetWide() - 2, 18  )
+            unequipammo:SetPos( 1, ammoinfopanel:GetTall() - unequipammo:GetTall() - 2)
+            unequipammo:SetText("Unequip")
+            function unequipammo:DoClick()
+                VerifySlider( amttopackage, function( amt )
+                    LocalPlayer():AddItemToInventory( itemid, amt )
+                    self:GetParent():Remove()
+                    net.Start("as_inventory_unequipammo")
+                        net.WriteString( itemid )
+                        net.WriteInt( amt, 32 )
+                    net.SendToServer()
+                end)
+            end
+        end
+
+        weaponscroll:AddPanel( ammoinfopanel )
     end
 
     return inventory

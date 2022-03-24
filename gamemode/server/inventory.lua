@@ -72,8 +72,17 @@ function PlayerMeta:UnequipItem( item )
     if not self:CanUnequipItem( item ) then return end
 
     self:AddItemToInventory( item )
+    local wep = self:GetWeapon(AS.Items[item].wep)
+    local ammoinclip = wep:Clip1()
     self:StripWeapon( AS.Items[item].wep )
+    self:GiveAmmo( ammoinclip, wep:GetPrimaryAmmoType() ) --Returns any extra ammo we have loaded, so it's not deleted.
     self:ChatPrint("Holstered " .. AS.Items[item].name .. ".")
+end
+
+function PlayerMeta:UnequipAmmo( item, amt )
+    self:AddItemToInventory( item, amt )
+    self:RemoveAmmo( (AS.Items[item].use.ammoamt) * amt, translateAmmoNameID( item ) )
+    self:ChatPrint("Unequipped " .. AS.Items[item].name .. " (" .. amt .. ").")
 end
 
 function PlayerMeta:DropItem( item, amt )
@@ -108,6 +117,7 @@ end
 util.AddNetworkString("as_inventory_useitem")
 util.AddNetworkString("as_inventory_equipitem")
 util.AddNetworkString("as_inventory_unequipitem")
+util.AddNetworkString("as_inventory_unequipammo")
 util.AddNetworkString("as_inventory_dropitem")
 util.AddNetworkString("as_inventory_destroyitem")
 
@@ -145,6 +155,23 @@ net.Receive("as_inventory_unequipitem", function( _, ply )
 
     --We're verified, so run the actual function.
     ply:UnequipItem( item )
+end)
+
+net.Receive("as_inventory_unequipammo", function( _, ply ) 
+    local item = net.ReadString()
+    local amt = net.ReadInt( 32 )
+
+    --We will be unequipping ammunition, so we will have to validate that the ammo they want to unequip that they actually have and they have the corrent amount as well.
+    if not AS.Items[item] then ply:ChatPrint("This isnt a valid item.") ply:ResyncInventory() return end --The weapon the player tried to unequip ammo that isnt an item?
+    local ammo = ply:GetAmmoCount( translateAmmoNameID( item ) )
+    local maxCanStore = math.floor( ammo / AS.Items[item].use.ammoamt )
+    if amt < 1 then amt = 1 end --Person might try negative numbers
+    if amt > maxCanStore then amt = maxCanStore end --Person might try higher numbers than what they have
+    amt = math.Round(amt) --fuck off floats
+    if amt == 0 then ply:ChatPrint("trollface") ply:ResyncInventory() return end --caught a sussy thick amogus boy
+
+    --We're verified, so run the actual function.
+    ply:UnequipAmmo( item, amt )
 end)
 
 net.Receive("as_inventory_dropitem", function( _, ply )

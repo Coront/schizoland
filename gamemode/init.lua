@@ -74,3 +74,12 @@ hook.Add( "PlayerSay", "AS_PlayerChatLog", function( ply, text )
 		sql.Query("INSERT INTO as_chatlog VALUES ( '-1', 'ERROR_NOUSER', " .. SQLStr(text) .. ", " .. SQLStr( os.date("%m/%d/%y - %I:%M %p", os.time()) ) .. ")")
 	end
 end)
+
+-- ███████╗ █████╗ ███████╗████████╗    ██████╗ ██╗
+-- ██╔════╝██╔══██╗██╔════╝╚══██╔══╝    ██╔══██╗██║
+-- █████╗  ███████║███████╗   ██║       ██║  ██║██║
+-- ██╔══╝  ██╔══██║╚════██║   ██║       ██║  ██║██║
+-- ██║     ██║  ██║███████║   ██║       ██████╔╝███████╗
+-- ╚═╝     ╚═╝  ╚═╝╚══════╝   ╚═╝       ╚═════╝ ╚══════╝
+
+resource.AddWorkshop( "104603291" ) --Extended Menu

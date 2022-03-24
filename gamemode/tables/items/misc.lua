@@ -249,24 +249,13 @@ AS.AddBaseItem("misc_paintcan", {
     weight = 2,
 })
 
-AS.AddBaseItem("misc_hydrogen", {
-    name = "Bottle of Hydrogen Peroxide",
-    desc = "A bottle that contains H2O2, or hydrogren peroxide, which is good for preventing minor cuts, scrapes, or burns from becoming infected.",
+AS.AddBaseItem("misc_pulsepod", {
+    name = "Pulse Pod",
+    desc = "A small pod that holds pulse charges. A necessary requirement for making pulse weapons.",
     category = "misc",
-    model = "models/props_junk/glassjug01.mdl",
-    color = Color( 75, 100, 100),
-    value = 5,
-    weight = 1,
-})
-
-AS.AddBaseItem("misc_isopropyl", {
-    name = "Bottle of Isopropyl Alcohol",
-    desc = "A bottle that contains C3H8O, or Isopropyl Alcohol, which is good as a rubbing alcohol, and to stop minor cuts from becoming infected.",
-    category = "misc",
-    model = "models/props_junk/glassjug01.mdl",
-    color = Color( 50, 75, 0 ),
-    value = 5,
-    weight = 1,
+    model = "models/props_combine/headcrabcannister01a_skybox.mdl",
+    value = 1,
+    weight = 2,
 })
 
 AS.AddBaseItem("misc_egg", {
