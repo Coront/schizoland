@@ -4,6 +4,7 @@ local ent
 
 function AS.Storage.Menu()
     ent = net.ReadEntity()
+    if not IsValid(ent) then return end
 
     if IsValid(frame_storage) then frame_storage:Close() end
     ent:EmitSound(STORAGECUE.OPEN)

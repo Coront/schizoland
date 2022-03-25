@@ -13,6 +13,7 @@ SET.ClassChangeCostTbl = { --If classchangecost is on, what do player's have to 
     ["misc_smallparts"] = 100,
     ["misc_chemical"] = 100,
 }
+SET.DeathResCost = 30 --Percentage of player's resources (scrap, smallparts, chemicals) that will be lost upon death.
 SET.SelectableModels = {
     --All of the models in here are models that the player is allowed to select during character creation.
     ["models/player/group01/male_01.mdl"] = true,

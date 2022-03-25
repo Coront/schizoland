@@ -75,9 +75,8 @@ if SERVER then
 
 elseif CLIENT then
 
-    function PlaytimeSync()
+    net.Receive("as_resyncplaytime", function()
         LocalPlayer():SetPlaytime( net.ReadInt(32) )
-    end
-    net.Receive("as_resyncplaytime", PlaytimeSync)
+    end)
 
 end

@@ -113,11 +113,9 @@ if SERVER then
 
 elseif CLIENT then
 
-    function InventorySync()
+    net.Receive("as_syncinventory", function()
         local inv = net.ReadTable()
-
         LocalPlayer():SetInventory( inv )
-    end
-    net.Receive("as_syncinventory", InventorySync)
+    end)
 
 end

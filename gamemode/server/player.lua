@@ -63,6 +63,52 @@ function GM:OnPlayerHitGround( ply, water, floater, speed )
     end
 end
 
+function GM:PostPlayerDeath( ply )
+    local contents = {} --Player's dropped contents
+    for k, v in pairs( ply:GetWeapons() ) do
+        if not v.ASID then continue end
+        contents[v.ASID] = 1
+        if v:Clip1() >= 1 and translateAmmoNameID( game.GetAmmoName(v:GetPrimaryAmmoType()) ) then
+            contents.ammo = contents.ammo or {}
+            contents.ammo[translateAmmoNameID(game.GetAmmoName(v:GetPrimaryAmmoType()))] = v:Clip1()
+        end
+    end
+    for k, v in pairs( ply:GetAmmo() ) do
+        if not translateAmmoNameID( game.GetAmmoName(k) ) then continue end --not a AS ammotype
+        contents.ammo = contents.ammo or {}
+        contents.ammo[translateAmmoNameID(game.GetAmmoName(k))] = (contents.ammo[translateAmmoNameID(game.GetAmmoName(k))] or 0) + v
+    end
+    --resources
+    for k, v in pairs( ply:GetInventory() ) do
+        if k != "misc_scrap" and k != "misc_smallparts" and k != "misc_chemical" then continue end --skip everything that isnt a resource
+        local reslost = math.ceil(v * (1 / SET.DeathResCost))
+        if reslost <= 0 then continue end
+        ply:TakeItemFromInventory( k, reslost )
+        contents[k] = reslost
+    end
+    ply:ResyncInventory()
+
+    --Entity
+    local ent = ents.Create("as_case")
+    local trace = util.TraceLine({
+        start = ply:GetPos() + ply:OBBCenter(),
+        endpos = (ply:GetPos() + ply:OBBCenter()) + Vector( 0, 0, -9999 ),
+        filter = {ent},
+    })
+    ent:SetPos( trace.HitPos + (ent:OBBCenter() + Vector( 0, 0, 20 )) )
+    ent:SetInventory( contents )
+    timer.Simple( 0.1, function() --im literally seetheing rn
+        ent:ResyncInventory()
+    end)
+    ent:Spawn()
+    local phys = ent:GetPhysicsObject()
+    phys:EnableMotion( false )
+    ent:SetNW2String("owner", ply:Nickname())
+
+    ply:SetHealth( 100 ) --This is just so it doesnt save 0 to the player's health in the database.
+    ply:SaveCharacter()
+end
+
 function GM:GetFallDamage( ply, speed )
     return math.max(1, ( speed - 526.5 ) * ( ply:GetMaxHealth() / 396 ))
 end

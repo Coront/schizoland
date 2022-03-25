@@ -32,6 +32,7 @@ net.Receive( "as_storage_tostore", function( _, ply )
     local item = net.ReadString()
     local amt = net.ReadInt( 32 )
     local ent = net.ReadEntity()
+    if not IsValid( ent ) then return end
 
     --We are going to store an item into our stash. We need to make sure the player actually has the item on them, and the right amount of it.
     if not AS.Items[item] then ply:ChatPrint("This isnt a valid item.") ply:ResyncInventory() ply:ResyncBank() return end --Person might try an invalid item
@@ -50,6 +51,7 @@ net.Receive( "as_storage_toinventory", function( _, ply )
     local item = net.ReadString()
     local amt = net.ReadInt( 32 )
     local ent = net.ReadEntity()
+    if not IsValid( ent ) then return end
 
     --We are going to withdraw an item from our stash. We need to make sure the stash actually has the item, and the right amount.
     if not AS.Items[item] then ply:ChatPrint("This isnt a valid item.") ply:ResyncInventory() ply:ResyncBank() return end --Person might try an invalid item

@@ -111,11 +111,9 @@ if SERVER then
 
 elseif CLIENT then
 
-    function SkillsSync()
+    net.Receive("as_syncskills", function()
         local skills = net.ReadTable()
-
         LocalPlayer():SetSkills( skills )
-    end
-    net.Receive("as_syncskills", SkillsSync)
+    end)
 
 end

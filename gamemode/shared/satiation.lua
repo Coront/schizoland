@@ -114,13 +114,12 @@ if SERVER then
 
 elseif CLIENT then
 
-    function SatiationSync()
+    net.Receive("as_syncsatiation", function()
         local hunger = net.ReadInt( 32 )
         local thirst = net.ReadInt( 32 )
-
+    
         LocalPlayer():SetHunger( hunger )
         LocalPlayer():SetThirst( thirst )
-    end
-    net.Receive("as_syncsatiation", SatiationSync)
+    end)
 
 end

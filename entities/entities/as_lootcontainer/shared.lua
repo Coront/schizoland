@@ -55,6 +55,7 @@ function ENT:HasInInventory( itemid, amt )
 end
 
 function ENT:PlayerCanTakeItem( ply, itemid, amt )
+    if not ply:Alive() then return end
     if ply:GetPos():Distance( self:GetPos() ) > 200 then ply:ChatPrint("You are too far to take this item.") return false end
     if ply:GetCarryWeight() + (AS.Items[itemid].weight * amt) > ply:MaxCarryWeight() then ply:ChatPrint("You are too overweight to take this item.") return false end
     return true
@@ -97,10 +98,9 @@ if SERVER then
 elseif CLIENT then
 
     function ContainerInventorySync()
-        local self = net.ReadEntity()
-        if self.SetInventory then --ugh what the fuck is this dumb shit
-            self:SetInventory( net.ReadTable() )
-        end
+        local ent = net.ReadEntity()
+        if not IsValid(ent) then return end
+        ent:SetInventory( net.ReadTable() )
     end
     net.Receive( "as_lootcontainer_syncinventory", ContainerInventorySync )
 

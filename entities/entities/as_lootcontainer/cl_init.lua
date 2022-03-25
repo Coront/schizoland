@@ -29,18 +29,34 @@ hook.Add( "PlayerButtonDown", "AS_LootContainer", function( ply, button )
 
         if button == input.LookupBinding( "+use" ) and IsValid(frame_container) and IsValid(frame_container.ent) and frame_container.selectedItem then --Take item from container
             local itemid = frame_container.selectedItem.ID
-            local amt = frame_container.ent:GetInventory()[itemid]
-            if not frame_container.ent:GetInventory()[itemid] then LocalPlayer():ChatPrint("This item was already taken.") frame_container.containeritemamtUpdate( itemid ) return end
-            if frame_container.ent:PlayerCanTakeItem( LocalPlayer(), itemid, frame_container.ent:GetInventory()[itemid] ) then
-                frame_container.ent:PlayerTakeItem( LocalPlayer(), itemid, frame_container.ent:GetInventory()[itemid] )
-                surface.PlaySound( ITEMCUE.TAKE )
-                frame_container.containeritemamtUpdate( itemid )
+            if not frame_container.selectedItem.ammo then
+                local amt = frame_container.ent:GetInventory()[itemid]
+                if not frame_container.ent:GetInventory()[itemid] then LocalPlayer():ChatPrint("This item was already taken.") frame_container.containeritemamtUpdate( itemid ) return end
+                if frame_container.ent:PlayerCanTakeItem( LocalPlayer(), itemid, frame_container.ent:GetInventory()[itemid] ) then
+                    frame_container.ent:PlayerTakeItem( LocalPlayer(), itemid, frame_container.ent:GetInventory()[itemid] )
+                    surface.PlaySound( ITEMCUE.TAKE )
+                    frame_container.containeritemamtUpdate( itemid )
 
-                net.Start("as_container_takeitem")
-                    net.WriteEntity( frame_container.ent )
-                    net.WriteString( itemid )
-                    net.WriteInt( amt, 32 )
-                net.SendToServer()
+                    net.Start("as_container_takeitem")
+                        net.WriteEntity( frame_container.ent )
+                        net.WriteString( itemid )
+                        net.WriteInt( amt, 32 )
+                    net.SendToServer()
+                end
+            else
+                local amt = frame_container.ent:GetInventory().ammo[itemid]
+                if not frame_container.ent:GetInventory().ammo[itemid] then LocalPlayer():ChatPrint("This item was already taken.") frame_container.containerammoamtUpdate( itemid ) return end
+                if frame_container.ent:PlayerCanTakeAmmo( LocalPlayer() ) then
+                    frame_container.ent:PlayerTakeAmmo( LocalPlayer(), itemid, frame_container.ent:GetInventory().ammo[itemid] )
+                    surface.PlaySound( ITEMCUE.DROP )
+                    frame_container.containerammoamtUpdate( itemid )
+
+                    net.Start("as_case_takeammo")
+                        net.WriteEntity( frame_container.ent )
+                        net.WriteString( itemid )
+                        net.WriteInt( amt, 32 )
+                    net.SendToServer()
+                end
             end
         elseif button == input.LookupBinding( "+reload" ) and IsValid(frame_container) then
             frame_container:MakePopup()

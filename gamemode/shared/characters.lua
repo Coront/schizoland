@@ -71,9 +71,9 @@ if SERVER then
 
 elseif CLIENT then
 
-    function LoadCharacter()
+    net.Receive("as_characters_syncdata", function()
         local ply = LocalPlayer()
-
+    
         ply.name = net.ReadString()
         ply:SetASClass(net.ReadString())
         ply:SetHunger(net.ReadInt(32))
@@ -82,7 +82,6 @@ elseif CLIENT then
         ply:SetInventory(net.ReadTable())
         ply:SetBank(net.ReadTable())
         ply:SetSkills(net.ReadTable())
-    end
-    net.Receive("as_characters_syncdata", LoadCharacter)
+    end)
 
 end

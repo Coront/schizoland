@@ -91,11 +91,9 @@ if SERVER then
 
 elseif CLIENT then
 
-    function BankSync()
+    net.Receive("as_syncbank", function()
         local bank = net.ReadTable()
-
         LocalPlayer():SetBank( bank )
-    end
-    net.Receive("as_syncbank", BankSync)
+    end)
 
 end
