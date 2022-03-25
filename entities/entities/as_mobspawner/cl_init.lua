@@ -58,8 +58,9 @@ hook.Add("PreDrawHalos", "AS_SpawnerOutlines", function()
             filter = LocalPlayer(),
         })
 
-        for k, v in pairs( ents.FindByClass( "player" ) ) do
-            if trace.Entity:GetPos():Distance(v:GetPos()) < trace.Entity:GetNWInt("Distance") * 1.5 then
+        for k, v in pairs( player.GetAll() ) do
+            if not IsValid(trace.Entity) then continue end
+            if trace.Entity:GetPos():Distance(v:GetPos()) < trace.Entity:GetNWInt("Distance", 0) * 1.5 then
                 col = COLHUD_BAD
                 break
             end

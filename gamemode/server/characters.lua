@@ -50,6 +50,7 @@ function PlayerMeta:SaveCharacter()
         if v.ASID then
             equipped.weps[#equipped.weps + 1] = v:GetClass()
             if v:Clip1() > 0 then
+                equipped.ammo = equipped.ammo or {}
                 equipped.ammo[string.lower(game.GetAmmoName(v:GetPrimaryAmmoType()))] = (equipped.ammo[string.lower(game.GetAmmoName(v:GetPrimaryAmmoType()))] or 0) + v:Clip1()
             end
         end
