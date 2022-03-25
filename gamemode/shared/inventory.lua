@@ -45,6 +45,7 @@ end
 function PlayerMeta:GetCarryWeight()
     local weight = 0
     for k, v in pairs(self:GetInventory()) do
+        if AS.Items[k].category == "vehicle" then continue end --Vehicles will weigh nothing.
         weight = weight + ((AS.Items[k].weight or 0) * v)
     end
     return weight
@@ -57,7 +58,8 @@ end
 
 function PlayerMeta:CanCarryItem( item, amt )
     amt = amt and amt > 0 and math.Round(amt) or 1
-    if self:GetCarryWeight() + (AS.Items[item].weight * amt) > self:MaxCarryWeight() then self:ChatPrint("You are too overweight to carry this.") return false end
+    local toweight = AS.Items[item].category == "vehicle" and 0 or AS.Items[item].weight * amt
+    if self:GetCarryWeight() + toweight > self:MaxCarryWeight() then self:ChatPrint("You are too overweight to carry this.") return false end
     return true
 end
 

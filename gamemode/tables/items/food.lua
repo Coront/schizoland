@@ -3,8 +3,8 @@ AS.AddBaseItem("food_beans", {
     desc = "An old aluminum can that contains perfectly good beans.",
     category = "food",
     model = "models/props_junk/garbage_metalcan001a.mdl",
-    value = 1,
-    weight = 0.5,
+    value = 2,
+    weight = 0.15,
     use = {
         hunger = 15,
         soundcs = "npc/headcrab/headbite.wav",
@@ -16,8 +16,8 @@ AS.AddBaseItem("food_potato", {
     desc = "It's a potato. Apparently these are still grown.",
     category = "food",
     model = "models/props_phx/misc/potato.mdl",
-    value = 1,
-    weight = 0.5,
+    value = 2,
+    weight = 0.15,
     use = {
         hunger = 15,
         soundcs = "npc/headcrab/headbite.wav",
@@ -29,11 +29,11 @@ AS.AddBaseItem("food_melon", {
     desc = "One of multiple slices from a melon. Manually grown and harvested.",
     category = "food",
     model = "models/props_junk/watermelon01_chunk01b.mdl",
-    value = 1,
-    weight = 0.4,
+    value = 3,
+    weight = 0.2,
     use = {
         hunger = 5,
-        thirst = 15,
+        thirst = 10,
         soundcs = "npc/headcrab/headbite.wav",
     },
 })
@@ -43,11 +43,11 @@ AS.AddBaseItem("food_orange", {
     desc = "An orange, like the fruit orange. Manually grown and harvested.",
     category = "food",
     model = "models/props/cs_italy/orange.mdl",
-    value = 1,
+    value = 2,
     weight = 0.2,
     use = {
         hunger = 4,
-        thirst = 10,
+        thirst = 12,
         soundcs = "npc/headcrab/headbite.wav",
     },
 })
@@ -57,7 +57,7 @@ AS.AddBaseItem("food_takeout", {
     desc = "A small box that contains remains of food from a Chinese restaurant.",
     category = "food",
     model = "models/props_junk/garbage_takeoutcarton001a.mdl",
-    value = 1,
+    value = 10,
     weight = 1,
     use = {
         hunger = 25,
@@ -70,11 +70,11 @@ AS.AddBaseItem("food_soup", {
     desc = "A thermos that still contains some warm soup. Everybody's favorite.",
     category = "food",
     model = "models/props_c17/pottery01a.mdl",
-    value = 1,
-    weight = 1,
+    value = 15,
+    weight = 1.25,
     use = {
-        hunger = 30,
-        thirst = 40,
+        hunger = 25,
+        thirst = 30,
         soundcs = "npc/barnacle/barnacle_gulp1.wav",
     },
 })
@@ -84,7 +84,7 @@ AS.AddBaseItem("food_dirty_water", {
     desc = "An old bottle that contains unsanitary water.",
     category = "food",
     model = "models/props_junk/garbage_plasticbottle003a.mdl",
-    value = 1,
+    value = 3,
     weight = 1,
     use = {
         thirst = 15,
@@ -97,10 +97,10 @@ AS.AddBaseItem("food_clean_water", {
     desc = "An old bottle that contains sanitized water.",
     category = "food",
     model = "models/props_junk/garbage_plasticbottle003a.mdl",
-    value = 1,
+    value = 5,
     weight = 1,
     use = {
-        thirst = 15,
+        thirst = 20,
         soundcs = "npc/barnacle/barnacle_gulp1.wav",
     },
 })
@@ -110,8 +110,8 @@ AS.AddBaseItem("food_milk", {
     desc = "An old carton that contains milk. Hopefully not expired.",
     category = "food",
     model = "models/props_junk/garbage_milkcarton002a.mdl",
-    value = 1,
-    weight = 1,
+    value = 3,
+    weight = 0.8,
     use = {
         thirst = 15,
         soundcs = "npc/barnacle/barnacle_gulp1.wav",
@@ -123,8 +123,8 @@ AS.AddBaseItem("food_soda", {
     desc = "An old aluminum can that contains soda. Apparently it still tastes good?",
     category = "food",
     model = "models/props_junk/PopCan01a.mdl",
-    value = 1,
-    weight = 1,
+    value = 2,
+    weight = 0.15,
     use = {
         thirst = 10,
         soundcs = "npc/barnacle/barnacle_gulp1.wav",
@@ -136,10 +136,11 @@ AS.AddBaseItem("food_coffee", {
     desc = "A mug that contains coffee. Great for pulling all-nighters.",
     category = "food",
     model = "models/props_junk/garbage_coffeemug001a.mdl",
-    value = 1,
-    weight = 0.8,
+    value = 10,
+    weight = 0.3,
     use = {
-        thirst = 15,
+        hunger = 15,
+        thirst = 25,
         soundcs = "npc/barnacle/barnacle_gulp1.wav",
     },
 })

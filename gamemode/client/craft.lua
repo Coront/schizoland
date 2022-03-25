@@ -11,7 +11,7 @@ function AS.Craft.Open()
     frame_craft:Center()
     frame_craft:MakePopup()
     frame_craft:SetDraggable( false )
-    frame_craft:SetTitle( "Crafting" )
+    frame_craft:SetTitle( "Hand Crafting" )
     frame_craft:ShowCloseButton( false )
     frame_craft.Paint = function(_,w,h)
         surface.SetDrawColor( COLHUD_PRIMARY )
@@ -51,7 +51,6 @@ function AS.Craft.Open()
     sheets:AddSheet("Armor", AS.Craft.BuildList(sheets, "armor"), "icon16/user.png")
     sheets:AddSheet("Ammo", AS.Craft.BuildList(sheets, "ammo"), "icon16/briefcase.png")
     sheets:AddSheet("Medical", AS.Craft.BuildList(sheets, "med"), "icon16/heart.png")
-    sheets:AddSheet("Food", AS.Craft.BuildList(sheets, "food"), "icon16/cup.png")
     sheets:AddSheet("Vehicle", AS.Craft.BuildList(sheets, "vehicle"), "icon16/car.png")
     sheets:AddSheet("Tool", AS.Craft.BuildList(sheets, "tool"), "icon16/wrench.png")
     sheets:AddSheet("Misc", AS.Craft.BuildList(sheets, "misc"), "icon16/cog.png")
@@ -68,6 +67,7 @@ function AS.Craft.BuildList( parent, category )
     itemlist:SetSpaceX( 5 )
 
     for k, v in SortedPairsByMemberValue( AS.Items, "name" ) do
+        if v.hidden then continue end
         if not v.craft then continue end
         if v.category != category then continue end
 
@@ -158,7 +158,7 @@ function AS.Craft.BuildList( parent, category )
             craft:SetEnabled( true )
         end
 
-        for k2, v2 in pairs( v.craft ) do
+        local function buildReqList( k2, v2 )
             local panel = reqlist:Add("DPanel")
             panel:SetSize( reqlist:GetWide() - 16, 20 )
             function panel:Paint(w,h) end
@@ -182,6 +182,21 @@ function AS.Craft.BuildList( parent, category )
             end
             silkicon:SetImage(silkimageicon)
             panel:SetTooltip(paneltt)
+        end
+
+        if v.craft["misc_scrap"] then --Doing it this way because i want scrap, smallparts and chems to be listed first, then the rest of the items.
+            buildReqList( "misc_scrap", v.craft["misc_scrap"])
+        end
+        if v.craft["misc_smallparts"] then
+            buildReqList( "misc_smallparts", v.craft["misc_smallparts"])
+        end
+        if v.craft["misc_chemical"] then
+            buildReqList( "misc_chemical", v.craft["misc_chemical"])
+        end
+
+        for k2, v2 in SortedPairs( v.craft ) do
+            if k2 == "misc_scrap" or k2 == "misc_smallparts" or k2 == "misc_chemical" then continue end
+            buildReqList( k2, v2 )
         end
     end
 
