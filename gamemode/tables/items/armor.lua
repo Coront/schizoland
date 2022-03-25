@@ -19,6 +19,11 @@ AS.AddBaseItem("armor_makeshift", {
         ["misc_chemical"] = 40,
         ["misc_hide_antlion"] = 1,
     },
+    salvage = {
+        ["misc_scrap"] = 17,
+        ["misc_smallparts"] = 8,
+        ["misc_chemical"] = 13,
+    },
 })
 
 AS.AddBaseItem("armor_police", {
@@ -43,6 +48,11 @@ AS.AddBaseItem("armor_police", {
         ["misc_chemical"] = 140,
         ["misc_hide_antlion"] = 2,
         ["misc_hide_guard"] = 1,
+    },
+    salvage = {
+        ["misc_scrap"] = 40,
+        ["misc_smallparts"] = 27,
+        ["misc_chemical"] = 47,
     },
 })
 
@@ -70,6 +80,11 @@ AS.AddBaseItem("armor_combine", {
         ["misc_hide_antlion"] = 3,
         ["misc_hide_guard"] = 2,
     },
+    salvage = {
+        ["misc_scrap"] = 83,
+        ["misc_smallparts"] = 100,
+        ["misc_chemical"] = 125,
+    },
 })
 
 AS.AddBaseItem("armor_supersoldier", {
@@ -90,9 +105,15 @@ AS.AddBaseItem("armor_supersoldier", {
     },
     class = "mercenary",
     craft = {
-        ["misc_scrap"] = 50,
-        ["misc_smallparts"] = 25,
-        ["misc_chemical"] = 40,
-        ["misc_hide_antlion"] = 1,
+        ["misc_scrap"] = 400,
+        ["misc_smallparts"] = 450,
+        ["misc_chemical"] = 500,
+        ["misc_hide_antlion"] = 4,
+        ["misc_hide_guard"] = 3,
+    },
+    salvage = {
+        ["misc_scrap"] = 133,
+        ["misc_smallparts"] = 150,
+        ["misc_chemical"] = 167,
     },
 })

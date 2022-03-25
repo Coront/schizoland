@@ -9,6 +9,11 @@ AS.AddBaseItem("food_beans", {
         hunger = 15,
         soundcs = "npc/headcrab/headbite.wav",
     },
+    salvage = {
+        ["misc_scrap"] = 2,
+        ["misc_smallparts"] = 0,
+        ["misc_chemical"] = 1,
+    },
 })
 
 AS.AddBaseItem("food_potato", {
@@ -63,6 +68,11 @@ AS.AddBaseItem("food_takeout", {
         hunger = 25,
         soundcs = "npc/headcrab/headbite.wav",
     },
+    salvage = {
+        ["misc_scrap"] = 2,
+        ["misc_smallparts"] = 0,
+        ["misc_chemical"] = 2,
+    },
 })
 
 AS.AddBaseItem("food_soup", {
@@ -77,6 +87,18 @@ AS.AddBaseItem("food_soup", {
         thirst = 30,
         soundcs = "npc/barnacle/barnacle_gulp1.wav",
     },
+    hidden = true,
+    class = "cultivator",
+    craft = {
+        ["misc_scrap"] = 15,
+        ["misc_smallparts"] = 5,
+        ["misc_chemical"] = 25,
+    },
+    salvage = {
+        ["misc_scrap"] = 5,
+        ["misc_smallparts"] = 2,
+        ["misc_chemical"] = 8,
+    },
 })
 
 AS.AddBaseItem("food_dirty_water", {
@@ -89,6 +111,11 @@ AS.AddBaseItem("food_dirty_water", {
     use = {
         thirst = 15,
         soundcs = "npc/barnacle/barnacle_gulp1.wav",
+    },
+    salvage = {
+        ["misc_scrap"] = 1,
+        ["misc_smallparts"] = 0,
+        ["misc_chemical"] = 0,
     },
 })
 
@@ -103,6 +130,19 @@ AS.AddBaseItem("food_clean_water", {
         thirst = 20,
         soundcs = "npc/barnacle/barnacle_gulp1.wav",
     },
+    hidden = true,
+    class = "cultivator",
+    craft = {
+        ["misc_scrap"] = 0,
+        ["misc_smallparts"] = 0,
+        ["misc_chemical"] = 3,
+        ["food_dirty_water"] = 1,
+    },
+    salvage = {
+        ["misc_scrap"] = 1,
+        ["misc_smallparts"] = 0,
+        ["misc_chemical"] = 1,
+    },
 })
 
 AS.AddBaseItem("food_milk", {
@@ -115,6 +155,11 @@ AS.AddBaseItem("food_milk", {
     use = {
         thirst = 15,
         soundcs = "npc/barnacle/barnacle_gulp1.wav",
+    },
+    salvage = {
+        ["misc_scrap"] = 1,
+        ["misc_smallparts"] = 0,
+        ["misc_chemical"] = 0,
     },
 })
 
@@ -129,6 +174,11 @@ AS.AddBaseItem("food_soda", {
         thirst = 10,
         soundcs = "npc/barnacle/barnacle_gulp1.wav",
     },
+    salvage = {
+        ["misc_scrap"] = 1,
+        ["misc_smallparts"] = 0,
+        ["misc_chemical"] = 0,
+    },
 })
 
 AS.AddBaseItem("food_coffee", {
@@ -142,5 +192,17 @@ AS.AddBaseItem("food_coffee", {
         hunger = 15,
         thirst = 25,
         soundcs = "npc/barnacle/barnacle_gulp1.wav",
+    },
+    hidden = true,
+    class = "cultivator",
+    craft = {
+        ["misc_scrap"] = 5,
+        ["misc_smallparts"] = 15,
+        ["misc_chemical"] = 20,
+    },
+    salvage = {
+        ["misc_scrap"] = 2,
+        ["misc_smallparts"] = 5,
+        ["misc_chemical"] = 7,
     },
 })

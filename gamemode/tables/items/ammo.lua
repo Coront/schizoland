@@ -17,6 +17,11 @@ AS.AddBaseItem("ammo_pistol", {
         ["misc_munitionpress"] = 0,
         ["misc_gunpowder"] = 1,
     },
+    salvage = {
+        ["misc_scrap"] = 2,
+        ["misc_smallparts"] = 5,
+        ["misc_chemical"] = 3,
+    },
 })
 
 AS.AddBaseItem("ammo_smg", {
@@ -38,6 +43,11 @@ AS.AddBaseItem("ammo_smg", {
         ["misc_chemical"] = 15,
         ["misc_munitionpress"] = 0,
         ["misc_gunpowder"] = 1,
+    },
+    salvage = {
+        ["misc_scrap"] = 3,
+        ["misc_smallparts"] = 7,
+        ["misc_chemical"] = 5,
     },
 })
 
@@ -61,6 +71,11 @@ AS.AddBaseItem("ammo_rifle", {
         ["misc_munitionpress"] = 0,
         ["misc_gunpowder"] = 1,
     },
+    salvage = {
+        ["misc_scrap"] = 5,
+        ["misc_smallparts"] = 8,
+        ["misc_chemical"] = 7,
+    },
 })
 
 AS.AddBaseItem("ammo_shotgun", {
@@ -83,6 +98,11 @@ AS.AddBaseItem("ammo_shotgun", {
         ["misc_munitionpress"] = 0,
         ["misc_gunpowder"] = 2,
     },
+    salvage = {
+        ["misc_scrap"] = 7,
+        ["misc_smallparts"] = 8,
+        ["misc_chemical"] = 7,
+    },
 })
 
 AS.AddBaseItem("ammo_sniper", {
@@ -104,5 +124,10 @@ AS.AddBaseItem("ammo_sniper", {
         ["misc_chemical"] = 25,
         ["misc_munitionpress"] = 0,
         ["misc_gunpowder"] = 2,
+    },
+    salvage = {
+        ["misc_scrap"] = 7,
+        ["misc_smallparts"] = 10,
+        ["misc_chemical"] = 8,
     },
 })

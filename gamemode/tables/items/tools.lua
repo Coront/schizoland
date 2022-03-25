@@ -18,6 +18,11 @@ AS.AddBaseItem("tool_armor", {
         ["misc_smallparts"] = 350,
         ["misc_chemical"] = 300,
     },
+    salvage = {
+        ["misc_scrap"] = 133,
+        ["misc_smallparts"] = 117,
+        ["misc_chemical"] = 100,
+    },
 })
 
 AS.AddBaseItem("tool_stove", {
@@ -32,6 +37,11 @@ AS.AddBaseItem("tool_stove", {
         ["misc_scrap"] = 400,
         ["misc_smallparts"] = 300,
         ["misc_chemical"] = 450,
+    },
+    salvage = {
+        ["misc_scrap"] = 133,
+        ["misc_smallparts"] = 100,
+        ["misc_chemical"] = 150,
     },
 })
 
@@ -49,6 +59,11 @@ AS.AddBaseItem("tool_workbench", {
         ["misc_chemical"] = 350,
         ["misc_saw"] = 1,
     },
+    salvage = {
+        ["misc_scrap"] = 108,
+        ["misc_smallparts"] = 100,
+        ["misc_chemical"] = 116,
+    },
 })
 
 AS.AddBaseItem("tool_pulse", {
@@ -63,6 +78,11 @@ AS.AddBaseItem("tool_pulse", {
         ["misc_scrap"] = 450,
         ["misc_smallparts"] = 600,
         ["misc_chemical"] = 500,
+    },
+    salvage = {
+        ["misc_scrap"] = 150,
+        ["misc_smallparts"] = 200,
+        ["misc_chemical"] = 167,
     },
 })
 
@@ -87,6 +107,11 @@ AS.AddBaseItem("tool_plant_orange", {
         ["misc_chemical"] = 550,
         ["misc_seed_orange"] = 1,
     },
+    salvage = {
+        ["misc_scrap"] = 100,
+        ["misc_smallparts"] = 133,
+        ["misc_chemical"] = 183,
+    },
 })
 
 AS.AddBaseItem("tool_plant_melon", {
@@ -102,6 +127,11 @@ AS.AddBaseItem("tool_plant_melon", {
         ["misc_smallparts"] = 450,
         ["misc_chemical"] = 650,
         ["misc_seed_melon"] = 1,
+    },
+    salvage = {
+        ["misc_scrap"] = 133,
+        ["misc_smallparts"] = 150,
+        ["misc_chemical"] = 217,
     },
 })
 
@@ -119,6 +149,11 @@ AS.AddBaseItem("tool_grub", {
         ["misc_chemical"] = 400,
         ["misc_egg"] = 1,
     },
+    salvage = {
+        ["misc_scrap"] = 100,
+        ["misc_smallparts"] = 83,
+        ["misc_chemical"] = 133,
+    },
 })
 
 AS.AddBaseItem("tool_miner", {
@@ -134,6 +169,12 @@ AS.AddBaseItem("tool_miner", {
         ["misc_smallparts"] = 650,
         ["misc_chemical"] = 500,
         ["misc_sensorpod"] = 1,
+        ["misc_electronicparts"] = 3,
         ["misc_servo"] = 3,
+    },
+    salvage = {
+        ["misc_scrap"] = 183,
+        ["misc_smallparts"] = 216,
+        ["misc_chemical"] = 166,
     },
 })

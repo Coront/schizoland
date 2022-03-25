@@ -14,7 +14,7 @@ AS.AddBaseItem("misc_scrap", {
     category = "misc",
     model = "models/gibs/scanner_gib02.mdl",
     color = Color( 125, 125, 125 ),
-    value = 1,
+    value = 0,
     weight = 0.001,
 })
 
@@ -24,7 +24,7 @@ AS.AddBaseItem("misc_smallparts", {
     category = "misc",
     model = "models/props_wasteland/gear02.mdl",
     color = Color( 125, 125, 125 ),
-    value = 1,
+    value = 0,
     weight = 0.001,
 })
 
@@ -34,7 +34,7 @@ AS.AddBaseItem("misc_chemical", {
     category = "misc",
     model = "models/grub_nugget_small.mdl",
     color = Color( 125, 125, 125 ),
-    value = 1,
+    value = 0,
     weight = 0.001,
 })
 
@@ -51,8 +51,13 @@ AS.AddBaseItem("misc_hide_antlion", {
     desc = "A hide, harvested from an antlion. Useful in the creation of some items.",
     category = "misc",
     model = "models/gibs/antlion_gib_large_2.mdl",
-    value = 1,
-    weight = 0.2,
+    value = 10,
+    weight = 0.75,
+    salvage = {
+        ["misc_scrap"] = 3,
+        ["misc_smallparts"] = 0,
+        ["misc_chemical"] = 5,
+    },
 })
 
 AS.AddBaseItem("misc_hide_guard", {
@@ -60,8 +65,13 @@ AS.AddBaseItem("misc_hide_guard", {
     desc = "A hide, harvested from a antlion guard. Useful in the creation of very protective armor.",
     category = "misc",
     model = "models/gibs/strider_gib2.mdl",
-    value = 1,
-    weight = 0.2,
+    value = 30,
+    weight = 1.5,
+    salvage = {
+        ["misc_scrap"] = 5,
+        ["misc_smallparts"] = 0,
+        ["misc_chemical"] = 10,
+    },
 })
 
 AS.AddBaseItem("misc_gunpowder", {
@@ -69,8 +79,13 @@ AS.AddBaseItem("misc_gunpowder", {
     desc = "A black powder that pops when ignited. An important requirement for crafting ammunition.",
     category = "misc",
     model = "models/props_lab/jar01b.mdl",
-    value = 1,
+    value = 5,
     weight = 0.2,
+    salvage = {
+        ["misc_scrap"] = 1,
+        ["misc_smallparts"] = 0,
+        ["misc_chemical"] = 2,
+    },
 })
 
 AS.AddBaseItem("misc_gunpowderten", {
@@ -78,8 +93,13 @@ AS.AddBaseItem("misc_gunpowderten", {
     desc = "Everything you could possibly want. A large jar that contains enough gunpowder to be split into ten smaller jars.",
     category = "misc",
     model = "models/props_lab/jar01a.mdl",
-    value = 1,
-    weight = 0.2,
+    value = 50,
+    weight = 2,
+    salvage = {
+        ["misc_scrap"] = 10,
+        ["misc_smallparts"] = 0,
+        ["misc_chemical"] = 20,
+    },
 })
 
 AS.AddBaseItem("misc_heavyplate", {
@@ -87,21 +107,31 @@ AS.AddBaseItem("misc_heavyplate", {
     desc = "A heavy plate that is incredibly durable against elements. Required in the creation of some very efficient armors.",
     category = "misc",
     model = "models/gibs/shield_scanner_gib2.mdl",
-    value = 1,
-    weight = 0.2,
+    value = 200,
+    weight = 1,
+    salvage = {
+        ["misc_scrap"] = 10,
+        ["misc_smallparts"] = 5,
+        ["misc_chemical"] = 3,
+    },
 })
 
 AS.AddBaseItem("misc_servo", {
     name = "Servo",
     desc = "A servomotor. A common requirement for automated tools.",
     model = "models/gibs/scanner_gib04.mdl",
-    value = 1,
-    weight = 0.2,
+    value = 5,
+    weight = 0.1,
     class = "engineer",
     craft = {
         ["misc_scrap"] = 25,
         ["misc_smallparts"] = 30,
         ["misc_chemical"] = 10,
+    },
+    salvage = {
+        ["misc_scrap"] = 8,
+        ["misc_smallparts"] = 10,
+        ["misc_chemical"] = 3,
     },
 })
 
@@ -110,37 +140,52 @@ AS.AddBaseItem("misc_electronicparts", {
     desc = "A bunch of circuits, useful for constructing something that requires conduction of electricity.",
     category = "misc",
     model = "models/props/cs_office/computer_caseb_p2a.mdl",
-    value = 1,
-    weight = 0.2,
+    value = 5,
+    weight = 0.1,
     class = "scientist",
     craft = {
         ["misc_scrap"] = 30,
         ["misc_smallparts"] = 25,
         ["misc_chemical"] = 20,
     },
+    salvage = {
+        ["misc_scrap"] = 10,
+        ["misc_smallparts"] = 8,
+        ["misc_chemical"] = 7,
+    },
 })
 
 AS.AddBaseItem("misc_saw", {
     name = "Diamond-Edged Saw",
-    desc = "A saw that has been tipped with diamond. Useful for cutting through metals.",
+    desc = "A saw that has been tipped with diamonds. Useful for cutting through metals.",
     category = "misc",
     model = "models/props/cs_militia/circularsaw01.mdl",
-    value = 1,
-    weight = 0.2,
+    value = 10,
+    weight = 1.5,
+    salvage = {
+        ["misc_scrap"] = 3,
+        ["misc_smallparts"] = 0,
+        ["misc_chemical"] = 5,
+    },
 })
 
 AS.AddBaseItem("misc_electronicreceiver", {
-    name = "Damaged Receiver",
-    desc = "A damaged receiver. Maybe if you find enough parts you could get it working again.",
+    name = "Electronic Receiver",
+    desc = "An electronic receiver. With the proper parts, you could get this functioning again.",
     category = "misc",
     model = "models/props_lab/reciever01c.mdl",
-    value = 1,
+    value = 10,
     weight = 0.2,
     class = "scientist",
     craft = {
-        ["misc_scrap"] = 50,
-        ["misc_smallparts"] = 40,
-        ["misc_chemical"] = 25,
+        ["misc_scrap"] = 30,
+        ["misc_smallparts"] = 25,
+        ["misc_chemical"] = 15,
+    },
+    salvage = {
+        ["misc_scrap"] = 10,
+        ["misc_smallparts"] = 8,
+        ["misc_chemical"] = 5,
     },
 })
 
@@ -149,8 +194,13 @@ AS.AddBaseItem("misc_sensorpod", {
     desc = "An old but still intact sensorpod that was salvaged from another object. Useful for relaying information that was gathered from a scan.",
     category = "misc",
     model = "models/gibs/shield_scanner_gib5.mdl",
-    value = 1,
+    value = 10,
     weight = 0.2,
+    salvage = {
+        ["misc_scrap"] = 5,
+        ["misc_smallparts"] = 10,
+        ["misc_chemical"] = 3,
+    },
 })
 
 AS.AddBaseItem("misc_seed_orange", {
@@ -158,8 +208,13 @@ AS.AddBaseItem("misc_seed_orange", {
     desc = "A packet that contains orange seeds. Can be used to grow an orange plant, to harvest oranges.",
     category = "misc",
     model = "models/props_lab/box01a.mdl",
-    value = 1,
+    value = 5,
     weight = 0.2,
+    salvage = {
+        ["misc_scrap"] = 4,
+        ["misc_smallparts"] = 0,
+        ["misc_chemical"] = 1,
+    },
 })
 
 AS.AddBaseItem("misc_seed_melon", {
@@ -167,8 +222,13 @@ AS.AddBaseItem("misc_seed_melon", {
     desc = "A packet that contains melon seeds. Can be used to grow a melon plant, to harvest melons.",
     category = "misc",
     model = "models/props_junk/cardboard_box004a.mdl",
-    value = 1,
+    value = 5,
     weight = 0.2,
+    salvage = {
+        ["misc_scrap"] = 5,
+        ["misc_smallparts"] = 0,
+        ["misc_chemical"] = 2,
+    },
 })
 
 AS.AddBaseItem("misc_solarfilmroll", {
@@ -176,8 +236,13 @@ AS.AddBaseItem("misc_solarfilmroll", {
     desc = "A very thin roll that containers copper, indium, gallium, and selenide. Can absorb energy from the sun to be converted into electricity.",
     category = "misc",
     model = "models/props/de_nuke/wall_light.mdl",
-    value = 1,
-    weight = 0.2,
+    value = 50,
+    weight = 2,
+    salvage = {
+        ["misc_scrap"] = 10,
+        ["misc_smallparts"] = 15,
+        ["misc_chemical"] = 10,
+    },
 })
 
 AS.AddBaseItem("misc_carbattery", {
@@ -185,8 +250,20 @@ AS.AddBaseItem("misc_carbattery", {
     desc = "A still functional battery salvaged from a vehicle. One of the many parts required to make a vehicle.",
     category = "misc",
     model = "models/items/car_battery01.mdl",
-    value = 1,
+    value = 5,
     weight = 2,
+    hidden = true,
+    class = "engineer",
+    craft = {
+        ["misc_scrap"] = 30,
+        ["misc_smallparts"] = 45,
+        ["misc_chemical"] = 20,
+    },
+    salvage = {
+        ["misc_scrap"] = 10,
+        ["misc_smallparts"] = 9,
+        ["misc_chemical"] = 4,
+    },
 })
 
 AS.AddBaseItem("misc_wheel", {
@@ -194,8 +271,13 @@ AS.AddBaseItem("misc_wheel", {
     desc = "A wheel salvaged from a car. One of the many parts required to make a vehicle.",
     category = "misc",
     model = "models/props_vehicles/carparts_wheel01a.mdl",
-    value = 1,
-    weight = 5,
+    value = 50,
+    weight = 4,
+    salvage = {
+        ["misc_scrap"] = 15,
+        ["misc_smallparts"] = 10,
+        ["misc_chemical"] = 5,
+    },
 })
 
 AS.AddBaseItem("misc_axel", {
@@ -203,8 +285,13 @@ AS.AddBaseItem("misc_axel", {
     desc = "An old axel that is still in good condition. One of the many parts required to make a vehicle.",
     category = "misc",
     model = "models/props_vehicles/carparts_axel01a.mdl",
-    value = 1,
+    value = 10,
     weight = 2,
+    salvage = {
+        ["misc_scrap"] = 10,
+        ["misc_smallparts"] = 5,
+        ["misc_chemical"] = 5,
+    },
 })
 
 AS.AddBaseItem("misc_engine", {
@@ -212,8 +299,22 @@ AS.AddBaseItem("misc_engine", {
     desc = "An engine made from found scraps. One of the many parts required to make a vehicle.",
     category = "misc",
     model = "models/props_c17/trappropeller_engine.mdl",
-    value = 1,
-    weight = 2,
+    value = 25,
+    weight = 3,
+    hidden = true,
+    class = "engineer",
+    craft = {
+        ["misc_scrap"] = 50,
+        ["misc_smallparts"] = 75,
+        ["misc_chemical"] = 60,
+        ["misc_servo"] = 3,
+        ["misc_multitool"] = 0,
+    },
+    salvage = {
+        ["misc_scrap"] = 17,
+        ["misc_smallparts"] = 25,
+        ["misc_chemical"] = 20,
+    },
 })
 
 AS.AddBaseItem("misc_propane", {
@@ -221,8 +322,13 @@ AS.AddBaseItem("misc_propane", {
     desc = "A canister that holds C3H8, or Propane Gas, useful when it comes to having a temporary source of fire for welding or burning.",
     category = "misc",
     model = "models/props_junk/PropaneCanister001a.mdl",
-    value = 1,
+    value = 10,
     weight = 2,
+    salvage = {
+        ["misc_scrap"] = 5,
+        ["misc_smallparts"] = 10,
+        ["misc_chemical"] = 20,
+    },
 })
 
 AS.AddBaseItem("misc_gasoline", {
@@ -230,13 +336,18 @@ AS.AddBaseItem("misc_gasoline", {
     desc = "A jerry can that holds a homogeneous mixture of petroleum oil and many other substances, commonly referred to as gasoline. Used to power generators.",
     category = "misc",
     model = "models/props_junk/metalgascan.mdl",
-    value = 1,
+    value = 5,
     weight = 4,
     class = "cultivator",
     craft = {
         ["misc_scrap"] = 15,
         ["misc_smallparts"] = 20,
         ["misc_chemical"] = 35,
+    },
+    salvage = {
+        ["misc_scrap"] = 5,
+        ["misc_smallparts"] = 7,
+        ["misc_chemical"] = 12,
     },
 })
 
@@ -245,8 +356,13 @@ AS.AddBaseItem("misc_paintcan", {
     desc = "A medium-sized tin can that holds paint inside of it. Useful if you want to, you know, paint something.",
     category = "misc",
     model = "models/props_junk/metal_paintcan001a.mdl",
-    value = 1,
-    weight = 2,
+    value = 5,
+    weight = 1.5,
+    salvage = {
+        ["misc_scrap"] = 5,
+        ["misc_smallparts"] = 7,
+        ["misc_chemical"] = 12,
+    },
 })
 
 AS.AddBaseItem("misc_pulsepod", {
@@ -254,8 +370,13 @@ AS.AddBaseItem("misc_pulsepod", {
     desc = "A small pod that holds pulse charges. A necessary requirement for making pulse weapons.",
     category = "misc",
     model = "models/props_combine/headcrabcannister01a_skybox.mdl",
-    value = 1,
+    value = 20,
     weight = 2,
+    salvage = {
+        ["misc_scrap"] = 10,
+        ["misc_smallparts"] = 5,
+        ["misc_chemical"] = 20,
+    },
 })
 
 AS.AddBaseItem("misc_egg", {
@@ -263,8 +384,13 @@ AS.AddBaseItem("misc_egg", {
     desc = "An egg that contains an unborn antlion grub inside of it.",
     category = "misc",
     model = "models/props_hive/egg.mdl",
-    value = 1,
-    weight = 0.4,
+    value = 10,
+    weight = 1,
+    salvage = {
+        ["misc_scrap"] = 0,
+        ["misc_smallparts"] = 5,
+        ["misc_chemical"] = 15,
+    },
 })
 
 AS.AddBaseItem("misc_emptybottle", {
@@ -273,7 +399,12 @@ AS.AddBaseItem("misc_emptybottle", {
     category = "misc",
     model = "models/props_junk/garbage_plasticbottle003a.mdl",
     value = 1,
-    weight = 0.4,
+    weight = 0.1,
+    salvage = {
+        ["misc_scrap"] = 1,
+        ["misc_smallparts"] = 0,
+        ["misc_chemical"] = 0,
+    },
 })
 
 -- ████████╗ ██████╗  ██████╗ ██╗         ██╗████████╗███████╗███╗   ███╗███████╗
@@ -289,8 +420,21 @@ AS.AddBaseItem("misc_tool", {
     desc = "A small tool with the ability to perform multiple tasks. Useful for making smaller objects.",
     category = "misc",
     model = "models/gibs/shield_scanner_gib4.mdl",
-    value = 1,
-    weight = 2,
+    value = 5,
+    weight = 1,
+    class = "engineer",
+    craft = {
+        ["misc_scrap"] = 20,
+        ["misc_smallparts"] = 25,
+        ["misc_chemical"] = 15,
+        ["misc_servo"] = 1,
+        ["misc_electronicparts"] = 1,
+    },
+    salvage = {
+        ["misc_scrap"] = 7,
+        ["misc_smallparts"] = 8,
+        ["misc_chemical"] = 5,
+    },
 })
 
 AS.AddBaseItem("misc_munitionpress", {
@@ -305,6 +449,11 @@ AS.AddBaseItem("misc_munitionpress", {
         ["misc_scrap"] = 40,
         ["misc_smallparts"] = 50,
         ["misc_chemical"] = 25,
+    },
+    salvage = {
+        ["misc_scrap"] = 13,
+        ["misc_smallparts"] = 17,
+        ["misc_chemical"] = 8,
     },
 })
 
@@ -324,6 +473,11 @@ AS.AddBaseItem("misc_shoe", {
     color = Color( 70, 70, 70 ),
     value = 1,
     weight = 0.4,
+    salvage = {
+        ["misc_scrap"] = 2,
+        ["misc_smallparts"] = 1,
+        ["misc_chemical"] = 0,
+    },
 })
 
 AS.AddBaseItem("misc_emptysodacan", {
@@ -334,6 +488,11 @@ AS.AddBaseItem("misc_emptysodacan", {
     color = Color( 70, 70, 70 ),
     value = 1,
     weight = 0.1,
+    salvage = {
+        ["misc_scrap"] = 1,
+        ["misc_smallparts"] = 0,
+        ["misc_chemical"] = 0,
+    },
 })
 
 AS.AddBaseItem("misc_metalcan", {
@@ -344,6 +503,11 @@ AS.AddBaseItem("misc_metalcan", {
     color = Color( 70, 70, 70 ),
     value = 1,
     weight = 0.125,
+    salvage = {
+        ["misc_scrap"] = 2,
+        ["misc_smallparts"] = 1,
+        ["misc_chemical"] = 0,
+    },
 })
 
 AS.AddBaseItem("misc_mug", {
@@ -354,6 +518,11 @@ AS.AddBaseItem("misc_mug", {
     color = Color( 70, 70, 70 ),
     value = 1,
     weight = 0.125,
+    salvage = {
+        ["misc_scrap"] = 3,
+        ["misc_smallparts"] = 1,
+        ["misc_chemical"] = 0,
+    },
 })
 
 AS.AddBaseItem("misc_towels", {
@@ -364,6 +533,11 @@ AS.AddBaseItem("misc_towels", {
     color = Color( 70, 70, 70 ),
     value = 1,
     weight = 0.125,
+    salvage = {
+        ["misc_scrap"] = 2,
+        ["misc_smallparts"] = 1,
+        ["misc_chemical"] = 0,
+    },
 })
 
 AS.AddBaseItem("misc_chemicalbucket", {
@@ -374,6 +548,11 @@ AS.AddBaseItem("misc_chemicalbucket", {
     color = Color( 70, 70, 70 ),
     value = 1,
     weight = 1,
+    salvage = {
+        ["misc_scrap"] = 5,
+        ["misc_smallparts"] = 0,
+        ["misc_chemical"] = 20,
+    },
 })
 
 AS.AddBaseItem("misc_leadpipe", {
@@ -384,4 +563,9 @@ AS.AddBaseItem("misc_leadpipe", {
     color = Color( 70, 70, 70 ),
     value = 1,
     weight = 1,
+    salvage = {
+        ["misc_scrap"] = 3,
+        ["misc_smallparts"] = 7,
+        ["misc_chemical"] = 0,
+    },
 })

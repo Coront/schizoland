@@ -10,6 +10,11 @@ AS.AddBaseItem("med_painkiller", {
         health = 5,
         sound = "items/medshot4.wav",
     },
+    salvage = {
+        ["misc_scrap"] = 2,
+        ["misc_smallparts"] = 0,
+        ["misc_chemical"] = 5,
+    },
 })
 
 AS.AddBaseItem("med_bag", {
@@ -27,6 +32,11 @@ AS.AddBaseItem("med_bag", {
         ["misc_scrap"] = 20,
         ["misc_smallparts"] = 15,
         ["misc_chemical"] = 35,
+    },
+    salvage = {
+        ["misc_scrap"] = 7,
+        ["misc_smallparts"] = 5,
+        ["misc_chemical"] = 12,
     },
 })
 
@@ -48,6 +58,11 @@ AS.AddBaseItem("med_vial", {
         ["misc_smallparts"] = 10,
         ["misc_chemical"] = 20,
     },
+    salvage = {
+        ["misc_scrap"] = 5,
+        ["misc_smallparts"] = 3,
+        ["misc_chemical"] = 7,
+    },
 })
 
 AS.AddBaseItem("med_kit", {
@@ -67,6 +82,11 @@ AS.AddBaseItem("med_kit", {
         ["misc_scrap"] = 25,
         ["misc_smallparts"] = 20,
         ["misc_chemical"] = 35,
+    },
+    salvage = {
+        ["misc_scrap"] = 8,
+        ["misc_smallparts"] = 7,
+        ["misc_chemical"] = 12,
     },
 })
 
@@ -89,6 +109,11 @@ AS.AddBaseItem("med_bloodbag", {
         ["misc_smallparts"] = 30,
         ["misc_chemical"] = 50,
     },
+    salvage = {
+        ["misc_scrap"] = 13,
+        ["misc_smallparts"] = 10,
+        ["misc_chemical"] = 17,
+    },
 })
 
 AS.AddBaseItem("med_surgery", {
@@ -109,5 +134,10 @@ AS.AddBaseItem("med_surgery", {
         ["misc_scrap"] = 75,
         ["misc_smallparts"] = 50,
         ["misc_chemical"] = 80,
+    },
+    salvage = {
+        ["misc_scrap"] = 25,
+        ["misc_smallparts"] = 17,
+        ["misc_chemical"] = 27,
     },
 })

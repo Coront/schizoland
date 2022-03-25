@@ -75,6 +75,7 @@ function AS.Craft.BuildList( parent, category )
         local itemdesc = v.desc or k .. "?desc"
         local itemreqs = ""
         for k2, v2 in pairs( v.craft ) do
+            if not AS.Items[k2] then AS.LuaError("Attmept to index an item that doens't exist via crafting - " .. k2) return end
             itemreqs = itemreqs .. "\n" .. AS.Items[k2].name .. " (" .. v2 .. ")"
         end
 
@@ -159,6 +160,7 @@ function AS.Craft.BuildList( parent, category )
         end
 
         local function buildReqList( k2, v2 )
+            if not AS.Items[k2] then AS.LuaError("Attmept to index an item that doens't exist via crafting - " .. k2) return end
             local panel = reqlist:Add("DPanel")
             panel:SetSize( reqlist:GetWide() - 16, 20 )
             function panel:Paint(w,h) end

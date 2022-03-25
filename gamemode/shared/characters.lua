@@ -39,11 +39,15 @@ if SERVER then
         self:SetSkills(skills)
         self:SetInventory(inv)
         self:SetBank(bank)
-        for k, v in pairs(equipment.weps) do
-            self:Give( v )
+        if equipment and equipment.weps then
+            for k, v in pairs(equipment.weps) do
+                self:Give( v )
+            end
         end
-        for k, v in pairs(equipment.ammo) do
-            self:GiveAmmo( v, k )
+        if equipment and equipment.ammo then
+            for k, v in pairs(equipment.ammo) do
+                self:GiveAmmo( v, k )
+            end
         end
         self:SetPlaytime(stats.playtime)
         self:ValidateInventory()

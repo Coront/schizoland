@@ -195,7 +195,15 @@ function AS.Settings.BuildOptions()
     addSpace( 0, 20 )
 
     ValueSlider( "Satiation Bars Height", xpos, ypos, 5, 50, settings_scroll, "as_hud_satiationbars_height" )
-    addSpace( -40, 20 )
+    addSpace( -20, 20 )
+
+    ToggleButton("Enable Event Bars", xpos, ypos, settings_scroll, "as_hud_timeevent")
+    addSpace( 20, 20 )
+
+    ToggleButton("Show Event Bar Percent", xpos, ypos, settings_scroll, "as_hud_timeevent_percent")
+    addSpace( 0, 20 )
+
+    resetX()
 
 --Connection Information
 

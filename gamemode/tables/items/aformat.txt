@@ -26,4 +26,6 @@ AS.AddBaseItem("my_item", {
     craft = { --A table that will allow this item to be hand-crafting (via crafting menu).
         ["misc_scrap"] = 1, --Key will always be item id, value will be amount. If the value is 0, it means the player must have the item but it will not be consumed.
     },
+    salvage = { --Other items to gain when salvaging this item.
+    },
 })

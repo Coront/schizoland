@@ -236,31 +236,38 @@ function AS.Inventory.BuildInventory()
                     dropItem( k, v )
                 end)
                 --Destroy
-                local function destroyItem( item, amt )
-                    LocalPlayer():TakeItemFromInventory( item, amt )
-                    itemamtUpdate()
-                    net.Start("as_inventory_destroyitem")
-                        net.WriteString( item )
-                        net.WriteInt( amt, 32 )
-                    net.SendToServer()
-                end
-                if v > 1 then
-                    options:AddOption("Destroy 1", function()
+                if AS.Items[k].salvage then
+                    local function destroyItem( item, amt )
+                        LocalPlayer():TakeItemFromInventory( item, amt )
+                        if AS.Items[item].salvage then
+                            for k, v in pairs( AS.Items[item].salvage ) do
+                                LocalPlayer():AddItemToInventory( k, v )
+                            end
+                        end
+                        itemamtUpdate()
+                        net.Start("as_inventory_destroyitem")
+                            net.WriteString( item )
+                            net.WriteInt( amt, 32 )
+                        net.SendToServer()
+                    end
+                    if v > 1 then
+                        options:AddOption("Salvage 1", function()
+                            Verify( function() 
+                                destroyItem( k, 1 )
+                            end )
+                        end)
+                        options:AddOption("Salvage X", function()
+                            VerifySlider( LocalPlayer():GetInventory()[k], function( amt )
+                                destroyItem( k, amt )
+                            end )
+                        end)
+                    end
+                    options:AddOption("Salvage All", function()
                         Verify( function() 
-                            destroyItem( k, 1 )
-                        end )
-                    end)
-                    options:AddOption("Destroy X", function()
-                        VerifySlider( LocalPlayer():GetInventory()[k], function( amt )
-                            destroyItem( k, amt )
+                            destroyItem( k, v )
                         end )
                     end)
                 end
-                options:AddOption("Destroy All", function()
-                    Verify( function() 
-                        destroyItem( k, v )
-                    end )
-                end)
                 options:Open()
                 function options:Think()
                     if not IsValid( frame_inventory ) then options:Hide() end
