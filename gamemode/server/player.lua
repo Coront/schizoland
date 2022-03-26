@@ -128,6 +128,11 @@ hook.Add( "Think", "AS_PassiveHealing", function()
         if v:GetHunger() >= SAT.SatBuffs and v:GetThirst() >= SAT.SatBuffs then
             hpToHeal = hpToHeal + 1
         end
+        for k2, v2 in pairs(ents.FindByClass("env_fire")) do
+            if v:GetPos():Distance(v2:GetPos()) > 150 then continue end
+            hpToHeal = hpToHeal + 1
+            break
+        end
         if hpToHeal == 0 then continue end --We skip this player because they cannot be healed.
 
         if CurTime() > (v.NextHealthUpdate or 0) then
