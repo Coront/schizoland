@@ -89,21 +89,23 @@ function GM:PostPlayerDeath( ply )
     ply:ResyncInventory()
 
     --Entity
-    local ent = ents.Create("as_case")
-    local trace = util.TraceLine({
-        start = ply:GetPos() + ply:OBBCenter(),
-        endpos = (ply:GetPos() + ply:OBBCenter()) + Vector( 0, 0, -9999 ),
-        filter = {ent},
-    })
-    ent:SetPos( trace.HitPos + (ent:OBBCenter() + Vector( 0, 0, 20 )) )
-    ent:SetInventory( contents )
-    timer.Simple( 0.1, function() --im literally seetheing rn
-        ent:ResyncInventory()
-    end)
-    ent:Spawn()
-    local phys = ent:GetPhysicsObject()
-    phys:EnableMotion( false )
-    ent:SetNW2String("owner", ply:Nickname())
+    if table.Count(contents) > 0 then
+        local ent = ents.Create("as_case")
+        local trace = util.TraceLine({
+            start = ply:GetPos() + ply:OBBCenter(),
+            endpos = (ply:GetPos() + ply:OBBCenter()) + Vector( 0, 0, -9999 ),
+            filter = {ent},
+        })
+        ent:SetPos( trace.HitPos + (ent:OBBCenter() + Vector( 0, 0, 20 )) )
+        ent:SetInventory( contents )
+        timer.Simple( 0.1, function() --im literally seetheing rn
+            ent:ResyncInventory()
+        end)
+        ent:Spawn()
+        local phys = ent:GetPhysicsObject()
+        phys:EnableMotion( false )
+        ent:SetNW2String("owner", ply:Nickname())
+    end
 
     ply:SetHealth( 100 ) --This is just so it doesnt save 0 to the player's health in the database.
     ply:SaveCharacter()
