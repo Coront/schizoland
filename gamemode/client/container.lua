@@ -179,11 +179,11 @@ function ContainerMenu( ent )
             icon:SetModel( AS.Items[k].model, AS.Items[k].skin or 0 )
             icon:SetTooltip( "Left Click to take all.\nRight Click to take amount." )
             icon.DoClick = function( self )
-                if frame_container.ent:PlayerCanTakeItem( LocalPlayer(), k, frame_container.ent:GetInventory()[k] ) then
-                    local amt = frame_container.ent:GetInventory()[k]
-                    frame_container.ent:PlayerTakeItem( LocalPlayer(), k, frame_container.ent:GetInventory()[k] )
-                    surface.PlaySound( ITEMCUE.TAKE )
-                    frame_container.containeritemamtUpdate( k )
+                if frame_container.ent:PlayerCanTakeAmmo( LocalPlayer() ) then
+                    local amt = frame_container.ent:GetInventory().ammo[k]
+                    frame_container.ent:PlayerTakeAmmo( LocalPlayer(), k, amt )
+                    surface.PlaySound( ITEMCUE.DROP )
+                    frame_container.containerammoamtUpdate( k )
 
                     net.Start("as_case_takeammo")
                         net.WriteEntity( frame_container.ent )
