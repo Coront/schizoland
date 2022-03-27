@@ -112,6 +112,7 @@ function SWEP:Deploy()
     if self:GetHolsteredState() == false then
         self:PlaySequence( self.Anim.Deploy )
     end
+    return true
 end
 
 function SWEP:PrimaryAttack()

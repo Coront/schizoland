@@ -120,6 +120,7 @@ AS.AddBaseItem("wep_mp7", {
     desc = "A medium sized SMG that holds 30 rounds and shoots fast. Deals below average damage. Uses SMG ammo.",
     category = "weapon",
     model = "models/weapons/w_smg1.mdl",
+    wep = "weapon_mp7",
     value = 50,
     weight = 2,
     hidden = true,

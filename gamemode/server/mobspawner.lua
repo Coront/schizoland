@@ -254,6 +254,7 @@ function AS.Grid.SpawnNodes()
     --Similar with mobs, we need to find a valid spawn location.
     local ValidSpawners = AS.Grid.FetchValidSpawners()
     if #ValidSpawners <= 0 then return end --None are valid
+    local SpawnerCap = {}
 
     --Now we place nodes.
     local maxnodes = math.floor( (NOD.Maximum * NOD.SpawnMult) * (AS.Maps[game.GetMap()] and AS.Maps[game.GetMap()].NodeMult or 1) )
@@ -288,6 +289,11 @@ function AS.Grid.SpawnNodes()
                 local physobj = ent:GetPhysicsObject()
                 physobj:EnableMotion( false )
             end
+        end
+
+        SpawnerCap[spawnPoint] = (SpawnerCap[spawnPoint] or 0) + 1
+        if SpawnerCap[spawnPoint] >= NOD.MaxPerSpawner then --This will remove a spawner from the valid spawn table if too many nodes plan on spawning at it.
+            ValidSpawners[spawnPoint] = nil
         end
     end
 end
