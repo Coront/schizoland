@@ -105,8 +105,8 @@ function PlayerMeta:DestroyItem( item, amt )
     self:ChatPrint("Salvaged " .. itemname .. " (" .. amt .. ") for:")
     if AS.Items[item].salvage then
         for k, v in pairs( AS.Items[item].salvage ) do
-            self:AddItemToInventory( k, v )
-            self:ChatPrint(AS.Items[k].name .. " (" .. v .. ")")
+            self:AddItemToInventory( k, v * amt )
+            self:ChatPrint(AS.Items[k].name .. " (" .. v * amt .. ")")
         end
     end
     self:EmitSound(ITEMCUE.DESTROY)

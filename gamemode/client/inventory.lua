@@ -241,7 +241,7 @@ function AS.Inventory.BuildInventory()
                         LocalPlayer():TakeItemFromInventory( item, amt )
                         if AS.Items[item].salvage then
                             for k, v in pairs( AS.Items[item].salvage ) do
-                                LocalPlayer():AddItemToInventory( k, v )
+                                LocalPlayer():AddItemToInventory( k, v * amt )
                             end
                         end
                         itemamtUpdate()
