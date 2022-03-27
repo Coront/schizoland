@@ -15,7 +15,7 @@ AS.AddBaseItem("misc_scrap", {
     model = "models/gibs/scanner_gib02.mdl",
     color = Color( 125, 125, 125 ),
     value = 0,
-    weight = 0.001,
+    weight = 0,
 })
 
 AS.AddBaseItem("misc_smallparts", {
@@ -25,7 +25,7 @@ AS.AddBaseItem("misc_smallparts", {
     model = "models/props_wasteland/gear02.mdl",
     color = Color( 125, 125, 125 ),
     value = 0,
-    weight = 0.001,
+    weight = 0,
 })
 
 AS.AddBaseItem("misc_chemical", {
@@ -35,7 +35,7 @@ AS.AddBaseItem("misc_chemical", {
     model = "models/grub_nugget_small.mdl",
     color = Color( 125, 125, 125 ),
     value = 0,
-    weight = 0.001,
+    weight = 0,
 })
 
 -- ██████╗  █████╗ ██████╗ ████████╗    ██╗████████╗███████╗███╗   ███╗███████╗

@@ -41,15 +41,18 @@ function PlayerMeta:CraftItem( item, amt )
     end
 
     if SERVER then
-        local itemname = AS.Items[item].name
-        local ent = ents.Create("as_baseitem")
-        ent:SetItem( item )
-        ent:SetAmount( amt )
-        ent:SetSkin( AS.Items[item].skin or 0 )
-        ent:SetPos( self:TracePosFromEyes(200) + Vector( 0, 0, 20 ) )
-        ent:Spawn()
-        ent:PhysWake()
-        self:ChatPrint("Crafted " .. itemname .. " (" .. amt .. ")")
-        ent:EmitSound(ITEMCUE.DROP)
+        local time = SET.CraftTime * amt
+        self:StartTimedEvent( time, true, function()
+            local itemname = AS.Items[item].name
+            local ent = ents.Create("as_baseitem")
+            ent:SetItem( item )
+            ent:SetAmount( amt )
+            ent:SetSkin( AS.Items[item].skin or 0 )
+            ent:SetPos( self:TracePosFromEyes(200) + Vector( 0, 0, 20 ) )
+            ent:Spawn()
+            ent:PhysWake()
+            self:ChatPrint("Crafted " .. itemname .. " (" .. amt .. ")")
+            ent:EmitSound(ITEMCUE.DROP)
+        end)
     end
 end
