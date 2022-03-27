@@ -112,7 +112,7 @@ AS.AddLootTable( "desk2", {
 } )
 
 AS.AddLootTable( "dresser", {
-    name = "Desser",
+    name = "Dresser",
     model = "models/props_c17/FurnitureDresser001a.mdl",
     opensound = "physics/wood/wood_plank_impact_soft1.wav",
     closesound = "physics/wood/wood_plank_impact_soft3.wav",
