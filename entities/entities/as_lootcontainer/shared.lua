@@ -77,6 +77,7 @@ end
 if SERVER then
 
     util.AddNetworkString("as_lootcontainer_syncinventory")
+    util.AddNetworkString("as_lootcontainer_requestinventory")
 
     function ENT:ResyncInventory()
         net.Start("as_lootcontainer_syncinventory")
@@ -95,6 +96,14 @@ if SERVER then
     end
     concommand.Add("as_resynccontainers", ResyncAllContainerInventories)
 
+    net.Receive("as_lootcontainer_requestinventory", function( _, ply )
+        local ent = net.ReadEntity()
+        net.Start("as_lootcontainer_syncinventory")
+            net.WriteEntity( ent )
+            net.WriteTable( ent:GetInventory() )
+        net.Send( ply )
+    end)
+
 elseif CLIENT then
 
     function ContainerInventorySync()
@@ -103,5 +112,14 @@ elseif CLIENT then
         ent:SetInventory( net.ReadTable() )
     end
     net.Receive( "as_lootcontainer_syncinventory", ContainerInventorySync )
+
+    timer.Create( "as_autoresync_containers", 3, 0, function()
+        for k, v in pairs( ents.FindByClass("as_lootcontainer") ) do
+            if table.Count(v:GetInventory()) != 0 then continue end
+            net.Start("as_lootcontainer_requestinventory")
+                net.WriteEntity(v)
+            net.SendToServer()
+        end
+    end)
 
 end
