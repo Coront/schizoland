@@ -207,7 +207,7 @@ net.Receive("as_inventory_destroyitem", function( _, ply )
     local inv = ply:GetInventory()
     if amt > inv[item] then amt = inv[item] end --Person might try higher numbers than what they actually have
     amt = math.Round(amt) --Person might try decimals
-    if not AS.Items[item].salvage then self:ChatPrint("This item cannot be salvaged.") ply:ResyncInventory() return end --Needs to be an item that can be destroyed.
+    if not AS.Items[item].salvage then ply:ChatPrint("This item cannot be salvaged.") ply:ResyncInventory() return end --Needs to be an item that can be destroyed.
 
     --Contents are verified. Running the actual function.
     ply:DestroyItem( item, amt )
