@@ -44,6 +44,18 @@ function GM:PlayerCanHearPlayersVoice( listener, speaker )
     return true, true
 end
 
+function GM:PlayerShouldTaunt( ply, act )
+    ply:PrintMessage( HUD_PRINTCONSOLE, "Acting/Taunting has been disabled.")
+    return false
+end
+
+hook.Add("StartCommand", "AS_CrouchJumpSpamBlock", function(ply, cmd)
+    if not ply:OnGround() and ply:Crouching() and ply:GetMoveType() ~= MOVETYPE_NOCLIP and ply:WaterLevel() < 2 then
+        local buttons = cmd:GetButtons()
+        cmd:SetButtons(bit.bor(IN_DUCK, buttons))
+    end
+end)
+
 --Serverside Permissions
 if SERVER then
 
