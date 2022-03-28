@@ -108,12 +108,13 @@ end)
 function GM:Move( ply, mv )
     local scavbonus = ply:GetASClass() == "scavenger" and CLS.Scavenger.movespeedmult or 1
     local movespeed = (SKL.Movement + math.floor(ply:GetSkillLevel( "endurance" ) * SKL.Endurance.runspeed)) * scavbonus
-    ply:SetRunSpeed( movespeed )
+    local sprintmovespeed = (SKL.SprintMovement + math.floor(ply:GetSkillLevel( "endurance" ) * SKL.Endurance.runspeed)) * scavbonus
+    ply:SetRunSpeed( sprintmovespeed )
     ply:SetWalkSpeed( movespeed )
     ply:SetSlowWalkSpeed( 75 )
     ply:SetDuckSpeed( 0.4 )
-    ply:SetViewOffset( Vector( 0, 0, 65 ) )
-    ply:SetViewOffsetDucked( Vector( 0, 0, 45 ) )
+    ply:SetViewOffset( Vector( 0, 0, 61 ) )
+    ply:SetViewOffsetDucked( Vector( 0, 0, 40 ) )
 end
 
 function PlayerMeta:Nickname() --Will return the name of the player. Use this over self:Nick().

@@ -83,6 +83,7 @@ SET.Skills = {}
 SKL = SET.Skills
 SKL.Health = 100 --Player starts with 100 hp.
 SKL.Movement = 163.5 --Player starts with 165 move speed.
+SKL.SprintMovement = 248.5 --Player starts with 250 sprint move speed.
 SKL.DefaultCarryWeight = 18.8 --Player starts with 20 carry weight.
 SKL.Strength = {
     incamt = 0.02, --Amount to increase per melee impact
