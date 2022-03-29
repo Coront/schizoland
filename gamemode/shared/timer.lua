@@ -17,6 +17,11 @@ function PlayerMeta:GetEventCallback()
     return self.TimedEventCallback
 end
 
+function PlayerMeta:IsEventActive()
+    if self:GetEventTime() > CurTime() then return true end
+    return false
+end
+
 if (SERVER) then
 
     function PlayerMeta:StartTimedEvent( length, freeze, callback )
@@ -39,7 +44,6 @@ if (SERVER) then
         self:SetEventTime( 0 )
         if self:GetMoveType() == MOVETYPE_NONE then self:SetMoveType( MOVETYPE_WALK ) end
     end
-
 
     hook.Add( "Think", "AS_TimedEvents", function()
         for k, v in pairs( player.GetAll() ) do

@@ -18,6 +18,7 @@ end
 hook.Add( "HUDPaint", "AS_Node_Indicator", function()
     for k, v in pairs( ents.FindByClass("as_lootnode") ) do
         if v:GetPos():Distance(LocalPlayer():GetPos()) > 400 then continue end
+        if LocalPlayer():IsEventActive() then continue end
         local trace = util.TraceLine({
             start = LocalPlayer():EyePos(),
             endpos = v:GetPos() + v:OBBCenter(),
