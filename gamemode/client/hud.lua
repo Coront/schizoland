@@ -33,6 +33,10 @@ CreateClientConVar( "as_hud_satiationbars_xadd", "0", true, false ) --X position
 CreateClientConVar( "as_hud_satiationbars_yadd", "0", true, false ) --Y position add
 CreateClientConVar( "as_hud_satiationbars_width", "150", true, false ) --Width
 CreateClientConVar( "as_hud_satiationbars_height", "10", true, false ) --Height
+-- Resources
+CreateClientConVar( "as_hud_resources", "0", true, false ) --Enable?
+CreateClientConVar( "as_hud_resources_xadd", "0", true, false ) --X position add
+CreateClientConVar( "as_hud_resources_yadd", "0", true, false ) --Y position add
 -- Player Info
 CreateClientConVar( "as_hud_playerinfo", "1", true, false )
 
@@ -92,6 +96,10 @@ function AftershockHUD()
         bary = bary + (height + 1)
         surface.DrawOutlinedRect(barx, bary, width, height) --Thirst bar outline
         surface.DrawRect( barx + 2, bary + 2, (thirst / maxthirst) * (width - 4), height - 4) --Thirst bar
+        --Buff Pos
+        --surface.SetDrawColor(COLHUD_GOOD)
+        --surface.DrawRect( ((barx - 1)) * SAT.SatBuffs, bary + 1, 1, height - 2) --Thirst bar
+
 
         local amt = tobool(GetConVar("as_hud_satiationbars_amount"):GetInt())
         if amt then --Will draw satiation amount if enabled
@@ -100,6 +108,22 @@ function AftershockHUD()
             amty = amty + 10
             draw.SimpleTextOutlined(thirst, "AftershockHUDVerySmall", amtx, amty, COLHUD_DEFAULT, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM, outline, Color(0,0,0))
         end
+    end
+
+    local resources = tobool(GetConVar("as_hud_resources"):GetInt())
+    if resources then
+        local inv = ply:GetInventory()
+        local scrap = inv and inv["misc_scrap"] or 0
+        local sp = inv and inv["misc_smallparts"] or 0
+        local chem = inv and inv["misc_chemical"] or 0
+
+        local xadd, yadd = GetConVar("as_hud_resources_xadd"):GetInt(), GetConVar("as_hud_resources_yadd"):GetInt()
+        local x, y, outline = (math.Clamp((ScrW() * 0.947) + xadd, 0, ScrW())), (math.Clamp((ScrH() * 0.876) + yadd, 0, ScrH())), (1)
+        draw.SimpleTextOutlined("Scrap: " .. scrap, "TargetIDSmall", x, y, COLHUD_DEFAULT, TEXT_ALIGN_RIGHT, TEXT_ALIGN_BOTTOM, outline, Color(0,0,0))
+        y = y + 15
+        draw.SimpleTextOutlined("Small Parts: " .. sp, "TargetIDSmall", x, y, COLHUD_DEFAULT, TEXT_ALIGN_RIGHT, TEXT_ALIGN_BOTTOM, outline, Color(0,0,0))
+        y = y + 15
+        draw.SimpleTextOutlined("Chemicals: " .. chem, "TargetIDSmall", x, y, COLHUD_DEFAULT, TEXT_ALIGN_RIGHT, TEXT_ALIGN_BOTTOM, outline, Color(0,0,0))
     end
 
     local playerinfo = tobool(GetConVar("as_hud_playerinfo"):GetInt())

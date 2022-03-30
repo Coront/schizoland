@@ -12,10 +12,22 @@ function ENT:Initialize()
     self:PhysicsInit( SOLID_VPHYSICS )
     self:SetUseType( SIMPLE_USE )
     self:SetCollisionGroup( COLLISION_GROUP_WEAPON )
+
+    self.AutoRemove = CurTime() + 3000 --1 hour
+    self.DeclaimTime = CurTime() + 300 --5 minutes
+
 end
 
 function ENT:Think()
     if table.Count(self:GetInventory()) <= 0 then
+        self:Remove()
+    end
+
+    if CurTime() > self.DeclaimTime and self:GetOwner() then --This will declaim any case with a claim stuck on it, generally from NPC kills.
+        self:DeclaimOwner()
+    end
+
+    if CurTime() > self.AutoRemove then
         self:Remove()
     end
 end

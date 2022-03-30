@@ -111,6 +111,9 @@ AS.AddBaseItem("food_dirty_water", {
     use = {
         thirst = 15,
         soundcs = "npc/barnacle/barnacle_gulp1.wav",
+        items = {
+            ["misc_emptybottle"] = 1,
+        }
     },
     salvage = {
         ["misc_scrap"] = 1,
@@ -129,6 +132,9 @@ AS.AddBaseItem("food_clean_water", {
     use = {
         thirst = 20,
         soundcs = "npc/barnacle/barnacle_gulp1.wav",
+        items = {
+            ["misc_emptybottle"] = 1,
+        },
     },
     hidden = true,
     class = "cultivator",

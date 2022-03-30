@@ -135,7 +135,7 @@ function SWEP:Reload()
             self:ToggleHolsteredState()
             self:SetNextReload( CurTime() + 1 )
         end
-    else
+    elseif not self.Melee then
 
         if not self:CanReload() then return end
 

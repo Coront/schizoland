@@ -197,6 +197,15 @@ function AS.Settings.BuildOptions()
     ValueSlider( "Satiation Bars Height", xpos, ypos, 5, 50, settings_scroll, "as_hud_satiationbars_height" )
     addSpace( -20, 20 )
 
+    ToggleButton("Enable Resource Count", xpos, ypos, settings_scroll, "as_hud_resources")
+    addSpace( 20, 20 )
+
+    ValueSlider("Resource X-Pos", xpos, ypos, -2000, 2000, settings_scroll, "as_hud_resources_xadd")
+    addSpace( 0, 20 )
+
+    ValueSlider("Resource Y-Pos", xpos, ypos, -2000, 2000, settings_scroll, "as_hud_resources_yadd")
+    addSpace( -20, 20 )
+
     ToggleButton("Enable Event Bars", xpos, ypos, settings_scroll, "as_hud_timeevent")
     addSpace( 20, 20 )
 

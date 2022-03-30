@@ -100,6 +100,12 @@ AS.AddBaseItem("misc_gunpowderten", {
         ["misc_smallparts"] = 0,
         ["misc_chemical"] = 20,
     },
+    use = {
+        items = {
+            ["misc_gunpowder"] = 10,
+        },
+        soundcs = "fx/items/up/itm_ammunition_up01.wav",
+    },
 })
 
 AS.AddBaseItem("misc_heavyplate", {

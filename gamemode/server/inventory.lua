@@ -28,6 +28,13 @@ function PlayerMeta:UseItem( item )
         local amt = use.ammoamt
         self:GiveAmmo( amt, use.ammotype, false )
     end
+    if use.items then
+        for k, v in pairs( use.items ) do
+            self:ChatPrint( AS.Items[k].name .. " (" .. v .. ") added to inventory.")
+            self:AddItemToInventory( k, v )
+        end
+        self:ResyncInventory()
+    end
     if use.health then
         self:SetHealth( math.Clamp( self:Health() + use.health, 1, self:GetMaxHealth() ) )
     end

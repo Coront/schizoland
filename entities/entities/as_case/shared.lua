@@ -38,6 +38,7 @@ end
 
 function ENT:PlayerCanTakeItem( ply, itemid, amt )
     if not ply:Alive() then return false end
+    if self:GetClaimer() and ply != self:GetClaimer() then return false end
     if ply:GetPos():Distance( self:GetPos() ) > 200 then ply:ChatPrint("You are too far to take this item.") return false end
     if ply:GetCarryWeight() + (AS.Items[itemid].weight * amt) > ply:MaxCarryWeight() then ply:ChatPrint("You are too overweight to take this item.") return false end
     return true
@@ -63,6 +64,18 @@ function ENT:PlayerTakeAmmo( ply, itemid, amt )
     if SERVER then
         ply:GiveAmmo( amt, translateAmmoNameID(itemid), true )
     end
+end
+
+function ENT:SetClaimer( ent )
+    self:SetNW2Entity("claimant", ent)
+end
+
+function ENT:GetClaimer()
+    return self:GetNW2Entity("claimant", nil)
+end
+
+function ENT:DeclaimOwner()
+    self:SetNW2Entity("claimant", nil)
 end
 
 -- ███╗   ██╗███████╗████████╗██╗    ██╗ ██████╗ ██████╗ ██╗  ██╗██╗███╗   ██╗ ██████╗
