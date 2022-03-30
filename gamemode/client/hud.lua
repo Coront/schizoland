@@ -33,6 +33,7 @@ CreateClientConVar( "as_hud_satiationbars_xadd", "0", true, false ) --X position
 CreateClientConVar( "as_hud_satiationbars_yadd", "0", true, false ) --Y position add
 CreateClientConVar( "as_hud_satiationbars_width", "150", true, false ) --Width
 CreateClientConVar( "as_hud_satiationbars_height", "10", true, false ) --Height
+CreateClientConVar( "as_hud_satiationbars_showindic", "1", true, false )
 -- Resources
 CreateClientConVar( "as_hud_resources", "0", true, false ) --Enable?
 CreateClientConVar( "as_hud_resources_xadd", "0", true, false ) --X position add
@@ -92,14 +93,21 @@ function AftershockHUD()
         --Hunger Bar
         surface.DrawOutlinedRect(barx, bary, width, height, outline) --Hunger bar outline
         surface.DrawRect(barx + 2, bary + 2, (hunger / maxhunger) * (width - 4), height - 4) --Hunger bar
+        --Buff Pos
+        if tobool(GetConVar("as_hud_satiationbars_showindic"):GetInt()) then
+            surface.SetDrawColor(COLHUD_GOOD)
+            surface.DrawRect( (barx - 1) + ((width / maxhunger) * SAT.SatBuffs), bary + 1, 1, height - 2)
+        end
         --Thirst Bar
         bary = bary + (height + 1)
+        surface.SetDrawColor(COLHUD_DEFAULT)
         surface.DrawOutlinedRect(barx, bary, width, height) --Thirst bar outline
         surface.DrawRect( barx + 2, bary + 2, (thirst / maxthirst) * (width - 4), height - 4) --Thirst bar
         --Buff Pos
-        --surface.SetDrawColor(COLHUD_GOOD)
-        --surface.DrawRect( ((barx - 1)) * SAT.SatBuffs, bary + 1, 1, height - 2) --Thirst bar
-
+        if tobool(GetConVar("as_hud_satiationbars_showindic"):GetInt()) then
+            surface.SetDrawColor(COLHUD_GOOD)
+            surface.DrawRect( (barx - 1) + ((width / maxthirst) * SAT.SatBuffs), bary + 1, 1, height - 2)
+        end
 
         local amt = tobool(GetConVar("as_hud_satiationbars_amount"):GetInt())
         if amt then --Will draw satiation amount if enabled

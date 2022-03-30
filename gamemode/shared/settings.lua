@@ -116,7 +116,7 @@ SAT.ThirstUpdate = 35 --Timer in seconds that the player's thirst will update
 SAT.ThirstLoss = 1 --Thirst loss on update
 SAT.StarveDamage = 2 --How much damage starvation should deal on next hunger update
 SAT.DehydratedDamage = 1 --How much damage dehydration should deal on next thirst update
-SAT.SatBuffs = 80 --The amount of hunger + thirst a player must remain above in order to receive the passive buffs.
+SAT.SatBuffs = 85 --The amount of hunger + thirst a player must remain above in order to receive the passive buffs.
 --Mobs
 SET.Mobs = {}
 MOB = SET.Mobs
