@@ -123,8 +123,9 @@ MOB = SET.Mobs
 MOB.SpawnMult = 1 --Multiplier for the amount of NPCs that will spawn. This is rounded down if decimal.
 MOB.RespawnTime = 60 --Time it takes for NPCs to respawn.
 MOB.NPCs = {
+    ["npc_as_zombie"] = 8,
+    ["npc_as_fastzombie"] = 5,
     ["npc_as_bandit"] = 4,
-    ["npc_as_raider"] = 2,
 }
 --Nodes
 SET.Nodes = {}
