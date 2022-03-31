@@ -119,6 +119,7 @@ function AS.Storage.BuildInventory()
     inventoryitemlist:SetSpaceX( 5 )
 
     for k, v in SortedPairs( LocalPlayer():GetInventory() ) do
+        if (AS.Items[k].nostore or false) then continue end
         if not string.find( string.lower(AS.Items[k].name), inventorysearchbar:GetValue() ) and not string.find( string.lower(k), inventorysearchbar:GetValue() ) then continue end
 
         local info = AS.Items[k]
