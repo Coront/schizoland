@@ -295,13 +295,12 @@ function AS.Inventory.BuildInventory()
         sheets_items:AddSheet("Vehicle", BuildItemList(sheets_items, "vehicle"), "icon16/car.png")
         sheets_items:AddSheet("Tool", BuildItemList(sheets_items, "tool"), "icon16/wrench.png")
         sheets_items:AddSheet("Misc", BuildItemList(sheets_items, "misc"), "icon16/cog.png")
-        sheets_items:AddSheet("All", BuildItemList(sheets_items), "icon16/basket.png")
     end
 
     if GetConVar("as_menu_inventory_singlepanel"):GetInt() < 1 then
         BuildAllSheets()
     else
-        sheets_items:AddSheet("All", BuildItemList(sheets_items), "icon16/basket.png")
+        sheets_items:AddSheet("All", BuildItemList(sheets_items), "icon16/add.png")
     end
 
 --Character Panel
