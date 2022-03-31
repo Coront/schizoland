@@ -34,8 +34,8 @@ function SWEP:ToggleHolsteredState()
     if not self:GetHolsteredState() then --We arent holstered, but we are going to holster.
         self:SetHolsteredState( true )
         self:SetHoldType( "normal" )
+        self:PlaySequence( self.Anim.Holster )
         if SERVER then
-            self:PlaySequence( self.Anim.Holster )
             local viewmodel = self.Owner:GetViewModel()
             timer.Simple( viewmodel:SequenceDuration( viewmodel:LookupSequence( self.Anim.Holster ) ), function()
                 if IsValid( self ) and self.Owner:Alive() then
@@ -46,9 +46,7 @@ function SWEP:ToggleHolsteredState()
     else
         self:SetHolsteredState( false )
         self:SetHoldType( self.HoldType )
-        if SERVER then
-            self:PlaySequence( self.Anim.Deploy )
-        end
+        self:PlaySequence( self.Anim.Deploy )
     end
 end
 
@@ -124,9 +122,7 @@ function SWEP:PrimaryAttack()
 end
 
 function SWEP:SecondaryAttack()
-    if self.Melee then --Temp;
-        self:PrimaryAttack()
-    end
+    --Will find something to fill this with, unsure as of now.
 end
 
 function SWEP:Reload()
@@ -146,9 +142,7 @@ function SWEP:Reload()
             if self.Primary.Reload then
                 self:EmitSound( self.Primary.Reload )
             end
-            if SERVER then
-                self:PlaySequence( self.Anim.Reload )
-            end
+            self:PlaySequence( self.Anim.Reload )
             self.Owner:GetViewModel():SetPlaybackRate( 1 + (self.Owner:GetSkillLevel( "weaponhandling" ) * SKL.WeaponHandling.reloadmultinc) )
         else
             self:PlaySequence( self.Anim.Reload[1] )
@@ -166,8 +160,8 @@ function SWEP:MeleeSwing()
     if not self:CanMeleeSwing() then return end
 
     self.Owner:SetAnimation( PLAYER_ATTACK1 )
+    self:PlaySequence( self.Anim.Attack )
     if SERVER then
-        self:PlaySequence( self.Anim.Attack )
         local snd = istable( self.Primary.Sound ) and table.Random( self.Primary.Sound ) or self.Primary.Sound
         self.Owner:EmitSound( snd )
     end
@@ -194,7 +188,11 @@ function SWEP:MeleeDamage()
         self:EmitSound( snd )
     end
 
-    if (trace.Entity and IsValid( trace.Entity )) and (trace.Entity:IsNPC() or trace.Entity:IsPlayer() or trace.Entity:Health() > 0) then
+    if (trace.Entity and IsValid( trace.Entity )) and (trace.Entity:IsNextBot() or trace.Entity:IsNPC() or trace.Entity:IsPlayer() or trace.Entity:Health() > 0) then
+
+        local data = EffectData()
+        data:SetOrigin( trace.HitPos )
+        util.Effect( "BloodImpact", data )
         if SERVER then
             local dmginfo = DamageInfo()
             dmginfo:SetInflictor( self )
@@ -206,6 +204,7 @@ function SWEP:MeleeDamage()
             self:EmitSound( snd )
         end
         self.Owner:IncreaseSkillExperience( "strength", SKL.Strength.incamt )
+
     end
 end
 
@@ -228,9 +227,7 @@ function SWEP:ShootGun()
     local snd = istable( self.Primary.Sound ) and table.Random( self.Primary.Sound ) or self.Primary.Sound
     self:EmitSound( snd )
     self.Owner:SetAnimation( PLAYER_ATTACK1 )
-    if SERVER then 
-        self:PlaySequence( self.Anim.Attack ) 
-    end
+    self:PlaySequence( self.Anim.Attack ) 
     if IsFirstTimePredicted() then
         self.Owner:IncreaseSkillExperience( "weaponhandling", SKL.WeaponHandling.incamt )
     end
@@ -258,7 +255,7 @@ end
 function SWEP:PlaySequence( sequence )
     local anim = sequence
     local viewmodel = self.Owner:GetViewModel()
-    local tblcheck = istable(anim) and table.Random(anim) or anim
+    local tblcheck = istable(anim) and sequence[math.Round(util.SharedRandom( "wepanimtoplay", 1, #sequence, 0 ))] or anim
     viewmodel:SendViewModelMatchingSequence( viewmodel:LookupSequence( tblcheck ) )
 end
 
