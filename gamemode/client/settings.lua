@@ -185,6 +185,9 @@ function AS.Settings.BuildOptions()
     ToggleButton("Enable Satiation Bars Amount", xpos, ypos, settings_scroll, "as_hud_satiationbars_amount")
     addSpace( 0, 20 )
 
+    ToggleButton("Show Satiated Indicator", xpos, ypos, settings_scroll, "as_hud_satiationbars_showindic")
+    addSpace( 0, 20 )
+
     ValueSlider( "Satiation Bars X-Pos", xpos, ypos, -2000, 2000, settings_scroll, "as_hud_satiationbars_xadd" )
     addSpace( 0, 20 )
 

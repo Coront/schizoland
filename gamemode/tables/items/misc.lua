@@ -16,6 +16,7 @@ AS.AddBaseItem("misc_scrap", {
     color = Color( 125, 125, 125 ),
     value = 0,
     weight = 0,
+    nostore = true,
 })
 
 AS.AddBaseItem("misc_smallparts", {
@@ -26,6 +27,7 @@ AS.AddBaseItem("misc_smallparts", {
     color = Color( 125, 125, 125 ),
     value = 0,
     weight = 0,
+    nostore = true,
 })
 
 AS.AddBaseItem("misc_chemical", {
@@ -36,6 +38,7 @@ AS.AddBaseItem("misc_chemical", {
     color = Color( 125, 125, 125 ),
     value = 0,
     weight = 0,
+    nostore = true,
 })
 
 -- ██████╗  █████╗ ██████╗ ████████╗    ██╗████████╗███████╗███╗   ███╗███████╗

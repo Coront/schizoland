@@ -61,6 +61,7 @@ end
 function PlayerMeta:CanStoreItem( ent, item, amt )
     if self:GetPos():Distance(ent:GetPos()) > 200 then self:ChatPrint("You are too far to store anything.") return false end --Dont try storing stuff miles away wtf???
     if self:GetBankWeight() + (AS.Items[item].weight * amt) > self:MaxBankWeight() then self:ChatPrint("Your storage is too full to hold this.") return false end
+    if (AS.Items[item].nostore or false) then self:ChatPrint("You cannot deposit " .. AS.Items[item].name .. " in your storage.") return false end
     return true
 end
 
