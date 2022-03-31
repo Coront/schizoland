@@ -1,7 +1,7 @@
 include( "shared.lua" )
 
 function ENT:Draw()
-    if self:GetClaimer() and LocalPlayer() != self:GetClaimer() and (not LocalPlayer():IsAdmin() or LocalPlayer():IsAdmin() and not LocalPlayer():IsDeveloping()) then return end
+    if IsValid(self:GetClaimer()) and LocalPlayer() != self:GetClaimer() and (not LocalPlayer():IsAdmin() or LocalPlayer():IsAdmin() and not LocalPlayer():IsDeveloping()) then return end
 
     if LocalPlayer():GetPos():Distance(self:GetPos()) < GetConVar("as_entity_renderdist"):GetInt() then
         self:DrawModel()
