@@ -59,6 +59,12 @@ function ENT:Think()
 	if IsValid(self) and self:GetDespawnTime() < CurTime() then
 		self:Remove()
 	end
+
+	--Water
+	if IsValid(self) and self:GetItem() == "misc_emptybottle" and self:WaterLevel() == 1 then
+		self:SetItem("food_dirty_water")
+		self:EmitSound("ambient/water/water_spray" .. math.random( 1, 3 ) .. ".wav")
+	end
 end
 
 -- ███╗   ██╗███████╗████████╗██╗    ██╗ ██████╗ ██████╗ ██╗  ██╗██╗███╗   ██╗ ██████╗
