@@ -38,7 +38,7 @@ end
 
 function ENT:PlayerCanTakeItem( ply, itemid, amt )
     if not ply:Alive() then return false end
-    if self:GetClaimer() and ply != self:GetClaimer() then return false end
+    if IsValid(self:GetClaimer()) and ply != self:GetClaimer() then ply:ChatPrint("You are not the claimant of this case.") return false end
     if ply:GetPos():Distance( self:GetPos() ) > 200 then ply:ChatPrint("You are too far to take this item.") return false end
     if ply:GetCarryWeight() + (AS.Items[itemid].weight * amt) > ply:MaxCarryWeight() then ply:ChatPrint("You are too overweight to take this item.") return false end
     return true
