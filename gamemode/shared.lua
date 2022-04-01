@@ -114,7 +114,7 @@ function GM:Move( ply, mv )
     ply:SetSlowWalkSpeed( 75 )
     ply:SetDuckSpeed( 0.4 )
     ply:SetViewOffset( Vector( 0, 0, 61 ) )
-    ply:SetViewOffsetDucked( Vector( 0, 0, 40 ) )
+    ply:SetViewOffsetDucked( Vector( 0, 0, 35 ) )
 end
 
 function PlayerMeta:Nickname() --Will return the name of the player. Use this over self:Nick().
@@ -144,4 +144,16 @@ end
 function PlayerMeta:IsDeveloping() --Will return if a player is in developer mode
     if self:IsAdmin() and self:GetMoveType() == MOVETYPE_NOCLIP and (self:GetActiveWeapon():GetClass() == "weapon_physgun" or self:GetActiveWeapon():GetClass() == "gmod_tool") then return true end
     return false
+end
+
+if CLIENT then
+
+    function GetPos( ply )
+        local pos = ply:GetPos():ToTable()
+        local str = "Vector( " .. math.Round(pos[1], 2) .. ", " .. math.Round(pos[2], 2) .. ", " .. math.Round(pos[3], 2) .. " )"
+        ply:ChatPrint( str )
+        SetClipboardText( str )
+    end
+    concommand.Add("GetPosV2", GetPos)
+
 end
