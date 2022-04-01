@@ -186,13 +186,14 @@ function SWEP:MeleeDamage()
     elseif trace.Hit and (trace.Entity:IsNextBot() or trace.Entity:IsPlayer() or trace.Entity:IsNPC()) then
         local snd = istable(self.Primary.ImpactFlesh) and table.Random(self.Primary.ImpactFlesh) or self.Primary.ImpactFlesh
         self:EmitSound( snd )
-    end
-
-    if (trace.Entity and IsValid( trace.Entity )) and (trace.Entity:IsNextBot() or trace.Entity:IsNPC() or trace.Entity:IsPlayer() or trace.Entity:Health() > 0) then
 
         local data = EffectData()
         data:SetOrigin( trace.HitPos )
         util.Effect( "BloodImpact", data )
+    end
+
+    if (trace.Entity and IsValid( trace.Entity )) and (trace.Entity:IsNextBot() or trace.Entity:IsNPC() or trace.Entity:IsPlayer() or trace.Entity:Health() > 0) then
+
         if SERVER then
             local dmginfo = DamageInfo()
             dmginfo:SetInflictor( self )
