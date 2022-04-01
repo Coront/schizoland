@@ -19,9 +19,15 @@ function ENT:Think()
             ContainerMenu( self )
         end
     else
-        if (IsValid( frame_container ) and frame_container.ent == self) or IsValid( frame_container ) and not IsValid( frame_container.ent ) then
+        if (IsValid( frame_container ) and frame_container.ent == self) or IsValid(frame_container) and not IsValid( frame_container.ent ) then
             frame_container:Close()
         end
+    end
+end
+
+function ENT:OnRemove()
+    if IsValid(frame_container) and frame_container.ent == self then
+        frame_container:Close()
     end
 end
 

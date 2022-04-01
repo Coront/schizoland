@@ -23,6 +23,12 @@ function ENT:Think()
     end
 end
 
+function ENT:OnRemove()
+    if IsValid(frame_container) and frame_container.ent == self then
+        frame_container:Close()
+    end
+end
+
 hook.Add( "PlayerButtonDown", "AS_LootContainer", function( ply, button )
     if IsFirstTimePredicted() then
         local button = GetKeyName( button )
