@@ -71,3 +71,20 @@ AS.AddMapData( "rp_cscdesert_v4b2", {
         Vector( -1192.67, 6298.56, 73.03 ),
     },
 })
+
+AS.AddMapData( "r_postnukemetro_dry", {
+    MobMult = 1.5,
+    NodeMult = 1.5,
+    Load = {
+        pos = Vector(-1429.20, 1270.12, 590.14),
+        ang = Angle(16.54, -48.93),
+    },
+    Spawns = {
+        Vector( -1238.96, 418.22, 92.03 ),
+        Vector( -1240.1, 344.57, 92.03 ),
+        Vector( -1241.25, 270.15, 92.03 ),
+        Vector( -1152.62, 268.78, 92.03 ),
+        Vector( -1151.82, 320.43, 92.03 ),
+        Vector( -1150.59, 399.83, 92.03 ),
+    },
+})
