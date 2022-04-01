@@ -180,10 +180,10 @@ function SWEP:MeleeDamage()
         mask = MASK_SHOT_HULL
     } )
 
-    if trace.Hit and not (trace.Entity:IsPlayer() or trace.Entity:IsNPC()) then
+    if trace.Hit and not (trace.Entity:IsNextBot() or trace.Entity:IsPlayer() or trace.Entity:IsNPC()) then
         local snd = istable(self.Primary.Impact) and table.Random(self.Primary.Impact) or self.Primary.Impact
         self:EmitSound( snd )
-    elseif trace.Hit and (trace.Entity:IsPlayer() or trace.Entity:IsNPC()) then
+    elseif trace.Hit and (trace.Entity:IsNextBot() or trace.Entity:IsPlayer() or trace.Entity:IsNPC()) then
         local snd = istable(self.Primary.ImpactFlesh) and table.Random(self.Primary.ImpactFlesh) or self.Primary.ImpactFlesh
         self:EmitSound( snd )
     end
