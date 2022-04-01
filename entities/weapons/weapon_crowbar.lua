@@ -20,7 +20,7 @@ Anim.Idle = {"fists_idle_01", "fists_idle_02"}
 Anim.Deploy = "draw"
 Anim.Holster = "holster"
 Anim.HolsterIdle = "holster"
-Anim.Attack = {"misscenter1", "misscenter2"}
+Anim.Attack = "misscenter1"
 
 Stat = SWEP.Primary
 Stat.Damage = 24 --Damage
@@ -28,8 +28,8 @@ Stat.Firerate = 60/65 --Attack Rate
 Stat.Distance = 90 --Attack Distance
 Stat.ImpactDelay = 0.2 --Delay before impacting
 Stat.Automatic = true
-Stat.Sound = {"weapons/knife/knife_slash1.wav", "weapons/knife/knife_slash2.wav"}
-Stat.Impact = {"weapons/crowbar/crowbar_impact1.wav", "weapons/crowbar/crowbar_impact2.wav"}
+Stat.Sound = "weapons/iceaxe/iceaxe_swing1.wav"
+Stat.Impact = {"physics/concrete/concrete_impact_bullet1.wav", "physics/concrete/concrete_impact_bullet2.wav", "physics/concrete/concrete_impact_bullet3.wav", "physics/concrete/concrete_impact_bullet4.wav"}
 Stat.ImpactFlesh = {"physics/flesh/flesh_impact_bullet1.wav", "physics/flesh/flesh_impact_bullet2.wav", "physics/flesh/flesh_impact_bullet3.wav", "physics/flesh/flesh_impact_bullet4.wav"}
 
 SWEP.Primary.DefaultClip = 0
