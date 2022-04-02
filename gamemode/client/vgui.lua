@@ -4,19 +4,19 @@ function MainMenuButton( text, x, y, width, height, parent, callback )
     button:SetPos(x, y)
     button:SetFont("AftershockButton")
     button:SetText( text )
-    button:SetColor( COLHUD_SECONDARY )
     button.DoClick = function()
         surface.PlaySound( UICUE.PRESS )
         callback()
     end
     button.HoveredOnce = false
     button.Paint = function(self, w, h)
-        local thickness = 1
+        local thickness = 2
         local gap = 1
-        surface.SetDrawColor( COLHUD_TERTIARY )
+        surface.SetDrawColor( COLHUD_DEFAULT )
         surface.DrawOutlinedRect( 0, 0, w, h, thickness)
         if self:IsHovered() then
-            surface.SetDrawColor( COLHUD_TERTIARY )
+            surface.SetDrawColor( COLHUD_DEFAULT )
+            button:SetColor( COLHUD_SECONDARY )
             if not self.HoveredOnce then
                 surface.PlaySound( UICUE.HOVER )
                 self.HoveredOnce = true
@@ -25,7 +25,8 @@ function MainMenuButton( text, x, y, width, height, parent, callback )
             if self.HoveredOnce then
                 self.HoveredOnce = false
             end
-            surface.SetDrawColor( COLHUD_DEFAULT )
+            surface.SetDrawColor( COLHUD_SECONDARY )
+            button:SetColor( COLHUD_DEFAULT )
         end
         surface.DrawRect( thickness + gap, thickness + gap, w - ((thickness + gap) * 2), h - ((thickness + gap) * 2) )
     end
