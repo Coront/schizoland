@@ -73,8 +73,8 @@ AS.AddMapData( "rp_cscdesert_v4b2", {
 })
 
 AS.AddMapData( "r_postnukemetro_dry", {
-    MobMult = 1.5,
-    NodeMult = 1.5,
+    MobMult = 2,
+    NodeMult = 2,
     Load = {
         pos = Vector(-1429.20, 1270.12, 590.14),
         ang = Angle(16.54, -48.93),

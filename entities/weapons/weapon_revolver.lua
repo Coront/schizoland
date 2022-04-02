@@ -5,7 +5,7 @@ SWEP.Base = "as_basewep"
 SWEP.Slot = 2
 
 SWEP.HoldType = "pistol"
-SWEP.ViewModelFOV = 60
+SWEP.ViewModelFOV = 55
 SWEP.ViewModel = "models/weapons/c_357.mdl"
 SWEP.WorldModel = "models/weapons/w_357.mdl"
 
@@ -31,7 +31,7 @@ Stat.SpreadC = 0.008 --Spread Cone while crouching
 Stat.RecoilVertical = 1.5 --vertical recoil
 Stat.RecoilHorizontal = 2 --Horizontal recoil
 Stat.Sound = "weapons/357/357_fire3.wav"
-Stat.ReloadTime = 2.1
+Stat.ReloadTime = 3.4
 
 SWEP.Primary.DefaultClip = 0
 SWEP.Secondary.DefaultClip = 0

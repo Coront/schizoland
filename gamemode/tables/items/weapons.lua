@@ -527,7 +527,7 @@ AS.AddBaseItem("wep_grenade", {
     model = "models/weapons/w_grenade.mdl",
     wep = "weapon_grenade",
     value = 15,
-    weight = 1,
+    weight = 0.4,
     class = "scientist",
     craft = {
         ["misc_scrap"] = 50,

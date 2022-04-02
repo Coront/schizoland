@@ -241,7 +241,7 @@ AS.AddBaseItem("misc_seed_melon", {
 })
 
 AS.AddBaseItem("misc_solarfilmroll", {
-    name = "Thin Rollable Solar Film",
+    name = "Thin Solar Film Roll",
     desc = "A very thin roll that containers copper, indium, gallium, and selenide. Can absorb energy from the sun to be converted into electricity.",
     category = "misc",
     model = "models/props/de_nuke/wall_light.mdl",

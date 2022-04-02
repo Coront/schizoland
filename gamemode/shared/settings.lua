@@ -123,16 +123,17 @@ MOB = SET.Mobs
 MOB.SpawnMult = 1 --Multiplier for the amount of NPCs that will spawn. This is rounded down if decimal.
 MOB.RespawnTime = 60 --Time it takes for NPCs to respawn.
 MOB.NPCs = {
-    ["npc_as_zombie"] = 8,
-    ["npc_as_fastzombie"] = 5,
-    ["npc_as_bandit"] = 4,
+    --amt is maximum amount, indoor means they spawn on indoor nodes, outdoor means they spawn on outdoor nodes
+    ["npc_as_zombie"] = {amt = 8, indoor = true, outdoor = true},
+    ["npc_as_fastzombie"] = {amt = 5, outdoor = true},
+    ["npc_as_bandit"] = {amt = 4, outdoor = true},
 }
 --Nodes
 SET.Nodes = {}
 NOD = SET.Nodes
 NOD.Maximum = 20 --Maximum nodes
 NOD.SpawnMult = 1 --Multiplier for the maximum number of nodes
-NOD.MaxPerSpawner = 3 --Maximum nodes per spawner. This helps spread out the nodes a bit more, so they don't spawn in one location.
+NOD.MaxPerSpawner = 2 --Maximum nodes per spawner. This helps spread out the nodes a bit more, so they don't spawn in one location.
 NOD.BaseScavTime = 3 --Base time length to scavenge
 NOD.ScavengeChance = 44 --Base chance for a successful scavenge
 NOD.ItemChance = 25 --Chance per scavenge to find an item, need to have a successful scavenge roll first
