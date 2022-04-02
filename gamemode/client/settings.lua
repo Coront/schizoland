@@ -158,8 +158,20 @@ function AS.Settings.BuildOptions()
     ValueSlider( "Ammo Y-Pos", xpos, ypos, -2000, 2000, settings_scroll, "as_hud_ammo_yadd" )
     addSpace( -20, 20 )
 
-    ToggleButton("Enable Player Info", xpos, ypos, settings_scroll, "as_hud_playerinfo")
+    ToggleButton("Enable Target Info", xpos, ypos, settings_scroll, "as_hud_targetinfo")
+    addSpace( 20, 20 )
+
+    ValueSlider( "Target Info X-Pos", xpos, ypos, -2000, 2000, settings_scroll, "as_hud_targetinfo_xadd" )
     addSpace( 0, 20 )
+
+    ValueSlider( "Target Info Y-Pos", xpos, ypos, -2000, 2000, settings_scroll, "as_hud_targetinfo_yadd" )
+    addSpace( 0, 20 )
+
+    ValueSlider( "Target Info Width", xpos, ypos, 5, 2000, settings_scroll, "as_hud_targetinfo_width" )
+    addSpace( 0, 20 )
+
+    ValueSlider( "Target Info Height", xpos, ypos, 5, 50, settings_scroll, "as_hud_targetinfo_height" )
+    addSpace( -20, 20 )
 
     ToggleButton("Enable Health Bar", xpos, ypos, settings_scroll, "as_hud_healthbar")
     addSpace( 20, 20 )

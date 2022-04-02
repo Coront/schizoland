@@ -38,8 +38,13 @@ CreateClientConVar( "as_hud_satiationbars_showindic", "1", true, false )
 CreateClientConVar( "as_hud_resources", "0", true, false ) --Enable?
 CreateClientConVar( "as_hud_resources_xadd", "0", true, false ) --X position add
 CreateClientConVar( "as_hud_resources_yadd", "0", true, false ) --Y position add
--- Player Info
-CreateClientConVar( "as_hud_playerinfo", "1", true, false )
+-- Target Info
+CreateClientConVar( "as_hud_targetinfo", "1", true, false )
+CreateClientConVar( "as_hud_targetinfo_amount", "0", true, false )
+CreateClientConVar( "as_hud_targetinfo_xadd", "0", true, false )
+CreateClientConVar( "as_hud_targetinfo_yadd", "0", true, false )
+CreateClientConVar( "as_hud_targetinfo_width", "150", true, false )
+CreateClientConVar( "as_hud_targetinfo_height", "20", true, false )
 -- Ownership Info
 CreateClientConVar( "as_hud_ownership", "1", true, false )
 
@@ -145,34 +150,25 @@ function AftershockHUD()
         draw.SimpleTextOutlined("Chemicals: " .. chem, "TargetIDSmall", x, y, COLHUD_DEFAULT, TEXT_ALIGN_RIGHT, TEXT_ALIGN_BOTTOM, outline, Color(0,0,0))
     end
 
-    local playerinfo = tobool(GetConVar("as_hud_playerinfo"):GetInt())
-    if playerinfo then
-        for k, v in pairs( player.GetAll() ) do
-            if v == LocalPlayer() then continue end --Don't show us to ourself.
-            if v:GetPos():Distance(LocalPlayer():GetPos()) > 250 then continue end --Hide people's labels who are far away.
-            if not v:IsLoaded() then continue end --Don't show us info of players who are just spawning.
-            if not v:Alive() or not IsValid(v) then continue end
-            local trace = util.TraceLine( {
-                start = LocalPlayer():EyePos(),
-                endpos = (v:GetPos() + v:OBBCenter()),
-                filter = LocalPlayer(),
-                mask = MASK_SOLID,
-            } )
-            if trace.Entity != v then continue end --Don't show info if we cannot trace the player.
-
-            local pos = (v:GetPos() + v:OBBCenter() + Vector(0, 0, 50)):ToScreen()
-            local barx, bary, width, height, outline = pos.x, pos.y, 150, 50, 1
-            surface.SetDrawColor(COLHUD_DEFAULT)
-            surface.DrawOutlinedRect(barx - (width / 2), bary - (height / 2), width, height, outline) --Info Outline
-            local coltbl = COLHUD_DEFAULT:ToTable()
-            surface.SetDrawColor( coltbl[1], coltbl[2], coltbl[3], 50 )
-            surface.DrawRect((barx - (width / 2)) + outline, (bary - (height / 2)) + outline, width - outline, height - outline) --Info
-            local charname, charhealth = v:GetNW2String( "as_name", "unknown" ), v:Health()
-            draw.SimpleTextOutlined( charname, "AftershockHUD", barx, bary, COLHUD_DEFAULT, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM, outline, Color(0,0,0) )
-            surface.SetDrawColor( coltbl[1], coltbl[2], coltbl[3], 255 )
-            local hpbarx, hpbary, hpbarwidth, hpbarheight = barx - (width / 2), bary + (height / 2), width - 10, 15
-            surface.DrawOutlinedRect(hpbarx + 5, hpbary - (hpbarheight + 5), hpbarwidth, hpbarheight, 1)
-            surface.DrawRect(hpbarx + 6, hpbary - (hpbarheight + 4), (v:Health() / v:GetMaxHealth()) * hpbarwidth - 2, 14)
+    local targetinfo = tobool(GetConVar("as_hud_targetinfo"):GetInt())
+    local target = LocalPlayer():GetActiveTarget()
+    if targetinfo and target and IsValid(target) and target:Alive() then
+        local col = COLHUD_DEFAULT:ToTable()
+        local alpha = 255
+        local newcol = Color( col[1], col[2], col[3], alpha )
+        surface.SetDrawColor( newcol )
+        local xadd, yadd = GetConVar("as_hud_targetinfo_xadd"):GetInt(), GetConVar("as_hud_targetinfo_yadd"):GetInt()
+        local x, y, width, height, outline = ((ScrW() * 0.5) + xadd), ((ScrH() * 0.88) + yadd), (GetConVar("as_hud_targetinfo_width"):GetInt()), (GetConVar("as_hud_targetinfo_height"):GetInt()), (1)
+        local health, maxhealth = (math.Clamp(target:Health(), 0, target:GetMaxHealth())), (target:GetMaxHealth())
+        local name = target:IsPlayer() and target:Nickname() or target.PrintName
+        draw.SimpleTextOutlined(name, "AftershockHUD", x, y - 5, newcol, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM, outline, Color(0,0,0))
+        x = x - (width / 2)
+        surface.DrawOutlinedRect( x, y, width, height, outline )
+        surface.DrawRect( x + 2, y + 2, ((health / maxhealth) * width) - 4, height - 4 )
+        if tobool(GetConVar("as_hud_targetinfo_amount"):GetInt()) then
+            x = x + (width / 2)
+            y = y + height
+            draw.SimpleTextOutlined( health .. " / " .. maxhealth, "TargetID", x, y, newcol, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, outline, Color(0,0,0) )
         end
     end
 
