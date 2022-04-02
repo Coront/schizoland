@@ -2,7 +2,7 @@ SWEP.PrintName = "MP7"
 SWEP.Category = "Aftershock"
 SWEP.Spawnable = true
 SWEP.Base = "as_basewep"
-SWEP.Slot = 4
+SWEP.Slot = 2
 
 SWEP.HoldType = "smg"
 SWEP.ViewModelFOV = 55

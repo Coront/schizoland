@@ -44,8 +44,8 @@ function GM:PlayerSpawn( ply )
     ply:SetHealth(health)
     ply:SetMaxHealth(health)
     ply:SetupHands()
-    for k, v in pairs( SET.DefaultWeapons ) do
-        ply:Give( k )
+    for k, v in SortedPairs( SET.DefaultWeapons ) do
+        ply:Give( v )
     end
 end
 

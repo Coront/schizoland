@@ -18,6 +18,11 @@ AS.AddBaseItem("wep_knife", {
         ["misc_smallparts"] = 10,
         ["misc_chemical"] = 5,
     },
+    salvage = {
+        ["misc_scrap"] = 5,
+        ["misc_smallparts"] = 3,
+        ["misc_chemical"] = 2,
+    },
 })
 
 AS.AddBaseItem("wep_crowbar", {
@@ -33,6 +38,11 @@ AS.AddBaseItem("wep_crowbar", {
         ["misc_scrap"] = 25,
         ["misc_smallparts"] = 15,
         ["misc_chemical"] = 15,
+    },
+    salvage = {
+        ["misc_scrap"] = 8,
+        ["misc_smallparts"] = 5,
+        ["misc_chemical"] = 5,
     },
 })
 
@@ -57,6 +67,11 @@ AS.AddBaseItem("wep_peashooter", {
         ["misc_smallparts"] = 45,
         ["misc_chemical"] = 30,
     },
+    salvage = {
+        ["misc_scrap"] = 12,
+        ["misc_smallparts"] = 15,
+        ["misc_chemical"] = 10,
+    },
 })
 
 AS.AddBaseItem("wep_p228", {
@@ -73,13 +88,19 @@ AS.AddBaseItem("wep_p228", {
         ["misc_smallparts"] = 60,
         ["misc_chemical"] = 30,
     },
+    salvage = {
+        ["misc_scrap"] = 15,
+        ["misc_smallparts"] = 20,
+        ["misc_chemical"] = 10,
+    },
 })
 
 AS.AddBaseItem("wep_magnum", {
-    name = ".357 Magnum",
+    name = "Magnum",
     desc = "A large magnum that holds 6 rounds and shoots at a slow rate. Deals above average damage. Uses pistol ammo.",
     category = "weapon",
     model = "models/weapons/w_357.mdl",
+    wep = "weapon_revolver",
     value = 100,
     weight = 1.8,
     hidden = true,
@@ -88,6 +109,11 @@ AS.AddBaseItem("wep_magnum", {
         ["misc_scrap"] = 120,
         ["misc_smallparts"] = 150,
         ["misc_chemical"] = 60,
+    },
+    salvage = {
+        ["misc_scrap"] = 40,
+        ["misc_smallparts"] = 50,
+        ["misc_chemical"] = 20,
     },
 })
 
@@ -105,6 +131,11 @@ AS.AddBaseItem("wep_deagle", {
         ["misc_scrap"] = 150,
         ["misc_smallparts"] = 180,
         ["misc_chemical"] = 100,
+    },
+    salvage = {
+        ["misc_scrap"] = 50,
+        ["misc_smallparts"] = 60,
+        ["misc_chemical"] = 33,
     },
 })
 
@@ -130,6 +161,11 @@ AS.AddBaseItem("wep_mp7", {
         ["misc_smallparts"] = 130,
         ["misc_chemical"] = 125,
     },
+    salvage = {
+        ["misc_scrap"] = 30,
+        ["misc_smallparts"] = 43,
+        ["misc_chemical"] = 42,
+    },
 })
 
 AS.AddBaseItem("wep_mp5", {
@@ -147,6 +183,11 @@ AS.AddBaseItem("wep_mp5", {
         ["misc_smallparts"] = 130,
         ["misc_chemical"] = 125,
     },
+    salvage = {
+        ["misc_scrap"] = 40,
+        ["misc_smallparts"] = 43,
+        ["misc_chemical"] = 42,
+    },
 })
 
 AS.AddBaseItem("wep_mac", {
@@ -163,6 +204,11 @@ AS.AddBaseItem("wep_mac", {
         ["misc_scrap"] = 120,
         ["misc_smallparts"] = 210,
         ["misc_chemical"] = 130,
+    },
+    salvage = {
+        ["misc_scrap"] = 40,
+        ["misc_smallparts"] = 70,
+        ["misc_chemical"] = 43,
     },
 })
 
@@ -188,6 +234,11 @@ AS.AddBaseItem("wep_m4a1", {
         ["misc_smallparts"] = 210,
         ["misc_chemical"] = 150,
     },
+    salvage = {
+        ["misc_scrap"] = 53,
+        ["misc_smallparts"] = 70,
+        ["misc_chemical"] = 50,
+    },
 })
 
 AS.AddBaseItem("wep_ak47", {
@@ -204,6 +255,11 @@ AS.AddBaseItem("wep_ak47", {
         ["misc_smallparts"] = 190,
         ["misc_chemical"] = 140,
     },
+    salvage = {
+        ["misc_scrap"] = 60,
+        ["misc_smallparts"] = 63,
+        ["misc_chemical"] = 47,
+    },
 })
 AS.AddBaseItem("wep_sg552", {
     name = "SG-552",
@@ -219,6 +275,11 @@ AS.AddBaseItem("wep_sg552", {
         ["misc_scrap"] = 210,
         ["misc_smallparts"] = 250,
         ["misc_chemical"] = 150,
+    },
+    salvage = {
+        ["misc_scrap"] = 70,
+        ["misc_smallparts"] = 83,
+        ["misc_chemical"] = 50,
     },
 })
 
@@ -237,6 +298,11 @@ AS.AddBaseItem("wep_aug", {
         ["misc_smallparts"] = 260,
         ["misc_chemical"] = 170,
     },
+    salvage = {
+        ["misc_scrap"] = 67,
+        ["misc_smallparts"] = 87,
+        ["misc_chemical"] = 57,
+    },
 })
 
 AS.AddBaseItem("wep_pulserifle", {
@@ -254,6 +320,11 @@ AS.AddBaseItem("wep_pulserifle", {
         ["misc_smallparts"] = 200,
         ["misc_chemical"] = 280,
         ["misc_pulsepod"] = 1,
+    },
+    salvage = {
+        ["misc_scrap"] = 100,
+        ["misc_smallparts"] = 67,
+        ["misc_chemical"] = 93,
     },
 })
 
@@ -279,6 +350,11 @@ AS.AddBaseItem("wep_m3super", {
         ["misc_smallparts"] = 180,
         ["misc_chemical"] = 280,
     },
+    salvage = {
+        ["misc_scrap"] = 77,
+        ["misc_smallparts"] = 60,
+        ["misc_chemical"] = 93,
+    },
 })
 
 AS.AddBaseItem("wep_xm1014", {
@@ -296,6 +372,11 @@ AS.AddBaseItem("wep_xm1014", {
         ["misc_smallparts"] = 200,
         ["misc_chemical"] = 300,
     },
+    salvage = {
+        ["misc_scrap"] = 83,
+        ["misc_smallparts"] = 67,
+        ["misc_chemical"] = 100,
+    },
 })
 
 AS.AddBaseItem("wep_spas", {
@@ -307,6 +388,11 @@ AS.AddBaseItem("wep_spas", {
     wep = "weapon_spas",
     value = 150,
     weight = 2.8,
+    salvage = {
+        ["misc_scrap"] = 90,
+        ["misc_smallparts"] = 100,
+        ["misc_chemical"] = 120,
+    },
 })
 
 -- ██╗     ███╗   ███╗ ██████╗ ███████╗
@@ -330,6 +416,11 @@ AS.AddBaseItem("wep_m249", {
         ["misc_scrap"] = 350,
         ["misc_smallparts"] = 300,
         ["misc_chemical"] = 285,
+    },
+    salvage = {
+        ["misc_scrap"] = 117,
+        ["misc_smallparts"] = 100,
+        ["misc_chemical"] = 95,
     },
 })
 
@@ -355,6 +446,11 @@ AS.AddBaseItem("wep_scout", {
         ["misc_smallparts"] = 240,
         ["misc_chemical"] = 175,
     },
+    salvage = {
+        ["misc_scrap"] = 73,
+        ["misc_smallparts"] = 80,
+        ["misc_chemical"] = 58,
+    },
 })
 
 AS.AddBaseItem("wep_g3sg1", {
@@ -371,6 +467,11 @@ AS.AddBaseItem("wep_g3sg1", {
         ["misc_scrap"] = 250,
         ["misc_smallparts"] = 275,
         ["misc_chemical"] = 200,
+    },
+    salvage = {
+        ["misc_scrap"] = 83,
+        ["misc_smallparts"] = 92,
+        ["misc_chemical"] = 67,
     },
 })
 
@@ -389,6 +490,11 @@ AS.AddBaseItem("wep_sg550", {
         ["misc_smallparts"] = 245,
         ["misc_chemical"] = 210,
     },
+    salvage = {
+        ["misc_scrap"] = 93,
+        ["misc_smallparts"] = 82,
+        ["misc_chemical"] = 70,
+    },
 })
 
 AS.AddBaseItem("wep_awp", {
@@ -400,6 +506,11 @@ AS.AddBaseItem("wep_awp", {
     wep = "weapon_awp",
     value = 500,
     weight = 3.9,
+    salvage = {
+        ["misc_scrap"] = 200,
+        ["misc_smallparts"] = 250,
+        ["misc_chemical"] = 225,
+    },
 })
 
 -- ███╗   ███╗██╗███████╗ ██████╗
@@ -414,8 +525,16 @@ AS.AddBaseItem("wep_grenade", {
     desc = "A high-explosive grenade that has a fuse of around 3 seconds after being thrown.",
     category = "weapon",
     model = "models/weapons/w_grenade.mdl",
+    wep = "weapon_grenade",
     value = 15,
-    weight = 1
+    weight = 1,
+    class = "scientist",
+    craft = {
+        ["misc_scrap"] = 50,
+        ["misc_smallparts"] = 30,
+        ["misc_chemical"] = 40,
+        ["misc_gunpowder"] = 1,
+    },
 })
 
 AS.AddBaseItem("wep_breach", {
@@ -424,5 +543,12 @@ AS.AddBaseItem("wep_breach", {
     category = "weapon",
     model = "models/weapons/w_slam.mdl",
     value = 15,
-    weight = 1
+    weight = 1,
+    class = "engineer",
+    craft = {
+        ["misc_scrap"] = 85,
+        ["misc_smallparts"] = 50,
+        ["misc_chemical"] = 60,
+        ["misc_gunpowder"] = 2,
+    },
 })

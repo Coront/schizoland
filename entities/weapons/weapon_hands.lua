@@ -10,6 +10,7 @@ SWEP.ViewModel = "models/weapons/c_arms_citizen.mdl"
 SWEP.WorldModel = ""
 SWEP.DefaultCrosshair = true
 SWEP.NoAmmo = true
+SWEP.Slot = 1
 
 SWEP.Anim = {}
 Anim = SWEP.Anim

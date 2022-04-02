@@ -38,9 +38,9 @@ SET.SelectableModels = {
     ["models/player/group01/female_06.mdl"] = true,
 }
 SET.DefaultWeapons = {
-    ["weapon_physgun"] = true,
-    ["gmod_tool"] = true,
-    ["weapon_hands"] = true,
+    [1] = "weapon_hands",
+    [2] = "weapon_physgun",
+    [3] = "gmod_tool",
 }
 --Permission Settings
 SET.PERM = {}

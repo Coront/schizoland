@@ -106,6 +106,7 @@ AS.AddBaseItem("food_dirty_water", {
     desc = "An old bottle that contains unsanitary water.",
     category = "food",
     model = "models/props_junk/garbage_plasticbottle003a.mdl",
+    color = Color( 135, 80, 0 ),
     value = 3,
     weight = 1,
     use = {
@@ -127,6 +128,7 @@ AS.AddBaseItem("food_clean_water", {
     desc = "An old bottle that contains sanitized water.",
     category = "food",
     model = "models/props_junk/garbage_plasticbottle003a.mdl",
+    color = Color( 0, 75, 135),
     value = 5,
     weight = 1,
     use = {

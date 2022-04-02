@@ -3,6 +3,8 @@ SWEP.Category = "Aftershock"
 SWEP.Spawnable = false
 SWEP.UseHands = true
 SWEP.DrawCrosshair = false
+SWEP.BounceWeaponIcon = false
+SWEP.DrawWeaponInfoBox = false
 
 CreateClientConVar( "aswep_debug_reloading", "0", true, false ) --(Admin) Debug Reloading
 CreateClientConVar( "aswep_scope_sensitivity", "50", true, false ) --Sensitivity multiplier for scopes
