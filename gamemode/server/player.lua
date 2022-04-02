@@ -52,6 +52,11 @@ end
 function GM:PlayerDisconnected( ply )
     if not ply:IsLoaded() and not ply.pid then return end
 
+    local tools = ply:GetAllTools()
+    for k, v in pairs( tools ) do
+        v:Remove()
+    end
+
     ply:SaveCharacter()
 end
 
@@ -107,7 +112,7 @@ function GM:PostPlayerDeath( ply )
         ent:SetNW2String("owner", ply:Nickname())
     end
 
-    ply:SetHealth( 100 ) --This is just so it doesnt save 0 to the player's health in the database.
+    ply:SetHealth( 15 ) --This is just so it doesnt save 0 to the player's health in the database.
     ply:SaveCharacter()
 end
 

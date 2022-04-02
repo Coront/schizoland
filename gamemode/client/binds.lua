@@ -4,6 +4,7 @@ CreateClientConVar( "as_bind_missions", "m", true, false )
 CreateClientConVar( "as_bind_stats", "t", true, false )
 CreateClientConVar( "as_bind_class", "F3", true, false )
 CreateClientConVar( "as_bind_craft", "F4", true, false )
+CreateClientConVar( "as_bind_ownership", "F11", true, false )
 
 function GetConVarString( convar )
     return GetConVar(convar):GetString()
@@ -35,6 +36,11 @@ hook.Add( "PlayerButtonDown", "AS_Binds", function( ply, button )
             AS.Class.Open()
         elseif button == GetConVarString("as_bind_craft") then
             AS.Craft.Open()
+        elseif button == GetConVarString("as_bind_ownership") then
+            local tr = ply:TraceFromEyes( 150 )
+            if tr.Entity and IsValid(tr.Entity) and tr.Entity:IsObjectOwnable() then
+                ply:BecomeObjectOwner( tr.Entity )
+            end
         end
     end
 end )

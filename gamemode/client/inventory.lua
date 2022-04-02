@@ -187,6 +187,13 @@ function AS.Inventory.BuildInventory()
                     net.Start("as_inventory_equipitem")
                         net.WriteString( k )
                     net.SendToServer()
+                elseif AS.Items[k].category == "tool" then
+                    LocalPlayer():TakeItemFromInventory( k, 1 )
+                    itemamtUpdate()
+                    net.Start("as_inventory_dropitem")
+                        net.WriteString( k )
+                        net.WriteInt( 1, 32 )
+                    net.SendToServer()
                 end
             end
             panel.DoRightClick = function()
@@ -222,19 +229,25 @@ function AS.Inventory.BuildInventory()
                         net.WriteInt( amt, 32 )
                     net.SendToServer()
                 end
-                if v > 1 then
-                    options:AddOption("Drop 1", function()
+                if AS.Items[k].category != "tool" then
+                    if v > 1 then
+                        options:AddOption("Drop 1", function()
+                            dropItem( k, 1 )
+                        end)
+                        options:AddOption("Drop X", function()
+                            VerifySlider( LocalPlayer():GetInventory()[k], function( amt )
+                                dropItem( k, amt )
+                            end )
+                        end)
+                    end
+                    options:AddOption("Drop All", function()
+                        dropItem( k, v )
+                    end)
+                else
+                    options:AddOption("Deploy", function()
                         dropItem( k, 1 )
                     end)
-                    options:AddOption("Drop X", function()
-                        VerifySlider( LocalPlayer():GetInventory()[k], function( amt )
-                            dropItem( k, amt )
-                        end )
-                    end)
                 end
-                options:AddOption("Drop All", function()
-                    dropItem( k, v )
-                end)
                 --Destroy
                 if AS.Items[k].salvage then
                     local function destroyItem( item, amt )
@@ -436,7 +449,7 @@ function AS.Inventory.BuildInventory()
         model:SetTooltip(AS.Items[itemid].name)
 
         local ammoamt = vgui.Create("DLabel", ammoinfopanel)
-        ammoamt:SetPos( 0, 75 )
+        ammoamt:SetPos( 1, 75 )
         ammoamt:SetFont("TargetIDSmall")
         ammoamt:SetText( "x" .. v )
         ammoamt:SizeToContents()
@@ -449,6 +462,7 @@ function AS.Inventory.BuildInventory()
             unequipammo:SetText("Unequip")
             function unequipammo:DoClick()
                 VerifySlider( amttopackage, function( amt )
+                    if not LocalPlayer():CanUnequipAmmo( itemid, amt ) then return end
                     LocalPlayer():AddItemToInventory( itemid, amt )
                     self:GetParent():Remove()
                     net.Start("as_inventory_unequipammo")

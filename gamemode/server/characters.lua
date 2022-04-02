@@ -24,7 +24,8 @@ function PlayerMeta:CreateCharacter( name, model, class )
     sql.Query( "INSERT INTO as_characters_inventory VALUES ( " .. newpid .. ", NULL, NULL, NULL )" )
     sql.Query( "INSERT INTO as_characters_skills VALUES ( " .. newpid .. ", NULL )" )
     local health = class == "scavenger" and SKL.Health * CLS.Scavenger.healthmult or class == "mercenary" and SKL.Health * CLS.Mercenary.healthmult or SKL.Health
-    sql.Query( "INSERT INTO as_characters_stats VALUES ( " .. newpid .. ", " .. SKL.Health .. ", 100, 100, 0 )" )
+    sql.Query( "INSERT INTO as_characters_stats VALUES ( " .. newpid .. ", " .. health .. ", 100, 100, 0 )" )
+    sql.Query( "INSERT INTO as_cache_tools VALUES ( " .. newpid .. ", NULL )" )
 
     self:ConCommand("as_characters")
 end

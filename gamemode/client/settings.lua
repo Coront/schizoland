@@ -296,4 +296,7 @@ function AS.Settings.BuildOptions()
 
     KeyBind( "Crafting", xpos, ypos, settings_scroll, "as_bind_craft" )
     addSpace( 0, 20 )
+
+    KeyBind( "Own/Unown Objects", xpos, ypos, settings_scroll, "as_bind_ownership" )
+    addSpace( 0, 20 )
 end

@@ -87,6 +87,8 @@ function PlayerMeta:UnequipItem( item )
 end
 
 function PlayerMeta:UnequipAmmo( item, amt )
+    if not self:CanUnequipAmmo( item, amt ) then return end
+
     self:AddItemToInventory( item, amt )
     self:RemoveAmmo( (AS.Items[item].use.ammoamt) * amt, translateAmmoNameID( item ) )
     self:ChatPrint("Unequipped " .. AS.Items[item].name .. " (" .. amt .. ").")
@@ -94,16 +96,30 @@ end
 
 function PlayerMeta:DropItem( item, amt )
     local itemname = AS.Items[item].name
-    self:TakeItemFromInventory( item, amt )
-    local ent = ents.Create("as_baseitem")
-    ent:SetItem( item )
-    ent:SetAmount( amt )
+    
+    local ent
+    if AS.Items[item].category == "tool" then
+        self:TakeItemFromInventory( item, 1 )
+        local class = AS.Items[item].ent or "prop_physics"
+        ent = ents.Create(class)
+        if ent:GetClass() == "prop_physics" then
+            ent:SetModel( AS.Items[item].model )
+        end
+        ent:SetObjectOwner( self )
+        self:AddToolToCache( item )
+    else
+        self:TakeItemFromInventory( item, amt )
+        ent = ents.Create("as_baseitem")
+        ent:SetItem( item )
+        ent:SetAmount( amt )
+    end
     ent:SetSkin( AS.Items[item].skin or 0 )
     ent:SetPos( self:TracePosFromEyes(200) + Vector( 0, 0, 20 ) )
     ent:Spawn()
     ent:PhysWake()
-    self:ChatPrint("Dropped " .. itemname .. " (" .. amt .. ")")
     ent:EmitSound(ITEMCUE.DROP)
+
+    self:ChatPrint("Dropped " .. itemname .. " (" .. amt .. ")")
 end
 
 function PlayerMeta:DestroyItem( item, amt )
@@ -192,6 +208,7 @@ net.Receive("as_inventory_dropitem", function( _, ply )
     local amt = net.ReadInt( 32 )
 
     --Since we are dropping an item, we need to verify that the item exists, that the player has it, and that they are dropping a valid amount of it.
+    if CurTime() < (ply.NextItemDrop or 0) then ply:ChatPrint("Please wait " .. math.Round(ply.NextItemDrop - CurTime(), 2) .. " seconds before dropping another item." ) return end
     if not AS.Items[item] then ply:ChatPrint("This isnt a valid item.") ply:ResyncInventory() return end --Person might try an invalid item
     if not ply:HasInInventory( item ) then ply:ChatPrint("You don't have this item.") ply:ResyncInventory() return end --Person might try running without actually having item
     if amt < 1 then amt = 1 end --Person might try negative numbers
@@ -200,6 +217,7 @@ net.Receive("as_inventory_dropitem", function( _, ply )
     amt = math.Round(amt) --Person might try decimals
 
     --We're verified, so we'll run the actual function.
+    ply.NextItemDrop = CurTime() + 0.1
     ply:DropItem( item, amt )
 end)
 

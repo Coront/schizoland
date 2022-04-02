@@ -17,6 +17,7 @@ if SERVER then
         local stats = sql.Query("SELECT * FROM as_characters_stats WHERE pid = " .. self.pid)[1]
         local skills = util.JSONToTable(sql.QueryValue("SELECT skills FROM as_characters_skills WHERE pid = " .. self.pid)) or {}
         local inv = util.JSONToTable(sql.QueryValue("SELECT inv FROM as_characters_inventory WHERE pid = " .. self.pid)) or {}
+        local toolcache = util.JSONToTable(sql.QueryValue("SELECT tools FROM as_cache_tools WHERE pid = " .. self.pid)) or {}
         local bank = util.JSONToTable(sql.QueryValue("SELECT bank FROM as_characters_inventory WHERE pid = " .. self.pid)) or {}
         local equipment = util.JSONToTable(sql.QueryValue("SELECT equipped FROM as_characters_inventory WHERE pid = " .. self.pid)) or {}
         self:Spawn()
@@ -39,6 +40,11 @@ if SERVER then
         self:SetSkills(skills)
         self:SetInventory(inv)
         self:SetBank(bank)
+        for k, v in pairs(toolcache) do --Player apparently had deployed tools when they disconnected. We'll give them back.
+            self:AddItemToInventory( k, v )
+        end
+        self:SetToolCache({}) --This will erase the cache
+        self:SaveToolCache() --Then save it to the database
         if equipment and equipment.weps then
             for k, v in pairs(equipment.weps) do
                 self:Give( v )

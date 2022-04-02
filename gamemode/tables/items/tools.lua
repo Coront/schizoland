@@ -10,6 +10,7 @@ AS.AddBaseItem("tool_armor", {
     desc = "A station that allows mercenaries to craft armors.",
     category = "tool",
     model = "models/props_wasteland/controlroom_desk001b.mdl",
+    ent = "as_workbench_armor",
     value = 250,
     weight = 5,
     class = "mercenary",
@@ -30,6 +31,7 @@ AS.AddBaseItem("tool_stove", {
     desc = "A handcrafted stove that will allow cultivators to cook food.",
     category = "tool",
     model = "models/props_c17/furnitureStove001a.mdl",
+    ent = "as_workbench_stove",
     value = 250,
     weight = 5,
     class = "cultivator",
@@ -50,6 +52,7 @@ AS.AddBaseItem("tool_workbench", {
     desc = "A handcrafted workbench that will allow engineers to craft firearms and better ammunition.",
     category = "tool",
     model = "models/props_canal/winch02.mdl",
+    ent = "as_workbench_weapon",
     value = 250,
     weight = 5,
     class = "engineer",
@@ -71,6 +74,7 @@ AS.AddBaseItem("tool_pulse", {
     desc = "A station that allows scientists to assemble pulse weaponry.",
     category = "tool",
     model = "models/props_combine/combine_interface002.mdl",
+    ent = "as_workbench_pulse",
     value = 300,
     weight = 5,
     class = "scientist",
@@ -134,6 +138,13 @@ AS.AddBaseItem("tool_plant_melon", {
         ["misc_chemical"] = 217,
     },
 })
+
+-- ██████╗ ██████╗  ██████╗ ██████╗ ██╗   ██╗ ██████╗████████╗██╗ ██████╗ ███╗   ██╗
+-- ██╔══██╗██╔══██╗██╔═══██╗██╔══██╗██║   ██║██╔════╝╚══██╔══╝██║██╔═══██╗████╗  ██║
+-- ██████╔╝██████╔╝██║   ██║██║  ██║██║   ██║██║        ██║   ██║██║   ██║██╔██╗ ██║
+-- ██╔═══╝ ██╔══██╗██║   ██║██║  ██║██║   ██║██║        ██║   ██║██║   ██║██║╚██╗██║
+-- ██║     ██║  ██║╚██████╔╝██████╔╝╚██████╔╝╚██████╗   ██║   ██║╚██████╔╝██║ ╚████║
+-- ╚═╝     ╚═╝  ╚═╝ ╚═════╝ ╚═════╝  ╚═════╝  ╚═════╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝
 
 AS.AddBaseItem("tool_grub", {
     name = "Antlion Grub",

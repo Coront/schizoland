@@ -77,6 +77,11 @@ function PlayerMeta:CanUnequipItem( item )
     return true
 end
 
+function PlayerMeta:CanUnequipAmmo( item, amt )
+    if not self:CanCarryItem( item, amt ) then return false end
+    return true
+end
+
 function translateAmmoNameID( ammo ) --This function translates an itemid/ammoid to its opposite. I know it kinda sucks but whatever.
     if AS.Items[ammo] then --we were given a AS.itemid.
         return AS.Items[ammo].use.ammotype --we will convert the itemid to the ammoid and send it back.
@@ -90,6 +95,29 @@ function translateAmmoNameID( ammo ) --This function translates an itemid/ammoid
         end
     end
     return nil
+end
+
+function FetchToolIDByClass( class )
+    local item
+    for k, v in pairs( AS.Items ) do
+        if v.category != "tool" then continue end --Skip everything not a tool
+        if v.ent != class then continue end --Skip everything that doesn't have the entity tied
+        item = k
+        break
+    end
+
+    return item
+end
+
+function PlayerMeta:GetAllTools() --Will return a table of a player's deployed tools
+    local tbl = {}
+    for k, v in pairs( ents.GetAll() ) do
+        if not v.AS_OwnableObject then continue end --Ignore everything that's not an ownable object
+        if not IsValid(v:GetObjectOwner()) then continue end
+        if v:GetObjectOwner() != self then continue end
+        tbl[k] = v
+    end
+    return tbl
 end
 
 -- ███╗   ██╗███████╗████████╗██╗    ██╗ ██████╗ ██████╗ ██╗  ██╗██╗███╗   ██╗ ██████╗

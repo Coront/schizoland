@@ -56,6 +56,8 @@ local function DatabaseCheck()
 	sql.Query("CREATE TABLE IF NOT EXISTS as_characters_stats (pid INTEGER, health INTEGER, hunger INTEGER, thirst INTEGER, playtime INTEGER)")
 	sql.Query("CREATE TABLE IF NOT EXISTS as_characters_skills (pid INTEGER, skills TEXT)")
 	sql.Query("CREATE TABLE IF NOT EXISTS as_characters_inventory (pid INTEGER, inv TEXT, bank TEXT, equipped TEXT)")
+	--Item Deployment Cache
+	sql.Query("CREATE TABLE IF NOT EXISTS as_cache_tools (pid INTEGER, tools TEXT)")
 	--Mob Spawner
 	sql.Query("CREATE TABLE IF NOT EXISTS as_grids (map TEXT, data TEXT)")
 	--Other

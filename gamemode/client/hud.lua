@@ -40,6 +40,8 @@ CreateClientConVar( "as_hud_resources_xadd", "0", true, false ) --X position add
 CreateClientConVar( "as_hud_resources_yadd", "0", true, false ) --Y position add
 -- Player Info
 CreateClientConVar( "as_hud_playerinfo", "1", true, false )
+-- Ownership Info
+CreateClientConVar( "as_hud_ownership", "1", true, false )
 
 -- Connection Information
 CreateClientConVar( "as_connectioninfo", "1", true, false ) --Show connection information?
@@ -171,6 +173,18 @@ function AftershockHUD()
             local hpbarx, hpbary, hpbarwidth, hpbarheight = barx - (width / 2), bary + (height / 2), width - 10, 15
             surface.DrawOutlinedRect(hpbarx + 5, hpbary - (hpbarheight + 5), hpbarwidth, hpbarheight, 1)
             surface.DrawRect(hpbarx + 6, hpbary - (hpbarheight + 4), (v:Health() / v:GetMaxHealth()) * hpbarwidth - 2, 14)
+        end
+    end
+
+    local ownership = tobool(GetConVar("as_hud_ownership"):GetInt())
+    if ownership then
+        local trace = LocalPlayer():TraceFromEyes( 150 )
+
+        if trace.Entity and IsValid(trace.Entity) and trace.Entity:IsObjectOwnable() then
+            local xpos, ypos = (ScrW() * 0.5), (15)
+            local key = string.upper(GetConVarString("as_bind_ownership"))
+            local txt = IsValid(trace.Entity:GetObjectOwner()) and "Owner: " .. trace.Entity:GetObjectOwner():Nickname() or "Press [" .. key .. "] to own"
+            draw.SimpleTextOutlined( txt, "AftershockHUD", xpos, ypos, COLHUD_DEFAULT, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 1, Color(0,0,0) )
         end
     end
 
