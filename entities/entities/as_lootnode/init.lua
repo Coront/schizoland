@@ -5,6 +5,14 @@ include( "shared.lua" )
 util.AddNetworkString("as_lootnode_syncnewitem")
 util.AddNetworkString("as_lootnode_syncskillinc")
 
+function ENT:SetIndoor( bool )
+    self.Indoor = bool
+end
+
+function ENT:GetIndoor()
+    return self.Indoor or false
+end
+
 function ENT:SetResourceType( node )
     self.ResourceType = node
 end
@@ -38,10 +46,14 @@ end
 function ENT:Initialize()
     local resourcetype = self:RandomizeNode()
     local model
-    if resourcetype == "Scrap" then
-        _, model = table.Random( NOD.ScrapNodeModels )
-    elseif resourcetype == "Chemical" then
-        _, model = table.Random( NOD.ChemicalNodeModels )
+    if not self:GetIndoor() then
+        if resourcetype == "Scrap" then
+            _, model = table.Random( NOD.ScrapNodeModels )
+        elseif resourcetype == "Chemical" then
+            _, model = table.Random( NOD.ChemicalNodeModels )
+        end
+    else
+        _, model = table.Random( NOD.ScrapNodeModelsIndoor )
     end
 	self:SetModel( model )
     self:SetSkin( math.random( 0, self:SkinCount() ) )

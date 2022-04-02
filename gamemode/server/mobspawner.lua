@@ -202,7 +202,7 @@ concommand.Add( "as_events_clear", AS.GridEnts.ClearEvents )
 -- ╚══════╝╚═╝     ╚═╝  ╚═╝ ╚══╝╚══╝ ╚═╝  ╚═══╝╚═╝╚═╝  ╚═══╝ ╚═════╝
 -- Automatic Spawning.
 
-function AS.Grid.FetchValidSpawners()
+function AS.Grid.FetchValidSpawners() --Every spawner that is valid
     local ValidSpawners = {}
     for _, info in pairs( ActiveGrid ) do
         local ValidSpawn = true
@@ -223,19 +223,45 @@ function AS.Grid.FetchValidSpawners()
     return ValidSpawners
 end
 
+function AS.Grid.FetchValidOutdoorSpawners( tbl ) --Every outdoor spawner that is valid from a provided table
+    local ValidSpawners = tbl
+    local NewValidSpawners = {}
+
+    for _, info in pairs( ValidSpawners ) do
+        if info.indoor then continue end
+        NewValidSpawners[#NewValidSpawners + 1] = info
+    end
+
+    return NewValidSpawners
+end
+
+function AS.Grid.FetchValidIndoorSpawners( tbl ) --Every indoor spawner that is valid from a provided table
+    local ValidSpawners = tbl
+    local NewValidSpawners = {}
+
+    for _, info in pairs( ValidSpawners ) do
+        if not info.indoor then continue end
+        NewValidSpawners[#NewValidSpawners + 1] = info
+    end
+
+    return NewValidSpawners
+end
+
 function AS.Grid.SpawnMobs()
     --We need to find a valid spawn for NPCs first. We'll go through all of the spawns and see what's available.
     local ValidSpawners = AS.Grid.FetchValidSpawners()
     if #ValidSpawners <= 0 then return end --No valid spawners. Although extremely rare, still a precaution to have.
 
     --Now, since we have a table containing valid spawn points, we need to spawn NPCs on them.
-    for mob, amt in pairs( MOB.NPCs ) do
-        local maxMobs = math.floor( (amt * MOB.SpawnMult) * (AS.Maps[game.GetMap()] and AS.Maps[game.GetMap()].MobMult or 1) )
+    for mob, info in pairs( MOB.NPCs ) do
+        ValidSpawners = info.indoor and info.outdoor and ValidSpawners or info.indoor and AS.Grid.FetchValidIndoorSpawners( ValidSpawners ) or info.outdoor and AS.Grid.FetchValidOutdoorSpawners( ValidSpawners )
+    
+        local maxMobs = math.floor( (info.amt * MOB.SpawnMult) * (AS.Maps[game.GetMap()] and AS.Maps[game.GetMap()].MobMult or 1) )
         if #ents.FindByClass(mob) >= maxMobs then continue end --We've already capped this NPC, skip to the next one.
         local mobsToSpawn = maxMobs - #ents.FindByClass(mob) --How many NPCs we need to spawn.
 
         for i = 1, mobsToSpawn do
-            local spawnPoint = ValidSpawners[math.random(1, #ValidSpawners)] --This is just selecting a random spawner.
+            local spawnPoint = ValidSpawners[math.random(1, #ValidSpawners)]
             local spawnPointPos = spawnPoint["pos"]:ToTable()
             local position = Vector( spawnPointPos[1] + math.random( spawnPoint["distance"] * -1, spawnPoint["distance"] ), spawnPointPos[2] + math.random(spawnPoint["distance"] * -1 , spawnPoint["distance"] ), spawnPointPos[3] )
 
@@ -261,6 +287,7 @@ function AS.Grid.SpawnNodes()
     local nodesToSpawn = maxnodes - #ents.FindByClass("as_lootnode")
     for i = 1, nodesToSpawn do
         local spawnPoint = ValidSpawners[math.random(1, #ValidSpawners)] --Random spawner
+        local isIndoor = spawnPoint.indoor and true or false
         local spawnPointPos = spawnPoint["pos"]:ToTable()
         local position = Vector( spawnPointPos[1] + math.random( spawnPoint["distance"] * -1, spawnPoint["distance"] ), spawnPointPos[2] + math.random(spawnPoint["distance"] * -1 , spawnPoint["distance"] ), spawnPointPos[3] )
 
@@ -268,9 +295,12 @@ function AS.Grid.SpawnNodes()
             local ent = ents.Create("as_lootnode")
             ent:SetPos(position)
             ent:SetAngles( Angle(0, math.random( 0, 360 ), 0) )
+            ent:SetIndoor( isIndoor )
             ent:Spawn()
             if ent:GetResourceType() == "Scrap" or ent:GetModel() == "models/props/de_train/pallet_barrels.mdl" then
-                ent:DropToFloor()
+                if not ent:GetIndoor() then
+                    ent:DropToFloor()
+                end
                 local physobj = ent:GetPhysicsObject()
                 physobj:Wake()
                 timer.Simple( 5, function()

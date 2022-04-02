@@ -21,7 +21,7 @@ hook.Add( "HUDPaint", "AS_Node_Indicator", function()
         if LocalPlayer():IsEventActive() then continue end
         local trace = util.TraceLine({
             start = LocalPlayer():EyePos(),
-            endpos = v:GetPos() + v:OBBCenter(),
+            endpos = v:GetPos(),
             filter = {LocalPlayer()},
         })
         if trace.Entity != v then continue end
