@@ -163,22 +163,17 @@ NOD.ScrapNodeModelsIndoor = {
     ["models/props_lab/harddrive01.mdl"] = true,
     ["models/props_lab/partsbin01.mdl"] = true,
 }
-NOD.ChemicalNodeModels = { --There is multiple skins for some of these models, so it may seem lacking in diversity.
-    ["models/props_c17/oildrum001.mdl"] = true,
-    ["models/props/de_train/barrel.mdl"] = true,
-    ["models/props/de_train/pallet_barrels.mdl"] = true,
-}
 NOD.ScavItems = { --Table containing potential items that will spawn if a item is scavenged. Key is itemid, value is tickets.
+    ["food_beans"] = 500,
+    ["misc_gunpowder"] = 475,
     ["wep_p228"] = 50,
     ["ammo_pistol"] = 50,
-    ["food_beans"] = 50,
     ["food_dirty_water"] = 50,
     ["food_clean_water"] = 50,
     ["food_soda"] = 50,
     ["food_milk"] = 50,
     ["med_bag"] = 50,
     ["med_vial"] = 50,
-    ["misc_gunpowder"] = 50,
     ["misc_gunpowderten"] = 50,
     ["misc_servo"] = 50,
     ["misc_electronicparts"] = 50,
