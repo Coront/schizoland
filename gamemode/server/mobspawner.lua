@@ -493,7 +493,7 @@ hook.Add( "Think", "AS_EventCheck", function()
         if PendingEvents[k] then
             if CurTime() > PendingEvents[k] then
                 PendingEvents[k] = nil --Clears the pending event. The next think will make a new one for us.
-                if AS.Grid.GetEventAmount( k ) < AS.Events[id].max then
+                if AS.Grid.GetEventAmount( k ) < (AS.Events[k].max or 1) then
                     AS.Grid.SpawnEvent( k )
                 end
             end
