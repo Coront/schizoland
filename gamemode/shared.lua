@@ -148,8 +148,8 @@ function PlayerMeta:IsDeveloping() --Will return if a player is in developer mod
 end
 
 function EntityMeta:Alive()
-    if self:Health() <= 0 then return false end
-    return true
+    if IsValid( self ) and self:Health() > 0 then return true end
+    return false
 end
 
 if CLIENT then
