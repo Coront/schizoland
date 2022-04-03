@@ -1,6 +1,66 @@
 AS.Grid = {}
 AS.GridEnts = {}
+AS.Events = {}
 ActiveGrid = ActiveGrid or {} --The AS. table is reset every time the server is updated, so to prevent the active grid from being wiped I made this independent instead.
+PendingEvents = PendingEvents or {}
+ActiveEvents = ActiveEvents or {}
+
+-- ███████╗██╗   ██╗███████╗███╗   ██╗████████╗███████╗
+-- ██╔════╝██║   ██║██╔════╝████╗  ██║╚══██╔══╝██╔════╝
+-- █████╗  ██║   ██║█████╗  ██╔██╗ ██║   ██║   ███████╗
+-- ██╔══╝  ╚██╗ ██╔╝██╔══╝  ██║╚██╗██║   ██║   ╚════██║
+-- ███████╗ ╚████╔╝ ███████╗██║ ╚████║   ██║   ███████║
+-- ╚══════╝  ╚═══╝  ╚══════╝╚═╝  ╚═══╝   ╚═╝   ╚══════╝
+
+function AS.AddEvent( id, data )
+    AS.Events = AS.Events or {}
+    AS.Events[id] = data
+end
+
+AS.AddEvent( "antlion_guard", {
+    enable = true, --Should we actually be spawning?
+    mintime = 600, --Minimal time before we spawn in seconds
+    maxtime = 1200, --Maximum time before we spawn
+    max = 2, --Maximum amount of this event that can spawn at once
+    eventspot = false, --Should we only spawn in event spots?
+    outdoor = true, --Spawn outdoor
+    ent = "npc_antlionguard", --Entity to spawn
+} )
+
+AS.AddEvent( "antlion_nest", {
+    enable = false,
+    mintime = 600,
+    maxtime = 1800,
+    max = 1,
+    eventspot = true,
+    outdoor = true,
+    ent = "npc_antlion", --Replace this with the antlionnest entity when finished
+    sound = "ambient/atmosphere/terrain_rumble1.wav", --This will play a sound to everyone as a notification
+} )
+
+AS.AddEvent( "raider_party", {
+    enable = true,
+    mintime = 1200,
+    maxtime = 2400,
+    max = 1,
+    eventspot = true,
+    outdoor = true,
+    ent = "npc_as_raider",
+    entamt = {min = 4, max = 6}, --This tells us how much of the entity to spawn in the same location.
+    notify = {"A group of heavily armed raiders have been spotted roaming the lands."}, --Will print text to everyone's chat
+} )
+
+AS.AddEvent( "combine_scout", {
+    enable = false,
+    mintime = 4200,
+    maxtime = 7200,
+    max = 1,
+    eventspot = true,
+    outdoor = true,
+    ent = "npc_as_soldier", --Replace this with the deploy pod entity when finished
+    sound = "npc/env_headcrabcanister/launch.wav",
+    notify = {"A distance explosion can be heard. The impact of a canister? Something bad just arrived."},
+} )
 
 --  ██████╗ ██████╗ ███╗   ███╗███╗   ███╗ █████╗ ███╗   ██╗██████╗ ███████╗
 -- ██╔════╝██╔═══██╗████╗ ████║████╗ ████║██╔══██╗████╗  ██║██╔══██╗██╔════╝
@@ -223,6 +283,18 @@ function AS.Grid.FetchValidSpawners() --Every spawner that is valid
     return ValidSpawners
 end
 
+function AS.Grid.FetchValidEventSpawners( tbl ) --Every event spawner that is valid
+    local ValidSpawners = tbl
+    local NewValidSpawners = {}
+
+    for _, info in pairs( ValidSpawners ) do
+        if not info.events then continue end
+        NewValidSpawners[#NewValidSpawners + 1] = info
+    end
+
+    return NewValidSpawners
+end
+
 function AS.Grid.FetchValidOutdoorSpawners( tbl ) --Every outdoor spawner that is valid from a provided table
     local ValidSpawners = tbl
     local NewValidSpawners = {}
@@ -274,7 +346,12 @@ function AS.Grid.SpawnMobs()
         end
     end
 end
-concommand.Add( "as_mobs_spawn", AS.Grid.SpawnMobs )
+concommand.Add( "as_mobs_spawn", function( ply, cmd, args )
+    if ply and IsValid(ply) then
+        if not ply:IsAdmin() then ply:ChatPrint("You are not an admin.") return end
+    end
+    AS.Grid.SpawnMobs()
+end)
 
 function AS.Grid.SpawnNodes()
     --Similar with mobs, we need to find a valid spawn location.
@@ -327,13 +404,102 @@ function AS.Grid.SpawnNodes()
         end
     end
 end
-concommand.Add( "as_nodes_spawn", AS.Grid.SpawnNodes )
+concommand.Add( "as_nodes_spawn", function( ply, cmd, args )
+    if ply and IsValid(ply) then
+        if not ply:IsAdmin() then ply:ChatPrint("You are not an admin.") return end
+    end
+    AS.Grid.SpawnNodes()
+end)
+
+function AS.Grid.SpawnEvent( id ) --This will activate an event.
+    local data = AS.Events[id]
+    ActiveEvents[id] = ActiveEvents[id] or {}
+    local num = #ActiveEvents[id] + 1
+    ActiveEvents[id][num] = {}
+
+    local ValidSpawners = AS.Grid.FetchValidSpawners()
+    ValidSpawners = data.eventspot and AS.Grid.FetchValidEventSpawners( ValidSpawners ) or ValidSpawners
+    --This next line will just get indoor/outdoor spawners based on the assigned values
+    ValidSpawners = data.indoor and data.outdoor and ValidSpawners or data.indoor and AS.Grid.FetchValidIndoorSpawners( ValidSpawners ) or data.outdoor and AS.Grid.FetchValidOutdoorSpawners( ValidSpawners )
+    if #ValidSpawners <= 0 then return end --None are valid
+
+    local spawnPoint = ValidSpawners[math.random(1, #ValidSpawners)] --Random spawner of the valid spawners
+    local spawnPointPos = spawnPoint["pos"]:ToTable()
+    local entamt = data.entamt and math.random(data.entamt.min, data.entamt.max) or 1
+
+    for i = 1, entamt do
+        local position = Vector( spawnPointPos[1] + math.random( spawnPoint["distance"] * -1, spawnPoint["distance"] ), spawnPointPos[2] + math.random(spawnPoint["distance"] * -1 , spawnPoint["distance"] ), spawnPointPos[3] )
+
+        local ent = ents.Create(data.ent)
+        ent:SetPos( position )
+        ent:Spawn()
+        table.insert( ActiveEvents[id][num], ent )
+    end
+
+    if data.sound then
+        for k, v in pairs(player.GetAll()) do
+            v:SendLua("surface.PlaySound('" .. data.sound .. "')")
+        end
+    end
+    if data.notify then
+        local text = table.Random(data.notify)
+        for k, v in pairs(player.GetAll()) do
+            v:ChatPrint( text )
+        end
+    end
+end
+concommand.Add( "as_event_spawn", function( ply, cmd, args ) 
+    if not args[1] then return end
+    if not AS.Events[ args[1] ] then return end
+    if ply and IsValid(ply) then
+        if not ply:IsAdmin() then ply:ChatPrint("You are not an admin.") return end
+        print(ply:Nickname() .. " (" .. ply:Nick() .. ") spawned an event: " .. args[1])
+    end
+    AS.Grid.SpawnEvent( args[1] )
+end)
+
+function AS.Grid.GenerateEvent( id ) --This will generate an event, as in put it into the pending table and wait to be called.
+    if PendingEvents[id] then return end --This event is already pending.
+
+    PendingEvents[id] = CurTime() + math.random(AS.Events[id].mintime, AS.Events[id].maxtime)
+end
+
+function AS.Grid.GetEventAmount( id )
+    local amt = 0
+    if ActiveEvents[id] then
+        for k, v in pairs( ActiveEvents[id] ) do
+            for k2, v2 in pairs( v ) do
+                if not IsValid(v2) then continue end
+                amt = amt + 1
+                break
+            end
+        end
+    end
+    return amt
+end
 
 hook.Add( "Think", "AS_GridSpawn", function() --This is just for automatically spawning mobs.
     if CurTime() > (NextSpawn or 0) then
         NextSpawn = CurTime() + MOB.RespawnTime
         AS.Grid.SpawnMobs()
         AS.Grid.SpawnNodes()
+    end
+end)
+
+hook.Add( "Think", "AS_EventCheck", function()
+    for k, v in pairs( AS.Events ) do
+        if not AS.Events[k].enable then continue end
+
+        if PendingEvents[k] then
+            if CurTime() > PendingEvents[k] then
+                PendingEvents[k] = nil --Clears the pending event. The next think will make a new one for us.
+                if AS.Grid.GetEventAmount() < AS.Events[id].max then
+                    AS.Grid.SpawnEvent( k )
+                end
+            end
+        else
+            AS.Grid.GenerateEvent( k )
+        end
     end
 end)
 

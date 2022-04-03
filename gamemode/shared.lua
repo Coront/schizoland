@@ -37,6 +37,7 @@ if CLIENT then
 end
 
 PlayerMeta = FindMetaTable("Player")
+EntityMeta = FindMetaTable( "Entity" )
 
 if SERVER then
 	AddCSLuaFile("tablebase.lua")
@@ -144,6 +145,11 @@ end
 function PlayerMeta:IsDeveloping() --Will return if a player is in developer mode
     if self:IsAdmin() and self:GetMoveType() == MOVETYPE_NOCLIP and (self:GetActiveWeapon():GetClass() == "weapon_physgun" or self:GetActiveWeapon():GetClass() == "gmod_tool") then return true end
     return false
+end
+
+function EntityMeta:Alive()
+    if self:Health() <= 0 then return false end
+    return true
 end
 
 if CLIENT then

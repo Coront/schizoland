@@ -1,5 +1,3 @@
-local EntityMeta = FindMetaTable( "Entity" )
-
 local CUE = {}
 CUE.Own = "buttons/blip1.wav"
 CUE.Unown = "buttons/button14.wav"
