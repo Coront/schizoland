@@ -160,7 +160,7 @@ function AftershockHUD()
         local xadd, yadd = GetConVar("as_hud_targetinfo_xadd"):GetInt(), GetConVar("as_hud_targetinfo_yadd"):GetInt()
         local x, y, width, height, outline = ((ScrW() * 0.5) + xadd), ((ScrH() * 0.88) + yadd), (GetConVar("as_hud_targetinfo_width"):GetInt()), (GetConVar("as_hud_targetinfo_height"):GetInt()), (1)
         local health, maxhealth = (math.Clamp(target:Health(), 0, target:GetMaxHealth())), (target:GetMaxHealth())
-        local name = target:IsPlayer() and target:Nickname() or target.PrintName
+        local name = target:IsPlayer() and target:Nickname() or target.PrintName or target:GetClass()
         draw.SimpleTextOutlined(name, "AftershockHUD", x, y - 5, newcol, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM, outline, Color(0,0,0))
         x = x - (width / 2)
         surface.DrawOutlinedRect( x, y, width, height, outline )
