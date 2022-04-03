@@ -153,7 +153,7 @@ function AftershockHUD()
     local targetinfo = tobool(GetConVar("as_hud_targetinfo"):GetInt())
     local target = LocalPlayer():GetActiveTarget()
     if targetinfo and target and IsValid(target) and target:Alive() then
-        local col = COLHUD_DEFAULT:ToTable()
+        local col = (target:IsNextBot() or target:IsNPC()) and (target:Hostile()) and COLHUD_BAD:ToTable() or COLHUD_DEFAULT:ToTable()
         local alpha = 255
         local newcol = Color( col[1], col[2], col[3], alpha )
         surface.SetDrawColor( newcol )
