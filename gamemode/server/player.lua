@@ -58,6 +58,10 @@ function GM:PlayerDisconnected( ply )
     end
 
     ply:SaveCharacter()
+
+    for k, v in pairs( player.GetAll() ) do
+        v:ChatPrint( ply:Nickname() .. " has left the server." )
+    end
 end
 
 function GM:OnPlayerHitGround( ply, water, floater, speed )

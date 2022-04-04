@@ -118,6 +118,15 @@ function GM:Move( ply, mv )
     ply:SetViewOffsetDucked( Vector( 0, 0, 35 ) )
 end
 
+function BoolToInt( bool )
+    if not bool then return end
+    if bool then
+        return 1
+    else
+        return 0
+    end
+end
+
 function PlayerMeta:Nickname() --Will return the name of the player. Use this over self:Nick().
     return self:GetNW2String("as_name", self.name) or self:Nick()
 end
@@ -152,6 +161,18 @@ function EntityMeta:Alive()
     return false
 end
 
+hook.Add( "ChatText", "AS_HideJoinLeave", function( index, name, text, type ) 
+    if type == "joinleave" or type == "namechange" or type == "teamchange" then return true end
+end)
+
+function GM:PlayerConnect( name, ip )
+    if (SERVER) then
+        for k, v in pairs( player.GetAll() ) do
+            v:ChatPrint( name .. " has joined the server." )
+        end
+    end
+end
+
 if CLIENT then
 
     function GetPos( ply )
@@ -163,3 +184,23 @@ if CLIENT then
     concommand.Add("GetPosV2", GetPos)
 
 end
+
+--  ██████╗ ██████╗ ███╗   ██╗███████╗ ██████╗ ██╗     ███████╗     ██████╗ ██████╗ ███╗   ███╗███╗   ███╗ █████╗ ███╗   ██╗██████╗ ███████╗
+-- ██╔════╝██╔═══██╗████╗  ██║██╔════╝██╔═══██╗██║     ██╔════╝    ██╔════╝██╔═══██╗████╗ ████║████╗ ████║██╔══██╗████╗  ██║██╔══██╗██╔════╝
+-- ██║     ██║   ██║██╔██╗ ██║███████╗██║   ██║██║     █████╗      ██║     ██║   ██║██╔████╔██║██╔████╔██║███████║██╔██╗ ██║██║  ██║███████╗
+-- ██║     ██║   ██║██║╚██╗██║╚════██║██║   ██║██║     ██╔══╝      ██║     ██║   ██║██║╚██╔╝██║██║╚██╔╝██║██╔══██║██║╚██╗██║██║  ██║╚════██║
+-- ╚██████╗╚██████╔╝██║ ╚████║███████║╚██████╔╝███████╗███████╗    ╚██████╗╚██████╔╝██║ ╚═╝ ██║██║ ╚═╝ ██║██║  ██║██║ ╚████║██████╔╝███████║
+--  ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝╚══════╝ ╚═════╝ ╚══════╝╚══════╝     ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝ ╚══════╝
+
+local function ToConValue( bool )
+	local int = BoolToInt( bool )
+	return tostring(int)
+end
+
+CreateConVar( "as_alltalk", "0", {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED}, "Enables all talk for players.", 0, 1 )
+CreateConVar( "as_pve", "0", {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED}, "Enables PvE only.", 0, 1 )
+CreateConVar( "as_nosandbox", "0", {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED}, "Enable satiation ticking.", 0, 1 )
+CreateConVar( "as_mobs", "1", {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED}, "Enable spawning of mobs.", 0, 1 )
+CreateConVar( "as_nodes", "1", {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED}, "Enables spawning of nodes.", 0, 1 )
+CreateConVar( "as_events", "1", {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED}, "Enable spawning of events.", 0, 1 )
+CreateConVar( "as_satiation", "1", {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED}, "Enable satiation ticking.", 0, 1 )

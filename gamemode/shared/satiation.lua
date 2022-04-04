@@ -45,6 +45,8 @@ function PlayerMeta:TakeThirst( amt )
 end
 
 hook.Add( "Think", "AS_SatiationUpdate", function()
+    if not tobool(GetConVar("as_satiation"):GetInt()) then return end
+
     for k, v in pairs(player.GetAll()) do
         if not v:IsLoaded() then continue end --We skip players who arent loaded for this check.
         if CLIENT and v != LocalPlayer() then continue end --This will make it so that while clientside, it will not update information for everyone, just the local player specifically.
@@ -59,7 +61,7 @@ hook.Add( "Think", "AS_SatiationUpdate", function()
                 v:SetHunger( math.Clamp(v:GetHunger() - SAT.HungerLoss, 0, v:GetMaxHunger()) )
             else
                 if SERVER then
-                    v:TakeDamage( SAT.StarveDamage, v )
+                    v:TakeDamage( SAT.StarveDamage )
                 end
             end
             v.NextHungerUpdate = CurTime() + SAT.HungerUpdate
@@ -70,7 +72,7 @@ hook.Add( "Think", "AS_SatiationUpdate", function()
                 v:SetThirst( math.Clamp(v:GetThirst() - SAT.ThirstLoss, 0, v:GetMaxThirst()) )
             else
                 if SERVER then
-                    v:TakeDamage( SAT.DehydratedDamage, v )
+                    v:TakeDamage( SAT.DehydratedDamage )
                 end
             end
             v.NextThirstUpdate = CurTime() + SAT.ThirstUpdate

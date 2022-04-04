@@ -15,8 +15,9 @@ function GM:PhysgunPickup( ply, ent )
     if ent:GetNW2Bool( "NoObjectOwner", false ) then return false end
     if (ent:GetObjectOwner() != ply) then return false end
     if not PERM.Physgunable[ent:GetClass()] then return false end
+    if ent:GetPos():Distance(ply:GetPos()) > 2000 then return false end
     if not ply:IsAdmin() then
-        ent:SetCollisionGroup( COLLISION_GROUP_WEAPON )
+        ent:SetCollisionGroup( COLLISION_GROUP_WORLD )
     end
 
     return true
@@ -31,6 +32,8 @@ function GM:PhysgunDrop( ply, ent )
 end
 
 function GM:PlayerCanSeePlayersChat( text, team, listener, speaker )
+    if tobool(GetConVar("as_alltalk"):GetInt()) then return true end
+
     if speaker and IsValid(speaker) then
         if listener:GetPos():Distance(speaker:GetPos()) > 1000 or not listener:IsLoaded() then --Player is too far to see this person's text.
             return false 
@@ -41,6 +44,8 @@ function GM:PlayerCanSeePlayersChat( text, team, listener, speaker )
 end
 
 function GM:PlayerCanHearPlayersVoice( listener, speaker )
+    if tobool(GetConVar("as_alltalk"):GetInt()) then return true, false end
+
     if listener:GetPos():Distance(speaker:GetPos()) > 1500 or not listener:IsLoaded() then --Player is too far to hear this person's voice.
         return false
     end
@@ -50,8 +55,14 @@ end
 
 function GM:CanTool( ply, tr, toolname, tool, button )
     if ply:IsAdmin() then return true end
-    if not PERM.ToolWhitelist[toolname] then if (CLIENT) then ply:ChatPrint("You cannot use this tool.") end return false end
+    if SERVER and tobool(GetConVar("as_nosandbox"):GetInt()) then ply:ChatPrint("No Sandboxing is enabled. You cannot do this.") return false end
+    if not PERM.ToolWhitelist[toolname] then return false end
     if tr.Entity:GetObjectOwner() != ply then return false end
+    return true
+end
+
+function GM:CanProperty( ply, property, ent )
+    if not ply:IsAdmin() then return false end
     return true
 end
 
@@ -71,6 +82,8 @@ end)
 if SERVER then
 
     function GM:PlayerSpawnProp( ply, model )
+        if not ply:IsAdmin() and tobool(GetConVar("as_nosandbox"):GetInt()) then ply:ChatPrint("No Sandboxing is enabled. You cannot do this.") return false end
+
         local TotalProps = 0
         for k, v in pairs( ents.FindByClass("prop_physics") ) do
             if v.Owner == ply then
@@ -86,7 +99,7 @@ if SERVER then
     function GM:PlayerSpawnedProp( ply, model, ent )
         ent:SetObjectOwner( ply )
         if not ply:IsAdmin() then
-            ent:SetCollisionGroup( COLLISION_GROUP_WEAPON )
+            ent:SetCollisionGroup( COLLISION_GROUP_WORLD )
             ent:GetPhysicsObject():EnableMotion( false )
             ent:SetRenderMode( RENDERMODE_TRANSCOLOR )
             ent:SetColor( Color( 255, 255, 255, 230 ) )
@@ -131,9 +144,15 @@ if SERVER then
     end
 
     hook.Add("EntityTakeDamage", "AS_PropDamageBlock", function( target, dmginfo)
-        --This prevents both getting damaged by props and crushed by them
-        if dmginfo:GetInflictor():GetClass() == "prop_physics" then dmginfo:SetDamage( 0 ) end
-        --if target:IsPlayer() and (dmginfo:GetInflictor():GetClass() == "prop_physics" or (dmginfo:GetInflictor():GetClass() == "worldspawn" and not dmginfo:IsFallDamage())) then dmginfo:SetDamage( 0 ) end
+        if IsValid(dmginfo:GetInflictor()) and  dmginfo:GetInflictor():GetClass() == "prop_physics" then dmginfo:SetDamage( 0 ) end
+    end)
+
+    hook.Add("EntityTakeDamage", "AS_PvE", function( target, dmginfo )
+        if not tobool(GetConVar("as_pve"):GetInt()) then return end
+        if target:IsPlayer() and IsValid(dmginfo:GetAttacker()) and dmginfo:GetAttacker():IsPlayer() then 
+            dmginfo:GetAttacker():ChatPrint("PvE Only is enabled. You cannot deal damage to other players.")
+            dmginfo:SetDamage( 0 )
+        end
     end)
 
 end

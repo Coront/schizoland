@@ -321,6 +321,8 @@ function AS.Grid.FetchValidIndoorSpawners( tbl ) --Every indoor spawner that is 
 end
 
 function AS.Grid.SpawnMobs()
+    if not tobool(GetConVar("as_mobs"):GetInt()) then return end
+
     --We need to find a valid spawn for NPCs first. We'll go through all of the spawns and see what's available.
     local ValidSpawners = AS.Grid.FetchValidSpawners()
     if #ValidSpawners <= 0 then return end --No valid spawners. Although extremely rare, still a precaution to have.
@@ -355,6 +357,8 @@ concommand.Add( "as_mobs_spawn", function( ply, cmd, args )
 end)
 
 function AS.Grid.SpawnNodes()
+    if not tobool(GetConVar("as_nodes"):GetInt()) then return end
+
     --Similar with mobs, we need to find a valid spawn location.
     local ValidSpawners = AS.Grid.FetchValidSpawners()
     if #ValidSpawners <= 0 then return end --None are valid
@@ -413,6 +417,8 @@ concommand.Add( "as_nodes_spawn", function( ply, cmd, args )
 end)
 
 function AS.Grid.SpawnEvent( id ) --This will activate an event.
+    if not tobool(GetConVar("as_events"):GetInt()) then return end
+
     local data = AS.Events[id]
     ActiveEvents[id] = ActiveEvents[id] or {}
     local num = #ActiveEvents[id] + 1
