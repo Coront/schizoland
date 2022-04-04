@@ -51,15 +51,16 @@ AS.AddEvent( "raider_party", {
 } )
 
 AS.AddEvent( "combine_scout", {
-    enable = false,
+    enable = true,
     mintime = 4200,
     maxtime = 7200,
     max = 1,
     eventspot = true,
     outdoor = true,
     ent = "npc_as_soldier", --Replace this with the deploy pod entity when finished
+    entamt = {min = 4, max = 6},
     sound = "npc/env_headcrabcanister/launch.wav",
-    notify = {"A distance explosion can be heard. The impact of a canister? Something bad just arrived."},
+    notify = {"The distant sound of an explosion can be heard. The impact of a canister? Something bad just arrived."},
 } )
 
 --  ██████╗ ██████╗ ███╗   ███╗███╗   ███╗ █████╗ ███╗   ██╗██████╗ ███████╗

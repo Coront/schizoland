@@ -15,8 +15,10 @@ function ENT:Think()
     local ply = LocalPlayer()
 
     if ply:GetEyeTrace().Entity == self and ply:GetPos():Distance(self:GetPos()) < 100 and self:GetInventory() != nil and LocalPlayer():Alive() then
-        if not IsValid( frame_container ) then
-            ContainerMenu( self )
+        if IsValid(self:GetClaimer()) and LocalPlayer() == self:GetClaimer() or not IsValid(self:GetClaimer()) then
+            if not IsValid( frame_container ) then
+                ContainerMenu( self )
+            end
         end
     else
         if (IsValid( frame_container ) and frame_container.ent == self) or IsValid(frame_container) and not IsValid( frame_container.ent ) then

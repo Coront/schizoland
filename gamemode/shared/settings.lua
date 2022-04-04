@@ -66,6 +66,19 @@ PERM.PropBlacklist = { --Props that are forbidden from being spawned
     ["models/props_phx/misc/flakshell_big.mdl"] = true, --Explosive
     ["models/props_phx/misc/potato_launcher_explosive.mdl"] = true, --Explosive
 }
+PERM.ToolWhitelist = { --Tools that regular players can use
+    ["precision"] = true,
+    ["weld"] = true,
+    ["button"] = true,
+    ["duplicator"] = true,
+    ["light"] = true,
+    ["nocollide"] = true,
+    ["nocollideeverything"] = true,
+    ["remover"] = true,
+    ["stacker_improved"] = true,
+    ["colour"] = true,
+    ["material"] = true,
+}
 --Class Settings
 SET.Classes = {}
 CLS = SET.Classes
@@ -198,7 +211,6 @@ NOD.ScavItems = { --Table containing potential items that will spawn if a item i
     ["misc_gunpowderten"] = 50,
     ["misc_solarfilmroll"] = 40,
     ["misc_wheel"] = 40,
-
 }
 
 

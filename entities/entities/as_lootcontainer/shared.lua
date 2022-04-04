@@ -109,6 +109,7 @@ elseif CLIENT then
     function ContainerInventorySync()
         local ent = net.ReadEntity()
         if not IsValid(ent) then return end
+        if not ent.SetInventory then return end
         ent:SetInventory( net.ReadTable() )
     end
     net.Receive( "as_lootcontainer_syncinventory", ContainerInventorySync )

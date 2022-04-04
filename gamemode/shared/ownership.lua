@@ -19,7 +19,8 @@ function EntityMeta:ClearObjectOwner()
 end
 
 function EntityMeta:IsObjectOwnable()
-    if self:GetClass() == "prop_door_rotating" or self:GetClass() == "func_door" then return true end
+    if self:GetNW2Bool( "NoObjectOwner", false ) then return false end
+    if self:GetClass() == "prop_door_rotating" or self:GetClass() == "func_door" or self:GetClass() == "prop_physics" then return true end
     if self.AS_OwnableObject then return true end
     return false
 end

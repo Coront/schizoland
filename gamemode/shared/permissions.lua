@@ -12,8 +12,12 @@ end
 
 function GM:PhysgunPickup( ply, ent )
     if ply:IsAdmin() then return true end
+    if ent:GetNW2Bool( "NoObjectOwner", false ) then return false end
+    if (ent:GetObjectOwner() != ply) then return false end
     if not PERM.Physgunable[ent:GetClass()] then return false end
-    ent:SetCollisionGroup( COLLISION_GROUP_WEAPON )
+    if not ply:IsAdmin() then
+        ent:SetCollisionGroup( COLLISION_GROUP_WEAPON )
+    end
 
     return true
 end
@@ -42,6 +46,13 @@ function GM:PlayerCanHearPlayersVoice( listener, speaker )
     end
 
     return true, true
+end
+
+function GM:CanTool( ply, tr, toolname, tool, button )
+    if ply:IsAdmin() then return true end
+    if not PERM.ToolWhitelist[toolname] then if (CLIENT) then ply:ChatPrint("You cannot use this tool.") end return false end
+    if tr.Entity:GetObjectOwner() != ply then return false end
+    return true
 end
 
 function GM:PlayerShouldTaunt( ply, act )
@@ -73,6 +84,7 @@ if SERVER then
     end
 
     function GM:PlayerSpawnedProp( ply, model, ent )
+        ent:SetObjectOwner( ply )
         if not ply:IsAdmin() then
             ent:SetCollisionGroup( COLLISION_GROUP_WEAPON )
             ent:GetPhysicsObject():EnableMotion( false )
@@ -120,6 +132,7 @@ if SERVER then
 
     hook.Add("EntityTakeDamage", "AS_PropDamageBlock", function( target, dmginfo)
         --This prevents both getting damaged by props and crushed by them
+        if dmginfo:GetInflictor():GetClass() == "prop_physics" then dmginfo:SetDamage( 0 ) end
         --if target:IsPlayer() and (dmginfo:GetInflictor():GetClass() == "prop_physics" or (dmginfo:GetInflictor():GetClass() == "worldspawn" and not dmginfo:IsFallDamage())) then dmginfo:SetDamage( 0 ) end
     end)
 
