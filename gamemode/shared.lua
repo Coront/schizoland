@@ -36,6 +36,12 @@ if CLIENT then
 
 end
 
+ConVarDefaults = ConVarDefaults or {}
+function AS_ClientConVar( name, str, save, sync, info, min, max )
+    ConVarDefaults[name] = str
+    local convar = CreateClientConVar( name, str, save, sync, info, min, max )
+end
+
 PlayerMeta = FindMetaTable("Player")
 EntityMeta = FindMetaTable( "Entity" )
 

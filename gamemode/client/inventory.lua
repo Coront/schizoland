@@ -7,8 +7,8 @@ AS.Inventory = {}
 -- ██║ ╚═╝ ██║███████╗██║ ╚████║╚██████╔╝
 -- ╚═╝     ╚═╝╚══════╝╚═╝  ╚═══╝ ╚═════╝
 
-CreateClientConVar( "as_menu_inventory_holdtoopen", "1", true, false )
-CreateClientConVar( "as_menu_inventory_singlepanel", "0", true, false )
+AS_ClientConVar( "as_menu_inventory_holdtoopen", "1", true, false )
+AS_ClientConVar( "as_menu_inventory_singlepanel", "0", true, false )
 
 function AS.Inventory.Open( tab )
     if not LocalPlayer():IsLoaded() then return end

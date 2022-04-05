@@ -3,60 +3,60 @@ COLHUD_GOOD = nil
 COLHUD_BAD = nil
 
 -- Enable HUD
-CreateClientConVar( "as_hud", "1", true, false )
+AS_ClientConVar( "as_hud", "1", true, false )
 -- Default Colors
-CreateClientConVar( "as_hud_color_default_r", "0", true, false )
-CreateClientConVar( "as_hud_color_default_g", "105", true, false )
-CreateClientConVar( "as_hud_color_default_b", "185", true, false )
+AS_ClientConVar( "as_hud_color_default_r", "0", true, false )
+AS_ClientConVar( "as_hud_color_default_g", "105", true, false )
+AS_ClientConVar( "as_hud_color_default_b", "185", true, false )
 -- Good Colors
-CreateClientConVar( "as_hud_color_good_r", "0", true, false )
-CreateClientConVar( "as_hud_color_good_g", "145", true, false )
-CreateClientConVar( "as_hud_color_good_b", "20", true, false )
+AS_ClientConVar( "as_hud_color_good_r", "0", true, false )
+AS_ClientConVar( "as_hud_color_good_g", "145", true, false )
+AS_ClientConVar( "as_hud_color_good_b", "20", true, false )
 -- Bad Colors
-CreateClientConVar( "as_hud_color_bad_r", "255", true, false )
-CreateClientConVar( "as_hud_color_bad_g", "50", true, false )
-CreateClientConVar( "as_hud_color_bad_b", "50", true, false )
+AS_ClientConVar( "as_hud_color_bad_r", "255", true, false )
+AS_ClientConVar( "as_hud_color_bad_g", "50", true, false )
+AS_ClientConVar( "as_hud_color_bad_b", "50", true, false )
 -- Crosshair
-CreateClientConVar( "as_hud_crosshair", "1", true, false ) --Enable?
-CreateClientConVar( "as_hud_crosshair_multidots", "1", true, false ) --Multiple Dots
+AS_ClientConVar( "as_hud_crosshair", "1", true, false ) --Enable?
+AS_ClientConVar( "as_hud_crosshair_multidots", "1", true, false ) --Multiple Dots
 -- Health Bar
-CreateClientConVar( "as_hud_healthbar", "1", true, false ) --Enable?
-CreateClientConVar( "as_hud_healthbar_amount", "1", true, false ) --Enable amount?
-CreateClientConVar( "as_hud_healthbar_xadd", "0", true, false ) --X position add
-CreateClientConVar( "as_hud_healthbar_yadd", "0", true, false ) --Y position add
-CreateClientConVar( "as_hud_healthbar_width", "200", true, false ) --Width
-CreateClientConVar( "as_hud_healthbar_height", "20", true, false ) --Height
+AS_ClientConVar( "as_hud_healthbar", "1", true, false ) --Enable?
+AS_ClientConVar( "as_hud_healthbar_amount", "1", true, false ) --Enable amount?
+AS_ClientConVar( "as_hud_healthbar_xadd", "0", true, false ) --X position add
+AS_ClientConVar( "as_hud_healthbar_yadd", "0", true, false ) --Y position add
+AS_ClientConVar( "as_hud_healthbar_width", "200", true, false ) --Width
+AS_ClientConVar( "as_hud_healthbar_height", "20", true, false ) --Height
 -- Satiation Bars
-CreateClientConVar( "as_hud_satiationbars", "1", true, false ) --Enable?
-CreateClientConVar( "as_hud_satiationbars_amount", "0", true, false ) --Enable amount?
-CreateClientConVar( "as_hud_satiationbars_xadd", "0", true, false ) --X position add
-CreateClientConVar( "as_hud_satiationbars_yadd", "0", true, false ) --Y position add
-CreateClientConVar( "as_hud_satiationbars_width", "150", true, false ) --Width
-CreateClientConVar( "as_hud_satiationbars_height", "10", true, false ) --Height
-CreateClientConVar( "as_hud_satiationbars_showindic", "1", true, false )
+AS_ClientConVar( "as_hud_satiationbars", "1", true, false ) --Enable?
+AS_ClientConVar( "as_hud_satiationbars_amount", "0", true, false ) --Enable amount?
+AS_ClientConVar( "as_hud_satiationbars_xadd", "0", true, false ) --X position add
+AS_ClientConVar( "as_hud_satiationbars_yadd", "0", true, false ) --Y position add
+AS_ClientConVar( "as_hud_satiationbars_width", "150", true, false ) --Width
+AS_ClientConVar( "as_hud_satiationbars_height", "10", true, false ) --Height
+AS_ClientConVar( "as_hud_satiationbars_showindic", "1", true, false )
 -- Resources
-CreateClientConVar( "as_hud_resources", "0", true, false ) --Enable?
-CreateClientConVar( "as_hud_resources_xadd", "0", true, false ) --X position add
-CreateClientConVar( "as_hud_resources_yadd", "0", true, false ) --Y position add
+AS_ClientConVar( "as_hud_resources", "0", true, false ) --Enable?
+AS_ClientConVar( "as_hud_resources_xadd", "0", true, false ) --X position add
+AS_ClientConVar( "as_hud_resources_yadd", "0", true, false ) --Y position add
 -- Target Info
-CreateClientConVar( "as_hud_targetinfo", "1", true, false )
-CreateClientConVar( "as_hud_targetinfo_amount", "0", true, false )
-CreateClientConVar( "as_hud_targetinfo_xadd", "0", true, false )
-CreateClientConVar( "as_hud_targetinfo_yadd", "0", true, false )
-CreateClientConVar( "as_hud_targetinfo_width", "150", true, false )
-CreateClientConVar( "as_hud_targetinfo_height", "20", true, false )
+AS_ClientConVar( "as_hud_targetinfo", "1", true, false )
+AS_ClientConVar( "as_hud_targetinfo_amount", "0", true, false )
+AS_ClientConVar( "as_hud_targetinfo_xadd", "0", true, false )
+AS_ClientConVar( "as_hud_targetinfo_yadd", "0", true, false )
+AS_ClientConVar( "as_hud_targetinfo_width", "150", true, false )
+AS_ClientConVar( "as_hud_targetinfo_height", "20", true, false )
 -- Ownership Info
-CreateClientConVar( "as_hud_ownership", "1", true, false )
+AS_ClientConVar( "as_hud_ownership", "1", true, false )
 
 -- Connection Information
-CreateClientConVar( "as_connectioninfo", "1", true, false ) --Show connection information?
-CreateClientConVar( "as_connectioninfo_update", "1", true, false ) --How fast should information update?
-CreateClientConVar( "as_connectioninfo_ping", "1", true, false ) --Show ping?
-CreateClientConVar( "as_connectioninfo_ping_warning", "1", true, false ) --Only show ping when spiking?
-CreateClientConVar( "as_connectioninfo_ping_warning_amt", "140", true, false ) --Above what ping is considered spiking?
-CreateClientConVar( "as_connectioninfo_fps", "1", true, false ) --Show framerate?
-CreateClientConVar( "as_connectioninfo_fps_warning", "1", true, false ) --Only show fps when dropping?
-CreateClientConVar( "as_connectioninfo_fps_warning_amt", "40", true, false ) --Below what rate is considered dropping?
+AS_ClientConVar( "as_connectioninfo", "1", true, false ) --Show connection information?
+AS_ClientConVar( "as_connectioninfo_update", "1", true, false ) --How fast should information update?
+AS_ClientConVar( "as_connectioninfo_ping", "1", true, false ) --Show ping?
+AS_ClientConVar( "as_connectioninfo_ping_warning", "1", true, false ) --Only show ping when spiking?
+AS_ClientConVar( "as_connectioninfo_ping_warning_amt", "140", true, false ) --Above what ping is considered spiking?
+AS_ClientConVar( "as_connectioninfo_fps", "1", true, false ) --Show framerate?
+AS_ClientConVar( "as_connectioninfo_fps_warning", "1", true, false ) --Only show fps when dropping?
+AS_ClientConVar( "as_connectioninfo_fps_warning_amt", "40", true, false ) --Below what rate is considered dropping?
 
 function AftershockHUD()
     local ply = LocalPlayer()

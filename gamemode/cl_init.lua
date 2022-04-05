@@ -15,8 +15,8 @@ end
 
 MsgC( Color(0,0,255), "[AS] Finished Loading!\n" )
 
-CreateClientConVar( "as_gameplay_verify", "1", true, false )
-CreateClientConVar( "as_entity_renderdist", "6000", true, false )
+AS_ClientConVar( "as_gameplay_verify", "1", true, false )
+AS_ClientConVar( "as_entity_renderdist", "6000", true, false )
 
 timer.Create( "as_autosave", 300, 0, function()
 	if LocalPlayer():IsLoaded() then

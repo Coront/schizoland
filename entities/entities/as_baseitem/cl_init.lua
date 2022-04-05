@@ -1,6 +1,6 @@
 include( "shared.lua" )
 
-CreateClientConVar( "as_item_renderdist", "500", true, false )
+AS_ClientConVar( "as_item_renderdist", "500", true, false )
 
 function ENT:Draw()
     if LocalPlayer():GetPos():Distance(self:GetPos()) < GetConVar("as_item_renderdist"):GetInt() then

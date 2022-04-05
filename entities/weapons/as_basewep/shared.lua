@@ -6,8 +6,20 @@ SWEP.DrawCrosshair = false
 SWEP.BounceWeaponIcon = false
 SWEP.DrawWeaponInfoBox = false
 
-CreateClientConVar( "aswep_debug_reloading", "0", true, false ) --(Admin) Debug Reloading
-CreateClientConVar( "aswep_scope_sensitivity", "50", true, false ) --Sensitivity multiplier for scopes
+if (CLIENT) then
+    AS_ClientConVar( "aswep_debug_reloading", "0", true, false ) --(Admin) Debug Reloading
+    AS_ClientConVar( "aswep_scope_sensitivity", "50", true, false ) --Sensitivity multiplier for scopes
+    AS_ClientConVar( "as_hud_crosshair_weaponcrosshair", "1", true, false ) --Use Weapon Crosshairs
+    AS_ClientConVar( "as_hud_crosshair_weaponcrosshair_centerdot", "1", true, false ) --Center Dot
+    AS_ClientConVar( "as_hud_crosshair_weaponcrosshair_centerdot_size", "1", true, false ) --Center Dot Size
+    AS_ClientConVar( "as_hud_crosshair_weaponcrosshair_shadow", "1", true, false ) --Shadow
+    AS_ClientConVar( "as_hud_crosshair_weaponcrosshair_length", "20", true, false ) --Weapon Crosshair Length
+    AS_ClientConVar( "as_hud_crosshair_weaponcrosshair_width", "2", true, false ) --Weapon Crosshair Width
+    AS_ClientConVar( "as_hud_ammo", 1, true, false ) --Show Ammo
+    AS_ClientConVar( "as_hud_ammo_background", 1, true, false ) --Show Ammo Background
+    AS_ClientConVar( "as_hud_ammo_xadd", 0, true, false ) --Ammo Offset X
+    AS_ClientConVar( "as_hud_ammo_yadd", 0, true, false ) --Ammo Offset Y
+end
 
 -- ███████╗███████╗████████╗████████╗██╗███╗   ██╗ ██████╗     ██╗██████╗ ███████╗████████╗██████╗ ██╗███████╗██╗   ██╗██╗███╗   ██╗ ██████╗
 -- ██╔════╝██╔════╝╚══██╔══╝╚══██╔══╝██║████╗  ██║██╔════╝    ██╔╝██╔══██╗██╔════╝╚══██╔══╝██╔══██╗██║██╔════╝██║   ██║██║████╗  ██║██╔════╝
@@ -330,17 +342,6 @@ function SWEP:Think()
 
     end
 end
-
-CreateClientConVar( "as_hud_crosshair_weaponcrosshair", "1", true, false ) --Use Weapon Crosshairs
-CreateClientConVar( "as_hud_crosshair_weaponcrosshair_centerdot", "1", true, false ) --Center Dot
-CreateClientConVar( "as_hud_crosshair_weaponcrosshair_centerdot_size", "1", true, false ) --Center Dot Size
-CreateClientConVar( "as_hud_crosshair_weaponcrosshair_shadow", "1", true, false ) --Shadow
-CreateClientConVar( "as_hud_crosshair_weaponcrosshair_length", "20", true, false ) --Weapon Crosshair Length
-CreateClientConVar( "as_hud_crosshair_weaponcrosshair_width", "2", true, false ) --Weapon Crosshair Width
-CreateClientConVar( "as_hud_ammo", 1, true, false ) --Show Ammo
-CreateClientConVar( "as_hud_ammo_background", 1, true, false ) --Show Ammo Background
-CreateClientConVar( "as_hud_ammo_xadd", 0, true, false ) --Ammo Offset X
-CreateClientConVar( "as_hud_ammo_yadd", 0, true, false ) --Ammo Offset Y
 
 function SWEP:DrawHUD()
     if CLIENT then

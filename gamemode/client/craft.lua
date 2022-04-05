@@ -1,6 +1,6 @@
 AS.Craft = {}
 
-CreateClientConVar( "as_menu_craft_holdtoopen", "0", true, false )
+AS_ClientConVar( "as_menu_craft_holdtoopen", "0", true, false )
 
 function AS.Craft.Open()
     if not LocalPlayer():IsLoaded() then return end

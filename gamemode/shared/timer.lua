@@ -69,8 +69,8 @@ end
 
 if (CLIENT) then
 
-    CreateClientConVar( "as_hud_timeevent", "1", true, false )
-    CreateClientConVar( "as_hud_timeevent_percent", "0", true, false )
+    AS_ClientConVar( "as_hud_timeevent", "1", true, false )
+    AS_ClientConVar( "as_hud_timeevent_percent", "0", true, false )
 
     hook.Add( "HUDPaint", "AS_TimedEvents", function()
 

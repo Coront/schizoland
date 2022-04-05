@@ -1,4 +1,4 @@
-CreateClientConVar( "as_container_sounds", "1", true, false )
+AS_ClientConVar( "as_container_sounds", "1", true, false )
 
 function ContainerMenu( ent )
     if IsValid(frame_container) then frame_container:Close() end

@@ -115,6 +115,18 @@ function ToggleButton( text, x, y, parent, convar )
     label:SizeToContents()
 end
 
+function DefaultButton( text, x, y, width, height, parent, callback )
+    local button = vgui.Create("DButton")
+    if parent then button:SetParent(parent) end
+    button:SetSize(width, height)
+    button:SetPos(x, y)
+    button:SetText( text )
+    button.DoClick = function()
+        surface.PlaySound("buttons/button15.wav")
+        callback()
+    end
+end
+
 function KeyBind( text, x, y, parent, convar )
     local binder = vgui.Create("DBinder", parent)
     binder:SetSize( 100, 20 )

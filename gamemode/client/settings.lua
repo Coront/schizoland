@@ -1,5 +1,11 @@
 AS.Settings = {}
 
+function AS.Settings.SetToDefault()
+    for k, v in pairs( ConVarDefaults ) do
+        RunConsoleCommand( k, v )
+    end
+end
+
 function AS.Settings.Menu()
     if IsValid(frame_settings) then frame_settings:Close() end
 
@@ -37,6 +43,9 @@ function AS.Settings.BuildOptions()
 -- ██║     ██║   ██║██║     ██║   ██║██╔══██╗╚════██║
 -- ╚██████╗╚██████╔╝███████╗╚██████╔╝██║  ██║███████║
 --  ╚═════╝ ╚═════╝ ╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝
+
+    DefaultButton( "Use Default Settings", xpos, ypos, 150, 20, settings_scroll, AS.Settings.SetToDefault )
+    addSpace( 0, 20 )
 
     SectionLabel( "Colors", xpos, ypos, settings_scroll )
     addSpace( 0, 35 )
