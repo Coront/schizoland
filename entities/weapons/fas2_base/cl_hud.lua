@@ -20,7 +20,7 @@ function SWEP:DrawHUD()
 	FT, CT, x, y = FrameTime(), CurTime(), ScrW(), ScrH()
 	lp = self.Owner:ShouldDrawLocalPlayer()
 	
-	if (self.dt.Status == FAS_STAT_ADS or self.dt.Status == FAS_STAT_SPRINT or self.dt.Status == FAS_STAT_CUSTOMIZE or self.dt.Status == FAS_STAT_QUICKGRENADE or self.MagCheck or self.NearWall or self.Vehicle) and not lp or self.FireMode == "safe" then
+	if (self.dt.Status == FAS_STAT_ADS or self.dt.Status == FAS_STAT_SPRINT or self.dt.Status == FAS_STAT_CUSTOMIZE or self.dt.Status == FAS_STAT_QUICKGRENADE or self.MagCheck or self.Vehicle) and not lp or self.FireMode == "safe" then
 		self.CrossAlpha = Lerp(FT * 20, self.CrossAlpha, 0)
 	else
 		self.CrossAlpha = Lerp(FT * 20, self.CrossAlpha, 255)

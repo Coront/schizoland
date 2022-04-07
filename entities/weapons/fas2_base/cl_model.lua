@@ -262,8 +262,6 @@ function SWEP:PostDrawViewModel()
 			ApproachSpeed = 10
 		end
 		
-		self.NearWall = false
-		
 		if self.dt.Status == FAS_STAT_ADS then
 			if self.CanPeek and self.Peeking then
 				if self.dt.Bipod then
@@ -441,23 +439,6 @@ function SWEP:PostDrawViewModel()
 						TargetPos[1] = TargetPos[1] - 0.5
 						TargetPos[3] = TargetPos[3] + 0.25
 					end
-				end
-			end
-			
-			if self.dt.Status != FAS_STAT_CUSTOMIZE and not self.NoNearWall and self.FireMode != "safe" then
-				td.start = self.Owner:GetShootPos()
-				td.endpos = td.start + self.Owner:GetAimVector() * 30
-				td.filter = self.Owner
-				
-				tr = util.TraceLine(td)
-				
-				if tr.Hit then
-					self.NearWall = true
-					dist = tr.HitPos:Distance(td.start)
-					
-					TargetAng[1] = TargetAng[1] - math.Clamp((30 - dist), 0, 10)
-					TargetAng[2] = TargetAng[2] + math.Clamp((30 - dist) * 2, 0, 20)
-					TargetPos[2] = TargetPos[2] + math.Clamp((30 - dist) * 0.1, 0, 1)
 				end
 			end
 			
@@ -769,22 +750,26 @@ function SWEP:Draw3D2DCamera()
 						YOff = YOff + 180
 					end
 				else
-					ShadowText("STAT", "FAS2_HUD24", 0, -30, White, Black, 2, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
+					local colhud = COLHUD_DEFAULT or Color(255,255,255)
+					local colhudgood = COLHUD_GOOD or Color(0,255,30)
+					local colhudbad = COLHUD_BAD or Color(155,10,0)
+
+					ShadowText("STAT", "FAS2_HUD24", 0, -30, colhud, Black, 2, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
 					
-					ShadowText("DAMAGE", "FAS2_HUD28", 0, 5, White, Black, 2, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
-					ShadowText("HIP SPREAD", "FAS2_HUD28", 0, 35, White, Black, 2, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
-					ShadowText("ACCURACY", "FAS2_HUD28", 0, 65, White, Black, 2, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
-					ShadowText("RECOIL", "FAS2_HUD28", 0, 95, White, Black, 2, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
-					ShadowText("MOBILITY", "FAS2_HUD28", 0, 125, White, Black, 2, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
-					ShadowText("FIRERATE", "FAS2_HUD28", 0, 155, White, Black, 2, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
-					ShadowText("SPREAD INC", "FAS2_HUD28", 0, 185, White, Black, 2, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
-					ShadowText("MAX SPREAD", "FAS2_HUD28", 0, 215, White, Black, 2, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
+					ShadowText("DAMAGE", "FAS2_HUD28", 0, 5, colhud, Black, 2, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
+					ShadowText("HIP SPREAD", "FAS2_HUD28", 0, 35, colhud, Black, 2, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
+					ShadowText("ACCURACY", "FAS2_HUD28", 0, 65, colhud, Black, 2, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
+					ShadowText("RECOIL", "FAS2_HUD28", 0, 95, colhud, Black, 2, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
+					ShadowText("MOBILITY", "FAS2_HUD28", 0, 125, colhud, Black, 2, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
+					ShadowText("FIRERATE", "FAS2_HUD28", 0, 155, colhud, Black, 2, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
+					ShadowText("SPREAD INC", "FAS2_HUD28", 0, 185, colhud, Black, 2, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
+					ShadowText("MAX SPREAD", "FAS2_HUD28", 0, 215, colhud, Black, 2, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
 					surface.SetDrawColor(0, 0, 0, 150)
 					surface.DrawRect(175, 0, 80, 250)
 					surface.DrawRect(270, 0, 80, 250)
 					
-					ShadowText("BASE", "FAS2_HUD24", 215, -30, White, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
-					ShadowText("CUR", "FAS2_HUD24", 310, -30, White, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
+					ShadowText("BASE", "FAS2_HUD24", 215, -30, colhud, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
+					ShadowText("CUR", "FAS2_HUD24", 310, -30, colhud, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
 					
 					ShadowText(self.Damage_Orig, "FAS2_HUD28", 215, 5, Grey, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
 					ShadowText(math.Round(self.HipCone_Orig * 1000) .. "%", "FAS2_HUD28", 215, 35, Grey, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
@@ -796,65 +781,65 @@ function SWEP:Draw3D2DCamera()
 					ShadowText("+" .. math.Round(self.MaxSpreadInc_Orig * 1000) .. "%", "FAS2_HUD24", 215, 215, Grey, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
 					
 					if self.Damage > self.Damage_Orig then
-						ShadowText(math.Round(self.Damage), "FAS2_HUD28", 310, 5, Green, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
+						ShadowText(math.Round(self.Damage), "FAS2_HUD28", 310, 5, colhudgood, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
 					elseif self.Damage < self.Damage_Orig then
-						ShadowText(math.Round(self.Damage), "FAS2_HUD28", 310, 5, Red, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
+						ShadowText(math.Round(self.Damage), "FAS2_HUD28", 310, 5, colhudbad, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
 					else
 						ShadowText(math.Round(self.Damage), "FAS2_HUD28", 310, 5, White, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
 					end
 					
 					if self.HipCone < self.HipCone_Orig then
-						ShadowText(math.Round(self.HipCone * 1000) .. "%", "FAS2_HUD28", 310, 35, Green, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
+						ShadowText(math.Round(self.HipCone * 1000) .. "%", "FAS2_HUD28", 310, 35, colhudgood, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
 					elseif self.HipCone > self.HipCone_Orig then
-						ShadowText(math.Round(self.HipCone * 1000) .. "%", "FAS2_HUD28", 310, 35, Red, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
+						ShadowText(math.Round(self.HipCone * 1000) .. "%", "FAS2_HUD28", 310, 35, colhudbad, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
 					else
 						ShadowText(math.Round(self.HipCone * 1000) .. "%", "FAS2_HUD28", 310, 35, White, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
 					end
 					
 					if self.AimCone < self.AimCone_Orig then
-						ShadowText(math.Round(100 - self.AimCone * 1000) .. "%", "FAS2_HUD28", 310, 65, Green, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
+						ShadowText(math.Round(100 - self.AimCone * 1000) .. "%", "FAS2_HUD28", 310, 65, colhudgood, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
 					elseif self.AimCone > self.AimCone_Orig then
-						ShadowText(math.Round(100 - self.AimCone * 1000) .. "%", "FAS2_HUD28", 310, 65, Red, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
+						ShadowText(math.Round(100 - self.AimCone * 1000) .. "%", "FAS2_HUD28", 310, 65, colhudbad, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
 					else
 						ShadowText(math.Round(100 - self.AimCone * 1000) .. "%", "FAS2_HUD28", 310, 65, White, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
 					end
 					
 					if self.Recoil < self.Recoil_Orig then
-						ShadowText(math.Round(self.Recoil * 100) .. "%", "FAS2_HUD24", 310, 95, Green, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
+						ShadowText(math.Round(self.Recoil * 100) .. "%", "FAS2_HUD24", 310, 95, colhudgood, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
 					elseif self.Recoil > self.Recoil_Orig then
-						ShadowText(math.Round(self.Recoil * 100) .. "%", "FAS2_HUD24", 310, 95, Red, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
+						ShadowText(math.Round(self.Recoil * 100) .. "%", "FAS2_HUD24", 310, 95, colhudbad, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
 					else
 						ShadowText(math.Round(self.Recoil * 100) .. "%", "FAS2_HUD24", 310, 95, White, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
 					end
 					
 					if self.VelocitySensitivity < self.VelocitySensitivity_Orig then
-						ShadowText(math.Round(100 - self.VelocitySensitivity / 3 * 100) .. "%", "FAS2_HUD28", 310, 125, Green, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
+						ShadowText(math.Round(100 - self.VelocitySensitivity / 3 * 100) .. "%", "FAS2_HUD28", 310, 125, colhudgood, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
 					elseif self.VelocitySensitivity > self.VelocitySensitivity_Orig then
-						ShadowText(math.Round(100 - self.VelocitySensitivity / 3 * 100) .. "%", "FAS2_HUD28", 310, 125, Red, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
+						ShadowText(math.Round(100 - self.VelocitySensitivity / 3 * 100) .. "%", "FAS2_HUD28", 310, 125, colhudbad, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
 					else
 						ShadowText(math.Round(100 - self.VelocitySensitivity / 3 * 100) .. "%", "FAS2_HUD28", 310, 125, White, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
 					end
 					
 					if self.FireDelay < self.FireDelay_Orig then
-						ShadowText(math.Round(60 / self.FireDelay), "FAS2_HUD28", 310, 155, Green, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
+						ShadowText(math.Round(60 / self.FireDelay), "FAS2_HUD28", 310, 155, colhudgood, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
 					elseif self.FireDelay > self.FireDelay_Orig then
-						ShadowText(math.Round(60 / self.FireDelay), "FAS2_HUD28", 310, 155, Red, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
+						ShadowText(math.Round(60 / self.FireDelay), "FAS2_HUD28", 310, 155, colhudbad, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
 					else
 						ShadowText(math.Round(60 / self.FireDelay), "FAS2_HUD28", 310, 155, White, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
 					end
 					
 					if self.SpreadPerShot < self.SpreadPerShot_Orig then
-						ShadowText("+" .. math.Round(self.SpreadPerShot * 1000) .. "%", "FAS2_HUD24", 310, 185, Green, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
+						ShadowText("+" .. math.Round(self.SpreadPerShot * 1000) .. "%", "FAS2_HUD24", 310, 185, colhudgood, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
 					elseif self.SpreadPerShot > self.SpreadPerShot_Orig then
-						ShadowText("+" .. math.Round(self.SpreadPerShot * 1000) .. "%", "FAS2_HUD24", 310, 185, Red, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
+						ShadowText("+" .. math.Round(self.SpreadPerShot * 1000) .. "%", "FAS2_HUD24", 310, 185, colhudbad, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
 					else
 						ShadowText("+" .. math.Round(self.SpreadPerShot * 1000) .. "%", "FAS2_HUD24", 310, 185, White, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
 					end
 					
 					if self.MaxSpreadInc < self.MaxSpreadInc_Orig then
-						ShadowText("+" .. math.Round(self.MaxSpreadInc * 1000) .. "%", "FAS2_HUD24", 310, 215, Green, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
+						ShadowText("+" .. math.Round(self.MaxSpreadInc * 1000) .. "%", "FAS2_HUD24", 310, 215, colhudgood, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
 					elseif self.MaxSpreadInc > self.MaxSpreadInc then
-						ShadowText("+" .. math.Round(self.MaxSpreadInc * 1000) .. "%", "FAS2_HUD24", 310, 215, Red, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
+						ShadowText("+" .. math.Round(self.MaxSpreadInc * 1000) .. "%", "FAS2_HUD24", 310, 215, colhudbad, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
 					else
 						ShadowText("+" .. math.Round(self.MaxSpreadInc * 1000) .. "%", "FAS2_HUD24", 310, 215, White, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
 					end

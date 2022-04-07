@@ -1,7 +1,4 @@
-if SERVER then
-	AddCSLuaFile("shared.lua")
-	SWEP.ExtraMags = 4
-end
+AddCSLuaFile()
 
 if CLIENT then
     SWEP.PrintName = "AK-47"
@@ -85,8 +82,8 @@ SWEP.WorldModel   = "models/weapons/w_rif_ak47.mdl"
 -- Primary Fire Attributes --
 SWEP.Primary.ClipSize        = 30
 SWEP.Primary.DefaultClip    = 0
-SWEP.Primary.Automatic       = false    
-SWEP.Primary.Ammo             = "7.62x39MM"
+SWEP.Primary.Automatic       = true 
+SWEP.Primary.Ammo             = "ar2"
 
 -- Secondary Fire Attributes --
 SWEP.Secondary.ClipSize        = -1

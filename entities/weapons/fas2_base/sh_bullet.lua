@@ -42,26 +42,12 @@ function SWEP:FireBullet()
 		bul.Tracer	= 4
 		bul.Force	= self.Damage * 0.1
 		bul.Damage = math.Round(self.Damage)
-		bul.Callback = function(a, b, c)
-			if SERVER and SP and hm > 0 then
-				ent = b.Entity
-				
-				if ent:IsNPC() or ent:IsPlayer() then
-					SendUserMessage("FAS2_HITMARKER", self.Owner)
-				end
-			end
-			
-			if CLIENT and hm > 0 then
-				ent = b.Entity
-				
-				if ent:IsNPC() or ent:IsPlayer() then
-					self.HitMarkerTime = CurTime() + 0.2
-					self.HitMarkerAlpha = 255
-				end
-			end
-		end
-		
 		self.Owner:FireBullets(bul)
+		if engine.ActiveGamemode() == "aftershock" then
+			self.Owner:IncreaseSkillExperience( "weaponhandling", SKL.WeaponHandling.incamt )
+		end
+
+		--[[
 		
 		tr.start = sp
 		tr.endpos = tr.start + Dir2 * 16384
@@ -185,6 +171,7 @@ function SWEP:FireBullet()
 				end
 			end
 		end
+		]]
 	end
 		
 	tr.mask = trace_normal

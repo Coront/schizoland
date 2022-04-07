@@ -29,7 +29,7 @@ AS.AddBaseSkill( "endurance", {
 
 AS.AddBaseSkill( "weaponhandling", {
     name = "Weapon Handling",
-    desc = "Reduces overall weapon recoil and increases reload speed. Leveled by use of firearms.",
+    desc = "Reduces overall weapon recoil. Leveled by use of firearms.",
     icon = "",
     max = 25,
     basexp = 1,

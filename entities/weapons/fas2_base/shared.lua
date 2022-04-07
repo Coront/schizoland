@@ -580,7 +580,7 @@ local ef
 function SWEP:AimRecoil(mul)
 	mul = mul or 1
 	mod = self.Owner:Crouching() and 0.75 or 1
-
+	
 	if (SERVER and SP) or CLIENT then
 		ang = self.Owner:EyeAngles()
 		ang.p = ang.p - self.Recoil * (1 + self.AddSpread * (self.SpreadToRecoil and self.SpreadToRecoil or 1)) * mod * (self.dt.Bipod and 0.3 or 1) * mul
@@ -636,16 +636,6 @@ function SWEP:PrimaryAttack()
 		end
 		
 		if self.dt.Status == FAS_STAT_SPRINT or self.dt.Status == FAS_STAT_QUICKGRENADE then
-			return
-		end
-		
-		td.start = self.Owner:GetShootPos()
-		td.endpos = td.start + self.Owner:GetAimVector() * 30
-		td.filter = self.Owner
-			
-		tr = util.TraceLine(td)
-		
-		if tr.Hit then
 			return
 		end
 		
@@ -928,6 +918,10 @@ function SWEP:Think()
 
 	if self.CockAfterShot and not self.Cocked then
 		self:CockLogic()
+	end
+
+	if engine.ActiveGamemode() == "aftershock" then
+		self.Recoil = self.Recoil_Orig * (1 - (self:GetOwner():GetSkillLevel("weaponhandling") * SKL.WeaponHandling.recoilmultloss))
 	end
 	
 	if self.ReloadDelay and CT >= self.ReloadDelay then

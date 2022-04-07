@@ -45,8 +45,7 @@ if CLIENT then
 	SWEP.AttachmentBGs = {["suppressor"] = {bg = 3, sbg = 1},
 		["compm4"] = {bg = 2, sbg = 1},
 		["eotech"] = {bg = 2, sbg = 2},
-		["c79"] = {bg = 2, sbg = 3},	
-		["lmgx200mag"] = {bg = 4, sbg = 1}}
+		["c79"] = {bg = 2, sbg = 3}}
 
 	SWEP.WMAng = Vector(-15, 180, 180)
 	SWEP.WMPos = Vector(1, -3, -1.25)
@@ -54,8 +53,7 @@ end
 
 SWEP.Attachments = {
 	[2] = {header = "Barrel", y = -100, atts = {"suppressor"}},
-	[1] = {header = "Sight", sight = true, x = 800, y = -200, atts = {"c79", "compm4", "eotech"}},
-	[3] = {header = "Magazine", x = 300, y = -50, atts = {"lmgx200mag"}}}
+	[1] = {header = "Sight", sight = true, x = 800, y = -200, atts = {"c79", "compm4", "eotech"}}}
 
 SWEP.BulletLength = 5.56
 SWEP.CaseLength = 45
