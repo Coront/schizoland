@@ -84,10 +84,10 @@ SWEP.WorldModel   = "models/weapons/w_rif_ak47.mdl"
 
 -- Primary Fire Attributes --
 SWEP.Primary.ClipSize        = 30
-SWEP.Primary.DefaultClip    = 60
-SWEP.Primary.Automatic       = true    
+SWEP.Primary.DefaultClip    = 0
+SWEP.Primary.Automatic       = false    
 SWEP.Primary.Ammo             = "7.62x39MM"
- 
+
 -- Secondary Fire Attributes --
 SWEP.Secondary.ClipSize        = -1
 SWEP.Secondary.DefaultClip    = -1
