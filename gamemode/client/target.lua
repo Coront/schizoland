@@ -31,7 +31,9 @@ end
 
 hook.Add("Think", "AS_TargetID", function()
     local ply = LocalPlayer()
-    local trace = ply:TraceFromEyes( 3500 )
+    local wep = ply:GetActiveWeapon()
+    local dist = wep and wep.dt and wep.dt.Status and wep.dt.Status == FAS_STAT_ADS and 12000 or 1000
+    local trace = ply:TraceFromEyes( dist )
     local ent = trace.Entity
     if ent and (ent:IsNPC() or ent:IsNextBot() or ent:IsPlayer()) then
         ply:SetActiveTarget( trace.Entity )
