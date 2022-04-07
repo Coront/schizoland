@@ -131,6 +131,9 @@ function AS.Settings.BuildOptions()
     ToggleButton("Enable Target Info", xpos, ypos, settings_scroll, "as_hud_targetinfo")
     addSpace( 20, 20 )
 
+    ToggleButton("Enable Target Info Amounts", xpos, ypos, settings_scroll, "as_hud_targetinfo_amount")
+    addSpace( 0, 20 )
+
     ValueSlider( "Target Info X-Pos", xpos, ypos, -2000, 2000, settings_scroll, "as_hud_targetinfo_xadd" )
     addSpace( 0, 20 )
 
