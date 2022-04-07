@@ -183,29 +183,6 @@ function AftershockHUD()
             draw.SimpleTextOutlined( txt, "AftershockHUD", xpos, ypos, COLHUD_DEFAULT, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 1, Color(0,0,0) )
         end
     end
-
-    local crosshair = tobool(GetConVar("as_hud_crosshair"):GetInt())
-    local weaponcrosshair = tobool(GetConVar("as_hud_crosshair_weaponcrosshair"):GetInt())
-    if crosshair and not (weaponcrosshair and LocalPlayer():GetActiveWeapon().Base == "as_basewep" and not LocalPlayer():GetActiveWeapon().DefaultCrosshair) then
-        local multidots = tobool(GetConVar("as_hud_crosshair_multidots"):GetInt())
-        local x, y = ScrW() / 2, ScrH() / 2
-        surface.SetDrawColor(Color(0,0,0))
-        surface.DrawRect( x, y, 3, 3 )
-        if multidots then
-            surface.DrawRect( x+10, y, 3, 3 )
-            surface.DrawRect( x-10, y, 3, 3 )
-            surface.DrawRect( x, y+10, 3, 3 )
-            surface.DrawRect( x, y-10, 3, 3 )
-        end
-        surface.SetDrawColor(COLHUD_DEFAULT)
-        surface.DrawRect( x, y, 2, 2 )
-        if multidots then
-            surface.DrawRect( x+10, y, 2, 2 )
-            surface.DrawRect( x-10, y, 2, 2 )
-            surface.DrawRect( x, y+10, 2, 2 )
-            surface.DrawRect( x, y-10, 2, 2 )
-        end
-    end
 end
 
 function ConnectionInformation()
@@ -253,7 +230,7 @@ function GM:HUDShouldDraw( type )
         ["CHudAmmo"] = true,
         ["CHudSecondaryAmmo"] = true,
         ["CHudBattery"] = true,
-        ["CHudCrosshair"] = true,
+        --["CHudCrosshair"] = true,
         ["CHudCloseCaption"] = true,
         ["CHudDamageIndicator"] = true,
         ["CHudGeiger"] = true,
@@ -263,7 +240,7 @@ function GM:HUDShouldDraw( type )
         ["CHudSquadStatus"] = true,
         ["CHudTrain"] = true,
         ["CHudVehicle"] = true,
-        ["CHudWeapon"] = true,
+        --["CHudWeapon"] = true,
         ["CHudZoom"] = true,
         ["CHudQuickInfo"] = true,
         ["CHudSuitPower"] = true,

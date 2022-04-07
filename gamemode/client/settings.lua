@@ -95,9 +95,6 @@ function AS.Settings.BuildOptions()
     ToggleButton("Play container sounds", xpos, ypos, settings_scroll, "as_container_sounds")
     addSpace( 0, 20 )
 
-    ValueSlider( "Scope Sensitivity Percent", xpos, ypos, 1, 100, settings_scroll, "aswep_scope_sensitivity" )
-    addSpace( 0, 20 )
-
     resetX()
 
 --  ██████╗ ██╗   ██╗██╗
@@ -130,42 +127,6 @@ function AS.Settings.BuildOptions()
 
     ToggleButton("Enable HUD", xpos, ypos, settings_scroll, "as_hud")
     addSpace( 20, 20 )
-
-    ToggleButton("Enable Crosshair", xpos, ypos, settings_scroll, "as_hud_crosshair")
-    addSpace( 20, 20 )
-
-    ToggleButton("Multiple Dots Crosshair", xpos, ypos, settings_scroll, "as_hud_crosshair_multidots")
-    addSpace( 0, 20 )
-
-    ToggleButton("Use Weapon Crosshairs", xpos, ypos, settings_scroll, "as_hud_crosshair_weaponcrosshair")
-    addSpace( 20, 20 )
-
-    ToggleButton("Crosshair Shadowing", xpos, ypos, settings_scroll, "as_hud_crosshair_weaponcrosshair_shadow")
-    addSpace( 0, 20 )
-
-    ToggleButton("Crosshair Center Dot", xpos, ypos, settings_scroll, "as_hud_crosshair_weaponcrosshair_centerdot")
-    addSpace( 20, 20 )
-    
-    ValueSlider( "Dot Size", xpos, ypos, 1, 30, settings_scroll, "as_hud_crosshair_weaponcrosshair_centerdot_size" )
-    addSpace( -20, 20 )
-
-    ValueSlider( "Crosshair Length", xpos, ypos, 1, 30, settings_scroll, "as_hud_crosshair_weaponcrosshair_length" )
-    addSpace( 0, 20 )
-
-    ValueSlider( "Crosshair Width", xpos, ypos, 1, 30, settings_scroll, "as_hud_crosshair_weaponcrosshair_width" )
-    addSpace( -40, 20 )
-
-    ToggleButton("Enable Weapon Ammo", xpos, ypos, settings_scroll, "as_hud_ammo")
-    addSpace( 20, 20 )
-
-    ToggleButton("Show Background", xpos, ypos, settings_scroll, "as_hud_ammo_background")
-    addSpace( 0, 20 )
-
-    ValueSlider( "Ammo X-Pos", xpos, ypos, -2000, 2000, settings_scroll, "as_hud_ammo_xadd" )
-    addSpace( 0, 20 )
-
-    ValueSlider( "Ammo Y-Pos", xpos, ypos, -2000, 2000, settings_scroll, "as_hud_ammo_yadd" )
-    addSpace( -20, 20 )
 
     ToggleButton("Enable Target Info", xpos, ypos, settings_scroll, "as_hud_targetinfo")
     addSpace( 20, 20 )
