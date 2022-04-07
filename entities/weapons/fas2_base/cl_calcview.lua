@@ -12,6 +12,7 @@ function SWEP:CalcView(ply, pos, ang, fov)
 	cyc = vm:GetCycle()
 	intensity = GetConVarNumber("fas2_headbob_intensity")
 	
+	--[[
 	if att then
 		if self.CurAnim and (self.CurAnim:find("reload") or self.AnimOverride and self.AnimOverride[self.CurAnim]) then
 			if cyc <= 0.9 then
@@ -29,6 +30,7 @@ function SWEP:CalcView(ply, pos, ang, fov)
 		ang:RotateAroundAxis(ang:Right(), curang.p * self.PitchMod)
 		ang:RotateAroundAxis(ang:Up(), curang.r * self.YawMod)
 	end
+	]]
 	
 	if self.dt.Status == FAS_STAT_ADS then
 		self.CurFOVMod = Lerp(FT * 10, self.CurFOVMod, self.AimFOV)

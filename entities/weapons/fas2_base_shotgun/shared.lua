@@ -288,7 +288,7 @@ function SWEP:ShotgunThink()
 					end
 					
 					self:InsertAmmo()
-					self.Owner:RestartGesture(PLAYER_RELOAD)
+					self.Owner:AnimRestartGesture( 1, PLAYER_RELOAD, true )
 					
 					if SERVER then
 						if not self.Owner.FAS_FamiliarWeapons[self.Class] then

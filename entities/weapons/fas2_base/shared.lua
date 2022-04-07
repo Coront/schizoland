@@ -128,7 +128,7 @@ SWEP.Instructions    = "CONTEXT MENU KEY - Open customization menu\nUSE + RELOAD
 SWEP.Contact        = ""
 SWEP.Purpose        = ""
 SWEP.HoldType = "ar2"
-SWEP.FirstDeploy = true
+SWEP.FirstDeploy = false
 
 SWEP.ViewModelFOV    = 55
 SWEP.ViewModelFlip    = false
@@ -450,78 +450,9 @@ function SWEP:Reload()
 	self.Owner:SetAnimation(PLAYER_RELOAD)
 end
 
-function SWEP:PlayDeployAnim()
-	if self:Clip1() == 0 and self.Anims.Draw_Empty then
-		FAS2_PlayAnim(self, self.Anims.Draw_Empty, self.DeployAnimSpeed)
-	else
-		FAS2_PlayAnim(self, self.Anims.Draw, self.DeployAnimSpeed)
-	end
-end
-
 function SWEP:Deploy()
-	if not IsValid(self.Owner) then
-		return false
-	end
-
-	if not self.FirstDeploy then
-		CT = CurTime()
-		
-		if (CLIENT and not IsFirstTimePredicted()) then
-			self:SetNextPrimaryFire(CT + (self.DeployTime and self.DeployTime or 1))
-			self:SetNextSecondaryFire(CT + (self.DeployTime and self.DeployTime or 1))
-			self.ReloadWait = CT + (self.DeployTime and self.DeployTime or 1)
-			self.SprintDelay = CT + (self.DeployTime and self.DeployTime or 1)
-		else
-			self:SetNextPrimaryFire(CT + (self.DeployTime and self.DeployTime or 1))
-			self:SetNextSecondaryFire(CT + (self.DeployTime and self.DeployTime or 1))
-			self.ReloadWait = CT + (self.DeployTime and self.DeployTime or 1)
-			self.SprintDelay = CT + (self.DeployTime and self.DeployTime or 1)
-		end
-		
-		self:PlayDeployAnim()
-	else
-		if SP and SERVER then
-			a = self.Anims.Draw_First
-			
-			if type(a) == "table" then
-				a = table.Random(a)
-			end
-			
-			FAS2_PlayAnim(self, a, 1, 0, self.Owner:Ping() / 1000)
-		end
-		
-		//self.CurSoundTable = self.Sounds[a]
-		//self.CurSoundEntry = 1
-		//self.SoundSpeed = 1
-		//self.SoundTime = CT + 0.175 + self:GetOwner():Ping() / 1000
-		//self.CurAnim = a
-		
-		CT = CurTime()
-		
-		self:SetNextPrimaryFire(CT + (self.FirstDeployTime and self.FirstDeployTime or 1))
-		self:SetNextSecondaryFire(CT + (self.FirstDeployTime and self.FirstDeployTime or 1))
-		self.ReloadWait = CT + (self.FirstDeployTime and self.FirstDeployTime or 1)
-		self.SprintDelay = CT + (self.FirstDeployTime and self.FirstDeployTime or 1)
-		self.FirstDeploy = false
-	end
-	
-	if CLIENT then
-		self.Peeking = false
-	end
-	
-	if not self.Owner.FAS_FamiliarWeapons then
-		self.Owner.FAS_FamiliarWeapons = {}
-	end
-		
-	if SERVER then
-		if not self.Owner.FAS_FamiliarWeaponsProgress then
-			self.Owner.FAS_FamiliarWeaponsProgress = {}
-		end
-	end
-
-	self.dt.Status = FAS_STAT_IDLE
+	self:PlayDeployAnim()
 	self:EmitSound("weapons/weapon_deploy" .. math.random(1, 3) .. ".wav", 50, 100)
-	
 	return true
 end
 
@@ -591,64 +522,21 @@ function SWEP:PlayHolsterAnim()
 	end
 end
 
+function SWEP:PlayDeployAnim()
+	if self:Clip1() == 0 and self.Anims.Draw_Empty then
+		FAS2_PlayAnim(self, self.Anims.Draw_Empty)
+	else
+		FAS2_PlayAnim(self, self.Anims.Draw)
+	end
+end
+
 function SWEP:Holster(wep)
-	if self == wep then
-		return
-	end
-	
-	if self.dt.Status == FAS_STAT_HOLSTER_END then
-		self.dt.Status = FAS_STAT_IDLE
-		self.ReloadDelay = nil
-		return true
-	end
-	
 	if self.ReloadDelay or CurTime() < self.ReloadWait then
 		return false
 	end
-	
-	if IsValid(wep) and self.dt.Status != FAS_STAT_HOLSTER_START then
-		CT = CurTime()
 
-		self:SetNextPrimaryFire(CT + (self.HolsterTime and self.HolsterTime * 2 or 0.75))
-		self:SetNextSecondaryFire(CT + (self.HolsterTime and self.HolsterTime * 2 or 0.75))
-		self.ReloadWait = CT + (self.HolsterTime and self.HolsterTime * 2 or 0.75)
-		self.SprintDelay = CT + (self.HolsterTime and self.HolsterTime * 2 or 0.75)
-		
-		self.ChosenWeapon = wep:GetClass()
-		
-		if self.dt.Status != FAS_STAT_HOLSTER_END then
-			timer.Simple((self.HolsterTime and self.HolsterTime or 0.45), function()
-				if IsValid(self) and IsValid(self.Owner) and self.Owner:Alive() then
-					self.dt.Status = FAS_STAT_HOLSTER_END
-					self.dt.Bipod = false
-					self.Owner:ConCommand("use " .. self.ChosenWeapon)
-					//RunConsoleCommand("use", self.ChosenWeapon)
-					//if SERVER then
-					//	self.Owner:SelectWeapon(self.ChosenWeapon)
-					//end
-				end
-			end)
-		end
-		
-		self.dt.Status = FAS_STAT_HOLSTER_START
-		self:PlayHolsterAnim()
-	end
-	
-	//self:EmitSound("Generic_Cloth", 70, 100)
-	
-	if CLIENT then
-		self.CurSoundTable = nil
-		self.CurSoundEntry = nil
-		self.SoundTime = nil
-		self.SoundSpeed = 1
-	end
-	
-	if SERVER and SP then
-		SendUserMessage("FAS2_ENDSOUNDS", self.Owner)
-	end
-	
 	self:EmitSound("weapons/weapon_holster" .. math.random(1, 3) .. ".wav", 50, 100)
-	return false
+	return true
 end
 
 local mod, cr, tr, aim
@@ -912,7 +800,7 @@ function SWEP:SecondaryAttack()
 	self:SetNextPrimaryFire(CT + 0.1)
 	self:SetNextSecondaryFire(CT + 0.1)
 	self.ReloadWait = CT + 0.3
-	
+
 	return 
 end
 
@@ -944,13 +832,8 @@ end
 function SWEP:CalculateSpread()
 	aim = self.Owner:GetAimVector()
 		
-	if not self.Owner.LastView then
-		self.Owner.LastView = aim
-		self.Owner.ViewAff = 0
-	else
-		self.Owner.ViewAff = Lerp(0.25, self.Owner.ViewAff, (aim - self.Owner.LastView):Length() * 0.5)
-		self.Owner.LastView = aim
-	end
+	self.Owner.LastView = aim
+	self.Owner.ViewAff = 0
 	
 	cone = self.HipCone * (cr and 0.75 or 1) * (self.dt.Bipod and 0.3 or 1)
 		
@@ -971,7 +854,10 @@ function SWEP:CalculateSpread()
 		end
 	end
 	
-	self.CurCone = math.Clamp(cone + self.AddSpread * (self.dt.Bipod and 0.5 or 1) + (vel / 10000 * self.VelocitySensitivity) * (self.dt.Status == FAS_STAT_ADS and 0.25 or 1) + self.Owner.ViewAff, 0, 0.09 + self.MaxSpreadInc)
+	self.CurCone = math.Clamp(cone + self.AddSpread * (self.dt.Bipod and 0.5 or 1) * (self.dt.Status == FAS_STAT_ADS and 0.25 or 1) + self.Owner.ViewAff, 0, 0.09 + self.MaxSpreadInc)
+	if not self:GetOwner():IsOnGround() then
+		self.CurCone = self.CurCone * 5
+	end
 	
 	if CT > self.SpreadWait then
 		self.AddSpread = math.Clamp(self.AddSpread - 0.005 * self.AddSpreadSpeed, 0, self.MaxSpreadInc)
@@ -1039,26 +925,14 @@ function SWEP:Think()
 
 	cr = self.Owner:Crouching()
 	CT, vel = CurTime(), Length(GetVelocity(self.Owner))
+
+	if self.CockAfterShot and not self.Cocked then
+		self:CockLogic()
+	end
 	
 	if self.ReloadDelay and CT >= self.ReloadDelay then
 		mag, ammo = self:Clip1(), self.Owner:GetAmmoCount(self.Primary.Ammo)
-		
-		if SERVER then
-			if not self.NoProficiency then
-				if not self.Owner.FAS_FamiliarWeapons[self.Class] then
-					if not self.Owner.FAS_FamiliarWeaponsProgress[self.Class] then
-						self.Owner.FAS_FamiliarWeaponsProgress[self.Class] = 0
-					end
-					
-					self.Owner.FAS_FamiliarWeaponsProgress[self.Class] = self.Owner.FAS_FamiliarWeaponsProgress[self.Class] + GetConVarNumber("fas2_profgain") * (mag == 0 and 1.5 or 1)
-					
-					if self.Owner.FAS_FamiliarWeaponsProgress[self.Class] >= 1 then
-						self:FamiliariseWithWeapon()
-					end
-				end
-			end
-		end
-		
+
 		if self.ReloadAmount then
 			if SERVER then
 				self:SetClip1(math.Clamp(mag + self.ReloadAmount, 0, self.Primary.ClipSize))
@@ -1236,7 +1110,7 @@ function SWEP:Think()
 					
 					if CT > self.SprintDelay and not self.ReloadDelay then
 						self:SetNextPrimaryFire(CT + 0.2)
-						self:SetNextSecondaryFire(CT + 0.2)
+						--self:SetNextSecondaryFire(CT + 0.2)
 					end
 				end
 			end
@@ -1246,7 +1120,7 @@ function SWEP:Think()
 				
 				if CT > self.SprintDelay and not self.ReloadDelay then
 					self:SetNextPrimaryFire(CT + 0.2)
-					self:SetNextSecondaryFire(CT + 0.2)
+					--self:SetNextSecondaryFire(CT + 0.2)
 				end
 			end
 		end
@@ -1481,7 +1355,6 @@ end
 
 function SWEP:DrawWeapon()
 	self:DelayMe(CT + self.DeployTime)
-	self:PlayDeployAnim()
 	self.dt.Status = FAS_STAT_IDLE
 end
 

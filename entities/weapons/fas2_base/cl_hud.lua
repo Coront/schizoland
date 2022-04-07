@@ -13,14 +13,17 @@ function SWEP:DrawHUD()
 	if GetConVarNumber("fas2_nohud") > 0 then
 		return
 	end
+
+	local colhud = COLHUD_DEFAULT or Color( 255, 255, 255, 255 )
+	local col = colhud:ToTable()
 	
 	FT, CT, x, y = FrameTime(), CurTime(), ScrW(), ScrH()
 	lp = self.Owner:ShouldDrawLocalPlayer()
 	
 	if (self.dt.Status == FAS_STAT_ADS or self.dt.Status == FAS_STAT_SPRINT or self.dt.Status == FAS_STAT_CUSTOMIZE or self.dt.Status == FAS_STAT_QUICKGRENADE or self.MagCheck or self.NearWall or self.Vehicle) and not lp or self.FireMode == "safe" then
-		self.CrossAlpha = Lerp(FT * 10, self.CrossAlpha, 0)
+		self.CrossAlpha = Lerp(FT * 20, self.CrossAlpha, 0)
 	else
-		self.CrossAlpha = Lerp(FT * 10, self.CrossAlpha, 255)
+		self.CrossAlpha = Lerp(FT * 20, self.CrossAlpha, 255)
 	end
 	
 	if lp then
@@ -40,8 +43,7 @@ function SWEP:DrawHUD()
 		surface.SetDrawColor(0, 0, 0, 255 - self.CrossAlpha)
 		surface.SetTexture(ClumpSpread)
 		surface.DrawTexturedRect(x2 - 20, y2 - 20, 40, 40)
-		
-		surface.SetDrawColor(255, 255, 255, 255 - self.CrossAlpha)
+		surface.SetDrawColor(col[1], col[2], col[3], 255 - self.CrossAlpha)
 		surface.DrawTexturedRect(x2 - 19, y2 - 19, 38, 38)
 		
 		White.a, Black.a = 255 - self.CrossAlpha, 255 - self.CrossAlpha
@@ -54,7 +56,7 @@ function SWEP:DrawHUD()
 		surface.SetTexture(ClumpSpread)
 		surface.DrawTexturedRect(x2 - size * 0.5 - 1, y2 - size * 0.5 - 1, size + 2, size + 2)
 				
-		surface.SetDrawColor(255, 255, 255, self.CrossAlpha)
+		surface.SetDrawColor(col[1], col[2], col[3], self.CrossAlpha)
 		surface.DrawTexturedRect(x2 - size * 0.5, y2 - size * 0.5, size, size)
 	end
 	
@@ -66,7 +68,7 @@ function SWEP:DrawHUD()
 	surface.DrawRect(x2 - 1, y2 - 13 - self.CrossAmount, 3, 12) -- upper cross
 	surface.DrawRect(x2 - 1, y2 + 3 + self.CrossAmount, 3, 12) -- lower cross
 		
-	surface.SetDrawColor(255, 255, 255, self.CrossAlpha) -- WHITE crosshair parts
+	surface.SetDrawColor(col[1], col[2], col[3], self.CrossAlpha) -- WHITE crosshair parts
 	surface.DrawRect(x2 - 12 - self.CrossAmount, y2, 10, 1) -- left cross
 	surface.DrawRect(x2 + 4 + self.CrossAmount, y2, 10, 1) -- right cross
 		
@@ -121,25 +123,13 @@ function SWEP:DrawHUD()
 			surface.SetDrawColor(0, 0, 0, 200)
 			surface.DrawTexturedRect(x / 2 - 128, y - 180, 256, 54)
 			
-			draw.ShadowText("[USE KEY]", "FAS2_HUD24", x / 2, y - 165, White, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+			draw.ShadowText("[USE KEY]", "FAS2_HUD24", x / 2, y - 165, colhud, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 				
 			if self.ShowStats then
-				draw.ShadowText("Customize weapon", "FAS2_HUD24", x / 2, y - 143, White, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+				draw.ShadowText("Customize weapon", "FAS2_HUD24", x / 2, y - 143, colhud, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 			else
-				draw.ShadowText("Show weapon stats", "FAS2_HUD24", x / 2, y - 143, White, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+				draw.ShadowText("Show weapon stats", "FAS2_HUD24", x / 2, y - 143, colhud, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 			end
 		end
-	end
-	
-	surface.SetTexture(HitMarker)
-	
-	surface.SetDrawColor(0, 0, 0, self.HitMarkerAlpha)
-	surface.DrawTexturedRect(x2 - 33, y2 - 33, 66, 66)
-	
-	surface.SetDrawColor(255, 255, 255, self.HitMarkerAlpha)
-	surface.DrawTexturedRect(x2 - 32, y2 - 32, 64, 64)
-	
-	if CT > self.HitMarkerTime then
-		self.HitMarkerAlpha = math.Approach(self.HitMarkerAlpha, 0, FT * 1400)
 	end
 end

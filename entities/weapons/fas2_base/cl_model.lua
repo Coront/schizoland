@@ -236,21 +236,6 @@ function SWEP:PostDrawViewModel()
 	if IsValid(vm) then
 		iv = self.Owner.InVehicle and self.Owner:InVehicle() -- what retard overrides or removes InVehicle?
 		
-		if self.FirstDeploy then
-			FAS2_PlayAnim(self, self.Anims.Draw_First, 1, 0)
-			self.FirstDeploy = false
-		end
-		
-		if self.Owner.CurClass then
-			if self.Owner.CurClass != self.Class then
-				if not self.FirstDeploy then
-					if GetSequenceName(vm, GetSequence(vm)) != self.Anims.Draw_First then
-						self:PlayDeployAnim()
-					end
-				end
-			end
-		end
-		
 		self.Owner.CurClass = self.Class
 		
 		if iv then
@@ -261,7 +246,6 @@ function SWEP:PostDrawViewModel()
 			end
 		else
 			if self.Vehicle then
-				self:PlayDeployAnim()
 				self.Vehicle = false
 			end
 		end
@@ -297,7 +281,7 @@ function SWEP:PostDrawViewModel()
 			
 			TargetAng = (self.dt.Bipod and self[self.AimAngName .. "_Bipod"] or self.AimAng) * 1
 			
-			BlendSpeed = Lerp(FT * 3, BlendSpeed, 15)
+			BlendSpeed = Lerp(FT * 3, BlendSpeed, 35)
 			self.SlowDownBlend = true
 			move = math.Clamp(len / self.Owner:GetWalkSpeed(), 0, 1)
 			
@@ -305,13 +289,13 @@ function SWEP:PostDrawViewModel()
 				cos1, sin1 = math.cos(CT * 8), math.sin(CT * 8)
 				tan = math.atan(cos1 * sin1, cos1 * sin1)
 				
-				TargetAng[1] = TargetAng[1] + tan * 0.5 * move 
-				TargetAng[2] = TargetAng[2] + cos1 * 0.25 * move 
-				TargetAng[3] = TargetAng[3] + sin1 * 0.25 * move 
+				TargetAng[1] = TargetAng[1] + tan * 0 * move 
+				TargetAng[2] = TargetAng[2] + cos1 * 0 * move 
+				TargetAng[3] = TargetAng[3] + sin1 * 0 * move 
 						
-				TargetPos[1] = TargetPos[1] + sin1 * 0.05 * move 
-				TargetPos[2] = TargetPos[2] + tan * 0.1 * move 
-				TargetPos[3] = TargetPos[3] + tan * 0.05 * move 
+				TargetPos[1] = TargetPos[1] + sin1 * 0 * move 
+				TargetPos[2] = TargetPos[2] + tan * 0 * move 
+				TargetPos[3] = TargetPos[3] + tan * 0 * move 
 			end
 			
 			AngMod = LerpVector(FT * 10, AngMod, Vec0)
@@ -480,7 +464,7 @@ function SWEP:PostDrawViewModel()
 			BlendSpeed = Lerp(FT * 3, BlendSpeed, 12)
 			
 			if len > 30 and ong then
-				move = math.Clamp(len / self.Owner:GetWalkSpeed(), 0, 1)
+				move = math.Clamp(len / self.Owner:GetWalkSpeed(), 0, 0.5)
 				
 				if self.Owner:Crouching() then
 					cos1, sin1 = math.cos(CT * 6), math.sin(CT * 6)
@@ -940,6 +924,9 @@ function SWEP:Draw3D2DCamera()
 	end
 	
 	if GetConVarNumber("fas2_nohud") <= 0 and GetConVarNumber("fas2_customhud") > 0 then
+		local colhud = COLHUD_DEFAULT or Color(255,255,255)
+		local col = colhud:ToTable()
+
 		if self.CockRemindTime > CT then
 			self.CockRemindAlpha = math.Approach(self.CockRemindAlpha, 255, FT * 500)
 		else	
@@ -972,21 +959,21 @@ function SWEP:Draw3D2DCamera()
 							end
 							
 							if mag > self.Primary.ClipSize then
-								ShadowText(self.MagText .. self.Primary.ClipSize .. " + " .. mag - self.Primary.ClipSize, "FAS2_HUD72", 0, 0, Color(MagTextColor.r, MagTextColor.g, MagTextColor.b, self.MagCheckAlpha), Color(0, 0, 0, self.MagCheckAlpha), 2, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
+								ShadowText(self.MagText .. self.Primary.ClipSize .. " + " .. mag - self.Primary.ClipSize, "FAS2_HUD72", 0, 0, Color(col[1], col[2], col[3], self.MagCheckAlpha), Color(0, 0, 0, self.MagCheckAlpha), 2, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
 							else
-								ShadowText(self.MagText .. mag, "FAS2_HUD72", 0, 0, Color(MagTextColor.r, MagTextColor.g, MagTextColor.b, self.MagCheckAlpha), Color(0, 0, 0, self.MagCheckAlpha), 2, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
+								ShadowText(self.MagText .. mag, "FAS2_HUD72", 0, 0, Color(col[1], col[2], col[3], self.MagCheckAlpha), Color(0, 0, 0, self.MagCheckAlpha), 2, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
 							end
 								
-							ShadowText("RESERVE " .. self.Owner:GetAmmoCount(self.Primary.Ammo), "FAS2_HUD48", 0, 60, Color(255, 255, 255, self.MagCheckAlpha), Color(0, 0, 0, self.MagCheckAlpha), 2, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
-							ShadowText(self.FireModeDisplay, "FAS2_HUD36", 0, 105, Color(255, 255, 255, self.MagCheckAlpha), Color(0, 0, 0, self.MagCheckAlpha), 2, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
-							ShadowText(self.Primary.Ammo, "FAS2_HUD24", 0, 140, Color(255, 255, 255, self.MagCheckAlpha), Color(0, 0, 0, self.MagCheckAlpha), 2, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
+							ShadowText("RESERVE " .. self.Owner:GetAmmoCount(self.Primary.Ammo), "FAS2_HUD48", 0, 60, Color(col[1], col[2], col[3], self.MagCheckAlpha), Color(0, 0, 0, self.MagCheckAlpha), 2, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
+							ShadowText(self.FireModeDisplay, "FAS2_HUD36", 0, 105, Color(col[1], col[2], col[3], self.MagCheckAlpha), Color(0, 0, 0, self.MagCheckAlpha), 2, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
+							ShadowText(self.Primary.Ammo, "FAS2_HUD24", 0, 140, Color(col[1], col[2], col[3], self.MagCheckAlpha), Color(0, 0, 0, self.MagCheckAlpha), 2, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
 								
 							if self.MagCheck then
 								if animfound and cyc < 0.99 then
 									surface.SetDrawColor(0, 0, 0, self.MagCheckAlpha)
 									surface.DrawRect(3, 175, 270, 10)
 										
-									surface.SetDrawColor(255, 255, 255, self.MagCheckAlpha)
+									surface.SetDrawColor(col[1], col[2], col[3], self.MagCheckAlpha)
 									surface.DrawRect(2, 175, 300 * cyc, 8)
 								end
 							end
