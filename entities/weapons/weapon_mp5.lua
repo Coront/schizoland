@@ -118,7 +118,7 @@ SWEP.WorldModel   = "models/weapons/w_smg_mp5.mdl"
 SWEP.Primary.ClipSize        = 30
 SWEP.Primary.DefaultClip    = 0
 SWEP.Primary.Automatic       = true    
-SWEP.Primary.Ammo             = "smg1"
+SWEP.Primary.Ammo             = "pistol"
  
 -- Secondary Fire Attributes --
 SWEP.Secondary.ClipSize        = -1

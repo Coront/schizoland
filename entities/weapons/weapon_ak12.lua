@@ -116,7 +116,7 @@ SWEP.WorldModel   = "models/weapons/world/rifles/ak12.mdl"
 SWEP.Primary.ClipSize        = 30
 SWEP.Primary.DefaultClip    = 0
 SWEP.Primary.Automatic       = true    
-SWEP.Primary.Ammo             = "ar2"
+SWEP.Primary.Ammo             = "smg1"
 
 -- Secondary Fire Attributes --
 SWEP.Secondary.ClipSize        = -1

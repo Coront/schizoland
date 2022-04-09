@@ -89,7 +89,7 @@ function translateAmmoNameID( ammo ) --This function translates an itemid/ammoid
         ammo = string.lower(ammo)
         for k, v in pairs(AS.Items) do
             if not string.find( k, "ammo_" ) then continue end --Ignore everything thats not an ammo.
-            if AS.Items[k].use.ammotype == ammo then
+            if string.lower(AS.Items[k].use.ammotype) == ammo then
                 return k --We'll feed back the itemid
             end
         end

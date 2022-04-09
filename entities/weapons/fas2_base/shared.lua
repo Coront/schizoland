@@ -829,7 +829,7 @@ function SWEP:UnloadWeapon()
 	if CLIENT then
 		self.CheckTime = CT + 3
 	else
-		self.Owner:GiveAmmo(mag, self.Primary.Ammo)
+		self.Owner:GiveAmmo(mag, self.Primary.Ammo, true)
 	end
 end
 

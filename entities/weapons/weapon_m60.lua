@@ -11,8 +11,8 @@ if CLIENT then
 	SWEP.CustomizePos = Vector(6, -2.92, -1.296)
 	SWEP.CustomizeAng = Vector(14.231, 30, 12.747)
 
-	SWEP.SprintPos = Vector(2.5, -5, -1.69)
-	SWEP.SprintAng = Vector(3.033, 34, 0)
+	--SWEP.SprintPos = Vector(2.5, -5, -1.69)
+	--SWEP.SprintAng = Vector(3.033, 34, 0)
 		
 	SWEP.CompM4Pos = Vector(-2.845, -3.25, 1.355)
 	SWEP.CompM4Ang = Vector(0, 0, 0)
@@ -129,7 +129,7 @@ SWEP.WorldModel   = "models/weapons/w_mach_m249para.mdl"
 SWEP.Primary.ClipSize        = 100
 SWEP.Primary.DefaultClip    = 0
 SWEP.Primary.Automatic       = true    
-SWEP.Primary.Ammo             = "ar2"
+SWEP.Primary.Ammo             = "sniperround"
  
 -- Secondary Fire Attributes --
 SWEP.Secondary.ClipSize        = -1

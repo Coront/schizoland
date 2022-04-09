@@ -204,7 +204,7 @@ SWEP.WorldModel   = "models/weapons/w_357.mdl"
 SWEP.Primary.ClipSize        = 5
 SWEP.Primary.DefaultClip    = 0
 SWEP.Primary.Automatic       = false    
-SWEP.Primary.Ammo             = "pistol"
+SWEP.Primary.Ammo             = "357"
  
 -- Secondary Fire Attributes --
 SWEP.Secondary.ClipSize        = -1
@@ -239,6 +239,7 @@ SWEP.Recoil = 3.5
 SWEP.RecoilHorizontal = 3.4
 
 -- Reload related
+SWEP.ReloadTime = 2.5
 SWEP.ReloadTime_1 = 2.5
 SWEP.ReloadTime_2 = 3.2
 SWEP.ReloadTime_3 = 3.7

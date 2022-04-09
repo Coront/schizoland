@@ -123,7 +123,7 @@ SWEP.WorldModel   = "models/weapons/w_snip_sg550.mdl"
 SWEP.Primary.ClipSize        = 10
 SWEP.Primary.DefaultClip    = 0
 SWEP.Primary.Automatic       = false    
-SWEP.Primary.Ammo             = "sniperround"
+SWEP.Primary.Ammo             = "sniperpenetratedround"
  
 -- Secondary Fire Attributes --
 SWEP.Secondary.ClipSize        = -1

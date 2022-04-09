@@ -11,8 +11,8 @@ if CLIENT then
 	SWEP.CustomizePos = Vector(6, -1.92, -3.396)
 	SWEP.CustomizeAng = Vector(16.431, 22.895, 9.747)
 	
-	SWEP.SprintPos = Vector(1.5, -7, -1.69)
-	SWEP.SprintAng = Vector(3.033, 34, 0)
+	--SWEP.SprintPos = Vector(1.5, -7, -1.69)
+	--SWEP.SprintAng = Vector(3.033, 34, 0)
 	
 	SWEP.AimPos_Bipod = Vector(-2.591, -2.874, 1.215)
 	SWEP.AimAng_Bipod = Vector(0.5, 0, 0)

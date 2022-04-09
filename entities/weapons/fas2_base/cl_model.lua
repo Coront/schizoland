@@ -927,7 +927,8 @@ function SWEP:Draw3D2DCamera()
 								
 							ShadowText("RESERVE " .. self.Owner:GetAmmoCount(self.Primary.Ammo), "FAS2_HUD48", 0, 60, Color(col[1], col[2], col[3], self.MagCheckAlpha), Color(0, 0, 0, self.MagCheckAlpha), 2, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
 							ShadowText(self.FireModeDisplay, "FAS2_HUD36", 0, 105, Color(col[1], col[2], col[3], self.MagCheckAlpha), Color(0, 0, 0, self.MagCheckAlpha), 2, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
-							ShadowText(self.Primary.Ammo, "FAS2_HUD24", 0, 140, Color(col[1], col[2], col[3], self.MagCheckAlpha), Color(0, 0, 0, self.MagCheckAlpha), 2, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
+							local ammoname = translateAmmoNameID(self.Primary.Ammo) and AS.Items[translateAmmoNameID(self.Primary.Ammo)].name or self.Primary.Ammo
+							ShadowText(ammoname, "FAS2_HUD24", 0, 140, Color(col[1], col[2], col[3], self.MagCheckAlpha), Color(0, 0, 0, self.MagCheckAlpha), 2, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
 								
 							if self.MagCheck then
 								if animfound and cyc < 0.99 then

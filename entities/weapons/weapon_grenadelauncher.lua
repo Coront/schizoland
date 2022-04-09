@@ -1,15 +1,12 @@
-if SERVER then
-	AddCSLuaFile("shared.lua")
-	SWEP.ExtraMags = 10
-end
+AddCSLuaFile()
 
 if CLIENT then
-    SWEP.PrintName = "M79"
+    SWEP.PrintName = "M79 Grenade Launcher"
     SWEP.Slot = 4
     SWEP.SlotPos = 0
 	
-	SWEP.AimPos = Vector(-3.412, -6.4, -2.238)
-	SWEP.AimAng = Vector(7.353, 0, 0)
+	SWEP.AimPos = Vector(-3.412, -5.4, 0.538)
+	SWEP.AimAng = Vector(1.283, -0.03, 0.2)
 		
 	SWEP.WMAng = Vector(-15, 180, 180)
 	SWEP.WMPos = Vector(1, -3, -2)
@@ -66,9 +63,9 @@ SWEP.WorldModel   = "models/weapons/w_rif_ak47.mdl"
 
 -- Primary Fire Attributes --
 SWEP.Primary.ClipSize        = 1
-SWEP.Primary.DefaultClip    = 2
+SWEP.Primary.DefaultClip    = 0
 SWEP.Primary.Automatic       = false    
-SWEP.Primary.Ammo             = "40MM HE"
+SWEP.Primary.Ammo             = "SMG1_Grenade"
  
 -- Secondary Fire Attributes --
 SWEP.Secondary.ClipSize        = -1
@@ -90,17 +87,16 @@ SWEP.FireSound = Sound("FAS2_M79")
 SWEP.FireSound_Suppressed = Sound("FAS2_AK47_S")
 
 -- Accuracy related
-SWEP.HipCone = 0.048
-SWEP.AimCone = 0.007
-SWEP.SpreadPerShot = 0.008
-SWEP.MaxSpreadInc = 0.03
-SWEP.SpreadCooldown = 0.18
-SWEP.VelocitySensitivity = 1.8
-SWEP.AimFOV = 5
+SWEP.HipCone = 0.07
+SWEP.AimCone = 0.005
+SWEP.SpreadPerShot = 0.1
+SWEP.MaxSpreadInc = 0.1
+SWEP.SpreadCooldown = 0
+SWEP.AimFOV = 10
 
 -- Recoil related
-SWEP.ViewKick = 4.5
-SWEP.Recoil = 3
+SWEP.Recoil = 5
+SWEP.RecoilHorizontal = 5
 
 -- Reload related
 SWEP.ReloadTime = 4
@@ -169,21 +165,20 @@ function SWEP:PrimaryAttack()
 	self.Owner:SetAnimation(PLAYER_ATTACK1)
 	self:TakePrimaryAmmo(1)
 	self:EmitSound(self.FireSound, 105, 100)
-	self.ReloadWait = CurTime() + 0.5
+	self.ReloadWait = CurTime()
 	
 	if SERVER then
 		nade = ents.Create("fas2_40mm_frag")
 		EA =  self.Owner:EyeAngles()
 		pos = self.Owner:GetShootPos()
 		pos = pos + EA:Right() * 5 - EA:Up() * 4 + EA:Forward() * 8
-					
 		nade:SetPos(pos)
 		nade:SetAngles(EA)
-		nade:Spawn()
 		nade:SetOwner(self.Owner)
-		nade.BlastRadius = 1024
-		nade.BlastDamage = 175
-		nade:GetPhysicsObject():SetVelocity((EA + Angle(self.CurCone * math.Rand(-25, 25), self.CurCone * math.Rand(-25, 25), 0)):Forward() * 3000)
+		nade.BlastRadius = 612
+		nade.BlastDamage = 180
+		nade:Spawn()
+		nade:GetPhysicsObject():SetVelocity((EA + Angle(self.CurCone * math.Rand(-25, 25), self.CurCone * math.Rand(-25, 25), 0)):Forward() * 5000)
 		
 		if SP then
 			SendUserMessage("FAS2MUZZLE", self.Owner)

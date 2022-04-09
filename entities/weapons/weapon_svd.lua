@@ -1,7 +1,4 @@
-if SERVER then
-	AddCSLuaFile("shared.lua")
-	SWEP.ExtraMags = 6
-end
+AddCSLuaFile()
 
 if CLIENT then
     SWEP.PrintName = "Dragunov SVD"
@@ -12,8 +9,8 @@ if CLIENT then
 	SWEP.AimPos = Vector(-2.286, -4.191, 0.825)
 	SWEP.AimAng = Vector(-0.045, -0.05, 0)
 
-	SWEP.SprintPos = Vector(0.75, -4.55, -0.45)
-	SWEP.SprintAng = Vector(-11, 25, -15)
+	--SWEP.SprintPos = Vector(0.75, -4.55, -0.45)
+	--SWEP.SprintAng = Vector(-11, 25, -15)
 
 	SWEP.AimSens = 0.15
 
@@ -95,9 +92,9 @@ SWEP.WorldModel   = "models/weapons/w_snip_sg550.mdl"
 
 -- Primary Fire Attributes --
 SWEP.Primary.ClipSize        = 10
-SWEP.Primary.DefaultClip    = 10
+SWEP.Primary.DefaultClip    = 0
 SWEP.Primary.Automatic       = false   
-SWEP.Primary.Ammo             = "7.62x54MM"
+SWEP.Primary.Ammo             = "sniperround"
  
 -- Secondary Fire Attributes --
 SWEP.Secondary.ClipSize        = -1
@@ -112,23 +109,23 @@ SWEP.DeployAnimSpeed = 0.75
 
 -- Firing related
 SWEP.Shots = 1
-SWEP.FireDelay = 0.19
-SWEP.Damage = 56
+SWEP.FireDelay = 60/200
+SWEP.Damage = 42
 SWEP.FireSound = Sound("FAS2_SVD")
 SWEP.FireSound_Suppressed = Sound("FAS2_SVD_S")
 
 -- Accuracy related
-SWEP.HipCone = 0.0725
-SWEP.AimCone = 0.0005
-SWEP.SpreadPerShot = 0.015
-SWEP.MaxSpreadInc = 0.041
-SWEP.SpreadCooldown = 0.2
+SWEP.HipCone = 0.09
+SWEP.AimCone = 0.0006
+SWEP.SpreadPerShot = 0.02
+SWEP.MaxSpreadInc = 0.06
+SWEP.SpreadCooldown = 0.4
 SWEP.VelocitySensitivity = 2.2
-SWEP.AimFOV = 5
+SWEP.AimFOV = 0
 
 -- Recoil related
-SWEP.ViewKick = 2.26
-SWEP.Recoil = 2.45552
+SWEP.Recoil = 1.9
+SWEP.RecoilHorizontal = 2.0
 
 -- Reload related
 SWEP.ReloadTime = 2.6
@@ -163,7 +160,7 @@ if CLIENT then
 		cd.y = 0
 		cd.w = 512
 		cd.h = 512
-		cd.fov = 2.85
+		cd.fov = 4
 		cd.drawviewmodel = false
 		cd.drawhud = false
 		render.SetRenderTarget(self.ScopeRT)

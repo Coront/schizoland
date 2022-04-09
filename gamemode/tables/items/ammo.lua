@@ -187,3 +187,24 @@ AS.AddBaseItem("ammo_50bmg", {
         ["misc_gunpowder"] = 3,
     },
 })
+
+AS.AddBaseItem("ammo_gl", {
+    name = "40mm HE",
+    desc = "A single shell of a 40mm High Explosive. Use it wisely.",
+    category = "ammo",
+    model = "models/items/ar2_grenade.mdl",
+    value = 25,
+    weight = 1,
+    use = {
+        ammotype = "SMG1_Grenade",
+        ammoamt = 1,
+    },
+    class = "engineer",
+    craft = {
+        ["misc_scrap"] = 20,
+        ["misc_smallparts"] = 20,
+        ["misc_chemical"] = 30,
+        ["misc_munitionpress"] = 0,
+        ["misc_gunpowder"] = 2,
+    },
+})

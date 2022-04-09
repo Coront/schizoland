@@ -96,7 +96,7 @@ SWEP.WorldModel = "models/weapons/w_pist_deagle.mdl"
 SWEP.Primary.ClipSize        = 7
 SWEP.Primary.DefaultClip    = 0
 SWEP.Primary.Automatic       = false    
-SWEP.Primary.Ammo             = "pistol"
+SWEP.Primary.Ammo             = "CombineHeavyCannon"
  
 -- Secondary Fire Attributes --
 SWEP.Secondary.ClipSize        = -1

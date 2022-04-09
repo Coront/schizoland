@@ -92,7 +92,7 @@ SWEP.WorldModel   = ""
 SWEP.Primary.ClipSize        = 32
 SWEP.Primary.DefaultClip    = 0
 SWEP.Primary.Automatic       = true    
-SWEP.Primary.Ammo             = "smg1"
+SWEP.Primary.Ammo             = "AlyxGun"
 
 -- Secondary Fire Attributes --
 SWEP.Secondary.ClipSize        = -1

@@ -538,7 +538,7 @@ SWEP.WorldModel   = "models/weapons/w_snip_awp.mdl"
 
 -- Primary Fire Attributes --
 SWEP.Primary.ClipSize        = 5
-SWEP.Primary.DefaultClip    = 10
+SWEP.Primary.DefaultClip    = 0
 SWEP.Primary.Automatic       = false    
 SWEP.Primary.Ammo             = "sniperround"
  

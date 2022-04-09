@@ -26,7 +26,9 @@ function PlayerMeta:UseItem( item )
 
     if use.ammotype then
         local amt = use.ammoamt
-        self:GiveAmmo( amt, use.ammotype, false )
+        self:GiveAmmo( amt, use.ammotype, true )
+        self:ChatPrint("Equipped " .. amt .. "x " .. AS.Items[item].name .. ".")
+        self:EmitSound(ITEMCUE.DROP)
     end
     if use.items then
         for k, v in pairs( use.items ) do

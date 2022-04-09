@@ -152,7 +152,7 @@ SWEP.WorldModel   = "models/weapons/w_snip_awp.mdl"
 SWEP.Primary.ClipSize        = 10
 SWEP.Primary.DefaultClip    = 0
 SWEP.Primary.Automatic       = false    
-SWEP.Primary.Ammo             = "ar2"
+SWEP.Primary.Ammo             = "smg1"
  
 -- Secondary Fire Attributes --
 SWEP.Secondary.ClipSize        = -1
@@ -168,7 +168,7 @@ SWEP.DeployAnimSpeed = 0.75
 -- Firing related
 SWEP.Shots = 1
 SWEP.FireDelay = 0.15
-SWEP.Damage = 38
+SWEP.Damage = 24
 SWEP.FireSound = Sound("FAS2_SKS")
 SWEP.FireSound_Suppressed = Sound("FAS2_SKS_S")
 
@@ -250,7 +250,7 @@ function SWEP:Reload()
 	
 	if self.Primary.ClipSize == 10 then
 		if SERVER then
-			self:GetOwner():GiveAmmo( self:Clip1(), self:GetPrimaryAmmoType() )
+			self:GetOwner():GiveAmmo( self:Clip1(), self:GetPrimaryAmmoType(), true )
 		end
 		self:SetClip1(0)
 	end
