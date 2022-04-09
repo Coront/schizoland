@@ -1,7 +1,4 @@
-if SERVER then
-	AddCSLuaFile("shared.lua")
-	SWEP.ExtraMags = 4
-end
+AddCSLuaFile()
 
 if CLIENT then
     SWEP.PrintName = "G36C"
@@ -99,9 +96,9 @@ SWEP.WorldModel   = "models/weapons/w_rif_m4a1.mdl"
 
 -- Primary Fire Attributes --
 SWEP.Primary.ClipSize        = 30
-SWEP.Primary.DefaultClip    = 60
+SWEP.Primary.DefaultClip    = 0
 SWEP.Primary.Automatic       = true    
-SWEP.Primary.Ammo             = "5.56x45MM"
+SWEP.Primary.Ammo             = "ar2"
  
 -- Secondary Fire Attributes --
 SWEP.Secondary.ClipSize        = -1
@@ -117,23 +114,23 @@ SWEP.HolsterTime = 0.35
 
 -- Firing related
 SWEP.Shots = 1
-SWEP.FireDelay = 0.08
-SWEP.Damage = 27
+SWEP.FireDelay = 60/800
+SWEP.Damage = 23
 SWEP.FireSound = Sound("FAS2_G36C")
 SWEP.FireSound_Suppressed = Sound("FAS2_G36C_S")
 
 -- Accuracy related
-SWEP.HipCone = 0.042
+SWEP.HipCone = 0.09
 SWEP.AimCone = 0.007
-SWEP.SpreadPerShot = 0.009
-SWEP.MaxSpreadInc = 0.03
+SWEP.SpreadPerShot = 0.0075
+SWEP.MaxSpreadInc = 0.04
 SWEP.SpreadCooldown = 0.15
 SWEP.VelocitySensitivity = 1.45
-SWEP.AimFOV = 5
+SWEP.AimFOV = 0
 
 -- Recoil related
-SWEP.ViewKick = 1.05
-SWEP.Recoil = 0.65
+SWEP.Recoil = 1.3
+SWEP.RecoilHorizontal = 0.85
 
 -- Reload related
 SWEP.ReloadTime = 1.8

@@ -1,7 +1,4 @@
-if SERVER then
-	AddCSLuaFile("shared.lua")
-	SWEP.ExtraMags = 4
-end
+AddCSLuaFile()
 
 if CLIENT then
     SWEP.PrintName = "Glock-20"
@@ -99,9 +96,9 @@ SWEP.DeployTime = 0.45
 
 -- Primary Fire Attributes --
 SWEP.Primary.ClipSize        = 15
-SWEP.Primary.DefaultClip    = 30
+SWEP.Primary.DefaultClip    = 0
 SWEP.Primary.Automatic       = false    
-SWEP.Primary.Ammo             = "10x25MM"
+SWEP.Primary.Ammo             = "pistol"
  
 -- Secondary Fire Attributes --
 SWEP.Secondary.ClipSize        = -1
@@ -111,23 +108,23 @@ SWEP.Secondary.Ammo         = "none"
 
 -- Firing related
 SWEP.Shots = 1
-SWEP.FireDelay = 0.13
-SWEP.Damage = 20
+SWEP.FireDelay = 60/800
+SWEP.Damage = 18
 SWEP.FireSound = Sound("FAS2_GLOCK20")
 SWEP.FireSound_Suppressed = Sound("FAS2_GLOCK20_S")
 
 -- Accuracy related
-SWEP.HipCone = 0.034
-SWEP.AimCone = 0.016
-SWEP.SpreadPerShot = 0.008
+SWEP.HipCone = 0.06
+SWEP.AimCone = 0.009
+SWEP.SpreadPerShot = 0.009
 SWEP.MaxSpreadInc = 0.03
 SWEP.SpreadCooldown = 0.2
 SWEP.VelocitySensitivity = 1.4
 SWEP.AimFOV = 0
 
 -- Recoil related
-SWEP.ViewKick = 0.75
-SWEP.Recoil = 0.6
+SWEP.Recoil = 0.85
+SWEP.RecoilHorizontal = 0.6
 
 -- Reload related
 SWEP.ReloadTime = 2.3

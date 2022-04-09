@@ -1,7 +1,4 @@
-if SERVER then
-	AddCSLuaFile("shared.lua")
-	SWEP.ExtraMags = 4
-end
+AddCSLuaFile()
 
 if CLIENT then
     SWEP.PrintName = "Sako RK-95"
@@ -89,9 +86,9 @@ SWEP.WorldModel   = "models/weapons/w_rif_ak47.mdl"
 
 -- Primary Fire Attributes --
 SWEP.Primary.ClipSize        = 30
-SWEP.Primary.DefaultClip    = 60
+SWEP.Primary.DefaultClip    = 0
 SWEP.Primary.Automatic       = true    
-SWEP.Primary.Ammo             = "7.62x39MM"
+SWEP.Primary.Ammo             = "ar2"
  
 -- Secondary Fire Attributes --
 SWEP.Secondary.ClipSize        = -1
@@ -106,23 +103,22 @@ SWEP.DeployAnimSpeed = 0.5
 
 -- Firing related
 SWEP.Shots = 1
-SWEP.FireDelay = 0.08
-SWEP.Damage = 34
+SWEP.FireDelay = 60/700
+SWEP.Damage = 25
 SWEP.FireSound = Sound("FAS2_RK95")
 SWEP.FireSound_Suppressed = Sound("FAS2_RK95_S")
 
 -- Accuracy related
-SWEP.HipCone = 0.05
-SWEP.AimCone = 0.0055
-SWEP.SpreadPerShot = 0.007
-SWEP.MaxSpreadInc = 0.03
+SWEP.HipCone = 0.082
+SWEP.AimCone = 0.004
+SWEP.SpreadPerShot = 0.0075
+SWEP.MaxSpreadInc = 0.05
 SWEP.SpreadCooldown = 0.15
-SWEP.VelocitySensitivity = 1.7
-SWEP.AimFOV = 5
+SWEP.AimFOV = 0
 
 -- Recoil related
-SWEP.ViewKick = 1.1
-SWEP.Recoil = 0.75
+SWEP.Recoil = 1.4
+SWEP.RecoilHorizontal = 0.9
 
 -- Reload related
 SWEP.ReloadTime = 2.6

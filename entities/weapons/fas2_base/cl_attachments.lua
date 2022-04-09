@@ -87,13 +87,6 @@ function SWEP:CycleAttachments(group)
 	end
 	
 	if total == 0 then
-		chat.AddText(Color(255, 255, 255), "You have ", Color(255, 125, 125), "no attachments", Color(255, 255, 255), " in the ", Color(255, 187, 104), t.header, Color(255, 255, 255), " category.")
-		chat.AddText(Color(255, 255, 255), "If you're in ", Color(109, 162, 255), "Sandbox", Color(255, 255, 255), " - spawn them via the Entities tab.")
-		
-		if self.Owner:IsAdmin() then
-			chat.AddText(Color(255, 255, 255), "As an ", Color(183, 255, 124), "Admin", Color(255, 255, 255), " you can configure what attachments players are given when spawning in the ", Color(220, 255, 117), "Utilities", Color(255, 255, 255), " section of the ", Color(220, 255, 117), "Spawn Menu.")
-		end
-		
 		surface.PlaySound("weapons/noattachments.wav")
 	end
 	

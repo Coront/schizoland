@@ -1,7 +1,4 @@
-if SERVER then
-	AddCSLuaFile("shared.lua")
-	SWEP.ExtraMags = 5
-end
+AddCSLuaFile()
 
 if CLIENT then
     SWEP.PrintName = "FAMAS F1"
@@ -98,9 +95,9 @@ SWEP.HoldType = "smg"
 
 -- Primary Fire Attributes --
 SWEP.Primary.ClipSize        = 25
-SWEP.Primary.DefaultClip    = 50
+SWEP.Primary.DefaultClip    = 0
 SWEP.Primary.Automatic       = true    
-SWEP.Primary.Ammo             = "5.56x45MM"
+SWEP.Primary.Ammo             = "ar2"
  
 -- Secondary Fire Attributes --
 SWEP.Secondary.ClipSize        = -1
@@ -116,23 +113,23 @@ SWEP.DeployAnimSpeed = 0.5
 
 -- Firing related
 SWEP.Shots = 1
-SWEP.FireDelay = 0.06
-SWEP.Damage = 27
+SWEP.FireDelay = 60/1100
+SWEP.Damage = 23
 SWEP.FireSound = Sound("FAS2_FAMAS")
 SWEP.FireSound_Suppressed = Sound("FAS2_FAMAS_S")
 
 -- Accuracy related
-SWEP.HipCone = 0.047
-SWEP.AimCone = 0.0035
-SWEP.SpreadPerShot = 0.009
-SWEP.MaxSpreadInc = 0.03
+SWEP.HipCone = 0.08
+SWEP.AimCone = 0.0045
+SWEP.SpreadPerShot = 0.011
+SWEP.MaxSpreadInc = 0.08
 SWEP.SpreadCooldown = 0.15
 SWEP.VelocitySensitivity = 1.55
-SWEP.AimFOV = 5
+SWEP.AimFOV = 0
 
 -- Recoil related
-SWEP.ViewKick = 1.15
-SWEP.Recoil = 0.75
+SWEP.Recoil = 1.3
+SWEP.RecoilHorizontal = 1.2
 
 -- Reload related
 SWEP.ReloadTime = 2.4

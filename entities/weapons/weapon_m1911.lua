@@ -1,7 +1,4 @@
-if SERVER then
-	AddCSLuaFile("shared.lua")
-	SWEP.ExtraMags = 6
-end
+AddCSLuaFile()
 
 if CLIENT then
     SWEP.PrintName = "M1911"
@@ -97,9 +94,9 @@ SWEP.WorldModel   = "models/weapons/w_pist_p228.mdl"
 
 -- Primary Fire Attributes --
 SWEP.Primary.ClipSize        = 7
-SWEP.Primary.DefaultClip    = 14
+SWEP.Primary.DefaultClip    = 0
 SWEP.Primary.Automatic       = false    
-SWEP.Primary.Ammo             = ".45 ACP"
+SWEP.Primary.Ammo             = "pistol"
  
 -- Secondary Fire Attributes --
 SWEP.Secondary.ClipSize        = -1
@@ -115,23 +112,22 @@ SWEP.DeployAnimSpeed = 0.35
 
 -- Firing related
 SWEP.Shots = 1
-SWEP.FireDelay = 0.2
-SWEP.Damage = 27
+SWEP.FireDelay = 60/350
+SWEP.Damage = 25
 SWEP.FireSound = Sound("FAS2_M1911")
 SWEP.FireSound_Suppressed = Sound("FAS2_M1911_S")
 
 -- Accuracy related
-SWEP.HipCone = 0.034
-SWEP.AimCone = 0.015
+SWEP.HipCone = 0.07
+SWEP.AimCone = 0.012
 SWEP.SpreadPerShot = 0.01
-SWEP.MaxSpreadInc = 0.03
+SWEP.MaxSpreadInc = 0.04
 SWEP.SpreadCooldown = 0.3
-SWEP.VelocitySensitivity = 1.2
 SWEP.AimFOV = 0
 
 -- Recoil related
-SWEP.ViewKick = 1.45
-SWEP.Recoil = 0.93
+SWEP.Recoil = 0.9
+SWEP.RecoilHorizontal = 0.7
 
 -- Reload related
 SWEP.ReloadTime = 1.35

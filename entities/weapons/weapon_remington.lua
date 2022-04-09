@@ -1,7 +1,4 @@
-if SERVER then
-	AddCSLuaFile("shared.lua")
-	SWEP.ExtraMags = 6
-end
+AddCSLuaFile()
 
 if CLIENT then
     SWEP.PrintName = "Remington 870"
@@ -114,9 +111,9 @@ SWEP.WorldModel   = "models/weapons/w_shot_m3super90.mdl"
 
 -- Primary Fire Attributes --
 SWEP.Primary.ClipSize        = 8
-SWEP.Primary.DefaultClip    = 16
+SWEP.Primary.DefaultClip    = 0
 SWEP.Primary.Automatic       = false    
-SWEP.Primary.Ammo             = "12 Gauge"
+SWEP.Primary.Ammo             = "buckshot"
  
 -- Secondary Fire Attributes --
 SWEP.Secondary.ClipSize        = -1
@@ -131,27 +128,29 @@ SWEP.HolsterTime = 0.3
 
 -- Firing related
 SWEP.Shots = 12
-SWEP.FireDelay = 0.2
+SWEP.FireDelay = 60/120
 SWEP.Damage = 10
 SWEP.FireSound = Sound("FAS2_REM870")
 SWEP.CockAfterShot = true
 SWEP.Cocked = true
 
 -- Accuracy related
-SWEP.HipCone = 0.035
-SWEP.AimCone = 0.005
-SWEP.ClumpSpread = 0.015
+SWEP.HipCone = 0.09
+SWEP.AimCone = 0.02
+SWEP.ClumpSpread = 0.0175
 SWEP.SpreadPerShot = 0.02
 SWEP.MaxSpreadInc = 0.055
 SWEP.SpreadCooldown = 0.4
 SWEP.VelocitySensitivity = 1.5
-SWEP.AimFOV = 5
+SWEP.AimFOV = 0
 
 -- Recoil related
-SWEP.ViewKick = 3.7
-SWEP.Recoil = 3
+SWEP.Recoil = 5.1
+SWEP.RecoilHorizontal = 6.1
 
 -- Reload related
+SWEP.ReloadTime = 2.1
+SWEP.ReloadTime_Orig = 2.1
 SWEP.InsertEmpty = 3
 SWEP.InsertTime = 0.8
 SWEP.ReloadStartTime = 0.5
@@ -159,7 +158,7 @@ SWEP.ReloadAdvanceTimeEmpty = 1.4
 SWEP.ReloadAdvanceTimeLast = 1.1
 SWEP.ReloadEndTime = 0.5
 SWEP.ReloadAbortTime = 0.7
-SWEP.CockTime = 0.5
+SWEP.CockTime = 0.4
 
 SWEP.InsertEmpty_Nomen = 2.7
 SWEP.InsertTime_Nomen = 0.6

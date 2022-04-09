@@ -1,7 +1,4 @@
-if SERVER then
-	AddCSLuaFile("shared.lua")
-	SWEP.ExtraMags = 8
-end
+AddCSLuaFile()
 
 if CLIENT then
     SWEP.PrintName = "M24"
@@ -543,7 +540,7 @@ SWEP.WorldModel   = "models/weapons/w_snip_awp.mdl"
 SWEP.Primary.ClipSize        = 5
 SWEP.Primary.DefaultClip    = 10
 SWEP.Primary.Automatic       = false    
-SWEP.Primary.Ammo             = "7.62x51MM"
+SWEP.Primary.Ammo             = "sniperround"
  
 -- Secondary Fire Attributes --
 SWEP.Secondary.ClipSize        = -1
@@ -558,23 +555,23 @@ SWEP.DeployAnimSpeed = 0.75
 
 -- Firing related
 SWEP.Shots = 1
-SWEP.FireDelay = 0.2
+SWEP.FireDelay = 60/180
 SWEP.Damage = 55
 SWEP.FireSound = Sound("FAS2_M24")
 SWEP.FireSound_Suppressed = Sound("FAS2_M24_S")
 
 -- Accuracy related
-SWEP.HipCone = 0.06
+SWEP.HipCone = 0.08
 SWEP.AimCone = 0.0005
 SWEP.SpreadPerShot = 0.015
 SWEP.MaxSpreadInc = 0.045
 SWEP.SpreadCooldown = 0.5
 SWEP.VelocitySensitivity = 2.2
-SWEP.AimFOV = 5
+SWEP.AimFOV = 0
 
 -- Recoil related
-SWEP.ViewKick = 1.8
-SWEP.Recoil = 2
+SWEP.Recoil = 3
+SWEP.RecoilHorizontal = 1.1
 
 -- Reload related
 SWEP.ReloadTime_1 = 5
@@ -907,7 +904,7 @@ if CLIENT then
 		cd.y = 0
 		cd.w = 512
 		cd.h = 512
-		cd.fov = 2.5
+		cd.fov = 4
 		cd.drawviewmodel = false
 		cd.drawhud = false
 		render.SetRenderTarget(self.ScopeRT)

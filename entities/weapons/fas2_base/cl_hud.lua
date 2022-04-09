@@ -9,6 +9,8 @@ local FrameTime, CurTime, ScrW, ScrH, Lerp = FrameTime, CurTime, ScrW, ScrH, Ler
 local Green = Color(202, 255, 163, 255)
 local White, Black = Color(255, 255, 255, 255), Color(0, 0, 0, 255)
 
+CreateClientConVar( "aswep_crosshair_aim", "0", true )
+
 function SWEP:DrawHUD()
 	if GetConVarNumber("fas2_nohud") > 0 then
 		return
@@ -20,7 +22,7 @@ function SWEP:DrawHUD()
 	FT, CT, x, y = FrameTime(), CurTime(), ScrW(), ScrH()
 	lp = self.Owner:ShouldDrawLocalPlayer()
 	
-	if (self.dt.Status == FAS_STAT_ADS or self.dt.Status == FAS_STAT_SPRINT or self.dt.Status == FAS_STAT_CUSTOMIZE or self.dt.Status == FAS_STAT_QUICKGRENADE or self.MagCheck or self.Vehicle) and not lp or self.FireMode == "safe" then
+	if not ( LocalPlayer():IsAdmin() and tobool(GetConVar("aswep_crosshair_aim"):GetInt()) ) and (self.dt.Status == FAS_STAT_ADS or self.dt.Status == FAS_STAT_SPRINT or self.dt.Status == FAS_STAT_CUSTOMIZE or self.dt.Status == FAS_STAT_QUICKGRENADE or self.MagCheck or self.Vehicle) and not lp or self.FireMode == "safe" then
 		self.CrossAlpha = Lerp(FT * 20, self.CrossAlpha, 0)
 	else
 		self.CrossAlpha = Lerp(FT * 20, self.CrossAlpha, 255)
@@ -90,12 +92,14 @@ function SWEP:DrawHUD()
 	end
 	
 	White.a, Black.a = 255, 255
+
+	local usekey = "[" .. string.upper(KEYBIND_USE) .. "]" or "[USE KEY]"
 	
 	if self.dt.Status != FAS_STAT_CUSTOMIZE then
 		if self.InstalledBipod then
 			if not self.dt.Bipod then 
 				if self:CanDeployBipod() then
-					draw.ShadowText("[USE KEY]", "FAS2_HUD24", x / 2, y / 2 + 100, White, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+					draw.ShadowText(usekey, "FAS2_HUD24", x / 2, y / 2 + 100, White, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 					
 					surface.SetTexture(Deploy)
 					
@@ -106,7 +110,7 @@ function SWEP:DrawHUD()
 					surface.DrawTexturedRect(x / 2 - 48, y / 2 + 125, 96, 96)
 				end
 			else
-				draw.ShadowText("[USE KEY]", "FAS2_HUD24", x / 2, y / 2 + 100, White, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+				draw.ShadowText(usekey, "FAS2_HUD24", x / 2, y / 2 + 100, White, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 					
 				surface.SetTexture(UnDeploy)
 					
@@ -123,7 +127,7 @@ function SWEP:DrawHUD()
 			surface.SetDrawColor(0, 0, 0, 200)
 			surface.DrawTexturedRect(x / 2 - 128, y - 180, 256, 54)
 			
-			draw.ShadowText("[USE KEY]", "FAS2_HUD24", x / 2, y - 165, colhud, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+			draw.ShadowText(usekey, "FAS2_HUD24", x / 2, y - 165, colhud, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 				
 			if self.ShowStats then
 				draw.ShadowText("Customize weapon", "FAS2_HUD24", x / 2, y - 143, colhud, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)

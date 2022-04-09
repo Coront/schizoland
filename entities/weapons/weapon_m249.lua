@@ -1,7 +1,4 @@
-if SERVER then
-	AddCSLuaFile("shared.lua")
-	SWEP.ExtraMags = 3
-end
+AddCSLuaFile()
 
 if CLIENT then
     SWEP.PrintName = "M249"
@@ -223,9 +220,9 @@ SWEP.WorldModel   = "models/weapons/w_mach_m249para.mdl"
 
 -- Primary Fire Attributes --
 SWEP.Primary.ClipSize        = 100
-SWEP.Primary.DefaultClip    = 100
+SWEP.Primary.DefaultClip    = 0
 SWEP.Primary.Automatic       = true    
-SWEP.Primary.Ammo             = "5.56x45MM"
+SWEP.Primary.Ammo             = "ar2"
  
 -- Secondary Fire Attributes --
 SWEP.Secondary.ClipSize        = -1
@@ -241,23 +238,22 @@ SWEP.HolsterTime = 0.45
 
 -- Firing related
 SWEP.Shots = 1
-SWEP.FireDelay = 0.089
-SWEP.Damage = 42
+SWEP.FireDelay = 60/800
+SWEP.Damage = 24
 SWEP.FireSound = Sound("FAS2_M249")
 SWEP.FireSound_Suppressed = Sound("FAS2_M249_S")
 
 -- Accuracy related
-SWEP.HipCone = 0.05521
-SWEP.AimCone = 0.00352
-SWEP.SpreadPerShot = 0.021
-SWEP.MaxSpreadInc = 0.03855
-SWEP.SpreadCooldown = 0.05
-SWEP.VelocitySensitivity = 1.4
-SWEP.AimFOV = 10
+SWEP.HipCone = 0.08
+SWEP.AimCone = 0.004
+SWEP.SpreadPerShot = 0.005
+SWEP.MaxSpreadInc = 0.12
+SWEP.SpreadCooldown = 0.1
+SWEP.AimFOV = 0
 
 -- Recoil related
-SWEP.ViewKick = 0.89
-SWEP.Recoil = 1.24
+SWEP.Recoil = 1.2
+SWEP.RecoilHorizontal = 0.9
 
 -- Reload related
 SWEP.ReloadTime = 6.4

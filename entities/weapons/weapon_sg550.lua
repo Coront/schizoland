@@ -1,7 +1,4 @@
-if SERVER then
-	AddCSLuaFile("shared.lua")
-	SWEP.ExtraMags = 4
-end
+AddCSLuaFile()
 
 if CLIENT then
     SWEP.PrintName = "SG 550"
@@ -21,17 +18,18 @@ if CLIENT then
 	SWEP.MuzzleEffect = "muzzleflash_6"
 	SWEP.Shell = "5.56x45"
 	SWEP.AttachmentBGs = {["eotech"] = {bg = 3, sbg = 1},
-		--["acog"] = {bg = 3, sbg = 2},
-		["suppressor"] = {bg = 2, sbg = 1},
-		["sg55x30mag"] = {bg = 4, sbg = 1}}
+		["suppressor"] = {bg = 2, sbg = 1}}
 		
 	SWEP.WMAng = Vector(0, 180, 180)
 	SWEP.WMPos = Vector(1, -3, 0.25)
+
+	SWEP.BodyGroups = {
+		["Magazine"] = 1,
+	}
 end
 
 SWEP.Attachments = {[1] = {header = "Sight", sight = true, x = 700, y = 20, atts = {"eotech"}},
-	[2] = {header = "Barrel", x = 50, y = -200, atts = {"suppressor"}},
-	[3] = {header = "Magazine", x = 500, y = 50, atts = {"sg55x30mag"}}}
+	[2] = {header = "Barrel", x = 50, y = -200, atts = {"suppressor"}}}
 
 SWEP.BulletLength = 5.56
 SWEP.CaseLength = 45
@@ -101,10 +99,10 @@ SWEP.WM = "models/weapons/w_sg550.mdl"
 SWEP.WorldModel   = "models/props_junk/PopCan01a.mdl"
 
 -- Primary Fire Attributes --
-SWEP.Primary.ClipSize        = 20
-SWEP.Primary.DefaultClip    = 40
+SWEP.Primary.ClipSize        = 30
+SWEP.Primary.DefaultClip    = 0
 SWEP.Primary.Automatic       = true    
-SWEP.Primary.Ammo             = "5.56x45MM"
+SWEP.Primary.Ammo             = "ar2"
  
 -- Secondary Fire Attributes --
 SWEP.Secondary.ClipSize        = -1
@@ -119,23 +117,23 @@ SWEP.DeployAnimTime = 0.75
 
 -- Firing related
 SWEP.Shots = 1
-SWEP.FireDelay = 0.0857
-SWEP.Damage = 27
+SWEP.FireDelay = 60/800
+SWEP.Damage = 25
 SWEP.FireSound = Sound("FAS2_SG550")
 SWEP.FireSound_Suppressed = Sound("FAS2_SG550_S")
 
 -- Accuracy related
-SWEP.HipCone = 0.052
-SWEP.AimCone = 0.003
+SWEP.HipCone = 0.08
+SWEP.AimCone = 0.005
 SWEP.SpreadPerShot = 0.008
-SWEP.MaxSpreadInc = 0.03
+SWEP.MaxSpreadInc = 0.06
 SWEP.SpreadCooldown = 0.15
-SWEP.VelocitySensitivity = 1.9
-SWEP.AimFOV = 5
+SWEP.VelocitySensitivity = 1.6
+SWEP.AimFOV = 0
 
 -- Recoil related
-SWEP.ViewKick = 1.2
-SWEP.Recoil = 0.8
+SWEP.Recoil = 1.7
+SWEP.RecoilHorizontal = 0.6
 
 -- Reload related
 SWEP.ReloadTime = 2.6

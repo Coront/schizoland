@@ -201,15 +201,16 @@ function SWEP:Initialize()
 	self.BurstAmount = t.burstamt
 	self.dt.Suppressed = self.Suppressed
 	self:CalculateEffectiveRange()
-	
+
 	self.Damage_Orig = self.Damage
 	self.FireDelay_Orig = self.FireDelay
-	self.HipCone_Orig = math.Round(self.HipCone, 4)
-	self.AimCone_Orig = math.Round(self.AimCone, 4)
-	self.Recoil_Orig = math.Round(self.Recoil, 4)
+	self.HipCone_Orig = self.HipCone
+	self.AimCone_Orig = self.AimCone
+	self.Recoil_Orig = self.Recoil
+	self.RecoilHorizontal_Orig = self.RecoilHorizontal
 	self.SpreadPerShot_Orig = self.SpreadPerShot
 	self.MaxSpreadInc_Orig = self.MaxSpreadInc
-	self.VelocitySensitivity_Orig = self.VelocitySensitivity
+	self.ReloadTime_Orig = self.ReloadTime
 	self.AimPosName = "AimPos"
 	self.AimAngName = "AimAng"
 	
@@ -247,6 +248,13 @@ function SWEP:Initialize()
 			self.Nade = self:createManagedCModel("models/weapons/v_m67.mdl", RENDERGROUP_BOTH)
 			self.Nade:SetNoDraw(true)
 			self.Nade.LifeTime = 0
+		end
+
+		if self.BodyGroups then
+			for k, v in pairs(self.BodyGroups) do
+				k = self.Wep:FindBodygroupByName( k )
+				self.Wep:SetBodygroup( k, v )
+			end
 		end
 		
 		RunConsoleCommand("fas2_handrig_applynow")
@@ -453,6 +461,16 @@ end
 function SWEP:Deploy()
 	self:PlayDeployAnim()
 	self:EmitSound("weapons/weapon_deploy" .. math.random(1, 3) .. ".wav", 50, 100)
+
+	if not self.Owner.FAS_FamiliarWeapons then
+		self.Owner.FAS_FamiliarWeapons = {}
+	end
+	if SERVER then
+		if not self.Owner.FAS_FamiliarWeaponsProgress then
+			self.Owner.FAS_FamiliarWeaponsProgress = {}
+		end
+	end
+
 	return true
 end
 
@@ -579,24 +597,26 @@ local ef
 
 function SWEP:AimRecoil(mul)
 	mul = mul or 1
-	mod = self.Owner:Crouching() and 0.75 or 1
+	mod = self.Owner:Crouching() and 0.7 or 1
 	
 	if (SERVER and SP) or CLIENT then
 		ang = self.Owner:EyeAngles()
-		ang.p = ang.p - self.Recoil * (1 + self.AddSpread * (self.SpreadToRecoil and self.SpreadToRecoil or 1)) * mod * (self.dt.Bipod and 0.3 or 1) * mul
-		ang.y = ang.y - self.Recoil * math.Rand(-0.375, 0.375) * (1 + self.AddSpread * (self.SpreadToRecoil and self.SpreadToRecoil or 1)) * mod * (self.dt.Bipod and 0.3 or 1) * mul
+		ang.p = ang.p - (self.Recoil * mod)
+		local toRecoil = math.random(1,2) == 1 and self.RecoilHorizontal or -self.RecoilHorizontal
+		ang.y = ang.y - (toRecoil * mod)
 		self.Owner:SetEyeAngles(ang)
 	end
 end
 
 function SWEP:HipRecoil(mul)
 	mul = mul or 1
-	mod = self.Owner:Crouching() and 0.75 or 1
-
+	mod = self.Owner:Crouching() and 0.8 or 1
+	
 	if (SERVER and SP) or CLIENT then
 		ang = self.Owner:EyeAngles()
-		ang.p = ang.p - self.Recoil * (1 + self.AddSpread * (self.SpreadToRecoil and self.SpreadToRecoil or 1)) * mod * (self.dt.Bipod and 0.3 or 1) * mul
-		ang.y = ang.y - self.Recoil * math.Rand(-0.5, 0.5) * (1 + self.AddSpread * (self.SpreadToRecoil and self.SpreadToRecoil or 1)) * mod * (self.dt.Bipod and 0.3 or 1) * mul
+		ang.p = ang.p - (self.Recoil * mod)
+		local toRecoil = math.random(1,2) == 1 and self.RecoilHorizontal or -self.RecoilHorizontal
+		ang.y = ang.y - (toRecoil * mod)
 		self.Owner:SetEyeAngles(ang)
 	end
 end
@@ -795,12 +815,6 @@ function SWEP:SecondaryAttack()
 end
 
 function SWEP:Equip()
-	if self.ExtraMags then
-		if gamemode.Get("sandbox") then
-			self.Owner:GiveAmmo(self.ExtraMags * self.Primary.ClipSize, self.Primary.Ammo)
-		end
-	end
-	
 	if self.AttOnPickUp then
 		for k, v in pairs(self.AttOnPickUp) do
 			self.Owner:FAS2_PickUpAttachment(v, true)
@@ -828,20 +842,7 @@ function SWEP:CalculateSpread()
 	cone = self.HipCone * (cr and 0.75 or 1) * (self.dt.Bipod and 0.3 or 1)
 		
 	if self.dt.Status == FAS_STAT_ADS then
-		td.start = self.Owner:GetShootPos()
-		td.endpos = td.start + aim * 30
-		td.filter = self.Owner
-		
-		tr = util.TraceLine(td)
-		
-		if tr.Hit then
-			self.dt.Status = FAS_STAT_IDLE
-			self:SetNextPrimaryFire(CT + 0.2)
-			self:SetNextSecondaryFire(CT + 0.2)
-			self.ReloadWait = CT + 0.2
-		else
-			cone = self.AimCone
-		end
+		cone = self.AimCone
 	end
 	
 	self.CurCone = math.Clamp(cone + self.AddSpread * (self.dt.Bipod and 0.5 or 1) * (self.dt.Status == FAS_STAT_ADS and 0.25 or 1) + self.Owner.ViewAff, 0, 0.09 + self.MaxSpreadInc)
@@ -913,15 +914,87 @@ function SWEP:Think()
 		self:ShotgunThink()
 	end
 
+	if engine.ActiveGamemode() == "aftershock" then
+		self.Recoil = self.Recoil_Orig * (1 - ((self:GetOwner():GetSkillLevel("weaponhandling") - 1) * SKL.WeaponHandling.recoilmultloss))
+		self.RecoilHorizontal = self.RecoilHorizontal_Orig * (1 - ((self:GetOwner():GetSkillLevel("weaponhandling") - 1) * SKL.WeaponHandling.recoilmultloss))
+	end
+
 	cr = self.Owner:Crouching()
 	CT, vel = CurTime(), Length(GetVelocity(self.Owner))
 
-	if self.CockAfterShot and not self.Cocked then
-		self:CockLogic()
+	if self.ReloadDelay and CT >= self.ReloadDelay then
+		mag, ammo = self:Clip1(), self.Owner:GetAmmoCount(self.Primary.Ammo)
+		
+		--[[
+		if SERVER then
+			if not self.NoProficiency then
+				if not self.Owner.FAS_FamiliarWeapons[self.Class] then
+					if not self.Owner.FAS_FamiliarWeaponsProgress[self.Class] then
+						self.Owner.FAS_FamiliarWeaponsProgress[self.Class] = 0
+					end
+					
+					self.Owner.FAS_FamiliarWeaponsProgress[self.Class] = self.Owner.FAS_FamiliarWeaponsProgress[self.Class] + GetConVarNumber("fas2_profgain") * (mag == 0 and 1.5 or 1)
+					
+					if self.Owner.FAS_FamiliarWeaponsProgress[self.Class] >= 1 then
+						self:FamiliariseWithWeapon()
+					end
+				end
+			end
+		end
+		]]
+		
+		if self.ReloadAmount then
+			if SERVER then
+				self:SetClip1(math.Clamp(mag + self.ReloadAmount, 0, self.Primary.ClipSize))
+				self.Owner:RemoveAmmo(self.ReloadAmount, self.Primary.Ammo)
+			end
+		else
+			if mag > 0 then
+				if not self.CantChamber then
+					if ammo >= self.Primary.ClipSize - mag + 1 then
+						if SERVER then
+							self:SetClip1(math.Clamp(self.Primary.ClipSize + 1, 0, self.Primary.ClipSize + 1))
+							self.Owner:RemoveAmmo(self.Primary.ClipSize - mag + 1, self.Primary.Ammo)
+						end
+					else
+						if SERVER then
+							self:SetClip1(math.Clamp(mag + ammo, 0, self.Primary.ClipSize))
+							self.Owner:RemoveAmmo(ammo, self.Primary.Ammo)
+						end
+					end
+				else
+					if ammo >= self.Primary.ClipSize - mag then
+						if SERVER then
+							self:SetClip1(math.Clamp(self.Primary.ClipSize, 0, self.Primary.ClipSize))
+							self.Owner:RemoveAmmo(self.Primary.ClipSize - mag, self.Primary.Ammo)
+						end
+					else
+						if SERVER then
+							self:SetClip1(math.Clamp(mag + ammo, 0, self.Primary.ClipSize))
+							self.Owner:RemoveAmmo(ammo, self.Primary.Ammo)
+						end
+					end
+				end
+			else
+				if ammo >= self.Primary.ClipSize then
+					if SERVER then
+						self:SetClip1(math.Clamp(self.Primary.ClipSize, 0, self.Primary.ClipSize))
+						self.Owner:RemoveAmmo(self.Primary.ClipSize, self.Primary.Ammo)
+					end
+				else
+					if SERVER then
+						self:SetClip1(math.Clamp(ammo, 0, self.Primary.ClipSize))
+						self.Owner:RemoveAmmo(ammo, self.Primary.Ammo)
+					end
+				end
+			end
+		end
+		
+		self.ReloadDelay = nil
 	end
 
-	if engine.ActiveGamemode() == "aftershock" then
-		self.Recoil = self.Recoil_Orig * (1 - (self:GetOwner():GetSkillLevel("weaponhandling") * SKL.WeaponHandling.recoilmultloss))
+	if self.CockAfterShot and not self.Cocked then
+		self:CockLogic()
 	end
 	
 	if self.ReloadDelay and CT >= self.ReloadDelay then

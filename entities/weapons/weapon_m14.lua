@@ -1,7 +1,4 @@
-if SERVER then
-	AddCSLuaFile("shared.lua")
-	SWEP.ExtraMags = 4
-end
+AddCSLuaFile()
 
 if CLIENT then
     SWEP.PrintName = "M14"
@@ -101,9 +98,9 @@ SWEP.WorldModel   = "models/weapons/w_snip_awp.mdl"
 
 -- Primary Fire Attributes --
 SWEP.Primary.ClipSize        = 20
-SWEP.Primary.DefaultClip    = 40
-SWEP.Primary.Automatic       = true    
-SWEP.Primary.Ammo             = "7.62x51MM"
+SWEP.Primary.DefaultClip    = 0
+SWEP.Primary.Automatic       = false
+SWEP.Primary.Ammo             = "ar2"
  
 -- Secondary Fire Attributes --
 SWEP.Secondary.ClipSize        = -1
@@ -117,23 +114,22 @@ SWEP.DeployTime = 0.45
 
 -- Firing related
 SWEP.Shots = 1
-SWEP.FireDelay = 0.08
-SWEP.Damage = 55
+SWEP.FireDelay = 60/400
+SWEP.Damage = 47
 SWEP.FireSound = Sound("FAS2_M14")
 SWEP.FireSound_Suppressed = Sound("FAS2_M14_S")
 
 -- Accuracy related
-SWEP.HipCone = 0.05
-SWEP.AimCone = 0.001
+SWEP.HipCone = 0.085
+SWEP.AimCone = 0.0035
 SWEP.SpreadPerShot = 0.015
-SWEP.MaxSpreadInc = 0.045
-SWEP.SpreadCooldown = 0.2
-SWEP.VelocitySensitivity = 2
-SWEP.AimFOV = 5
+SWEP.MaxSpreadInc = 0.06
+SWEP.SpreadCooldown = 0.3
+SWEP.AimFOV = 0
 
 -- Recoil related
-SWEP.ViewKick = 1.5
-SWEP.Recoil = 1.1
+SWEP.Recoil = 2
+SWEP.RecoilHorizontal = 0.75
 
 -- Reload related
 SWEP.ReloadTime = 2.3

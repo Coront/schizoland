@@ -6,32 +6,52 @@ if CLIENT then
     SWEP.SlotPos = 0
 	SWEP.DrawAmmo = false
 
-	SWEP.AimPos = Vector(-2.208, -4.375, 0.595)
+	SWEP.AimPos = Vector(-2.2055, -4.575, 0.589)
 	SWEP.AimAng = Vector(0.149, -0.015, 0)
 	
-	SWEP.CompM4Pos = Vector(-2.2, -2.5, 0.1)
+	SWEP.CompM4Pos = Vector(-2.2, -3.5, 0.1)
 	SWEP.CompM4Ang = Vector(0, 0, 0)
 	
-	SWEP.EoTechPos = Vector(-2.2, -5, -0.1)
+	SWEP.EoTechPos = Vector(-2.2, -6, -0.1)
 	SWEP.EoTechAng = Vector(0, 0, 0)
 	
-	SWEP.ELCANPos = Vector(-2.21, -4, -0.05)
+	SWEP.ELCANPos = Vector(-2.21, -3.5, -0.04)
 	SWEP.ELCANAng = Vector(-0.631, 0, 0)
-	
+
 	SWEP.MuzzleEffect = "muzzleflash_ak74"
 	SWEP.Shell = "5.45x39"
-	SWEP.AttachmentBGs = {["compm4"] = {bg = 3, sbg = 1},
+	SWEP.AttachmentBGs = {
+		["compm4"] = {bg = 3, sbg = 1},
 		["c79"] = {bg = 3, sbg = 2},
 		["eotech"] = {bg = 3, sbg = 3},
-		["suppressor"] = {bg = 2, sbg = 1}}
-		
+		["suppressor"] = {bg = 2, sbg = 1}
+	}
+
 	SWEP.WMAng = Vector(0, 0, 180)
 	SWEP.WMPos = Vector(-4.25, -10, 7)
 end
 
 SWEP.Attachments = {
-	[1] = {header = "Sight", sight = true, x = 900, y = -50, atts = {"c79", "compm4", "eotech"}},
-	[2] = {header = "Barrel", y = -200, atts = {"suppressor"}}}
+	[1] = {
+		header = "Sight",
+		sight = true,
+		x = 800,
+		y = 50,
+		atts = {
+			"c79",
+			"compm4",
+			"eotech"
+		}
+	},
+	[2] = {
+		header = "Barrel",
+		x = 150,
+		y = -170,
+		atts = {
+			"suppressor"
+		}
+	}
+}
 
 SWEP.BulletLength = 5.45
 SWEP.CaseLength = 39
@@ -51,24 +71,29 @@ SWEP.Anims.Reload_Empty = "reload_empty"
 SWEP.Anims.Reload_Empty_Nomen = "reload_empty_nomen"
 
 SWEP.Sounds = {}
-SWEP.Sounds["reload"] = {[1] = {time = 1, sound = Sound("Weapon_ak74.MagOut")},
-	[2] = {time = 1.5, sound = Sound("MagPouch_AR")},
-	[3] = {time = 1.9, sound = Sound("Weapon_ak74.MagIn")}}
-	
-SWEP.Sounds["reload_nomen"] = {[1] = {time = 0.6, sound = Sound("Weapon_ak74.MagOut")},
+SWEP.Sounds["reload"] = {
+	[1] = {time = 0.9, sound = Sound("Weapon_ak74.MagOut")},
+	[2] = {time = 1.3, sound = Sound("MagPouch_AR")},
+	[3] = {time = 1.85, sound = Sound("Weapon_ak74.MagIn")}
+}
+SWEP.Sounds["reload_nomen"] = {
+	[1] = {time = 0.6, sound = Sound("Weapon_ak74.MagOut")},
 	[2] = {time = 1.2, sound = Sound("MagPouch_AR")},
-	[3] = {time = 1.8, sound = Sound("Weapon_ak74.MagIn")}}
-	
-SWEP.Sounds["reload_empty"] = {[1] = {time = 0.7, sound = Sound("Weapon_ak74.MagOutEmpty")},
-	[2] = {time = 1.15, sound = Sound("MagPouch_AR")},
-	[3] = {time = 1.85, sound = Sound("Weapon_ak74.MagIn")},
-	[4] = {time = 2.9, sound = Sound("Weapon_ak74.BoltPull")}}
-	
-SWEP.Sounds["reload_empty_nomen"] = {[1] = {time = 0.8, sound = Sound("MagPouch_AR")},
+	[3] = {time = 1.8, sound = Sound("Weapon_ak74.MagIn")}
+}
+SWEP.Sounds["reload_empty"] = {
+	[1] = {time = 0.6, sound = Sound("Weapon_ak74.MagOutEmpty")},
+	[2] = {time = 1.2, sound = Sound("MagPouch_AR")},
+	[3] = {time = 1.7, sound = Sound("Weapon_ak74.MagIn")},
+	[4] = {time = 2.8, sound = Sound("Weapon_ak74.BoltPull")}
+}
+SWEP.Sounds["reload_empty_nomen"] = {
+	[1] = {time = 0.8, sound = Sound("MagPouch_AR")},
 	[2] = {time = 1.5, sound = Sound("Weapon_ak74.MagOutEmptyNomen")},
 	[3] = {time = 1.8, sound = Sound("Weapon_ak74.MagIn")},
-	[4] = {time = 2.5, sound = Sound("Weapon_ak74.BoltPull")}}
-	
+	[4] = {time = 2.5, sound = Sound("Weapon_ak74.BoltPull")}
+}
+
 SWEP.FireModes = {"auto", "3burst", "semi"}
 
 SWEP.Category = "FA:S 2 Weapons"
@@ -89,10 +114,10 @@ SWEP.WorldModel   = "models/weapons/world/rifles/ak12.mdl"
 
 -- Primary Fire Attributes --
 SWEP.Primary.ClipSize        = 30
-SWEP.Primary.DefaultClip    = 60
+SWEP.Primary.DefaultClip    = 0
 SWEP.Primary.Automatic       = true    
-SWEP.Primary.Ammo             = "5.45x39MM"
- 
+SWEP.Primary.Ammo             = "ar2"
+
 -- Secondary Fire Attributes --
 SWEP.Secondary.ClipSize        = -1
 SWEP.Secondary.DefaultClip    = -1
@@ -106,24 +131,22 @@ SWEP.DeployAnimSpeed = 0.5
 
 -- Firing related
 SWEP.Shots = 1
-SWEP.FireDelay = 0.092307
-SWEP.Damage = 32
+SWEP.FireDelay = 60/650
+SWEP.Damage = 24
 SWEP.FireSound = Sound("FAS2_AK12")
 SWEP.FireSound_Suppressed = Sound("FAS2_AK74_S")
-SWEP.BurstFireDelayMod = 0.65
 
 -- Accuracy related
-SWEP.HipCone = 0.052
+SWEP.HipCone = 0.082
 SWEP.AimCone = 0.003
-SWEP.SpreadPerShot = 0.008
-SWEP.MaxSpreadInc = 0.035
+SWEP.SpreadPerShot = 0.015
+SWEP.MaxSpreadInc = 0.075
 SWEP.SpreadCooldown = 0.18
-SWEP.VelocitySensitivity = 1.8
-SWEP.AimFOV = 5
+SWEP.AimFOV = 0
 
 -- Recoil related
-SWEP.ViewKick = 1
-SWEP.Recoil = 0.6
+SWEP.Recoil = 1.6
+SWEP.RecoilHorizontal = 1
 
 -- Reload related
 SWEP.ReloadTime = 2.6

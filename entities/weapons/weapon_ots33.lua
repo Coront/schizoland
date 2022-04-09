@@ -1,7 +1,4 @@
-if SERVER then
-	AddCSLuaFile("shared.lua")
-	SWEP.ExtraMags = 4
-end
+AddCSLuaFile()
 
 if CLIENT then
     SWEP.PrintName = "OTs-33 Pernach"
@@ -94,10 +91,10 @@ SWEP.WM = "models/weapons/world/pistols/ots33.mdl"
 SWEP.WorldModel   = "models/weapons/world/pistols/ots33.mdl"
 
 -- Primary Fire Attributes --
-SWEP.Primary.ClipSize        = 18
-SWEP.Primary.DefaultClip    = 36
+SWEP.Primary.ClipSize        = 21
+SWEP.Primary.DefaultClip    = 0
 SWEP.Primary.Automatic       = true    
-SWEP.Primary.Ammo             = "9x18MM"
+SWEP.Primary.Ammo             = "pistol"
  
 -- Secondary Fire Attributes --
 SWEP.Secondary.ClipSize        = -1
@@ -112,23 +109,21 @@ SWEP.DeployAnimSpeed = 0.5
 
 -- Firing related
 SWEP.Shots = 1
-SWEP.FireDelay = 0.0666
-SWEP.Damage = 15
+SWEP.FireDelay = 60/1100
+SWEP.Damage = 18
 SWEP.FireSound = Sound("FAS2_OTS33")
 
 -- Accuracy related
-SWEP.HipCone = 0.032
-SWEP.AimCone = 0.018
+SWEP.HipCone = 0.075
+SWEP.AimCone = 0.011
 SWEP.SpreadPerShot = 0.005
-SWEP.MaxSpreadInc = 0.04
+SWEP.MaxSpreadInc = 0.05
 SWEP.SpreadCooldown = 0.15
-SWEP.VelocitySensitivity = 1.2
-SWEP.SpreadToRecoil = 25 -- 25x additional recoil from continuous fire
 SWEP.AimFOV = 0
 
 -- Recoil related
-SWEP.ViewKick = 0.6
-SWEP.Recoil = 0.4
+SWEP.Recoil = 0.75
+SWEP.RecoilHorizontal = 0.9
 
 -- Reload related
 SWEP.ReloadTime = 1.8

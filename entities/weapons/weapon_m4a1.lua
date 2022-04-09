@@ -1,7 +1,4 @@
-if SERVER then
-	AddCSLuaFile("shared.lua")
-	SWEP.ExtraMags = 4
-end
+AddCSLuaFile()
 
 if CLIENT then
     SWEP.PrintName = "M4A1"
@@ -111,9 +108,9 @@ SWEP.HoldType = "smg"
 
 -- Primary Fire Attributes --
 SWEP.Primary.ClipSize        = 30
-SWEP.Primary.DefaultClip    = 60
+SWEP.Primary.DefaultClip    = 0
 SWEP.Primary.Automatic       = true    
-SWEP.Primary.Ammo             = "5.56x45MM"
+SWEP.Primary.Ammo             = "ar2"
  
 -- Secondary Fire Attributes --
 SWEP.Secondary.ClipSize        = -1
@@ -129,23 +126,22 @@ SWEP.HolsterTime = 0.3
 
 -- Firing related
 SWEP.Shots = 1
-SWEP.FireDelay = 0.0666
-SWEP.Damage = 27
+SWEP.FireDelay = 60/1000
+SWEP.Damage = 24
 SWEP.FireSound = Sound("FAS2_M4A1")
 SWEP.FireSound_Suppressed = Sound("FAS2_M4A1_S")
 
 -- Accuracy related
-SWEP.HipCone = 0.047
+SWEP.HipCone = 0.082
 SWEP.AimCone = 0.004
 SWEP.SpreadPerShot = 0.009
-SWEP.MaxSpreadInc = 0.03
+SWEP.MaxSpreadInc = 0.065
 SWEP.SpreadCooldown = 0.15
-SWEP.VelocitySensitivity = 1.55
-SWEP.AimFOV = 5
+SWEP.AimFOV = 0
 
 -- Recoil related
-SWEP.ViewKick = 1.1
-SWEP.Recoil = 0.4
+SWEP.Recoil = 1.5
+SWEP.RecoilHorizontal = 0.8
 
 -- Reload related
 SWEP.ReloadTime = 2.6

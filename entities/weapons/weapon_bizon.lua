@@ -1,7 +1,4 @@
-if SERVER then
-	AddCSLuaFile("shared.lua")
-	SWEP.ExtraMags = 2
-end
+AddCSLuaFile()
 
 if CLIENT then
     SWEP.PrintName = "PP-19 Bizon"
@@ -13,10 +10,7 @@ if CLIENT then
 	
 	SWEP.CompM4Pos = Vector(-1.742, 0, -0.33)
 	SWEP.CompM4Ang = Vector(0, 0, 0)
-	//SWEP.SprintPos = Vector(0, 0, 1)
-	//SWEP.SprintAng = Vector(-20, 0, 0)
-	
-	//SWEP.MoveType = 3
+
 	SWEP.YawMod = 0.1
 	
 	SWEP.MuzzleEffect = "muzzleflash_smg"
@@ -97,9 +91,9 @@ SWEP.WorldModel   = "models/weapons/w_smg_biz.mdl"
 
 -- Primary Fire Attributes --
 SWEP.Primary.ClipSize        = 64
-SWEP.Primary.DefaultClip    = 128
+SWEP.Primary.DefaultClip    = 0
 SWEP.Primary.Automatic       = true    
-SWEP.Primary.Ammo             = "9x18MM"
+SWEP.Primary.Ammo             = "smg1"
  
 -- Secondary Fire Attributes --
 SWEP.Secondary.ClipSize        = -1
@@ -114,23 +108,23 @@ SWEP.DeployAnimSpeed = 0.5
 
 -- Firing related
 SWEP.Shots = 1
-SWEP.FireDelay = 0.085
-SWEP.Damage = 14
+SWEP.FireDelay = 60/800
+SWEP.Damage = 19
 SWEP.FireSound = Sound("FAS2_PP19")
 SWEP.FireSound_Suppressed = Sound("FAS2_PP19_S")
 
 -- Accuracy related
-SWEP.HipCone = 0.036
-SWEP.AimCone = 0.013
-SWEP.SpreadPerShot = 0.007
-SWEP.MaxSpreadInc = 0.03
+SWEP.HipCone = 0.09
+SWEP.AimCone = 0.009
+SWEP.SpreadPerShot = 0.004
+SWEP.MaxSpreadInc = 0.06
 SWEP.SpreadCooldown = 0.2
 SWEP.VelocitySensitivity = 1.6
-SWEP.AimFOV = 5
+SWEP.AimFOV = 0
 
 -- Recoil related
-SWEP.ViewKick = 0.6
-SWEP.Recoil = 0.5
+SWEP.Recoil = 0.8
+SWEP.RecoilHorizontal = 0.9
 
 -- Reload related
 SWEP.ReloadTime = 2.9

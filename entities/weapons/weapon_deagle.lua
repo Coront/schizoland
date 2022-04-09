@@ -1,7 +1,4 @@
-if SERVER then
-	AddCSLuaFile("shared.lua")
-	SWEP.ExtraMags = 6
-end
+AddCSLuaFile()
 
 if CLIENT then
     SWEP.PrintName = "IMI Desert Eagle"
@@ -97,9 +94,9 @@ SWEP.WorldModel = "models/weapons/w_pist_deagle.mdl"
 
 -- Primary Fire Attributes --
 SWEP.Primary.ClipSize        = 7
-SWEP.Primary.DefaultClip    = 14
+SWEP.Primary.DefaultClip    = 0
 SWEP.Primary.Automatic       = false    
-SWEP.Primary.Ammo             = ".50 AE"
+SWEP.Primary.Ammo             = "pistol"
  
 -- Secondary Fire Attributes --
 SWEP.Secondary.ClipSize        = -1
@@ -113,22 +110,21 @@ SWEP.DeployTime = 0.45
 
 -- Firing related
 SWEP.Shots = 1
-SWEP.FireDelay = 0.25
+SWEP.FireDelay = 60/120
 SWEP.Damage = 55
 SWEP.FireSound = Sound("FAS2_DEAGLE")
 
 -- Accuracy related
-SWEP.HipCone = 0.04
-SWEP.AimCone = 0.009
-SWEP.SpreadPerShot = 0.02
-SWEP.MaxSpreadInc = 0.055
-SWEP.SpreadCooldown = 0.4
-SWEP.VelocitySensitivity = 1.5
+SWEP.HipCone = 0.075
+SWEP.AimCone = 0.004
+SWEP.SpreadPerShot = 0.05
+SWEP.MaxSpreadInc = 0.10
+SWEP.SpreadCooldown = 0.5
 SWEP.AimFOV = 0
 
 -- Recoil related
-SWEP.ViewKick = 3.7
 SWEP.Recoil = 3.2
+SWEP.RecoilHorizontal = 2.9
 
 -- Reload related
 SWEP.ReloadTime = 2.1

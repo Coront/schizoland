@@ -1,7 +1,4 @@
-if SERVER then
-	AddCSLuaFile("shared.lua")
-	SWEP.ExtraMags = 6
-end
+AddCSLuaFile()
 
 if CLIENT then
     SWEP.PrintName = "M82"
@@ -124,9 +121,9 @@ SWEP.WorldModel   = "models/weapons/w_snip_sg550.mdl"
 
 -- Primary Fire Attributes --
 SWEP.Primary.ClipSize        = 10
-SWEP.Primary.DefaultClip    = 20
+SWEP.Primary.DefaultClip    = 0
 SWEP.Primary.Automatic       = false    
-SWEP.Primary.Ammo             = ".50 BMG"
+SWEP.Primary.Ammo             = "sniperround"
  
 -- Secondary Fire Attributes --
 SWEP.Secondary.ClipSize        = -1
@@ -141,22 +138,21 @@ SWEP.DeployAnimSpeed = 0.75
 
 -- Firing related
 SWEP.Shots = 1
-SWEP.FireDelay = 0.35
-SWEP.Damage = 150
+SWEP.FireDelay = 60/210
+SWEP.Damage = 142
 SWEP.FireSound = Sound("FAS2_M82")
 
 -- Accuracy related
-SWEP.HipCone = 0.08
-SWEP.AimCone = 0.00005
-SWEP.SpreadPerShot = 0.05
-SWEP.MaxSpreadInc = 0.1
-SWEP.SpreadCooldown = 0.5
-SWEP.VelocitySensitivity = 2.5
-SWEP.AimFOV = 5
+SWEP.HipCone = 0.12
+SWEP.AimCone = 0.00001
+SWEP.SpreadPerShot = 0.15
+SWEP.MaxSpreadInc = 0.4
+SWEP.SpreadCooldown = 1
+SWEP.AimFOV = 0
 
 -- Recoil related
-SWEP.ViewKick = 7.5
-SWEP.Recoil = 5
+SWEP.Recoil = 8.1
+SWEP.RecoilHorizontal = 7.4
 
 -- Reload related
 SWEP.ReloadTime = 4
@@ -201,7 +197,7 @@ if CLIENT then
 		cd.y = 0
 		cd.w = 512
 		cd.h = 512
-		cd.fov = 2.5
+		cd.fov = 5
 		cd.drawviewmodel = false
 		cd.drawhud = false
 		render.SetRenderTarget(self.ScopeRT)

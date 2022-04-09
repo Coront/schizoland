@@ -1,7 +1,4 @@
-if SERVER then
-	AddCSLuaFile("shared.lua")
-	SWEP.ExtraMags = 8
-end
+AddCSLuaFile()
 
 if CLIENT then
     SWEP.PrintName = "Raging Bull"
@@ -205,9 +202,9 @@ SWEP.WorldModel   = "models/weapons/w_357.mdl"
 
 -- Primary Fire Attributes --
 SWEP.Primary.ClipSize        = 5
-SWEP.Primary.DefaultClip    = 10
+SWEP.Primary.DefaultClip    = 0
 SWEP.Primary.Automatic       = false    
-SWEP.Primary.Ammo             = ".454 Casull"
+SWEP.Primary.Ammo             = "pistol"
  
 -- Secondary Fire Attributes --
 SWEP.Secondary.ClipSize        = -1
@@ -223,14 +220,14 @@ SWEP.DeployAnimSpeed = 0.65
 
 -- Firing related
 SWEP.Shots = 1
-SWEP.FireDelay = 0.25
-SWEP.Damage = 58
+SWEP.FireDelay = 60/180
+SWEP.Damage = 59
 SWEP.FireSound = Sound("FAS2_RAGINGBULL")
 SWEP.CantSuppress = true
 
 -- Accuracy related
-SWEP.HipCone = 0.035
-SWEP.AimCone = 0.01
+SWEP.HipCone = 0.07
+SWEP.AimCone = 0.005
 SWEP.SpreadPerShot = 0.015
 SWEP.MaxSpreadInc = 0.045
 SWEP.SpreadCooldown = 0.4
@@ -238,8 +235,8 @@ SWEP.VelocitySensitivity = 1.4
 SWEP.AimFOV = 0
 
 -- Recoil related
-SWEP.ViewKick = 3.8
-SWEP.Recoil = 3
+SWEP.Recoil = 3.5
+SWEP.RecoilHorizontal = 3.4
 
 -- Reload related
 SWEP.ReloadTime_1 = 2.5

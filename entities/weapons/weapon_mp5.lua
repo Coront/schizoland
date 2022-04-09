@@ -1,7 +1,4 @@
-if SERVER then
-	AddCSLuaFile("shared.lua")
-	SWEP.ExtraMags = 4
-end
+AddCSLuaFile()
 
 if CLIENT then
     SWEP.PrintName = "MP5A5"
@@ -119,9 +116,9 @@ SWEP.WorldModel   = "models/weapons/w_smg_mp5.mdl"
 
 -- Primary Fire Attributes --
 SWEP.Primary.ClipSize        = 30
-SWEP.Primary.DefaultClip    = 60
+SWEP.Primary.DefaultClip    = 0
 SWEP.Primary.Automatic       = true    
-SWEP.Primary.Ammo             = "9x19MM"
+SWEP.Primary.Ammo             = "smg1"
  
 -- Secondary Fire Attributes --
 SWEP.Secondary.ClipSize        = -1
@@ -137,23 +134,22 @@ SWEP.DeployAnimSpeed = 0.75
 
 -- Firing related
 SWEP.Shots = 1
-SWEP.FireDelay = 0.075
-SWEP.Damage = 18
+SWEP.FireDelay = 60/900
+SWEP.Damage = 19
 SWEP.FireSound = Sound("FAS2_MP5A5")
 SWEP.FireSound_Suppressed = Sound("FAS2_MP5A5_S")
 
 -- Accuracy related
-SWEP.HipCone = 0.036
-SWEP.AimCone = 0.0105
-SWEP.SpreadPerShot = 0.007
-SWEP.MaxSpreadInc = 0.03
+SWEP.HipCone = 0.075
+SWEP.AimCone = 0.009
+SWEP.SpreadPerShot = 0.0065
+SWEP.MaxSpreadInc = 0.05
 SWEP.SpreadCooldown = 0.2
-SWEP.VelocitySensitivity = 1.6
-SWEP.AimFOV = 5
+SWEP.AimFOV = 0
 
 -- Recoil related
-SWEP.ViewKick = 0.7
-SWEP.Recoil = 0.7
+SWEP.Recoil = 0.85
+SWEP.RecoilHorizontal = 0.9
 
 -- Reload related
 SWEP.ReloadTime = 2.7

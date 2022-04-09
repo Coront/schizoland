@@ -1,7 +1,4 @@
-if SERVER then
-	AddCSLuaFile("shared.lua")
-	SWEP.ExtraMags = 4
-end
+AddCSLuaFile()
 
 if CLIENT then
     SWEP.PrintName = "G3A3"
@@ -99,9 +96,9 @@ SWEP.WorldModel   = "models/weapons/w_rif_ak47.mdl"
 
 -- Primary Fire Attributes --
 SWEP.Primary.ClipSize        = 20
-SWEP.Primary.DefaultClip    = 40
+SWEP.Primary.DefaultClip    = 0
 SWEP.Primary.Automatic       = true    
-SWEP.Primary.Ammo             = "7.62x51MM"
+SWEP.Primary.Ammo             = "ar2"
  
 -- Secondary Fire Attributes --
 SWEP.Secondary.ClipSize        = -1
@@ -117,23 +114,23 @@ SWEP.HolsterTime = 0.25
 
 -- Firing related
 SWEP.Shots = 1
-SWEP.FireDelay = 0.12
-SWEP.Damage = 42
+SWEP.FireDelay = 60/450
+SWEP.Damage = 41
 SWEP.FireSound = Sound("FAS2_G3")
 SWEP.FireSound_Suppressed = Sound("FAS2_G3_S")
 
 -- Accuracy related
-SWEP.HipCone = 0.06
-SWEP.AimCone = 0.002
-SWEP.SpreadPerShot = 0.01
-SWEP.MaxSpreadInc = 0.03
+SWEP.HipCone = 0.09
+SWEP.AimCone = 0.004
+SWEP.SpreadPerShot = 0.02
+SWEP.MaxSpreadInc = 0.07
 SWEP.SpreadCooldown = 0.2
 SWEP.VelocitySensitivity = 2.2
-SWEP.AimFOV = 5
+SWEP.AimFOV = 0
 
 -- Recoil related
-SWEP.ViewKick = 1.4
-SWEP.Recoil = 1.1
+SWEP.Recoil = 1.8
+SWEP.RecoilHorizontal = 0.8
 
 -- Reload related
 SWEP.ReloadTime = 2.3

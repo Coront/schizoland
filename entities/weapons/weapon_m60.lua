@@ -1,10 +1,7 @@
-if SERVER then
-	AddCSLuaFile("shared.lua")
-	SWEP.ExtraMags = 3
-end
+AddCSLuaFile()
 
 if CLIENT then
-    SWEP.PrintName = "M60E3"
+    SWEP.PrintName = "M60"
     SWEP.Slot = 3
     SWEP.SlotPos = 0
 	
@@ -130,9 +127,9 @@ SWEP.WorldModel   = "models/weapons/w_mach_m249para.mdl"
 
 -- Primary Fire Attributes --
 SWEP.Primary.ClipSize        = 100
-SWEP.Primary.DefaultClip    = 100
+SWEP.Primary.DefaultClip    = 0
 SWEP.Primary.Automatic       = true    
-SWEP.Primary.Ammo             = "7.62x51MM"
+SWEP.Primary.Ammo             = "ar2"
  
 -- Secondary Fire Attributes --
 SWEP.Secondary.ClipSize        = -1
@@ -148,23 +145,22 @@ SWEP.HolsterTime = 0.45
 
 -- Firing related
 SWEP.Shots = 1
-SWEP.FireDelay = 0.09111
-SWEP.Damage = 42
+SWEP.FireDelay = 60/400
+SWEP.Damage = 39
 SWEP.FireSound = Sound("FAS2_M60")
 SWEP.FireSound_Suppressed = Sound("FAS2_M60_S")
 
 -- Accuracy related
-SWEP.HipCone = 0.0512
-SWEP.AimCone = 0.00354
-SWEP.SpreadPerShot = 0.017
-SWEP.MaxSpreadInc = 0.03551
-SWEP.SpreadCooldown = 0.355
-SWEP.VelocitySensitivity = 1.4
-SWEP.AimFOV = 5
+SWEP.HipCone = 0.09
+SWEP.AimCone = 0.01
+SWEP.SpreadPerShot = 0.023
+SWEP.MaxSpreadInc = 0.07
+SWEP.SpreadCooldown = 0.4
+SWEP.AimFOV = 0
 
 -- Recoil related
-SWEP.ViewKick = 1.098
-SWEP.Recoil = 1.45585
+SWEP.Recoil = 2.1
+SWEP.RecoilHorizontal = 1.8
 
 -- Reload related
 SWEP.ReloadTime = 7.65

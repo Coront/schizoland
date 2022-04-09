@@ -295,12 +295,6 @@ function SWEP:ShotgunThink()
 							if not self.Owner.FAS_FamiliarWeaponsProgress[self.Class] then
 								self.Owner.FAS_FamiliarWeaponsProgress[self.Class] = 0
 							end
-							
-							self.Owner.FAS_FamiliarWeaponsProgress[self.Class] = self.Owner.FAS_FamiliarWeaponsProgress[self.Class] + GetConVarNumber("fas2_profgain_shotguns")
-							
-							if self.Owner.FAS_FamiliarWeaponsProgress[self.Class] >= 1 then
-								self:FamiliariseWithWeapon()
-							end
 						end
 					end
 				else

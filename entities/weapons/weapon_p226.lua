@@ -1,7 +1,4 @@
-if SERVER then
-	AddCSLuaFile("shared.lua")
-	SWEP.ExtraMags = 4
-end
+AddCSLuaFile()
 
 if CLIENT then
     SWEP.PrintName = "P226"
@@ -101,9 +98,9 @@ SWEP.WorldModel   = "models/weapons/w_pist_p228.mdl"
 
 -- Primary Fire Attributes --
 SWEP.Primary.ClipSize        = 13
-SWEP.Primary.DefaultClip    = 26
+SWEP.Primary.DefaultClip    = 0
 SWEP.Primary.Automatic       = false    
-SWEP.Primary.Ammo             = ".357 SIG"
+SWEP.Primary.Ammo             = "pistol"
  
 -- Secondary Fire Attributes --
 SWEP.Secondary.ClipSize        = -1
@@ -118,14 +115,14 @@ SWEP.DeployAnimSpeed = 0.5
 
 -- Firing related
 SWEP.Shots = 1
-SWEP.FireDelay = 0.135
+SWEP.FireDelay = 60/650
 SWEP.Damage = 19
 SWEP.FireSound = Sound("FAS2_P226")
 SWEP.FireSound_Suppressed = Sound("FAS2_P226_S")
 
 -- Accuracy related
-SWEP.HipCone = 0.033
-SWEP.AimCone = 0.017
+SWEP.HipCone = 0.07
+SWEP.AimCone = 0.012
 SWEP.SpreadPerShot = 0.006
 SWEP.MaxSpreadInc = 0.03
 SWEP.SpreadCooldown = 0.2
@@ -133,8 +130,8 @@ SWEP.VelocitySensitivity = 1.2
 SWEP.AimFOV = 0
 
 -- Recoil related
-SWEP.ViewKick = 0.7
-SWEP.Recoil = 0.55
+SWEP.Recoil = 0.65
+SWEP.RecoilHorizontal = 0.4
 
 -- Reload related
 SWEP.ReloadTime = 1.95

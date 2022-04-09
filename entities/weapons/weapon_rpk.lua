@@ -1,7 +1,4 @@
-if SERVER then
-	AddCSLuaFile("shared.lua")
-	SWEP.ExtraMags = 3
-end
+AddCSLuaFile()
 
 if CLIENT then
     SWEP.PrintName = "RPK-47"
@@ -134,9 +131,9 @@ SWEP.WorldModel   = "models/weapons/w_rif_ak47.mdl"
 
 -- Primary Fire Attributes --
 SWEP.Primary.ClipSize        = 45
-SWEP.Primary.DefaultClip    = 90
+SWEP.Primary.DefaultClip    = 0
 SWEP.Primary.Automatic       = true    
-SWEP.Primary.Ammo             = "7.62x39MM"
+SWEP.Primary.Ammo             = "ar2"
  
 -- Secondary Fire Attributes --
 SWEP.Secondary.ClipSize        = -1
@@ -153,22 +150,21 @@ SWEP.HolsterTime = 0.3
 -- Firing related
 SWEP.Shots = 1
 SWEP.FireDelay = 0.1
-SWEP.Damage = 34
+SWEP.Damage = 24
 SWEP.FireSound = Sound("FAS2_RPK")
 SWEP.FireSound_Suppressed = Sound("FAS2_RPK_S")
 
 -- Accuracy related
-SWEP.HipCone = 0.053
-SWEP.AimCone = 0.004
-SWEP.SpreadPerShot = 0.01
-SWEP.MaxSpreadInc = 0.03
-SWEP.SpreadCooldown = 0.18
-SWEP.VelocitySensitivity = 2
-SWEP.AimFOV = 5
+SWEP.HipCone = 0.089
+SWEP.AimCone = 0.005
+SWEP.SpreadPerShot = 0.015
+SWEP.MaxSpreadInc = 0.085
+SWEP.SpreadCooldown = 0.2
+SWEP.AimFOV = 0
 
 -- Recoil related
-SWEP.ViewKick = 1.4
-SWEP.Recoil = 1
+SWEP.Recoil = 1.5
+SWEP.RecoilHorizontal = 1.1
 
 -- Reload related
 SWEP.ReloadTime = 2.7

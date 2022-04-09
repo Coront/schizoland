@@ -1,7 +1,4 @@
-if SERVER then
-	AddCSLuaFile("shared.lua")
-	SWEP.ExtraMags = 6
-end
+AddCSLuaFile()
 
 if CLIENT then
     SWEP.PrintName = "KS-23"
@@ -117,9 +114,9 @@ SWEP.WorldModel   = "models/weapons/w_shot_m3super90.mdl"
 
 -- Primary Fire Attributes --
 SWEP.Primary.ClipSize        = 4
-SWEP.Primary.DefaultClip    = 8
+SWEP.Primary.DefaultClip    = 0
 SWEP.Primary.Automatic       = false    
-SWEP.Primary.Ammo             = "23x75MMR"
+SWEP.Primary.Ammo             = "buckshot"
  
 -- Secondary Fire Attributes --
 SWEP.Secondary.ClipSize        = -1
@@ -134,27 +131,28 @@ SWEP.HolsterTime = 0.3
 SWEP.DeployAnimSpeed = 0.5
 
 -- Firing related
-SWEP.Shots = 1
-SWEP.FireDelay = 0.2
-SWEP.Damage = 120
+SWEP.Shots = 4
+SWEP.FireDelay = 60/300
+SWEP.Damage = 32
 SWEP.FireSound = Sound("FAS2_KS23")
 SWEP.CockAfterShot = true
 SWEP.Cocked = true
 
 -- Accuracy related
-SWEP.HipCone = 0.05
-SWEP.AimCone = 0.002
-SWEP.SpreadPerShot = 0.3
-SWEP.MaxSpreadInc = 0.055
-SWEP.SpreadCooldown = 0.4
-SWEP.VelocitySensitivity = 1.5
-SWEP.AimFOV = 5
+SWEP.HipCone = 0.09
+SWEP.AimCone = 0.005
+SWEP.SpreadPerShot = 0.05
+SWEP.MaxSpreadInc = 0.09
+SWEP.SpreadCooldown = 0.9
+SWEP.AimFOV = 0
 
 -- Recoil related
-SWEP.ViewKick = 7.5
-SWEP.Recoil = 5
+SWEP.Recoil = 5.2
+SWEP.RecoilHorizontal = 6.5
 
 -- Reload related
+SWEP.ReloadTime = 2.1
+SWEP.ReloadTime_Orig = 2.1
 SWEP.InsertEmpty = 2.1
 SWEP.InsertTime = 1
 SWEP.ReloadStartTime = 0.5
@@ -162,7 +160,7 @@ SWEP.ReloadAdvanceTimeEmpty = 1.4
 SWEP.ReloadAdvanceTimeLast = 1.1
 SWEP.ReloadEndTime = 0.5
 SWEP.ReloadAbortTime = 0.7
-SWEP.CockTime = 0.75
+SWEP.CockTime = 0.8
 
 SWEP.InsertEmpty_Nomen = 2.1
 SWEP.InsertTime_Nomen = 0.75

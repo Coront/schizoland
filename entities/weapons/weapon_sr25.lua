@@ -1,7 +1,4 @@
-if SERVER then
-	AddCSLuaFile("shared.lua")
-	SWEP.ExtraMags = 6
-end
+AddCSLuaFile()
 
 if CLIENT then
     SWEP.PrintName = "SR-25"
@@ -18,16 +15,17 @@ if CLIENT then
 
 	SWEP.MuzzleEffect = "muzzleflash_SR25"
 	SWEP.Shell = "7.62x51"
-	SWEP.AttachmentBGs = {["suppressor"] = {bg = 2, sbg = 2}}
 	
 	SWEP.WMAng = Vector(0, 180, 180)
 	SWEP.WMPos = Vector(1, -3, 0.25)
 	SWEP.TargetViewModelFOV = 50
 	SWEP.CanPeek = true
 	SWEP.BlurOnAim = true
-end
 
-SWEP.Attachments = {[1] = {header = "Barrel", x = 50, atts = {"suppressor"}}}
+	SWEP.BodyGroups = {
+		["Barrel"] = 2,
+	}
+end
 
 SWEP.BulletLength = 7.62
 SWEP.CaseLength = 51
@@ -130,9 +128,9 @@ SWEP.WorldModel   = "models/weapons/w_snip_sg550.mdl"
 
 -- Primary Fire Attributes --
 SWEP.Primary.ClipSize        = 10
-SWEP.Primary.DefaultClip    = 20
+SWEP.Primary.DefaultClip    = 0
 SWEP.Primary.Automatic       = false    
-SWEP.Primary.Ammo             = "7.62x51MM"
+SWEP.Primary.Ammo             = "sniperround"
  
 -- Secondary Fire Attributes --
 SWEP.Secondary.ClipSize        = -1
@@ -147,23 +145,22 @@ SWEP.DeployAnimSpeed = 0.75
 
 -- Firing related
 SWEP.Shots = 1
-SWEP.FireDelay = 0.16
-SWEP.Damage = 55
-SWEP.FireSound = Sound("FAS2_SR25")
-SWEP.FireSound_Suppressed = Sound("FAS2_SR25_S")
+SWEP.FireDelay = 60/250
+SWEP.Damage = 54
+--SWEP.FireSound = Sound("FAS2_SR25")
+SWEP.FireSound = Sound("FAS2_SR25_S")
 
 -- Accuracy related
-SWEP.HipCone = 0.055
-SWEP.AimCone = 0.0005
-SWEP.SpreadPerShot = 0.015
-SWEP.MaxSpreadInc = 0.045
+SWEP.HipCone = 0.09
+SWEP.AimCone = 0.0004
+SWEP.SpreadPerShot = 0.025
+SWEP.MaxSpreadInc = 0.05
 SWEP.SpreadCooldown = 0.3
-SWEP.VelocitySensitivity = 2.2
-SWEP.AimFOV = 5
+SWEP.AimFOV = 0
 
 -- Recoil related
-SWEP.ViewKick = 1.5
-SWEP.Recoil = 1.2
+SWEP.Recoil = 1.8
+SWEP.RecoilHorizontal = 1.7
 
 -- Reload related
 SWEP.ReloadTime = 2.6
@@ -209,7 +206,7 @@ if CLIENT then
 		cd.y = 0
 		cd.w = 512
 		cd.h = 512
-		cd.fov = 2.5
+		cd.fov = 4
 		cd.drawviewmodel = false
 		cd.drawhud = false
 		render.SetRenderTarget(self.ScopeRT)

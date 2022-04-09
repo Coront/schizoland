@@ -1,8 +1,4 @@
-
-if SERVER then
-	AddCSLuaFile("shared.lua")
-	SWEP.ExtraMags = 8
-end
+AddCSLuaFile()
 
 if CLIENT then
     SWEP.PrintName = "SKS"
@@ -25,13 +21,13 @@ if CLIENT then
 	SWEP.Shell = "7.62x39"
 	SWEP.YawMod = 0.1
 	
-	SWEP.AttachmentBGs = {["compm4"] = {bg = 2, sbg = 1},
+	SWEP.AttachmentBGs = {
+		["compm4"] = {bg = 2, sbg = 1},
 		["eotech"] = {bg = 2, sbg = 2},
 		["pso1"] = {bg = 2, sbg = 3},
 		["suppressor"] = {bg = 3, sbg = 2},
-		["sks20mag"] = {bg = 4, sbg = 1},
-		["sks30mag"] = {bg = 4, sbg = 2}}
-		
+		["sks20mag"] = {bg = 4, sbg = 2}
+	}
 	SWEP.WMAng = Vector(0, 180, 180)
 	SWEP.WMPos = Vector(1, -2, 1)
 end
@@ -39,7 +35,7 @@ end
 SWEP.Attachments = {
 	[1] = {header = "Sight", sight = true, x = 900, y = -50, atts = {"pso1", "compm4", "eotech"}},
 	[2] = {header = "Barrel", x = 50, y = -200, atts = {"suppressor"}},
-	[3] = {header = "Magazine", x = 300, y = 100, atts = {"sks20mag", "sks30mag"}}}
+	[3] = {header = "Magazine", x = 300, y = 100, atts = {"sks20mag"}}}
 
 SWEP.BulletLength = 7.62
 SWEP.CaseLength = 39
@@ -62,14 +58,10 @@ SWEP.Anims.Reload_10 = "Reload5"
 SWEP.Anims.Reload_10_Nomen = "Reload5_nmc"
 SWEP.Anims.Reload_Empty_10 = "Reload_empty"
 SWEP.Anims.Reload_Empty_10_Nomen = "Reload_empty_nmc"
-SWEP.Anims.Reload_20 = "Reload_20_add"
-SWEP.Anims.Reload_20_Nomen = "Reload_20_add_nmc"
-SWEP.Anims.Reload_Empty_20 = "Reload_20_empty"
-SWEP.Anims.Reload_Empty_20_Nomen = "Reload_20_empty_nmc"
-SWEP.Anims.Reload_30 = "Reload_30"
-SWEP.Anims.Reload_30_Nomen = "Reload_30_nmc"
-SWEP.Anims.Reload_Empty_30 = "Reload_30_empty"
-SWEP.Anims.Reload_Empty_30_Nomen = "Reload_30_empty_nmc"
+SWEP.Anims.Reload_20 = "Reload_30"
+SWEP.Anims.Reload_20_Nomen = "Reload_30_nmc"
+SWEP.Anims.Reload_Empty_20 = "Reload_30_empty"
+SWEP.Anims.Reload_Empty_20_Nomen = "Reload_30_empty_nmc"
 
 SWEP.Sounds = {}
 
@@ -110,47 +102,6 @@ SWEP.Sounds["Reload_empty_nmc"] = {[1] = {time = 0.4, sound = Sound("MagPouch_AR
 	[4] = {time = 2, sound = Sound("FAS2_SKS.RemoveClip")},
 	[5] = {time = 2.35, sound = Sound("FAS2_SKS.BoltBack")},
 	[6] = {time = 2.45, sound = Sound("FAS2_SKS.BoltForward")}}
-	
-SWEP.Sounds["Reload_20_add"] = {[1] = {time = 0.5, sound = Sound("FAS2_SKS.BoltBack")},
-	[2] = {time = 1, sound = Sound("MagPouch_AR")},
-	[3] = {time = 1.6, sound = Sound("FAS2_SKS.ClipIn")},
-	[4] = {time = 2.1, sound = Sound("FAS2_SKS.Insert1")},
-	[5] = {time = 2.5, sound = Sound("FAS2_SKS.Insert3")},
-	[6] = {time = 2.9, sound = Sound("FAS2_SKS.RemoveClip")},
-	[7] = {time = 3.15, sound = Sound("FAS2_SKS.BoltForward")}}
-	
-SWEP.Sounds["Reload_20_add_nmc"] = {[1] = {time = 0.4, sound = Sound("MagPouch_AR")},
-	[2] = {time = 0.75, sound = Sound("FAS2_SKS.BoltBack")},
-	[3] = {time = 1.1, sound = Sound("FAS2_SKS.ClipIn")},
-	[4] = {time = 1.6, sound = Sound("FAS2_SKS.InsertNomen")},
-	[5] = {time = 2.05, sound = Sound("FAS2_SKS.BoltForward")},
-	[6] = {time = 2.35, sound = Sound("FAS2_SKS.RemoveClip")}}
-	
-SWEP.Sounds["Reload_20_empty"] = {[1] = {time = 0.5, sound = Sound("MagPouch_AR")},
-	[2] = {time = 1, sound = Sound("FAS2_SKS.ClipIn")},
-	[3] = {time = 1.6, sound = Sound("FAS2_SKS.Insert1")},
-	[4] = {time = 2, sound = Sound("FAS2_SKS.Insert2")},
-	[5] = {time = 2.4, sound = Sound("FAS2_SKS.Insert3")},
-	[6] = {time = 2.8, sound = Sound("FAS2_SKS.RemoveClip")},
-	[7] = {time = 3.3, sound = Sound("MagPouch_AR")},
-	[8] = {time = 4, sound = Sound("FAS2_SKS.ClipIn")},
-	[9] = {time = 4.5, sound = Sound("FAS2_SKS.Insert1")},
-	[10] = {time = 4.9, sound = Sound("FAS2_SKS.Insert2")},
-	[11] = {time = 5.3, sound = Sound("FAS2_SKS.Insert3")},
-	[12] = {time = 5.8, sound = Sound("FAS2_SKS.RemoveClip")},
-	[13] = {time = 6.2, sound = Sound("FAS2_SKS.LatchClose")},
-	[14] = {time = 6.4, sound = Sound("FAS2_SKS.BoltForward")}}
-	
-SWEP.Sounds["Reload_20_empty_nmc"] = {[1] = {time = 0.4, sound = Sound("MagPouch_AR")},
-	[2] = {time = 0.85, sound = Sound("FAS2_SKS.ClipIn")},
-	[3] = {time = 1.4, sound = Sound("FAS2_SKS.InsertNomen")},
-	[4] = {time = 2.05, sound = Sound("FAS2_SKS.RemoveClip")},
-	[5] = {time = 3, sound = Sound("FAS2_SKS.ClipIn")},
-	[6] = {time = 3.6, sound = Sound("FAS2_SKS.InsertNomen")},
-	[7] = {time = 4.2, sound = Sound("FAS2_SKS.RemoveClip")},
-	[8] = {time = 4.65, sound = Sound("FAS2_SKS.BoltBack")},
-	[9] = {time = 4.75, sound = Sound("FAS2_SKS.BoltForward")}}
-	
 SWEP.Sounds["Reload_30"] = {[1] = {time = 0.7, sound = Sound("FAS2_SKS.BoltBack")},
 	[2] = {time = 1.15, sound = Sound("FAS2_SKS.MagOut")},
 	[3] = {time = 1.7, sound = Sound("MagPouch_AR")},
@@ -199,9 +150,9 @@ SWEP.WorldModel   = "models/weapons/w_snip_awp.mdl"
 
 -- Primary Fire Attributes --
 SWEP.Primary.ClipSize        = 10
-SWEP.Primary.DefaultClip    = 20
+SWEP.Primary.DefaultClip    = 0
 SWEP.Primary.Automatic       = false    
-SWEP.Primary.Ammo             = "7.62x39MM"
+SWEP.Primary.Ammo             = "ar2"
  
 -- Secondary Fire Attributes --
 SWEP.Secondary.ClipSize        = -1
@@ -228,13 +179,15 @@ SWEP.SpreadPerShot = 0.007
 SWEP.MaxSpreadInc = 0.03
 SWEP.SpreadCooldown = 0.2
 SWEP.VelocitySensitivity = 2.2
-SWEP.AimFOV = 5
+SWEP.AimFOV = 0
 
 -- Recoil related
-SWEP.ViewKick = 1.55
-SWEP.Recoil = 1.35
+SWEP.Recoil = 1.5
+SWEP.RecoilHorizontal = 1.5
 
 -- Reload related
+SWEP.ReloadTime = 3
+SWEP.ReloadTime_Orig = 3
 SWEP.ReloadTime_10 = 6
 SWEP.ReloadTime_Nomen_10 = 4.2
 SWEP.ReloadTime_Empty_10 = 3.5
@@ -242,13 +195,8 @@ SWEP.ReloadTime_Empty_Nomen_10 = 2.75
 
 SWEP.ReloadTime_20 = 3.8
 SWEP.ReloadTime_Nomen_20 = 2.8
-SWEP.ReloadTime_Empty_20 = 6.7
-SWEP.ReloadTime_Empty_Nomen_20 = 5
-
-SWEP.ReloadTime_30 = 3.8
-SWEP.ReloadTime_Nomen_30 = 2.8
-SWEP.ReloadTime_Empty_30 = 3.8
-SWEP.ReloadTime_Empty_Nomen_30 = 2.8
+SWEP.ReloadTime_Empty_20 = 3.8
+SWEP.ReloadTime_Empty_Nomen_20 = 2.8
 
 SWEP.CantChamber = true
 
@@ -286,7 +234,7 @@ function SWEP:Reload()
 	mag = self:Clip1()
 	ammo = self.Owner:GetAmmoCount(self.Primary.Ammo)
 	
-	if mag >= self.Primary.ClipSize or (self.Primary.ClipSize < 30 and ammo < 10) or ammo == 0 then
+	if mag >= self.Primary.ClipSize or (self.Primary.ClipSize < 20 and ammo < 10) or ammo == 0 then
 		if SERVER and game.SinglePlayer() then
 			SendUserMessage("FAS2_CHECKWEAPON", self.Owner)
 		end
@@ -300,55 +248,10 @@ function SWEP:Reload()
 	
 	self.ReloadAmount = nil
 	
-	if self.Primary.ClipSize == 20 then
-		if mag > 10 then
-			if SERVER and game.SinglePlayer() then
-				SendUserMessage("FAS2_CHECKWEAPON", self.Owner)
-			end
-			
-			if CLIENT then
-				self.CheckTime = CT + 0.5
-			end
-		
-			return
-		elseif mag < 10 and mag > 0 then
-			self.ReloadAmount = 10
-		elseif mag == 0 and ammo < 20 then
-			self.dt.Status = FAS_STAT_IDLE
-			
-			if self.Owner.FAS_FamiliarWeapons[self.Class] then
-				FAS2_PlayAnim(self, self.Anims["Reload_Empty_10_Nomen"])
-				self.ReloadDelay = CT + self.ReloadTime_Empty_Nomen_10 + 0.3
-				self:SetNextPrimaryFire(CT + self.ReloadTime_Empty_Nomen_10 + 0.3)
-				self:SetNextSecondaryFire(CT + self.ReloadTime_Empty_Nomen_10 + 0.3)
-				
-				if CLIENT then
-					self:MakeSKSStripper(2)
-				end
-				
-				umsg.Start("FAS2_SKSSTRIPPER", self.Owner)
-					umsg.Float(2)
-				umsg.End()
-			else
-				FAS2_PlayAnim(self, self.Anims["Reload_Empty_10"])
-				self.ReloadDelay = CT + self.ReloadTime_Empty_10 + 0.3
-				self:SetNextPrimaryFire(CT + CT + self.ReloadTime_Empty_10 + 0.3)
-				self:SetNextSecondaryFire(CT + CT + self.ReloadTime_Empty_10 + 0.3)
-				
-				if CLIENT then
-					self:MakeSKSStripper(2.8)
-				end
-				
-				umsg.Start("FAS2_SKSSTRIPPER", self.Owner)
-					umsg.Float(2.8)
-				umsg.End()
-			end
-	
-			self.ReloadAmount = 10
-			
-			return
+	if self.Primary.ClipSize == 10 then
+		if SERVER then
+			self:GetOwner():GiveAmmo( self:Clip1(), self:GetPrimaryAmmoType() )
 		end
-	elseif self.Primary.ClipSize == 10 then
 		self:SetClip1(0)
 	end
 	
@@ -365,8 +268,6 @@ function SWEP:Reload()
 				if self.Primary.ClipSize == 10 then
 					self:MakeLiveSKSRounds(0.5, mag - 1)
 					self:MakeSKSStripper(3.62)
-				elseif self.Primary.ClipSize == 20 then
-					self:MakeSKSStripper(2.4)
 				end
 			end
 			
@@ -380,10 +281,6 @@ function SWEP:Reload()
 					umsg.Start("FAS2_SKSSTRIPPER", self.Owner)
 						umsg.Float(3.62)
 					umsg.End()
-				elseif self.Primary.ClipSize == 20 then
-					umsg.Start("FAS2_SKSSTRIPPER", self.Owner)
-						umsg.Float(2.4)
-					umsg.End()
 				end
 			end
 		else
@@ -395,9 +292,6 @@ function SWEP:Reload()
 			if CLIENT then
 				if self.Primary.ClipSize == 10 then
 					self:MakeSKSStripper(2)
-				elseif self.Primary.ClipSize == 20 then
-					self:MakeSKSStripper(2.1)
-					self:MakeSKSStripper(4.25)
 				end
 			end
 			
@@ -405,15 +299,6 @@ function SWEP:Reload()
 				if self.Primary.ClipSize == 10 then
 					umsg.Start("FAS2_SKSSTRIPPER", self.Owner)
 						umsg.Float(2)
-					umsg.End()
-					
-				elseif self.Primary.ClipSize == 20 then
-					umsg.Start("FAS2_SKSSTRIPPER", self.Owner)
-						umsg.Float(2.1)
-					umsg.End()
-					
-					umsg.Start("FAS2_SKSSTRIPPER", self.Owner)
-						umsg.Float(4.25)
 					umsg.End()
 				end
 			end
@@ -429,8 +314,6 @@ function SWEP:Reload()
 				if self.Primary.ClipSize == 10 then
 					self:MakeLiveSKSRounds(0.55, mag - 1)
 					self:MakeSKSStripper(5.15)
-				elseif self.Primary.ClipSize == 20 then
-					self:MakeSKSStripper(2.95)
 				end
 			end
 			
@@ -444,19 +327,12 @@ function SWEP:Reload()
 					umsg.Start("FAS2_SKSSTRIPPER", self.Owner)
 						umsg.Float(5.15)
 					umsg.End()
-				elseif self.Primary.ClipSize == 20 then
-					umsg.Start("FAS2_SKSSTRIPPER", self.Owner)
-						umsg.Float(2.95)
-					umsg.End()
 				end
 			end
 		else
 			if CLIENT then
 				if self.Primary.ClipSize == 10 then
 					self:MakeSKSStripper(2.8)
-				elseif self.Primary.ClipSize == 20 then
-					self:MakeSKSStripper(2.8)
-					self:MakeSKSStripper(5.8)
 				end
 			end
 			
@@ -464,14 +340,6 @@ function SWEP:Reload()
 				if self.Primary.ClipSize == 10 then
 					umsg.Start("FAS2_SKSSTRIPPER", self.Owner)
 						umsg.Float(2.8)
-					umsg.End()
-				elseif self.Primary.ClipSize == 20 then
-					umsg.Start("FAS2_SKSSTRIPPER", self.Owner)
-						umsg.Float(2.8)
-					umsg.End()
-					
-					umsg.Start("FAS2_SKSSTRIPPER", self.Owner)
-						umsg.Float(5.8)
 					umsg.End()
 				end
 			end
