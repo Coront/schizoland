@@ -22,9 +22,10 @@ hook.Add( "HUDPaint", "AS_Node_Indicator", function()
         local trace = util.TraceLine({
             start = LocalPlayer():EyePos(),
             endpos = v:GetPos(),
+            mask = MASK_SOLID,
             filter = {LocalPlayer()},
         })
-        if trace.Entity != v then continue end
+        if trace.HitWorld then continue end
 
         local pos = v:GetPos() + v:OBBCenter()
         local screen = pos:ToScreen()
