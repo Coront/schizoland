@@ -1,9 +1,12 @@
 COLHUD_DEFAULT = nil
 COLHUD_GOOD = nil
 COLHUD_BAD = nil
+HUD_SCALE = nil
 
 -- Enable HUD
 AS_ClientConVar( "as_hud", "1", true, false )
+-- Scaling
+AS_ClientConVar( "as_hud_scale", "1.0", true, false )
 -- Default Colors
 AS_ClientConVar( "as_hud_color_default_r", "0", true, false )
 AS_ClientConVar( "as_hud_color_default_g", "105", true, false )
@@ -69,9 +72,9 @@ function AftershockHUD()
         local maxhealth = ply:GetMaxHealth()
         local xpos = GetConVar("as_hud_healthbar_xadd"):GetInt()
         local ypos = GetConVar("as_hud_healthbar_yadd"):GetInt()
-        local width = GetConVar("as_hud_healthbar_width"):GetInt()
-        local height = GetConVar("as_hud_healthbar_height"):GetInt()
-        local barx, bary, width, height, outline = (math.Clamp(100 + xpos, 0, ScrW() - width)), (math.Clamp((ScrH() * 0.91) + ypos, 0, ScrH() - height)), (width), (height), (1)
+        local width = GetConVar("as_hud_healthbar_width"):GetInt() * HUD_SCALE
+        local height = GetConVar("as_hud_healthbar_height"):GetInt() * HUD_SCALE
+        local barx, bary, width, height, outline = (xpos + (80)), ((ypos - height) + (ScrH() * 0.94)), (width), (height), (1)
 
         surface.SetDrawColor(COLHUD_DEFAULT) --Set color to hud color
         surface.DrawOutlinedRect(barx, bary, width, height, outline) --Health bar outline
@@ -79,8 +82,8 @@ function AftershockHUD()
 
         local amt = tobool(GetConVar("as_hud_healthbar_amount"):GetInt())
         if amt then --Will draw health amount if enabled
-            local hp, amtx, amty, outline = (health), (math.Clamp(xpos + width + 110, width + 10, ScrW())), (math.Clamp((ScrH() * 0.928) + ypos, 0, ScrH())), (1)
-            draw.SimpleTextOutlined(hp, "AftershockHUD", amtx, amty, COLHUD_DEFAULT, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM, outline, Color(0,0,0))
+            local hp, amtx, amty, outline = (health), ((xpos + width) + (85)), ((ypos - (height / 1.9)) + (ScrH() * 0.94)), (1)
+            draw.SimpleTextOutlined(hp, "AftershockHUD", amtx, amty, COLHUD_DEFAULT, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER, outline, Color(0,0,0))
         end
     end
 
@@ -92,15 +95,16 @@ function AftershockHUD()
         local maxthirst = ply:GetMaxThirst()
         local xpos = GetConVar("as_hud_satiationbars_xadd"):GetInt()
         local ypos = GetConVar("as_hud_satiationbars_yadd"):GetInt()
-        local width = GetConVar("as_hud_satiationbars_width"):GetInt()
-        local height = GetConVar("as_hud_satiationbars_height"):GetInt()
-        local barx, bary, width, height, outline = (math.Clamp(100 + xpos, 0, ScrW() - width)), (math.Clamp((ScrH() * 0.91) + ypos + 21, 0, ScrH() - (height * 2) + 1)), (width), (height), (1)
+        local width = GetConVar("as_hud_satiationbars_width"):GetInt() * HUD_SCALE
+        local height = GetConVar("as_hud_satiationbars_height"):GetInt() * HUD_SCALE
+        local barx, bary, width, height, outline = (xpos + 80), (ypos + (ScrH() * 0.941)), (width), (height), (1)
+        local iconsize = 10
 
         --Hunger Bar
         surface.SetDrawColor( Color( 255, 255, 255, 255 ) )
         surface.SetMaterial( Material( "icon16/cup.png" ) )
-        surface.DrawTexturedRect( barx, bary, 10, 10 )
-        barx = barx + 12
+        surface.DrawTexturedRect( barx, bary + (height / 2) - (iconsize / 2), iconsize * HUD_SCALE, iconsize * HUD_SCALE )
+        barx = barx + (12 * HUD_SCALE)
         surface.SetDrawColor(COLHUD_DEFAULT) --Set color to hud color
         surface.DrawOutlinedRect(barx, bary, width, height, outline) --Hunger bar outline
         surface.DrawRect(barx + 2, bary + 2, (hunger / maxhunger) * (width - 4), height - 4) --Hunger bar
@@ -109,13 +113,13 @@ function AftershockHUD()
             surface.SetDrawColor(COLHUD_GOOD)
             surface.DrawRect( (barx - 1) + ((width / maxhunger) * SAT.SatBuffs), bary + 1, 1, height - 2)
         end
-        barx = barx - 12
+        barx = barx - (12 * HUD_SCALE)
         --Thirst Bar
         bary = bary + (height + 1)
         surface.SetDrawColor( Color( 255, 255, 255, 255 ) )
         surface.SetMaterial( Material( "icon16/drink.png" ) )
-        surface.DrawTexturedRect( barx, bary, 10, 10 )
-        barx = barx + 12
+        surface.DrawTexturedRect( barx, bary + (height / 2) - (iconsize / 2), iconsize * HUD_SCALE, iconsize * HUD_SCALE )
+        barx = barx + (12 * HUD_SCALE)
         surface.SetDrawColor(COLHUD_DEFAULT)
         surface.DrawOutlinedRect(barx, bary, width, height) --Thirst bar outline
         surface.DrawRect( barx + 2, bary + 2, (thirst / maxthirst) * (width - 4), height - 4) --Thirst bar
@@ -127,27 +131,36 @@ function AftershockHUD()
 
         local amt = tobool(GetConVar("as_hud_satiationbars_amount"):GetInt())
         if amt then --Will draw satiation amount if enabled
-            local hunger, thirst, amtx, amty, outline = (hunger), (thirst), (math.Clamp(xpos + width + 117, width + 10, ScrW())), (math.Clamp((ScrH() * 0.91) + ypos + 31, 0, ScrH())), (1)
-            draw.SimpleTextOutlined(hunger, "AftershockHUDVerySmall", amtx, amty, COLHUD_DEFAULT, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM, outline, Color(0,0,0))
-            amty = amty + 10
-            draw.SimpleTextOutlined(thirst, "AftershockHUDVerySmall", amtx, amty, COLHUD_DEFAULT, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM, outline, Color(0,0,0))
+            local hunger, thirst, amtx, amty, outline = (hunger), (thirst), (barx + width + 2), (bary - (height) / 2 - 1), (1)
+            draw.SimpleTextOutlined(hunger, "AftershockHUDVerySmall", amtx, amty, COLHUD_DEFAULT, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER, outline, Color(0,0,0))
+            amty = amty + (height)
+            draw.SimpleTextOutlined(thirst, "AftershockHUDVerySmall", amtx, amty, COLHUD_DEFAULT, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER, outline, Color(0,0,0))
         end
     end
 
     local resources = tobool(GetConVar("as_hud_resources"):GetInt())
     if resources then
         local inv = ply:GetInventory()
-        local scrap = inv and inv["misc_scrap"] or 0
-        local sp = inv and inv["misc_smallparts"] or 0
-        local chem = inv and inv["misc_chemical"] or 0
+        local res = {}
+        res[1] = {name = "Scrap", amt = inv and inv["misc_scrap"] or 0}
+        res[2] = {name = "Small Parts", amt = inv and inv["misc_smallparts"] or 0}
+        res[3] = {name = "Chemicals", amt = inv and inv["misc_chemical"] or 0}
+        local xpos = GetConVar("as_hud_resources_xadd"):GetInt()
+        local ypos = GetConVar("as_hud_resources_yadd"):GetInt()
+        local width = 80 * HUD_SCALE
+        local height = 20 * HUD_SCALE
+        local barx, bary, width, height, spacing, outline = (xpos - width + (ScrW() - 80)), (ypos - height + (ScrH() - 50)), (width), (height), 13 * HUD_SCALE, 1
 
-        local xadd, yadd = GetConVar("as_hud_resources_xadd"):GetInt(), GetConVar("as_hud_resources_yadd"):GetInt()
-        local x, y, outline = (math.Clamp((ScrW() * 0.947) + xadd, 0, ScrW())), (math.Clamp((ScrH() * 0.876) + yadd, 0, ScrH())), (1)
-        draw.SimpleTextOutlined("Scrap: " .. scrap, "TargetIDSmall", x, y, COLHUD_DEFAULT, TEXT_ALIGN_RIGHT, TEXT_ALIGN_BOTTOM, outline, Color(0,0,0))
-        y = y + 15
-        draw.SimpleTextOutlined("Small Parts: " .. sp, "TargetIDSmall", x, y, COLHUD_DEFAULT, TEXT_ALIGN_RIGHT, TEXT_ALIGN_BOTTOM, outline, Color(0,0,0))
-        y = y + 15
-        draw.SimpleTextOutlined("Chemicals: " .. chem, "TargetIDSmall", x, y, COLHUD_DEFAULT, TEXT_ALIGN_RIGHT, TEXT_ALIGN_BOTTOM, outline, Color(0,0,0))
+        for k, v in SortedPairs( res, true ) do
+            surface.SetDrawColor( 20, 20, 20, 150 )
+            surface.DrawRect( barx, bary, width, height )
+            surface.SetDrawColor( COLHUD_DEFAULT )
+            surface.DrawOutlinedRect( barx, bary, width, height, 1 )
+
+            draw.SimpleTextOutlined( v.name .. ":", "AftershockHUDSmall", barx + width, bary - 1, COLHUD_DEFAULT, TEXT_ALIGN_RIGHT, TEXT_ALIGN_BOTTOM, outline, Color(0,0,0))
+            draw.SimpleTextOutlined( v.amt, "AftershockHUDSmall", barx + width - 5, bary + (height / 2), COLHUD_DEFAULT, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER, outline, Color(0,0,0))
+            bary = bary - ((24 * HUD_SCALE) + spacing)
+        end
     end
 
     local targetinfo = tobool(GetConVar("as_hud_targetinfo"):GetInt())
@@ -158,7 +171,7 @@ function AftershockHUD()
         local newcol = Color( col[1], col[2], col[3], alpha )
         surface.SetDrawColor( newcol )
         local xadd, yadd = GetConVar("as_hud_targetinfo_xadd"):GetInt(), GetConVar("as_hud_targetinfo_yadd"):GetInt()
-        local x, y, width, height, outline = ((ScrW() * 0.5) + xadd), ((ScrH() * 0.88) + yadd), (GetConVar("as_hud_targetinfo_width"):GetInt()), (GetConVar("as_hud_targetinfo_height"):GetInt()), (1)
+        local x, y, width, height, outline = ((ScrW() * 0.5) + xadd), ((ScrH() * 0.88) + yadd), (GetConVar("as_hud_targetinfo_width"):GetInt() * HUD_SCALE), (GetConVar("as_hud_targetinfo_height"):GetInt() * HUD_SCALE), (1)
         local health, maxhealth = (math.Clamp(target:Health(), 0, target:GetMaxHealth())), (target:GetMaxHealth())
         local name = target:IsPlayer() and target:Nickname() or target.PrintName or target:GetClass()
         draw.SimpleTextOutlined(name, "AftershockHUD", x, y - 5, newcol, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM, outline, Color(0,0,0))
@@ -168,7 +181,7 @@ function AftershockHUD()
         if tobool(GetConVar("as_hud_targetinfo_amount"):GetInt()) then
             x = x + (width / 2)
             y = y + height
-            draw.SimpleTextOutlined( health .. " / " .. maxhealth, "TargetID", x, y, newcol, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, outline, Color(0,0,0) )
+            draw.SimpleTextOutlined( health .. " / " .. maxhealth, "AftershockHUDSmall", x, y, newcol, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, outline, Color(0,0,0) )
         end
     end
 
@@ -269,10 +282,73 @@ function GM:DrawDeathNotice()
     return false 
 end
 
+function BuildASFonts()
+    surface.CreateFont( "AftershockHUD", {
+        font 		= "TargetID",
+        extended 	= false,
+        size 		= 24 * HUD_SCALE,
+        weight 		= 400,
+        blursize 	= 0,
+        scanlines 	= 0,
+        antialias 	= true,
+        underline 	= false,
+        italic 		= false,
+        strikeout 	= false,
+        symbol 		= false,
+        rotary 		= false,
+        shadow 		= false,
+        additive 	= false,
+        outline 	= false,
+    })
+    
+    surface.CreateFont( "AftershockHUDSmall", {
+        font 		= "TargetIDSmall",
+        extended 	= false,
+        size 		= 15 * HUD_SCALE,
+        weight 		= 400,
+        blursize 	= 0,
+        scanlines 	= 0,
+        antialias 	= true,
+        underline 	= false,
+        italic 		= false,
+        strikeout 	= false,
+        symbol 		= false,
+        rotary 		= false,
+        shadow 		= false,
+        additive 	= false,
+        outline 	= false,
+    })
+
+    surface.CreateFont( "AftershockHUDVerySmall", {
+        font 		= "TargetID",
+        extended 	= false,
+        size 		= 11 * HUD_SCALE,
+        weight 		= 400,
+        blursize 	= 0,
+        scanlines 	= 0,
+        antialias 	= true,
+        underline 	= false,
+        italic 		= false,
+        strikeout 	= false,
+        symbol 		= false,
+        rotary 		= false,
+        shadow 		= false,
+        additive 	= false,
+        outline 	= false,
+    })
+end
+
 hook.Add( "HUDPaint", "AS_HUD", function()
     COLHUD_DEFAULT = Color(GetConVar("as_hud_color_default_r"):GetInt(), GetConVar("as_hud_color_default_g"):GetInt(), GetConVar("as_hud_color_default_b"):GetInt(), 255)
     COLHUD_GOOD = Color(GetConVar("as_hud_color_good_r"):GetInt(), GetConVar("as_hud_color_good_g"):GetInt(), GetConVar("as_hud_color_good_b"):GetInt(), 255)
     COLHUD_BAD = Color(GetConVar("as_hud_color_bad_r"):GetInt(), GetConVar("as_hud_color_bad_g"):GetInt(), GetConVar("as_hud_color_bad_b"):GetInt(), 255)
+    HUD_SCALE = GetConVar("as_hud_scale"):GetFloat()
+
+    CurScale = CurScale or nil
+    if CurScale != HUD_SCALE then
+        CurScale = HUD_SCALE
+        BuildASFonts()
+    end
 
     if tobool(GetConVar("as_connectioninfo"):GetInt()) then
         ConnectionInformation()

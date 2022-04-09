@@ -156,7 +156,7 @@ COLHUD_GOOD = Color(GetConVar("as_hud_color_good_r"):GetInt(), GetConVar("as_hud
 COLHUD_BAD = Color(GetConVar("as_hud_color_bad_r"):GetInt(), GetConVar("as_hud_color_bad_g"):GetInt(), GetConVar("as_hud_color_bad_b"):GetInt(), 255) or Color(255,255,255,255)
 
 surface.CreateFont( "AftershockTitle", {
-    font 		= "TargetID",
+	font 		= "TargetID",
 	extended 	= false,
 	size 		= 102,
 	weight 		= 1000,
@@ -174,7 +174,7 @@ surface.CreateFont( "AftershockTitle", {
 })
 
 surface.CreateFont( "AftershockButton", {
-    font 		= "TargetID",
+	font 		= "TargetID",
 	extended 	= false,
 	size 		= 30,
 	weight 		= 1000,
@@ -192,7 +192,7 @@ surface.CreateFont( "AftershockButton", {
 })
 
 surface.CreateFont( "AftershockButtonSmall", {
-    font 		= "TargetID",
+	font 		= "TargetID",
 	extended 	= false,
 	size 		= 20,
 	weight 		= 1000,
@@ -210,46 +210,10 @@ surface.CreateFont( "AftershockButtonSmall", {
 })
 
 surface.CreateFont( "AftershockText", {
-    font 		= "TargetID",
+	font 		= "TargetID",
 	extended 	= false,
 	size 		= 20,
 	weight 		= 1000,
-	blursize 	= 0,
-	scanlines 	= 0,
-	antialias 	= true,
-	underline 	= false,
-	italic 		= false,
-	strikeout 	= false,
-	symbol 		= false,
-	rotary 		= false,
-	shadow 		= false,
-	additive 	= false,
-	outline 	= false,
-})
-
-surface.CreateFont( "AftershockHUD", {
-    font 		= "TargetID",
-	extended 	= false,
-	size 		= 24,
-	weight 		= 400,
-	blursize 	= 0,
-	scanlines 	= 0,
-	antialias 	= true,
-	underline 	= false,
-	italic 		= false,
-	strikeout 	= false,
-	symbol 		= false,
-	rotary 		= false,
-	shadow 		= false,
-	additive 	= false,
-	outline 	= false,
-})
-
-surface.CreateFont( "AftershockHUDVerySmall", {
-    font 		= "TargetID",
-	extended 	= false,
-	size 		= 11,
-	weight 		= 400,
 	blursize 	= 0,
 	scanlines 	= 0,
 	antialias 	= true,

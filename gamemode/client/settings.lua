@@ -125,26 +125,11 @@ function AS.Settings.BuildOptions()
     SectionLabel( "HUD", xpos, ypos, settings_scroll )
     addSpace( 0, 35 )
 
-    ToggleButton("Enable HUD", xpos, ypos, settings_scroll, "as_hud")
+    ToggleButton( "Enable HUD", xpos, ypos, settings_scroll, "as_hud")
+    addSpace( 0, 20 )
+
+    ValueSlider( "HUD Scale", xpos, ypos, 0.2, 3, settings_scroll, "as_hud_scale", nil, true )
     addSpace( 20, 20 )
-
-    ToggleButton("Enable Target Info", xpos, ypos, settings_scroll, "as_hud_targetinfo")
-    addSpace( 20, 20 )
-
-    ToggleButton("Enable Target Info Amounts", xpos, ypos, settings_scroll, "as_hud_targetinfo_amount")
-    addSpace( 0, 20 )
-
-    ValueSlider( "Target Info X-Pos", xpos, ypos, -2000, 2000, settings_scroll, "as_hud_targetinfo_xadd" )
-    addSpace( 0, 20 )
-
-    ValueSlider( "Target Info Y-Pos", xpos, ypos, -2000, 2000, settings_scroll, "as_hud_targetinfo_yadd" )
-    addSpace( 0, 20 )
-
-    ValueSlider( "Target Info Width", xpos, ypos, 5, 2000, settings_scroll, "as_hud_targetinfo_width" )
-    addSpace( 0, 20 )
-
-    ValueSlider( "Target Info Height", xpos, ypos, 5, 50, settings_scroll, "as_hud_targetinfo_height" )
-    addSpace( -20, 20 )
 
     ToggleButton("Enable Health Bar", xpos, ypos, settings_scroll, "as_hud_healthbar")
     addSpace( 20, 20 )
@@ -192,6 +177,24 @@ function AS.Settings.BuildOptions()
     addSpace( 0, 20 )
 
     ValueSlider("Resource Y-Pos", xpos, ypos, -2000, 2000, settings_scroll, "as_hud_resources_yadd")
+    addSpace( -20, 20 )
+
+    ToggleButton( "Enable Target Info", xpos, ypos, settings_scroll, "as_hud_targetinfo" )
+    addSpace( 20, 20 )
+
+    ToggleButton( "Enable Target Info Amounts", xpos, ypos, settings_scroll, "as_hud_targetinfo_amount" )
+    addSpace( 0, 20 )
+
+    ValueSlider( "Target Info X-Pos", xpos, ypos, -2000, 2000, settings_scroll, "as_hud_targetinfo_xadd" )
+    addSpace( 0, 20 )
+
+    ValueSlider( "Target Info Y-Pos", xpos, ypos, -2000, 2000, settings_scroll, "as_hud_targetinfo_yadd" )
+    addSpace( 0, 20 )
+
+    ValueSlider( "Target Info Width", xpos, ypos, 5, 2000, settings_scroll, "as_hud_targetinfo_width" )
+    addSpace( 0, 20 )
+
+    ValueSlider( "Target Info Height", xpos, ypos, 5, 50, settings_scroll, "as_hud_targetinfo_height" )
     addSpace( -20, 20 )
 
     ToggleButton("Enable Event Bars", xpos, ypos, settings_scroll, "as_hud_timeevent")

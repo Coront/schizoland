@@ -29,9 +29,6 @@ COLHUD_QUINARY = AS.Colors.Quinary
 --Clientside
 if CLIENT then
 
-    KEYBIND_INV = input.LookupBinding("+showscores") or '"+showscores" -Unbound'
-    KEYBIND_SKL = input.LookupBinding("+menu") or '"+menu" -Unbound'
-    KEYBIND_MSN = input.LookupBinding("+menu_context") or '"+menu_context" -Unbound'
     KEYBIND_USE = input.LookupBinding("+use") or '"+use" -Unbound'
 
 end
