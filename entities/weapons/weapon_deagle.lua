@@ -27,6 +27,8 @@ if CLIENT then
 	SWEP.SwayInterpolation = "linear"
 end
 
+SWEP.ASID = "wep_deagle"
+
 SWEP.Attachments = {[1] = {header = "Sight", x = 400, y = -50, atts = {"tritiumsights"}}}
 
 SWEP.BulletLength = 12.7

@@ -2,7 +2,7 @@ AS.AddBaseItem("ammo_9mm", {
     name = "9x19mm",
     desc = "40 rounds of 9x19mm ammunition. Used mainly in pistols and a couple SMGs.",
     category = "ammo",
-    model = "models/Items/BoxSRounds.mdl",
+    model = "models/items/ammo/9mmbox.mdl",
     value = 5,
     weight = 0.4,
     use = {
@@ -23,7 +23,7 @@ AS.AddBaseItem("ammo_45acp", {
     name = ".45 ACP",
     desc = "40 rounds of .45 ACP ammunition. Used in the M1911 and Mac11.",
     category = "ammo",
-    model = "models/Items/BoxSRounds.mdl",
+    model = "models/items/ammo/45acpbox.mdl",
     value = 10,
     weight = 0.4,
     use = {
@@ -44,7 +44,7 @@ AS.AddBaseItem("ammo_44", {
     name = ".44 Magnum",
     desc = "20 rounds of .44 Magnum, a powerful cartridge. Used in the Raging Bull.",
     category = "ammo",
-    model = "models/Items/357ammobox.mdl",
+    model = "models/items/ammo/44magbox.mdl",
     value = 15,
     weight = 0.6,
     use = {
@@ -107,7 +107,7 @@ AS.AddBaseItem("ammo_762x39", {
     name = "7.62x39mm",
     desc = "60 rounds of 7.62x39mm. Commonly used in rifles.",
     category = "ammo",
-    model = "models/Items/BoxSRounds.mdl",
+    model = "models/items/ammo/762x39box.mdl",
     value = 15,
     weight = 0.8,
     use = {
@@ -170,7 +170,7 @@ AS.AddBaseItem("ammo_50bmg", {
     name = ".50 BMG",
     desc = "20 rounds of .50 BMG. A round of this size and potential power doesn't even need to hit someone to kill them. Used in the M82 Barret.",
     category = "ammo",
-    model = "models/Items/BoxSRounds.mdl",
+    model = "models/items/ammo/50bmgbox.mdl",
     color = Color( 120, 40, 40 ),
     value = 40,
     weight = 1,

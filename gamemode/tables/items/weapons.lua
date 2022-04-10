@@ -25,27 +25,6 @@ AS.AddBaseItem("wep_knife", {
     },
 })
 
-AS.AddBaseItem("wep_crowbar", {
-    name = "Crowbar",
-    desc = "A lengthy piece of metal, once used as a repair tool. Now, for ultimate destruction.",
-    category = "weapon",
-    model = "models/weapons/w_crowbar.mdl",
-    wep = "weapon_crowbar",
-    value = 10,
-    weight = 0.75,
-    class = "scavenger",
-    craft = {
-        ["misc_scrap"] = 25,
-        ["misc_smallparts"] = 15,
-        ["misc_chemical"] = 15,
-    },
-    salvage = {
-        ["misc_scrap"] = 8,
-        ["misc_smallparts"] = 5,
-        ["misc_chemical"] = 5,
-    },
-})
-
 -- ██████╗ ██╗███████╗████████╗ ██████╗ ██╗     ███████╗
 -- ██╔══██╗██║██╔════╝╚══██╔══╝██╔═══██╗██║     ██╔════╝
 -- ██████╔╝██║███████╗   ██║   ██║   ██║██║     ███████╗
@@ -53,12 +32,12 @@ AS.AddBaseItem("wep_crowbar", {
 -- ██║     ██║███████║   ██║   ╚██████╔╝███████╗███████║
 -- ╚═╝     ╚═╝╚══════╝   ╚═╝    ╚═════╝ ╚══════╝╚══════╝
 
-AS.AddBaseItem("wep_peashooter", {
-    name = "Peashooter",
-    desc = "A small pistol that holds 18 rounds and can shoot an above moderate rate. Deals less than average damage. Uses pistol ammo.",
+AS.AddBaseItem("wep_p226", {
+    name = "P226",
+    desc = "A small pistol that holds 13 rounds. Uses 9x19mm ammunition.",
     category = "weapon",
-    model = "models/weapons/w_pistol.mdl",
-    wep = "weapon_peashooter",
+    model = "models/weapons/w_pist_p228.mdl",
+    wep = "weapon_p226",
     value = 25,
     weight = 0.8,
     class = "engineer",
@@ -67,75 +46,21 @@ AS.AddBaseItem("wep_peashooter", {
         ["misc_smallparts"] = 45,
         ["misc_chemical"] = 30,
     },
-    salvage = {
-        ["misc_scrap"] = 12,
-        ["misc_smallparts"] = 15,
-        ["misc_chemical"] = 10,
-    },
-})
-
-AS.AddBaseItem("wep_p228", {
-    name = "P228",
-    desc = "A small pistol that holds 13 rounds and shoots at a moderate rate. Deals average damage. Uses pistol ammo.",
-    category = "weapon",
-    model = "models/weapons/w_pist_p228.mdl",
-    wep = "weapon_p228",
-    value = 30,
-    weight = 0.8,
-    class = "engineer",
-    craft = {
-        ["misc_scrap"] = 45,
-        ["misc_smallparts"] = 60,
-        ["misc_chemical"] = 30,
-    },
-    salvage = {
-        ["misc_scrap"] = 15,
-        ["misc_smallparts"] = 20,
-        ["misc_chemical"] = 10,
-    },
-})
-
-AS.AddBaseItem("wep_magnum", {
-    name = "Magnum",
-    desc = "A large magnum that holds 6 rounds and shoots at a slow rate. Deals above average damage. Uses pistol ammo.",
-    category = "weapon",
-    model = "models/weapons/w_357.mdl",
-    wep = "weapon_revolver",
-    value = 100,
-    weight = 1.8,
-    hidden = true,
-    class = "engineer",
-    craft = {
-        ["misc_scrap"] = 120,
-        ["misc_smallparts"] = 150,
-        ["misc_chemical"] = 60,
-    },
-    salvage = {
-        ["misc_scrap"] = 40,
-        ["misc_smallparts"] = 50,
-        ["misc_chemical"] = 20,
-    },
 })
 
 AS.AddBaseItem("wep_deagle", {
     name = ".50 AE Desert Eagle",
-    desc = "A large and heavy handcannon that holds 7 rounds and shoots at a very slow rate. Deals a significant amount of damage. Uses pistol ammo.",
+    desc = "A large hand-cannon that holds 7 rounds. Uses .50 Action Express.",
     category = "weapon",
     model = "models/weapons/w_pist_deagle.mdl",
     wep = "weapon_deagle",
-    value = 120,
-    weight = 2.1,
-    hidden = true,
+    value = 25,
+    weight = 0.8,
     class = "engineer",
     craft = {
-        ["misc_scrap"] = 150,
-        ["misc_smallparts"] = 180,
-        ["misc_chemical"] = 100,
-    },
-    salvage = {
-        ["misc_scrap"] = 50,
-        ["misc_smallparts"] = 60,
-        ["misc_chemical"] = 33,
+        ["misc_scrap"] = 35,
+        ["misc_smallparts"] = 45,
+        ["misc_chemical"] = 30,
     },
 })
 

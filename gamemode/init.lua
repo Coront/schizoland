@@ -84,4 +84,19 @@ end)
 -- ██║     ██║  ██║███████║   ██║       ██████╔╝███████╗
 -- ╚═╝     ╚═╝  ╚═╝╚══════╝   ╚═╝       ╚═════╝ ╚══════╝
 
-resource.AddWorkshop( "104603291" ) --Extended Menu
+local WorkshopFastDL = {
+	--Value doesn't do anything, i just use it so i know what the workshop ID is.
+	["104603291"] = "Extended Spawnmenu",
+	["180507408"] = "FA:S 2.0 Alpha SWEPs",
+	["181283903"] = "FA:S 2.0 Alpha SWEPs - Pistols",
+	["183139624"] = "FA:S 2.0 Alpha SWEPs - SMGs",
+	["181656972"] = "FA:S 2.0 Alpha SWEPs - Rifles",
+	["183140076"] = "FA:S 2.0 Alpha SWEPs - Shotguns",
+	["201027715"] = "FA:S 2.0 Alpha SWEPs - U. Rifles",
+	["462119296"] = "FA:S 2.0 Alpha SWEPs - Unused Weapons (Unofficial)",
+	["201027186"] = "FA:S 2.0 Alpha SWEPs - Misc",
+}
+
+for k, v in pairs(WorkshopFastDL) do
+	resource.AddWorkshop( k )
+end
