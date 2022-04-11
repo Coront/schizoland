@@ -27,6 +27,8 @@ if CLIENT then
 	}
 end
 
+SWEP.ASID = "wep_sr25"
+
 SWEP.BulletLength = 7.62
 SWEP.CaseLength = 51
 SWEP.EmptySound = Sound("weapons/empty_sniperrifles.wav")

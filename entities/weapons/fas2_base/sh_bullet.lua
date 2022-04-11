@@ -31,147 +31,23 @@ function SWEP:FireBullet()
 		
 		if self.ClumpSpread and self.ClumpSpread > 0 then
 			Dir2 = Dir + Vector(math.Rand(-1, 1), math.Rand(-1, 1), math.Rand(-1, 1)) * self.ClumpSpread
-			
-			--Dir2 = Dir + VectorRand() * self.ClumpSpread
 		end
 		
 		bul.Num = 1
 		bul.Src = sp
 		bul.Dir = Dir2
 		bul.Spread 	= Vector(0, 0, 0)
-		bul.Tracer	= 4
+		if self.Tracer then
+			bul.Tracer = self.Tracer
+		else
+			bul.Tracer = 4
+		end
 		bul.Force	= self.Damage * 0.1
 		bul.Damage = math.Round(self.Damage)
 		self.Owner:FireBullets(bul)
 		if engine.ActiveGamemode() == "aftershock" then
 			self.Owner:IncreaseSkillExperience( "weaponhandling", SKL.WeaponHandling.incamt )
 		end
-
-		--[[
-		
-		tr.start = sp
-		tr.endpos = tr.start + Dir2 * 16384
-		tr.filter = self.Owner
-		tr.mask = trace_normal
-		
-		trace = util.TraceLine(tr)
-			
-		if not NoPenetration[trace.MatType] then
-			dot = -Dir2:DotProduct(trace.HitNormal)
-			ent = trace.Entity
-		
-			if self.PenetrationEnabled and dot > 0.26 and not ent:IsNPC() and not ent:IsPlayer() then
-				tr.start = trace.HitPos
-				tr.endpos = tr.start + Dir2 * self.PenStr * (PenMod[trace.MatType] and PenMod[trace.MatType] or 1) * self.PenMod
-				tr.filter = self.Owner
-				tr.mask = trace_walls
-				
-				trace = util.TraceLine(tr)
-				
-				tr.start = trace.HitPos
-				tr.endpos = tr.start + Dir2 * 0.1
-				tr.filter = self.Owner
-				tr.mask = trace_normal
-				
-				trace = util.TraceLine(tr) -- run ANOTHER trace to check whether we've penetrated a surface or not
-				
-				if not trace.Hit then
-					bul.Num = 1
-					bul.Src = trace.HitPos
-					bul.Dir = Dir2
-					bul.Spread 	= Vec0
-					bul.Tracer	= 4
-					bul.Force	= self.Damage * 0.05
-					bul.Damage = bul.Damage * 0.5
-				
-					bul.Callback = function(a, b, c)
-						if SERVER and SP and hm > 0 then
-							ent = b.Entity
-							
-							if ent:IsNPC() or ent:IsPlayer() then
-								SendUserMessage("FAS2_HITMARKER", self.Owner)
-							end
-						end
-			
-						if CLIENT and hm > 0 then
-							ent = b.Entity
-							
-							if ent:IsNPC() or ent:IsPlayer() then
-								self.HitMarkerTime = CurTime() + 0.2
-								self.HitMarkerAlpha = 255
-							end
-						end
-					end
-					
-					self.Owner:FireBullets(bul)
-					
-					bul.Num = 1
-					bul.Src = trace.HitPos
-					bul.Dir = -Dir2
-					bul.Spread 	= Vec0
-					bul.Tracer	= 4
-					bul.Force	= self.Damage * 0.05
-					bul.Damage = bul.Damage * 0.5
-					
-					bul.Callback = function(a, b, c)
-						if SERVER and SP and hm > 0 then
-							ent = b.Entity
-							
-							if ent:IsNPC() or ent:IsPlayer() then
-								SendUserMessage("FAS2_HITMARKER", self.Owner)
-							end
-						end
-
-						if CLIENT and hm > 0 then
-							ent = b.Entity
-							
-							if ent:IsNPC() or ent:IsPlayer() then
-								self.HitMarkerTime = CurTime() + 0.2
-								self.HitMarkerAlpha = 255
-							end
-						end
-					end
-					
-					self.Owner:FireBullets(bul)
-				end
-			else
-				if self.RicochetEnabled then
-					if not NoRicochet[trace.MatType] then
-						Dir2 = Dir2 + (trace.HitNormal * dot) * 3
-						Dir2 = Dir2 + VectorRand() * 0.06
-						bul.Num = 1
-						bul.Src = trace.HitPos
-						bul.Dir = Dir2
-						bul.Spread 	= Vec0
-						bul.Tracer	= 0
-						bul.Force	= self.Damage * 0.075
-						bul.Damage = bul.Damage * 0.75
-						
-						bul.Callback = function(a, b, c)
-							if SERVER and SP then
-								ent = b.Entity
-								
-								if ent:IsNPC() or ent:IsPlayer() then
-									SendUserMessage("FAS2_HITMARKER", self.Owner)
-								end
-							end
-						
-							if CLIENT and hm > 0 then
-								ent = b.Entity
-								
-								if ent:IsNPC() or ent:IsPlayer() then
-									self.HitMarkerTime = CurTime() + 0.2
-									self.HitMarkerAlpha = 255
-								end
-							end
-						end
-						
-						self.Owner:FireBullets(bul)
-					end
-				end
-			end
-		end
-		]]
 	end
 		
 	tr.mask = trace_normal

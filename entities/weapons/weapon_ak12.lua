@@ -31,6 +31,8 @@ if CLIENT then
 	SWEP.WMPos = Vector(-4.25, -10, 7)
 end
 
+SWEP.ASID = "wep_ak12"
+
 SWEP.Attachments = {
 	[1] = {
 		header = "Sight",

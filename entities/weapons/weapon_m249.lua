@@ -48,6 +48,8 @@ if CLIENT then
 	SWEP.WMPos = Vector(1, -3, -1.25)
 end
 
+SWEP.ASID = "wep_m249"
+
 SWEP.Attachments = {
 	[2] = {header = "Barrel", y = -100, atts = {"suppressor"}},
 	[1] = {header = "Sight", sight = true, x = 800, y = -200, atts = {"c79", "compm4", "eotech"}}}
@@ -57,7 +59,7 @@ SWEP.CaseLength = 45
 SWEP.EmptySound = Sound("weapons/empty_assaultrifles.wav")
 
 SWEP.Anims = {}
-SWEP.Anims.Draw_First = "deploy_first01"
+SWEP.Anims.Draw_First = "deploy"
 SWEP.Anims.Draw = "deploy"
 SWEP.Anims.Draw_Empty = "deploy_empty"
 SWEP.Anims.Holster_Empty = "holster_empty"

@@ -15,11 +15,13 @@ if CLIENT then
 	SWEP.Shell = "50bmg"
 	SWEP.TargetViewModelFOV = 40
 	
-	SWEP.WMAng = Vector(0, 180, 180)
-	SWEP.WMPos = Vector(1, -3, 0.25)
+	SWEP.WMAng = Vector(0, 90, 180)
+	SWEP.WMPos = Vector(-10.1, 0.5, 3.2)
 	SWEP.CanPeek = true
 	SWEP.BlurOnAim = true
 end
+
+SWEP.ASID = "wep_m82"
 
 SWEP.BulletLength = 12.95
 SWEP.CaseLength = 99
@@ -116,8 +118,8 @@ SWEP.Spawnable            = true
 SWEP.AdminSpawnable        = true
 
 SWEP.VM = "models/weapons/view/support/m82.mdl"
-SWEP.WM = "models/weapons/w_m82.mdl"
-SWEP.WorldModel   = "models/weapons/w_snip_sg550.mdl"
+SWEP.WM = "models/items/weapons/m82.mdl"
+SWEP.WorldModel   = "models/items/weapons/m82.mdl"
 
 -- Primary Fire Attributes --
 SWEP.Primary.ClipSize        = 10

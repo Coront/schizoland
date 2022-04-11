@@ -18,9 +18,11 @@ if CLIENT then
 		["suppressor"] = {bg = 2, sbg = 1}
 	}
 
-	SWEP.WMAng = Vector(0, 180, 180)
-	SWEP.WMPos = Vector(1, -3, 0.25)
+	SWEP.WMAng = Vector(0, 90, 180)
+	SWEP.WMPos = Vector(-10.3, 0.6, 2.9)
 end
+
+SWEP.ASID = "wep_ak47"
 
 SWEP.Attachments = {
 	[1] = {header = "Sight", sight = true, x = 800, y = -50, atts = {"compm4"}},
@@ -86,8 +88,8 @@ SWEP.Spawnable            = true
 SWEP.AdminSpawnable        = true
 
 SWEP.VM = "models/weapons/view/rifles/ak47.mdl"
-SWEP.WM = "models/weapons/w_ak47.mdl"
-SWEP.WorldModel   = "models/weapons/w_rif_ak47.mdl"
+SWEP.WM = "models/items/weapons/ak47.mdl"
+SWEP.WorldModel   = "models/items/weapons/ak47.mdl"
 
 -- Primary Fire Attributes --
 SWEP.Primary.ClipSize        = 30

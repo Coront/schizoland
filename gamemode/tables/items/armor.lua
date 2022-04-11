@@ -2,7 +2,7 @@ AS.AddBaseItem("armor_makeshift", {
     name = "Makeshift Armor",
     desc = "Some old clothes sewed together. Hopefully it helps protect you.",
     category = "armor",
-    model = "models/props/cs_office/Cardboard_box03.mdl",
+    model = "models/items/armor/rebel.mdl",
     value = 35,
     weight = 2,
     armor = {
@@ -11,6 +11,7 @@ AS.AddBaseItem("armor_makeshift", {
         [DMG_SLASH] = 12, --Melee
         [DMG_BURN] = 9, --Fire
         [DMG_PLASMA] = 5, --Pulse
+        [DMG_BLAST] = 3, --Explosive
     },
     class = "scavenger",
     craft = {
@@ -60,7 +61,7 @@ AS.AddBaseItem("armor_combine", {
     name = "Combine Soldier Armor",
     desc = "Armor that is worn commonly by combine soldiers. Has everything you need to protect yourself from basic wasteland elements.",
     category = "armor",
-    model = "models/props/cs_office/Cardboard_box03.mdl",
+    model = "models/items/armor/combine.mdl",
     color = Color( 120, 40, 40 ),
     value = 200,
     weight = 4.5,

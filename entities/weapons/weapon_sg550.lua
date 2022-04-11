@@ -28,6 +28,8 @@ if CLIENT then
 	}
 end
 
+SWEP.ASID = "wep_sg550"
+
 SWEP.Attachments = {[1] = {header = "Sight", sight = true, x = 700, y = 20, atts = {"eotech"}},
 	[2] = {header = "Barrel", x = 50, y = -200, atts = {"suppressor"}}}
 

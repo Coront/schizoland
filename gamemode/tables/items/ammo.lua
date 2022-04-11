@@ -21,7 +21,7 @@ AS.AddBaseItem("ammo_9mm", {
 
 AS.AddBaseItem("ammo_45acp", {
     name = ".45 ACP",
-    desc = "40 rounds of .45 ACP ammunition. Used in the M1911 and Mac11.",
+    desc = "40 rounds of .45 ACP ammunition. Used in the M1911, Mac11, and CMG.",
     category = "ammo",
     model = "models/items/ammo/45acpbox.mdl",
     value = 10,
@@ -40,7 +40,7 @@ AS.AddBaseItem("ammo_45acp", {
     },
 })
 
-AS.AddBaseItem("ammo_44", {
+AS.AddBaseItem("ammo_44mag", {
     name = ".44 Magnum",
     desc = "20 rounds of .44 Magnum, a powerful cartridge. Used in the Raging Bull.",
     category = "ammo",
@@ -142,6 +142,25 @@ AS.AddBaseItem("ammo_556x45", {
         ["misc_chemical"] = 15,
         ["misc_munitionpress"] = 0,
         ["misc_gunpowder"] = 1,
+    },
+})
+
+AS.AddBaseItem("ammo_pulse", {
+    name = "Pulse Battery",
+    desc = "A battery with 50 charges. Used in pulse weaponry.",
+    category = "ammo",
+    model = "models/Items/combine_rifle_cartridge01.mdl",
+    value = 20,
+    weight = 1,
+    use = {
+        ammotype = "striderminigun",
+        ammoamt = 50,
+    },
+    class = "scientist",
+    craft = {
+        ["misc_scrap"] = 25,
+        ["misc_smallparts"] = 5,
+        ["misc_chemical"] = 25,
     },
 })
 

@@ -21,6 +21,8 @@ if CLIENT then
 	SWEP.WMPos = Vector(-1, 6.5, 2.5)
 end
 
+SWEP.ASID = "wep_sako"
+
 SWEP.Attachments = {
 	[1] = {header = "Sight", sight = true, x = 800, y = -50, atts = {"compm4"}},
 	[2] = {header = "Barrel", y = -200, atts = {"suppressor"}}}

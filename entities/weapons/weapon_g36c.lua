@@ -19,9 +19,11 @@ if CLIENT then
 	SWEP.AttachmentBGs = {["compm4"] = {bg = 2, sbg = 1},
 		["suppressor"] = {bg = 3, sbg = 1}}
 		
-	SWEP.WMAng = Vector(0, 180, 180)
-	SWEP.WMPos = Vector(1, -3, 0.25)
+	SWEP.WMAng = Vector(0, 90, 180)
+	SWEP.WMPos = Vector(-10, 0.5, 3)
 end
+
+SWEP.ASID = "wep_g36"
 
 SWEP.Attachments = {
 	[1] = {header = "Sight", sight = true, x = 600, y = -50, atts = {"compm4"}},
@@ -91,7 +93,7 @@ SWEP.Spawnable            = true
 SWEP.AdminSpawnable        = true
 
 SWEP.VM = "models/weapons/view/rifles/g36c.mdl"
-SWEP.WM = "models/weapons/w_g36e.mdl"
+SWEP.WM = "models/items/weapons/g36.mdl"
 SWEP.WorldModel   = "models/weapons/w_rif_m4a1.mdl"
 
 -- Primary Fire Attributes --

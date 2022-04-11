@@ -27,6 +27,8 @@ if CLIENT then
 	SWEP.SwayInterpolation = "linear"
 end
 
+SWEP.ASID = "wep_m1911"
+
 SWEP.Attachments = {[1] = {header = "Barrel", x = 20, y = -60, atts = {"suppressor"}}}
 
 SWEP.BulletLength = 11.5

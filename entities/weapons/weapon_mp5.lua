@@ -23,9 +23,11 @@ if CLIENT then
 	["compm4"] = {bg = 2, sbg = 1},
 	["foregrip"] = {bg = 4, sbg = 1}}
 	
-	SWEP.WMAng = Vector(0, 180, 180)
-	SWEP.WMPos = Vector(1, -3, 0.25)
+	SWEP.WMAng = Vector(0, 90, 180)
+	SWEP.WMPos = Vector(-7.5, -0.5, 3.2)
 end
+
+SWEP.ASID = "wep_mp5"
 
 SWEP.Attachments = {[1] = {header = "Sight", sight = true, x = 400, y = -50, atts = {"compm4"}},
 	[2] = {header = "Barrel", x = 25, y = -250, atts = {"suppressor"}},
@@ -111,8 +113,8 @@ SWEP.Spawnable            = true
 SWEP.AdminSpawnable        = true
 
 SWEP.VM = "models/weapons/view/smgs/mp5a5.mdl"
-SWEP.WM = "models/weapons/w_mp5.mdl"
-SWEP.WorldModel   = "models/weapons/w_smg_mp5.mdl"
+SWEP.WM = "models/items/weapons/mp5.mdl"
+SWEP.WorldModel   = "models/items/weapons/mp5.mdl"
 
 -- Primary Fire Attributes --
 SWEP.Primary.ClipSize        = 30

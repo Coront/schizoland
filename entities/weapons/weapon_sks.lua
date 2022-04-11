@@ -32,6 +32,8 @@ if CLIENT then
 	SWEP.WMPos = Vector(1, -2, 1)
 end
 
+SWEP.ASID = "wep_sks"
+
 SWEP.Attachments = {
 	[1] = {header = "Sight", sight = true, x = 900, y = -50, atts = {"pso1", "compm4", "eotech"}},
 	[2] = {header = "Barrel", x = 50, y = -200, atts = {"suppressor"}},
@@ -145,8 +147,8 @@ SWEP.Spawnable            = true
 SWEP.AdminSpawnable        = true
 
 SWEP.VM = "models/weapons/view/rifles/sks.mdl"
-SWEP.WM = "models/weapons/world/rifles/sks.mdl"
-SWEP.WorldModel   = "models/weapons/w_snip_awp.mdl"
+SWEP.WM = "models/items/weapons/sks.mdl"
+SWEP.WorldModel   = "models/items/weapons/sks.mdl"
 
 -- Primary Fire Attributes --
 SWEP.Primary.ClipSize        = 10

@@ -26,6 +26,8 @@ if CLIENT then
 	SWEP.SwayInterpolation = "linear"
 end
 
+SWEP.ASID = "wep_ots"
+
 SWEP.BulletLength = 9
 SWEP.CaseLength = 18
 

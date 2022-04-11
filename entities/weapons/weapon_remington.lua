@@ -14,8 +14,8 @@ if CLIENT then
 	SWEP.MuzzleEffect = "muzzleflash_shotgun"
 	//SWEP.AttachmentBGs = {["compm4"] = {bg = 2, sbg = 1}}
 	
-	SWEP.WMAng = Vector(0, 180, 180)
-	SWEP.WMPos = Vector(1, -3.2, 0.25)
+	SWEP.WMAng = Vector(0, 90, 190)
+	SWEP.WMPos = Vector(-10, 0.2, 2)
 	SWEP.MagText = "TUBE "
 	SWEP.BoltReminderText = "RELOAD KEY - PUMP SHOTGUN"
 	
@@ -27,6 +27,8 @@ if CLIENT then
 	SWEP.SprintPos = Vector(5, -3, 0.5)
 	SWEP.SprintAng = Vector(-12.968, 47.729, 0)
 end
+
+SWEP.ASID = "wep_remington"
 
 //SWEP.Attachments = {[1] = {header = "Sight", sight = true, x = 600, y = -50, atts = {"compm4"}}}
 
@@ -106,8 +108,8 @@ SWEP.Spawnable            = true
 SWEP.AdminSpawnable        = true
 
 SWEP.VM = "models/weapons/view/shotguns/870.mdl"
-SWEP.WM = "models/weapons/w_m3.mdl"
-SWEP.WorldModel   = "models/weapons/w_shot_m3super90.mdl"
+SWEP.WM = "models/items/weapons/rem870.mdl"
+SWEP.WorldModel   = "models/items/weapons/rem870.mdl"
 
 -- Primary Fire Attributes --
 SWEP.Primary.ClipSize        = 8
