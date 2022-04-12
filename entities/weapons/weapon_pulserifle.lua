@@ -10,8 +10,8 @@ if CLIENT then
 
 	SWEP.Shell = "7.62x39"
 
-	SWEP.WMAng = Vector(180, -90, 0)
-	SWEP.WMPos = Vector(16, -0.1, 1)
+	SWEP.WMAng = Vector(180, 0, 0)
+	SWEP.WMPos = Vector(0, -16.3, 0.1)
 	SWEP.CrosshairShow = true
 end
 
@@ -24,25 +24,22 @@ SWEP.CaseLength = 39
 SWEP.EmptySound = Sound("weapons/empty_assaultrifles.wav")
 
 SWEP.Anims = {}
-SWEP.Anims.Draw_First = "draw"
-SWEP.Anims.Draw = "draw"
-SWEP.Anims.Holster = "holster"
-SWEP.Anims.Fire = "fire"
-SWEP.Anims.Fire_Aiming = "fire"
-SWEP.Anims.Idle = "idle"
-SWEP.Anims.Idle_Aim = "idle"
-SWEP.Anims.Reload = "reload"
-SWEP.Anims.Reload_Nomen = "reload"
-SWEP.Anims.Reload_Empty = "reload"
-SWEP.Anims.Reload_Empty_Nomen = "reload"
+SWEP.Anims.Draw_First = "ir_draw"
+SWEP.Anims.Draw = "ir_draw"
+SWEP.Anims.Holster = "ir_holster"
+SWEP.Anims.Fire = {"fire2", "fire3", "fire4"}
+SWEP.Anims.Fire_Aiming = {"fire2", "fire3", "fire4"}
+SWEP.Anims.Idle = "ir_idle"
+SWEP.Anims.Idle_Aim = "ir_idle"
+SWEP.Anims.Reload = "ir_reload"
+SWEP.Anims.Reload_Nomen = "ir_reload"
+SWEP.Anims.Reload_Empty = "ir_reload"
+SWEP.Anims.Reload_Empty_Nomen = "ir_reload"
 
 SWEP.Sounds = {}
-SWEP.Sounds["reload"] = {
-	[1] = {time = 0.8, sound = Sound("weapons/m21/m21_magout.wav")},
-	[2] = {time = 0.9, sound = Sound("weapons/ar2/ar2_reload_rotate.wav")},
-	[3] = {time = 1.8, sound = Sound("MagPouch_AR")},
-	[4] = {time = 2.1, sound = Sound("weapons/m21/m21_magin.wav")},
-	[5] = {time = 2.2, sound = Sound("weapons/ar2/ar2_reload_push.wav")},
+SWEP.Sounds["ir_reload"] = {
+	[1] = {time = 0.1, sound = Sound("weapons/ar2/ar2_reload_rotate.wav")},
+	[2] = {time = 0.6, sound = Sound("weapons/ar2/ar2_reload_push.wav")},
 }
 
 SWEP.FireModes = {"auto", "semi"}
@@ -83,25 +80,25 @@ SWEP.DeployAnimSpeed = 0.5
 
 -- Firing related
 SWEP.Shots = 1
-SWEP.FireDelay = 60/750
-SWEP.Damage = 19
-SWEP.FireSound = "weapons/ar1/ar1_dist1.wav"
+SWEP.FireDelay = 60/450
+SWEP.Damage = 28
+SWEP.FireSound = "weapons/ar2/fire1.wav"
 SWEP.FireSound_Suppressed = Sound("FAS2_AK47_S")
 
 -- Accuracy related
 SWEP.HipCone = 0.086
 SWEP.AimCone = 0.007
 SWEP.SpreadPerShot = 0.009
-SWEP.MaxSpreadInc = 0.1
-SWEP.SpreadCooldown = 0.18
+SWEP.MaxSpreadInc = 0.05
+SWEP.SpreadCooldown = 0.13
 SWEP.AimFOV = 0
 
 -- Recoil related
-SWEP.Recoil = 1.2
-SWEP.RecoilHorizontal = 1.3
+SWEP.Recoil = 1.5
+SWEP.RecoilHorizontal = 1.6
 
 -- Reload related
-SWEP.ReloadTime = 3.1
-SWEP.ReloadTime_Nomen = 2.2
-SWEP.ReloadTime_Empty = 3.3
-SWEP.ReloadTime_Empty_Nomen = 3
+SWEP.ReloadTime = 1.2
+SWEP.ReloadTime_Nomen = 1.2
+SWEP.ReloadTime_Empty = 1.2
+SWEP.ReloadTime_Empty_Nomen = 1.2
