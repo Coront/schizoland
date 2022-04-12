@@ -13,14 +13,6 @@ local GetCurrentCommand = reg.Player.GetCurrentCommand
 local CommandNumber = reg.CUserCmd.CommandNumber
 
 function SWEP:FireBullet()
-	if CLIENT then
-		hm = GetConVarNumber("fas2_hitmarker")
-	else
-		if SP then
-			hm = tonumber(self.Owner:GetInfo("fas2_hitmarker"))
-		end
-	end
-	
 	sp = GetShootPos(self.Owner)
 	math.randomseed(CurTime())
 	
@@ -44,11 +36,13 @@ function SWEP:FireBullet()
 		end
 		bul.Force	= self.Damage * 0.1
 		bul.Damage = math.Round(self.Damage)
+		bul.Callback = function( attacker, tr, dmginfo )
+			local damagetype = self.DamageType or DMG_BULLET
+			dmginfo:SetDamageType( DMG_BULLET )
+		end
 		self.Owner:FireBullets(bul)
 		if engine.ActiveGamemode() == "aftershock" then
 			self.Owner:IncreaseSkillExperience( "weaponhandling", SKL.WeaponHandling.incamt )
 		end
 	end
-		
-	tr.mask = trace_normal
 end

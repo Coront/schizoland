@@ -226,7 +226,7 @@ function SWEP:Think()
 						
 						dmg:SetAttacker(self.Owner)
 						dmg:SetInflictor(self)
-						dmg:SetDamageForce(force * 20000)
+						dmg:SetDamageForce(force * 500)
 						ent:TakeDamageInfo(dmg)
 					else
 						self:EmitSound("physics/body/body_medium_impact_hard" .. math.random( 1, 6 ) .. ".wav", 70, 100)

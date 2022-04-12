@@ -20,7 +20,7 @@ if CLIENT then
 	SWEP.HideWorldModel = true
 	
 	SWEP.WMAng = Vector(0, 0, 180)
-	SWEP.WMPos = Vector(-1, 0, 0)
+	SWEP.WMPos = Vector(-1.5, 4, -2)
 	SWEP.Text3DForward = -2
 	SWEP.Text3DRight = -1
 	SWEP.Text3DSize = 0.007

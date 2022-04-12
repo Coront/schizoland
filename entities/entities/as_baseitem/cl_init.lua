@@ -19,7 +19,7 @@ hook.Add( "HUDPaint", "AS_ItemInfo", function()
             endpos = v:GetPos() + v:OBBCenter(),
             filter = LocalPlayer(),
         })
-        if trace.Entity != v then continue end
+        if trace.HitWorld then continue end
 
         local pos = v:GetPos():ToScreen()
         local id = v:GetItem()

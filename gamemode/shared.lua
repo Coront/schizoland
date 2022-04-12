@@ -113,6 +113,8 @@ function GM:Move( ply, mv )
     local scavbonus = ply:GetASClass() == "scavenger" and CLS.Scavenger.movespeedmult or 1
     local movespeed = (SKL.Movement + math.floor(ply:GetSkillLevel( "endurance" ) * SKL.Endurance.runspeed)) * scavbonus
     local sprintmovespeed = (SKL.SprintMovement + math.floor(ply:GetSkillLevel( "endurance" ) * SKL.Endurance.runspeed)) * scavbonus
+    movespeed = ply:HasArmor() and AS.Items[ply:GetArmor()].armor["movemult"] and  (movespeed * AS.Items[ply:GetArmor()].armor["movemult"]) or movespeed
+    sprintmovespeed = ply:HasArmor() and AS.Items[ply:GetArmor()].armor["movemult"] and (sprintmovespeed * AS.Items[ply:GetArmor()].armor["movemult"]) or sprintmovespeed
     ply:SetRunSpeed( sprintmovespeed )
     ply:SetWalkSpeed( movespeed )
     ply:SetSlowWalkSpeed( 75 )
@@ -155,6 +157,7 @@ function PlayerMeta:TraceFromEyes( dist ) --Will return the trace table.
 end
 
 function PlayerMeta:IsDeveloping() --Will return if a player is in developer mode
+    if not IsValid(ply) or not ply:Alive() then return false end
     if self:IsAdmin() and self:GetMoveType() == MOVETYPE_NOCLIP and (self:GetActiveWeapon():GetClass() == "weapon_physgun" or self:GetActiveWeapon():GetClass() == "gmod_tool") then return true end
     return false
 end

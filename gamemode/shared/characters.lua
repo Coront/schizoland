@@ -23,6 +23,7 @@ if SERVER then
         self:Spawn()
 
         self:SetNW2String( "as_name", name )
+        self:SetNW2String( "as_referencemodel", model )
         self.name = name
         self:SetModel(model)
         self:SetASClass(class)

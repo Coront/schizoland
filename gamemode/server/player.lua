@@ -153,3 +153,19 @@ hook.Add( "Think", "AS_PassiveHealing", function()
         end
     end
 end)
+
+hook.Add( "EntityTakeDamage", "AS_ArmorResistance", function( victim, dmginfo )
+    if not victim:IsPlayer() then return end --This is a function for players only.
+    local ply = victim
+    if not ply:HasArmor() then return end --Doesn't have armor. No reason to run this.
+    local curarmor = ply:GetArmor()
+    local armorres = AS.Items[curarmor].armor
+    local dmgtype = dmginfo:GetDamageType()
+    if not armorres[dmgtype] then return end --Defense value doesnt exist. ignore.
+
+    local overallDamage = dmginfo:GetDamage()
+    local multDamage = 1 - (armorres[dmgtype] / 100)
+    local toDamage = (overallDamage * multDamage)
+    local damage = toDamage < 1 and 1 or math.Round( toDamage )
+    dmginfo:SetDamage( damage )
+end)

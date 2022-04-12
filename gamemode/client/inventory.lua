@@ -353,6 +353,30 @@ function AS.Inventory.BuildInventory()
         Entity:SetPos(Vector(0,0,5))
         Entity:SetAngles( self.Angles + Angle(0,-100,-90) )
     end
+    function characterdisplay:DrawModel()
+        self.Entity:DrawModel()
+        local armorwep = LocalPlayer():GetArmorWep()
+        if LocalPlayer().ArmorOverlay and LocalPlayer():HasArmor() and armorwep.ArmorModel then
+            if not IsValid( self.Entity.ArmorOverlay ) then
+                self.Entity.ArmorOverlay = ClientsideModel( armorwep.ArmorModel, RENDERGROUP_BOTH )
+                self.Entity.ArmorOverlay:SetNoDraw( true )
+            end
+
+            if IsValid( self.Entity.ArmorOverlay ) then
+                if armorwep.BoneMerge then --Bone merging
+                    self.Entity.ArmorOverlay:SetParent( self.Entity )
+                    self.Entity.ArmorOverlay:AddEffects( EF_BONEMERGE )
+                end
+                if armorwep.Scale or armorwep.ScaleFemale then
+                    local scale = LocalPlayer():IsFemale() and armorwep.ScaleFemale or armorwep.Scale or 1
+                    for i = 0, self.Entity.ArmorOverlay:GetBoneCount() do
+                        self.Entity.ArmorOverlay:ManipulateBoneScale( i, Vector( scale, scale, scale ) )
+                    end
+                end
+                self.Entity.ArmorOverlay:DrawModel()
+            end
+        end
+    end
     function characterdisplay:Think()
         if realchars and realchars[selectedChar] and self:GetModel() != realchars[selectedChar].model then
             self:SetModel(realchars[selectedChar].model)

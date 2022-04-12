@@ -1,8 +1,9 @@
 AS.AddBaseItem("armor_makeshift", {
     name = "Makeshift Armor",
-    desc = "Some old clothes sewed together. Hopefully it helps protect you.",
+    desc = "Some old clothes that have been sewed together. Hopefully it helps protect you.",
     category = "armor",
     model = "models/items/armor/rebel.mdl",
+    wep = "armor_makeshift",
     value = 35,
     weight = 2,
     armor = {
@@ -20,40 +21,30 @@ AS.AddBaseItem("armor_makeshift", {
         ["misc_chemical"] = 40,
         ["misc_hide_antlion"] = 1,
     },
-    salvage = {
-        ["misc_scrap"] = 17,
-        ["misc_smallparts"] = 8,
-        ["misc_chemical"] = 13,
-    },
 })
 
-AS.AddBaseItem("armor_police", {
-    name = "Police Armor",
-    desc = "Armor that was one day used to protect police in riots. May it service you better now.",
+AS.AddBaseItem("armor_combat", {
+    name = "Combat Armor",
+    desc = "cool",
     category = "armor",
-    model = "models/props/cs_office/Cardboard_box03.mdl",
-    value = 80,
-    weight = 3.5,
+    model = "models/armor/combatarmor.mdl",
+    wep = "armor_urban",
+    value = 35,
+    weight = 2,
     armor = {
-        ["movemult"] = 0.9,
-        [DMG_BULLET] = 14,
-        [DMG_SLASH] = 20,
-        [DMG_BURN] = 25,
-        [DMG_PLASMA] = 9,
+        ["movemult"] = 0.8, --Movespeed Mult
+        [DMG_BULLET] = 38, --Bullets
+        [DMG_SLASH] = 52, --Melee
+        [DMG_BURN] = 10, --Fire
+        [DMG_PLASMA] = 30, --Pulse
+        [DMG_BLAST] = 40, --Explosive
     },
-    hidden = true,
-    class = "mercenary",
+    class = "scavenger",
     craft = {
-        ["misc_scrap"] = 120,
-        ["misc_smallparts"] = 80,
-        ["misc_chemical"] = 140,
-        ["misc_hide_antlion"] = 2,
-        ["misc_hide_guard"] = 1,
-    },
-    salvage = {
-        ["misc_scrap"] = 40,
-        ["misc_smallparts"] = 27,
-        ["misc_chemical"] = 47,
+        ["misc_scrap"] = 50,
+        ["misc_smallparts"] = 25,
+        ["misc_chemical"] = 40,
+        ["misc_hide_antlion"] = 1,
     },
 })
 
@@ -62,6 +53,7 @@ AS.AddBaseItem("armor_combine", {
     desc = "Armor that is worn commonly by combine soldiers. Has everything you need to protect yourself from basic wasteland elements.",
     category = "armor",
     model = "models/items/armor/combine.mdl",
+    wep = "armor_combine",
     color = Color( 120, 40, 40 ),
     value = 200,
     weight = 4.5,
@@ -80,41 +72,5 @@ AS.AddBaseItem("armor_combine", {
         ["misc_chemical"] = 375,
         ["misc_hide_antlion"] = 3,
         ["misc_hide_guard"] = 2,
-    },
-    salvage = {
-        ["misc_scrap"] = 83,
-        ["misc_smallparts"] = 100,
-        ["misc_chemical"] = 125,
-    },
-})
-
-AS.AddBaseItem("armor_supersoldier", {
-    name = "Super Soldier Armor",
-    desc = "Armor worn by superior soldiers in the combine. Offers significant protection at the cost of be able to move flexibly.",
-    category = "armor",
-    model = "models/props/cs_office/Cardboard_box03.mdl",
-    color = Color( 150, 120, 60 ),
-    value = 400,
-    weight = 6,
-    hidden = true,
-    armor = {
-        ["movemult"] = 0.7,
-        [DMG_BULLET] = 55,
-        [DMG_SLASH] = 40,
-        [DMG_BURN] = 20,
-        [DMG_PLASMA] = 50,
-    },
-    class = "mercenary",
-    craft = {
-        ["misc_scrap"] = 400,
-        ["misc_smallparts"] = 450,
-        ["misc_chemical"] = 500,
-        ["misc_hide_antlion"] = 4,
-        ["misc_hide_guard"] = 3,
-    },
-    salvage = {
-        ["misc_scrap"] = 133,
-        ["misc_smallparts"] = 150,
-        ["misc_chemical"] = 167,
     },
 })

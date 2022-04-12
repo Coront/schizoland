@@ -1,1 +1,1 @@
-local _ = nil
+include( "shared.lua" )
