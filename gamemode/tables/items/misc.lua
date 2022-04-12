@@ -56,11 +56,6 @@ AS.AddBaseItem("misc_hide_antlion", {
     model = "models/gibs/antlion_gib_large_2.mdl",
     value = 10,
     weight = 0.75,
-    salvage = {
-        ["misc_scrap"] = 3,
-        ["misc_smallparts"] = 0,
-        ["misc_chemical"] = 5,
-    },
 })
 
 AS.AddBaseItem("misc_hide_guard", {
@@ -70,11 +65,6 @@ AS.AddBaseItem("misc_hide_guard", {
     model = "models/gibs/strider_gib2.mdl",
     value = 30,
     weight = 1.5,
-    salvage = {
-        ["misc_scrap"] = 5,
-        ["misc_smallparts"] = 0,
-        ["misc_chemical"] = 10,
-    },
 })
 
 AS.AddBaseItem("misc_gunpowder", {
@@ -84,11 +74,6 @@ AS.AddBaseItem("misc_gunpowder", {
     model = "models/props_lab/jar01b.mdl",
     value = 5,
     weight = 0.2,
-    salvage = {
-        ["misc_scrap"] = 1,
-        ["misc_smallparts"] = 0,
-        ["misc_chemical"] = 2,
-    },
 })
 
 AS.AddBaseItem("misc_gunpowderten", {
@@ -98,11 +83,6 @@ AS.AddBaseItem("misc_gunpowderten", {
     model = "models/props_lab/jar01a.mdl",
     value = 50,
     weight = 2,
-    salvage = {
-        ["misc_scrap"] = 10,
-        ["misc_smallparts"] = 0,
-        ["misc_chemical"] = 20,
-    },
     use = {
         items = {
             ["misc_gunpowder"] = 10,
@@ -118,11 +98,6 @@ AS.AddBaseItem("misc_heavyplate", {
     model = "models/gibs/shield_scanner_gib2.mdl",
     value = 200,
     weight = 1,
-    salvage = {
-        ["misc_scrap"] = 10,
-        ["misc_smallparts"] = 5,
-        ["misc_chemical"] = 3,
-    },
 })
 
 AS.AddBaseItem("misc_servo", {
@@ -136,11 +111,6 @@ AS.AddBaseItem("misc_servo", {
         ["misc_scrap"] = 25,
         ["misc_smallparts"] = 30,
         ["misc_chemical"] = 10,
-    },
-    salvage = {
-        ["misc_scrap"] = 8,
-        ["misc_smallparts"] = 10,
-        ["misc_chemical"] = 3,
     },
 })
 
@@ -157,11 +127,6 @@ AS.AddBaseItem("misc_electronicparts", {
         ["misc_smallparts"] = 25,
         ["misc_chemical"] = 20,
     },
-    salvage = {
-        ["misc_scrap"] = 10,
-        ["misc_smallparts"] = 8,
-        ["misc_chemical"] = 7,
-    },
 })
 
 AS.AddBaseItem("misc_saw", {
@@ -171,11 +136,6 @@ AS.AddBaseItem("misc_saw", {
     model = "models/props/cs_militia/circularsaw01.mdl",
     value = 10,
     weight = 1.5,
-    salvage = {
-        ["misc_scrap"] = 3,
-        ["misc_smallparts"] = 0,
-        ["misc_chemical"] = 5,
-    },
 })
 
 AS.AddBaseItem("misc_electronicreceiver", {
@@ -191,11 +151,6 @@ AS.AddBaseItem("misc_electronicreceiver", {
         ["misc_smallparts"] = 25,
         ["misc_chemical"] = 15,
     },
-    salvage = {
-        ["misc_scrap"] = 10,
-        ["misc_smallparts"] = 8,
-        ["misc_chemical"] = 5,
-    },
 })
 
 AS.AddBaseItem("misc_sensorpod", {
@@ -205,11 +160,6 @@ AS.AddBaseItem("misc_sensorpod", {
     model = "models/gibs/shield_scanner_gib5.mdl",
     value = 10,
     weight = 0.2,
-    salvage = {
-        ["misc_scrap"] = 5,
-        ["misc_smallparts"] = 10,
-        ["misc_chemical"] = 3,
-    },
 })
 
 AS.AddBaseItem("misc_seed_orange", {
@@ -219,11 +169,6 @@ AS.AddBaseItem("misc_seed_orange", {
     model = "models/props_lab/box01a.mdl",
     value = 5,
     weight = 0.2,
-    salvage = {
-        ["misc_scrap"] = 4,
-        ["misc_smallparts"] = 0,
-        ["misc_chemical"] = 1,
-    },
 })
 
 AS.AddBaseItem("misc_seed_melon", {
@@ -233,11 +178,6 @@ AS.AddBaseItem("misc_seed_melon", {
     model = "models/props_junk/cardboard_box004a.mdl",
     value = 5,
     weight = 0.2,
-    salvage = {
-        ["misc_scrap"] = 5,
-        ["misc_smallparts"] = 0,
-        ["misc_chemical"] = 2,
-    },
 })
 
 AS.AddBaseItem("misc_solarfilmroll", {
@@ -247,11 +187,6 @@ AS.AddBaseItem("misc_solarfilmroll", {
     model = "models/props/de_nuke/wall_light.mdl",
     value = 50,
     weight = 2,
-    salvage = {
-        ["misc_scrap"] = 10,
-        ["misc_smallparts"] = 15,
-        ["misc_chemical"] = 10,
-    },
 })
 
 AS.AddBaseItem("misc_carbattery", {
@@ -268,11 +203,6 @@ AS.AddBaseItem("misc_carbattery", {
         ["misc_smallparts"] = 45,
         ["misc_chemical"] = 20,
     },
-    salvage = {
-        ["misc_scrap"] = 10,
-        ["misc_smallparts"] = 9,
-        ["misc_chemical"] = 4,
-    },
 })
 
 AS.AddBaseItem("misc_wheel", {
@@ -282,11 +212,6 @@ AS.AddBaseItem("misc_wheel", {
     model = "models/props_vehicles/carparts_wheel01a.mdl",
     value = 50,
     weight = 4,
-    salvage = {
-        ["misc_scrap"] = 15,
-        ["misc_smallparts"] = 10,
-        ["misc_chemical"] = 5,
-    },
 })
 
 AS.AddBaseItem("misc_axel", {
@@ -296,11 +221,6 @@ AS.AddBaseItem("misc_axel", {
     model = "models/props_vehicles/carparts_axel01a.mdl",
     value = 10,
     weight = 2,
-    salvage = {
-        ["misc_scrap"] = 10,
-        ["misc_smallparts"] = 5,
-        ["misc_chemical"] = 5,
-    },
 })
 
 AS.AddBaseItem("misc_engine", {
@@ -319,11 +239,6 @@ AS.AddBaseItem("misc_engine", {
         ["misc_servo"] = 3,
         ["misc_multitool"] = 0,
     },
-    salvage = {
-        ["misc_scrap"] = 17,
-        ["misc_smallparts"] = 25,
-        ["misc_chemical"] = 20,
-    },
 })
 
 AS.AddBaseItem("misc_propane", {
@@ -333,11 +248,6 @@ AS.AddBaseItem("misc_propane", {
     model = "models/props_junk/PropaneCanister001a.mdl",
     value = 10,
     weight = 2,
-    salvage = {
-        ["misc_scrap"] = 5,
-        ["misc_smallparts"] = 10,
-        ["misc_chemical"] = 20,
-    },
 })
 
 AS.AddBaseItem("misc_gasoline", {
@@ -353,11 +263,6 @@ AS.AddBaseItem("misc_gasoline", {
         ["misc_smallparts"] = 20,
         ["misc_chemical"] = 35,
     },
-    salvage = {
-        ["misc_scrap"] = 5,
-        ["misc_smallparts"] = 7,
-        ["misc_chemical"] = 12,
-    },
 })
 
 AS.AddBaseItem("misc_paintcan", {
@@ -367,11 +272,6 @@ AS.AddBaseItem("misc_paintcan", {
     model = "models/props_junk/metal_paintcan001a.mdl",
     value = 5,
     weight = 1.5,
-    salvage = {
-        ["misc_scrap"] = 5,
-        ["misc_smallparts"] = 7,
-        ["misc_chemical"] = 12,
-    },
 })
 
 AS.AddBaseItem("misc_pulsepod", {
@@ -381,11 +281,6 @@ AS.AddBaseItem("misc_pulsepod", {
     model = "models/props_combine/headcrabcannister01a_skybox.mdl",
     value = 20,
     weight = 2,
-    salvage = {
-        ["misc_scrap"] = 10,
-        ["misc_smallparts"] = 5,
-        ["misc_chemical"] = 20,
-    },
 })
 
 AS.AddBaseItem("misc_egg", {
@@ -395,11 +290,6 @@ AS.AddBaseItem("misc_egg", {
     model = "models/props_hive/egg.mdl",
     value = 10,
     weight = 1,
-    salvage = {
-        ["misc_scrap"] = 0,
-        ["misc_smallparts"] = 5,
-        ["misc_chemical"] = 15,
-    },
 })
 
 AS.AddBaseItem("misc_emptybottle", {
@@ -409,11 +299,6 @@ AS.AddBaseItem("misc_emptybottle", {
     model = "models/props_junk/garbage_plasticbottle003a.mdl",
     value = 1,
     weight = 0.1,
-    salvage = {
-        ["misc_scrap"] = 1,
-        ["misc_smallparts"] = 0,
-        ["misc_chemical"] = 0,
-    },
 })
 
 -- ████████╗ ██████╗  ██████╗ ██╗         ██╗████████╗███████╗███╗   ███╗███████╗
@@ -439,11 +324,6 @@ AS.AddBaseItem("misc_tool", {
         ["misc_servo"] = 1,
         ["misc_electronicparts"] = 1,
     },
-    salvage = {
-        ["misc_scrap"] = 7,
-        ["misc_smallparts"] = 8,
-        ["misc_chemical"] = 5,
-    },
 })
 
 AS.AddBaseItem("misc_munitionpress", {
@@ -458,11 +338,6 @@ AS.AddBaseItem("misc_munitionpress", {
         ["misc_scrap"] = 40,
         ["misc_smallparts"] = 50,
         ["misc_chemical"] = 25,
-    },
-    salvage = {
-        ["misc_scrap"] = 13,
-        ["misc_smallparts"] = 17,
-        ["misc_chemical"] = 8,
     },
 })
 
@@ -482,11 +357,6 @@ AS.AddBaseItem("misc_shoe", {
     color = Color( 70, 70, 70 ),
     value = 1,
     weight = 0.4,
-    salvage = {
-        ["misc_scrap"] = 2,
-        ["misc_smallparts"] = 1,
-        ["misc_chemical"] = 0,
-    },
 })
 
 AS.AddBaseItem("misc_emptysodacan", {
@@ -497,11 +367,6 @@ AS.AddBaseItem("misc_emptysodacan", {
     color = Color( 70, 70, 70 ),
     value = 1,
     weight = 0.1,
-    salvage = {
-        ["misc_scrap"] = 1,
-        ["misc_smallparts"] = 0,
-        ["misc_chemical"] = 0,
-    },
 })
 
 AS.AddBaseItem("misc_metalcan", {
@@ -512,11 +377,6 @@ AS.AddBaseItem("misc_metalcan", {
     color = Color( 70, 70, 70 ),
     value = 1,
     weight = 0.125,
-    salvage = {
-        ["misc_scrap"] = 2,
-        ["misc_smallparts"] = 1,
-        ["misc_chemical"] = 0,
-    },
 })
 
 AS.AddBaseItem("misc_mug", {
@@ -527,11 +387,6 @@ AS.AddBaseItem("misc_mug", {
     color = Color( 70, 70, 70 ),
     value = 1,
     weight = 0.125,
-    salvage = {
-        ["misc_scrap"] = 3,
-        ["misc_smallparts"] = 1,
-        ["misc_chemical"] = 0,
-    },
 })
 
 AS.AddBaseItem("misc_towels", {
@@ -542,11 +397,6 @@ AS.AddBaseItem("misc_towels", {
     color = Color( 70, 70, 70 ),
     value = 1,
     weight = 0.125,
-    salvage = {
-        ["misc_scrap"] = 2,
-        ["misc_smallparts"] = 1,
-        ["misc_chemical"] = 0,
-    },
 })
 
 AS.AddBaseItem("misc_chemicalbucket", {
@@ -557,11 +407,6 @@ AS.AddBaseItem("misc_chemicalbucket", {
     color = Color( 70, 70, 70 ),
     value = 1,
     weight = 1,
-    salvage = {
-        ["misc_scrap"] = 5,
-        ["misc_smallparts"] = 0,
-        ["misc_chemical"] = 20,
-    },
 })
 
 AS.AddBaseItem("misc_leadpipe", {
@@ -572,9 +417,4 @@ AS.AddBaseItem("misc_leadpipe", {
     color = Color( 70, 70, 70 ),
     value = 1,
     weight = 1,
-    salvage = {
-        ["misc_scrap"] = 3,
-        ["misc_smallparts"] = 7,
-        ["misc_chemical"] = 0,
-    },
 })

@@ -18,11 +18,6 @@ AS.AddBaseItem("wep_knife", {
         ["misc_smallparts"] = 10,
         ["misc_chemical"] = 5,
     },
-    salvage = {
-        ["misc_scrap"] = 5,
-        ["misc_smallparts"] = 3,
-        ["misc_chemical"] = 2,
-    },
 })
 
 -- ██████╗ ██╗███████╗████████╗ ██████╗ ██╗     ███████╗
@@ -84,7 +79,7 @@ AS.AddBaseItem("wep_deagle", {
     name = ".50 AE Desert Eagle",
     desc = "A large hand-cannon that holds 7 rounds. Uses .50 Action Express.",
     category = "weapon",
-    model = "models/weapons/w_pist_deagle.mdl",
+    model = "models/items/weapons/deagle.mdl",
     wep = "weapon_deagle",
     value = 25,
     weight = 0.8,

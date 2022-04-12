@@ -41,9 +41,9 @@ AS.AddBaseItem("armor_combat", {
     },
     class = "scavenger",
     craft = {
-        ["misc_scrap"] = 50,
-        ["misc_smallparts"] = 25,
-        ["misc_chemical"] = 40,
+        ["misc_scrap"] = 1,
+        ["misc_smallparts"] = 1,
+        ["misc_chemical"] = 1,
         ["misc_hide_antlion"] = 1,
     },
 })
