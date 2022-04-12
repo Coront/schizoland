@@ -70,7 +70,7 @@ end
 
 function PlayerMeta:CanEquipItem( item )
     if not self:Alive() then self:ChatPrint("You are dead, you cannot equip this.") return false end
-    if self:HasArmor() then self:ChatPrint("You already have an armor equipped.") return false end
+    if AS.Items[item].category == "armor" and self:HasArmor() then self:ChatPrint("You already have an armor equipped.") return false end
     if self:HasWeapon( AS.Items[item].wep ) then self:ChatPrint("You already have this equipped.") return false end
     return true
 end
