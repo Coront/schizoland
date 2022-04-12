@@ -180,9 +180,9 @@ net.Receive("as_inventory_unequipitem", function( _, ply )
     local item = net.ReadString()
 
     --We are unequipping a item (usually will be weapon), so we have to verify that the player has the weapon before we return it to their inventory.
-    if not AS.Items[item] then ply:ChatPrint("This isnt a valid item.") return end --The weapon the player tried to unequip isnt an item? plus there is nothing to resync.
-    if not AS.Items[item].wep then ply:ChatPrint("This weapon doesn't have any linked items.") return end --The weapon isn't linked to any items, so this would be impossible but just incase.
-    if not ply:HasWeapon( AS.Items[item].wep ) then ply:ChatPrint("You don't have this item equipped.") return end --Player doesn't actually have this equipped.
+    if not AS.Items[item] then ply:ChatPrint("This isnt a valid item.") ply:ResyncInventory() return end --The weapon the player tried to unequip isnt an item? plus there is nothing to resync.
+    if not AS.Items[item].wep then ply:ChatPrint("This weapon doesn't have any linked items.") ply:ResyncInventory() return end --The weapon isn't linked to any items, so this would be impossible but just incase.
+    if not ply:HasWeapon( AS.Items[item].wep ) then ply:ChatPrint("You don't have this item equipped.") ply:ResyncInventory() return end --Player doesn't actually have this equipped.
 
     --We're verified, so run the actual function.
     ply:UnequipItem( item )
@@ -213,6 +213,7 @@ net.Receive("as_inventory_dropitem", function( _, ply )
     if CurTime() < (ply.NextItemDrop or 0) then ply:ChatPrint("Please wait " .. math.Round(ply.NextItemDrop - CurTime(), 2) .. " seconds before dropping another item." ) return end
     if not AS.Items[item] then ply:ChatPrint("This isnt a valid item.") ply:ResyncInventory() return end --Person might try an invalid item
     if not ply:HasInInventory( item ) then ply:ChatPrint("You don't have this item.") ply:ResyncInventory() return end --Person might try running without actually having item
+    if not ply:Alive() then ply:ChatPrint("You cannot drop items while being dead.") ply:ResyncInventory() return end
     if amt < 1 then amt = 1 end --Person might try negative numbers
     local inv = ply:GetInventory()
     if amt > inv[item] then amt = inv[item] end --Person might try higher numbers than what they actually have
@@ -230,6 +231,7 @@ net.Receive("as_inventory_destroyitem", function( _, ply )
     --We will be destroying an item, so we just need to verify that the item exists, the player has it, and they have the amount they specified to destroy.
     if not AS.Items[item] then ply:ChatPrint("This isnt a valid item.") ply:ResyncInventory() return end --Person might try an invalid item
     if not ply:HasInInventory( item ) then ply:ChatPrint("You don't have this item.") ply:ResyncInventory() return end --Person might try running without actually having item
+    if not ply:Alive() then ply:ChatPrint("You cannot salvage items while being dead.") ply:ResyncInventory() return end
     if amt < 1 then amt = 1 end --Person might try negative numbers
     local inv = ply:GetInventory()
     if amt > inv[item] then amt = inv[item] end --Person might try higher numbers than what they actually have
