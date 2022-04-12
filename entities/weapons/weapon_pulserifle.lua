@@ -102,3 +102,4 @@ SWEP.ReloadTime = 1.2
 SWEP.ReloadTime_Nomen = 1.2
 SWEP.ReloadTime_Empty = 1.2
 SWEP.ReloadTime_Empty_Nomen = 1.2
+SWEP.CantChamber = true
