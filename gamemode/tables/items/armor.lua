@@ -28,7 +28,7 @@ AS.AddBaseItem("armor_combat", {
     desc = "cool",
     category = "armor",
     model = "models/armor/combatarmor.mdl",
-    wep = "armor_urban",
+    wep = "armor_combat",
     value = 35,
     weight = 2,
     armor = {
