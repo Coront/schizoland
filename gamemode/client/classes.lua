@@ -2,6 +2,7 @@ AS.Class = {} --Not to be confused with AS.Class'es', im dumb lol
 
 function AS.Class.Open()
     if not LocalPlayer():IsLoaded() then return end
+    if not LocalPlayer():Alive() then return end
     if IsValid(frame_class) then frame_class:Close() end
 
     frame_class = vgui.Create("DFrame")

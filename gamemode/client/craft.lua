@@ -4,6 +4,7 @@ AS_ClientConVar( "as_menu_craft_holdtoopen", "0", true, false )
 
 function AS.Craft.Open()
     if not LocalPlayer():IsLoaded() then return end
+    if not LocalPlayer():Alive() then return end
     if IsValid(frame_craft) then frame_craft:Close() end
 
     frame_craft = vgui.Create("DFrame")

@@ -12,10 +12,11 @@ AS_ClientConVar( "as_menu_inventory_singlepanel", "0", true, false )
 
 function AS.Inventory.Open( tab )
     if not LocalPlayer():IsLoaded() then return end
+    if not LocalPlayer():Alive() then return end
     if IsValid(frame_inventory) then frame_inventory:Close() end
 
     frame_inventory = vgui.Create("DFrame")
-    frame_inventory:SetSize(1000, 600)
+    frame_inventory:SetSize(900, 700)
     frame_inventory:Center()
     frame_inventory:MakePopup()
     frame_inventory:SetDraggable( false )
@@ -69,42 +70,15 @@ end
 -- ██████╔╝╚██████╔╝██║███████╗██████╔╝███████║
 -- ╚═════╝  ╚═════╝ ╚═╝╚══════╝╚═════╝ ╚══════╝
 
---[[
-
---This isnt finished, trying to make a function that builds an item individually.
-
-function AS.Inventory.BuildItem( parent, id, amt )
-    local Info = AS.Items[id]
-    local itemName = Info.name or "name?" .. id
-    local itemDesc = Info.desc or "desc?" .. id
-    local itemModel = Info.model or "model?" .. id
-    local itemSkin = Info.skin or 0
-    local itemWeight = Info.weight or 0
-    local ToolTip = v > 1 and itemName .. "\n" .. itemDesc .. "\nWeight: " .. itemWeight .. " [" .. (isnumber(itemWeight) and Weight * amt or "w?") .. "]" or itemName .. "\n" .. itemDesc .. "\nWeight: " .. itemWeight
-
-    local itempanel = vgui.Create("SpawnIcon", parent)
-    itempanel:SetModel( itemModel, itemSkin or 0 )
-    itempanel:SetTooltip( ToolTip )
-    function itempanel:Paint = function( w, h )
-        if info.color then
-            surface.SetDrawColor( info.color )
-        else
-            surface.SetDrawColor( COLHUD_PRIMARY )
-        end
-        surface.DrawRect( 0, 0, w, h )
-    end
-end
-]]
-
 function AS.Inventory.BuildInventory()
     local inventory = vgui.Create("DPanel", sheets)
     inventory.Paint = function(_,w,h) end
 
 -- Items Panel
     local itempanel = vgui.Create( "DPanel", inventory )
-    itempanel:SetSize( 665, 554 )
+    itempanel:SetSize( 570, 450 )
     itempanel:Dock( LEFT )
-    itempanel:DockMargin( 0, 0, 0, 0 )
+    itempanel:DockMargin( 0, 0, 0, 180 )
     function itempanel:Paint(w,h)
         surface.SetDrawColor( COLHUD_SECONDARY )
         surface.DrawRect( 0, 0, w, h )
@@ -318,9 +292,9 @@ function AS.Inventory.BuildInventory()
 
 --Character Panel
     local characterpanel = vgui.Create( "DPanel", inventory )
-    characterpanel:SetSize( 300, 434 )
+    characterpanel:SetSize( 300, 494 )
     characterpanel:Dock( RIGHT )
-    characterpanel:DockMargin( 5, 0, 0, 120 )
+    characterpanel:DockMargin( 5, 0, 0, 180 )
     function characterpanel:Paint(w,h)
         surface.SetDrawColor( COLHUD_SECONDARY )
         surface.DrawRect( 0, 0, w, h )
@@ -398,8 +372,8 @@ function AS.Inventory.BuildInventory()
 
 --Weapons/Ammo Panel
     local weaponpanel = vgui.Create( "DPanel", inventory )
-    weaponpanel:SetPos( 674, 440 )
-    weaponpanel:SetSize( 300, 115 )
+    weaponpanel:SetPos( 0, 477 )
+    weaponpanel:SetSize( 450, 175 )
     function weaponpanel:Paint(w,h)
         surface.SetDrawColor( COLHUD_SECONDARY )
         surface.DrawRect( 0, 0, w, h )
@@ -413,23 +387,24 @@ function AS.Inventory.BuildInventory()
     for k, v in SortedPairs( LocalPlayer():GetWeapons() ) do
         if SET.DefaultWeapons[v:GetClass()] then continue end --Default weapons arent real get out of my walls
         if not v.ASID then continue end --stupid method but it works, need to tie an id to the weapons
+        if v.ASArmor then continue end
 
         local weaponinfopanel = vgui.Create("DPanel")
-        weaponinfopanel:SetSize( 70, weaponscroll:GetTall() )
+        weaponinfopanel:SetSize( 85, weaponscroll:GetTall() )
         function weaponinfopanel:Paint(w,h)
             surface.SetDrawColor( COLHUD_PRIMARY )
             surface.DrawRect( 0, 0, w, h )
         end
 
         local weaponname = vgui.Create("DLabel", weaponinfopanel)
-        weaponname:SetPos( 0, 0 )
+        weaponname:SetPos( 0, 5 )
         weaponname:SetFont("TargetIDSmall")
         weaponname:SetText( AS.Items[v.ASID].name )
-        weaponname:SizeToContents()
+        weaponname:SetSize( weaponinfopanel:GetWide(), 15 )
 
         local model = vgui.Create("SpawnIcon", weaponinfopanel)
-        model:SetPos( 0, 15 )
         model:SetSize( weaponinfopanel:GetWide(), weaponinfopanel:GetWide() )
+        model:SetPos( 0, weaponinfopanel:GetTall() / 2 - (model:GetTall() / 2) )
         model:SetModel( AS.Items[v.ASID].model, AS.Items[v.ASID].skin or 0 )
         model:SetTooltip(AS.Items[v.ASID].name)
 
@@ -454,26 +429,26 @@ function AS.Inventory.BuildInventory()
         if not itemid then continue end --doesnt have any item information, not a real item please leave my walls
 
         local ammoinfopanel = vgui.Create("DPanel")
-        ammoinfopanel:SetSize( 70, weaponscroll:GetTall() )
+        ammoinfopanel:SetSize( 85, weaponscroll:GetTall() )
         function ammoinfopanel:Paint(w,h)
             surface.SetDrawColor( COLHUD_PRIMARY )
             surface.DrawRect( 0, 0, w, h )
         end
 
         local ammoname = vgui.Create("DLabel", ammoinfopanel)
-        ammoname:SetPos( 0, 0 )
+        ammoname:SetPos( 0, 5 )
         ammoname:SetFont("TargetIDSmall")
         ammoname:SetText( AS.Items[itemid].name )
-        ammoname:SizeToContents()
+        ammoname:SetSize( ammoinfopanel:GetWide(), 15 )
 
         local model = vgui.Create("SpawnIcon", ammoinfopanel)
-        model:SetPos( 0, 15 )
         model:SetSize( ammoinfopanel:GetWide(), ammoinfopanel:GetWide() )
+        model:SetPos( 0, ammoinfopanel:GetTall() / 2 - (model:GetWide() / 2) )
         model:SetModel( AS.Items[itemid].model, AS.Items[itemid].skin or 0 )
         model:SetTooltip(AS.Items[itemid].name)
 
         local ammoamt = vgui.Create("DLabel", ammoinfopanel)
-        ammoamt:SetPos( 1, 75 )
+        ammoamt:SetPos( 1, model:GetY() + model:GetTall() + 5 )
         ammoamt:SetFont("TargetIDSmall")
         ammoamt:SetText( "x" .. v )
         ammoamt:SizeToContents()
@@ -498,6 +473,110 @@ function AS.Inventory.BuildInventory()
         end
 
         weaponscroll:AddPanel( ammoinfopanel )
+    end
+
+--Armor Panel
+    local armorpanel = vgui.Create( "DPanel", inventory )
+    armorpanel:SetPos( 453, 477 )
+    armorpanel:SetSize( 421, 175 )
+    function armorpanel:Paint(w,h)
+        surface.SetDrawColor( COLHUD_SECONDARY )
+        surface.DrawRect( 0, 0, w, h )
+    end
+
+    local armor = vgui.Create( "DPanel", armorpanel )
+    armor:SetPos( 3, 3 )
+    armor:SetSize( 100, armorpanel:GetTall() - (armor:GetY() * 2) )
+    function armor:Paint(w,h)
+        surface.SetDrawColor( COLHUD_PRIMARY )
+        surface.DrawRect( 0, 0, w, h )
+    end
+
+    local armorname = vgui.Create("DLabel", armor)
+    armorname:SetPos( 0, 5 )
+    armorname:SetFont("TargetIDSmall")
+    armorname:SetText( "No Armor" )
+    armorname:SetSize( armor:GetWide(), 15 )
+
+    
+    if LocalPlayer():HasArmor() then
+        local curarmor = LocalPlayer():GetArmor()
+        local curarmorwep = LocalPlayer():GetArmorWep()
+
+        armorname:SetText( AS.Items[curarmor].name )
+
+        local stats = vgui.Create( "DPanel", armorpanel )
+        stats:SetPos( 105, 3 )
+        stats:SetSize( armorpanel:GetWide() - (stats:GetX() + 3), armorpanel:GetTall() - (stats:GetY() * 2) )
+        function stats:Paint(w,h)
+            surface.SetDrawColor( COLHUD_PRIMARY )
+            surface.DrawRect( 0, 0, w, h )
+        end
+
+        local scroll_stats = vgui.Create("DScrollPanel", stats)
+        scroll_stats:SetSize( scroll_stats:GetParent():GetWide(), scroll_stats:GetParent():GetTall() )
+        scroll_stats.Paint = function() end
+
+        for k, v in pairs( AS.Items[curarmor].armor ) do
+            if not AS.DamageTypes[k] then continue end
+
+            local statbg = scroll_stats:Add( "DPanel" )
+            statbg:Dock( TOP )
+            statbg:DockMargin( 5, 7, 5, 0 )
+            statbg:SetSize( 0, 20 )
+            local TTtext = AS.DamageTypes[k].name .. ": " .. v .. "%"
+            statbg:SetTooltip( TTtext )
+            statbg.Paint = function(_,w,h)
+                w = w - 73
+                surface.SetDrawColor( COLHUD_SECONDARY )
+                surface.DrawRect( 25, 0, w, h )
+                
+                surface.SetDrawColor( COLHUD_GOOD )
+                local length = (v / 100) * w
+                surface.DrawRect( 25, 0, length, h )
+                
+                local xpos = 30
+                for i = 1, 45 do
+                    
+                    surface.SetDrawColor( COLHUD_PRIMARY )
+                    surface.DrawRect( xpos, 0, 1, h )
+                    xpos = xpos + 5
+                end
+            end
+
+            local icon = vgui.Create("DImageButton", statbg)
+            icon:SetPos( 5, 0 )
+            icon:SetSize (16, 16)
+            icon:SetImage( AS.DamageTypes[k].icon )
+            icon:SetColor(Color(255,255,255,255))
+
+            local amt = vgui.Create("DLabel", statbg)
+            amt:SetSize( 35, 20 )
+            amt:SetPos( 295 - amt:GetWide(), 0 )
+            amt:SetFont("TargetIDSmall")
+            amt:SetText( v .. "%" )
+
+        end
+
+        local armormodel = vgui.Create("SpawnIcon", armor)
+        armormodel:SetSize( armor:GetWide(), armor:GetWide() )
+        armormodel:SetPos( 0, armor:GetTall() / 2 - (armormodel:GetTall() / 2) )
+        armormodel:SetModel( AS.Items[curarmor].model, AS.Items[curarmor].skin or 0 )
+        armormodel:SetTooltip(AS.Items[curarmor].name)
+
+        local unequiparmor = vgui.Create("DButton", armor)
+        unequiparmor:SetSize( armor:GetWide() - 2, 18  )
+        unequiparmor:SetPos( 1, armor:GetTall() - unequiparmor:GetTall() - 2)
+        unequiparmor:SetText("Unequip Armor")
+        function unequiparmor:DoClick()
+            if not LocalPlayer():CanUnequipItem( curarmor ) then return end
+            LocalPlayer():AddItemToInventory( curarmor )
+            self:GetParent():Remove()
+            stats:Remove()
+            net.Start("as_inventory_unequipitem")
+                net.WriteString( curarmor )
+            net.SendToServer()
+        end
     end
 
     return inventory
