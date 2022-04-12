@@ -63,6 +63,7 @@ AS.AddBaseItem("armor_combine", {
         [DMG_SLASH] = 25,
         [DMG_BURN] = 15,
         [DMG_PLASMA] = 21,
+        [DMG_BLAST] = 45,
     },
     hidden = true,
     class = "mercenary",
