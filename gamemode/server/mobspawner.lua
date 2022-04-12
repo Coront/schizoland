@@ -46,7 +46,7 @@ AS.AddEvent( "zombie_horde", {
     eventspot = true,
     outdoor = true,
     ent = "npc_as_fastzombie", --Replace this with the antlionnest entity when finished
-    entamt = {min = 10, max = 20},
+    entamt = {min = 25, max = 50},
     notify = {"A large horde of fast zombies have been spotted out in the wasteland."},
 } )
 
