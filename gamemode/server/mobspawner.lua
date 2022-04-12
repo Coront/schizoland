@@ -38,6 +38,18 @@ AS.AddEvent( "antlion_nest", {
     sound = "ambient/atmosphere/terrain_rumble1.wav", --This will play a sound to everyone as a notification
 } )
 
+AS.AddEvent( "zombie_horde", {
+    enable = true,
+    mintime = 1800,
+    maxtime = 3600,
+    max = 1,
+    eventspot = true,
+    outdoor = true,
+    ent = "npc_as_fastzombie", --Replace this with the antlionnest entity when finished
+    entamt = {min = 10, max = 20},
+    notify = {"A large horde of fast zombies have been spotted out in the wasteland."},
+} )
+
 AS.AddEvent( "raider_party", {
     enable = true,
     mintime = 1200,
