@@ -73,7 +73,7 @@ function PlayerMeta:EquipItem( item )
     if not self:CanEquipItem( item ) then return end
 
     self:TakeItemFromInventory( item )
-    self:Give( AS.Items[item].wep )
+    self:Give( AS.Items[item].wep, true )
     self:ChatPrint("Equipped " .. AS.Items[item].name .. ".")
 end
 
@@ -84,7 +84,7 @@ function PlayerMeta:UnequipItem( item )
     local wep = self:GetWeapon(AS.Items[item].wep)
     local ammoinclip = wep:Clip1()
     self:StripWeapon( AS.Items[item].wep )
-    self:GiveAmmo( ammoinclip, wep:GetPrimaryAmmoType() ) --Returns any extra ammo we have loaded, so it's not deleted.
+    self:GiveAmmo( ammoinclip, wep:GetPrimaryAmmoType(), true ) --Returns any extra ammo we have loaded, so it's not deleted.
     self:ChatPrint("Holstered " .. AS.Items[item].name .. ".")
 end
 
