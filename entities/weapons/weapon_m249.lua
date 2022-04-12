@@ -216,7 +216,7 @@ SWEP.ViewModelFlip    = false
 SWEP.Spawnable            = true
 SWEP.AdminSpawnable        = true
 
-SWEP.VM = "models/weapons/view/support/m249.mdl"
+SWEP.VM = "models/weapons/view/support/minimi.mdl"
 SWEP.WM = "models/weapons/w_m249.mdl"
 SWEP.WorldModel   = "models/weapons/w_mach_m249para.mdl"
 
