@@ -64,20 +64,25 @@ function PlayerMeta:CanCarryItem( item, amt )
 end
 
 function PlayerMeta:CanUseItem( item )
+    if not self:Alive() then self:ChatPrint("You are dead, you cannot use this.") return false end
     return true
 end
 
 function PlayerMeta:CanEquipItem( item )
-    if self:HasWeapon( AS.Items[item].wep ) then self:ChatPrint("You already have this weapon equipped.") return false end
+    if not self:Alive() then self:ChatPrint("You are dead, you cannot equip this.") return false end
+    if self:HasArmor() then self:ChatPrint("You already have an armor equipped.") return false end
+    if self:HasWeapon( AS.Items[item].wep ) then self:ChatPrint("You already have this equipped.") return false end
     return true
 end
 
 function PlayerMeta:CanUnequipItem( item )
+    if not self:Alive() then self:ChatPrint("You are dead, you cannot unequip this.") return false end
     if not self:CanCarryItem( item ) then return false end --Player needs room in their inventory to unequip.
     return true
 end
 
 function PlayerMeta:CanUnequipAmmo( item, amt )
+    if not self:Alive() then self:ChatPrint("You are dead, you cannot unequip this.") return false end
     if not self:CanCarryItem( item, amt ) then return false end
     return true
 end
@@ -118,6 +123,32 @@ function PlayerMeta:GetAllTools() --Will return a table of a player's deployed t
         tbl[k] = v
     end
     return tbl
+end
+
+function PlayerMeta:GetArmor()
+    for k, v in pairs( self:GetWeapons() ) do
+        if not v.ASArmor then continue end --Skip everything not an armor.
+        if v.ASID then --Item has an ASID.
+            return v.ASID --We'll return the active armor ID.
+        end
+    end
+    return false --If we've reached this point, they don't have armor.
+end
+
+function PlayerMeta:GetArmorWep() --Same thing as the function above, but will return the weapon instead of the ASID.
+    for k, v in pairs( self:GetWeapons() ) do
+        if not v.ASArmor then continue end
+        if v.ASID then
+            return v
+        end
+    end
+    return false
+end
+
+function PlayerMeta:HasArmor()
+    local armor = self:GetArmor()
+    if armor then return true end
+    return false
 end
 
 -- ███╗   ██╗███████╗████████╗██╗    ██╗ ██████╗ ██████╗ ██╗  ██╗██╗███╗   ██╗ ██████╗
