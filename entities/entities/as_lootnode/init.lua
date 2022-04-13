@@ -107,6 +107,20 @@ function ENT:Use( ply )
             local roll = math.random( 0, 100 )
             if roll > (NOD.ScavengeChance + (SKL.Salvaging.incscavsuccess * ply:GetSkillLevel("salvaging"))) then return end --Player failed to find anything this time
 
+            --Canister Special
+            if self:GetResourceType() == "Canister" then
+                local roll = math.random( 0, 9 )
+                local item = roll <= 3 and "misc_scrap" or roll > 3 and roll <= 6 and "misc_smallparts" or roll > 6 and "misc_chemical"
+                local amt = math.random( 4, 8 )
+                if ply:CanCarryItem( item, amt ) then
+                    self:GiveItemToPlayer( ply, item, amt )
+                else
+                    self:DropItem( item, amt )
+                end
+                ply:EmitSound( "fx/items/up/itm_ammunition_up0" .. math.random( 1, 3 ) .. ".wav" ) --CONTENTPACKREPLACE
+                return
+            end
+
             --Adding Resources to inventory.
             local scavbonus = ply:GetASClass() == "scavenger" and CLS.Scavenger.scavresinc or 0
             if self:GetResourceType() == "Scrap" then
