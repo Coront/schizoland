@@ -18,7 +18,7 @@ if CLIENT then
 		["suppressor"] = {bg = 2, sbg = 1}}
 		
 	SWEP.WMAng = Vector(0, 0, 180)
-	SWEP.WMPos = Vector(-1, 6.5, 2.5)
+	SWEP.WMPos = Vector(-4.6, -7.2, 6)
 end
 
 SWEP.ASID = "wep_sako"
@@ -83,7 +83,7 @@ SWEP.Spawnable            = true
 SWEP.AdminSpawnable        = true
 
 SWEP.VM = "models/weapons/view/rifles/rk95.mdl"
-SWEP.WM = "models/weapons/world/rifles/rk95.mdl"
+SWEP.WM = "models/items/weapons/sako.mdl"
 SWEP.WorldModel   = "models/weapons/w_rif_ak47.mdl"
 
 -- Primary Fire Attributes --

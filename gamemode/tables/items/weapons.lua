@@ -217,6 +217,22 @@ AS.AddBaseItem("wep_sako", {
     },
 })
 
+AS.AddBaseItem("wep_m4a1", {
+    name = "M4A1",
+    desc = "A balanced rifle that holds 30 rounds. Uses 5.56x45mm ammunition.",
+    category = "weapon",
+    model = "models/items/weapons/m4a1.mdl",
+    wep = "weapon_m4a1",
+    value = 100,
+    weight = 1.4,
+    class = "engineer",
+    craft = {
+        ["misc_scrap"] = 35,
+        ["misc_smallparts"] = 45,
+        ["misc_chemical"] = 30,
+    },
+})
+
 AS.AddBaseItem("wep_sks", {
     name = "SKS",
     desc = "A long-ranged soviet rifle that holds 10 rounds. Uses 7.62x39mm ammunition.",

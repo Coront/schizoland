@@ -27,11 +27,13 @@ if CLIENT then
 		["c79"] = {bg = 2, sbg = 3},
 		["suppressor"] = {bg = 3, sbg = 1}}
 		
-	SWEP.WMAng = Vector(0, 180, 180)
-	SWEP.WMPos = Vector(1, -3, 0.25)
+	SWEP.WMAng = Vector(0, 0, 180)
+	SWEP.WMPos = Vector(-2.6, -3.9, 5.4)
 	
 	SWEP.HideWorldModel = true
 end
+
+SWEP.ASID = "wep_m4a1"
 
 SWEP.Attachments = {
 	[1] = {header = "Sight", sight = true, x = 600, y = -50, atts = {"c79", "compm4", "eotech"}},
@@ -102,9 +104,9 @@ SWEP.Spawnable            = true
 SWEP.AdminSpawnable        = true
 
 SWEP.VM = "models/weapons/view/rifles/m4a1.mdl"
-SWEP.WM = "models/weapons/w_m4.mdl"
+SWEP.WM = "models/items/weapons/m4a1.mdl"
 SWEP.WorldModel   = "models/weapons/w_rif_m4a1.mdl"
-SWEP.HoldType = "smg"
+SWEP.HoldType = "ar2"
 
 -- Primary Fire Attributes --
 SWEP.Primary.ClipSize        = 30
