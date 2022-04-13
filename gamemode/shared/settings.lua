@@ -100,7 +100,8 @@ SKL.SprintMovement = 248.5 --Player starts with 250 sprint move speed.
 SKL.DefaultCarryWeight = 18.8 --Player starts with 20 carry weight.
 SKL.Strength = {
     incamt = 0.02, --Amount to increase per melee impact
-    carryweight = 1.2, --Max weight increase per level
+    dmgmultinc = 0.04, --(1+(level*dmgmultinc)) The number to mult overall damage by per level, as in higher means more damage per level.
+    carryweight = 1.3, --Max weight increase per level
 }
 SKL.Endurance = {
     updatetime = 1.5, --Every second until updates again
