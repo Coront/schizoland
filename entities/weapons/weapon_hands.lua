@@ -236,6 +236,7 @@ function SWEP:Think()
 						cl = ClassToParticle[ent:GetClass()]
 						ParticleEffect((cl and cl or "blood_impact_red_01"), tr.HitPos, tr.HitNormal:Angle(), ent)
 					end
+					self:GetOwner():IncreaseSkillExperience( "strength", SKL.Strength.incamt )
 				else
 					hit = true
 					tr2 = self.Owner:GetEyeTrace() -- separate trace for the decal, because decals don't like util.TraceHull :(
@@ -276,7 +277,7 @@ function SWEP:PrimaryAttack()
 	self.Owner:SetAnimation(PLAYER_ATTACK1)
 	self.AttackType = "slash"
 
-	self.DamageAmount = 11
+	self.DamageAmount = 11 * (1 + (self:GetOwner():GetSkillLevel("strength") * SKL.Strength.dmgmultinc))
 	self:EmitSound("weapons/slam/throw.wav")
 end
 
