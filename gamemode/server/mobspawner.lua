@@ -69,10 +69,8 @@ AS.AddEvent( "combine_scout", {
     max = 1,
     eventspot = true,
     outdoor = true,
-    ent = "npc_as_soldier", --Replace this with the deploy pod entity when finished
-    entamt = {min = 4, max = 6},
-    sound = "npc/env_headcrabcanister/launch.wav",
-    notify = {"The distant sound of an explosion can be heard. The impact of a canister? Something bad just arrived."},
+    ent = "as_event_canister", --Btw, this event doesn't need a sound because the canisters play one for us.
+    notify = {"The distant sound of an explosion can be heard from the sky. Something bad is coming.", "The sound of a loud explosion from the sky shakes the land. Watch out from above.", "An explosion from above ruptures your eardrums. The government is on their way."},
 } )
 
 --  ██████╗ ██████╗ ███╗   ███╗███╗   ███╗ █████╗ ███╗   ██╗██████╗ ███████╗
