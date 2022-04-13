@@ -27,7 +27,7 @@ AS.AddBaseItem("armor_combat", {
     name = "Combat Armor",
     desc = "A heavy set of armor made of kevlar and a couple other materials. Useful for stopping several incoming bullets.",
     category = "armor",
-    model = "models/armor/combatarmor.mdl",
+    model = "models/items/armor/combat.mdl",
     wep = "armor_combat",
     value = 35,
     weight = 2,
