@@ -11,7 +11,7 @@ AS.AddBaseItem("armor_makeshift", {
         [DMG_BULLET] = 8, --Bullets
         [DMG_SLASH] = 12, --Melee
         [DMG_BURN] = 9, --Fire
-        [DMG_PLASMA] = 5, --Pulse
+        [DMG_ENERGYBEAM] = 5, --Pulse
         [DMG_BLAST] = 3, --Explosive
     },
     class = "scavenger",
@@ -36,7 +36,7 @@ AS.AddBaseItem("armor_combat", {
         [DMG_BULLET] = 38, --Bullets
         [DMG_SLASH] = 52, --Melee
         [DMG_BURN] = 10, --Fire
-        [DMG_PLASMA] = 30, --Pulse
+        [DMG_ENERGYBEAM] = 30, --Pulse
         [DMG_BLAST] = 40, --Explosive
     },
     class = "scavenger",
@@ -62,7 +62,7 @@ AS.AddBaseItem("armor_combine", {
         [DMG_BULLET] = 30,
         [DMG_SLASH] = 25,
         [DMG_BURN] = 15,
-        [DMG_PLASMA] = 21,
+        [DMG_ENERGYBEAM] = 21,
         [DMG_BLAST] = 45,
     },
     hidden = true,

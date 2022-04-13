@@ -20,7 +20,7 @@ AS.AddDamageType( DMG_BURN, {
     icon = "icon16/fire.png",
 })
 
-AS.AddDamageType( DMG_PLASMA, {
+AS.AddDamageType( DMG_ENERGYBEAM, {
     name = "Pulse Resistance",
     icon = "icon16/lightning.png",
 })
