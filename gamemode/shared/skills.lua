@@ -84,7 +84,7 @@ hook.Add( "Think", "AS_Skill_Endurance", function()
         if CurTime() < (v.Skill_NextEnduranceUpdate or 0) then continue end
         if v:GetMoveType() == MOVETYPE_NOCLIP then continue end
 
-        if v:KeyDown( IN_FORWARD ) or v:KeyDown( IN_MOVELEFT ) or v:KeyDown( IN_MOVERIGHT ) or v:KeyDown( IN_BACK ) then
+        if (v:KeyDown( IN_FORWARD ) or v:KeyDown( IN_MOVELEFT ) or v:KeyDown( IN_MOVERIGHT ) or v:KeyDown( IN_BACK )) and v:IsSprinting() then
             v.Skill_NextEnduranceUpdate = CurTime() + SKL.Endurance.updatetime
             v:IncreaseSkillExperience( "endurance", SKL.Endurance.incamt )
         end

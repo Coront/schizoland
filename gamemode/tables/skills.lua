@@ -1,14 +1,5 @@
 -- Skills
 
-AS.AddBaseSkill( "health", {
-    name = "Health", --Name
-    desc = "Increases your maximum health. Leveled by special circumstances.", --Description
-    icon = "", --Icon defaulted to, use silkicons
-    max = 10, --Level capacity, we will not gain any more experience one we reach this.
-    basexp = 5, --Base Experience
-    power = 2 --How much the next xp req will be powered by. Defaults to 2.
-} )
-
 AS.AddBaseSkill( "strength", {
     name = "Strength",
     desc = "Increases your carry capacity as well as the ability to deal damage with melee weapons. Leveled by use of melee weapons.",
@@ -41,6 +32,33 @@ AS.AddBaseSkill( "salvaging", {
     desc = "Increases your chances of successfully finding resources from salvaging a node, increases the minimal and maximum amount that can be found, and increases your chances of finding items. Leveled by salvaging nodes.",
     icon = "",
     max = 20,
+    basexp = 1,
+    power = 1.85,
+} )
+
+AS.AddBaseSkill( "farming", {
+    name = "Farming",
+    desc = "Decreases the time it takes to produce food from plants. Leveled by harvesting plants.",
+    icon = "",
+    max = 20,
+    basexp = 1,
+    power = 1.85,
+} )
+
+AS.AddBaseSkill( "Mining", {
+    name = "Mining",
+    desc = "Decreases the time it takes for a miner to produce resources. Leveled by miner production.",
+    icon = "",
+    max = 5,
+    basexp = 1,
+    power = 1.85,
+} )
+
+AS.AddBaseSkill( "Charisma", {
+    name = "Charisma",
+    desc = "(Work In Progress) Decreases the cost of items at traders, while increasing the price of items that are sold. Leveled by bartering with traders.",
+    icon = "",
+    max = 5,
     basexp = 1,
     power = 1.85,
 } )
