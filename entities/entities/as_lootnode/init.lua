@@ -117,7 +117,7 @@ function ENT:Use( ply )
                 else
                     self:DropItem( item, amt )
                 end
-                ply:EmitSound( "fx/items/up/itm_ammunition_up0" .. math.random( 1, 3 ) .. ".wav" ) --CONTENTPACKREPLACE
+                ply:EmitSound( "entities/resources_" .. math.random( 1, 3 ) .. ".wav" )
                 return
             end
 
@@ -175,7 +175,7 @@ function ENT:Use( ply )
 				end
             end
 
-            ply:EmitSound( "fx/items/up/itm_ammunition_up0" .. math.random( 1, 3 ) .. ".wav" ) --CONTENTPACKREPLACE
+            ply:EmitSound( "entities/resources_" .. math.random( 1, 3 ) .. ".wav" )
 
             if self:GetScavengesLeft() <= 0 then
                 self:Remove()
