@@ -28,32 +28,32 @@ AS.AddEvent( "antlion_guard", {
 } )
 
 AS.AddEvent( "antlion_nest", {
-    enable = false,
+    enable = true,
     mintime = 600,
     maxtime = 1800,
     max = 1,
     eventspot = true,
     outdoor = true,
-    ent = "npc_antlion", --Replace this with the antlionnest entity when finished
+    ent = "as_event_mound", --Replace this with the antlionnest entity when finished
     sound = "ambient/atmosphere/terrain_rumble1.wav", --This will play a sound to everyone as a notification
 } )
 
 AS.AddEvent( "zombie_horde", {
     enable = true,
     mintime = 1800,
-    maxtime = 3600,
+    maxtime = 7200,
     max = 1,
     eventspot = true,
     outdoor = true,
     ent = "npc_as_fastzombie", --Replace this with the antlionnest entity when finished
-    entamt = {min = 25, max = 50},
+    entamt = {min = 20, max = 30},
     notify = {"A large horde of fast zombies have been spotted out in the wasteland."},
 } )
 
 AS.AddEvent( "raider_party", {
     enable = true,
-    mintime = 1200,
-    maxtime = 2400,
+    mintime = 3600,
+    maxtime = 6000,
     max = 1,
     eventspot = true,
     outdoor = true,
@@ -65,7 +65,7 @@ AS.AddEvent( "raider_party", {
 AS.AddEvent( "combine_scout", {
     enable = true,
     mintime = 4200,
-    maxtime = 7200,
+    maxtime = 8000,
     max = 1,
     eventspot = true,
     outdoor = true,
