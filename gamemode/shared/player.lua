@@ -47,7 +47,7 @@ if ( CLIENT ) then
         for k, v in pairs( player.GetAll() ) do
             if not v:IsLoaded() then continue end
             if not v:Alive() then continue end
-            if not v:HasArmor() then v.HideDefault = false continue end
+            if not v:HasArmor() then v.HideDefault = false v.LastArmorModel = nil continue end
             if v:HasArmor() and not v:GetArmorWep().ArmorModel then continue end
 
             local armorwep = v:GetArmorWep()
@@ -58,6 +58,7 @@ if ( CLIENT ) then
             
             if v.ArmorOverlay:GetModel() != armorwep.ArmorModel then
                 v.ArmorOverlay:SetModel( armorwep.ArmorModel )
+                v.LastArmorModel = armorwep.ArmorModel
             end
             
             if armorwep.HideDefault then
