@@ -2,7 +2,8 @@ AddCSLuaFile()
 
 ENT.Type = "anim"
 ENT.Base = "base_gmodentity"
-ENT.PrintName = "as_event_canister"
+ENT.PrintName = "Combine Canister"
+ENT.Category = "Aftershock - Automated Events"
 ENT.Spawnable = true 
 
 if ( SERVER ) then
@@ -62,9 +63,14 @@ if ( SERVER ) then
                     y = dice == 1 and 200 or -200
                 end
 
-                local spawnPos = pos + Vector( x, y, 10 )
+                local spawnPos = pos + Vector( x, y, 200 )
+                local tr = util.TraceLine({
+                    start = spawnPos,
+                    endpos = spawnPos + Vector( 0, 0, -9999 )
+                })
+
                 local npc = ents.Create(k)
-                npc:SetPos( spawnPos )
+                npc:SetPos( tr.HitPos )
                 npc:Spawn()
             end
         end
