@@ -24,7 +24,7 @@ AS.AddEvent( "antlion_guard", {
     max = 2, --Maximum amount of this event that can spawn at once
     eventspot = false, --Should we only spawn in event spots?
     outdoor = true, --Spawn outdoor
-    ent = "npc_antlionguard", --Entity to spawn
+    ent = "npc_as_antlionguard", --Entity to spawn
 } )
 
 AS.AddEvent( "antlion_nest", {
@@ -69,7 +69,8 @@ AS.AddEvent( "combine_scout", {
     max = 1,
     eventspot = true,
     outdoor = true,
-    ent = "as_event_canister", --Btw, this event doesn't need a sound because the canisters play one for us.
+    ent = "as_event_canister",
+    sound = "npc/env_headcrabcanister/launch.wav",
     notify = {"The distant sound of an explosion can be heard from the sky. Something bad is coming.", "The sound of a loud explosion from the sky shakes the land. Watch out from above.", "An explosion from above ruptures your eardrums. The government is on their way."},
 } )
 
