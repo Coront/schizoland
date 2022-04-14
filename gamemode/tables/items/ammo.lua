@@ -30,6 +30,7 @@ AS.AddBaseItem("ammo_45acp", {
         ammotype = "AlyxGun",
         ammoamt = 40,
     },
+    hidden = true,
     class = "engineer",
     craft = {
         ["misc_scrap"] = 10,
@@ -51,6 +52,7 @@ AS.AddBaseItem("ammo_44mag", {
         ammotype = "357",
         ammoamt = 20,
     },
+    hidden = true,
     class = "engineer",
     craft = {
         ["misc_scrap"] = 25,
@@ -72,6 +74,7 @@ AS.AddBaseItem("ammo_50ae", {
         ammotype = "CombineHeavyCannon",
         ammoamt = 20,
     },
+    hidden = true,
     class = "engineer",
     craft = {
         ["misc_scrap"] = 20,
@@ -93,6 +96,7 @@ AS.AddBaseItem("ammo_buckshot", {
         ammotype = "buckshot",
         ammoamt = 20,
     },
+    hidden = true,
     class = "engineer",
     craft = {
         ["misc_scrap"] = 25,
@@ -114,6 +118,7 @@ AS.AddBaseItem("ammo_762x39", {
         ammotype = "smg1",
         ammoamt = 60,
     },
+    hidden = true,
     class = "engineer",
     craft = {
         ["misc_scrap"] = 15,
@@ -135,6 +140,7 @@ AS.AddBaseItem("ammo_556x45", {
         ammotype = "ar2",
         ammoamt = 75,
     },
+    hidden = true,
     class = "engineer",
     craft = {
         ["misc_scrap"] = 20,
@@ -156,6 +162,7 @@ AS.AddBaseItem("ammo_pulse", {
         ammotype = "striderminigun",
         ammoamt = 50,
     },
+    hidden = true,
     class = "scientist",
     craft = {
         ["misc_scrap"] = 25,
@@ -175,6 +182,7 @@ AS.AddBaseItem("ammo_762x51", {
         ammotype = "sniperround",
         ammoamt = 20,
     },
+    hidden = true,
     class = "engineer",
     craft = {
         ["misc_scrap"] = 25,
@@ -197,6 +205,7 @@ AS.AddBaseItem("ammo_50bmg", {
         ammotype = "sniperpenetratedround",
         ammoamt = 20,
     },
+    hidden = true,
     class = "engineer",
     craft = {
         ["misc_scrap"] = 30,
@@ -218,6 +227,7 @@ AS.AddBaseItem("ammo_gl", {
         ammotype = "SMG1_Grenade",
         ammoamt = 1,
     },
+    hidden = true,
     class = "engineer",
     craft = {
         ["misc_scrap"] = 20,

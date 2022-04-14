@@ -151,6 +151,18 @@ function PlayerMeta:HasArmor()
     return false
 end
 
+function CalculateItemSalvage( itemid, amt ) --This will calculate the amount of resources to recieve from salvaging an item.
+    local tbl = {}
+
+    for k, v in pairs( AS.Items[itemid].craft ) do
+        if not SET.RawResources[k] then continue end --Ignore everything not a raw resource
+        local toAmt = math.floor(v * SET.DestroyPerc) * amt
+        tbl[k] = toAmt
+    end
+
+    return tbl
+end
+
 -- ███╗   ██╗███████╗████████╗██╗    ██╗ ██████╗ ██████╗ ██╗  ██╗██╗███╗   ██╗ ██████╗
 -- ████╗  ██║██╔════╝╚══██╔══╝██║    ██║██╔═══██╗██╔══██╗██║ ██╔╝██║████╗  ██║██╔════╝
 -- ██╔██╗ ██║█████╗     ██║   ██║ █╗ ██║██║   ██║██████╔╝█████╔╝ ██║██╔██╗ ██║██║  ███╗

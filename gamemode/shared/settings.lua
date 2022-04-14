@@ -2,6 +2,11 @@ AS.Settings = {}
 SET = AS.Settings
 
 --Game Settings
+SET.RawResources = { --Raw resources table, functions will reference this when looking for resources.
+    ["misc_scrap"] = true,
+    ["misc_smallparts"] = true,
+    ["misc_chemical"] = true,
+}
 SET.MaxCharacters = 5 --Maximum characters players are allowed to have.
 SET.MinNameLength = 3 --Minimal length of a players name.
 SET.BankWeight = 1000 --Maximum weight a player's bank can hold.
@@ -14,6 +19,7 @@ SET.ClassChangeCostTbl = { --If classchangecost is on, what do player's have to 
     ["misc_chemical"] = 100,
 }
 SET.CraftTime = 1 --Craft time per item (seconds)
+SET.DestroyPerc = 0.3 --Percentage of resources to receive from an item when breaking it down.
 SET.DeathResCost = 30 --Percentage of player's resources (scrap, smallparts, chemicals) that will be lost upon death.
 SET.SelectableModels = {
     --All of the models in here are models that the player is allowed to select during character creation.

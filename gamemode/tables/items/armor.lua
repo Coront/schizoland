@@ -39,6 +39,7 @@ AS.AddBaseItem("armor_combat", {
         [DMG_ENERGYBEAM] = 30, --Pulse
         [DMG_BLAST] = 40, --Explosive
     },
+    hidden = true,
     class = "scavenger",
     craft = {
         ["misc_scrap"] = 1,

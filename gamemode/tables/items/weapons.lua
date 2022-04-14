@@ -51,6 +51,7 @@ AS.AddBaseItem("wep_m1911", {
     wep = "weapon_m1911",
     value = 25,
     weight = 0.8,
+    hidden = true,
     class = "engineer",
     craft = {
         ["misc_scrap"] = 35,
@@ -67,6 +68,7 @@ AS.AddBaseItem("wep_ots", {
     wep = "weapon_ots33",
     value = 25,
     weight = 0.8,
+    hidden = true,
     class = "engineer",
     craft = {
         ["misc_scrap"] = 35,
@@ -83,6 +85,7 @@ AS.AddBaseItem("wep_deagle", {
     wep = "weapon_deagle",
     value = 25,
     weight = 0.8,
+    hidden = true,
     class = "engineer",
     craft = {
         ["misc_scrap"] = 35,
@@ -106,6 +109,7 @@ AS.AddBaseItem("wep_mp5", {
     wep = "weapon_mp5",
     value = 100,
     weight = 1.4,
+    hidden = true,
     class = "engineer",
     craft = {
         ["misc_scrap"] = 35,
@@ -122,6 +126,7 @@ AS.AddBaseItem("wep_csmg", {
     wep = "weapon_cmg",
     value = 100,
     weight = 1.4,
+    hidden = true,
     class = "engineer",
     craft = {
         ["misc_scrap"] = 35,
@@ -145,6 +150,7 @@ AS.AddBaseItem("wep_g36", {
     wep = "weapon_g36c",
     value = 100,
     weight = 1.4,
+    hidden = true,
     class = "engineer",
     craft = {
         ["misc_scrap"] = 35,
@@ -161,6 +167,7 @@ AS.AddBaseItem("wep_ak12", {
     wep = "weapon_ak12",
     value = 100,
     weight = 1.4,
+    hidden = true,
     class = "engineer",
     craft = {
         ["misc_scrap"] = 35,
@@ -177,6 +184,7 @@ AS.AddBaseItem("wep_ak47", {
     wep = "weapon_ak47",
     value = 100,
     weight = 1.4,
+    hidden = true,
     class = "engineer",
     craft = {
         ["misc_scrap"] = 35,
@@ -193,6 +201,7 @@ AS.AddBaseItem("wep_sg550", {
     wep = "weapon_sg550",
     value = 100,
     weight = 1.4,
+    hidden = true,
     class = "engineer",
     craft = {
         ["misc_scrap"] = 35,
@@ -209,6 +218,7 @@ AS.AddBaseItem("wep_sako", {
     wep = "weapon_sako",
     value = 100,
     weight = 1.4,
+    hidden = true,
     class = "engineer",
     craft = {
         ["misc_scrap"] = 35,
@@ -225,6 +235,7 @@ AS.AddBaseItem("wep_m4a1", {
     wep = "weapon_m4a1",
     value = 100,
     weight = 1.4,
+    hidden = true,
     class = "engineer",
     craft = {
         ["misc_scrap"] = 35,
@@ -241,6 +252,7 @@ AS.AddBaseItem("wep_sks", {
     wep = "weapon_sks",
     value = 100,
     weight = 1.4,
+    hidden = true,
     class = "engineer",
     craft = {
         ["misc_scrap"] = 35,
@@ -257,6 +269,7 @@ AS.AddBaseItem("wep_pulserifle", {
     wep = "weapon_pulserifle",
     value = 100,
     weight = 1.4,
+    hidden = true,
     class = "engineer",
     craft = {
         ["misc_scrap"] = 35,
@@ -280,6 +293,7 @@ AS.AddBaseItem("wep_remington", {
     wep = "weapon_remington",
     value = 100,
     weight = 1.4,
+    hidden = true,
     class = "engineer",
     craft = {
         ["misc_scrap"] = 35,
@@ -303,6 +317,7 @@ AS.AddBaseItem("wep_m249", {
     wep = "weapon_m249",
     value = 100,
     weight = 1.4,
+    hidden = true,
     class = "engineer",
     craft = {
         ["misc_scrap"] = 35,
@@ -319,6 +334,7 @@ AS.AddBaseItem("wep_pulselmg", {
     wep = "weapon_pulselmg",
     value = 100,
     weight = 1.4,
+    hidden = true,
     class = "engineer",
     craft = {
         ["misc_scrap"] = 35,
@@ -335,6 +351,7 @@ AS.AddBaseItem("wep_m60", {
     wep = "weapon_m60",
     value = 100,
     weight = 1.4,
+    hidden = true,
     class = "engineer",
     craft = {
         ["misc_scrap"] = 35,
@@ -358,6 +375,7 @@ AS.AddBaseItem("wep_sr25", {
     wep = "weapon_sr25",
     value = 100,
     weight = 1.4,
+    hidden = true,
     class = "engineer",
     craft = {
         ["misc_scrap"] = 35,
@@ -374,6 +392,7 @@ AS.AddBaseItem("wep_pulsesniper", {
     wep = "weapon_pulsesniper",
     value = 100,
     weight = 1.4,
+    hidden = true,
     class = "engineer",
     craft = {
         ["misc_scrap"] = 35,
@@ -390,6 +409,7 @@ AS.AddBaseItem("wep_m82", {
     wep = "weapon_m82",
     value = 100,
     weight = 1.4,
+    hidden = true,
     class = "engineer",
     craft = {
         ["misc_scrap"] = 35,

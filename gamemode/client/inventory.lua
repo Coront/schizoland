@@ -223,13 +223,11 @@ function AS.Inventory.BuildInventory()
                     end)
                 end
                 --Destroy
-                if AS.Items[k].salvage then
+                if AS.Items[k].craft then
                     local function destroyItem( item, amt )
                         LocalPlayer():TakeItemFromInventory( item, amt )
-                        if AS.Items[item].salvage then
-                            for k, v in pairs( AS.Items[item].salvage ) do
-                                LocalPlayer():AddItemToInventory( k, v * amt )
-                            end
+                        for k, v in pairs( CalculateItemSalvage(item, amt) ) do
+                            LocalPlayer():AddItemToInventory( k, v )
                         end
                         itemamtUpdate()
                         net.Start("as_inventory_destroyitem")
