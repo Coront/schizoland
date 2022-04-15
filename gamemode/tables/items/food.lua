@@ -17,6 +17,44 @@ AS.AddBaseItem("food_beans", {
     }
 })
 
+AS.AddBaseItem("food_meat_antlion", {
+    name = "Antlion Meat",
+    desc = "A large chuck of meat that has been harvested from an antlion. With cooking, it could probably be edible.",
+    category = "food",
+    model = "models/gibs/antlion_gib_large_1.mdl",
+    value = 2,
+    weight = 0.15,
+    use = {
+        hunger = 15,
+        soundcs = "npc/headcrab/headbite.wav",
+    },
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 3,
+        ["misc_smallparts"] = 0,
+        ["misc_chemical"] = 0,
+    }
+})
+
+AS.AddBaseItem("food_cooked_antlion", {
+    name = "Cooked Antlion Meat",
+    desc = "Antlion meat that has been properly cooked to be edible.",
+    category = "food",
+    model = "models/gibs/antlion_gib_medium_2.mdl",
+    value = 2,
+    weight = 0.15,
+    use = {
+        hunger = 40,
+        soundcs = "npc/headcrab/headbite.wav",
+    },
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 10,
+        ["misc_smallparts"] = 5,
+        ["misc_chemical"] = 15,
+    }
+})
+
 AS.AddBaseItem("food_potato", {
     name = "Potato",
     desc = "It's a potato. Apparently these are still grown.",
