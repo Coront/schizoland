@@ -272,6 +272,7 @@ AS.AddBaseItem("misc_wheel", {
     model = "models/props_vehicles/carparts_wheel01a.mdl",
     value = 50,
     weight = 4,
+    hidden = true,
     craft = {
         ["misc_scrap"] = 30,
         ["misc_smallparts"] = 20,
