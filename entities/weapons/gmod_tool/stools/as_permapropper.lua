@@ -77,6 +77,10 @@ if (SERVER) then
                     end
                 end
             end
+            if ent:GetClass() == "as_staticspawn" then
+                ent.NextSpawn = nil
+                ent.PlyDisableDist = nil
+            end
 
             local physobj = ent:GetPhysicsObject()
             if ent:GetClass() != "prop_physics" and IsValid(physobj) then --I will probably never have entities move, soooo
