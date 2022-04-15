@@ -10,9 +10,6 @@ function ENT:Initialize()
     self:SetUseType( SIMPLE_USE )
     self:SetCollisionGroup( COLLISION_GROUP_WEAPON )
 
-    self.SpawnTime = 900
-    self.PlyDisableDist = 5000
-
     self:SetNPC( "npc_as_raider" )
     self:SetNextSpawn( CurTime() + 10 )
 end
@@ -46,17 +43,11 @@ function ENT:CreateNPC()
 end
 
 function ENT:Think()
-    if CurTime() > self:GetNextSpawn() then
-        for k, v in pairs( player.GetAll() ) do
-            if not v:IsLoaded() then continue end
-            if not v:Alive() then continue end
-            if v:IsDeveloping() then continue end
-            if v:GetPos():Distance(self:GetPos()) <= self.PlyDisableDist then --Disable if one player is nearby.
-                self.Disabled = true
-                break
-            end
-        end
+    self.SpawnTime = self.SpawnTime or 900
+    self.PlyDisableDist = self.PlyDisableDist or 5000
+    if not tobool(GetConVar("as_occupation"):GetInt()) then return end
 
+    if CurTime() > self:GetNextSpawn() then
         if self.Disabled then --Intentionally pushing the time to stop rapid thinking of this function.
             self:SetNextSpawn( CurTime() + 10 )
             return 
