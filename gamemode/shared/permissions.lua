@@ -24,10 +24,12 @@ function GM:PhysgunPickup( ply, ent )
 end
 
 function GM:PhysgunDrop( ply, ent )
-    ent:SetCollisionGroup( COLLISION_GROUP_NONE )
-    local physobj = ent:GetPhysicsObject()
-    if physobj and IsValid( physobj ) then
-        ent:GetPhysicsObject():SetVelocity( Vector( 0, 0, 0 ) )
+    if not ply:IsAdmin() then
+        ent:SetCollisionGroup( COLLISION_GROUP_NONE )
+        local physobj = ent:GetPhysicsObject()
+        if physobj and IsValid( physobj ) then
+            ent:GetPhysicsObject():SetVelocity( Vector( 0, 0, 0 ) )
+        end
     end
 end
 
