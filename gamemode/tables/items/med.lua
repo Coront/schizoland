@@ -10,6 +10,13 @@ AS.AddBaseItem("med_painkiller", {
         health = 5,
         sound = "items/medshot4.wav",
     },
+    hidden = true,
+    class = "scientist",
+    craft = {
+        ["misc_scrap"] = 15,
+        ["misc_smallparts"] = 10,
+        ["misc_chemical"] = 40,
+    }
 })
 
 AS.AddBaseItem("med_bag", {

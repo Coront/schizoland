@@ -54,9 +54,9 @@ AS.AddBaseItem("wep_m1911", {
     hidden = true,
     class = "engineer",
     craft = {
-        ["misc_scrap"] = 35,
-        ["misc_smallparts"] = 45,
-        ["misc_chemical"] = 30,
+        ["misc_scrap"] = 40,
+        ["misc_smallparts"] = 60,
+        ["misc_chemical"] = 35,
     },
 })
 
@@ -71,9 +71,9 @@ AS.AddBaseItem("wep_ots", {
     hidden = true,
     class = "engineer",
     craft = {
-        ["misc_scrap"] = 35,
-        ["misc_smallparts"] = 45,
-        ["misc_chemical"] = 30,
+        ["misc_scrap"] = 40,
+        ["misc_smallparts"] = 70,
+        ["misc_chemical"] = 35,
     },
 })
 
@@ -88,9 +88,9 @@ AS.AddBaseItem("wep_deagle", {
     hidden = true,
     class = "engineer",
     craft = {
-        ["misc_scrap"] = 35,
-        ["misc_smallparts"] = 45,
-        ["misc_chemical"] = 30,
+        ["misc_scrap"] = 115,
+        ["misc_smallparts"] = 90,
+        ["misc_chemical"] = 85,
     },
 })
 
@@ -112,9 +112,9 @@ AS.AddBaseItem("wep_mp5", {
     hidden = true,
     class = "engineer",
     craft = {
-        ["misc_scrap"] = 35,
-        ["misc_smallparts"] = 45,
-        ["misc_chemical"] = 30,
+        ["misc_scrap"] = 70,
+        ["misc_smallparts"] = 85,
+        ["misc_chemical"] = 80,
     },
 })
 
@@ -129,9 +129,9 @@ AS.AddBaseItem("wep_csmg", {
     hidden = true,
     class = "engineer",
     craft = {
-        ["misc_scrap"] = 35,
-        ["misc_smallparts"] = 45,
-        ["misc_chemical"] = 30,
+        ["misc_scrap"] = 175,
+        ["misc_smallparts"] = 140,
+        ["misc_chemical"] = 115,
     },
 })
 
@@ -153,9 +153,9 @@ AS.AddBaseItem("wep_g36", {
     hidden = true,
     class = "engineer",
     craft = {
-        ["misc_scrap"] = 35,
-        ["misc_smallparts"] = 45,
-        ["misc_chemical"] = 30,
+        ["misc_scrap"] = 140,
+        ["misc_smallparts"] = 125,
+        ["misc_chemical"] = 105,
     },
 })
 
@@ -170,9 +170,9 @@ AS.AddBaseItem("wep_ak12", {
     hidden = true,
     class = "engineer",
     craft = {
-        ["misc_scrap"] = 35,
-        ["misc_smallparts"] = 45,
-        ["misc_chemical"] = 30,
+        ["misc_scrap"] = 175,
+        ["misc_smallparts"] = 150,
+        ["misc_chemical"] = 125,
     },
 })
 
@@ -187,9 +187,9 @@ AS.AddBaseItem("wep_ak47", {
     hidden = true,
     class = "engineer",
     craft = {
-        ["misc_scrap"] = 35,
-        ["misc_smallparts"] = 45,
-        ["misc_chemical"] = 30,
+        ["misc_scrap"] = 160,
+        ["misc_smallparts"] = 155,
+        ["misc_chemical"] = 115,
     },
 })
 
@@ -204,9 +204,9 @@ AS.AddBaseItem("wep_sg550", {
     hidden = true,
     class = "engineer",
     craft = {
-        ["misc_scrap"] = 35,
-        ["misc_smallparts"] = 45,
-        ["misc_chemical"] = 30,
+        ["misc_scrap"] = 185,
+        ["misc_smallparts"] = 140,
+        ["misc_chemical"] = 125,
     },
 })
 
@@ -221,9 +221,9 @@ AS.AddBaseItem("wep_sako", {
     hidden = true,
     class = "engineer",
     craft = {
-        ["misc_scrap"] = 35,
-        ["misc_smallparts"] = 45,
-        ["misc_chemical"] = 30,
+        ["misc_scrap"] = 175,
+        ["misc_smallparts"] = 160,
+        ["misc_chemical"] = 135,
     },
 })
 
@@ -238,9 +238,9 @@ AS.AddBaseItem("wep_m4a1", {
     hidden = true,
     class = "engineer",
     craft = {
-        ["misc_scrap"] = 35,
-        ["misc_smallparts"] = 45,
-        ["misc_chemical"] = 30,
+        ["misc_scrap"] = 180,
+        ["misc_smallparts"] = 165,
+        ["misc_chemical"] = 140,
     },
 })
 
@@ -255,9 +255,9 @@ AS.AddBaseItem("wep_sks", {
     hidden = true,
     class = "engineer",
     craft = {
-        ["misc_scrap"] = 35,
-        ["misc_smallparts"] = 45,
-        ["misc_chemical"] = 30,
+        ["misc_scrap"] = 160,
+        ["misc_smallparts"] = 150,
+        ["misc_chemical"] = 120,
     },
 })
 
@@ -272,9 +272,10 @@ AS.AddBaseItem("wep_pulserifle", {
     hidden = true,
     class = "engineer",
     craft = {
-        ["misc_scrap"] = 35,
-        ["misc_smallparts"] = 45,
-        ["misc_chemical"] = 30,
+        ["misc_scrap"] = 285,
+        ["misc_smallparts"] = 200,
+        ["misc_chemical"] = 225,
+        ["misc_pulsepod"] = 1,
     },
 })
 
@@ -296,9 +297,9 @@ AS.AddBaseItem("wep_remington", {
     hidden = true,
     class = "engineer",
     craft = {
-        ["misc_scrap"] = 35,
-        ["misc_smallparts"] = 45,
-        ["misc_chemical"] = 30,
+        ["misc_scrap"] = 180,
+        ["misc_smallparts"] = 150,
+        ["misc_chemical"] = 105,
     },
 })
 
@@ -320,9 +321,9 @@ AS.AddBaseItem("wep_m249", {
     hidden = true,
     class = "engineer",
     craft = {
-        ["misc_scrap"] = 35,
-        ["misc_smallparts"] = 45,
-        ["misc_chemical"] = 30,
+        ["misc_scrap"] = 225,
+        ["misc_smallparts"] = 185,
+        ["misc_chemical"] = 160,
     },
 })
 
@@ -337,9 +338,10 @@ AS.AddBaseItem("wep_pulselmg", {
     hidden = true,
     class = "engineer",
     craft = {
-        ["misc_scrap"] = 35,
-        ["misc_smallparts"] = 45,
-        ["misc_chemical"] = 30,
+        ["misc_scrap"] = 300,
+        ["misc_smallparts"] = 215,
+        ["misc_chemical"] = 185,
+        ["misc_pulsepod"] = 1,
     },
 })
 
@@ -354,9 +356,9 @@ AS.AddBaseItem("wep_m60", {
     hidden = true,
     class = "engineer",
     craft = {
-        ["misc_scrap"] = 35,
-        ["misc_smallparts"] = 45,
-        ["misc_chemical"] = 30,
+        ["misc_scrap"] = 325,
+        ["misc_smallparts"] = 300,
+        ["misc_chemical"] = 275,
     },
 })
 
@@ -378,9 +380,9 @@ AS.AddBaseItem("wep_sr25", {
     hidden = true,
     class = "engineer",
     craft = {
-        ["misc_scrap"] = 35,
-        ["misc_smallparts"] = 45,
-        ["misc_chemical"] = 30,
+        ["misc_scrap"] = 215,
+        ["misc_smallparts"] = 185,
+        ["misc_chemical"] = 190,
     },
 })
 
@@ -395,9 +397,10 @@ AS.AddBaseItem("wep_pulsesniper", {
     hidden = true,
     class = "engineer",
     craft = {
-        ["misc_scrap"] = 35,
-        ["misc_smallparts"] = 45,
-        ["misc_chemical"] = 30,
+        ["misc_scrap"] = 285,
+        ["misc_smallparts"] = 295,
+        ["misc_chemical"] = 280,
+        ["misc_pulsepod"] = 1,
     },
 })
 
@@ -412,8 +415,8 @@ AS.AddBaseItem("wep_m82", {
     hidden = true,
     class = "engineer",
     craft = {
-        ["misc_scrap"] = 35,
-        ["misc_smallparts"] = 45,
-        ["misc_chemical"] = 30,
+        ["misc_scrap"] = 350,
+        ["misc_smallparts"] = 290,
+        ["misc_chemical"] = 250,
     },
 })

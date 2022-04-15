@@ -56,6 +56,12 @@ AS.AddBaseItem("misc_hide_antlion", {
     model = "models/gibs/antlion_gib_large_2.mdl",
     value = 10,
     weight = 0.75,
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 5,
+        ["misc_smallparts"] = 5,
+        ["misc_chemical"] = 10,
+    }
 })
 
 AS.AddBaseItem("misc_hide_guard", {
@@ -65,6 +71,12 @@ AS.AddBaseItem("misc_hide_guard", {
     model = "models/gibs/strider_gib2.mdl",
     value = 30,
     weight = 1.5,
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 25,
+        ["misc_smallparts"] = 5,
+        ["misc_chemical"] = 15,
+    }
 })
 
 AS.AddBaseItem("misc_gunpowder", {
@@ -74,6 +86,12 @@ AS.AddBaseItem("misc_gunpowder", {
     model = "models/props_lab/jar01b.mdl",
     value = 5,
     weight = 0.2,
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 4,
+        ["misc_smallparts"] = 0,
+        ["misc_chemical"] = 2,
+    }
 })
 
 AS.AddBaseItem("misc_gunpowderten", {
@@ -89,15 +107,27 @@ AS.AddBaseItem("misc_gunpowderten", {
         },
         soundcs = "fx/items/up/itm_ammunition_up01.wav",
     },
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 40,
+        ["misc_smallparts"] = 0,
+        ["misc_chemical"] = 20,
+    }
 })
 
 AS.AddBaseItem("misc_heavyplate", {
     name = "Heavy Armor Plate",
-    desc = "A heavy plate that is incredibly durable against elements. Required in the creation of some very efficient armors.",
+    desc = "A heavy plate that is incredibly durable and rare. Required in the creation of some very efficient armors.",
     category = "misc",
     model = "models/gibs/shield_scanner_gib2.mdl",
     value = 200,
     weight = 1,
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 20,
+        ["misc_smallparts"] = 5,
+        ["misc_chemical"] = 25,
+    }
 })
 
 AS.AddBaseItem("misc_servo", {
@@ -131,11 +161,17 @@ AS.AddBaseItem("misc_electronicparts", {
 
 AS.AddBaseItem("misc_saw", {
     name = "Diamond-Edged Saw",
-    desc = "A saw that has been tipped with diamonds. Useful for cutting through metals.",
+    desc = "A saw that has been tipped with diamond. Useful for cutting through metals.",
     category = "misc",
     model = "models/props/cs_militia/circularsaw01.mdl",
     value = 10,
     weight = 1.5,
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 25,
+        ["misc_smallparts"] = 10,
+        ["misc_chemical"] = 5,
+    },
 })
 
 AS.AddBaseItem("misc_electronicreceiver", {
@@ -160,6 +196,12 @@ AS.AddBaseItem("misc_sensorpod", {
     model = "models/gibs/shield_scanner_gib5.mdl",
     value = 10,
     weight = 0.2,
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 20,
+        ["misc_smallparts"] = 25,
+        ["misc_chemical"] = 5,
+    }
 })
 
 AS.AddBaseItem("misc_seed_orange", {
@@ -169,6 +211,12 @@ AS.AddBaseItem("misc_seed_orange", {
     model = "models/props_lab/box01a.mdl",
     value = 5,
     weight = 0.2,
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 5,
+        ["misc_smallparts"] = 0,
+        ["misc_chemical"] = 15,
+    }
 })
 
 AS.AddBaseItem("misc_seed_melon", {
@@ -178,6 +226,12 @@ AS.AddBaseItem("misc_seed_melon", {
     model = "models/props_junk/cardboard_box004a.mdl",
     value = 5,
     weight = 0.2,
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 5,
+        ["misc_smallparts"] = 0,
+        ["misc_chemical"] = 20,
+    }
 })
 
 AS.AddBaseItem("misc_solarfilmroll", {
@@ -187,6 +241,12 @@ AS.AddBaseItem("misc_solarfilmroll", {
     model = "models/props/de_nuke/wall_light.mdl",
     value = 50,
     weight = 2,
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 15,
+        ["misc_smallparts"] = 25,
+        ["misc_chemical"] = 30,
+    }
 })
 
 AS.AddBaseItem("misc_carbattery", {
@@ -212,6 +272,11 @@ AS.AddBaseItem("misc_wheel", {
     model = "models/props_vehicles/carparts_wheel01a.mdl",
     value = 50,
     weight = 4,
+    craft = {
+        ["misc_scrap"] = 30,
+        ["misc_smallparts"] = 20,
+        ["misc_chemical"] = 5,
+    }
 })
 
 AS.AddBaseItem("misc_axel", {
@@ -221,6 +286,12 @@ AS.AddBaseItem("misc_axel", {
     model = "models/props_vehicles/carparts_axel01a.mdl",
     value = 10,
     weight = 2,
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 25,
+        ["misc_smallparts"] = 15,
+        ["misc_chemical"] = 10,
+    }
 })
 
 AS.AddBaseItem("misc_engine", {
@@ -248,6 +319,12 @@ AS.AddBaseItem("misc_propane", {
     model = "models/props_junk/PropaneCanister001a.mdl",
     value = 10,
     weight = 2,
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 25,
+        ["misc_smallparts"] = 10,
+        ["misc_chemical"] = 30,
+    }
 })
 
 AS.AddBaseItem("misc_gasoline", {
@@ -272,6 +349,12 @@ AS.AddBaseItem("misc_paintcan", {
     model = "models/props_junk/metal_paintcan001a.mdl",
     value = 5,
     weight = 1.5,
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 10,
+        ["misc_smallparts"] = 5,
+        ["misc_chemical"] = 15,
+    }
 })
 
 AS.AddBaseItem("misc_pulsepod", {
@@ -281,6 +364,12 @@ AS.AddBaseItem("misc_pulsepod", {
     model = "models/props_combine/headcrabcannister01a_skybox.mdl",
     value = 20,
     weight = 2,
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 10,
+        ["misc_smallparts"] = 5,
+        ["misc_chemical"] = 25,
+    }
 })
 
 AS.AddBaseItem("misc_egg", {
@@ -290,6 +379,12 @@ AS.AddBaseItem("misc_egg", {
     model = "models/props_hive/egg.mdl",
     value = 10,
     weight = 1,
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 5,
+        ["misc_smallparts"] = 5,
+        ["misc_chemical"] = 30,
+    }
 })
 
 AS.AddBaseItem("misc_emptybottle", {
@@ -299,6 +394,12 @@ AS.AddBaseItem("misc_emptybottle", {
     model = "models/props_junk/garbage_plasticbottle003a.mdl",
     value = 1,
     weight = 0.1,
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 2,
+        ["misc_smallparts"] = 0,
+        ["misc_chemical"] = 0,
+    }
 })
 
 -- ████████╗ ██████╗  ██████╗ ██╗         ██╗████████╗███████╗███╗   ███╗███████╗
@@ -357,6 +458,12 @@ AS.AddBaseItem("misc_shoe", {
     color = Color( 70, 70, 70 ),
     value = 1,
     weight = 0.4,
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 4,
+        ["misc_smallparts"] = 2,
+        ["misc_chemical"] = 0,
+    }
 })
 
 AS.AddBaseItem("misc_emptysodacan", {
@@ -367,6 +474,12 @@ AS.AddBaseItem("misc_emptysodacan", {
     color = Color( 70, 70, 70 ),
     value = 1,
     weight = 0.1,
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 2,
+        ["misc_smallparts"] = 1,
+        ["misc_chemical"] = 0,
+    }
 })
 
 AS.AddBaseItem("misc_metalcan", {
@@ -377,6 +490,12 @@ AS.AddBaseItem("misc_metalcan", {
     color = Color( 70, 70, 70 ),
     value = 1,
     weight = 0.125,
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 2,
+        ["misc_smallparts"] = 1,
+        ["misc_chemical"] = 0,
+    }
 })
 
 AS.AddBaseItem("misc_mug", {
@@ -387,6 +506,12 @@ AS.AddBaseItem("misc_mug", {
     color = Color( 70, 70, 70 ),
     value = 1,
     weight = 0.125,
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 3,
+        ["misc_smallparts"] = 0,
+        ["misc_chemical"] = 0,
+    }
 })
 
 AS.AddBaseItem("misc_towels", {
@@ -397,6 +522,12 @@ AS.AddBaseItem("misc_towels", {
     color = Color( 70, 70, 70 ),
     value = 1,
     weight = 0.125,
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 2,
+        ["misc_smallparts"] = 1,
+        ["misc_chemical"] = 0,
+    }
 })
 
 AS.AddBaseItem("misc_chemicalbucket", {
@@ -407,6 +538,12 @@ AS.AddBaseItem("misc_chemicalbucket", {
     color = Color( 70, 70, 70 ),
     value = 1,
     weight = 1,
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 5,
+        ["misc_smallparts"] = 2,
+        ["misc_chemical"] = 20,
+    }
 })
 
 AS.AddBaseItem("misc_leadpipe", {
@@ -417,4 +554,10 @@ AS.AddBaseItem("misc_leadpipe", {
     color = Color( 70, 70, 70 ),
     value = 1,
     weight = 1,
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 15,
+        ["misc_smallparts"] = 5,
+        ["misc_chemical"] = 0,
+    }
 })
