@@ -36,6 +36,10 @@ if (SERVER) then
             if v:GetClass() == "as_lootcontainer" then
                 v.Inventory = {} --This just wipes the inventory so it doesn't accidentily save and load it when it's respawned.
             end
+            if v:GetClass() == "as_staticspawn" then
+                v.NextSpawn = nil
+                v.PlyDisableDist = nil
+            end
         end
 
         return Persists
