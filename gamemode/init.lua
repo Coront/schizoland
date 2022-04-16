@@ -85,6 +85,7 @@ end)
 -- ╚═╝     ╚═╝  ╚═╝╚══════╝   ╚═╝       ╚═════╝ ╚══════╝
 
 local WorkshopFastDL = {
+	--Value doesn't do anything, i just use it so i know what the workshop ID is.
 	["2794939351"] = "Aftershock: Content - Generic 1",
 	["104603291"] = "Extended Spawnmenu",
 	["104604709"] = "Easy Animation Tool",
