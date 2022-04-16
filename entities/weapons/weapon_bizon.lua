@@ -19,8 +19,10 @@ if CLIENT then
 	["compm4"] = {bg = 3, sbg = 1}}
 	
 	SWEP.WMAng = Vector(0, 0, 180)
-	SWEP.WMPos = Vector(0, -6, -1.25)
+	SWEP.WMPos = Vector(-3.7, -8, 6)
 end
+
+SWEP.ASID = "wep_bizon"
 
 SWEP.Attachments = {
 	[1] = {header = "Sight", sight = true, x = 400, y = -50, atts = {"compm4"}},
@@ -86,8 +88,8 @@ SWEP.Spawnable            = true
 SWEP.AdminSpawnable        = true
 
 SWEP.VM = "models/weapons/view/smgs/bizon.mdl"
-SWEP.WM = "models/weapons/w_smg_biz.mdl"
-SWEP.WorldModel   = "models/weapons/w_smg_biz.mdl"
+SWEP.WM = "models/items/weapons/bizon.mdl"
+SWEP.WorldModel   = "models/items/weapons/bizon.mdl"
 
 -- Primary Fire Attributes --
 SWEP.Primary.ClipSize        = 64

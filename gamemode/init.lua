@@ -85,8 +85,9 @@ end)
 -- ╚═╝     ╚═╝  ╚═╝╚══════╝   ╚═╝       ╚═════╝ ╚══════╝
 
 local WorkshopFastDL = {
-	--Value doesn't do anything, i just use it so i know what the workshop ID is.
+	["2794939351"] = "Aftershock: Content - Generic 1",
 	["104603291"] = "Extended Spawnmenu",
+	["104604709"] = "Easy Animation Tool",
 	["180507408"] = "FA:S 2.0 Alpha SWEPs",
 	["181283903"] = "FA:S 2.0 Alpha SWEPs - Pistols",
 	["183139624"] = "FA:S 2.0 Alpha SWEPs - SMGs",
@@ -95,6 +96,9 @@ local WorkshopFastDL = {
 	["201027715"] = "FA:S 2.0 Alpha SWEPs - U. Rifles",
 	["462119296"] = "FA:S 2.0 Alpha SWEPs - Unused Weapons (Unofficial)",
 	["201027186"] = "FA:S 2.0 Alpha SWEPs - Misc",
+	--Maps
+	["2795340202"] = "r_postnukemetro_dry",
+	["2595136841"] = "RP Asheville",
 }
 
 for k, v in pairs(WorkshopFastDL) do

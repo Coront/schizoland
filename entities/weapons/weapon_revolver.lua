@@ -39,7 +39,9 @@ if CLIENT then
 	SWEP.EjectTime_3_Nomen = 0.65
 	SWEP.EjectTime_4_Nomen = 0.65
 	SWEP.EjectTime_5_Nomen = 0.65
-	SWEP.HideWorldModel = false
+
+	SWEP.WMAng = Vector( 180, -90, 0 )
+	SWEP.WMPos = Vector( -2, 2.5, 3.8 )
 	
 	SWEP.Text3DForward = -2
 	SWEP.Text3DRight = -1
@@ -47,6 +49,8 @@ if CLIENT then
 	SWEP.SafePosType = "pistol"
 	SWEP.SwayInterpolation = "linear"
 end
+
+SWEP.ASID = "wep_raging"
 
 SWEP.Attachments = {
 	[1] = {header = "Sight", sight = true, x = 100, y = -100, atts = {"leupold", "compm4"}}}
@@ -198,7 +202,8 @@ SWEP.Spawnable            = true
 SWEP.AdminSpawnable        = true
 
 SWEP.VM = "models/weapons/view/pistols/ragingbull.mdl"
-SWEP.WorldModel   = "models/weapons/w_357.mdl"
+SWEP.WM  = "models/items/weapons/ragingbull.mdl"
+SWEP.WorldModel   = "models/items/weapons/ragingbull.mdl"
 
 -- Primary Fire Attributes --
 SWEP.Primary.ClipSize        = 5

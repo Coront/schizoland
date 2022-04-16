@@ -94,6 +94,23 @@ AS.AddBaseItem("wep_deagle", {
     },
 })
 
+AS.AddBaseItem("wep_raging", {
+    name = ".44 Raging Bull",
+    desc = "A heavy revolver that holds 5 rounds. Uses .44 Magnum.",
+    category = "weapon",
+    model = "models/items/weapons/ragingbull.mdl",
+    wep = "weapon_revolver",
+    value = 25,
+    weight = 0.8,
+    hidden = true,
+    class = "engineer",
+    craft = {
+        ["misc_scrap"] = 130,
+        ["misc_smallparts"] = 80,
+        ["misc_chemical"] = 95,
+    },
+})
+
 -- ███████╗███╗   ███╗ ██████╗ ███████╗
 -- ██╔════╝████╗ ████║██╔════╝ ██╔════╝
 -- ███████╗██╔████╔██║██║  ███╗███████╗
@@ -115,6 +132,40 @@ AS.AddBaseItem("wep_mp5", {
         ["misc_scrap"] = 70,
         ["misc_smallparts"] = 85,
         ["misc_chemical"] = 80,
+    },
+})
+
+AS.AddBaseItem("wep_bizon", {
+    name = "PP-19 Bizon",
+    desc = "A compact SMG that holds 30 rounds. Uses 9x19mm ammunition.",
+    category = "weapon",
+    model = "models/items/weapons/bizon.mdl",
+    wep = "weapon_mp5",
+    value = 100,
+    weight = 1.4,
+    hidden = true,
+    class = "engineer",
+    craft = {
+        ["misc_scrap"] = 85,
+        ["misc_smallparts"] = 125,
+        ["misc_chemical"] = 95,
+    },
+})
+
+AS.AddBaseItem("wep_mac11", {
+    name = "Mac-11",
+    desc = "An incredibly fast SMG that holds 32 rounds. Uses .45ACP ammunition.",
+    category = "weapon",
+    model = "models/items/weapons/mac11.mdl",
+    wep = "weapon_baiter",
+    value = 100,
+    weight = 1.4,
+    hidden = true,
+    class = "engineer",
+    craft = {
+        ["misc_scrap"] = 85,
+        ["misc_smallparts"] = 125,
+        ["misc_chemical"] = 95,
     },
 })
 
@@ -261,6 +312,23 @@ AS.AddBaseItem("wep_sks", {
     },
 })
 
+AS.AddBaseItem("wep_m14", {
+    name = "M14",
+    desc = "A long-ranged american that holds 20 rounds. Uses 7.62x51mm ammunition.",
+    category = "weapon",
+    model = "models/items/weapons/m14.mdl",
+    wep = "weapon_m14",
+    value = 100,
+    weight = 1.4,
+    hidden = true,
+    class = "engineer",
+    craft = {
+        ["misc_scrap"] = 150,
+        ["misc_smallparts"] = 200,
+        ["misc_chemical"] = 145,
+    },
+})
+
 AS.AddBaseItem("wep_pulserifle", {
     name = "Pulse Rifle",
     desc = "An advanced pulse rifle that holds 30 pulse charges. Uses Pulse Batteries.",
@@ -303,12 +371,46 @@ AS.AddBaseItem("wep_remington", {
     },
 })
 
+AS.AddBaseItem("wep_ks23", {
+    name = "KS-23",
+    desc = "A heavy pump action shotgun that holds 4 slugs. Uses 12-Gauge Buckshot.",
+    category = "weapon",
+    model = "models/items/weapons/ks23.mdl",
+    wep = "weapon_ks23",
+    value = 100,
+    weight = 1.4,
+    hidden = true,
+    class = "engineer",
+    craft = {
+        ["misc_scrap"] = 175,
+        ["misc_smallparts"] = 200,
+        ["misc_chemical"] = 125,
+    },
+})
+
 -- ██╗  ██╗███████╗ █████╗ ██╗   ██╗██╗   ██╗
 -- ██║  ██║██╔════╝██╔══██╗██║   ██║╚██╗ ██╔╝
 -- ███████║█████╗  ███████║██║   ██║ ╚████╔╝
 -- ██╔══██║██╔══╝  ██╔══██║╚██╗ ██╔╝  ╚██╔╝
 -- ██║  ██║███████╗██║  ██║ ╚████╔╝    ██║
 -- ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝  ╚═══╝     ╚═╝
+
+AS.AddBaseItem("wep_rpk", {
+    name = "RPK-47",
+    desc = "A heavy assault rifle that holds 45 rounds. Uses 7.62x39mm ammunition.",
+    category = "weapon",
+    model = "models/items/weapons/rpk.mdl",
+    wep = "weapon_rpk",
+    value = 100,
+    weight = 1.4,
+    hidden = true,
+    class = "engineer",
+    craft = {
+        ["misc_scrap"] = 230,
+        ["misc_smallparts"] = 185,
+        ["misc_chemical"] = 175,
+    },
+})
 
 AS.AddBaseItem("wep_m249", {
     name = "M249",
@@ -369,9 +471,43 @@ AS.AddBaseItem("wep_m60", {
 -- ███████║██║ ╚████║██║██║     ███████╗██║  ██║
 -- ╚══════╝╚═╝  ╚═══╝╚═╝╚═╝     ╚══════╝╚═╝  ╚═╝
 
+AS.AddBaseItem("wep_m24", {
+    name = "M24",
+    desc = "A bolt-action sniper that holds 5 rounds. Uses 7.62x51mm ammunition.",
+    category = "weapon",
+    model = "models/items/weapons/m24.mdl",
+    wep = "weapon_m24",
+    value = 100,
+    weight = 1.4,
+    hidden = true,
+    class = "engineer",
+    craft = {
+        ["misc_scrap"] = 215,
+        ["misc_smallparts"] = 185,
+        ["misc_chemical"] = 200,
+    },
+})
+
+AS.AddBaseItem("wep_svd", {
+    name = "SVD Dragunov",
+    desc = "A heavy soviet sniper that holds 10 rounds. Uses 7.62x51mm ammunition.",
+    category = "weapon",
+    model = "models/items/weapons/svd.mdl",
+    wep = "weapon_svd",
+    value = 100,
+    weight = 1.4,
+    hidden = true,
+    class = "engineer",
+    craft = {
+        ["misc_scrap"] = 240,
+        ["misc_smallparts"] = 200,
+        ["misc_chemical"] = 185,
+    },
+})
+
 AS.AddBaseItem("wep_sr25", {
     name = "SR-25",
-    desc = "A long-ranged DMR that holds 10 rounds. Uses 7.52x51mm ammunition.",
+    desc = "A long-ranged DMR that holds 10 rounds. Uses 7.62x51mm ammunition.",
     category = "weapon",
     model = "models/items/weapons/sr25.mdl",
     wep = "weapon_sr25",
@@ -418,5 +554,29 @@ AS.AddBaseItem("wep_m82", {
         ["misc_scrap"] = 350,
         ["misc_smallparts"] = 290,
         ["misc_chemical"] = 250,
+    },
+})
+
+-- ███╗   ███╗██╗███████╗ ██████╗███████╗██╗     ██╗      █████╗ ███╗   ██╗███████╗ ██████╗ ██╗   ██╗███████╗
+-- ████╗ ████║██║██╔════╝██╔════╝██╔════╝██║     ██║     ██╔══██╗████╗  ██║██╔════╝██╔═══██╗██║   ██║██╔════╝
+-- ██╔████╔██║██║███████╗██║     █████╗  ██║     ██║     ███████║██╔██╗ ██║█████╗  ██║   ██║██║   ██║███████╗
+-- ██║╚██╔╝██║██║╚════██║██║     ██╔══╝  ██║     ██║     ██╔══██║██║╚██╗██║██╔══╝  ██║   ██║██║   ██║╚════██║
+-- ██║ ╚═╝ ██║██║███████║╚██████╗███████╗███████╗███████╗██║  ██║██║ ╚████║███████╗╚██████╔╝╚██████╔╝███████║
+-- ╚═╝     ╚═╝╚═╝╚══════╝ ╚═════╝╚══════╝╚══════╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝ ╚═════╝  ╚═════╝ ╚══════╝
+
+AS.AddBaseItem("wep_gl", {
+    name = "M79 Grenade Launcher",
+    desc = "A compact Grenade Launcher, capable of firing a single 40mm HE at a time.",
+    category = "weapon",
+    model = "models/items/weapons/m79.mdl",
+    wep = "weapon_grenadelauncher",
+    value = 80,
+    weight = 1.4,
+    hidden = true,
+    class = "engineer",
+    craft = {
+        ["misc_scrap"] = 200,
+        ["misc_smallparts"] = 150,
+        ["misc_chemical"] = 170,
     },
 })

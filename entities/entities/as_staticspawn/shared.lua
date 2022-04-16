@@ -17,11 +17,12 @@ function ENT:SetupDataTables()
         }
     } )
 
-    self:NetworkVarNotify( "NPC", self.OnNPCChanged )
-end
-
-function ENT:OnNPCChanged( name, old, new )
-    if old == "" then return end
+    self:NetworkVar( "Bool", 0, "ForceHold", {
+        KeyName = "Force Hold",
+        Edit = {
+            type = "Bool",
+        }
+    } )
 end
 
 function ENT:GetSpawnPos()

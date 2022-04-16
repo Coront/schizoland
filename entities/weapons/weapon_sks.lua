@@ -28,8 +28,8 @@ if CLIENT then
 		["suppressor"] = {bg = 3, sbg = 2},
 		["sks20mag"] = {bg = 4, sbg = 2}
 	}
-	SWEP.WMAng = Vector(0, 180, 180)
-	SWEP.WMPos = Vector(1, -2, 1)
+	SWEP.WMAng = Vector(-10, 180, 180)
+	SWEP.WMPos = Vector(0.5, -2, 0.1)
 end
 
 SWEP.ASID = "wep_sks"

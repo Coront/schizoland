@@ -44,6 +44,7 @@ function GM:PlayerSpawn( ply )
     ply:SetHealth(health)
     ply:SetMaxHealth(health)
     ply:SetupHands()
+    ply:SetCustomCollisionCheck( true )
     for k, v in SortedPairs( SET.DefaultWeapons ) do
         ply:Give( v )
     end

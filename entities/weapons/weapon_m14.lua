@@ -26,10 +26,12 @@ if CLIENT then
 		["leupold"] = {bg = 2, sbg = 3},
 		["suppressor"] = {bg = 3, sbg = 1}}
 		
-	SWEP.WMAng = Vector(0, 180, 180)
-	SWEP.WMPos = Vector(1, -3, 0.25)
+	SWEP.WMAng = Vector(-10, 0, 180)
+	SWEP.WMPos = Vector(-3.2, -3, 4)
 	SWEP.TargetViewModelFOV = 40
 end
+
+SWEP.ASID = "wep_m14"
 
 SWEP.Attachments = {[1] = {header = "Sight", sight = true, x = 800, y = 100, atts = {"leupold", "compm4", "eotech"}},
 	[2] = {header = "Barrel", x = 50, y = -200, atts = {"suppressor"}}}
@@ -93,8 +95,8 @@ SWEP.Spawnable            = true
 SWEP.AdminSpawnable        = true
 
 SWEP.VM = "models/weapons/view/rifles/m14.mdl"
-SWEP.WM = "models/weapons/w_m14.mdl"
-SWEP.WorldModel   = "models/weapons/w_snip_awp.mdl"
+SWEP.WM = "models/items/weapons/m14.mdl"
+SWEP.WorldModel   = "models/items/weapons/m14.mdl"
 
 -- Primary Fire Attributes --
 SWEP.Primary.ClipSize        = 20

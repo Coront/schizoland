@@ -50,6 +50,7 @@ if ( SERVER ) then
                 ply.Scavenging = true
                 self:EmitSound( "ambient/levels/streetwar/building_rubble" .. math.random( 1, 5 ) .. ".wav" )
                 ply:StartTimedEvent( self.ItemTime, true, function()
+                    if not IsValid(self) then return end
                     if self.ItemAmt <= 0 then ply:ChatPrint("There is nothing left to harvest.") return end
                     self.ItemAmt = self.ItemAmt - 1
                     ply:AddItemToInventory( self.Item, 1 )

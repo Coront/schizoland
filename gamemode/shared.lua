@@ -10,7 +10,7 @@ AS = {}
 
 DeriveGamemode("sandbox")
 GM.Name = "Aftershock"
-GM.Discord = "https://www.google.com/"
+GM.Discord = "https://discord.gg/S3xQjZefuF"
 
 --Shared Variables
 AS.Colors = {}
@@ -124,12 +124,8 @@ function GM:Move( ply, mv )
 end
 
 function BoolToInt( bool )
-    if not bool then return end
-    if bool then
-        return 1
-    else
-        return 0
-    end
+    if bool then return 1 end
+    return 0
 end
 
 function PlayerMeta:Nickname() --Will return the name of the player. Use this over self:Nick().
@@ -189,6 +185,11 @@ if CLIENT then
     end
     concommand.Add("GetPosV2", GetPos)
 
+    function GM:DrawPhysgunBeam( ply, wep, bool, target, phys, hit )
+        if ply:IsDeveloping() and not IsValid(target) then return false end
+        return true
+    end
+
 end
 
 --  ██████╗ ██████╗ ███╗   ██╗███████╗ ██████╗ ██╗     ███████╗     ██████╗ ██████╗ ███╗   ███╗███╗   ███╗ █████╗ ███╗   ██╗██████╗ ███████╗
@@ -198,7 +199,7 @@ end
 -- ╚██████╗╚██████╔╝██║ ╚████║███████║╚██████╔╝███████╗███████╗    ╚██████╗╚██████╔╝██║ ╚═╝ ██║██║ ╚═╝ ██║██║  ██║██║ ╚████║██████╔╝███████║
 --  ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝╚══════╝ ╚═════╝ ╚══════╝╚══════╝     ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝ ╚══════╝
 
-local function ToConValue( bool )
+function ToConValue( bool )
 	local int = BoolToInt( bool )
 	return tostring(int)
 end
@@ -211,3 +212,4 @@ CreateConVar( "as_nodes", "1", {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED}, 
 CreateConVar( "as_events", "1", {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED}, "Enable spawning of events.", 0, 1 )
 CreateConVar( "as_satiation", "1", {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED}, "Enable satiation ticking.", 0, 1 )
 CreateConVar( "as_occupation", "1", {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED}, "Enable occupation zone spawners.", 0, 1 )
+CreateConVar( "as_collisions", "1", {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED}, "Enable collisions between players.", 0, 1 )

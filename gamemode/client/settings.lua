@@ -170,6 +170,30 @@ function AS.Settings.BuildOptions()
     ValueSlider( "Satiation Bars Height", xpos, ypos, 5, 50, settings_scroll, "as_hud_satiationbars_height" )
     addSpace( -20, 20 )
 
+    ToggleButton("Enable Effects", xpos, ypos, settings_scroll, "as_hud_effects")
+    addSpace( 20, 20 )
+
+    ToggleButton("Enable Effects Amounts", xpos, ypos, settings_scroll, "as_hud_effects_amount")
+    addSpace( 0, 20 )
+
+    ValueSlider( "Effects X-Pos", xpos, ypos, -2000, 2000, settings_scroll, "as_hud_effects_xadd" )
+    addSpace( 0, 20 )
+
+    ValueSlider( "Effects Y-Pos", xpos, ypos, -2000, 2000, settings_scroll, "as_hud_effects_yadd" )
+    addSpace( 0, 20 )
+
+    ValueSlider( "Effects Icon Size", xpos, ypos, 16, 32, settings_scroll, "as_hud_effects_iconsize" )
+    addSpace( 0, 20 )
+
+    ValueSlider( "Effects Bar Width", xpos, ypos, 5, 2000, settings_scroll, "as_hud_effects_width" )
+    addSpace( 0, 20 )
+
+    ValueSlider( "Effects Bar Height", xpos, ypos, 5, 50, settings_scroll, "as_hud_effects_height" )
+    addSpace( 0, 20 )
+
+    ValueSlider( "Y Spacing Between Effects", xpos, ypos, 0, 15, settings_scroll, "as_hud_effects_barspacing" )
+    addSpace( -20, 20 )
+
     ToggleButton("Enable Resource Count", xpos, ypos, settings_scroll, "as_hud_resources")
     addSpace( 20, 20 )
 

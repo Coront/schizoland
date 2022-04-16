@@ -16,8 +16,8 @@ if CLIENT then
 	SWEP.MuzzleEffect = "muzzleflash_SR25"
 	SWEP.Shell = "7.62x51"
 	
-	SWEP.WMAng = Vector(0, 180, 180)
-	SWEP.WMPos = Vector(1, -3, 0.25)
+	SWEP.WMAng = Vector(0, 0, 180)
+	SWEP.WMPos = Vector(-4.1, -9.3, 8)
 	SWEP.TargetViewModelFOV = 50
 	SWEP.CanPeek = true
 	SWEP.BlurOnAim = true
@@ -125,8 +125,8 @@ SWEP.Spawnable            = true
 SWEP.AdminSpawnable        = true
 
 SWEP.VM = "models/weapons/view/support/sr25.mdl"
-SWEP.WM = "models/weapons/w_sr25.mdl"
-SWEP.WorldModel   = "models/weapons/w_snip_sg550.mdl"
+SWEP.WM = "models/items/weapons/sr25.mdl"
+SWEP.WorldModel   = "models/items/weapons/sr25.mdl"
 
 -- Primary Fire Attributes --
 SWEP.Primary.ClipSize        = 10

@@ -37,6 +37,15 @@ AS_ClientConVar( "as_hud_satiationbars_yadd", "0", true, false ) --Y position ad
 AS_ClientConVar( "as_hud_satiationbars_width", "150", true, false ) --Width
 AS_ClientConVar( "as_hud_satiationbars_height", "10", true, false ) --Height
 AS_ClientConVar( "as_hud_satiationbars_showindic", "1", true, false )
+-- Effects
+AS_ClientConVar( "as_hud_effects", "1", true, false ) --Enable
+AS_ClientConVar( "as_hud_effects_amount", "0", true, false ) --Enable amount
+AS_ClientConVar( "as_hud_effects_xadd", "0", true, false ) --X position add
+AS_ClientConVar( "as_hud_effects_yadd", "0", true, false ) --Y position add
+AS_ClientConVar( "as_hud_effects_iconsize", "24", true, false ) --Icon Size
+AS_ClientConVar( "as_hud_effects_width", "150", true, false ) --Width
+AS_ClientConVar( "as_hud_effects_height", "10", true, false ) --Height
+AS_ClientConVar( "as_hud_effects_barspacing", "3", true, false ) --Spacing between bars
 -- Resources
 AS_ClientConVar( "as_hud_resources", "0", true, false ) --Enable?
 AS_ClientConVar( "as_hud_resources_xadd", "0", true, false ) --X position add
@@ -135,6 +144,45 @@ function AftershockHUD()
             draw.SimpleTextOutlined(hunger, "AftershockHUDVerySmall", amtx, amty, COLHUD_DEFAULT, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER, outline, Color(0,0,0))
             amty = amty + (height)
             draw.SimpleTextOutlined(thirst, "AftershockHUDVerySmall", amtx, amty, COLHUD_DEFAULT, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER, outline, Color(0,0,0))
+        end
+    end
+
+    local effect = tobool(GetConVar("as_hud_effects"):GetInt())
+    if effect then
+        local iconsize = GetConVar("as_hud_effects_iconsize"):GetInt() * HUD_SCALE
+        local xpos = GetConVar("as_hud_effects_xadd"):GetInt()
+        local ypos = GetConVar("as_hud_effects_yadd"):GetInt()
+        local width = GetConVar("as_hud_effects_width"):GetInt() * HUD_SCALE
+        local height = GetConVar("as_hud_effects_height"):GetInt() * HUD_SCALE
+        local barx, bary, width, height, outline = (xpos + 80), (ypos + (ScrH() * 0.935)), (width), (height), (1)
+        local iconspace = 3
+        local barspace = 2
+        local spacebetweenbars = GetConVar("as_hud_effects_barspacing"):GetInt()
+
+        for i = 1, 4 do
+            local name = "EFFECT_DEBUG"
+            local time = 10.0
+            local time_max = 10.0
+
+            --Icon
+            surface.SetDrawColor( COLHUD_DEFAULT )
+            surface.DrawOutlinedRect( barx, (bary - iconsize) - (GetConVar("as_hud_healthbar_height"):GetInt() * HUD_SCALE), iconsize, iconsize )
+            surface.SetDrawColor( Color( 255, 255, 255, 255 ) )
+            surface.SetMaterial( Material( "icon16/lightning.png" ) )
+            surface.DrawTexturedRect( barx + iconspace, (bary - iconsize) - (GetConVar("as_hud_healthbar_height"):GetInt() * HUD_SCALE) + iconspace, iconsize - (iconspace * 2), iconsize - (iconspace * 2) )
+            --Bar
+            surface.SetDrawColor( COLHUD_DEFAULT )
+            surface.DrawOutlinedRect( (barx + iconsize) - 1, bary - height - (GetConVar("as_hud_healthbar_height"):GetInt() * HUD_SCALE), width, height )
+            surface.DrawRect( (barx + iconsize) - 1, bary - height - (GetConVar("as_hud_healthbar_height"):GetInt() * HUD_SCALE) + barspace, (time / time_max) * width - barspace, height - (barspace * 2) )
+            --Name
+            draw.SimpleTextOutlined(name, "AftershockHUDVerySmall", (barx + iconsize + 2), bary - (height + 2) - (GetConVar("as_hud_healthbar_height"):GetInt() * HUD_SCALE), COLHUD_DEFAULT, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM, outline, Color(0,0,0))
+            
+            local amt = tobool(GetConVar("as_hud_effects_amount"):GetInt())
+            if amt then
+                draw.SimpleTextOutlined(time, "AftershockHUDVerySmall", barx + iconsize + width + 1, bary - (height / 2) - 1 - (GetConVar("as_hud_healthbar_height"):GetInt() * HUD_SCALE), COLHUD_DEFAULT, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER, outline, Color(0,0,0))
+            end
+
+            bary = bary - (iconsize + spacebetweenbars)
         end
     end
 

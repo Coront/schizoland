@@ -80,6 +80,12 @@ hook.Add("StartCommand", "AS_CrouchJumpSpamBlock", function(ply, cmd)
     end
 end)
 
+hook.Add("ShouldCollide", "AS_PlayerCollisions", function( ent1, ent2 )
+    if ent1:IsPlayer() and ent2:IsPlayer() and (ent1:GetMoveType() == MOVETYPE_NOCLIP or not tobool(GetConVar("as_collisions"):GetInt())) then
+        return false
+    end
+end)
+
 --Serverside Permissions
 if SERVER then
 
@@ -156,5 +162,4 @@ if SERVER then
             dmginfo:SetDamage( 0 )
         end
     end)
-
 end

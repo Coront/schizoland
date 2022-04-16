@@ -8,13 +8,15 @@ if CLIENT then
 	SWEP.AimPos = Vector(-3.412, -5.4, 0.538)
 	SWEP.AimAng = Vector(1.283, -0.03, 0.2)
 		
-	SWEP.WMAng = Vector(-15, 180, 180)
-	SWEP.WMPos = Vector(1, -3, -2)
+	SWEP.WMAng = Vector(-15, 0, 180)
+	SWEP.WMPos = Vector(-6, -11.5, 5)
 	SWEP.MuzzleName = "1"
 	SWEP.YawMod = 0.1
 	SWEP.MagText = "CYLINDER "
 	SWEP.MuzzleEffect = "muzzleflash_m79"
 end
+
+SWEP.ASID = "wep_gl"
 
 SWEP.NoProficiency = true
 SWEP.BulletLength = 7.62
@@ -22,6 +24,7 @@ SWEP.CaseLength = 39
 SWEP.EmptySound = Sound("weapons/empty_assaultrifles.wav")
 SWEP.NoAttachmentMenu = true
 SWEP.NoDistance = true
+SWEP.HoldType = "shotgun"
 
 SWEP.Anims = {}
 SWEP.Anims.Draw_First = "deploy"
@@ -58,8 +61,8 @@ SWEP.Spawnable            = true
 SWEP.AdminSpawnable        = true
 
 SWEP.VM = "models/weapons/view/explosives/m79.mdl"
-SWEP.WM = "models/weapons/w_m79.mdl"
-SWEP.WorldModel   = "models/weapons/w_rif_ak47.mdl"
+SWEP.WM = "models/items/weapons/m79.mdl"
+SWEP.WorldModel   = "models/items/weapons/m79.mdl"
 
 -- Primary Fire Attributes --
 SWEP.Primary.ClipSize        = 1

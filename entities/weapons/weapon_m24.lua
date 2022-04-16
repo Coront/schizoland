@@ -17,11 +17,13 @@ if CLIENT then
 	["harrisbipod"] = {bg = 5, sbg = 1}}
 	SWEP.AimSens = 0.15
 	
-	SWEP.WMAng = Vector(0, 0, 180)
-	SWEP.WMPos = Vector(-1, 12.5, 1.5)
+	SWEP.WMAng = Vector(-10, 0, 180)
+	SWEP.WMPos = Vector(-4, -6, 6)
 	SWEP.CanPeek = true
 	SWEP.BlurOnAim = true
 end
+
+SWEP.ASID = "wep_m24"
 
 SWEP.Attachments = {[1] = {header = "Barrel", x = 50, y = -25, atts = {"suppressor"}},
 	[2] = {header = "Forearm", x = 50, y = 75, atts = {"harrisbipod"}}}
@@ -533,8 +535,8 @@ SWEP.Spawnable            = true
 SWEP.AdminSpawnable        = true
 
 SWEP.VM = "models/weapons/view/support/m24.mdl"
-SWEP.WM = "models/weapons/w_m24.mdl"
-SWEP.WorldModel   = "models/weapons/w_snip_awp.mdl"
+SWEP.WM = "models/items/weapons/m24.mdl"
+SWEP.WorldModel   = "models/items/weapons/m24.mdl"
 
 -- Primary Fire Attributes --
 SWEP.Primary.ClipSize        = 5

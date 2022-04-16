@@ -11,7 +11,7 @@ if CLIENT then
 	SWEP.Shell = "7.62x39"
 
 	SWEP.WMAng = Vector(180, -90, 0)
-	SWEP.WMPos = Vector(16, -0.1, 1)
+	SWEP.WMPos = Vector(16.5, 0.5, 1)
 	SWEP.CrosshairShow = true
 end
 

@@ -84,7 +84,7 @@ if ( CLIENT ) then
     end)
 
     hook.Add("PrePlayerDraw", "AS_PlayerHide", function( ply )
-        if ply:GetMoveType() == MOVETYPE_NOCLIP then return true end
+        if ply:GetMoveType() == MOVETYPE_NOCLIP and not LocalPlayer():IsDeveloping() then return true end
         if ply.HideDefault then
             ply:SetMaterial( "Models/effects/vol_light001" )
         else

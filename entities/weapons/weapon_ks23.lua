@@ -14,8 +14,8 @@ if CLIENT then
 	SWEP.MuzzleEffect = "muzzleflash_shotgun"
 	SWEP.AttachmentBGs = {["tritiumsights"] = {bg = 2, sbg = 1}}
 	
-	SWEP.WMAng = Vector(0, 0, 180)
-	SWEP.WMPos = Vector(-1, 6, 3.75)
+	SWEP.WMAng = Vector(-10, 0, 180)
+	SWEP.WMPos = Vector(-4, -8, 4.5)
 	SWEP.MagText = "TUBE "
 	SWEP.BoltReminderText = "RELOAD KEY - PUMP SHOTGUN"
 	
@@ -33,6 +33,8 @@ if CLIENT then
 	SWEP.SprintPos = Vector(4, -2.09, 0.5)
 	SWEP.SprintAng = Vector(-12.968, 47.729, 0)
 end
+
+SWEP.ASID = "wep_ks23"
 
 SWEP.Attachments = {[1] = {header = "Sight", sight = true, x = 600, y = -50, atts = {"tritiumsights"}}}
 
@@ -109,8 +111,8 @@ SWEP.Spawnable            = true
 SWEP.AdminSpawnable        = true
 
 SWEP.VM = "models/weapons/view/shotguns/ks23.mdl"
-SWEP.WM = "models/weapons/world/shotguns/ks23.mdl"
-SWEP.WorldModel   = "models/weapons/w_shot_m3super90.mdl"
+SWEP.WM = "models/items/weapons/ks23.mdl"
+SWEP.WorldModel   = "models/items/weapons/ks23.mdl"
 
 -- Primary Fire Attributes --
 SWEP.Primary.ClipSize        = 4

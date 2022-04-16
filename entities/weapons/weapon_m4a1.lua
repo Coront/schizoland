@@ -28,7 +28,7 @@ if CLIENT then
 		["suppressor"] = {bg = 3, sbg = 1}}
 		
 	SWEP.WMAng = Vector(0, 0, 180)
-	SWEP.WMPos = Vector(-2.6, -3.9, 5.4)
+	SWEP.WMPos = Vector(-6.7, -19.5, 11.2)
 	
 	SWEP.HideWorldModel = true
 end
@@ -106,7 +106,7 @@ SWEP.AdminSpawnable        = true
 SWEP.VM = "models/weapons/view/rifles/m4a1.mdl"
 SWEP.WM = "models/items/weapons/m4a1.mdl"
 SWEP.WorldModel   = "models/weapons/w_rif_m4a1.mdl"
-SWEP.HoldType = "ar2"
+SWEP.HoldType = "smg"
 
 -- Primary Fire Attributes --
 SWEP.Primary.ClipSize        = 30

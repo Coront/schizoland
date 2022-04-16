@@ -7,6 +7,9 @@ if CLIENT then
 	
 	SWEP.AimPos = Vector(-2.031, -5.177, 0.294)
 	SWEP.AimAng = Vector(2.391, 0, 0)
+
+	SWEP.WMAng = Vector( 0, 0, 180 )
+	SWEP.WMPos = Vector( -3.8, -12.3, 5.5 )
 	
 	SWEP.SprintPos = Vector(0, -2, 2.5)
 	SWEP.SprintAng = Vector(-30.433, 0, 0)
@@ -23,10 +26,14 @@ if CLIENT then
 	SWEP.SafePosType = "pistol"
 end
 
+SWEP.ASID = "wep_mac11"
+
 SWEP.Attachments = {[1] = {header = "Barrel", x = -25, y = -75, atts = {"suppressor"}}}
 
 SWEP.BulletLength = 9
 SWEP.CaseLength = 17.3
+
+SWEP.HoldType = "pistol"
 
 SWEP.Anims = {}
 SWEP.Anims.Draw_First = "draw"
@@ -86,7 +93,8 @@ SWEP.Spawnable            = true
 SWEP.AdminSpawnable        = true
 
 SWEP.VM = "models/weapons/view/smgs/mac11.mdl"
-SWEP.WorldModel   = ""
+SWEP.WM = "models/items/weapons/mac11.mdl"
+SWEP.WorldModel   = "models/items/weapons/mac11.mdl"
 
 -- Primary Fire Attributes --
 SWEP.Primary.ClipSize        = 32

@@ -22,5 +22,9 @@ SWEP.ModelOverride = { --Model override should only be used in the case where pl
     ["models/player/group01/male_07.mdl"] = "models/player/group03/male_07.mdl",
     ["models/player/group01/male_08.mdl"] = "models/player/group03/male_08.mdl",
     ["models/player/group01/male_09.mdl"] = "models/player/group03/male_09.mdl",
+    ["models/player/group02/male_02.mdl"] = "models/player/group03/male_02.mdl",
+    ["models/player/group02/male_04.mdl"] = "models/player/group03/male_04.mdl",
+    ["models/player/group02/male_06.mdl"] = "models/player/group03/male_06.mdl",
+    ["models/player/group02/male_08.mdl"] = "models/player/group03/male_08.mdl",
     ["default"] = "models/player/group03/male_02.mdl", --This is important. If we cannot find a reference for us, we default to this one in case.
 }

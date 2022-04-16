@@ -23,6 +23,31 @@ AS.AddBaseItem("armor_makeshift", {
     },
 })
 
+AS.AddBaseItem("armor_bandit", {
+    name = "Bandit Armor",
+    desc = "A ragged coat with a gasmask attached to it. Simple, but could be useful at a time like this.",
+    category = "armor",
+    model = "models/items/armor/banditarmor.mdl",
+    wep = "armor_bandit",
+    value = 35,
+    weight = 2,
+    armor = {
+        ["movemult"] = 0.95, --Movespeed Mult
+        [DMG_BULLET] = 7, --Bullets
+        [DMG_SLASH] = 14, --Melee
+        [DMG_BURN] = 11, --Fire
+        [DMG_ENERGYBEAM] = 4, --Pulse
+        [DMG_BLAST] = 5, --Explosive
+    },
+    class = "scavenger",
+    craft = {
+        ["misc_scrap"] = 50,
+        ["misc_smallparts"] = 25,
+        ["misc_chemical"] = 40,
+        ["misc_hide_antlion"] = 1,
+    },
+})
+
 AS.AddBaseItem("armor_combat", {
     name = "Combat Armor",
     desc = "A heavy set of armor made of kevlar and a couple other materials. Useful for stopping several incoming bullets.",
@@ -67,6 +92,34 @@ AS.AddBaseItem("armor_combine", {
         [DMG_BURN] = 15,
         [DMG_ENERGYBEAM] = 21,
         [DMG_BLAST] = 45,
+    },
+    hidden = true,
+    class = "mercenary",
+    craft = {
+        ["misc_scrap"] = 250,
+        ["misc_smallparts"] = 300,
+        ["misc_chemical"] = 375,
+        ["misc_hide_antlion"] = 3,
+        ["misc_hide_guard"] = 2,
+    },
+})
+
+AS.AddBaseItem("armor_recon", {
+    name = "Recon Armor",
+    desc = "A very light set of armor with technologies that improve the wearer's mobility.",
+    category = "armor",
+    model = "models/items/armor/recon.mdl",
+    wep = "armor_recon",
+    color = Color( 120, 40, 40 ),
+    value = 200,
+    weight = 4.5,
+    armor = {
+        ["movemult"] = 1.2,
+        [DMG_BULLET] = 23,
+        [DMG_SLASH] = 24,
+        [DMG_BURN] = 18,
+        [DMG_ENERGYBEAM] = 18,
+        [DMG_BLAST] = 20,
     },
     hidden = true,
     class = "mercenary",

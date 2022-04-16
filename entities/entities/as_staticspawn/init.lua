@@ -38,13 +38,15 @@ function ENT:CreateNPC()
     ent:SetAngles( self:GetSpawnAng() )
     ent:Spawn()
     ent.Guarding = true
+    if self:GetForceHold() then
+        ent.GuardingForceHold = true
+    end
 
     self.CurrentNPC = ent
 end
 
 function ENT:Think()
-    self.SpawnTime = self.SpawnTime or 900
-    self.PlyDisableDist = self.PlyDisableDist or 5000
+    self.SpawnTime = self.SpawnTime or 3600
     if not tobool(GetConVar("as_occupation"):GetInt()) then return end
 
     if CurTime() > self:GetNextSpawn() then

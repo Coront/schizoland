@@ -23,9 +23,11 @@ if CLIENT then
 	SWEP.AttachmentBGs = {["pso1"] = {bg = 3, sbg = 1},
 		["suppressor"] = {bg = 2, sbg = 1}}	
 		
-	SWEP.WMAng = Vector(0, 180, 180)
-	SWEP.WMPos = Vector(1, -3, 0.25)
+	SWEP.WMAng = Vector(0, 0, 180)
+	SWEP.WMPos = Vector(-3.5, -6.8, 5.8)
 end
+
+SWEP.ASID = "wep_rpk"
 
 SWEP.Attachments = {
 	[1] = {header = "Sight", sight = true, x = 800, y = -50, atts = {"pso1"}},
@@ -126,8 +128,8 @@ SWEP.Spawnable            = true
 SWEP.AdminSpawnable        = true
 
 SWEP.VM = "models/weapons/view/support/rpk.mdl"
-SWEP.WM = "models/weapons/w_ak47.mdl"
-SWEP.WorldModel   = "models/weapons/w_rif_ak47.mdl"
+SWEP.WM = "models/items/weapons/rpk.mdl"
+SWEP.WorldModel   = "models/items/weapons/rpk.mdl"
 
 -- Primary Fire Attributes --
 SWEP.Primary.ClipSize        = 45

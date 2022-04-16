@@ -18,12 +18,14 @@ if CLIENT then
 	SWEP.Shell = "7.62x51"
 	SWEP.AttachmentBGs = {["suppressor"] = {bg = 2, sbg = 1}}
 	
-	SWEP.WMAng = Vector(-15, 180, 180)
-	SWEP.WMPos = Vector(1, -3, -1.25)
+	SWEP.WMAng = Vector(-10, 0, 180)
+	SWEP.WMPos = Vector(-3.6, -6, 5)
 	SWEP.TargetViewModelFOV = 50
 	SWEP.CanPeek = true
 	SWEP.BlurOnAim = true
 end
+
+SWEP.ASID = "wep_svd"
 
 SWEP.Attachments = {[1] = {header = "Barrel", x = 50, atts = {"suppressor"}}}
 
@@ -87,8 +89,8 @@ SWEP.Spawnable            = true
 SWEP.AdminSpawnable        = true
 
 SWEP.VM = "models/weapons/view/support/svd_update.mdl"
-SWEP.WM = "models/weapons/w_sr25.mdl"
-SWEP.WorldModel   = "models/weapons/w_snip_sg550.mdl"
+SWEP.WM = "models/items/weapons/svd.mdl"
+SWEP.WorldModel   = "models/items/weapons/svd.mdl"
 
 -- Primary Fire Attributes --
 SWEP.Primary.ClipSize        = 10

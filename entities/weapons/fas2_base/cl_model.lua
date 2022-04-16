@@ -585,7 +585,7 @@ function SWEP:PostDrawViewModel()
 end
 
 function SWEP:DrawWorldModel()
-	if self:GetOwner():GetMoveType() == MOVETYPE_NOCLIP or false then return end
+	if IsValid(self:GetOwner()) and self:GetOwner():GetMoveType() == MOVETYPE_NOCLIP or false then return end
 
 	if not self.HideWorldModel then
 		self:DrawModel()

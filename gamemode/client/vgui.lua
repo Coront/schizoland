@@ -68,6 +68,19 @@ function Button( text, x, y, width, height, parent, callback )
     end
 end
 
+function DefaultButton( text, x, y, width, height, parent, callback )
+    local button = vgui.Create("DButton")
+    if parent then button:SetParent(parent) end
+    button:SetSize(width, height)
+    button:SetPos(x, y)
+    button:SetFont("AftershockButtonSmall")
+    button:SetText( text )
+    button.DoClick = function()
+        surface.PlaySound("buttons/button15.wav")
+        callback()
+    end
+end
+
 function SectionLabel( text, x, y, parent )
     local label = vgui.Create("DLabel", parent)
     label:SetFont( "AftershockButton" )
@@ -145,5 +158,22 @@ function KeyBind( text, x, y, parent, convar )
     local label = vgui.Create("DLabel", parent)
     label:SetText(text)
     label:SetPos(x + 110, y + 2)
+    label:SizeToContents()
+end
+
+function ToggleButtonFunction( text, x, y, parent, startvalue, callback )
+    startvalue = startvalue or false
+
+    local checkbox = vgui.Create("DCheckBox", parent)
+    checkbox:SetPos( x, y )
+    checkbox:SetValue( startvalue )
+    function checkbox:OnChange( bool )
+        bool = ToConValue( bool )
+        callback( bool )
+    end
+
+    local label = vgui.Create("DLabel", parent)
+    label:SetText(text)
+    label:SetPos(x + 20, y)
     label:SizeToContents()
 end
