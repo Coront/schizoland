@@ -40,7 +40,8 @@ hook.Add("Think", "AS_TargetID", function()
         ["func_breakable"] = true,
         ["func_breakable_surf"] = true,
     }
-    if IsValid(ent) and not ignoreEnts[ent:GetClass()] and (ent:Health() > 0 or ent:IsNPC() or ent:IsNextBot() or (ent:IsPlayer() and not ent:GetMoveType() == MOVETYPE_NOCLIP)) then
+    if IsValid(ent) and not ignoreEnts[ent:GetClass()] and (ent:Health() > 0 or ent:IsPlayer() or ent:IsNPC() or ent:IsNextBot()) then
+        if ent:IsPlayer() and ent:GetMoveType() == MOVETYPE_NOCLIP then return end
         ply:SetActiveTarget( trace.Entity )
         ply:SetActiveTargetLength( CurTime() + 3 )
         ply:SetInitialTargetLength( CurTime() )
