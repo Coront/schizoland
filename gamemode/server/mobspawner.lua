@@ -266,13 +266,13 @@ function AS.Grid.SpawnMobs()
     if not tobool(GetConVar("as_mobs"):GetInt()) then return end
 
     --We need to find a valid spawn for NPCs first. We'll go through all of the spawns and see what's available.
-    local ValidSpawners = AS.Grid.FetchValidSpawners()
-    if #ValidSpawners <= 0 then return end --No valid spawners. Although extremely rare, still a precaution to have.
+    local AllValidSpawners = AS.Grid.FetchValidSpawners()
+    if #AllValidSpawners <= 0 then return end --No valid spawners. Although extremely rare, still a precaution to have.
 
     --Now, since we have a table containing valid spawn points, we need to spawn NPCs on them.
     for mob, info in pairs( MOB.NPCs ) do
-        ValidSpawners = info.indoor and info.outdoor and ValidSpawners or info.indoor and AS.Grid.FetchValidIndoorSpawners( ValidSpawners ) or info.outdoor and AS.Grid.FetchValidOutdoorSpawners( ValidSpawners )
-    
+        local ValidSpawners = (info.indoor and info.outdoor and AllValidSpawners) or (info.indoor and AS.Grid.FetchValidIndoorSpawners( AllValidSpawners )) or (info.outdoor and AS.Grid.FetchValidOutdoorSpawners( AllValidSpawners ))
+
         local maxMobs = math.floor( (info.amt * MOB.SpawnMult) * (AS.Maps[game.GetMap()] and AS.Maps[game.GetMap()].MobMult or 1) )
         if #ents.FindByClass(mob) >= maxMobs then continue end --We've already capped this NPC, skip to the next one.
         local mobsToSpawn = maxMobs - #ents.FindByClass(mob) --How many NPCs we need to spawn.
