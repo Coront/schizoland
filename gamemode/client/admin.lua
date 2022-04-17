@@ -111,6 +111,14 @@ function AdminMenu_Server()
     end)
     YAdd( 20 )
 
+    ToggleButtonFunction( "Enable Respawn Delay? (Waiting a period before respawning)", xpos, ypos, scroll, GetConVar("as_respawnwait"):GetBool(), function( bool )
+        net.Start("as_admin_modifyconvar")
+            net.WriteString("as_respawnwait")
+            net.WriteString( bool )
+        net.SendToServer()
+    end)
+    YAdd( 20 )
+
     return panel
 end
 

@@ -221,3 +221,4 @@ CreateConVar( "as_events", "1", {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED},
 CreateConVar( "as_satiation", "1", {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED}, "Enable satiation ticking.", 0, 1 )
 CreateConVar( "as_occupation", "1", {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED}, "Enable occupation zone spawners.", 0, 1 )
 CreateConVar( "as_collisions", "1", {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED}, "Enable collisions between players.", 0, 1 )
+CreateConVar( "as_respawnwait", "1", {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED}, "Enable respawn wait.", 0, 1 )

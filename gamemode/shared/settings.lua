@@ -21,6 +21,7 @@ SET.ClassChangeCostTbl = { --If classchangecost is on, what do player's have to 
 SET.CraftTime = 1 --Craft time per item (seconds)
 SET.DestroyPerc = 0.3 --Percentage of resources to receive from an item when breaking it down.
 SET.DeathResCost = 30 --Percentage of player's resources (scrap, smallparts, chemicals) that will be lost upon death.
+SET.DeathWait = 10 --How long a player must wait before respawning.
 SET.SelectableModels = {
     --All of the models in here are models that the player is allowed to select during character creation.
     ["models/player/group01/male_01.mdl"] = true,
@@ -126,6 +127,11 @@ SKL.Salvaging = {
     incscavitem = 0.6, --Increases the chance of finding an item per level
     incminres = 0.25, --Increases the minimal amount of resources found
     incmaxres = 0.3, --Increases the maximum amount of resources found
+}
+SKL.Treatment = {
+    incamt = 0.05,
+    deccooltime = 0.08,
+    inceffectlength = 0.6,
 }
 --Satiation Settings
 SET.Satiation = {}

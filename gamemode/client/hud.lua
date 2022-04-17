@@ -70,7 +70,7 @@ AS_ClientConVar( "as_connectioninfo_fps_warning_amt", "40", true, false ) --Belo
 function AftershockHUD()
     local ply = LocalPlayer()
 
-    if not ply:IsLoaded() or not ply:Alive() then return end
+    if not ply:IsLoaded() or not ply:Alive() then AftershockHUDDeath() return end
 
     local bar = tobool(GetConVar("as_hud_healthbar"):GetInt())
     if bar then
@@ -228,7 +228,7 @@ function AftershockHUD()
         if tobool(GetConVar("as_hud_targetinfo_amount"):GetInt()) then
             x = x + (width / 2)
             y = y + height
-            draw.SimpleTextOutlined( health .. " / " .. maxhealth, "AftershockHUDSmall", x, y, newcol, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, outline, Color(0,0,0) )
+            draw.SimpleTextOutlined( target:Health() .. " / " .. maxhealth, "AftershockHUDSmall", x, y, newcol, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, outline, Color(0,0,0) )
         end
     end
 
@@ -243,6 +243,18 @@ function AftershockHUD()
             draw.SimpleTextOutlined( txt, "AftershockHUD", xpos, ypos, COLHUD_DEFAULT, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 1, Color(0,0,0) )
         end
     end
+end
+
+function AftershockHUDDeath()
+    local width = 200 * HUD_SCALE
+    local height = 15 * HUD_SCALE
+    local barx, bary, width, height, outline = ((ScrW() / 2) - (width / 2)), ((ScrH() * 0.8)), (width), (height), (1)
+
+    surface.SetDrawColor(COLHUD_DEFAULT) --Set color to hud color
+    surface.DrawOutlinedRect(barx, bary, width, height, outline) --Health bar outline
+    local length = tobool(GetConVar("as_respawnwait"):GetInt()) and SET.DeathWait or 1
+    local percent = (CurTime() - (LocalPlayer():GetNW2Int("AS_LastDeath") or 0)) / length
+    surface.DrawRect(barx + 2, bary + 2, math.Clamp((percent * 200 - 4), 0, 200 - 4), height - 4) --Health bar
 end
 
 function ConnectionInformation()

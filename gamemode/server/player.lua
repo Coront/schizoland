@@ -74,6 +74,19 @@ function GM:OnPlayerHitGround( ply, water, floater, speed )
     end
 end
 
+function GM:PlayerDeath( victim, inflictor, attacker )
+    local length = tobool(GetConVar("as_respawnwait"):GetInt()) and SET.DeathWait or 1
+    victim:SetNW2Int("AS_NextRespawn", CurTime() + length )
+    victim:SetNW2Int("AS_LastDeath", CurTime() )
+end
+
+function GM:PlayerDeathThink( ply )
+    if CurTime() > (ply:GetNW2Int("AS_NextRespawn") or 0) then
+        ply:Spawn()
+    end
+    return false
+end
+
 function GM:PostPlayerDeath( ply )
     local contents = {} --Player's dropped contents
     for k, v in pairs( ply:GetWeapons() ) do
