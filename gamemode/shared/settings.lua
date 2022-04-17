@@ -146,6 +146,7 @@ MOB.NPCs = {
     --amt is maximum amount, indoor means they spawn on indoor nodes, outdoor means they spawn on outdoor nodes
     ["npc_as_zombie"] = {amt = 8, indoor = true, outdoor = true},
     ["npc_as_fastzombie"] = {amt = 5, outdoor = true},
+    ["npc_as_poisonzombie"] = {amt = 5, indoor = true},
     ["npc_as_bandit"] = {amt = 4, outdoor = true},
     ["npc_as_antlion"] = {amt = 3, outdoor = true},
 }
