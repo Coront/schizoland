@@ -101,6 +101,14 @@ end)
 if SERVER then
 
     util.AddNetworkString("as_syncskills")
+    util.AddNetworkString("as_syncskill") --singular
+
+    function PlayerMeta:ResyncSkill( skill )
+        net.Start("as_syncskill")
+            net.WriteString(skill)
+            net.WriteDouble(self:GetSkillExperience( skill ))
+        net.Send(self)
+    end
 
     function PlayerMeta:ResyncSkills()
         net.Start("as_syncskills")
@@ -110,6 +118,12 @@ if SERVER then
     concommand.Add("as_resyncskills", function(ply) ply:ResyncSkills() end)
 
 elseif CLIENT then
+
+    net.Receive("as_syncskill", function()
+        local skill = net.ReadString()
+        local exp = net.ReadDouble()
+        LocalPlayer():SetSkillExperience( skill, exp )
+    end)
 
     net.Receive("as_syncskills", function()
         local skills = net.ReadTable()

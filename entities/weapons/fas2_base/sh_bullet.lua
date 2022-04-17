@@ -41,8 +41,15 @@ function SWEP:FireBullet()
 			dmginfo:SetDamageType( DMG_BULLET )
 		end
 		self.Owner:FireBullets(bul)
-		if engine.ActiveGamemode() == "aftershock" then
-			self.Owner:IncreaseSkillExperience( "weaponhandling", SKL.WeaponHandling.incamt )
-		end
 	end
 end
+
+hook.Add("EntityTakeDamage", "AS_WeaponHandlingInc", function( target, dmginfo )
+	local attacker = dmginfo:GetAttacker()
+	if not IsValid(attacker) or not attacker:IsPlayer() then return end --only necessary for players
+	if not target:IsNextBot() and not target:IsNPC() then return end --Only level if players are attacking NPCs.
+
+	local xp = math.Round(dmginfo:GetDamage() * SKL.WeaponHandling.incamt, 3)
+	attacker:IncreaseSkillExperience( "weaponhandling", xp )
+	attacker:ResyncSkill( "weaponhandling" )
+end)

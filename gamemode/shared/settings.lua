@@ -115,7 +115,7 @@ SKL.Endurance = {
     runspeed = 1.5, --Run speed increase per level
 }
 SKL.WeaponHandling = {
-    incamt = 0.01, --Amount to increase per shot
+    incamt = 0.001, --Amount to increase per shot
     recoilmultloss = 0.02, --(1-(level*recoilmultloss)) The number to mult overall recoil by per level, as in higher means less recoil per level.
     reloadmultinc = 0.013, --(1+(level*reloadmultinc)) The number to mult reload speed by per level, as in higher means faster reloading per level.
 }
