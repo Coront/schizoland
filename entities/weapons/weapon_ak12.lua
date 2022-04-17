@@ -133,8 +133,8 @@ SWEP.DeployAnimSpeed = 0.5
 
 -- Firing related
 SWEP.Shots = 1
-SWEP.FireDelay = 60/650
-SWEP.Damage = 24
+SWEP.FireDelay = 60/700
+SWEP.Damage = 29
 SWEP.FireSound = Sound("FAS2_AK12")
 SWEP.FireSound_Suppressed = Sound("FAS2_AK74_S")
 
@@ -147,7 +147,7 @@ SWEP.SpreadCooldown = 0.18
 SWEP.AimFOV = 0
 
 -- Recoil related
-SWEP.Recoil = 1.6
+SWEP.Recoil = 2
 SWEP.RecoilHorizontal = 1
 
 -- Reload related

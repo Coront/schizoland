@@ -141,7 +141,7 @@ SWEP.DeployAnimSpeed = 0.75
 -- Firing related
 SWEP.Shots = 1
 SWEP.FireDelay = 60/210
-SWEP.Damage = 142
+SWEP.Damage = 150
 SWEP.FireSound = Sound("FAS2_M82")
 
 -- Accuracy related

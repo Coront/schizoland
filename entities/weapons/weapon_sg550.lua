@@ -119,8 +119,8 @@ SWEP.DeployAnimTime = 0.75
 
 -- Firing related
 SWEP.Shots = 1
-SWEP.FireDelay = 60/800
-SWEP.Damage = 25
+SWEP.FireDelay = 60/850
+SWEP.Damage = 20
 SWEP.FireSound = Sound("FAS2_SG550")
 SWEP.FireSound_Suppressed = Sound("FAS2_SG550_S")
 

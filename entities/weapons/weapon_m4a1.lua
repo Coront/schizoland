@@ -128,8 +128,8 @@ SWEP.HolsterTime = 0.3
 
 -- Firing related
 SWEP.Shots = 1
-SWEP.FireDelay = 60/1000
-SWEP.Damage = 24
+SWEP.FireDelay = 60/700
+SWEP.Damage = 26
 SWEP.FireSound = Sound("FAS2_M4A1")
 SWEP.FireSound_Suppressed = Sound("FAS2_M4A1_S")
 

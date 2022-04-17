@@ -170,7 +170,7 @@ SWEP.DeployAnimSpeed = 0.75
 -- Firing related
 SWEP.Shots = 1
 SWEP.FireDelay = 0.15
-SWEP.Damage = 24
+SWEP.Damage = 35
 SWEP.FireSound = Sound("FAS2_SKS")
 SWEP.FireSound_Suppressed = Sound("FAS2_SKS_S")
 

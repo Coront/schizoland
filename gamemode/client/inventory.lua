@@ -461,7 +461,9 @@ function AS.Inventory.BuildInventory()
                 VerifySlider( amttopackage, function( amt )
                     if not LocalPlayer():CanUnequipAmmo( itemid, amt ) then return end
                     LocalPlayer():AddItemToInventory( itemid, amt )
-                    self:GetParent():Remove()
+                    if IsValid(self:GetParent()) then
+                        self:GetParent():Remove()
+                    end
                     net.Start("as_inventory_unequipammo")
                         net.WriteString( itemid )
                         net.WriteInt( amt, 32 )

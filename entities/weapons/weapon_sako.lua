@@ -106,7 +106,7 @@ SWEP.DeployAnimSpeed = 0.5
 -- Firing related
 SWEP.Shots = 1
 SWEP.FireDelay = 60/700
-SWEP.Damage = 25
+SWEP.Damage = 28
 SWEP.FireSound = Sound("FAS2_RK95")
 SWEP.FireSound_Suppressed = Sound("FAS2_RK95_S")
 
@@ -119,7 +119,7 @@ SWEP.SpreadCooldown = 0.15
 SWEP.AimFOV = 0
 
 -- Recoil related
-SWEP.Recoil = 1.4
+SWEP.Recoil = 1.65
 SWEP.RecoilHorizontal = 0.9
 
 -- Reload related

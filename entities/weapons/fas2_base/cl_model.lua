@@ -799,7 +799,7 @@ function SWEP:Draw3D2DCamera()
 					ShadowText("+" .. self.SpreadPerShot_Orig * 1000 .. "%", "FAS2_HUD28", 255, 155, Grey, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
 					ShadowText("+" .. self.MaxSpreadInc_Orig * 1000 .. "%", "FAS2_HUD28", 255, 185, Grey, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
 					ShadowText(math.Round(60 / self.FireDelay_Orig), "FAS2_HUD28", 255, 215, Grey, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
-					ShadowText(self.ReloadTime_Orig .. "s", "FAS2_HUD28", 255, 245, Grey, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
+					ShadowText((self.ReloadTime_Orig or 0) .. "s", "FAS2_HUD28", 255, 245, Grey, Black, 2, TEXT_ALIGN_CENTER, TEXT_ALIGN_LEFT)
 
 					local damage_color = self.Damage > self.Damage_Orig and colhudgood or self.Damage < self.Damage_Orig and colhudbad or White
 					local recoil_color = self.Recoil < self.Recoil_Orig and colhudgood or self.Recoil > self.Recoil_Orig and colhudbad or White

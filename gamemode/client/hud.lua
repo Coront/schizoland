@@ -19,9 +19,6 @@ AS_ClientConVar( "as_hud_color_good_b", "20", true, false )
 AS_ClientConVar( "as_hud_color_bad_r", "255", true, false )
 AS_ClientConVar( "as_hud_color_bad_g", "50", true, false )
 AS_ClientConVar( "as_hud_color_bad_b", "50", true, false )
--- Crosshair
-AS_ClientConVar( "as_hud_crosshair", "1", true, false ) --Enable?
-AS_ClientConVar( "as_hud_crosshair_multidots", "1", true, false ) --Multiple Dots
 -- Health Bar
 AS_ClientConVar( "as_hud_healthbar", "1", true, false ) --Enable?
 AS_ClientConVar( "as_hud_healthbar_amount", "1", true, false ) --Enable amount?
@@ -52,7 +49,7 @@ AS_ClientConVar( "as_hud_resources_xadd", "0", true, false ) --X position add
 AS_ClientConVar( "as_hud_resources_yadd", "0", true, false ) --Y position add
 -- Target Info
 AS_ClientConVar( "as_hud_targetinfo", "1", true, false )
-AS_ClientConVar( "as_hud_targetinfo_amount", "0", true, false )
+AS_ClientConVar( "as_hud_targetinfo_amount", "1", true, false )
 AS_ClientConVar( "as_hud_targetinfo_xadd", "0", true, false )
 AS_ClientConVar( "as_hud_targetinfo_yadd", "0", true, false )
 AS_ClientConVar( "as_hud_targetinfo_width", "150", true, false )
