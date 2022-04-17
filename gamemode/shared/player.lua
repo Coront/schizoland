@@ -53,11 +53,12 @@ hook.Add( "KeyPress", "AS_Treatment", function( ply, key )
 
     local length = 5
     length = length - (ply:GetSkillLevel("treatment") * SKL.Treatment.deccooltime)
-    ply:AddStatus( "treatmentdelay", length )
     ply:IncreaseSkillExperience( "treatment", SKL.Treatment.incamt )
-
+    
     if SERVER then
         ent:EmitSound("items/medshot4.wav", 80, 100, 0.2)
+        ply:AddStatus( "treatmentdelay", length )
+        ply:ResyncStatuses()
 
         local treatlength = 1
         treatlength = treatlength + (ply:GetSkillLevel("treatment") * SKL.Treatment.inceffectlength)
