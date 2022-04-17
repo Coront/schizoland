@@ -2,7 +2,7 @@ AddCSLuaFile()
 
 ENT.Type = "anim"
 ENT.Base = "base_gmodentity"
-ENT.PrintName = "Laser Generator (0.4s)"
+ENT.PrintName = "Laser Generator (0.5s)"
 ENT.Category = "Aftershock - Fun"
 ENT.Spawnable = true
 
@@ -16,7 +16,7 @@ if ( SERVER ) then
         self:SetCollisionGroup( COLLISION_GROUP_INTERACTIVE )
         self:SetAngles( Angle( 0, 0, 0 ) )
 
-        self.LaserDelay = 0.4
+        self.LaserDelay = 0.5
 
         self.NextLaser = CurTime() + 3
     end
@@ -32,6 +32,9 @@ if ( SERVER ) then
             self:CreateLaser()
             self.NextLaser = CurTime() + self.LaserDelay
         end
+
+        self:NextThink( CurTime() + 0.05 )
+        return true
     end
 
 end

@@ -124,7 +124,7 @@ SWEP.Secondary.Automatic       = false
 SWEP.Secondary.Ammo         = "none"
 
 -- Deploy related
-SWEP.FirstDeployTime = 6.5
+SWEP.FirstDeployTime = 0.45
 SWEP.DeployTime = 0.45
 SWEP.HolsterTime = 0.3
 

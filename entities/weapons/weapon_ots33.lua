@@ -111,8 +111,8 @@ SWEP.DeployAnimSpeed = 0.5
 
 -- Firing related
 SWEP.Shots = 1
-SWEP.FireDelay = 60/1100
-SWEP.Damage = 18
+SWEP.FireDelay = 60/800
+SWEP.Damage = 16
 SWEP.FireSound = Sound("FAS2_OTS33")
 
 -- Accuracy related

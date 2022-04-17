@@ -108,15 +108,15 @@ SWEP.Secondary.Ammo         = "none"
 
 -- Firing related
 SWEP.Shots = 1
-SWEP.FireDelay = 60/800
+SWEP.FireDelay = 60/750
 SWEP.Damage = 18
 SWEP.FireSound = Sound("FAS2_GLOCK20")
 SWEP.FireSound_Suppressed = Sound("FAS2_GLOCK20_S")
 
 -- Accuracy related
 SWEP.HipCone = 0.06
-SWEP.AimCone = 0.009
-SWEP.SpreadPerShot = 0.009
+SWEP.AimCone = 0.015
+SWEP.SpreadPerShot = 0.01
 SWEP.MaxSpreadInc = 0.03
 SWEP.SpreadCooldown = 0.2
 SWEP.VelocitySensitivity = 1.4
@@ -124,7 +124,7 @@ SWEP.AimFOV = 0
 
 -- Recoil related
 SWEP.Recoil = 0.85
-SWEP.RecoilHorizontal = 0.6
+SWEP.RecoilHorizontal = 0.55
 
 -- Reload related
 SWEP.ReloadTime = 2.3

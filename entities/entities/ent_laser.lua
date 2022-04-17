@@ -81,7 +81,7 @@ if ( SERVER ) then
             self.AdjustPosition = true
         end
         if CurTime() > self.Lifetime then self:Remove() end
-        self:SetPos( self:GetPos() + self:GetAngles():Forward() * -15 )
+        self:SetPos( self:GetPos() + self:GetAngles():Forward() * -20 )
         self:PerformTrace()
 
         self:NextThink( CurTime() + 0.01 )

@@ -195,7 +195,7 @@ SWEP.Purpose        = ""
 SWEP.HoldType = "revolver"
 SWEP.RunHoldType = "normal"
 
-SWEP.ViewModelFOV    = 57
+SWEP.ViewModelFOV    = 58
 SWEP.ViewModelFlip    = false
 
 SWEP.Spawnable            = true
@@ -225,23 +225,23 @@ SWEP.DeployAnimSpeed = 0.65
 
 -- Firing related
 SWEP.Shots = 1
-SWEP.FireDelay = 60/180
+SWEP.FireDelay = 60/75
 SWEP.Damage = 59
 SWEP.FireSound = Sound("FAS2_RAGINGBULL")
 SWEP.CantSuppress = true
 
 -- Accuracy related
 SWEP.HipCone = 0.07
-SWEP.AimCone = 0.005
-SWEP.SpreadPerShot = 0.015
+SWEP.AimCone = 0.004
+SWEP.SpreadPerShot = 0.035
 SWEP.MaxSpreadInc = 0.045
 SWEP.SpreadCooldown = 0.4
 SWEP.VelocitySensitivity = 1.4
 SWEP.AimFOV = 0
 
 -- Recoil related
-SWEP.Recoil = 3.5
-SWEP.RecoilHorizontal = 3.4
+SWEP.Recoil = 3.8
+SWEP.RecoilHorizontal = 2.9
 
 -- Reload related
 SWEP.ReloadTime = 2.5

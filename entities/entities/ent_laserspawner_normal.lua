@@ -32,6 +32,9 @@ if ( SERVER ) then
             self:CreateLaser()
             self.NextLaser = CurTime() + self.LaserDelay
         end
+
+        self:NextThink( CurTime() + 0.05 )
+        return true
     end
 
 end

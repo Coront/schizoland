@@ -114,8 +114,8 @@ SWEP.DeployTime = 0.6
 
 -- Firing related
 SWEP.Shots = 1
-SWEP.FireDelay = 60/1800
-SWEP.Damage = 18
+SWEP.FireDelay = 60/1200
+SWEP.Damage = 16
 SWEP.FireSound = Sound("FAS2_MAC11")
 SWEP.FireSound_Suppressed = Sound("FAS2_MAC11_S")
 

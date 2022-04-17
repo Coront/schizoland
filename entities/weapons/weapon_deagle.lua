@@ -112,8 +112,8 @@ SWEP.DeployTime = 0.45
 
 -- Firing related
 SWEP.Shots = 1
-SWEP.FireDelay = 60/120
-SWEP.Damage = 55
+SWEP.FireDelay = 60/160
+SWEP.Damage = 54
 SWEP.FireSound = Sound("FAS2_DEAGLE")
 
 -- Accuracy related
@@ -125,8 +125,8 @@ SWEP.SpreadCooldown = 0.5
 SWEP.AimFOV = 0
 
 -- Recoil related
-SWEP.Recoil = 3.2
-SWEP.RecoilHorizontal = 2.9
+SWEP.Recoil = 3.4
+SWEP.RecoilHorizontal = 2.6
 
 -- Reload related
 SWEP.ReloadTime = 2.1
