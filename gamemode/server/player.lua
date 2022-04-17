@@ -117,6 +117,8 @@ function GM:PostPlayerDeath( ply )
         ent:SetNW2String("owner", ply:Nickname())
     end
 
+    ply:ClearAllStatuses()
+    ply:ResyncStatuses()
     ply:SetHealth( 15 ) --This is just so it doesnt save 0 to the player's health in the database.
     ply:SaveCharacter()
 end

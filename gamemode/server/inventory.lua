@@ -56,7 +56,8 @@ function PlayerMeta:UseItem( item )
     end
     if use.hunger or use.thirst then self:ResyncSatiation() end
     if use.stat then
-        --self:GiveStatus( use.stat )
+        self:AddStatus( use.stat.effect, use.stat.length )
+        self:ResyncStatuses()
     end
     if use.sound then
         self:EmitSound( use.sound, 40 )

@@ -159,27 +159,29 @@ function AftershockHUD()
         local barspace = 2
         local spacebetweenbars = GetConVar("as_hud_effects_barspacing"):GetInt()
 
-        for i = 1, 4 do
-            local name = "EFFECT_DEBUG"
-            local time = 10.0
-            local time_max = 10.0
+        for k, v in SortedPairsByMemberValue( LocalPlayer():GetStatuses(), "time", true ) do
+            local name = AS.Effects[k].name
+            local time = v.time - CurTime()
+            local time_max = v.maxtime
+
+            local color = AS.Effects[k] and (AS.Effects[k].type == "positive" and COLHUD_GOOD or AS.Effects[k].type == "negative" and COLHUD_BAD) or COLHUD_DEFAULT
 
             --Icon
-            surface.SetDrawColor( COLHUD_DEFAULT )
+            surface.SetDrawColor( color )
             surface.DrawOutlinedRect( barx, (bary - iconsize) - (GetConVar("as_hud_healthbar_height"):GetInt() * HUD_SCALE), iconsize, iconsize )
-            surface.SetDrawColor( Color( 255, 255, 255, 255 ) )
-            surface.SetMaterial( Material( "icon16/lightning.png" ) )
+            surface.SetDrawColor( AS.Effects[k] and AS.Effects[k].color or Color( 255, 255, 255, 255 ) )
+            surface.SetMaterial( Material( AS.Effects[k] and AS.Effects[k].icon or "icon16/lightning.png" ) )
             surface.DrawTexturedRect( barx + iconspace, (bary - iconsize) - (GetConVar("as_hud_healthbar_height"):GetInt() * HUD_SCALE) + iconspace, iconsize - (iconspace * 2), iconsize - (iconspace * 2) )
             --Bar
-            surface.SetDrawColor( COLHUD_DEFAULT )
+            surface.SetDrawColor( color )
             surface.DrawOutlinedRect( (barx + iconsize) - 1, bary - height - (GetConVar("as_hud_healthbar_height"):GetInt() * HUD_SCALE), width, height )
             surface.DrawRect( (barx + iconsize) - 1, bary - height - (GetConVar("as_hud_healthbar_height"):GetInt() * HUD_SCALE) + barspace, (time / time_max) * width - barspace, height - (barspace * 2) )
             --Name
-            draw.SimpleTextOutlined(name, "AftershockHUDVerySmall", (barx + iconsize + 2), bary - (height + 2) - (GetConVar("as_hud_healthbar_height"):GetInt() * HUD_SCALE), COLHUD_DEFAULT, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM, outline, Color(0,0,0))
+            draw.SimpleTextOutlined(name, "AftershockHUDVerySmall", (barx + iconsize + 2), bary - (height + 2) - (GetConVar("as_hud_healthbar_height"):GetInt() * HUD_SCALE), color, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM, outline, Color(0,0,0))
             
             local amt = tobool(GetConVar("as_hud_effects_amount"):GetInt())
             if amt then
-                draw.SimpleTextOutlined(time, "AftershockHUDVerySmall", barx + iconsize + width + 1, bary - (height / 2) - 1 - (GetConVar("as_hud_healthbar_height"):GetInt() * HUD_SCALE), COLHUD_DEFAULT, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER, outline, Color(0,0,0))
+                draw.SimpleTextOutlined(math.Round(time, 1), "AftershockHUDVerySmall", barx + iconsize + width + 1, bary - (height / 2) - 1 - (GetConVar("as_hud_healthbar_height"):GetInt() * HUD_SCALE), color, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER, outline, Color(0,0,0))
             end
 
             bary = bary - (iconsize + spacebetweenbars)

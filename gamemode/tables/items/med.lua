@@ -1,14 +1,41 @@
 AS.AddBaseItem("med_painkiller", {
     name = "Bottle of Painkillers",
-    desc = "A bottle that contains a couple tablets of painkiller. Will reduce incoming damage by 10% for 2 minutes, heals 5 HP, 5 minute cooldown.",
+    desc = "A bottle that contains a couple tablets of painkiller. Will reduce incoming damage by 10% for 2 minutes.",
     category = "med",
     model = "models/props_junk/PopCan01a.mdl",
     skin = 1,
     value = 15,
     weight = 0.1,
     use = {
-        health = 5,
         sound = "items/medshot4.wav",
+        stat = {
+            effect = "painkillers",
+            length = 120,
+        },
+    },
+    hidden = true,
+    class = "scientist",
+    craft = {
+        ["misc_scrap"] = 15,
+        ["misc_smallparts"] = 10,
+        ["misc_chemical"] = 40,
+    }
+})
+
+AS.AddBaseItem("med_adrenaline", {
+    name = "Adrenaline Shot",
+    desc = "A syringe that carries adrenaline. Will increase your movement speed by 15% for 1 minute.",
+    category = "med",
+    model = "models/props_junk/PopCan01a.mdl",
+    skin = 1,
+    value = 15,
+    weight = 0.1,
+    use = {
+        sound = "items/medshot4.wav",
+        stat = {
+            effect = "adrenaline",
+            length = 60,
+        },
     },
     hidden = true,
     class = "scientist",
@@ -29,6 +56,10 @@ AS.AddBaseItem("med_bag", {
     use = {
         health = 15,
         sound = "physics/body/body_medium_impact_soft4.wav",
+        stat = {
+            effect = "healingsickness",
+            length = 3,
+        },
     },
     craft = {
         ["misc_scrap"] = 20,
@@ -48,6 +79,10 @@ AS.AddBaseItem("med_vial", {
     use = {
         health = 20,
         sound = "items/medshot4.wav",
+        stat = {
+            effect = "healingsickness",
+            length = 4,
+        },
     },
     class = "scientist",
     craft = {
@@ -68,6 +103,10 @@ AS.AddBaseItem("med_kit", {
     use = {
         health = 35,
         sound = "items/smallmedkit1.wav",
+        stat = {
+            effect = "healingsickness",
+            length = 7,
+        },
     },
     class = "scientist",
     craft = {
@@ -88,6 +127,10 @@ AS.AddBaseItem("med_bloodbag", {
     use = {
         health = 70,
         sound = "physics/flesh/flesh_bloody_impact_hard1.wav",
+        stat = {
+            effect = "healingsickness",
+            length = 20,
+        },
     },
     hidden = true,
     class = "scientist",
@@ -109,6 +152,10 @@ AS.AddBaseItem("med_surgery", {
     use = {
         health = 150,
         sound = "physics/body/body_medium_impact_soft6.wav",
+        stat = {
+            effect = "healingsickness",
+            length = 40,
+        },
     },
     hidden = true,
     class = "scientist",

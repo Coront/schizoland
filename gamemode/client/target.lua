@@ -38,6 +38,7 @@ hook.Add("Think", "AS_TargetID", function()
     local ignoreEnts = {
         ["prop_door_rotating"] = true,
         ["func_breakable"] = true,
+        ["func_breakable_surf"] = true,
     }
     if IsValid(ent) and not ignoreEnts[ent:GetClass()] and (ent:Health() > 0 or ent:IsNPC() or ent:IsNextBot() or (ent:IsPlayer() and not ent:GetMoveType() == MOVETYPE_NOCLIP)) then
         ply:SetActiveTarget( trace.Entity )

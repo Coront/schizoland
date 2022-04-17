@@ -113,8 +113,16 @@ function GM:Move( ply, mv )
     local scavbonus = ply:GetASClass() == "scavenger" and CLS.Scavenger.movespeedmult or 1
     local movespeed = (SKL.Movement + math.floor(ply:GetSkillLevel( "endurance" ) * SKL.Endurance.runspeed)) * scavbonus
     local sprintmovespeed = (SKL.SprintMovement + math.floor(ply:GetSkillLevel( "endurance" ) * SKL.Endurance.runspeed)) * scavbonus
+    --Armor
     movespeed = ply:HasArmor() and AS.Items[ply:GetArmor()].armor["movemult"] and  (movespeed * AS.Items[ply:GetArmor()].armor["movemult"]) or movespeed
     sprintmovespeed = ply:HasArmor() and AS.Items[ply:GetArmor()].armor["movemult"] and (sprintmovespeed * AS.Items[ply:GetArmor()].armor["movemult"]) or sprintmovespeed
+    --Adrenaline
+    movespeed = ply:HasStatus( "adrenaline" ) and movespeed * 1.15 or movespeed
+    sprintmovespeed = ply:HasStatus( "adrenaline" ) and sprintmovespeed * 1.15 or sprintmovespeed
+    --Stunned
+    movespeed = ply:HasStatus( "stunned" ) and movespeed * 0.4 or movespeed
+    sprintmovespeed = ply:HasStatus( "stunned" ) and sprintmovespeed * 0.4 or sprintmovespeed
+
     ply:SetRunSpeed( sprintmovespeed )
     ply:SetWalkSpeed( movespeed )
     ply:SetSlowWalkSpeed( 75 )
