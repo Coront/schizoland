@@ -32,7 +32,8 @@ if ( SERVER ) then
         self.ItemTime = 15 --Time it takes to harvest
         self.ShowHealth = true
         self.NPCS = {
-            ["npc_as_antlion"] = 6,
+            ["npc_as_antlion"] = 4,
+            ["npc_as_antlionspitter"] = 2,
         }
 
         self:SetHealth( 4000 )
@@ -84,7 +85,7 @@ if ( SERVER ) then
         for k, v in pairs( player.GetAll() ) do
             if not v:IsLoaded() then continue end
             if not IsValid(v) or not v:Alive() then continue end
-            if not v:IsDeveloping() then continue end
+            if v:IsDeveloping() then continue end
 
             if v:GetPos():Distance(self:GetPos()) < 2000 then return false end
         end
@@ -95,36 +96,25 @@ if ( SERVER ) then
         if not self:CanSpawnNPCS() then return end
 
         local pos = self:GetPos()
+        local toAng = self:GetAngles()
+
         for k, v in pairs( self.NPCS ) do --Loop though the NPC table
             local current = 0
             for k2, v2 in pairs( self.ActiveNPCS ) do
                 if not IsValid(v2) then continue end
+                if v2:GetClass() != k then continue end
                 current = current + 1
             end
             local numToSpawn = v - current
             if numToSpawn <= 0 then return end --No reason to continue, none to spawn.
 
             for i = 1, numToSpawn do --Spawn the amount of NPCs.
-                local x, y = math.random(-500, 500), math.random(-500, 500)
-                if math.abs(x) < 200 then --Random math stuff to force the npc to be atleast 100 units away (to stop them from spawning stuck)
-                    local dice = math.random( 0, 1 )
-                    x = dice == 1 and 200 or -200
-                end
-                if math.abs(y) < 200 then
-                    local dice = math.random( 0, 1 )
-                    y = dice == 1 and 200 or -200
-                end
-
-                local spawnPos = pos + Vector( x, y, 200 )
-                local tr = util.TraceLine({
-                    start = spawnPos,
-                    endpos = spawnPos + Vector( 0, 0, -9999 )
-                })
-
                 local npc = ents.Create(k)
-                npc:SetPos( tr.HitPos )
+                npc:SetPos( pos + toAng:Forward() * 350 + Vector( 0, 0, 150 ) )
                 npc:Spawn()
                 self.ActiveNPCS[#self.ActiveNPCS + 1] = npc
+
+                toAng = toAng + Angle( 0, 80, 0 )
             end
         end
     end

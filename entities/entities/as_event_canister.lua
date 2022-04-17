@@ -51,27 +51,15 @@ if ( SERVER ) then
 
     function ENT:SpawnNPCS()
         local pos = self:GetPos()
+        local toAng = self:GetAngles()
+
         for k, v in pairs( self.NPCS ) do --Loop though the NPC table
             for i = 1, v do --Spawn the amount of NPCs.
-                local x, y = math.random(-500, 500), math.random(-500, 500)
-                if math.abs(x) < 200 then --Random math stuff to force the npc to be atleast 100 units away (to stop them from spawning stuck)
-                    local dice = math.random( 0, 1 )
-                    x = dice == 1 and 200 or -200
-                end
-                if math.abs(y) < 200 then
-                    local dice = math.random( 0, 1 )
-                    y = dice == 1 and 200 or -200
-                end
-
-                local spawnPos = pos + Vector( x, y, 200 )
-                local tr = util.TraceLine({
-                    start = spawnPos,
-                    endpos = spawnPos + Vector( 0, 0, -9999 )
-                })
-
                 local npc = ents.Create(k)
-                npc:SetPos( tr.HitPos )
+                npc:SetPos( pos + toAng:Forward() * 350 + Vector( 0, 0, 150 ) )
                 npc:Spawn()
+
+                toAng = toAng + Angle( 0, 80, 0 )
             end
         end
 
