@@ -70,7 +70,8 @@ AS_ClientConVar( "as_connectioninfo_fps_warning_amt", "40", true, false ) --Belo
 function AftershockHUD()
     local ply = LocalPlayer()
 
-    if not ply:IsLoaded() or not ply:Alive() then AftershockHUDDeath() return end
+    if not ply:IsLoaded() then return end
+    if not ply:Alive() then AftershockHUDDeath() return end
 
     local bar = tobool(GetConVar("as_hud_healthbar"):GetInt())
     if bar then
