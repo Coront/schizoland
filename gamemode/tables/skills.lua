@@ -36,6 +36,15 @@ AS.AddBaseSkill( "salvaging", {
     power = 1.85,
 } )
 
+AS.AddBaseSkill( "treatment", {
+    name = "Treatment",
+    desc = "Increases the lasting length of your treatments and reduces the cooldown time. Leveled by treating players.",
+    icon = "",
+    max = 10,
+    basexp = 1,
+    power = 1.85,
+} )
+
 AS.AddBaseSkill( "farming", {
     name = "Farming",
     desc = "Decreases the time it takes to produce food from plants. Leveled by harvesting plants.",

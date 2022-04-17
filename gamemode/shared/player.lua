@@ -41,6 +41,31 @@ hook.Add( "Think", "AS_Armor", function()
     end
 end)
 
+hook.Add( "KeyPress", "AS_Treatment", function( ply, key )
+    if key != IN_USE then return end
+    if not IsFirstTimePredicted() then return end
+    if ply:GetASClass() != "scientist" then return end
+    local tr = ply:TraceFromEyes( 80 )
+    local ent = tr.Entity
+    if not ent:IsPlayer() then return end
+    if ent:Health() >= ent:GetMaxHealth() then return end
+    if ply:HasStatus( "treatmentdelay" ) then if (CLIENT) then ply:ChatPrint("You must wait before treating again.") end return end
+
+    local length = 5
+    length = length - (ply:GetSkillLevel("treatment") * SKL.Treatment.deccooltime)
+    ply:AddStatus( "treatmentdelay", length )
+    ply:IncreaseSkillExperience( "treatment", SKL.Treatment.incamt )
+
+    if SERVER then
+        ent:EmitSound("items/medshot4.wav", 80, 100, 0.2)
+
+        local treatlength = 1
+        treatlength = treatlength + (ply:GetSkillLevel("treatment") * SKL.Treatment.inceffectlength)
+        ent:AddStatus( "treatment", treatlength ) --This needs to be serverside because we as players dont see other player's effects.
+        ent:ResyncStatuses()
+    end
+end)
+
 if ( CLIENT ) then
 
     hook.Add("PostDrawTranslucentRenderables", "AS_ArmorOverlay", function()
@@ -92,4 +117,39 @@ if ( CLIENT ) then
         end
     end)
 
+    hook.Add("HUDPaint", "AS_Treatment", function()
+        if LocalPlayer():GetASClass() != "scientist" then return end
+        local tr = LocalPlayer():TraceFromEyes( 80 )
+        local ent = tr.Entity
+        if not ent:IsPlayer() then return end
+        if ent:Health() >= ent:GetMaxHealth() then return end
+
+        local pos = (ent:GetPos() + ent:OBBCenter()):ToScreen()
+        local txt = "Press [" .. string.upper(KEYBIND_USE) .. "] to treat wounds."
+        draw.SimpleTextOutlined( txt, "TargetID", pos.x, pos.y, COLHUD_DEFAULT, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 1, Color( 0, 0, 0 ) )
+    end)
+
+    hook.Add("CalcView", "AS_PlayerRagdollCamera", function( ply,pos, angle, lastfov, znear, zfar )
+        if LocalPlayer():Alive() then return end --Not neccessary if player is alive.
+
+        local doll = ply:GetRagdollEntity()
+        if not IsValid(doll) then return end
+
+        local bone = doll:LookupBone( "ValveBiped.Bip01_Head1" )
+        local newpos, newang = doll:GetBonePosition( bone )
+
+        newang:RotateAroundAxis( newang:Forward(), 270 )
+        newang:RotateAroundAxis( newang:Right(), 270 )
+
+        newpos = newpos + 6 * newang:Forward()
+
+        local view = {
+            origin = newpos,
+            angles = newang,
+            fov = lastfov,
+            znear = 1,
+        }
+
+        return view
+    end)
 end
