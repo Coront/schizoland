@@ -17,6 +17,10 @@ function AS.Settings.Menu()
 
     settings_scroll = vgui.Create("DScrollPanel", frame_settings)
     settings_scroll:Dock( FILL )
+    function settings_scroll:Paint( w, h )
+        surface.SetDrawColor( COLHUD_SECONDARY )
+        surface.DrawRect( 0, 0, w, h )
+    end
 
     AS.Settings.BuildOptions()
 
@@ -28,7 +32,7 @@ concommand.Add("as_settings", AS.Settings.Menu)
 
 function AS.Settings.BuildOptions()
     local xpos = 10
-    local ypos = 0
+    local ypos = 5
     local function addSpace(x, y)
         xpos = (xpos + (x or 0))
         ypos = (ypos + (y or 0)) 
