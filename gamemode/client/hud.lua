@@ -325,7 +325,7 @@ hook.Add( "PlayerStartVoice", "AS_VoiceStart", function( ply )
 
     local panel = vgui.Create("DPanel")
     panel:SetSize( ASHUDVOICE_iconsize, ASHUDVOICE_iconsize )
-    panel:SetPos( ASHUDVOICE_xpos, ASHUDVOICE_ypos + 1 )
+    panel:SetPos( ASHUDVOICE_xpos + 1, ASHUDVOICE_ypos + 1 )
     panel.Paint = function() end
     CharacterIcon( ply:GetModel(), 0, 0, panel:GetWide(), panel:GetTall(), panel )
     HUD_TALKINGPLAYERSPANELS[ply] = panel
