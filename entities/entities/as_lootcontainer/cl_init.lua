@@ -31,13 +31,14 @@ end
 
 hook.Add( "PlayerButtonDown", "AS_LootContainer", function( ply, button )
     if IsFirstTimePredicted() then
+        if CurTime() < (ply.NextItemLootTime or 0) then return end
         local button = GetKeyName( button )
 
         if button == input.LookupBinding( "+use" ) and IsValid(frame_container) and IsValid(frame_container.ent) and frame_container.selectedItem then --Take item from container
             local itemid = frame_container.selectedItem.ID
             if not frame_container.selectedItem.ammo then
                 local amt = frame_container.ent:GetInventory()[itemid]
-                if not frame_container.ent:GetInventory()[itemid] then LocalPlayer():ChatPrint("This item was already taken.") frame_container.containeritemamtUpdate( itemid ) return end
+                if not frame_container.ent:GetInventory()[itemid] then LocalPlayer():ChatPrint("This item isn't in the container.") frame_container.containeritemamtUpdate( itemid ) return end
                 if frame_container.ent:PlayerCanTakeItem( LocalPlayer(), itemid, frame_container.ent:GetInventory()[itemid] ) then
                     frame_container.ent:PlayerTakeItem( LocalPlayer(), itemid, frame_container.ent:GetInventory()[itemid] )
                     surface.PlaySound( ITEMCUE.TAKE )
@@ -64,6 +65,7 @@ hook.Add( "PlayerButtonDown", "AS_LootContainer", function( ply, button )
                     net.SendToServer()
                 end
             end
+            ply.NextItemLootTime = CurTime() + 0.15
         elseif button == input.LookupBinding( "+reload" ) and IsValid(frame_container) then
             frame_container:MakePopup()
             frame_container:SetKeyboardInputEnabled( false )

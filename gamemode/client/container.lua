@@ -74,7 +74,7 @@ function ContainerMenu( ent )
         name:SizeToContents()
         name:SetPos( icon:GetWide() + 5, 0 )
         function frame_container.containeritemamtUpdate( key )
-            if frame_container.ent:GetInventory()[key] then
+            if frame_container.ent:GetInventory()[key] and IsValid(frame_container.ent:GetInventory()[key]) and frame_container.ent:GetInventory()[key] > 1 then
                 if IsValid( name ) then
                     name:SetText( info.name .. " (" .. frame_container.ent:GetInventory()[k] .. ")" )
                     name:SizeToContents()
@@ -85,8 +85,8 @@ function ContainerMenu( ent )
                     noitem = true
                     for k, v in SortedPairs( frame_container.ent:GetInventory() ) do
                         if k == "ammo" then continue end
-                        frame_container.selectedItem = {ID = k, amt = v}
                         noitem = false
+                        frame_container.selectedItem = {ID = k, amt = v}
                         break
                     end
                     if noitem then
