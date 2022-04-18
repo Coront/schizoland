@@ -15,6 +15,7 @@ if ( SERVER ) then
         self.NPCS = { --Modify this table if you need to change NPC values.
             ["npc_as_soldier"] = 5, --Key is NPC, Value is amount
             ["npc_as_super"] = 1,
+            ["npc_as_hunter"] = 2,
         }
     end
 
@@ -59,7 +60,7 @@ if ( SERVER ) then
                 npc:SetPos( pos + toAng:Forward() * 350 + Vector( 0, 0, 150 ) )
                 npc:Spawn()
 
-                toAng = toAng + Angle( 0, 80, 0 )
+                toAng = toAng + Angle( 0, 70, 0 )
             end
         end
 
