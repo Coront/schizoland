@@ -38,7 +38,7 @@ function SWEP:FireBullet()
 		bul.Damage = math.Round(self.Damage)
 		bul.Callback = function( attacker, tr, dmginfo )
 			local damagetype = self.DamageType or DMG_BULLET
-			dmginfo:SetDamageType( DMG_BULLET )
+			dmginfo:SetDamageType( damagetype )
 		end
 		self.Owner:FireBullets(bul)
 	end
@@ -48,6 +48,11 @@ hook.Add("EntityTakeDamage", "AS_WeaponHandlingInc", function( target, dmginfo )
 	local attacker = dmginfo:GetAttacker()
 	if not IsValid(attacker) or not attacker:IsPlayer() then return end --only necessary for players
 	if not target:IsNextBot() and not target:IsNPC() then return end --Only level if players are attacking NPCs.
+	local dmgs = {
+		[DMG_BULLET] = true,
+		[DMG_ENERGYBEAM] = true,
+	}
+	if not dmgs[dmginfo:GetDamageType()] then return end --Not a bullet damage type
 
 	local xp = math.Round(dmginfo:GetDamage() * SKL.WeaponHandling.incamt, 3)
 	attacker:IncreaseSkillExperience( "weaponhandling", xp )
