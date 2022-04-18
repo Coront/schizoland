@@ -12,7 +12,7 @@ if (SERVER) then
         local class = args[1]
         if not AS.Classes[class] then return end
         if not ply:CanChangeClass( class ) then return end
-        if SET.ClassChangeCost then
+        if tobool(GetConVar("as_classchangecost"):GetInt()) then
             for k, v in pairs( SET.ClassChangeCostTbl ) do
                 ply:TakeItemFromInventory( k, v )
                 ply:ResyncInventory()
@@ -30,9 +30,9 @@ if (SERVER) then
 end
 
 function PlayerMeta:CanChangeClass( class )
-    if not SET.ClassChange then return false end --Class changing disabled
+    if not tobool(GetConVar("as_classchange"):GetInt()) then return false end --Class changing disabled
     if self:GetASClass() == class then return false end --Player already this current class
-    if SET.ClassChangeCost then
+    if tobool(GetConVar("as_classchangecost"):GetInt()) then
         for k, v in pairs( SET.ClassChangeCostTbl ) do
             if not self:HasInInventory( k, v ) then
                 return false

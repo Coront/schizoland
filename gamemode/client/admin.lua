@@ -119,6 +119,22 @@ function AdminMenu_Server()
     end)
     YAdd( 20 )
 
+    ToggleButtonFunction( "Enable Class Changing?", xpos, ypos, scroll, GetConVar("as_classchange"):GetBool(), function( bool )
+        net.Start("as_admin_modifyconvar")
+            net.WriteString("as_classchange")
+            net.WriteString( bool )
+        net.SendToServer()
+    end)
+    YAdd( 20 )
+
+    ToggleButtonFunction( "Enable Class Change Cost?", xpos, ypos, scroll, GetConVar("as_classchangecost"):GetBool(), function( bool )
+        net.Start("as_admin_modifyconvar")
+            net.WriteString("as_classchangecost")
+            net.WriteString( bool )
+        net.SendToServer()
+    end)
+    YAdd( 20 )
+
     return panel
 end
 

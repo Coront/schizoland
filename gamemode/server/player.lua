@@ -179,7 +179,7 @@ hook.Add( "EntityTakeDamage", "AS_ArmorResistance", function( victim, dmginfo )
     local armorres = AS.Items[curarmor].armor
     local dmgtype = dmginfo:GetDamageType()
     if not armorres[dmgtype] then return end --Defense value doesnt exist. ignore.
-
+    
     local overallDamage = dmginfo:GetDamage()
     local multDamage = 1 - (armorres[dmgtype] / 100)
     local toDamage = (overallDamage * multDamage)
