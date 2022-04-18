@@ -82,7 +82,8 @@ SWEP.DeployAnimSpeed = 0.5
 -- Firing related
 SWEP.Shots = 1
 SWEP.FireDelay = 60/100
-SWEP.Damage = 26
+SWEP.Damage = 75
+SWEP.DamageType = DMG_ENERGYBEAM
 SWEP.FireSound = "npc/sniper/echo1.wav"
 SWEP.FireSound_Suppressed = Sound("FAS2_AK47_S")
 
