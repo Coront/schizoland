@@ -17,23 +17,23 @@ if CLIENT then
 	SWEP.AimPos_Bipod = Vector(-2.591, -2.874, 1.215)
 	SWEP.AimAng_Bipod = Vector(0.5, 0, 0)
 		
-	SWEP.CompM4Pos = Vector(-3.516, -5, 1.565)
+	SWEP.CompM4Pos = Vector(-2.665, -6, 0.97)
 	SWEP.CompM4Ang = Vector(0, 0, 0)
 
-	SWEP.CompM4Pos_Bipod = Vector(-2.591, -4.274, 0.775)
-	SWEP.CompM4Ang_Bipod = Vector(0, 0, 0)
+	SWEP.CompM4Pos_Bipod = Vector(-1.75, -4.5, 0.18)
+	SWEP.CompM4Ang_Bipod = Vector(-0.084, 0, 0)
 
-	SWEP.ELCANPos = Vector(-3.515, -4.64, 1.05)
-	SWEP.ELCANAng = Vector(-0.6, 0, 0)
+	SWEP.ELCANPos = Vector(-2.665, -4.5, 0.5)
+	SWEP.ELCANAng = Vector(-0.595, 0, 0)
 	
-	SWEP.ELCANPos_Bipod = Vector(-2.591, -4.474, 0.23)
-	SWEP.ELCANAng_Bipod = Vector(-0.6, 0, 0)
+	SWEP.ELCANPos_Bipod = Vector(-1.74, -3.5, 0.29)
+	SWEP.ELCANAng_Bipod = Vector(-0.575, 0, 0)
 
-	SWEP.EoTechPos_Bipod = Vector(-2.591, -4.874, 0.315)
-	SWEP.EoTechAng_Bipod = Vector(0, 0, 0)
+	SWEP.EoTechPos_Bipod = Vector(-1.74, -6.75, -0.315)
+	SWEP.EoTechAng_Bipod = Vector(1.17, 0, 0)
 	
-	SWEP.EoTechPos = Vector(-3.516, -6, 1.162)
-	SWEP.EoTechAng = Vector(0, 0, 0)
+	SWEP.EoTechPos = Vector(-2.665, -7.5, 0.5)
+	SWEP.EoTechAng = Vector(0.5, 0, 0)
 
 
 	SWEP.MuzzleEffect = "muzzleflash_ak47"

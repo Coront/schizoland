@@ -44,7 +44,7 @@ SWEP.CaseLength = 45
 SWEP.EmptySound = Sound("weapons/empty_assaultrifles.wav")
 
 SWEP.Anims = {}
-SWEP.Anims.Draw_First = "deploy_first"
+SWEP.Anims.Draw_First = "deploy"
 SWEP.Anims.Draw = "deploy"
 SWEP.Anims.Draw_Empty = "deploy_empty"
 SWEP.Anims.Holster = "holster"
@@ -121,7 +121,7 @@ SWEP.Secondary.Automatic       = false
 SWEP.Secondary.Ammo         = "none"
 
 -- Deploy related
-SWEP.FirstDeployTime = 5.3
+SWEP.FirstDeployTime = 0.6
 SWEP.DeployTime = 0.6
 SWEP.DeployAnimSpeed = 0.7
 SWEP.HolsterTime = 0.3
