@@ -2,6 +2,8 @@ COLHUD_DEFAULT = nil
 COLHUD_GOOD = nil
 COLHUD_BAD = nil
 HUD_SCALE = nil
+HUD_TALKINGPLAYERS = {}
+HUD_TALKINGPLAYERSPANELS = {}
 
 -- Enable HUD
 AS_ClientConVar( "as_hud", "1", true, false )
@@ -72,6 +74,7 @@ function AftershockHUD()
 
     if not ply:IsLoaded() then return end
     if not ply:Alive() then AftershockHUDDeath() return end
+    AftershockHUDVoice()
 
     local bar = tobool(GetConVar("as_hud_healthbar"):GetInt())
     if bar then
@@ -298,6 +301,53 @@ function ConnectionInformation()
     end
 end
 
+function AftershockHUDVoice()
+    if table.Count(HUD_TALKINGPLAYERS) <= 0 then return end --No one is talking, lets not run this.
+
+    for k, v in pairs( HUD_TALKINGPLAYERS ) do
+        if not IsValid(k) then continue end
+        local bg = COLHUD_SECONDARY:ToTable()
+        surface.SetDrawColor( bg[1], bg[2], bg[3], 150 )
+        surface.DrawRect( ASHUDVOICE_xpos, ASHUDVOICE_ypos, ASHUDVOICE_width, ASHUDVOICE_height, 1 )
+        surface.SetDrawColor( COLHUD_DEFAULT )
+        surface.DrawOutlinedRect( ASHUDVOICE_xpos, ASHUDVOICE_ypos, ASHUDVOICE_width, ASHUDVOICE_height, 1 )
+        local color = AS.Classes[k:GetNW2String("as_class", nil)].color or COLHUD_DEFAULT
+        draw.SimpleTextOutlined( k:Nickname() .. " (" .. AS.Classes[k:GetNW2String("as_class", nil)].name .. ")", "AftershockHUDSmall", ASHUDVOICE_xpos + 5, ASHUDVOICE_ypos + ASHUDVOICE_height - 3, color, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM, 1, Color(0,0,0) )
+
+        ASHUDVOICE_ypos = ASHUDVOICE_ypos + ASHUDVOICE_height + ASHUDVOICE_spacing
+    end
+end
+
+hook.Add( "PlayerStartVoice", "AS_VoiceStart", function( ply )
+    HUD_TALKINGPLAYERS[ply] = true
+
+    ASHUDVOICE_iconsize = 64 * HUD_SCALE
+
+    local panel = vgui.Create("DPanel")
+    panel:SetSize( ASHUDVOICE_iconsize, ASHUDVOICE_iconsize )
+    panel:SetPos( ASHUDVOICE_xpos, ASHUDVOICE_ypos + 1 )
+    panel.Paint = function() end
+    CharacterIcon( ply:GetModel(), 0, 0, panel:GetWide(), panel:GetTall(), panel )
+    HUD_TALKINGPLAYERSPANELS[ply] = panel
+
+    return true --Hides the default voice UI
+end)
+
+hook.Add( "PlayerEndVoice", "AS_VoiceEnd", function( ply )
+    HUD_TALKINGPLAYERS[ply] = nil
+    HUD_TALKINGPLAYERSPANELS[ply]:Remove()
+    HUD_TALKINGPLAYERSPANELS[ply] = nil
+end)
+
+timer.Create( "AS_CleanupVoice", 10, 0, function()
+    for k, v in pairs( HUD_TALKINGPLAYERSPANELS ) do
+        if not IsValid( k ) then
+            v:Remove()
+            HUD_TALKINGPLAYERS[ k ] = nil
+        end
+    end
+end)
+
 function GM:HUDShouldDraw( type )
     local hideHud = {
         ["CHudAmmo"] = true,
@@ -403,6 +453,14 @@ hook.Add( "HUDPaint", "AS_HUD", function()
     COLHUD_GOOD = Color(GetConVar("as_hud_color_good_r"):GetInt(), GetConVar("as_hud_color_good_g"):GetInt(), GetConVar("as_hud_color_good_b"):GetInt(), 255)
     COLHUD_BAD = Color(GetConVar("as_hud_color_bad_r"):GetInt(), GetConVar("as_hud_color_bad_g"):GetInt(), GetConVar("as_hud_color_bad_b"):GetInt(), 255)
     HUD_SCALE = GetConVar("as_hud_scale"):GetFloat()
+
+    --I hate myself for this
+    ASHUDVOICE_height = 85 * HUD_SCALE
+    ASHUDVOICE_width = 150 * HUD_SCALE
+    ASHUDVOICE_spacing = 2 * HUD_SCALE
+    ASHUDVOICE_xadd = 0
+    ASHUDVOICE_yadd = 0
+    ASHUDVOICE_xpos, ASHUDVOICE_ypos = (ASHUDVOICE_xadd + ScrW() * 0.9 - ASHUDVOICE_width), (ASHUDVOICE_yadd + 150)
 
     CurScale = CurScale or nil
     if CurScale != HUD_SCALE then
