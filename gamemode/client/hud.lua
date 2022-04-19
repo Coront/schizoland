@@ -58,6 +58,10 @@ AS_ClientConVar( "as_hud_targetinfo_width", "150", true, false )
 AS_ClientConVar( "as_hud_targetinfo_height", "20", true, false )
 -- Ownership Info
 AS_ClientConVar( "as_hud_ownership", "1", true, false )
+-- Stress
+AS_ClientConVar( "as_hud_stress", "1", true, false )
+AS_ClientConVar( "as_hud_stress_xadd", "0", true, false )
+AS_ClientConVar( "as_hud_stress_yadd", "0", true, false )
 
 -- Connection Information
 AS_ClientConVar( "as_connectioninfo", "1", true, false ) --Show connection information?
@@ -261,6 +265,14 @@ function AftershockHUD()
             local txt = IsValid(trace.Entity:GetObjectOwner()) and "Owner: " .. trace.Entity:GetObjectOwner():Nickname() or "Press [" .. key .. "] to own"
             draw.SimpleTextOutlined( txt, "AftershockHUD", xpos, ypos, COLHUD_DEFAULT, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 1, Color(0,0,0) )
         end
+    end
+
+    local combat = tobool(GetConVar("as_hud_stress"):GetInt()) and LocalPlayer():InCombat()
+    if combat then
+        local xadd = GetConVar("as_hud_stress_xadd"):GetInt()
+        local yadd = GetConVar("as_hud_stress_yadd"):GetInt()
+        local xpos, ypos = (xadd + (ScrW() * 0.5)), (yadd + (ScrH() - 5))
+        draw.SimpleTextOutlined( "In Combat", "AftershockHUD", xpos, ypos, COLHUD_BAD, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM, 1, Color( 0, 0, 0 ) )
     end
 end
 

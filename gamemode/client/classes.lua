@@ -48,7 +48,7 @@ function AS.Class.Open()
     disclaimer:SetFont("TargetIDSmall")
     disclaimer:SetColor( COLHUD_GOOD )
     local disclaimertext = "Class Changing is ENABLED."
-    if not SET.ClassChange then
+    if not tobool(GetConVar("as_classchange"):GetInt()) then
         disclaimer:SetColor( COLHUD_BAD )
         disclaimertext = "Class Changing is DISABLED."
     end
@@ -59,7 +59,7 @@ function AS.Class.Open()
     local disclaimer2 = itemlist:Add("DLabel")
     disclaimer2:SetFont("TargetIDSmall")
     local disclaimertext2 = "Class Change Cost is OFF."
-    if SET.ClassChangeCost then
+    if tobool(GetConVar("as_classchangecost"):GetInt()) then
         disclaimertext2 = "Class Change Cost is ON. You will have to pay:\n"
         for k, v in pairs( SET.ClassChangeCostTbl ) do
             disclaimertext2 = disclaimertext2 .. v .. " " .. AS.Items[k].name .. ", "

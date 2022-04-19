@@ -9,6 +9,14 @@
 function GM:ShowHelp( ply ) ply:SendLua( "gui.OpenURL( GAMEMODE.Discord )" ) end --Discord
 function GM:ShowTeam( ply ) ply:ConCommand( "as_settings" ) end --Settings menu
 
+function GM:PlayerConnect( name, ip )
+    if (SERVER) then
+        for k, v in pairs( player.GetAll() ) do
+            v:ChatPrint( name .. " has joined the server." )
+        end
+    end
+end
+
 function GM:PlayerInitialSpawn( ply ) --Player's first spawn. 
     ply:SetNW2Bool( "as_spawned", false ) --Player just loaded in, they have not selected their profile yet.
     ply:ConCommand("as_spawnmenu")
@@ -171,6 +179,10 @@ hook.Add( "Think", "AS_PassiveHealing", function()
     end
 end)
 
+hook.Add( "ChatText", "AS_HideJoinLeave", function( index, name, text, type ) 
+    if type == "joinleave" or type == "namechange" or type == "teamchange" then return true end
+end)
+
 hook.Add( "EntityTakeDamage", "AS_ArmorResistance", function( victim, dmginfo )
     if not victim:IsPlayer() then return end --This is a function for players only.
     local ply = victim
@@ -186,3 +198,20 @@ hook.Add( "EntityTakeDamage", "AS_ArmorResistance", function( victim, dmginfo )
     local damage = toDamage < 1 and 1 or math.Round( toDamage )
     dmginfo:SetDamage( damage )
 end)
+
+hook.Add( "PlayerSay", "AS_PlayerChatLog", function( ply, text )
+	if ply and IsValid( ply ) then
+		sql.Query("INSERT INTO as_chatlog VALUES ( " .. SQLStr(ply:SteamID()) .. ", " .. SQLStr(ply:Nickname()) .. ", " .. SQLStr(text) .. ", " .. SQLStr( os.date("%m/%d/%y - %I:%M %p", os.time()) ) .. ")")
+	else
+		sql.Query("INSERT INTO as_chatlog VALUES ( '-1', 'ERROR_NOUSER', " .. SQLStr(text) .. ", " .. SQLStr( os.date("%m/%d/%y - %I:%M %p", os.time()) ) .. ")")
+	end
+end)
+
+-- ███╗   ██╗███████╗████████╗██╗    ██╗ ██████╗ ██████╗ ██╗  ██╗██╗███╗   ██╗ ██████╗
+-- ████╗  ██║██╔════╝╚══██╔══╝██║    ██║██╔═══██╗██╔══██╗██║ ██╔╝██║████╗  ██║██╔════╝
+-- ██╔██╗ ██║█████╗     ██║   ██║ █╗ ██║██║   ██║██████╔╝█████╔╝ ██║██╔██╗ ██║██║  ███╗
+-- ██║╚██╗██║██╔══╝     ██║   ██║███╗██║██║   ██║██╔══██╗██╔═██╗ ██║██║╚██╗██║██║   ██║
+-- ██║ ╚████║███████╗   ██║   ╚███╔███╔╝╚██████╔╝██║  ██║██║  ██╗██║██║ ╚████║╚██████╔╝
+-- ╚═╝  ╚═══╝╚══════╝   ╚═╝    ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝ ╚═════╝
+
+util.AddNetworkString( "as_chatmessage" )

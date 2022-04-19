@@ -26,6 +26,7 @@ hook.Add( "HUDPaint", "AS_Node_Indicator", function()
             filter = {LocalPlayer()},
         })
         if trace.HitWorld then continue end
+        if IsValid(trace.Entity) and trace.Entity != v then continue end
 
         local pos = v:GetPos() + v:OBBCenter()
         local screen = pos:ToScreen()

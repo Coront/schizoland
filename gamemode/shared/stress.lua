@@ -1,24 +1,21 @@
-function PlayerMeta:SetEventTime( length )
-    length = length or 1
-    self.TimedEvent = length
+function PlayerMeta:SetStress( time )
+    self.Stress = time
 end
 
-function PlayerMeta:GetEventTime()
-    return self.TimedEvent or 0
+function PlayerMeta:GetStress()
+    return self.Stress or 0
 end
 
-function PlayerMeta:SetEventCallback( callback )
-    callback = callback or nil 
-    if not callback then return end
-    self.TimedEventCallback = callback
+function PlayerMeta:UpdateStress( length )
+    self:SetStress( CurTime() + length )
 end
 
-function PlayerMeta:GetEventCallback()
-    return self.TimedEventCallback
+function PlayerMeta:ClearStress()
+    self:SetStress( 0 )
 end
 
-function PlayerMeta:IsEventActive()
-    if self:GetEventTime() > CurTime() then return true end
+function PlayerMeta:InCombat()
+    if self:GetStress() > CurTime() then return true end
     return false
 end
 
@@ -29,21 +26,21 @@ end
 -- ██║ ╚████║███████╗   ██║   ╚███╔███╔╝╚██████╔╝██║  ██║██║  ██╗██║██║ ╚████║╚██████╔╝
 -- ╚═╝  ╚═══╝╚══════╝   ╚═╝    ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝ ╚═════╝
 
-if (SERVER) then
+if ( SERVER ) then
 
-    util.AddNetworkString("as_timer_start")
-    util.AddNetworkString("as_timer_end")
+    util.AddNetworkString("as_syncstress")
 
-elseif (CLIENT) then
+    function PlayerMeta:ResyncStress()
+        net.Start("as_syncstress")
+            net.WriteDouble(self:GetStress())
+        net.Send(self)
+    end
 
-    net.Receive("as_timer_start", function()
-        EventStartTime = CurTime()
-        EventTimeLength = net.ReadFloat()
-        LocalPlayer():SetEventTime( CurTime() + EventTimeLength )
-    end)
+elseif ( CLIENT ) then
 
-    net.Receive("as_timer_end", function()
-        LocalPlayer():SetEventTime( 0 )
+    net.Receive("as_syncstress", function()
+        local length = net.ReadDouble()
+        LocalPlayer():SetStress( length )
     end)
 
 end

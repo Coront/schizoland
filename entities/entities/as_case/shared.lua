@@ -11,7 +11,7 @@ function ENT:SetInventory( tbl )
 end
 
 function ENT:GetInventory()
-    return self.Inventory
+    return self.Inventory or {}
 end
 
 function ENT:TakeItemFromInventory( itemid, amt )

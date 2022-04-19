@@ -11,8 +11,6 @@ SET.MaxCharacters = 5 --Maximum characters players are allowed to have.
 SET.MinNameLength = 3 --Minimal length of a players name.
 SET.BankWeight = 1000 --Maximum weight a player's bank can hold.
 SET.HealthUpdating = 3 --Seconds until passive health updates
-SET.ClassChange = true --Players able to change classes?
-SET.ClassChangeCost = true --Player have to pay to change classes?
 SET.ClassChangeCostTbl = { --If classchangecost is on, what do player's have to pay to change?
     ["misc_scrap"] = 100,
     ["misc_smallparts"] = 100,
@@ -22,6 +20,8 @@ SET.CraftTime = 1 --Craft time per item (seconds)
 SET.DestroyPerc = 0.3 --Percentage of resources to receive from an item when breaking it down.
 SET.DeathResCost = 30 --Percentage of player's resources (scrap, smallparts, chemicals) that will be lost upon death.
 SET.DeathWait = 10 --How long a player must wait before respawning.
+SET.CombatLength = 10 --Default combat length
+SET.PlyCombatLength = 30 --Player combat length
 SET.SelectableModels = {
     --All of the models in here are models that the player is allowed to select during character creation.
     ["models/player/group01/male_01.mdl"] = true,

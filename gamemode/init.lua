@@ -69,14 +69,6 @@ if not DATABASECHECKED then DatabaseCheck() end
 MsgC( Color(0,0,255), "[AS] Finished Loading!\n" )
 GAMEMODEFIRSTLOAD = true
 
-hook.Add( "PlayerSay", "AS_PlayerChatLog", function( ply, text )
-	if ply and IsValid( ply ) then
-		sql.Query("INSERT INTO as_chatlog VALUES ( " .. SQLStr(ply:SteamID()) .. ", " .. SQLStr(ply:Nickname()) .. ", " .. SQLStr(text) .. ", " .. SQLStr( os.date("%m/%d/%y - %I:%M %p", os.time()) ) .. ")")
-	else
-		sql.Query("INSERT INTO as_chatlog VALUES ( '-1', 'ERROR_NOUSER', " .. SQLStr(text) .. ", " .. SQLStr( os.date("%m/%d/%y - %I:%M %p", os.time()) ) .. ")")
-	end
-end)
-
 -- ███████╗ █████╗ ███████╗████████╗    ██████╗ ██╗
 -- ██╔════╝██╔══██╗██╔════╝╚══██╔══╝    ██╔══██╗██║
 -- █████╗  ███████║███████╗   ██║       ██║  ██║██║

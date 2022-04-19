@@ -225,6 +225,15 @@ function AS.Settings.BuildOptions()
     ValueSlider( "Target Info Height", xpos, ypos, 5, 50, settings_scroll, "as_hud_targetinfo_height" )
     addSpace( -20, 20 )
 
+    ToggleButton( "Enable Combat Warning", xpos, ypos, settings_scroll, "as_hud_stress" )
+    addSpace( 20, 20 )
+
+    ValueSlider( "Combat Warning X-Pos", xpos, ypos, -2000, 2000, settings_scroll, "as_hud_stress_xadd" )
+    addSpace( 0, 20 )
+
+    ValueSlider( "Combat Warning Y-Pos", xpos, ypos, -2000, 2000, settings_scroll, "as_hud_stress_yadd" )
+    addSpace( -20, 20 )
+
     ToggleButton("Enable Event Bars", xpos, ypos, settings_scroll, "as_hud_timeevent")
     addSpace( 20, 20 )
 

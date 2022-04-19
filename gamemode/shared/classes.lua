@@ -6,29 +6,6 @@ function PlayerMeta:GetASClass()
     return self.Class
 end
 
-if (SERVER) then
-
-    function PlayerChangeClass( ply, cmd, args )
-        local class = args[1]
-        if not AS.Classes[class] then return end
-        if not ply:CanChangeClass( class ) then return end
-        if tobool(GetConVar("as_classchangecost"):GetInt()) then
-            for k, v in pairs( SET.ClassChangeCostTbl ) do
-                ply:TakeItemFromInventory( k, v )
-                ply:ResyncInventory()
-            end
-        end
-
-        ply:SetASClass( class )
-        ply:ResyncClass()
-        ply:Spawn()
-        ply:ChatPrint("You are now a " .. AS.Classes[class].name .. "." )
-
-    end
-    concommand.Add( "as_changeclass", PlayerChangeClass )
-
-end
-
 function PlayerMeta:CanChangeClass( class )
     if not tobool(GetConVar("as_classchange"):GetInt()) then return false end --Class changing disabled
     if self:GetASClass() == class then return false end --Player already this current class

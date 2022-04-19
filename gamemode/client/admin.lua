@@ -135,6 +135,14 @@ function AdminMenu_Server()
     end)
     YAdd( 20 )
 
+    ToggleButtonFunction( "Enable Combat Timers?", xpos, ypos, scroll, GetConVar("as_stress"):GetBool(), function( bool )
+        net.Start("as_admin_modifyconvar")
+            net.WriteString("as_stress")
+            net.WriteString( bool )
+        net.SendToServer()
+    end)
+    YAdd( 20 )
+
     return panel
 end
 

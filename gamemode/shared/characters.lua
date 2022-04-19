@@ -2,6 +2,24 @@ function PlayerMeta:IsLoaded()
     return self:GetNW2Bool("as_spawned", false)
 end
 
+function PlayerMeta:Nickname() --Returns the player's name.
+    return self:GetNW2String("as_name", self.name) or self:Nick()
+end
+
+function PlayerMeta:IsFemale()
+    if string.find( self:GetNW2String( "as_referencemodel" ), "female" ) then
+        return true 
+    end
+    return false
+end
+
+-- ███╗   ██╗███████╗████████╗██╗    ██╗ ██████╗ ██████╗ ██╗  ██╗██╗███╗   ██╗ ██████╗
+-- ████╗  ██║██╔════╝╚══██╔══╝██║    ██║██╔═══██╗██╔══██╗██║ ██╔╝██║████╗  ██║██╔════╝
+-- ██╔██╗ ██║█████╗     ██║   ██║ █╗ ██║██║   ██║██████╔╝█████╔╝ ██║██╔██╗ ██║██║  ███╗
+-- ██║╚██╗██║██╔══╝     ██║   ██║███╗██║██║   ██║██╔══██╗██╔═██╗ ██║██║╚██╗██║██║   ██║
+-- ██║ ╚████║███████╗   ██║   ╚███╔███╔╝╚██████╔╝██║  ██║██║  ██╗██║██║ ╚████║╚██████╔╝
+-- ╚═╝  ╚═══╝╚══════╝   ╚═╝    ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝ ╚═════╝
+
 if SERVER then
 
     function PlayerMeta:LoadCharacter( playerid )
