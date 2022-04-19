@@ -132,7 +132,7 @@ function AS.Settings.BuildOptions()
     ToggleButton( "Enable HUD", xpos, ypos, settings_scroll, "as_hud")
     addSpace( 0, 20 )
 
-    ValueSlider( "HUD Scale", xpos, ypos, 0.2, 3, settings_scroll, "as_hud_scale", nil, true )
+    ValueSlider( "HUD Scale", xpos, ypos, 0.6, 2.5, settings_scroll, "as_hud_scale", nil, true )
     addSpace( 20, 20 )
 
     ToggleButton("Enable Health Bar", xpos, ypos, settings_scroll, "as_hud_healthbar")
