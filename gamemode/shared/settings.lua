@@ -86,6 +86,9 @@ PERM.ToolWhitelist = { --Tools that regular players can use
     ["colour"] = true,
     ["material"] = true,
 }
+PERM.VoiceDistance = 1500
+PERM.ChatDistance = 500
+PERM.YellDistance = 4000
 --Class Settings
 SET.Classes = {}
 CLS = SET.Classes
