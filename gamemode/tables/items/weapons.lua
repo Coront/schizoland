@@ -43,18 +43,34 @@ AS.AddBaseItem("wep_p226", {
     },
 })
 
+AS.AddBaseItem("wep_glock17", {
+    name = "Glock-17",
+    desc = "A pistol that holds 15 rounds. Uses 9x19mm ammunition.",
+    category = "weapon",
+    model = "models/items/weapons/glock20.mdl",
+    wep = "weapon_glock20",
+    value = 25,
+    weight = 0.8,
+    class = "engineer",
+    craft = {
+        ["misc_scrap"] = 40,
+        ["misc_smallparts"] = 55,
+        ["misc_chemical"] = 35,
+    },
+})
+
 AS.AddBaseItem("wep_m1911", {
     name = "M1911",
     desc = "A pistol that holds 7 rounds. Uses .45 ACP ammunition.",
     category = "weapon",
     model = "models/items/weapons/m1911.mdl",
     wep = "weapon_m1911",
-    value = 25,
-    weight = 0.8,
+    value = 30,
+    weight = 0.9,
     hidden = true,
     class = "engineer",
     craft = {
-        ["misc_scrap"] = 40,
+        ["misc_scrap"] = 45,
         ["misc_smallparts"] = 60,
         ["misc_chemical"] = 35,
     },
@@ -66,8 +82,8 @@ AS.AddBaseItem("wep_ots", {
     category = "weapon",
     model = "models/items/weapons/ots.mdl",
     wep = "weapon_ots33",
-    value = 25,
-    weight = 0.8,
+    value = 40,
+    weight = 1,
     hidden = true,
     class = "engineer",
     craft = {
@@ -83,8 +99,8 @@ AS.AddBaseItem("wep_deagle", {
     category = "weapon",
     model = "models/items/weapons/deagle.mdl",
     wep = "weapon_deagle",
-    value = 25,
-    weight = 0.8,
+    value = 50,
+    weight = 1.4,
     hidden = true,
     class = "engineer",
     craft = {
@@ -100,8 +116,8 @@ AS.AddBaseItem("wep_raging", {
     category = "weapon",
     model = "models/items/weapons/ragingbull.mdl",
     wep = "weapon_revolver",
-    value = 25,
-    weight = 0.8,
+    value = 55,
+    weight = 1.4,
     hidden = true,
     class = "engineer",
     craft = {

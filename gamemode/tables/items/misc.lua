@@ -451,18 +451,20 @@ AS.AddBaseItem("misc_munitionpress", {
 -- ╚══════╝╚═╝  ╚═╝╚══════╝ ╚═══╝  ╚═╝  ╚═╝ ╚═════╝ ╚══════╝    ╚═╝   ╚═╝   ╚══════╝╚═╝     ╚═╝╚══════╝
 -- Salvage items are just junk items. They don't do anything and cannot be used for crafting, but can be salvaged for raw resources.
 
-AS.AddBaseItem("misc_shoe", {
-    name = "Shoe",
-    desc = "A leather shoe. Can be salvaged for raw resources.",
+-- Scrap
+
+AS.AddBaseItem("misc_towels", {
+    name = "Paper Towels",
+    desc = "Useful if you need to clean up a spilled drink.",
     category = "misc",
-    model = "models/props_junk/Shoe001a.mdl",
+    model = "models/props/cs_office/paper_towels.mdl",
     color = Color( 70, 70, 70 ),
     value = 1,
-    weight = 0.4,
+    weight = 0.125,
     hidden = true,
     craft = {
-        ["misc_scrap"] = 4,
-        ["misc_smallparts"] = 2,
+        ["misc_scrap"] = 2,
+        ["misc_smallparts"] = 0,
         ["misc_chemical"] = 0,
     }
 })
@@ -493,57 +495,41 @@ AS.AddBaseItem("misc_metalcan", {
     weight = 0.125,
     hidden = true,
     craft = {
-        ["misc_scrap"] = 2,
-        ["misc_smallparts"] = 1,
-        ["misc_chemical"] = 0,
-    }
-})
-
-AS.AddBaseItem("misc_mug", {
-    name = "Coffee Mug",
-    desc = "A coffee mug. Not really used for, well, anything.",
-    category = "misc",
-    model = "models/props/cs_office/coffee_mug.mdl",
-    color = Color( 70, 70, 70 ),
-    value = 1,
-    weight = 0.125,
-    hidden = true,
-    craft = {
         ["misc_scrap"] = 3,
         ["misc_smallparts"] = 0,
         ["misc_chemical"] = 0,
     }
 })
 
-AS.AddBaseItem("misc_towels", {
-    name = "Paper Towels",
-    desc = "Useful if you need to clean up a spilled drink.",
+AS.AddBaseItem("misc_shoe", {
+    name = "Shoe",
+    desc = "A leather shoe. Can be salvaged for raw resources.",
     category = "misc",
-    model = "models/props/cs_office/paper_towels.mdl",
+    model = "models/props_junk/Shoe001a.mdl",
     color = Color( 70, 70, 70 ),
     value = 1,
-    weight = 0.125,
+    weight = 0.4,
     hidden = true,
     craft = {
-        ["misc_scrap"] = 2,
-        ["misc_smallparts"] = 1,
+        ["misc_scrap"] = 4,
+        ["misc_smallparts"] = 2,
         ["misc_chemical"] = 0,
     }
 })
 
-AS.AddBaseItem("misc_chemicalbucket", {
-    name = "Chemical Bucket",
-    desc = "A bucket that has some random chemicals inside of it. Probably not really useful for much.",
+AS.AddBaseItem("misc_wrench", {
+    name = "Old wrench",
+    desc = "An old wrench. You have pleanty of these.",
     category = "misc",
-    model = "models/props_junk/plasticbucket001a.mdl",
+    model = "models/props_c17/tools_wrench01a.mdl",
     color = Color( 70, 70, 70 ),
-    value = 1,
-    weight = 1,
+    value = 5,
+    weight = 0.5,
     hidden = true,
     craft = {
-        ["misc_scrap"] = 5,
+        ["misc_scrap"] = 10,
         ["misc_smallparts"] = 2,
-        ["misc_chemical"] = 20,
+        ["misc_chemical"] = 0,
     }
 })
 
@@ -558,7 +544,171 @@ AS.AddBaseItem("misc_leadpipe", {
     hidden = true,
     craft = {
         ["misc_scrap"] = 15,
-        ["misc_smallparts"] = 5,
+        ["misc_smallparts"] = 3,
         ["misc_chemical"] = 0,
+    }
+})
+
+-- Small Parts
+
+AS.AddBaseItem("misc_phonereceiver", {
+    name = "Broken phone receiver",
+    desc = "A chunck of an old phone. probably contains some small components",
+    category = "misc",
+    model = "models/props_trainstation/payphone_reciever001a.mdl",
+    color = Color( 70, 70, 70 ),
+    value = 2,
+    weight = 0.3,
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 1,
+        ["misc_smallparts"] = 3,
+        ["misc_chemical"] = 0,
+    }
+})
+
+AS.AddBaseItem("misc_pulley", {
+    name = "Pulley",
+    desc = "A damaged pulley. Can be broken apart for some small parts.",
+    category = "misc",
+    model = "models/props_c17/pulleywheels_small01.mdl",
+    color = Color( 70, 70, 70 ),
+    value = 3,
+    weight = 1,
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 3,
+        ["misc_smallparts"] = 6,
+        ["misc_chemical"] = 0,
+    }
+})
+
+AS.AddBaseItem("misc_lamp", {
+    name = "Lamp",
+    desc = "A lamp you can scrap for some parts.",
+    category = "misc",
+    model = "models/props_lab/desklamp01.mdl",
+    color = Color( 70, 70, 70 ),
+    value = 5,
+    weight = 0.6,
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 4,
+        ["misc_smallparts"] = 7,
+        ["misc_chemical"] = 1,
+    }
+})
+
+AS.AddBaseItem("misc_damagedtransceiver", {
+    name = "Damaged transceiver",
+    desc = "An old transceiver that doesnt work anymore. Could be scrapped for some small parts.",
+    category = "misc",
+    model = "models/props_lab/reciever01b.mdl",
+    color = Color( 70, 70, 70 ),
+    value = 5,
+    weight = 0.8,
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 4,
+        ["misc_smallparts"] = 9,
+        ["misc_chemical"] = 0,
+    }
+})
+
+AS.AddBaseItem("misc_bustedcomputer", {
+    name = "Busted computer",
+    desc = "This thing has seen better days but is a trove of parts.",
+    category = "misc",
+    model = "models/props_lab/harddrive01.mdl",
+    color = Color( 70, 70, 70 ),
+    value = 20,
+    weight = 2.5,
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 5,
+        ["misc_smallparts"] = 15,
+        ["misc_chemical"] = 2,
+    }
+})
+
+--Chems
+
+AS.AddBaseItem("misc_cleaner", {
+    name = "Discarded cleaner",
+    desc = "A mostly empty bottle of house cleaner. Maybe you can extract some chemicals.",
+    category = "misc",
+    model = "models/props_junk/garbage_plasticbottle002a.mdl",
+    color = Color( 70, 70, 70 ),
+    value = 3,
+    weight = 0.25,
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 1,
+        ["misc_smallparts"] = 0,
+        ["misc_chemical"] = 3,
+    }
+})
+
+AS.AddBaseItem("misc_acid", {
+    name = "Bottle of acid",
+    desc = "A bottle of acid used for stripping metal. Has some left in it you could use.",
+    category = "misc",
+    model = "models/props_junk/garbage_milkcarton001a.mdl",
+    color = Color( 70, 70, 70 ),
+    value = 5,
+    weight = 0.5,
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 2,
+        ["misc_smallparts"] = 0,
+        ["misc_chemical"] = 5,
+    }
+})
+
+AS.AddBaseItem("misc_bleach", {
+    name = "Bleach",
+    desc = "Rumor has it you can drink this to cure viruses, they just don't want you to know. Useful for chemicals though.",
+    category = "misc",
+    model = "models/props_junk/garbage_plasticbottle001a.mdl",
+    color = Color( 70, 70, 70 ),
+    value = 7,
+    weight = 0.8,
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 2,
+        ["misc_smallparts"] = 0,
+        ["misc_chemical"] = 6,
+    }
+})
+
+AS.AddBaseItem("misc_fireextinguisher", {
+    name = "Expired fire extinguisher",
+    desc = "This has long since gone bad, but still contains many usable parts.",
+    category = "misc",
+    model = "models/props/cs_office/Fire_Extinguisher.mdl",
+    color = Color( 70, 70, 70 ),
+    value = 11,
+    weight = 1.2,
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 6,
+        ["misc_smallparts"] = 3,
+        ["misc_chemical"] = 12,
+    }
+})
+
+AS.AddBaseItem("misc_chemicalbucket", {
+    name = "Chemical Bucket",
+    desc = "A bucket that has some random chemicals inside of it. Probably not really useful for much.",
+    category = "misc",
+    model = "models/props_junk/plasticbucket001a.mdl",
+    color = Color( 70, 70, 70 ),
+    value = 20,
+    weight = 1.5,
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 3,
+        ["misc_smallparts"] = 1,
+        ["misc_chemical"] = 20,
     }
 })
