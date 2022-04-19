@@ -46,3 +46,32 @@ hook.Add( "PreDrawHalos", "AS_Case_Indicator", function()
 
     halo.Add( container, COLHUD_DEFAULT, 1, 1, 1, true, false )
 end)
+
+hook.Add("HUDPaint", "AS_Cases", function()
+    for k, v in pairs( ents.FindByClass("as_case") ) do
+        if LocalPlayer():GetPos():Distance(v:GetPos()) > 250 then continue end
+
+        local trace = util.TraceLine({
+            start = LocalPlayer():EyePos(),
+            endpos = v:GetPos() + v:OBBCenter(),
+            filter = LocalPlayer(),
+        })
+        if trace.HitWorld then continue end
+
+        local pos = v:GetPos():ToScreen()
+        local owner = v:GetNW2String("owner", nil)
+        local claimer = v:GetNW2Entity("killer", nil)
+
+        if owner and owner != "" then
+            draw.SimpleTextOutlined( owner .. "'s Case", "TargetIDSmall", pos.x, pos.y, COLHUD_DEFAULT, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 1, Color( 0, 0, 0 ) )
+            if claimer and IsValid(claimer) then
+                pos.y = pos.y + 15
+                draw.SimpleTextOutlined( "Claimant: " .. claimer:Nickname(), "TargetIDSmall", pos.x, pos.y, COLHUD_DEFAULT, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 1, Color( 0, 0, 0 ) )
+                pos.y = pos.y + 15
+                if LocalPlayer() != claimer then
+                    draw.SimpleTextOutlined( "You may be attacked for approaching or looting.", "TargetIDSmall", pos.x, pos.y, COLHUD_BAD, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 1, Color( 0, 0, 0 ) )
+                end
+            end
+        end
+    end
+end)
