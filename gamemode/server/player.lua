@@ -95,7 +95,7 @@ function GM:PlayerDeathThink( ply )
     return false
 end
 
-function GM:PostPlayerDeath( ply )
+hook.Add( "DoPlayerDeath", "AS_PlayerDeath", function( ply, attacker, dmginfo )
     local contents = {} --Player's dropped contents
     for k, v in pairs( ply:GetWeapons() ) do
         if not v.ASID then continue end
@@ -126,7 +126,7 @@ function GM:PostPlayerDeath( ply )
         local trace = util.TraceLine({
             start = ply:GetPos() + ply:OBBCenter(),
             endpos = (ply:GetPos() + ply:OBBCenter()) + Vector( 0, 0, -9999 ),
-            filter = {ent},
+            filter = {ent, ply},
         })
         ent:SetPos( trace.HitPos + (ent:OBBCenter() + Vector( 0, 0, 20 )) )
         ent:SetInventory( contents )
@@ -137,13 +137,16 @@ function GM:PostPlayerDeath( ply )
         local phys = ent:GetPhysicsObject()
         phys:EnableMotion( false )
         ent:SetNW2String("owner", ply:Nickname())
+        if attacker:IsPlayer() and ply != attacker then
+            ent:SetNW2Entity("killer", attacker)
+        end
     end
 
     ply:ClearAllStatuses()
     ply:ResyncStatuses()
     ply:SetHealth( 15 ) --This is just so it doesnt save 0 to the player's health in the database.
     ply:SaveCharacter()
-end
+end)
 
 function GM:GetFallDamage( ply, speed )
     return math.max(1, ( speed - 526.5 ) * ( ply:GetMaxHealth() / 396 ))
@@ -177,10 +180,6 @@ hook.Add( "Think", "AS_PassiveHealing", function()
             end
         end
     end
-end)
-
-hook.Add( "ChatText", "AS_HideJoinLeave", function( index, name, text, type ) 
-    if type == "joinleave" or type == "namechange" or type == "teamchange" then return true end
 end)
 
 hook.Add( "EntityTakeDamage", "AS_ArmorResistance", function( victim, dmginfo )
