@@ -79,12 +79,14 @@ end
 
 function PlayerMeta:CanUnequipItem( item )
     if not self:Alive() then self:ChatPrint("You are dead, you cannot unequip this.") return false end
+    if self:InCombat() then self:ChatPrint("You cannot unequip this while in combat.") return false end
     if not self:CanCarryItem( item ) then return false end --Player needs room in their inventory to unequip.
     return true
 end
 
 function PlayerMeta:CanUnequipAmmo( item, amt )
     if not self:Alive() then self:ChatPrint("You are dead, you cannot unequip this.") return false end
+    if self:InCombat() then self:ChatPrint("You cannot unequip this while in combat.") return false end
     if not self:CanCarryItem( item, amt ) then return false end
     return true
 end
