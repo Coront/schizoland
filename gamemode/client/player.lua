@@ -36,6 +36,10 @@ function GetPos( ply )
 end
 concommand.Add("GetPosV2", GetPos)
 
+hook.Add( "ChatText", "AS_HideJoinLeave", function( index, name, text, type ) 
+    if type == "joinleave" or type == "namechange" or type == "teamchange" then return true end
+end)
+
 hook.Add("PostDrawTranslucentRenderables", "AS_ArmorOverlay", function()
     for k, v in pairs( player.GetAll() ) do
         if not v:IsLoaded() then continue end

@@ -8,18 +8,18 @@
 MsgC( Color(0,0,255), "[AS] Loading Clientside Files...\n" )
 include("shared.lua")
 
+ConVarDefaults = ConVarDefaults or {}
+function AS_ClientConVar( name, str, save, sync, info, min, max )
+    ConVarDefaults[name] = str
+    local convar = CreateClientConVar( name, str, save, sync, info, min, max )
+end
+
 for k, v in pairs( file.Find("aftershock/gamemode/client/*.lua", "LUA") ) do
 	include("client/" .. v)
 	print("CS File: client/" .. v)
 end
 
 MsgC( Color(0,0,255), "[AS] Finished Loading!\n" )
-
-ConVarDefaults = ConVarDefaults or {}
-function AS_ClientConVar( name, str, save, sync, info, min, max )
-    ConVarDefaults[name] = str
-    local convar = CreateClientConVar( name, str, save, sync, info, min, max )
-end
 
 AS_ClientConVar( "as_gameplay_verify", "1", true, false )
 AS_ClientConVar( "as_entity_renderdist", "6000", true, false )
