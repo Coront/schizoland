@@ -40,6 +40,9 @@ if (SERVER) then
                 v.NextSpawn = nil
                 v.PlyDisableDist = nil
             end
+            if v:GetClass() == "prop_physics" then
+                v.Owner = nil
+            end
         end
 
         return Persists
