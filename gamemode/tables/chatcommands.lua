@@ -6,7 +6,7 @@ end)
 AS.AddChatCommand("roll", function( ply, args )
     for k, v in pairs( player.GetAll() ) do
         if v:GetPos():Distance( ply:GetPos() ) > PERM.ChatDistance then continue end
-        local max = args[2] or 6
+        local max = tonumber(args[2]) or 6
         local dice = math.random( 1, max )
         v:ChatPrint( "** " .. ply:Nickname() .. " rolled " .. dice .. " out of " .. max)
     end
