@@ -90,11 +90,19 @@ function AftershockHUD()
         surface.DrawOutlinedRect(barx, bary, width, height, outline) --Health bar outline
         surface.DrawRect(barx + 2, bary + 2, (health / maxhealth) * (width - 4), height - 4) --Health bar
 
+        local hp, amtx, amty, outline = (health), ((xpos + width) + (85)), ((ypos - (height / 1.9)) + (ScrH() * 0.94)), (1)
+        if ply.Devmode then
+            surface.SetDrawColor( Color( 255, 255, 255, 255 ) )
+            surface.SetMaterial( Material( "icon16/shield.png" ) )
+            surface.DrawTexturedRect( barx + width + 4, bary, height, height )
+            amtx = amtx + height
+        end
+
         local amt = tobool(GetConVar("as_hud_healthbar_amount"):GetInt())
         if amt then --Will draw health amount if enabled
-            local hp, amtx, amty, outline = (health), ((xpos + width) + (85)), ((ypos - (height / 1.9)) + (ScrH() * 0.94)), (1)
             draw.SimpleTextOutlined(hp, "AftershockHUD", amtx, amty, COLHUD_DEFAULT, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER, outline, Color(0,0,0))
         end
+
     end
 
     local satiation = tobool(GetConVar("as_hud_satiationbars"):GetInt())
@@ -229,6 +237,13 @@ function AftershockHUD()
         x = x - (width / 2)
         surface.DrawOutlinedRect( x, y, width, height, outline )
         surface.DrawRect( x + 2, y + 2, ((health / maxhealth) * width) - 4, height - 4 )
+
+        if target.Devmode then
+            surface.SetDrawColor( Color( 255, 255, 255, 255 ) )
+            surface.SetMaterial( Material( "icon16/shield.png" ) )
+            surface.DrawTexturedRect( x - (height + 4), y, height, height )
+        end
+
         if tobool(GetConVar("as_hud_targetinfo_amount"):GetInt()) then
             x = x + (width / 2)
             y = y + height
