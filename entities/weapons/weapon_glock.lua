@@ -28,6 +28,8 @@ if CLIENT then
 	SWEP.SwayInterpolation = "linear"
 end
 
+SWEP.ASID = "wep_glock17"
+
 SWEP.Attachments = {[1] = {header = "Barrel", x = 50, y = -100, atts = {"suppressor"}},
 	[2] = {header = "Sight", x = 400, y = -250, atts = {"tritiumsights"}}}
 
