@@ -3,6 +3,26 @@ function PlayerMeta:AdminSpawnItem( item, amt )
     self:ChatPrint("You have received " .. AS.Items[item].name .. " (" .. amt .. ").")
 end
 
+-- ██╗  ██╗ ██████╗  ██████╗ ██╗  ██╗███████╗
+-- ██║  ██║██╔═══██╗██╔═══██╗██║ ██╔╝██╔════╝
+-- ███████║██║   ██║██║   ██║█████╔╝ ███████╗
+-- ██╔══██║██║   ██║██║   ██║██╔═██╗ ╚════██║
+-- ██║  ██║╚██████╔╝╚██████╔╝██║  ██╗███████║
+-- ╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚══════╝
+
+hook.Add( "EntityTakeDamage", "AS_DevMode", function( target, dmginfo )
+    if not target:IsPlayer() then return end
+    if not target:InDevmode() then return end
+    local attacker = dmginfo:GetAttacker()
+
+    dmginfo:SetDamage( 0 )
+
+    if attacker:IsPlayer() then
+        target:ChatPrint("You were attacked by " .. attacker:Nickname() .. " while in devmode.")
+        attacker:ChatPrint("You attacked " .. target:Nickname() .. ", who is in devmode.")
+    end
+end)
+
 -- ███╗   ██╗███████╗████████╗██╗    ██╗ ██████╗ ██████╗ ██╗  ██╗██╗███╗   ██╗ ██████╗
 -- ████╗  ██║██╔════╝╚══██╔══╝██║    ██║██╔═══██╗██╔══██╗██║ ██╔╝██║████╗  ██║██╔════╝
 -- ██╔██╗ ██║█████╗     ██║   ██║ █╗ ██║██║   ██║██████╔╝█████╔╝ ██║██╔██╗ ██║██║  ███╗

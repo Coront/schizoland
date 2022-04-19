@@ -183,7 +183,11 @@ function GM:PlayerConnect( name, ip )
     end
 end
 
-if CLIENT then
+if SERVER then
+
+    util.AddNetworkString( "as_chatmessage" )
+
+elseif CLIENT then
 
     function GetPos( ply )
         local pos = ply:GetPos():ToTable()
@@ -197,6 +201,11 @@ if CLIENT then
         if ply:IsDeveloping() and not IsValid(target) then return false end
         return true
     end
+
+    net.Receive( "as_chatmessage", function()
+        local tbl = net.ReadTable()
+        chat.AddText( unpack( tbl ) )
+    end)
 
 end
 

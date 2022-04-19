@@ -37,7 +37,7 @@ function GM:PlayerCanSeePlayersChat( text, team, listener, speaker )
     if tobool(GetConVar("as_alltalk"):GetInt()) then return true end
 
     if speaker and IsValid(speaker) then
-        if listener:GetPos():Distance(speaker:GetPos()) > 1000 or not listener:IsLoaded() then --Player is too far to see this person's text.
+        if listener:GetPos():Distance(speaker:GetPos()) > PERM.ChatDistance or not listener:IsLoaded() then --Player is too far to see this person's text.
             return false 
         end
     end
@@ -48,7 +48,7 @@ end
 function GM:PlayerCanHearPlayersVoice( listener, speaker )
     if tobool(GetConVar("as_alltalk"):GetInt()) then return true, false end
 
-    if listener:GetPos():Distance(speaker:GetPos()) > 1500 or not listener:IsLoaded() then --Player is too far to hear this person's voice.
+    if listener:GetPos():Distance(speaker:GetPos()) > PERM.VoiceDistance or not listener:IsLoaded() then --Player is too far to hear this person's voice.
         return false
     end
 
