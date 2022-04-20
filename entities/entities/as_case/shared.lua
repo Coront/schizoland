@@ -52,7 +52,7 @@ end
 
 function ENT:PlayerTakeItem( ply, itemid, amt )
     self:TakeItemFromInventory( itemid, amt )
-    if (SERVER) and IsValid(self:GetNW2Entity("killer", nil)) then
+    if (SERVER) and self:GetNW2String("owner", "") != "" then
         ply:SetRecentInvDelay( CurTime() + SET.PlyCombatLength )
         ply:AddRecentInvItem( itemid, amt )
     end
