@@ -96,6 +96,8 @@ function GM:PlayerDeathThink( ply )
 end
 
 hook.Add( "DoPlayerDeath", "AS_PlayerDeath", function( ply, attacker, dmginfo )
+    ply:ChatPrint("You died.")
+
     local contents = {} --Player's dropped contents
     for k, v in pairs( ply:GetWeapons() ) do
         if not v.ASID then continue end
@@ -119,6 +121,21 @@ hook.Add( "DoPlayerDeath", "AS_PlayerDeath", function( ply, attacker, dmginfo )
         contents[k] = reslost
     end
     ply:ResyncInventory()
+
+    --Recent Inventory
+    if ply:HasRecentInventory() then --Player has recently taken items from a claimed case. We will make them drop those items.
+        ply:ChatPrint("Recent items you have taken from a case have been dropped.")
+
+        for k, v in pairs( ply:GetRecentInv() ) do
+            if not ply:HasInInventory( k, v ) then continue end
+            ply:TakeItemFromInventory( k, v )
+            contents[k] = (contents[k] or 0) + v
+            ply:ResyncInventory()
+        end
+
+        ply:ClearRecentInv()
+        ply:SetRecentInvDelay( 0 )
+    end
 
     --Entity
     if table.Count(contents) > 0 then

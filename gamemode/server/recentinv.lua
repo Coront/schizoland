@@ -38,7 +38,7 @@ function PlayerMeta:GetRecentInvDelay()
 end
 
 function PlayerMeta:HasRecentInventory()
-    if #self:GetRecentInv() > 0 then
+    if table.Count(self:GetRecentInv()) > 0 then
         return true 
     else
         return false

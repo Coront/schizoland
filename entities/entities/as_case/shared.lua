@@ -52,6 +52,10 @@ end
 
 function ENT:PlayerTakeItem( ply, itemid, amt )
     self:TakeItemFromInventory( itemid, amt )
+    if (SERVER) and IsValid(self:GetNW2Entity("killer", nil)) then
+        ply:SetRecentInvDelay( CurTime() + SET.PlyCombatLength )
+        ply:AddRecentInvItem( itemid, amt )
+    end
     ply:AddItemToInventory( itemid, amt )
 end
 
@@ -98,7 +102,6 @@ if ( SERVER ) then
 
     function ResyncAllCaseInventories( ply )
         for k, v in pairs( ents.FindByClass("as_case") ) do
-            PrintTable(v:GetInventory())
             net.Start("as_case_syncinventory")
                 net.WriteEntity(v)
                 net.WriteTable( v:GetInventory() )

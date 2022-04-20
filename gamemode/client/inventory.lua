@@ -498,7 +498,6 @@ function AS.Inventory.BuildInventory()
     armorname:SetText( "No Armor" )
     armorname:SetSize( armor:GetWide(), 15 )
 
-    
     if LocalPlayer():HasArmor() then
         local curarmor = LocalPlayer():GetArmor()
         local curarmorwep = LocalPlayer():GetArmorWep()
