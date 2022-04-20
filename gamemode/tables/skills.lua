@@ -4,9 +4,9 @@ AS.AddBaseSkill( "strength", {
     name = "Strength",
     desc = "Increases your carry capacity as well as the ability to deal damage with melee weapons. Leveled by use of melee weapons.",
     icon = "",
-    max = 50,
+    max = 25,
     basexp = 1,
-    power = 1.5,
+    power = 1.6,
 } )
 
 AS.AddBaseSkill( "endurance", {
