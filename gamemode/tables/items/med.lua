@@ -1,3 +1,10 @@
+-- ██████╗ ██████╗ ██╗   ██╗ ██████╗ ███████╗
+-- ██╔══██╗██╔══██╗██║   ██║██╔════╝ ██╔════╝
+-- ██║  ██║██████╔╝██║   ██║██║  ███╗███████╗
+-- ██║  ██║██╔══██╗██║   ██║██║   ██║╚════██║
+-- ██████╔╝██║  ██║╚██████╔╝╚██████╔╝███████║
+-- ╚═════╝ ╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚══════╝
+
 AS.AddBaseItem("med_painkiller", {
     name = "Bottle of Painkillers",
     desc = "A bottle that contains a couple tablets of painkiller. Will reduce incoming damage by 10% for 2 minutes.",
@@ -9,8 +16,7 @@ AS.AddBaseItem("med_painkiller", {
     use = {
         sound = "items/medshot4.wav",
         stat = {
-            effect = "painkillers",
-            length = 120,
+            [1] = {effect = "painkillers", length = 120},
         },
     },
     hidden = true,
@@ -33,8 +39,7 @@ AS.AddBaseItem("med_adrenaline", {
     use = {
         sound = "items/medshot4.wav",
         stat = {
-            effect = "adrenaline",
-            length = 60,
+            [1] = {effect = "adrenaline", length = 60},
         },
     },
     hidden = true,
@@ -46,9 +51,16 @@ AS.AddBaseItem("med_adrenaline", {
     }
 })
 
+-- ███╗   ███╗███████╗██████╗ ██╗ ██████╗ █████╗ ██╗
+-- ████╗ ████║██╔════╝██╔══██╗██║██╔════╝██╔══██╗██║
+-- ██╔████╔██║█████╗  ██║  ██║██║██║     ███████║██║
+-- ██║╚██╔╝██║██╔══╝  ██║  ██║██║██║     ██╔══██║██║
+-- ██║ ╚═╝ ██║███████╗██████╔╝██║╚██████╗██║  ██║███████╗
+-- ╚═╝     ╚═╝╚══════╝╚═════╝ ╚═╝ ╚═════╝╚═╝  ╚═╝╚══════╝
+
 AS.AddBaseItem("med_bag", {
     name = "Bag of Medical Supplies",
-    desc = "An old garbage bag that contains some bandages, a potential tourniquet, and maybe a few other things to help with your personal health. Heals 15 HP, 3 second cooldown.",
+    desc = "An old garbage bag that contains some bandages, a potential tourniquet, and maybe a few other things to help with your personal health. Heals 15 HP, 1 second cooldown.",
     category = "med",
     model = "models/props_junk/garbage_bag001a.mdl",
     value = 20,
@@ -57,8 +69,7 @@ AS.AddBaseItem("med_bag", {
         health = 15,
         sound = "physics/body/body_medium_impact_soft4.wav",
         stat = {
-            effect = "healingsickness",
-            length = 3,
+            [1] = {effect = "healingsickness", length = 1},
         },
     },
     craft = {
@@ -70,18 +81,17 @@ AS.AddBaseItem("med_bag", {
 
 AS.AddBaseItem("med_vial", {
     name = "Health Vial",
-    desc = "A vial that contains a strange green liquid that apparently lets your body regenerate lost blood faster. Heals 20 HP, 4 second cooldown.",
+    desc = "A vial that contains a strange green liquid that apparently lets your body regenerate lost blood faster. Heals 25 HP, 3 second cooldown.",
     category = "med",
     model = "models/healthvial.mdl",
     color = Color( 0, 115, 70 ),
     value = 20,
     weight = 0.75,
     use = {
-        health = 20,
+        health = 25,
         sound = "items/medshot4.wav",
         stat = {
-            effect = "healingsickness",
-            length = 4,
+            [1] = {effect = "healingsickness", length = 3},
         },
     },
     class = "scientist",
@@ -94,18 +104,17 @@ AS.AddBaseItem("med_vial", {
 
 AS.AddBaseItem("med_kit", {
     name = "Medical Kit",
-    desc = "A kit that contains some of that strange green liquid and a bunch of other necessities to help recover from wounds. Heals 35 HP, 7 second cooldown.",
+    desc = "A kit that contains some of that strange green liquid and a bunch of other necessities to help recover from wounds. Heals 50 HP, 8 second cooldown.",
     category = "med",
     model = "models/Items/HealthKit.mdl",
     color = Color( 0, 115, 70 ),
     value = 40,
     weight = 1,
     use = {
-        health = 35,
+        health = 50,
         sound = "items/smallmedkit1.wav",
         stat = {
-            effect = "healingsickness",
-            length = 7,
+            [1] = {effect = "healingsickness", length = 8},
         },
     },
     class = "scientist",
@@ -125,11 +134,10 @@ AS.AddBaseItem("med_bloodbag", {
     value = 80,
     weight = 1.5,
     use = {
-        health = 70,
         sound = "physics/flesh/flesh_bloody_impact_hard1.wav",
         stat = {
-            effect = "healingsickness",
-            length = 20,
+            [1] = {effect = "healingsickness", length = 1},
+            [2] = {effect = "medicalitem", length = 35},
         },
     },
     hidden = true,
@@ -150,11 +158,10 @@ AS.AddBaseItem("med_surgery", {
     value = 175,
     weight = 2.5,
     use = {
-        health = 150,
         sound = "physics/body/body_medium_impact_soft6.wav",
         stat = {
-            effect = "healingsickness",
-            length = 40,
+            [1] = {effect = "healingsickness", length = 40},
+            [2] = {effect = "medicalitem", length = 75},
         },
     },
     hidden = true,

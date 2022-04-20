@@ -1,3 +1,22 @@
+AS.AddBaseItem("food_unsatiate", {
+    name = "Starver",
+    desc = "[Dev Item] Will starve your character.",
+    category = "food",
+    model = "models/hunter/blocks/cube025x025x025.mdl",
+    value = 0,
+    weight = 0,
+    use = {
+        hunger = -50,
+        thirst = -50,
+    },
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 0,
+        ["misc_smallparts"] = 0,
+        ["misc_chemical"] = 0,
+    }
+})
+
 AS.AddBaseItem("food_beans", {
     name = "Can of Beans",
     desc = "An old aluminum can that contains perfectly good beans.",
