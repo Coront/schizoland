@@ -136,7 +136,7 @@ AS.AddBaseItem("med_bloodbag", {
     use = {
         sound = "physics/flesh/flesh_bloody_impact_hard1.wav",
         stat = {
-            [1] = {effect = "healingsickness", length = 1},
+            [1] = {effect = "healingsickness", length = 20},
             [2] = {effect = "medicalitem", length = 35},
         },
     },
