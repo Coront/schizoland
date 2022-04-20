@@ -745,7 +745,7 @@ function AS.Inventory.BuildPlayers()
 
         local name = vgui.Create("DLabel", panel)
         name:SetFont( "TargetID" )
-        name:SetText( v:Nickname() .. " (" .. AS.Classes[v:GetASClass()].name .. ")" )
+        name:SetText( v:Nickname() .. " (" .. v:GetASClass() and AS.Classes[v:GetASClass()] and AS.Classes[v:GetASClass()].name or "" .. ")" )
         name:SetPos( 100, 5 )
         name:SizeToContents()
         name:SetColor( AS.Classes[v:GetASClass()].color )
