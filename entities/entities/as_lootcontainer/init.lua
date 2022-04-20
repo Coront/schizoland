@@ -25,6 +25,8 @@ end
 function ENT:ShouldStopTimer()
 	for k, v in pairs( player.GetAll() ) do
 		if not v:IsLoaded() then continue end
+		if not v:Alive() then continue end
+		if v:IsDeveloping() then continue end
 		if v:GetPos():Distance(self:GetPos()) < 1500 then --A player is too close, we should stop the timer.
 			return true
 		end
