@@ -27,14 +27,20 @@ function ENT:ShouldStopTimer()
 		if not v:IsLoaded() then continue end
 		if not v:Alive() then continue end
 		if v:IsDeveloping() then continue end
-		if v:GetPos():Distance(self:GetPos()) < 1500 then --A player is too close, we should stop the timer.
+		if v:GetPos():Distance(self:GetPos()) < 2000 then --A player is too close, we should stop the timer.
 			return true
 		end
 	end
 	for k, v in pairs( ents.FindByClass("prop_physics") ) do
 		if not v.Owner then continue end
-		if v:GetPos():Distance(self:GetPos()) < 1500 then --A player's prop is too close, assuming they're building in the area.
+		if v:GetPos():Distance(self:GetPos()) < 3000 then --A player's prop is too close, assuming they're building in the area.
 			return true 
+		end
+	end
+	for k, v in pairs( ents.FindByClass("prop_door_rotating") ) do --An owned door is too close.
+		if not v:HasObjectOwner() then continue end
+		if v:GetPos():Distance(self:GetPos()) < 3000 then
+			return true
 		end
 	end
 

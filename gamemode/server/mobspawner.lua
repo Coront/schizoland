@@ -212,7 +212,23 @@ function AS.Grid.FetchValidSpawners() --Every spawner that is valid
 
         --A spawner shouldnt be valid if a player is nearby. This prevents nodes or npcs from spawning on them directly.
         for k, v in pairs( ents.FindByClass( "player" ) ) do
-            if info["pos"]:Distance(v:GetPos()) < info["distance"] * 1.5 then
+            if info["pos"]:Distance(v:GetPos()) < 2000 then
+                ValidSpawn = false 
+                break
+            end
+        end
+
+        for k, v in pairs( ents.FindByClass( "prop_physics" ) ) do
+            if not v.Owner then continue end
+            if info["pos"]:Distance(v:GetPos()) < info["distance"] * 2 then
+                ValidSpawn = false 
+                break
+            end
+        end
+
+        for k, v in pairs( ents.FindByClass( "prop_door_rotating" ) ) do
+            if not v:HasObjectOwner() then continue end
+            if info["pos"]:Distance(v:GetPos()) < 3000 then
                 ValidSpawn = false 
                 break
             end
