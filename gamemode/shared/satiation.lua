@@ -36,12 +36,12 @@ end
 
 function PlayerMeta:TakeHunger( amt )
     amt = amt and math.Round( amt ) or 0
-    self:SetHunger( self:GetHunger() - amt )
+    self:SetHunger( math.Clamp(self:GetHunger() - amt, 0, self:GetMaxHunger()) )
 end
 
 function PlayerMeta:TakeThirst( amt )
     amt = amt and math.Round( amt ) or 0
-    self:SetThirst( self:GetThirst() - amt )
+    self:SetThirst( math.Clamp(self:GetThirst() - amt, 0, self:GetMaxThirst()) )
 end
 
 hook.Add( "Think", "AS_SatiationUpdate", function()
@@ -80,12 +80,21 @@ hook.Add( "Think", "AS_SatiationUpdate", function()
     end
 end)
 
+-- ██╗  ██╗ ██████╗  ██████╗ ██╗  ██╗███████╗
+-- ██║  ██║██╔═══██╗██╔═══██╗██║ ██╔╝██╔════╝
+-- ███████║██║   ██║██║   ██║█████╔╝ ███████╗
+-- ██╔══██║██║   ██║██║   ██║██╔═██╗ ╚════██║
+-- ██║  ██║╚██████╔╝╚██████╔╝██║  ██╗███████║
+-- ╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚══════╝
+
 hook.Add( "KeyPress", "AS_DrinkWater", function( ply, key )
     if key == IN_USE and ply:WaterLevel() == 1 then
         local waterdrinkdelay = 0.5
 
         ply.NextWaterDrink = ply.NextWaterDrink or CurTime() + waterdrinkdelay
         if CurTime() > ply.NextWaterDrink and ply:GetThirst() < 100 then
+            local length = ply.Status and ply.Status["poison"] and (ply.Status["poison"].time - CurTime()) + 5 or 5
+            ply:AddStatus( "poison", length )
             ply:AddThirst( 10 )
             ply.NextWaterDrink = CurTime() + waterdrinkdelay
             if SERVER then
