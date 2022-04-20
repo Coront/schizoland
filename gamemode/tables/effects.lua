@@ -71,6 +71,13 @@ AS.AddEffect( "treatment", {
     type = "positive",
 } )
 
+AS.AddEffect( "medicalitem", {
+    name = "Healing",
+    desc = "Regain health over time.",
+    icon = "icon16/heart_add.png",
+    type = "positive",
+} )
+
 AS.AddEffect( "painkillers", {
     name = "Painkillers",
     desc = "Reduces incoming damage by 10%.",
@@ -91,6 +98,19 @@ AS.AddEffect( "adrenaline", {
 -- ██╔══██║██║   ██║██║   ██║██╔═██╗ ╚════██║
 -- ██║  ██║╚██████╔╝╚██████╔╝██║  ██╗███████║
 -- ╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚══════╝
+
+hook.Add( "Think", "AS_Effect_MedicalItem", function()
+    for k, v in pairs( player.GetAll() ) do
+        if not v:HasStatus( "medicalitem" ) then continue end --Skip every player that doesn't have this effect.
+        if v:Health() >= v:GetMaxHealth() then continue end --Skip players that are at max health.
+        if CurTime() < (v.Treatment_NextTick or 0) then continue end --Still waiting for tick.
+
+        v.Treatment_NextTick = CurTime() + 0.5
+        if ( SERVER ) then
+            v:SetHealth( math.Clamp( v:Health() + 1, 0, v:GetMaxHealth() ) )
+        end
+    end
+end)
 
 hook.Add( "Think", "AS_Effect_Treatment", function()
     for k, v in pairs( player.GetAll() ) do
