@@ -168,3 +168,4 @@ CreateConVar( "as_respawnwait", "1", {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICA
 CreateConVar( "as_classchange", "1", {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED}, "Enable class changing.", 0, 1 )
 CreateConVar( "as_classchangecost", "1", {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED}, "Enable cost for class changing.", 0, 1 )
 CreateConVar( "as_stress", "1", {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED}, "Enable combat timer.", 0, 1 )
+CreateConVar( "as_cases", "1", {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED}, "Enable player case dropping.", 0, 1 )

@@ -143,6 +143,14 @@ function AdminMenu_Server()
     end)
     YAdd( 20 )
 
+    ToggleButtonFunction( "Drop Player Cases on death? (Will return items if off)", xpos, ypos, scroll, GetConVar("as_cases"):GetBool(), function( bool )
+        net.Start("as_admin_modifyconvar")
+            net.WriteString("as_cases")
+            net.WriteString( bool )
+        net.SendToServer()
+    end)
+    YAdd( 20 )
+
     return panel
 end
 
@@ -248,11 +256,16 @@ function AdminMenu_Other()
     end)
     YAdd( 30 )
 
+    DefaultButton( "Skills Menu", xpos, ypos, 200, 25, scroll, function()
+        RunConsoleCommand( "as_skills" )
+    end)
+    YAdd( 30 )
+
     return panel
 end
 
 function ItemMenu()
-    if not LocalPlayer():IsAdmin() then LocalPlayer():ChatPrint("You are not an admin!") return end
+    if not LocalPlayer():IsAdmin() then return end
     if IsValid(frame_itemmenu) then frame_itemmenu:Close() end
 
     frame_itemmenu = vgui.Create("DFrame")
@@ -315,7 +328,8 @@ function ItemMenu()
                 LocalPlayer():ChatPrint( k )
             end
             panel.DoRightClick = function()
-                VerifySlider( 100, function( amt ) 
+                local slideramt = SET.RawResources[k] and 10000 or 100
+                VerifySlider( slideramt, function( amt ) 
                     giveItem( k, amt )
                 end )
             end
@@ -337,3 +351,93 @@ function ItemMenu()
     refreshList()
 end
 concommand.Add("as_itemmenu", ItemMenu)
+
+function SkillsMenu()
+    if not LocalPlayer():IsAdmin() then return end
+    local ply = LocalPlayer()
+
+    frame_skillsmenu = vgui.Create("DFrame")
+    frame_skillsmenu:SetSize(400, 500)
+    frame_skillsmenu:Center()
+    frame_skillsmenu:MakePopup()
+    frame_skillsmenu:SetDraggable( false )
+    frame_skillsmenu:SetTitle( "Skills Menu" )
+    frame_skillsmenu:ShowCloseButton( true )
+
+    skills_scroll = vgui.Create("DScrollPanel", frame_skillsmenu)
+    skills_scroll:SetPos( 5, 25 )
+    skills_scroll:SetSize( frame_skillsmenu:GetWide() - (skills_scroll:GetX() * 2), frame_skillsmenu:GetTall() - (skills_scroll:GetY() + 5) )
+    function skills_scroll:Paint( w, h )
+        surface.SetDrawColor( COLHUD_SECONDARY )
+        surface.DrawRect( 0, 0, w, h )
+    end
+
+    local xpos, ypos = 5, 5
+    local function yadd( amt ) ypos = ypos + amt end
+
+    for k, v in SortedPairs( AS.Skills ) do
+
+        local panel = vgui.Create("DPanel", skills_scroll)
+        panel:SetSize( skills_scroll:GetWide() - ((xpos * 2) + 15), 70)
+        panel:SetPos( xpos, ypos )
+        function panel:Paint( w, h )
+            surface.SetDrawColor( COLHUD_PRIMARY )
+            surface.DrawRect( 0, 0, w, h )
+        end
+
+        local skill = vgui.Create("DLabel", panel)
+        skill:SetPos( 5, 5 )
+        skill:SetFont( "TargetID" )
+        skill:SetText( v.name )
+        skill:SizeToContents()
+
+        local exp = vgui.Create("DPanel", panel)
+        exp:SetSize( panel:GetWide() - 10, 15)
+        exp:SetPos( 5, panel:GetTall() - (exp:GetTall() + 5) )
+        function exp:Paint( w, h )
+            surface.SetDrawColor( COLHUD_SECONDARY )
+            surface.DrawRect( 0, 0, w, h )
+
+            local ply = LocalPlayer()
+            local curxp = ply:GetSkillExperience( k ) - ExpForLevel( k, ply:GetSkillLevel( k ) - 1 )
+            local nextxp = ExpForLevel( k, ply:GetSkillLevel( k ) + 1 ) - ExpForLevel( k, ply:GetSkillLevel( k ))
+
+            surface.SetDrawColor( COLHUD_DEFAULT )
+            surface.DrawRect( 0, 0, (curxp / nextxp) * w, h )
+        end
+
+        local amt = vgui.Create("DLabel", panel)
+        amt:SetPos( 5, exp:GetY() - 15 )
+        amt:SetText( "Level " .. ply:GetSkillLevel(k) .. "/" .. v.max .. " - " .. ply:GetSkillExperience(k) .. "/" .. ExpForLevel( k, ply:GetSkillLevel(k) + 1 ) .. " Experience" )
+        amt:SizeToContents()
+
+        local btn = vgui.Create("DButton", panel)
+        btn:SetSize( 70, 20 )
+        btn:SetPos( panel:GetWide() - (btn:GetWide() + 5), 5 )
+        btn:SetText("Add XP")
+        function btn:DoClick()
+            VerifySlider( 100, function( amt )
+                net.Start("as_admin_changeskillxp")
+                    net.WriteString( k )
+                    net.WriteInt( amt, 32 )
+                net.SendToServer()
+            end)
+        end
+
+        local btn2 = vgui.Create("DButton", panel)
+        btn2:SetSize( 70, 20 )
+        btn2:SetPos( panel:GetWide() - (btn2:GetWide() + 5), 25 )
+        btn2:SetText("Take XP")
+        function btn2:DoClick()
+            VerifySlider( 100, function( amt )
+                net.Start("as_admin_changeskillxp")
+                    net.WriteString( k )
+                    net.WriteInt( -amt, 32 )
+                net.SendToServer()
+            end)
+        end
+
+        yadd( panel:GetTall() + 5 )
+    end
+end
+concommand.Add("as_skills", SkillsMenu)

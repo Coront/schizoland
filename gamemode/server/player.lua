@@ -57,6 +57,19 @@ function GM:PlayerSpawn( ply )
     for k, v in SortedPairs( SET.DefaultWeapons ) do
         ply:Give( v )
     end
+
+    if not tobool(GetConVar("as_cases"):GetInt()) and ply.ItemReturns then
+        for k, v in pairs( ply.ItemReturns ) do
+            if k == "ammo" then
+                for k2, v2 in pairs( v ) do
+                    ply:GiveAmmo( v2, AS.Items[k2].use.ammotype, true )
+                end
+                continue 
+            end
+            ply:Give( AS.Items[k].wep )
+        end
+        ply.ItemReturns = nil
+    end
 end
 
 function GM:PlayerDisconnected( ply )
@@ -112,6 +125,14 @@ hook.Add( "DoPlayerDeath", "AS_PlayerDeath", function( ply, attacker, dmginfo )
         contents.ammo = contents.ammo or {}
         contents.ammo[translateAmmoNameID(game.GetAmmoName(k))] = (contents.ammo[translateAmmoNameID(game.GetAmmoName(k))] or 0) + v
     end
+
+    if not tobool(GetConVar("as_cases"):GetInt()) then
+        ply:ChatPrint("Your items will be returned to you when you respawn.")
+        ply.ItemReturns = contents
+
+        return --prevent the rest of the code from running
+    end
+
     --resources
     for k, v in pairs( ply:GetInventory() ) do
         if k != "misc_scrap" and k != "misc_smallparts" and k != "misc_chemical" then continue end --skip everything that isnt a resource

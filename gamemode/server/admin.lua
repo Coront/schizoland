@@ -32,6 +32,7 @@ end)
 
 util.AddNetworkString("as_admin_modifyconvar")
 util.AddNetworkString("as_admin_spawnitem")
+util.AddNetworkString("as_admin_changeskillxp")
 
 net.Receive("as_admin_modifyconvar", function( _, ply )
     local convar = net.ReadString()
@@ -50,4 +51,21 @@ net.Receive("as_admin_spawnitem", function( _, ply )
     if not ply:IsAdmin() then ply:ChatPrint("You are not an admin.") ply:ResyncInventory() return end
 
     ply:AdminSpawnItem( item, amt )
+end)
+
+net.Receive("as_admin_changeskillxp", function( _, ply )
+    local skill = net.ReadString()
+    local amt = net.ReadInt( 32 )
+
+    if not ply:IsAdmin() then ply:ChatPrint("You are not an admin.") return end
+
+    if amt > 0 then
+        ply:ChatPrint("Added " .. amt .. " experience to " .. skill .. ".")
+        ply:IncreaseSkillExperience( skill, amt )
+    else
+        amt = -amt
+        ply:ChatPrint("Removed " .. amt .. " experience from " .. skill .. ".")
+        ply:DecreaseSkillExperience( skill, amt )
+    end
+    ply:ResyncSkills()
 end)

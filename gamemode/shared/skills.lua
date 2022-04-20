@@ -70,6 +70,11 @@ function PlayerMeta:DecreaseSkillExperience( skill, amt )
     end
 end
 
+function ExpForLevel( skill, lvl )
+    if not AS.Skills[skill] then AS.LuaError("Attempting to index a non-existant skill - " .. skill) return end
+    return math.Round((AS.Skills[skill].basexp * lvl) ^ (AS.Skills[skill].power or 2), 2)
+end
+
 -- ██╗  ██╗ ██████╗  ██████╗ ██╗  ██╗███████╗
 -- ██║  ██║██╔═══██╗██╔═══██╗██║ ██╔╝██╔════╝
 -- ███████║██║   ██║██║   ██║█████╔╝ ███████╗

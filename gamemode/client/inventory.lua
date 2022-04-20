@@ -608,7 +608,10 @@ function AS.Inventory.BuildSkills()
             surface.DrawRect( (w - width) - 5, (h - height) - 5, width, height )
             --Bar
             surface.SetDrawColor( COLHUD_TERTIARY )
-            surface.DrawRect( (w - width) - 5, (h - height) - 5, (LocalPlayer():GetSkillExperience( k ) / LocalPlayer():ExpToLevelSkill( k )) * 740, 20)
+            local ply = LocalPlayer()
+            local curxp = ply:GetSkillExperience( k ) - ExpForLevel( k, ply:GetSkillLevel( k ) - 1 )
+            local nextxp = ExpForLevel( k, ply:GetSkillLevel( k ) + 1 ) - ExpForLevel( k, ply:GetSkillLevel( k ))
+            surface.DrawRect( (w - width) - 5, (h - height) - 5, (curxp / nextxp) * 740, 20)
         end
 
         local skillname = vgui.Create("DLabel", itempanel)
@@ -617,11 +620,15 @@ function AS.Inventory.BuildSkills()
         skillname:SetText( v.name )
         skillname:SizeToContents()
 
-        local skilldesc = vgui.Create("DLabel", itempanel)
-        skilldesc:SetPos( 20, 22 )
-        skilldesc:SetFont("TargetIDSmall")
-        skilldesc:SetText( v.desc )
-        skilldesc:SizeToContents()
+        local scroll_desc = vgui.Create("DScrollPanel", itempanel)
+        scroll_desc:SetPos( 20, 22 )
+        scroll_desc:SetSize( 800, 35 )
+
+        local desc = vgui.Create("DLabel", scroll_desc)
+        desc:SetText( v.desc )
+        desc:SetSize( scroll_desc:GetWide() - 15, scroll_desc:GetTall() )
+        desc:SetWrap( true )
+        desc:SetAutoStretchVertical( true )
 
         local skilllevel = vgui.Create("DLabel", itempanel)
         skilllevel:SetPos( 5, 55 )
