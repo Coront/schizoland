@@ -311,7 +311,7 @@ AS.AddLootTable( "file", {
             ["misc_chemical"] = {tickets = 100, min = 1, max = 4},
             --Items
             ["currency_dollar"] = {tickets = 60, min = 5, max = 25},
-            ["misc_mug"] = {tickets = 60, min = 1, max = 1},
+            ["misc_wrench"] = {tickets = 60, min = 1, max = 1},
             ["misc_seed_melon"] = {tickets = 50, min = 1, max = 1},
             ["misc_seed_orange"] = {tickets = 50, min = 1, max = 1},
             ["misc_electronicparts"] = {tickets = 40, min = 1, max = 1},
