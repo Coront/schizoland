@@ -283,7 +283,7 @@ function AS.Settings.BuildOptions()
     ToggleButton("GMod Multi-Core", xpos, ypos, settings_scroll, "gmod_mcore_test")
     addSpace( 0, 20 )
 
-    ValueSlider( "Item Render Distance", xpos, ypos, 100, 1000, settings_scroll, "as_item_renderdist" )
+    ValueSlider( "Item Render Distance", xpos, ypos, 100, 4000, settings_scroll, "as_item_renderdist" )
     addSpace( 0, 20 )
 
     ValueSlider( "Entity Render Distance", xpos, ypos, 500, 8000, settings_scroll, "as_entity_renderdist" )
@@ -314,6 +314,9 @@ function AS.Settings.BuildOptions()
     addSpace( 0, 20 )
 
     KeyBind( "Statistics", xpos, ypos, settings_scroll, "as_bind_stats" )
+    addSpace( 0, 20 )
+
+    KeyBind( "Players", xpos, ypos, settings_scroll, "as_bind_players" )
     addSpace( 0, 20 )
 
     KeyBind( "Classes", xpos, ypos, settings_scroll, "as_bind_class" )

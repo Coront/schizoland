@@ -2,6 +2,7 @@ AS_ClientConVar( "as_bind_inventory", "TAB", true, false )
 AS_ClientConVar( "as_bind_skills", "b", true, false )
 AS_ClientConVar( "as_bind_missions", "m", true, false )
 AS_ClientConVar( "as_bind_stats", "t", true, false )
+AS_ClientConVar( "as_bind_players", "p", true, false )
 AS_ClientConVar( "as_bind_class", "F3", true, false )
 AS_ClientConVar( "as_bind_craft", "F4", true, false )
 AS_ClientConVar( "as_bind_ownership", "F11", true, false )
@@ -36,6 +37,8 @@ hook.Add( "PlayerButtonDown", "AS_Binds", function( ply, button )
             AS.Class.Open()
         elseif button == GetConVarString("as_bind_craft") then
             AS.Craft.Open()
+        elseif button == GetConVarString("as_bind_players") then
+            AS.Inventory.Open( 5 )
         elseif button == GetConVarString("as_bind_ownership") then
             local tr = ply:TraceFromEyes( 150 )
             if tr.Entity and IsValid(tr.Entity) and tr.Entity:IsObjectOwnable() then

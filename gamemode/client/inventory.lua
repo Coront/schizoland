@@ -28,7 +28,7 @@ function AS.Inventory.Open( tab )
     end
     if GetConVar("as_menu_inventory_holdtoopen"):GetInt() > 0 then
         frame_inventory.Think = function( self )
-            if not input.IsButtonDown( input.GetKeyCode( GetConVarString("as_bind_inventory") ) ) and not input.IsButtonDown( input.GetKeyCode( GetConVarString("as_bind_stats") ) ) and not input.IsButtonDown( input.GetKeyCode( GetConVarString("as_bind_skills") ) ) and not input.IsButtonDown( input.GetKeyCode( GetConVarString("as_bind_missions") ) ) then
+            if not input.IsButtonDown( input.GetKeyCode( GetConVarString("as_bind_inventory") ) ) and not input.IsButtonDown( input.GetKeyCode( GetConVarString("as_bind_stats") ) ) and not input.IsButtonDown( input.GetKeyCode( GetConVarString("as_bind_skills") ) ) and not input.IsButtonDown( input.GetKeyCode( GetConVarString("as_bind_missions") ) ) and not input.IsButtonDown( input.GetKeyCode( GetConVarString("as_bind_players") ) ) then
                 self:Close()
             end
         end
@@ -57,6 +57,7 @@ function AS.Inventory.Open( tab )
     sheets:AddSheet("Skills", AS.Inventory.BuildSkills(), "icon16/user.png")
     sheets:AddSheet("Missions", AS.Inventory.BuildMissions(), "icon16/map.png")
     sheets:AddSheet("Statistics", AS.Inventory.BuildStats(), "icon16/chart_line.png")
+    sheets:AddSheet("Players", AS.Inventory.BuildPlayers(), "icon16/user_gray.png")
 
     if tab then
         sheets:SetActiveTab( sheets:GetItems()[tab].Tab )
@@ -672,8 +673,107 @@ function AS.Inventory.BuildStats()
         surface.DrawRect(0, 0, w, h)
     end
 
-    SmallLabel( "Playtime", 5, 0, scroll_stats )
-    SmallLabel( LocalPlayer():GetPlaytimeHourMin(), 200, 0, scroll_stats )
+    local xpos, ypos, statx = 5, 0, 250
+    local function addSpace() ypos = ypos + 20 end
+    local function addXSpace( amt ) xpos = xpos + amt end
+
+    SmallLabel( "Playtime", xpos, ypos, scroll_stats )
+    SmallLabel( LocalPlayer():GetPlaytimeHourMin(), xpos + statx, ypos, scroll_stats )
+    addSpace()
+
+    SmallLabel( "Overall Kills", xpos, ypos, scroll_stats )
+    SmallLabel( 0, xpos + statx, ypos, scroll_stats )
+    addSpace()
+    addXSpace( 15 )
+
+    SmallLabel( "Wasteland Threats Killed", xpos, ypos, scroll_stats )
+    SmallLabel( 0, xpos + statx, ypos, scroll_stats )
+    addSpace()
+
+    SmallLabel( "Players Killed", xpos, ypos, scroll_stats )
+    SmallLabel( 0, xpos + statx, ypos, scroll_stats )
+    addSpace()
+    addXSpace( -15 )
+
+    SmallLabel( "Overall Scavenges", xpos, ypos, scroll_stats )
+    SmallLabel( 0, xpos + statx, ypos, scroll_stats )
+    addSpace()
+    addXSpace( 15 )
+
+    SmallLabel( "Containers Looted", xpos, ypos, scroll_stats )
+    SmallLabel( 0, xpos + statx, ypos, scroll_stats )
+    addSpace()
+
+    SmallLabel( "Nodes Scavenged", xpos, ypos, scroll_stats )
+    SmallLabel( 0, xpos + statx, ypos, scroll_stats )
+    addSpace()
+
+    SmallLabel( "Nodes Depleted", xpos, ypos, scroll_stats )
+    SmallLabel( 0, xpos + statx, ypos, scroll_stats )
+    addSpace()
+
+    return stats
+end
+
+function AS.Inventory.BuildPlayers()
+    local stats = vgui.Create("DPanel", sheet)
+    stats.Paint = function() end
+
+    local scroll_players = vgui.Create("DScrollPanel", stats)
+    scroll_players:SetSize( 774, 0 )
+    scroll_players:Dock( FILL )
+    scroll_players:DockMargin( 0, 0, 0, 0 )
+    scroll_players.Paint = function(_,w,h)
+        surface.SetDrawColor( COLHUD_SECONDARY )
+        surface.DrawRect(0, 0, w, h)
+    end
+
+    local xpos, ypos = 5, 5
+
+    for k, v in pairs( player.GetAll() ) do
+        if not v:IsLoaded() then continue end
+
+        local panel = vgui.Create("DPanel", scroll_players)
+        panel:SetPos( xpos, ypos )
+        panel:SetSize( 850, 100 )
+        function panel:Paint( w, h )
+            surface.SetDrawColor( COLHUD_PRIMARY )
+            surface.DrawRect( 0, 0, w, h )
+        end
+
+        CharacterIcon( v:GetModel(), 5, 5, panel:GetTall() - 10, panel:GetTall() - 10, panel )
+
+        local name = vgui.Create("DLabel", panel)
+        name:SetFont( "TargetID" )
+        name:SetText( v:Nickname() .. " (" .. AS.Classes[v:GetASClass()].name .. ")" )
+        name:SetPos( 100, 5 )
+        name:SizeToContents()
+        name:SetColor( AS.Classes[v:GetASClass()].color )
+
+        local community = vgui.Create("DLabel", panel)
+        community:SetFont( "TargetID" )
+        community:SetText( "CommunityName" )
+        community:SetPos( 100, 25 )
+        community:SizeToContents()
+
+        local title = vgui.Create("DLabel", panel)
+        title:SetFont( "TargetID" )
+        title:SetText( "CommunityTitle" )
+        title:SetPos( 100, 45 )
+        title:SizeToContents()
+
+        local ping = vgui.Create("DLabel", panel)
+        ping:SetFont( "TargetID" )
+        ping:SetText( "Ping: " .. v:Ping() .. " m/s" )
+        ping:SetPos( 100, 80 )
+        ping:SizeToContents()
+        ping:SetColor( Color( 0, 185, 200) )
+        function ping:Think()
+            ping:SetText( "Ping: " .. v:Ping() .. " m/s" )
+        end
+
+        ypos = ypos + panel:GetTall() + 5
+    end
 
     return stats
 end
