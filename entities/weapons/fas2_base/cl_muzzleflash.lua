@@ -18,24 +18,7 @@ function SWEP:CreateMuzzle()
 	eyeang = self.Owner:EyeAngles()
 	
 	if self.MuzzleEffect then
-		if self.dt.Suppressed then
-			ParticleEffectAttach("muzzleflash_suppressed", PATTACH_POINT_FOLLOW, vm, muz2)
-		else
-			ParticleEffectAttach(self.MuzzleEffect, PATTACH_POINT_FOLLOW, vm, muz2)
-		end
-	end
-	
-	if not self.dt.Suppressed and muz then
-		dlight = DynamicLight(self:EntIndex())
-		
-		dlight.r = 255 
-		dlight.g = 218
-		dlight.b = 74
-		dlight.Brightness = 4
-		dlight.Pos = muz.Pos + self.Owner:GetAimVector() * 3
-		dlight.Size = 96
-		dlight.Decay = 128
-		dlight.DieTime = CurTime() + FrameTime()
+		ParticleEffectAttach("muzzleflash_suppressed", PATTACH_POINT_FOLLOW, vm, muz2)
 	end
 end
 

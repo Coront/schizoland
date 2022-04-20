@@ -228,8 +228,7 @@ function SWEP:Think()
 						dmg:SetInflictor(self)
 						dmg:SetDamageForce(force * 500)
 						ent:TakeDamageInfo(dmg)
-					else
-						self:EmitSound("physics/body/body_medium_impact_hard" .. math.random( 1, 6 ) .. ".wav", 70, 100)
+						self:GetOwner():EmitSound("physics/body/body_medium_impact_hard" .. math.random( 1, 6 ) .. ".wav", 70, 100)
 					end
 					hit = true
 					if tr.MatType == MAT_FLESH or tr.MatType == MAT_ANTLION or tr.MatType == MAT_ALIENFLESH or tr.MatType == MAT_BLOODYFLESH then
@@ -250,15 +249,14 @@ function SWEP:Think()
 						dmg:SetInflictor(self)
 						dmg:SetDamageForce(force * 500)
 						ent:TakeDamageInfo(dmg)
-					else
-						self:EmitSound("physics/body/body_medium_impact_hard" .. math.random( 1, 6 ) .. ".wav", 70, 100)
+						self:GetOwner():EmitSound("physics/body/body_medium_impact_hard" .. math.random( 1, 6 ) .. ".wav", 70, 100)
 					end
 					
 				end
 			end
 			if tr.HitWorld then
-				if CLIENT then
-					self:EmitSound("physics/body/body_medium_impact_hard" .. math.random( 1, 6 ) .. ".wav", 70, 100)
+				if SERVER then
+					self:GetOwner():EmitSound("physics/body/body_medium_impact_hard" .. math.random( 1, 6 ) .. ".wav", 70, 100)
 				end
 			end
 		end
