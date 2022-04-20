@@ -44,20 +44,22 @@ function PlayerMeta:UseItem( item )
         if use.hunger > 0 then
             self:AddHunger( use.hunger )
         else
-            self:TakeHunger( use.hunger )
+            self:TakeHunger( -use.hunger )
         end
     end
     if use.thirst then
         if use.thirst > 0 then
             self:AddThirst( use.thirst )
         else
-            self:TakeThirst( use.thirst )
+            self:TakeThirst( -use.thirst )
         end
     end
     if use.hunger or use.thirst then self:ResyncSatiation() end
     if use.stat then
-        self:AddStatus( use.stat.effect, use.stat.length )
-        self:ResyncStatuses()
+        for k, v in pairs( use.stat ) do
+            self:AddStatus( v.effect, v.length )
+            self:ResyncStatuses()
+        end
     end
     if use.sound then
         self:EmitSound( use.sound, 40 )
