@@ -11,27 +11,34 @@ CUE.Error = "buttons/button10.wav"
 -- ╚══════╝╚═╝  ╚═══╝   ╚═╝   ╚═╝   ╚═╝      ╚═╝       ╚═╝     ╚═╝╚══════╝   ╚═╝   ╚═╝  ╚═╝
 
 function EntityMeta:SetObjectOwner( ent )
-    self:SetNW2Entity( "as_owner", ent )
+    self:SetNWEntity( "as_owner", ent )
 end
 
 function EntityMeta:ClearObjectOwner()
-    self:SetNW2Entity( "as_owner", nil )
+    self:SetNWEntity( "as_owner", nil )
 end
 
 function EntityMeta:IsObjectOwnable()
-    if self:GetNW2Bool( "NoObjectOwner", false ) then return false end
+    if self:GetNWBool( "NoObjectOwner", false ) then return false end
     if self:GetClass() == "prop_door_rotating" or self:GetClass() == "func_door_rotating" or self:GetClass() == "func_door" or self:GetClass() == "prop_physics" then return true end
+    if self:GetNWBool( "AS_OwnableObject", false ) then return true end
     if self.AS_OwnableObject then return true end
     return false
 end
 
 function EntityMeta:GetObjectOwner()
-    return self:GetNW2Entity( "as_owner", nil )
+    return self:GetNWEntity( "as_owner", nil )
 end
 
 function EntityMeta:HasObjectOwner()
-    if IsValid(self:GetNW2Entity( "as_owner", nil )) then return true end
+    if IsValid(self:GetNWEntity( "as_owner", nil )) then return true end
     return false
+end
+
+function EntityMeta:PlayerCanPickUp( ply )
+    if ply:GetPos():Distance(self:GetPos()) > 300 then return false end
+	if IsValid(self:GetObjectOwner()) and self:GetObjectOwner() == ply then return true end
+	return false
 end
 
 -- ███╗   ██╗███████╗████████╗██╗    ██╗ ██████╗ ██████╗ ██╗  ██╗██╗███╗   ██╗ ██████╗

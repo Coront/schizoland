@@ -59,8 +59,8 @@ hook.Add("HUDPaint", "AS_Cases", function()
         if trace.HitWorld then continue end
 
         local pos = v:GetPos():ToScreen()
-        local owner = v:GetNW2String("owner", nil)
-        local claimer = v:GetNW2Entity("killer", nil)
+        local owner = v:GetNWString("owner", nil)
+        local claimer = v:GetNWEntity("killer", nil)
 
         if owner and owner != "" then
             draw.SimpleTextOutlined( owner .. "'s Case", "TargetIDSmall", pos.x, pos.y, COLHUD_DEFAULT, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 1, Color( 0, 0, 0 ) )

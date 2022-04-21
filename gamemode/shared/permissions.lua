@@ -12,7 +12,7 @@ end
 
 function GM:PhysgunPickup( ply, ent )
     if ply:IsAdmin() then return true end
-    if ent:GetNW2Bool( "NoObjectOwner", false ) then return false end
+    if ent:GetNWBool( "NoObjectOwner", false ) then return false end
     if (ent:GetObjectOwner() != ply) then return false end
     if not PERM.Physgunable[ent:GetClass()] then return false end
     if ent:GetPos():Distance(ply:GetPos()) > 2000 then return false end

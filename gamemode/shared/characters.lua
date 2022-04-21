@@ -1,13 +1,13 @@
 function PlayerMeta:IsLoaded()
-    return self:GetNW2Bool("as_spawned", false)
+    return self:GetNWBool("as_spawned", false)
 end
 
 function PlayerMeta:Nickname() --Returns the player's name.
-    return self:GetNW2String("as_name", self.name) or self:Nick()
+    return self:GetNWString("as_name", self.name) or self:Nick()
 end
 
 function PlayerMeta:IsFemale()
-    if string.find( self:GetNW2String( "as_referencemodel" ), "female" ) then
+    if string.find( self:GetNWString( "as_referencemodel" ), "female" ) then
         return true 
     end
     return false
@@ -23,7 +23,7 @@ end
 if SERVER then
 
     function PlayerMeta:LoadCharacter( playerid )
-        self:SetNW2Bool("as_spawned", true)
+        self:SetNWBool("as_spawned", true)
         self:Freeze(false)
         self:UnSpectate()
         self:AllowFlashlight( true )
@@ -40,12 +40,12 @@ if SERVER then
         local equipment = util.JSONToTable(sql.QueryValue("SELECT equipped FROM as_characters_inventory WHERE pid = " .. self.pid)) or {}
         self:Spawn()
 
-        self:SetNW2String( "as_name", name )
-        self:SetNW2String( "as_referencemodel", model )
+        self:SetNWString( "as_name", name )
+        self:SetNWString( "as_referencemodel", model )
         self.name = name
         self:SetModel(model)
         self:SetASClass(class)
-        self:SetNW2String( "as_class", self:GetASClass() )
+        self:SetNWString( "as_class", self:GetASClass() )
         self:SetHealth(stats.health)
         local health = SKL.Health
         if self:GetASClass() == "mercenary" then

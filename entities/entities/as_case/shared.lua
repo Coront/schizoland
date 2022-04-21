@@ -52,7 +52,7 @@ end
 
 function ENT:PlayerTakeItem( ply, itemid, amt )
     self:TakeItemFromInventory( itemid, amt )
-    if (SERVER) and self:GetNW2String("owner", "") != "" then
+    if (SERVER) and self:GetNWString("owner", "") != "" then
         ply:SetRecentInvDelay( CurTime() + SET.PlyCombatLength )
         ply:AddRecentInvItem( itemid, amt )
     end
@@ -71,15 +71,15 @@ function ENT:PlayerTakeAmmo( ply, itemid, amt )
 end
 
 function ENT:SetClaimer( ent )
-    self:SetNW2Entity("claimant", ent)
+    self:SetNWEntity("claimant", ent)
 end
 
 function ENT:GetClaimer()
-    return self:GetNW2Entity("claimant", nil)
+    return self:GetNWEntity("claimant", nil)
 end
 
 function ENT:DeclaimOwner()
-    self:SetNW2Entity("claimant", nil)
+    self:SetNWEntity("claimant", nil)
 end
 
 -- ███╗   ██╗███████╗████████╗██╗    ██╗ ██████╗ ██████╗ ██╗  ██╗██╗███╗   ██╗ ██████╗

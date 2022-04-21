@@ -68,7 +68,7 @@ if (SERVER) then
         local persists = util.JSONToTable(sql.QueryValue( "SELECT data FROM as_persists WHERE map = " .. SQLStr( game.GetMap() ) ))
         for k, v in pairs( persists ) do
             local ent = duplicator.CreateEntityFromTable( nil, v.entTable )
-            ent:SetNW2Bool( "NoObjectOwner", true )
+            ent:SetNWBool( "NoObjectOwner", true )
             ent:SetNWBool( "Persisted", true ) 
             ent:SetNWString( "PersistedOwner", v.owner )
             ent:SetNWString( "PersistedDate", v.date )
