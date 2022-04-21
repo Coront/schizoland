@@ -18,7 +18,7 @@ function GM:PlayerConnect( name, ip )
 end
 
 function GM:PlayerInitialSpawn( ply ) --Player's first spawn. 
-    ply:SetNW2Bool( "as_spawned", false ) --Player just loaded in, they have not selected their profile yet.
+    ply:SetNWBool( "as_spawned", false ) --Player just loaded in, they have not selected their profile yet.
     ply:ConCommand("as_spawnmenu")
 end
 
@@ -97,12 +97,12 @@ end
 
 function GM:PlayerDeath( victim, inflictor, attacker )
     local length = tobool(GetConVar("as_respawnwait"):GetInt()) and SET.DeathWait or 1
-    victim:SetNW2Int("AS_NextRespawn", CurTime() + length )
-    victim:SetNW2Int("AS_LastDeath", CurTime() )
+    victim:SetNWInt("AS_NextRespawn", CurTime() + length )
+    victim:SetNWInt("AS_LastDeath", CurTime() )
 end
 
 function GM:PlayerDeathThink( ply )
-    if CurTime() > (ply:GetNW2Int("AS_NextRespawn") or 0) then
+    if CurTime() > (ply:GetNWInt("AS_NextRespawn") or 0) then
         ply:Spawn()
     end
     return false
@@ -174,9 +174,9 @@ hook.Add( "DoPlayerDeath", "AS_PlayerDeath", function( ply, attacker, dmginfo )
         ent:Spawn()
         local phys = ent:GetPhysicsObject()
         phys:EnableMotion( false )
-        ent:SetNW2String("owner", ply:Nickname())
+        ent:SetNWString("owner", ply:Nickname())
         if attacker:IsPlayer() and ply != attacker then
-            ent:SetNW2Entity("killer", attacker)
+            ent:SetNWEntity("killer", attacker)
         end
     end
 
