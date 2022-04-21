@@ -15,7 +15,7 @@ function EntityMeta:SetObjectOwner( ent )
 end
 
 function EntityMeta:ClearObjectOwner()
-    self:SetNWEntity( "as_owner", nil )
+    self:SetNWEntity( "as_owner", "nil" )
 end
 
 function EntityMeta:IsObjectOwnable()
@@ -27,11 +27,11 @@ function EntityMeta:IsObjectOwnable()
 end
 
 function EntityMeta:GetObjectOwner()
-    return self:GetNWEntity( "as_owner", nil )
+    return self:GetNWEntity( "as_owner", "nil" )
 end
 
 function EntityMeta:HasObjectOwner()
-    if IsValid(self:GetNWEntity( "as_owner", nil )) then return true end
+    if IsValid(self:GetNWEntity( "as_owner", "nil" )) then return true end
     return false
 end
 
@@ -61,8 +61,8 @@ if (SERVER) then
                 ply:ChatPrint("Admin Force Unown of object: " .. ent:GetClass() .. " (Old Owner: " .. oldowner:Nickname() .. ")")
                 ent:EmitSound(CUE.Unown)
                 ent:ClearObjectOwner()
-                if ent.AS_OwnableObject then
-                    local item = FetchToolIDByClass( ent:GetClass() )
+                if ent.AS_OwnableObject or ent:GetNWBool("AS_OwnableObject", false) then
+                    local item = ent:IsVehicle() and ent:GetNWString( "ASID" ) or FetchToolIDByClass( ent:GetClass() )
                     oldowner:RemoveToolFromCache( item )
                 end
                 return 
@@ -75,16 +75,16 @@ if (SERVER) then
             else
                 ent:EmitSound(CUE.Unown)
                 ent:ClearObjectOwner()
-                if ent.AS_OwnableObject then
-                    local item = FetchToolIDByClass( ent:GetClass() )
+                if ent.AS_OwnableObject or ent:GetNWBool("AS_OwnableObject", false) then
+                    local item = ent:IsVehicle() and ent:GetNWString( "ASID" ) or FetchToolIDByClass( ent:GetClass() )
                     ply:RemoveToolFromCache( item )
                 end
             end
         else
             ent:EmitSound(CUE.Own)
             ent:SetObjectOwner( ply )
-            if ent.AS_OwnableObject then
-                local item = FetchToolIDByClass( ent:GetClass() )
+            if ent.AS_OwnableObject or ent:GetNWBool("AS_OwnableObject", false) then
+                local item = ent:IsVehicle() and ent:GetNWString( "ASID" ) or FetchToolIDByClass( ent:GetClass() )
                 ply:AddToolToCache( item )
             end
         end
