@@ -156,7 +156,7 @@ AS.AddBaseItem("wep_bizon", {
     desc = "A compact SMG that holds 30 rounds. Uses 9x19mm ammunition.",
     category = "weapon",
     model = "models/items/weapons/bizon.mdl",
-    wep = "weapon_mp5",
+    wep = "weapon_bizon",
     value = 100,
     weight = 1.4,
     hidden = true,
