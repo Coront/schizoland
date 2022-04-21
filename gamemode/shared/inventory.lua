@@ -121,7 +121,7 @@ end
 function PlayerMeta:GetAllTools() --Will return a table of a player's deployed tools
     local tbl = {}
     for k, v in pairs( ents.GetAll() ) do
-        if not v.AS_OwnableObject then continue end --Ignore everything that's not an ownable object
+        if not v.AS_OwnableObject and self:GetNWBool( "AS_OwnableObject", false ) then continue end --Ignore everything that's not an ownable object
         if not IsValid(v:GetObjectOwner()) then continue end
         if v:GetObjectOwner() != self then continue end
         tbl[k] = v

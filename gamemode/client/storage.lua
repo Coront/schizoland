@@ -2,8 +2,7 @@ AS.Storage = {}
 
 local ent
 
-function AS.Storage.Menu()
-    ent = net.ReadEntity()
+function AS.Storage.Menu( ent )
     if not IsValid(ent) then return end
 
     if IsValid(frame_storage) then frame_storage:Close() end
@@ -20,6 +19,9 @@ function AS.Storage.Menu()
         surface.SetDrawColor( COLHUD_PRIMARY )
         surface.DrawRect( 0, 0, w, h )
     end
+    function frame_storage:Think()
+        if not IsValid(ent) then frame_storage:Close() end
+    end
 
     local closebutton = vgui.Create("DButton", frame_storage)
     closebutton:SetSize( 25, 25 )
@@ -33,6 +35,23 @@ function AS.Storage.Menu()
             frame_storage:Close()
             ent:EmitSound(STORAGECUE.CLOSE)
         end
+    end
+
+    local pickup = vgui.Create("DButton", frame_storage)
+    pickup:SetSize( 80, 20 )
+    pickup:SetPos( frame_storage:GetWide() - closebutton:GetWide() - pickup:GetWide(), 3 )
+    pickup:SetText("Pick Up")
+    pickup:SetEnabled( false )
+    pickup:SetTooltip("You are not the owner of this object.")
+    if ent:PlayerCanPickUp( LocalPlayer() ) then
+        pickup:SetEnabled( true )
+        pickup:SetTooltip("Pickup the entity and place it in your inventory.")
+    end
+    pickup.DoClick = function()
+        net.Start("as_storage_pickup")
+            net.WriteEntity( ent )
+        net.SendToServer()
+        frame_storage:Close()
     end
 
     local inventory = vgui.Create("DLabel", frame_storage)
@@ -58,7 +77,7 @@ function AS.Storage.Menu()
     inventorysearchbar:SetPlaceholderText( "Search an item here. Hit enter to submit." )
     inventorysearchbar.OnEnter = function( self )
         inventoryitemlist:Clear()
-        AS.Storage.BuildInventory()
+        AS.Storage.BuildInventory( ent )
     end
 
     weightlbl = vgui.Create("DLabel", inventorypanel)
@@ -68,7 +87,7 @@ function AS.Storage.Menu()
     weightlbl:SizeToContents()
     weightlbl:SetPos( 5, 27 )
 
-    AS.Storage.BuildInventory()
+    AS.Storage.BuildInventory( ent )
 
     local storage = vgui.Create("DLabel", frame_storage)
     storage:SetFont("TargetID")
@@ -93,21 +112,21 @@ function AS.Storage.Menu()
     banksearchbar:SetPlaceholderText( "Search an item here. Hit enter to submit." )
     banksearchbar.OnEnter = function( self )
         storageitemlist:Clear()
-        AS.Storage.BuildStorage()
+        AS.Storage.BuildStorage( ent )
     end
 
     bankweightlbl = vgui.Create("DLabel", storagepanel)
     bankweightlbl:SetFont("TargetID")
-    bankweightlbl:SetText( "Weight: " .. LocalPlayer():GetBankWeight() .. " / " .. LocalPlayer():MaxBankWeight() )
+    bankweightlbl:SetText( "Weight: " .. LocalPlayer():GetBankWeight() .. " / " .. LocalPlayer():MaxBankWeight( ent:GetNWString("ASID") ) )
     bankweightlbl:SetContentAlignment( 3 )
     bankweightlbl:SizeToContents()
     bankweightlbl:SetPos( 5, 27 )
 
-    AS.Storage.BuildStorage()
+    AS.Storage.BuildStorage( ent )
 end
 net.Receive( "as_storage_open", AS.Storage.Menu )
 
-function AS.Storage.BuildInventory()
+function AS.Storage.BuildInventory( ent )
     local itemscrollpanel = vgui.Create("DScrollPanel", inventorypanel)
     itemscrollpanel:SetSize( inventorypanel:GetWide(), 0 )
     itemscrollpanel:Dock( FILL )
@@ -156,13 +175,13 @@ function AS.Storage.BuildInventory()
                 itemamt:SetPos( (panel:GetWide() - itemamt:GetWide()) - 2, panel:GetTall() - itemamt:GetTall() )
                 weightlbl:SetText( "Weight: " .. LocalPlayer():GetCarryWeight() .. " / " .. LocalPlayer():MaxCarryWeight() )
                 weightlbl:SizeToContents()
-                bankweightlbl:SetText( "Weight: " .. LocalPlayer():GetBankWeight() .. " / " .. LocalPlayer():MaxBankWeight() )
+                bankweightlbl:SetText( "Weight: " .. LocalPlayer():GetBankWeight() .. " / " .. LocalPlayer():MaxBankWeight( ent:GetNWString("ASID") ) )
                 bankweightlbl:SizeToContents()
             else
                 panel:Remove()
                 weightlbl:SetText( "Weight: " .. LocalPlayer():GetCarryWeight() .. " / " .. LocalPlayer():MaxCarryWeight() )
                 weightlbl:SizeToContents()
-                bankweightlbl:SetText( "Weight: " .. LocalPlayer():GetBankWeight() .. " / " .. LocalPlayer():MaxBankWeight() )
+                bankweightlbl:SetText( "Weight: " .. LocalPlayer():GetBankWeight() .. " / " .. LocalPlayer():MaxBankWeight( ent:GetNWString("ASID") ) )
                 bankweightlbl:SizeToContents()
             end
         end
@@ -174,7 +193,7 @@ function AS.Storage.BuildInventory()
             surface.PlaySound(STORAGECUE.TRANSFER)
 
             storageitemlist:Clear()
-            AS.Storage.BuildStorage()
+            AS.Storage.BuildStorage( ent )
 
             net.Start("as_storage_tostore")
                 net.WriteString( item )
@@ -206,7 +225,7 @@ function AS.Storage.BuildInventory()
     end
 end
 
-function AS.Storage.BuildStorage()
+function AS.Storage.BuildStorage( ent )
     local itemscrollpanel = vgui.Create("DScrollPanel", storagepanel)
     itemscrollpanel:SetSize( storagepanel:GetWide(), 0 )
     itemscrollpanel:Dock( FILL )
@@ -254,13 +273,13 @@ function AS.Storage.BuildStorage()
                 itemamt:SetPos( (panel:GetWide() - itemamt:GetWide()) - 2, panel:GetTall() - itemamt:GetTall() )
                 weightlbl:SetText( "Weight: " .. LocalPlayer():GetCarryWeight() .. " / " .. LocalPlayer():MaxCarryWeight() )
                 weightlbl:SizeToContents()
-                bankweightlbl:SetText( "Weight: " .. LocalPlayer():GetBankWeight() .. " / " .. LocalPlayer():MaxBankWeight() )
+                bankweightlbl:SetText( "Weight: " .. LocalPlayer():GetBankWeight() .. " / " .. LocalPlayer():MaxBankWeight( ent:GetNWString("ASID") ) )
                 bankweightlbl:SizeToContents()
             else
                 panel:Remove()
                 weightlbl:SetText( "Weight: " .. LocalPlayer():GetCarryWeight() .. " / " .. LocalPlayer():MaxCarryWeight() )
                 weightlbl:SizeToContents()
-                bankweightlbl:SetText( "Weight: " .. LocalPlayer():GetBankWeight() .. " / " .. LocalPlayer():MaxBankWeight() )
+                bankweightlbl:SetText( "Weight: " .. LocalPlayer():GetBankWeight() .. " / " .. LocalPlayer():MaxBankWeight( ent:GetNWString("ASID") ) )
                 bankweightlbl:SizeToContents()
             end
         end
@@ -272,7 +291,7 @@ function AS.Storage.BuildStorage()
             surface.PlaySound(STORAGECUE.TRANSFER)
 
             inventoryitemlist:Clear()
-            AS.Storage.BuildInventory()
+            AS.Storage.BuildInventory( ent )
 
             net.Start("as_storage_toinventory")
                 net.WriteString( item )

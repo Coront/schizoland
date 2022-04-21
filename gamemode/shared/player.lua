@@ -26,8 +26,8 @@ hook.Add( "Think", "AS_Armor", function()
         if not v:Alive() then continue end --This incase too
         if CurTime() < (v.NextArmorUpdate or 0) then continue end --Not their turn to update yet.
         if not v:HasArmor() then
-            if (SERVER) and v:GetModel() != v:GetNW2String( "as_referencemodel" ) then --This check make sures that a player's model is reset.
-                v:SetModel( v:GetNW2String( "as_referencemodel" ) )
+            if (SERVER) and v:GetModel() != v:GetNWString( "as_referencemodel" ) then --This check make sures that a player's model is reset.
+                v:SetModel( v:GetNWString( "as_referencemodel" ) )
             end
             continue 
         end
@@ -38,7 +38,7 @@ hook.Add( "Think", "AS_Armor", function()
         local armorwep = v:GetArmorWep()
 
         if (armorwep.Model or armorwep.ModelOverride) and ( SERVER ) then
-            local model = armorwep.Model or armorwep.ModelOverride and (armorwep.ModelOverride[v:GetNW2String( "as_referencemodel" )] or armorwep.ModelOverride["default"])
+            local model = armorwep.Model or armorwep.ModelOverride and (armorwep.ModelOverride[v:GetNWString( "as_referencemodel" )] or armorwep.ModelOverride["default"])
             if curmodel != model then
                 v:SetModel( model )
             end

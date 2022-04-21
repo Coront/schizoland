@@ -9,7 +9,7 @@ function GM:OnPlayerChat( ply, txt, team, dead )
 	local tab = {}
 
 	if ( IsValid( ply ) ) then
-		table.insert( tab, AS.Classes[ply:GetNW2String("as_class")].color )
+		table.insert( tab, AS.Classes[ply:GetNWString("as_class")].color )
 		table.insert( tab, ply:Nickname() )
 		table.insert( tab, color_white )
 		table.insert( tab, ": " .. txt )
@@ -81,7 +81,7 @@ hook.Add("PostDrawTranslucentRenderables", "AS_ArmorOverlay", function()
 end)
 
 hook.Add("PrePlayerDraw", "AS_PlayerHide", function( ply )
-    if ply:GetMoveType() == MOVETYPE_NOCLIP and not LocalPlayer():IsDeveloping() then return true end
+    if (ply:GetMoveType() == MOVETYPE_NOCLIP and not ply:InVehicle()) and not LocalPlayer():IsDeveloping() then return true end
     if ply.HideDefault then
         ply:SetMaterial( "Models/effects/vol_light001" )
     else

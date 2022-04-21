@@ -24,9 +24,14 @@ end )
 hook.Add( "PlayerButtonDown", "AS_Binds", function( ply, button )
     if IsFirstTimePredicted() then
         local button = GetKeyName( button )
+        local tr = ply:TraceFromEyes( 200 )
 
         if button == GetConVarString("as_bind_inventory") then
-            AS.Inventory.Open()
+            if IsValid(tr.Entity) and tr.Entity:GetClass() == "prop_vehicle_jeep" and tr.Entity:GetObjectOwner() == ply then
+                AS.Storage.Menu( tr.Entity )
+            else
+                AS.Inventory.Open()
+            end
         elseif button == GetConVarString("as_bind_skills") then
             AS.Inventory.Open( 2 )
         elseif button == GetConVarString("as_bind_missions") then

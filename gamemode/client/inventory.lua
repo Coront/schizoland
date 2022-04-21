@@ -169,6 +169,13 @@ function AS.Inventory.BuildInventory()
                         net.WriteString( k )
                         net.WriteInt( 1, 32 )
                     net.SendToServer()
+                elseif AS.Items[k].category == "vehicle" then
+                    LocalPlayer():TakeItemFromInventory( k, 1 )
+                    itemamtUpdate()
+                    net.Start("as_inventory_dropitem")
+                        net.WriteString( k )
+                        net.WriteInt( 1, 32 )
+                    net.SendToServer()
                 end
             end
             panel.DoRightClick = function()
@@ -204,7 +211,7 @@ function AS.Inventory.BuildInventory()
                         net.WriteInt( amt, 32 )
                     net.SendToServer()
                 end
-                if AS.Items[k].category != "tool" then
+                if AS.Items[k].category != "tool" and AS.Items[k].category != "vehicle" then
                     if v > 1 then
                         options:AddOption("Drop 1", function()
                             dropItem( k, 1 )

@@ -119,7 +119,7 @@ end
 
 function PlayerMeta:IsDeveloping() --Will return if a player is in developer mode
     if not IsValid(self) or not self:Alive() then return false end
-    if self:IsAdmin() and self:GetMoveType() == MOVETYPE_NOCLIP and (self:GetActiveWeapon():GetClass() == "weapon_physgun" or self:GetActiveWeapon():GetClass() == "gmod_tool") then return true end
+    if self:IsAdmin() and (self:GetMoveType() == MOVETYPE_NOCLIP and not self:InVehicle()) and (self:GetActiveWeapon():GetClass() == "weapon_physgun" or self:GetActiveWeapon():GetClass() == "gmod_tool") then return true end
     return false
 end
 

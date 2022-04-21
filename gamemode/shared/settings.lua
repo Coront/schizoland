@@ -72,6 +72,7 @@ PERM.PropBlacklist = { --Props that are forbidden from being spawned
     ["models/props_phx/ww2bomb.mdl"] = true, --Explosive
     ["models/props_phx/misc/flakshell_big.mdl"] = true, --Explosive
     ["models/props_phx/misc/potato_launcher_explosive.mdl"] = true, --Explosive
+    ["models/props_phx/ball.mdl"] = true, --Explosive
 }
 PERM.ToolWhitelist = { --Tools that regular players can use
     ["precision"] = true,

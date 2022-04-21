@@ -99,19 +99,52 @@ function PlayerMeta:UnequipAmmo( item, amt )
     self:ChatPrint("Unequipped " .. AS.Items[item].name .. " (" .. amt .. ").")
 end
 
+function PlayerMeta:DeployVehicle( item )
+    local ent = ents.Create("prop_vehicle_jeep")
+    ent:SetAngles(Angle(0,180,0))
+    ent:SetModel( AS.Items[item].model )
+    ent:SetNWBool("AS_OwnableObject", true)
+
+    local name = AS.Items[item].ent
+    local vlist = list.Get( "Vehicles" ) --Will return all of the vehicles.
+    local vehicle = vlist[ name ] --A table of the vehicle information.
+
+    for k, v in pairs( vehicle.KeyValues ) do
+        ent:SetKeyValue( k, v ) --We'll apply all of the key values from the vehicle table
+    end
+
+    ent.VehicleName = vname
+    ent.VehicleTable = vehicle
+    ent:SetNWString("ASID", item)
+
+    ent:SetObjectOwner( self )
+    self:AddToolToCache( item )
+
+    return ent
+end
+
+function PlayerMeta:DeployTool( item )
+    local class = AS.Items[item].ent or "prop_physics"
+    ent = ents.Create(class)
+    if ent:GetClass() == "prop_physics" then
+        ent:SetModel( AS.Items[item].model )
+    end
+    ent:SetObjectOwner( self )
+    self:AddToolToCache( item )
+
+    return ent
+end
+
 function PlayerMeta:DropItem( item, amt )
     local itemname = AS.Items[item].name
-    
+
     local ent
     if AS.Items[item].category == "tool" then
         self:TakeItemFromInventory( item, 1 )
-        local class = AS.Items[item].ent or "prop_physics"
-        ent = ents.Create(class)
-        if ent:GetClass() == "prop_physics" then
-            ent:SetModel( AS.Items[item].model )
-        end
-        ent:SetObjectOwner( self )
-        self:AddToolToCache( item )
+        ent = self:DeployTool( item )
+    elseif AS.Items[item].category == "vehicle" then
+        self:TakeItemFromInventory( item, 1 )
+        ent = self:DeployVehicle( item )
     else
         self:TakeItemFromInventory( item, amt )
         ent = ents.Create("as_baseitem")
