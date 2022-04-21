@@ -284,7 +284,7 @@ function AftershockHUDDeath()
     surface.SetDrawColor(COLHUD_DEFAULT) --Set color to hud color
     surface.DrawOutlinedRect(barx, bary, width, height, outline) --Health bar outline
     local length = tobool(GetConVar("as_respawnwait"):GetInt()) and SET.DeathWait or 1
-    local percent = (CurTime() - (LocalPlayer():GetNW2Int("AS_LastDeath") or 0)) / length
+    local percent = (CurTime() - (LocalPlayer():GetNWInt("AS_LastDeath") or 0)) / length
     surface.DrawRect(barx + 2, bary + 2, math.Clamp((percent * 200 - 4), 0, 200 - 4), height - 4) --Health bar
 end
 
@@ -338,8 +338,8 @@ function AftershockHUDVoice()
         surface.DrawRect( ASHUDVOICE_xpos, ASHUDVOICE_ypos, ASHUDVOICE_width, ASHUDVOICE_height, 1 )
         surface.SetDrawColor( COLHUD_DEFAULT )
         surface.DrawOutlinedRect( ASHUDVOICE_xpos, ASHUDVOICE_ypos, ASHUDVOICE_width, ASHUDVOICE_height, 1 )
-        local color = AS.Classes[k:GetNW2String("as_class", nil)].color or COLHUD_DEFAULT
-        draw.SimpleTextOutlined( k:Nickname() .. " (" .. AS.Classes[k:GetNW2String("as_class", nil)].name .. ")", "AftershockHUDSmall", ASHUDVOICE_xpos + 5, ASHUDVOICE_ypos + ASHUDVOICE_height - 3, color, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM, 1, Color(0,0,0) )
+        local color = AS.Classes[k:GetNWString("as_class", nil)].color or COLHUD_DEFAULT
+        draw.SimpleTextOutlined( k:Nickname() .. " (" .. AS.Classes[k:GetNWString("as_class", nil)].name .. ")", "AftershockHUDSmall", ASHUDVOICE_xpos + 5, ASHUDVOICE_ypos + ASHUDVOICE_height - 3, color, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM, 1, Color(0,0,0) )
 
         ASHUDVOICE_ypos = ASHUDVOICE_ypos + ASHUDVOICE_height + ASHUDVOICE_spacing
     end
