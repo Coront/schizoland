@@ -146,8 +146,15 @@ concommand.Add( "as_mobs_clear", AS.GridEnts.ClearMobs )
 
 function AS.GridEnts.CountNodes( ply ) --This will count all of the nodes that are spawned and make a detailed report in the console.
     local overallNodes = 0
+    local scrapNodes = 0
+    local chemNodes = 0
     for k, v in pairs( ents.FindByClass("as_lootnode") ) do
         overallNodes = overallNodes + 1
+        if v:GetResourceType() == "Scrap" then
+            scrapNodes = scrapNodes + 1
+        elseif v:GetResourceType() == "Chemical" then
+            chemNodes = chemNodes + 1
+        end
     end
 
     if ply and IsValid( ply ) then
@@ -155,6 +162,8 @@ function AS.GridEnts.CountNodes( ply ) --This will count all of the nodes that a
         ply:PrintMessage( HUD_PRINTCONSOLE, "||                                Node Report                                 ||")
         ply:PrintMessage( HUD_PRINTCONSOLE, "[[============================================================================]]" )
         ply:PrintMessage( HUD_PRINTCONSOLE, "|| Current Node Multiplier: " .. NOD.SpawnMult * (AS.Maps[game.GetMap()] and AS.Maps[game.GetMap()].NodeMult or 1) )
+        ply:PrintMessage( HUD_PRINTCONSOLE, "|| Scrap Nodes: " .. scrapNodes )
+        ply:PrintMessage( HUD_PRINTCONSOLE, "|| Chemical Nodes: " .. chemNodes )
         ply:PrintMessage( HUD_PRINTCONSOLE, "|| Total Nodes: " .. overallNodes )
         ply:PrintMessage( HUD_PRINTCONSOLE, "[[============================================================================]]" )
     else
@@ -162,6 +171,8 @@ function AS.GridEnts.CountNodes( ply ) --This will count all of the nodes that a
         print( "||                                Node Report                                 ||")
         print( "[[============================================================================]]" )
         print( "|| Current Node Multiplier: " .. NOD.SpawnMult * (AS.Maps[game.GetMap()] and AS.Maps[game.GetMap()].NodeMult or 1) )
+        print( "|| Scrap Nodes: " .. scrapNodes )
+        print( "|| Chemical Nodes: " .. chemNodes )
         print( "|| Total Nodes: " .. overallNodes )
         print( "[[============================================================================]]" )
     end
