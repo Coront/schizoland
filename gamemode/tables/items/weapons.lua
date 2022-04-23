@@ -48,7 +48,7 @@ AS.AddBaseItem("wep_glock17", {
     desc = "A pistol that holds 15 rounds. Uses 9x19mm ammunition.",
     category = "weapon",
     model = "models/weapons/w_pist_glock18.mdl",
-    wep = "weapon_glock20",
+    wep = "weapon_glock",
     value = 25,
     weight = 0.8,
     class = "engineer",
