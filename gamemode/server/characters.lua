@@ -26,6 +26,7 @@ function PlayerMeta:CreateCharacter( name, model, class )
     local health = class == "scavenger" and SKL.Health * CLS.Scavenger.healthmult or class == "mercenary" and SKL.Health * CLS.Mercenary.healthmult or SKL.Health
     sql.Query( "INSERT INTO as_characters_stats VALUES ( " .. newpid .. ", " .. health .. ", 100, 100, 0 )" )
     sql.Query( "INSERT INTO as_cache_tools VALUES ( " .. newpid .. ", NULL )" )
+    sql.Query( "INSERT INTO as_communities_members VALUES ( " .. newpid .. ", NULL, NULL, NULL )" )
 
     self:ConCommand("as_characters")
 end
@@ -38,7 +39,7 @@ end
 function PlayerMeta:SaveCharacter()
     local pid = self.pid
     if not pid then return false end
-    if not (self.FullyLoadedCharacter or false) then print("Stopped player: " .. self:Nickname() .. "'s data from saving, encountered an error while loading profile.") return false end
+    if not (self.FullyLoadedCharacter or false) then print("Stopped " .. self:Nickname() .. "'s data from saving, encountered an error while loading profile.") return false end
 
     local equipped = {}
     for k, v in pairs(self:GetAmmo()) do
@@ -61,6 +62,7 @@ function PlayerMeta:SaveCharacter()
     sql.Query( "UPDATE as_characters_skills SET skills = " .. SQLStr(util.TableToJSON( self:GetSkills(), true )) .. " WHERE pid = " .. pid )
     sql.Query( "UPDATE as_characters_stats SET health = " .. self:Health() .. ", hunger = " .. self:GetHunger() .. ", thirst = " .. self:GetThirst() .. ", playtime = " .. self:GetPlaytime() .. " WHERE pid = " .. pid )
     sql.Query( "UPDATE as_characters SET class = " .. SQLStr( self:GetASClass() ) .. ", laston = " .. SQLStr( os.date( "%m/%d/%y - %I:%M %p", os.time() ) ) .. " WHERE pid = " .. pid )
+    sql.Query( "UPDATE as_communities_members SET cid = " .. self:GetCommunity() .. ", title = " .. SQLStr( self:GetTitle() ) .. ", rank = " .. self:GetRank() .. " WHERE pid = " .. pid )
     return true --Saving was successful.
 end
 

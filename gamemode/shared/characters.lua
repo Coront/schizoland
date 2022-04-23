@@ -38,11 +38,14 @@ if SERVER then
         local toolcache = util.JSONToTable(sql.QueryValue("SELECT tools FROM as_cache_tools WHERE pid = " .. self.pid)) or {}
         local bank = util.JSONToTable(sql.QueryValue("SELECT bank FROM as_characters_inventory WHERE pid = " .. self.pid)) or {}
         local equipment = util.JSONToTable(sql.QueryValue("SELECT equipped FROM as_characters_inventory WHERE pid = " .. self.pid)) or {}
+        local community = tonumber(sql.QueryValue("SELECT cid FROM as_communities_members WHERE pid = " .. self.pid)) or 0
+        local rank = tonumber(sql.QueryValue("SELECT rank FROM as_communities_members WHERE pid = " .. self.pid)) or -1
+        local title = sql.QueryValue("SELECT title FROM as_communities_members WHERE pid = " .. self.pid)
+
         self:Spawn()
 
         self:SetNWString( "as_name", name )
         self:SetNWString( "as_referencemodel", model )
-        self.name = name
         self:SetModel(model)
         self:SetASClass(class)
         self:SetNWString( "as_class", self:GetASClass() )
@@ -75,11 +78,13 @@ if SERVER then
             end
         end
         self:SetPlaytime(stats.playtime)
+        self:SetCommunity( tonumber(community) )
+        self:SetRank( rank )
+        self:SetTitle( title )
         self:ValidateInventory()
         self:ValidateStorage()
 
         net.Start("as_characters_syncdata")
-            net.WriteString(self.name)
             net.WriteString(self:GetASClass())
             net.WriteInt(self:GetHunger(), 32)
             net.WriteInt(self:GetThirst(), 32)
@@ -98,8 +103,6 @@ elseif CLIENT then
 
     net.Receive("as_characters_syncdata", function()
         local ply = LocalPlayer()
-    
-        ply.name = net.ReadString()
         ply:SetASClass(net.ReadString())
         ply:SetHunger(net.ReadInt(32))
         ply:SetThirst(net.ReadInt(32))

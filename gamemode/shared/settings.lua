@@ -147,6 +147,19 @@ SAT.ThirstLoss = 1 --Thirst loss on update
 SAT.StarveDamage = 2 --How much damage starvation should deal on next hunger update
 SAT.DehydratedDamage = 1 --How much damage dehydration should deal on next thirst update
 SAT.SatBuffs = 85 --The amount of hunger + thirst a player must remain above in order to receive the passive buffs.
+--Communities
+SET.MaxMembers = 30 --Maximum members a community can have.
+SET.MaxRanks = 8 --Maximum ranks a community can have.
+SET.CommunitiesPerms = { --Permissions are hardcoded, so you'll have to manage the table here if you want to add any.
+    ["admin"] = {name = "Admin", desc = "Provides access everything, and community management."},
+    ["invite"] = {name = "Invite", desc = "Can invite players to the community."},
+    ["kick"] = {name = "Kick", desc = "Can kick players from the community (excluding admins)."},
+    ["title"] = {name = "Title", desc = "Can modify player titles of other community members (excluding admins)."},
+    ["ally"] = {name = "Ally", desc = "Can accept/decline ally requests sent from other communities."},
+    ["war"] = {name = "War", desc = "Can accept/decline war requests sent from other communities."},
+    ["locker"] = {name = "Locker", desc = "Can deploy/breakdown the community locker. This is a raidable object."},
+    ["stockpile"] = {name = "Stockpile", desc = "Can deploy/breakdown the community stockpile. This is a raidable object."},
+}
 --Mobs
 SET.Mobs = {}
 MOB = SET.Mobs

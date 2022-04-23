@@ -230,6 +230,7 @@ function AftershockHUD()
     local target = LocalPlayer():GetActiveTarget()
     if targetinfo and target and IsValid(target) and target:Alive() then
         local col = (target:IsNextBot() or target:IsNPC()) and (target.Hostile and target:Hostile() or false) and COLHUD_BAD:ToTable() or COLHUD_DEFAULT:ToTable()
+        col = target:IsPlayer() and target:InCommunity() and target:GetCommunity() == LocalPlayer():GetCommunity() and COLHUD_GOOD:ToTable() or col
         local alpha = 255
         local newcol = Color( col[1], col[2], col[3], alpha )
         surface.SetDrawColor( newcol )
@@ -237,7 +238,12 @@ function AftershockHUD()
         local x, y, width, height, outline = ((ScrW() * 0.5) + xadd), ((ScrH() * 0.88) + yadd), (GetConVar("as_hud_targetinfo_width"):GetInt() * HUD_SCALE), (GetConVar("as_hud_targetinfo_height"):GetInt() * HUD_SCALE), (1)
         local health, maxhealth = (math.Clamp(target:Health(), 0, target:GetMaxHealth())), (target:GetMaxHealth())
         local name = target:IsPlayer() and target:Nickname() or target.PrintName or target:GetClass()
-        draw.SimpleTextOutlined(name, "AftershockHUD", x, y - 5, newcol, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM, outline, Color(0,0,0))
+        local namey = y - 5
+        if target:IsPlayer() and target:InCommunity() then
+            draw.SimpleTextOutlined( target:GetCommunityName() .. " - " .. target:GetTitle(), "AftershockHUDVerySmall", x, y - 5, newcol, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM, outline, Color(0,0,0))
+            namey = namey - (12 * HUD_SCALE)
+        end
+        draw.SimpleTextOutlined(name, "AftershockHUD", x, namey, newcol, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM, outline, Color(0,0,0))
         x = x - (width / 2)
         surface.DrawOutlinedRect( x, y, width, height, outline )
         surface.DrawRect( x + 2, y + 2, ((health / maxhealth) * width) - 4, height - 4 )

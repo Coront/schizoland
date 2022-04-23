@@ -37,13 +37,13 @@ hook.Add( "PlayerButtonDown", "AS_Binds", function( ply, button )
         elseif button == GetConVarString("as_bind_missions") then
             AS.Inventory.Open( 3 )
         elseif button == GetConVarString("as_bind_stats") then
-            AS.Inventory.Open( 4 )
+            AS.Inventory.Open( 5 )
         elseif button == GetConVarString("as_bind_class") then
             AS.Class.Open()
         elseif button == GetConVarString("as_bind_craft") then
             AS.Craft.Open()
         elseif button == GetConVarString("as_bind_players") then
-            AS.Inventory.Open( 5 )
+            AS.Inventory.Open( 6 )
         elseif button == GetConVarString("as_bind_ownership") then
             local tr = ply:TraceFromEyes( 150 )
             if tr.Entity and IsValid(tr.Entity) and tr.Entity:IsObjectOwnable() then

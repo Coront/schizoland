@@ -1,3 +1,5 @@
+--I should probably note that this entire file is shitcoded, if you're looking at this im truly sorry lol
+
 AS.Inventory = {}
 
 -- ███╗   ███╗███████╗███╗   ██╗██╗   ██╗
@@ -34,7 +36,7 @@ function AS.Inventory.Open( tab )
         end
     end
 
-    local sheets = vgui.Create("DPropertySheet", frame_inventory)
+    sheets = vgui.Create("DPropertySheet", frame_inventory)
     sheets:SetPos(5, 5)
     sheets:SetFadeTime( 0 )
     sheets:SetSize( frame_inventory:GetWide() - (sheets:GetX() * 2), frame_inventory:GetTall() - (sheets:GetY() * 2))
@@ -56,6 +58,7 @@ function AS.Inventory.Open( tab )
     sheets:AddSheet("Inventory", AS.Inventory.BuildInventory(), "icon16/box.png")
     sheets:AddSheet("Skills", AS.Inventory.BuildSkills(), "icon16/user.png")
     sheets:AddSheet("Missions", AS.Inventory.BuildMissions(), "icon16/map.png")
+    sheets:AddSheet("Community", AS.Inventory.BuildCommunity(), "icon16/vcard.png")
     sheets:AddSheet("Statistics", AS.Inventory.BuildStats(), "icon16/chart_line.png")
     sheets:AddSheet("Players", AS.Inventory.BuildPlayers(), "icon16/user_gray.png")
 
@@ -664,6 +667,12 @@ function AS.Inventory.BuildMissions()
     local missions = vgui.Create("DPanel", sheet)
     missions.Paint = function() end
 
+    local wip = vgui.Create("DLabel", missions)
+    wip:SetPos( 5, 5 )
+    wip:SetFont("TargetID")
+    wip:SetText( "Work In Progress" )
+    wip:SizeToContents()
+
     return missions
 end
 
@@ -722,11 +731,323 @@ function AS.Inventory.BuildStats()
     return stats
 end
 
-function AS.Inventory.BuildPlayers()
-    local stats = vgui.Create("DPanel", sheet)
-    stats.Paint = function() end
+function AS.Inventory.BuildCommunity()
+    communitypanel = vgui.Create("DPanel", sheet)
+    communitypanel:SetSize( sheets:GetWide(), sheets:GetTall() )
+    communitypanel.Paint = function( _, w, h ) end
 
-    local scroll_players = vgui.Create("DScrollPanel", stats)
+    local txt = not LocalPlayer():InCommunity() and "You are not in a community." or "Loading Community..."
+
+    communitypanel_loading = vgui.Create("DLabel", communitypanel)
+	communitypanel_loading:SetText( txt )
+	communitypanel_loading:SetFont("TargetID")
+	communitypanel_loading:SizeToContents()
+	communitypanel_loading:SetPos( communitypanel:GetWide() / 2 - communitypanel_loading:GetWide() / 2, 250 )
+
+    if LocalPlayer():InCommunity() then
+
+        net.Start("as_community_requestdata") --We'll fetch their community data.
+        net.SendToServer()
+
+    else
+
+        local width, height = 200, 25
+        local x, y = communitypanel:GetWide() / 2 - (width / 2), 300
+        DefaultButton( "Create a new community", x, y, width, height, communitypanel, function()
+            CreateCommunity()
+            frame_inventory:Close()
+        end)
+
+        y = y + height + 5
+        DefaultButton( "Seach existing communities", x, y, width, height, communitypanel, function()
+        
+        end)
+
+    end
+
+    return communitypanel
+end
+net.Receive("as_community_senddata", function() 
+    AS.Inventory.LoadCommunity( net.ReadTable(), net.ReadTable() )
+end)
+
+function AS.Inventory.LoadCommunity( communitydata, memberdata )
+    if not IsValid( communitypanel ) then return end
+    if IsValid( communitypanel_loading ) then communitypanel_loading:Remove() end
+
+    local cname = vgui.Create("DLabel", communitypanel)
+    cname:SetFont( "Trebuchet24" )
+    cname:SetText( communitydata.name )
+    cname:SetPos( 5, 0 )
+    cname:SizeToContents()
+    cname:SetColor( Color( 255, 255, 255) )
+
+    local creator = vgui.Create("DLabel", communitypanel)
+    creator:SetFont( "TargetIDSmall" )
+    creator:SetText( "Created by " .. communitydata.creator .. ", " .. table.Count(memberdata) .. " / " .. SET.MaxMembers .. " current member(s)" )
+    creator:SetPos( 5, 23 )
+    creator:SizeToContents()
+    creator:SetColor( Color( 255, 255, 255) )
+
+    local width, height = 270, 30
+    local x, y = 600, 40
+
+    DefaultButton( "Update Community Description", x, y, width, height, communitypanel, function()
+        UpdateDescription()
+        frame_inventory:Close()
+    end)
+    y = y + height + 20
+
+    DefaultButton( "Create a Rank", x, y, width, height, communitypanel, function()
+        CreateRank()
+        frame_inventory:Close()
+    end)
+    y = y + height + 1
+
+    DefaultButton( "Modify a Rank", x, y, width, height, communitypanel, function()
+        ModifyRankSelect()
+        frame_inventory:Close()
+    end)
+    y = y + height + 1
+
+    DefaultButton( "Delete a Rank", x, y, width, height, communitypanel, function()
+        DeleteRank()
+        frame_inventory:Close()
+    end)
+    y = y + height + 20
+
+    DefaultButton( "Deploy Locker", x, y, width, height, communitypanel, function()
+    
+    end)
+    y = y + height + 1
+
+    DefaultButton( "Hide Locker", x, y, width, height, communitypanel, function()
+    
+    end)
+    y = y + height + 1
+
+    DefaultButton( "Deploy Stockpile", x, y, width, height, communitypanel, function()
+    
+    end)
+    y = y + height + 1
+
+    DefaultButton( "Hide Stockpile", x, y, width, height, communitypanel, function()
+    
+    end)
+    y = y + height + 20
+
+    DefaultButton( "Leave Community", x, y, width, height, communitypanel, function()
+        frame_inventory:Close()
+        Verify( function()
+            net.Start( "as_community_leave" )
+            net.SendToServer()
+        end, true)
+    end)
+    y = y + height + 1
+
+    DefaultButton( "Disband Community", x, y, width, height, communitypanel, function()
+        frame_inventory:Close()
+        Verify( function()
+            net.Start( "as_community_delete" )
+            net.SendToServer()
+        end, true)
+    end)
+    y = y + height + 20
+
+    DefaultButton( "Search other communities", x, y, width, height, communitypanel, function()
+        frame_inventory:Close()
+        Verify( function()
+            net.Start( "as_community_delete" )
+            net.SendToServer()
+        end, true)
+    end)
+    y = y + height + 1
+
+    local descpanel = vgui.Create("DPanel", communitypanel)
+    descpanel:SetPos( 600, 460 )
+    descpanel:SetSize( 270, 194 )
+    function descpanel:Paint( w, h )
+        surface.SetDrawColor( COLHUD_SECONDARY )
+        surface.DrawRect( 0, 0, w, h )
+    end
+
+    local desc = vgui.Create("DLabel", descpanel)
+    desc:SetPos( 5, 5 )
+    desc:SetSize( descpanel:GetWide() - 10, descpanel:GetTall() - 10)
+    desc:SetFont("TargetIDSmall")
+    desc:SetText( communitydata.desc )
+    desc:SetWrap( true )
+    desc:SetAutoStretchVertical( true )
+
+    local csheets = vgui.Create("DPropertySheet", communitypanel)
+    csheets:SetPos( 0, 40 )
+    csheets:SetSize( csheets:GetParent():GetWide() - 300, csheets:GetParent():GetTall() - 75 )
+    csheets:SetFadeTime( 0 )
+    function csheets:Paint( w, h )
+        surface.SetDrawColor( COLHUD_SECONDARY )
+        surface.DrawRect( 0, 0, w, h )
+    end
+
+--Members
+    local members = vgui.Create("DPanel", members)
+    members:SetSize( csheets:GetWide() - 15, csheets:GetTall() - 35 )
+    function members:Paint() end
+
+    local scroll_members = vgui.Create("DScrollPanel", members)
+    scroll_members:SetSize( members:GetWide(), members:GetTall() )
+    scroll_members.Paint = function(_,w,h)
+        surface.SetDrawColor( COLHUD_SECONDARY )
+        surface.DrawRect(0, 0, w, h)
+    end
+
+    local xpos, ypos = 5, 5
+
+    for k, v in pairs( memberdata ) do
+        local panel = vgui.Create("DPanel", scroll_members)
+        panel:SetPos( xpos, ypos )
+        panel:SetSize( 550, 100 )
+        function panel:Paint( w, h )
+            surface.SetDrawColor( COLHUD_PRIMARY )
+            surface.DrawRect( 0, 0, w, h )
+        end
+
+        CharacterIcon( v.model, 5, 5, panel:GetTall() - 10, panel:GetTall() - 10, panel )
+
+        local name = vgui.Create("DLabel", panel)
+        name:SetFont( "TargetID" )
+        name:SetText( v.name .. " (" .. (AS.Classes[v.class].name or "") .. ")" )
+        name:SetPos( 100, 5 )
+        name:SizeToContents()
+        name:SetColor( AS.Classes[v.class].color )
+
+        local rank = vgui.Create("DLabel", panel)
+        rank:SetFont( "TargetID" )
+        rank:SetText( "Rank: " .. v.rank )
+        rank:SetPos( 100, 25 )
+        rank:SizeToContents()
+
+        local title = vgui.Create("DLabel", panel)
+        title:SetFont( "TargetID" )
+        title:SetText( "Title: " .. v.title )
+        title:SetPos( 100, 45 )
+        title:SizeToContents()
+
+        local laston = vgui.Create("DLabel", panel)
+        laston:SetFont( "TargetID" )
+        laston:SetText( "Last on: " .. v.laston )
+        laston:SetPos( 100, 80 )
+        laston:SizeToContents()
+
+        local width, height = 100, 20
+        local x, y = 445, 5
+
+        DefaultButton( "Change Title", x, y, width, height, panel, function()
+            ChangeTitle( v )
+        end)
+        y = y + height + 1
+
+        DefaultButton( "Change Rank", x, y, width, height, panel, function()
+            local Menu = DermaMenu()
+            for k2, v2 in pairs( communitydata.ranks ) do
+                Menu:AddOption( v2.name, function()
+                    net.Start("as_community_changerank")
+                        net.WriteInt( k2, 32 )
+                        net.WriteInt( v.pid, 32 )
+                    net.SendToServer()
+                end)
+            end
+            Menu:Open()
+        end)
+        y = y + height + 30
+
+        DefaultButton( "Kick", x, y, width, height, panel, function()
+            net.Start("as_community_kickplayer")
+                net.WriteInt( v.pid, 32 )
+            net.SendToServer()
+            frame_inventory:Close()
+        end)
+        y = y + height + 1
+
+        ypos = ypos + panel:GetTall() + 5
+    end
+
+    csheets:AddSheet("Members", members, "icon16/user.png")
+
+--Invite
+    local invite = vgui.Create("DPanel", invite)
+    invite:SetSize( csheets:GetWide() - 15, csheets:GetTall() - 35 )
+    function invite:Paint() end
+
+    local scroll_invite = vgui.Create("DScrollPanel", invite)
+    scroll_invite:SetSize( invite:GetWide(), invite:GetTall() )
+    scroll_invite.Paint = function(_,w,h)
+        surface.SetDrawColor( COLHUD_SECONDARY )
+        surface.DrawRect(0, 0, w, h)
+    end
+
+    local xpos, ypos = 5, 5
+
+    for k, v in pairs( player.GetAll() ) do
+        if v:InCommunity() then continue end
+        if not v:IsLoaded() then continue end
+
+        local panel = vgui.Create("DPanel", scroll_invite)
+        panel:SetPos( xpos, ypos )
+        panel:SetSize( 550, 100 )
+        function panel:Paint( w, h )
+            surface.SetDrawColor( COLHUD_PRIMARY )
+            surface.DrawRect( 0, 0, w, h )
+        end
+
+        local name = vgui.Create("DLabel", panel)
+        name:SetFont( "TargetID" )
+
+        name:SetText( v:Nickname() .. " (" .. (AS.Classes[v:GetNWString("as_class")].name or "") .. ")" )
+        name:SetPos( 100, 5 )
+        name:SizeToContents()
+        name:SetColor( AS.Classes[v:GetNWString("as_class")].color )
+
+        CharacterIcon( v:GetModel(), 5, 5, panel:GetTall() - 10, panel:GetTall() - 10, panel )
+
+        local width, height = 100, 20
+        local x, y = 445, 5
+
+        DefaultButton( "Invite", x, y, width, height, panel, function()
+            panel:Remove()
+            net.Start( "as_community_inviteplayer" )
+                net.WriteEntity( v )
+            net.SendToServer()
+        end)
+
+        ypos = ypos + panel:GetTall() + 5
+    end
+
+    csheets:AddSheet("Invite Players", invite, "icon16/add.png")
+
+    --Allies
+    local allies = vgui.Create("DPanel", allies)
+    allies:SetSize( csheets:GetWide() - 15, csheets:GetTall() - 35 )
+    function allies:Paint() end
+    csheets:AddSheet("Alliances", allies, "icon16/flag_green.png")
+
+    --Wars
+    local wars = vgui.Create("DPanel", wars)
+    wars:SetSize( csheets:GetWide() - 15, csheets:GetTall() - 35 )
+    function wars:Paint() end
+    csheets:AddSheet("Wars", wars, "icon16/flag_red.png")
+
+    --Pending
+    local pending = vgui.Create("DPanel", pending)
+    pending:SetSize( csheets:GetWide() - 15, csheets:GetTall() - 35 )
+    function pending:Paint() end
+    csheets:AddSheet("Diplomacies", pending, "icon16/script.png")
+end
+
+function AS.Inventory.BuildPlayers()
+    local players = vgui.Create("DPanel", sheet)
+    players.Paint = function() end
+
+    local scroll_players = vgui.Create("DScrollPanel", players)
     scroll_players:SetSize( 774, 0 )
     scroll_players:Dock( FILL )
     scroll_players:DockMargin( 0, 0, 0, 0 )
@@ -752,7 +1073,7 @@ function AS.Inventory.BuildPlayers()
 
         local name = vgui.Create("DLabel", panel)
         name:SetFont( "TargetID" )
-        name:SetText( v:Nickname() .. " (" .. AS.Classes[v:GetNWString("as_class")].name or "" .. ")" )
+        name:SetText( v:Nickname() .. " (" .. (AS.Classes[v:GetNWString("as_class")].name or "") .. ")" )
         name:SetPos( 100, 5 )
         name:SizeToContents()
         name:SetColor( AS.Classes[v:GetNWString("as_class")].color )
@@ -782,5 +1103,5 @@ function AS.Inventory.BuildPlayers()
         ypos = ypos + panel:GetTall() + 5
     end
 
-    return stats
+    return players
 end
