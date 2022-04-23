@@ -180,6 +180,22 @@ hook.Add( "DoPlayerDeath", "AS_PlayerDeath", function( ply, attacker, dmginfo )
         end
     end
 
+    --War
+    if attacker:IsPlayer() and ply:IsPlayer() and CurTime() >= (attacker.NextWarRequest or 0) then
+        if not attacker:InCommunity() then return end
+        if not ply:InCommunity() then return end
+        if ply:IsAtWar( attacker:GetCommunity() ) then return end --Don't generate more requests from war?
+
+        community.CreateDiplomacy( ply:GetCommunity(), "war", { --This create's a diplomacy of war, and we'll add some information.
+            cid = attacker:GetCommunity(),
+            cname = attacker:GetCommunityName(),
+            text = "The community, " .. attacker:GetCommunityName() .. ", has committed an act of war!\n\n" .. attacker:Nickname() .. " killed " .. ply:Nickname() .. " on " .. os.date( "%m/%d/%y - %I:%M %p", os.time() ) .. ".",
+        })
+
+        attacker:ChatPrint("You have committed an act of war.")
+        attacker.NextWarRequest = CurTime() + 900 --This just stops us from making too many war requests in a short period of time.
+    end
+
     ply:ClearAllStatuses()
     ply:ResyncStatuses()
     ply:SetHealth( 15 ) --This is just so it doesnt save 0 to the player's health in the database.

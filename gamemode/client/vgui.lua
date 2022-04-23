@@ -10,8 +10,8 @@ function MainMenuButton( text, x, y, width, height, parent, callback )
     end
     button.HoveredOnce = false
     button.Paint = function(self, w, h)
-        local thickness = 2
-        local gap = 1
+        local thickness = 1
+        local gap = 0
         surface.SetDrawColor( COLHUD_DEFAULT )
         surface.DrawOutlinedRect( 0, 0, w, h, thickness)
         if self:IsHovered() then

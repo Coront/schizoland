@@ -4,6 +4,8 @@ COLHUD_BAD = nil
 HUD_SCALE = nil
 HUD_TALKINGPLAYERS = {}
 HUD_TALKINGPLAYERSPANELS = {}
+CommunityAllies = CommunityAllies or {}
+CommunityWars = CommunityWars or {}
 
 -- Enable HUD
 AS_ClientConVar( "as_hud", "1", true, false )
@@ -230,7 +232,8 @@ function AftershockHUD()
     local target = LocalPlayer():GetActiveTarget()
     if targetinfo and target and IsValid(target) and target:Alive() then
         local col = (target:IsNextBot() or target:IsNPC()) and (target.Hostile and target:Hostile() or false) and COLHUD_BAD:ToTable() or COLHUD_DEFAULT:ToTable()
-        col = target:IsPlayer() and target:InCommunity() and target:GetCommunity() == LocalPlayer():GetCommunity() and COLHUD_GOOD:ToTable() or col
+        col = target:IsPlayer() and target:InCommunity() and (target:GetCommunity() == LocalPlayer():GetCommunity() or CommunityAllies[target:GetCommunity()]) and COLHUD_GOOD:ToTable() or col
+        col = target:IsPlayer() and target:InCommunity() and (CommunityWars[target:GetCommunity()]) and COLHUD_BAD:ToTable() or col
         local alpha = 255
         local newcol = Color( col[1], col[2], col[3], alpha )
         surface.SetDrawColor( newcol )

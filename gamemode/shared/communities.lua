@@ -44,10 +44,14 @@ end
 if ( SERVER ) then
 
     util.AddNetworkString("as_community_requestdata")
-    util.AddNetworkString("as_community_requestranks")
     util.AddNetworkString("as_community_senddata")
+    util.AddNetworkString("as_community_requestranks")
     util.AddNetworkString("as_community_sendranks")
+    util.AddNetworkString("as_community_requestcommunitiesbyname")
+    util.AddNetworkString("as_community_sendcommunities")
     util.AddNetworkString("as_community_sendranksmodify")
+    util.AddNetworkString("as_community_syncallies")
+    util.AddNetworkString("as_community_syncwars")
 
     net.Receive("as_community_requestdata", function( _, ply )
         local members = sql.Query( "SELECT pid FROM as_communities_members WHERE cid = " .. ply:GetCommunity() )
@@ -82,6 +86,48 @@ if ( SERVER ) then
         end
             net.WriteTable( tbl.ranks )
         net.Send(ply)
+    end)
+
+    net.Receive("as_community_requestcommunitiesbyname", function( _, ply )
+        local comname = net.ReadString()
+
+        local tbl = sql.Query( "SELECT data FROM as_communities" )
+        local newtbl = {}
+
+        for k, v in pairs( tbl ) do
+            if k == ply:GetCommunity() then continue end
+            for k2, v2 in pairs( v ) do
+                v2 = util.JSONToTable( v2 )
+                if not string.find( string.lower(v2.name), string.lower(comname) ) then continue end
+                newtbl[k] = v2
+            end
+        end
+
+        net.Start( "as_community_sendcommunities" )
+            net.WriteTable( newtbl )
+        net.Send( ply )
+    end)
+
+    function PlayerMeta:ResyncAllies()
+        net.Start("as_community_syncallies")
+            net.WriteTable( Communities[self:GetCommunity()] and Communities[self:GetCommunity()].allies or {} )
+        net.Send( self )
+    end
+
+    function PlayerMeta:ResyncWars()
+        net.Start("as_community_syncwars")
+            net.WriteTable( Communities[self:GetCommunity()] and Communities[self:GetCommunity()].wars or {} )
+        net.Send( self )
+    end
+
+else
+
+    net.Receive("as_community_syncallies", function()
+        CommunityAllies = net.ReadTable()
+    end)
+
+    net.Receive("as_community_syncwars", function()
+        CommunityWars = net.ReadTable()
     end)
 
 end

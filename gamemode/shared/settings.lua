@@ -150,6 +150,7 @@ SAT.SatBuffs = 85 --The amount of hunger + thirst a player must remain above in 
 --Communities
 SET.MaxMembers = 30 --Maximum members a community can have.
 SET.MaxRanks = 8 --Maximum ranks a community can have.
+SET.WarLength = 172800 --Two days
 SET.CommunitiesPerms = { --Permissions are hardcoded, so you'll have to manage the table here if you want to add any.
     ["admin"] = {name = "Admin", desc = "Provides access everything, and community management."},
     ["invite"] = {name = "Invite", desc = "Can invite players to the community."},

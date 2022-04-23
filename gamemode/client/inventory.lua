@@ -759,8 +759,9 @@ function AS.Inventory.BuildCommunity()
         end)
 
         y = y + height + 5
-        DefaultButton( "Seach existing communities", x, y, width, height, communitypanel, function()
-        
+        DefaultButton( "Search existing communities", x, y, width, height, communitypanel, function()
+            CommunitySearchWindow()
+            frame_inventory:Close()
         end)
 
     end
@@ -855,11 +856,8 @@ function AS.Inventory.LoadCommunity( communitydata, memberdata )
     y = y + height + 20
 
     DefaultButton( "Search other communities", x, y, width, height, communitypanel, function()
+        CommunitySearchWindow()
         frame_inventory:Close()
-        Verify( function()
-            net.Start( "as_community_delete" )
-            net.SendToServer()
-        end, true)
     end)
     y = y + height + 1
 
@@ -1001,7 +999,6 @@ function AS.Inventory.LoadCommunity( communitydata, memberdata )
 
         local name = vgui.Create("DLabel", panel)
         name:SetFont( "TargetID" )
-
         name:SetText( v:Nickname() .. " (" .. (AS.Classes[v:GetNWString("as_class")].name or "") .. ")" )
         name:SetPos( 100, 5 )
         name:SizeToContents()
@@ -1028,18 +1025,142 @@ function AS.Inventory.LoadCommunity( communitydata, memberdata )
     local allies = vgui.Create("DPanel", allies)
     allies:SetSize( csheets:GetWide() - 15, csheets:GetTall() - 35 )
     function allies:Paint() end
+
+    local scroll_allies = vgui.Create("DScrollPanel", allies)
+    scroll_allies:SetSize( allies:GetWide(), allies:GetTall() )
+    scroll_allies.Paint = function(_,w,h)
+        surface.SetDrawColor( COLHUD_SECONDARY )
+        surface.DrawRect(0, 0, w, h)
+    end
+
+    local xpos, ypos = 5, 5
+
+    for k, v in pairs( communitydata.allies ) do
+        local panel = vgui.Create("DPanel", scroll_allies)
+        panel:SetPos( xpos, ypos )
+        panel:SetSize( 550, 40 )
+        function panel:Paint( w, h )
+            surface.SetDrawColor( COLHUD_PRIMARY )
+            surface.DrawRect( 0, 0, w, h )
+        end
+
+        local info = vgui.Create("DLabel", panel)
+        info:SetFont( "TargetID" )
+        info:SetText( v.name or "CID: " .. k )
+        info:SetPos( 5, 10 )
+        info:SizeToContents()
+
+        local bheight, bwidth = 20, 100
+        DefaultButton( "End Alliance", 445, 10, bwidth, bheight, panel, function()
+            panel:Remove()
+            net.Start( "as_community_endally" )
+                net.WriteInt( k, 32 )
+            net.SendToServer()
+        end)
+
+        ypos = ypos + panel:GetTall() + 5
+    end
+
     csheets:AddSheet("Alliances", allies, "icon16/flag_green.png")
 
     --Wars
     local wars = vgui.Create("DPanel", wars)
     wars:SetSize( csheets:GetWide() - 15, csheets:GetTall() - 35 )
     function wars:Paint() end
+
+    local scroll_wars = vgui.Create("DScrollPanel", wars)
+    scroll_wars:SetSize( wars:GetWide(), wars:GetTall() )
+    scroll_wars.Paint = function(_,w,h)
+        surface.SetDrawColor( COLHUD_SECONDARY )
+        surface.DrawRect(0, 0, w, h)
+    end
+
+    local xpos, ypos = 5, 5
+
+    for k, v in pairs( communitydata.wars ) do
+        local panel = vgui.Create("DPanel", scroll_wars)
+        panel:SetPos( xpos, ypos )
+        panel:SetSize( 550, 40 )
+        function panel:Paint( w, h )
+            surface.SetDrawColor( COLHUD_PRIMARY )
+            surface.DrawRect( 0, 0, w, h )
+        end
+
+        local info = vgui.Create("DLabel", panel)
+        info:SetFont( "TargetID" )
+        info:SetText( v.name or "CID: " .. k )
+        info:SetPos( 5, 10 )
+        info:SizeToContents()
+
+        local bheight, bwidth = 20, 100
+        DefaultButton( "Cancel War", 445, 10, bwidth, bheight, panel, function()
+            panel:Remove()
+            net.Start( "as_community_endwarrequest" )
+                net.WriteInt( k, 32 )
+            net.SendToServer()
+        end)
+
+        ypos = ypos + panel:GetTall() + 5
+    end
+
     csheets:AddSheet("Wars", wars, "icon16/flag_red.png")
 
     --Pending
     local pending = vgui.Create("DPanel", pending)
     pending:SetSize( csheets:GetWide() - 15, csheets:GetTall() - 35 )
     function pending:Paint() end
+
+    local scroll_pending = vgui.Create("DScrollPanel", pending)
+    scroll_pending:SetSize( pending:GetWide(), pending:GetTall() )
+    scroll_pending.Paint = function(_,w,h)
+        surface.SetDrawColor( COLHUD_SECONDARY )
+        surface.DrawRect(0, 0, w, h)
+    end
+
+    local xpos, ypos = 5, 5
+
+    for k, v in pairs( communitydata.pending ) do
+        local diplotype = v.type
+
+        local panel = vgui.Create("DPanel", scroll_pending)
+        panel:SetPos( xpos, ypos )
+        panel:SetSize( 550, 100 )
+        function panel:Paint( w, h )
+            surface.SetDrawColor( COLHUD_PRIMARY )
+            surface.DrawRect( 0, 0, w, h )
+        end
+
+        local diplo = vgui.Create("DLabel", panel)
+        diplo:SetFont( "TargetIDSmall" )
+        diplo:SetText( "Diplomacy: " .. diplotype )
+        diplo:SetPos( 5, 5 )
+        diplo:SizeToContents()
+
+        local info = vgui.Create("DLabel", panel)
+        info:SetFont( "TargetIDSmall" )
+        local txt = v.info.text or "UKN_ERROR, NO DIPLOMACY?"
+        info:SetText( txt )
+        info:SetPos( 15, 25 )
+        info:SizeToContents()
+
+        local bheight, bwidth = 20, 100
+        DefaultButton( "Accept", 5, panel:GetTall() - bheight - 5, bwidth, bheight, panel, function()
+            panel:Remove()
+            net.Start("as_community_acceptdiplomacy")
+                net.WriteInt( k, 32 )
+            net.SendToServer()
+        end)
+
+        DefaultButton( "Decline", bwidth + 10, panel:GetTall() - bheight - 5, bwidth, bheight, panel, function()
+            panel:Remove()
+            net.Start("as_community_declinediplomacy")
+                net.WriteInt( k, 32 )
+            net.SendToServer()
+        end)
+
+        ypos = ypos + panel:GetTall() + 5
+    end
+
     csheets:AddSheet("Diplomacies", pending, "icon16/script.png")
 end
 

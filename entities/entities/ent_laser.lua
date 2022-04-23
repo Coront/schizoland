@@ -44,7 +44,7 @@ if ( SERVER ) then
         local dmg = DamageInfo()
         dmg:SetAttacker( self )
         dmg:SetInflictor( self )
-        dmg:SetDamage( 9999 )
+        dmg:SetDamage( 99999999999 )
         dmg:SetDamageForce( Vector( 2000, 2000, 2000 ) )
 
         local snds = {

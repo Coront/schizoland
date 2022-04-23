@@ -69,6 +69,18 @@ function community.Delete( cid )
         sql.Query( "UPDATE as_communities_members SET cid = 0, title = '', rank = -1 WHERE pid = " .. v.pid )
     end
 
+    for k, v in pairs( Communities ) do --We need to clear all of the alliances, wars, and pending requests to prevent future errors.
+        for k2, v2 in pairs( v.pending ) do
+            if not v2.info.cid == cid then continue end
+            v.pending[k2] = nil
+        end
+        --[[
+        for k2, v2 in pairs( v.allies ) do
+            if not 
+        end
+        ]]
+    end
+
     sql.Query( "UPDATE as_communities SET deleted = " .. SQLStr( os.date( "%m/%d/%y - %I:%M %p", os.time() ) ) .. " WHERE cid = " .. cid ) --Then community go bye bye
 end
 
@@ -102,6 +114,127 @@ function community.UpdateDescription( cid, newdesc )
     community.Update( cid )
 end
 
+function community.CreateDiplomacy( cid, dtype, desc )
+    local diplos = #Communities[cid].pending
+    Communities[ cid ].pending[ diplos + 1 ] = {
+        type = dtype,
+        info = desc,
+    }
+    community.Update( cid )
+end
+
+function community.DeleteDiplomacy( cid, did )
+    Communities[ cid ].pending[ did ] = nil 
+    community.Update( cid )
+end
+
+function community.AcceptDiplomacy( cid, did )
+    local diplotype = Communities[ cid ].pending[ did ].type
+    local othercid = Communities[ cid ].pending[ did ].info.cid
+    if diplotype == "ally" then
+        community.EstablishAlliance( cid, othercid )
+    elseif diplotype == "war" then
+        community.DeclareWar( cid, othercid )
+    elseif diplotype == "endally" then
+        community.EndAlliance( cid, othercid )
+    elseif diplotype == "endwar" then
+        community.EndWar( cid, othercid )
+    end
+    community.DeleteDiplomacy( cid, did )
+end
+
+function community.EstablishAlliance( cid, ocid )
+    Communities[ cid ].allies[ ocid ] = {
+        name = Communities[ocid].name,
+        date = os.time(),
+    }
+    community.Update( cid )
+
+    Communities[ ocid ].allies[ cid ] = {
+        name = Communities[cid].name,
+        date = os.time(),
+    }
+    community.Update( ocid )
+
+    for k, v in pairs( player.GetAll() ) do
+        if not v:GetCommunity() == cid and not v:GetCommunity() == ocid then continue end
+        if v:GetCommunity() == cid then
+            v:ChatPrint("You are now allied with " .. Communities[ocid].name .. ".")
+            v:ResyncAllies()
+        end
+        if v:GetCommunity() == ocid then
+            v:ChatPrint("You are now allied with " .. Communities[cid].name .. ".")
+            v:ResyncAllies()
+        end
+    end
+end
+
+function community.EndAlliance( cid, ocid )
+    Communities[ cid ].allies[ ocid ] = nil 
+    community.Update( cid )
+    Communities[ ocid ].allies[ cid ] = nil 
+    community.Update( ocid )
+
+    for k, v in pairs( player.GetAll() ) do
+        if not v:GetCommunity() == cid and not v:GetCommunity() == ocid then continue end
+        if v:GetCommunity() == cid then
+            v:ChatPrint("Your alliance with " .. Communities[ocid].name .. " has ended.")
+            v:ResyncAllies()
+        end
+        if v:GetCommunity() == ocid then
+            v:ChatPrint("Your alliance with " .. Communities[cid].name .. " has ended.")
+            v:ResyncAllies()
+        end
+    end
+end
+
+function community.DeclareWar( cid, ocid )
+    Communities[ cid ].wars[ ocid ] = {
+        name = Communities[ocid].name,
+        date = os.time(),
+        endtime = os.time() + SET.WarLength,
+    }
+    community.Update( cid )
+
+    Communities[ ocid ].wars[ cid ] = {
+        name = Communities[cid].name,
+        date = os.time(),
+        endtime = os.time() + SET.WarLength,
+    }
+    community.Update( ocid )
+
+    for k, v in pairs( player.GetAll() ) do
+        if not v:GetCommunity() == cid and not v:GetCommunity() == ocid then continue end
+        if v:GetCommunity() == cid then
+            v:ChatPrint("You are now at war with " .. Communities[ocid].name .. "!")
+            v:ResyncWars()
+        end
+        if v:GetCommunity() == ocid then
+            v:ChatPrint("You are now at war with " .. Communities[cid].name .. "!")
+            v:ResyncWars()
+        end
+    end
+end
+
+function community.EndWar( cid, ocid )
+    Communities[ cid ].wars[ ocid ] = nil
+    community.Update( cid )
+    Communities[ ocid ].wars[ cid ] = nil
+    community.Update( ocid )
+
+    for k, v in pairs( player.GetAll() ) do
+        if not v:GetCommunity() == cid and not v:GetCommunity() == ocid then continue end
+        if v:GetCommunity() == cid then
+            v:ChatPrint("The war with " .. Communities[ocid].name .. " has ended.")
+            v:ResyncWars()
+        end
+        if v:GetCommunity() == ocid then
+            v:ChatPrint("The war with " .. Communities[cid].name .. " has ended.")
+            v:ResyncWars()
+        end
+    end
+end
+
 function community.GetName( cid )
     return Communities[ cid ].name
 end
@@ -130,6 +263,8 @@ function PlayerMeta:SetCommunity( cid )
     if Communities[cid] then
         self:SetNWString( "as_cname", Communities[cid].name )
     end
+    self:ResyncAllies()
+    self:ResyncWars()
 end
 
 function PlayerMeta:SetRank( rank )
@@ -256,6 +391,46 @@ function PlayerMeta:UpdateDescription( desc )
     self:ChatPrint("Community Description Updated.")
 end
 
+function PlayerMeta:AcceptDiplomacy( diploid )
+    self:ChatPrint("You have accepted the diplomacy - id " .. diploid .. ".")
+    community.AcceptDiplomacy( self:GetCommunity(), diploid )
+end
+
+function PlayerMeta:DeclineDiplomacy( diploid )
+    self:ChatPrint("You have declined the diplomacy - id " .. diploid .. ".")
+    community.DeleteDiplomacy( self:GetCommunity(), diploid )
+end
+
+function PlayerMeta:IsAtWar( othercid )
+    if Communities[self:GetCommunity()].wars[othercid] then return true end
+    return false
+end
+
+function PlayerMeta:EndWarRequest( warid )
+    community.CreateDiplomacy( warid, "endwar", {
+        cid = self:GetCommunity(),
+        text = self:Nickname() .. " (" .. self:GetCommunityName() .. ") has requested to end the war.",
+    })
+end
+
+function PlayerMeta:SendAllyRequest( cid )
+    community.CreateDiplomacy( cid, "ally", {
+        cid = self:GetCommunity(),
+        text = self:Nickname() .. " (" .. self:GetCommunityName() .. ") wants to be your ally."
+    })
+end
+
+function PlayerMeta:SendWarRequest( cid )
+    community.CreateDiplomacy( cid, "war", {
+        cid = self:GetCommunity(),
+        text = self:Nickname() .. " (" .. self:GetCommunityName() .. ") wishes to declare war."
+    })
+end
+
+function PlayerMeta:EndAlliance( ocid )
+    community.EndAlliance( self:GetCommunity(), ocid )
+end
+
 -- ██████╗ ██████╗ ███████╗    ██╗      ██████╗  █████╗ ██████╗ ███████╗██████╗
 -- ██╔══██╗██╔══██╗██╔════╝    ██║     ██╔═══██╗██╔══██╗██╔══██╗██╔════╝██╔══██╗
 -- ██████╔╝██████╔╝█████╗█████╗██║     ██║   ██║███████║██║  ██║█████╗  ██████╔╝
@@ -264,10 +439,39 @@ end
 -- ╚═╝     ╚═╝  ╚═╝╚══════╝    ╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚═════╝ ╚══════╝╚═╝  ╚═╝
 
 hook.Add( "Initialize", "AS_Communities_Load", function()
-    local com = sql.Query("SELECT * FROM as_communities WHERE deleted IS NULL")
+    local com = sql.Query("SELECT * FROM as_communities")
     if com then
         for _, res in pairs( com ) do
             Communities[ tonumber(res.cid) ] = util.JSONToTable(res.data)
+        end
+    end
+end)
+
+-- ██╗  ██╗ ██████╗  ██████╗ ██╗  ██╗███████╗
+-- ██║  ██║██╔═══██╗██╔═══██╗██║ ██╔╝██╔════╝
+-- ███████║██║   ██║██║   ██║█████╔╝ ███████╗
+-- ██╔══██║██║   ██║██║   ██║██╔═██╗ ╚════██║
+-- ██║  ██║╚██████╔╝╚██████╔╝██║  ██╗███████║
+-- ╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚══════╝
+
+hook.Add( "Think", "AS_Communities_WarTime", function()
+    for k, v in pairs( Communities ) do
+        if table.Count(v.wars) <= 0 then continue end
+        for k2, v2 in pairs( v.wars ) do
+            if os.time() > v2.endtime then
+                community.EndWar( k, k2 )
+                for k3, v3 in pairs( player.GetAll() ) do --Basically just tell everyone that the war is over.
+                    if not v3:GetCommunity() == k and not v3:GetCommunity() == k2 then continue end
+                    if v3:GetCommunity() == k then
+                        v3:ChatPrint("The war against " .. Communities[ k2 ].name .. " has ended.")
+                        v3:ResyncWars()
+                    end
+                    if v3:GetCommunity() == k2 then
+                        v3:ChatPrint("The war against " .. Communities[ k ].name .. " has ended.")
+                        v3:ResyncWars()
+                    end
+                end
+            end
         end
     end
 end)
@@ -293,6 +497,12 @@ util.AddNetworkString( "as_community_createrank" )
 util.AddNetworkString( "as_community_deleterank" )
 util.AddNetworkString( "as_community_modifyrank" )
 util.AddNetworkString( "as_community_changerank" )
+util.AddNetworkString( "as_community_acceptdiplomacy" )
+util.AddNetworkString( "as_community_declinediplomacy" )
+util.AddNetworkString( "as_community_ally" )
+util.AddNetworkString( "as_community_war" )
+util.AddNetworkString( "as_community_endwarrequest" )
+util.AddNetworkString( "as_community_endally" )
 
 net.Receive( "as_community_create", function( _, ply )
     local name = net.ReadString()
@@ -450,4 +660,66 @@ net.Receive( "as_community_updatedescription", function( _, ply )
     if not ply:HasPerm("admin") then ply:ChatPrint("You must have the permission 'admin' to update the community description.") return end
 
     ply:UpdateDescription( desc )
+end)
+
+net.Receive( "as_community_acceptdiplomacy", function( _, ply ) 
+    local diploid = net.ReadInt( 32 )
+
+    if not ply:InCommunity() then ply:ChatPrint("You are not in a community.") return end
+    local diplotype = Communities[ply:GetCommunity()].pending[diploid].type
+    if diplotype == "ally" and not ply:HasPerm("ally") then ply:ChatPrint("You must have the permission 'ally' to accept or decline ally diplomacies.") return end
+    if diplotype == "war" and not ply:HasPerm("war") then ply:ChatPrint("You must have the permission 'war' to accept or decline war diplomacies.") return end
+    if diplotype == "endwar" and not ply:HasPerm("war") then ply:ChatPrint("You must have the permission 'war' to accept war ending diplomacies.") return end
+
+    ply:AcceptDiplomacy( diploid )
+end)
+
+net.Receive( "as_community_declinediplomacy", function( _, ply ) 
+    local diploid = net.ReadInt( 32 )
+
+    if not ply:InCommunity() then ply:ChatPrint("You are not in a community.") return end
+    local diplotype = Communities[ply:GetCommunity()].pending[diploid].type
+    if diplotype == "ally" and not ply:HasPerm("ally") then ply:ChatPrint("You must have the permission 'ally' to accept or decline ally diplomacies.") return end
+    if diplotype == "war" and not ply:HasPerm("war") then ply:ChatPrint("You must have the permission 'war' to accept or decline war diplomacies.") return end
+
+    ply:DeclineDiplomacy( diploid )
+end)
+
+net.Receive( "as_community_ally", function( _, ply ) 
+    local cid = net.ReadInt( 32 )
+
+    if not ply:InCommunity() then ply:ChatPrint("You are not in a community.") return end
+    if not ply:HasPerm("ally") then ply:ChatPrint("You must have the permission 'ally' to send alliance requests to other communities.") return end
+
+    ply:ChatPrint("You have sent an alliance request to this community.")
+    ply:SendAllyRequest( cid )
+end)
+
+net.Receive( "as_community_war", function( _, ply ) 
+    local cid = net.ReadInt( 32 )
+
+    if not ply:InCommunity() then ply:ChatPrint("You are not in a community.") return end
+    if not ply:HasPerm("war") then ply:ChatPrint("You must have the permission 'war' to send war requests to other communities.") return end
+
+    ply:ChatPrint("You have sent an war request to this community.")
+    ply:SendWarRequest( cid )
+end)
+
+net.Receive( "as_community_endally", function( _, ply ) 
+    local cid = net.ReadInt( 32 )
+
+    if not ply:InCommunity() then ply:ChatPrint("You are not in a community.") return end
+    if not ply:HasPerm("ally") then ply:ChatPrint("You must have the permission 'ally' to end alliances with other communities.") return end
+
+    ply:EndAlliance( cid )
+end)
+
+net.Receive( "as_community_endwarreq", function( _, ply ) 
+    local warid = net.ReadInt( 32 )
+
+    if not ply:InCommunity() then ply:ChatPrint("You are not in a community.") return end
+    if not ply:HasPerm("war") then ply:ChatPrint("You must have the permission 'war' to send requests to end a war.") return end
+
+    ply:ChatPrint("You have sent a request to end this war.")
+    ply:EndWarRequest( warid )
 end)

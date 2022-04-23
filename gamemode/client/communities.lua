@@ -642,3 +642,111 @@ function UpdateDescription()
         net.SendToServer()
     end
 end
+
+function CommunitySearchWindow()
+    if IsValid(frame_communitysearch) then frame_communitysearch:Close() end
+
+    frame_communitysearch = vgui.Create("DFrame")
+	frame_communitysearch:SetSize(700, 600)
+    frame_communitysearch:Center()
+    frame_communitysearch:MakePopup()
+    frame_communitysearch:SetDraggable( false )
+    frame_communitysearch:SetTitle( "Community Search Window" )
+    frame_communitysearch:ShowCloseButton( false )
+    frame_communitysearch.Paint = function(_,w,h)
+		draw.RoundedBox( 0, 0, 0, w, h, COLHUD_PRIMARY)
+		draw.RoundedBox( 0, 5, 25, w - 10, h - 30, COLHUD_SECONDARY )
+    end
+
+    local closebutton = vgui.Create("DButton", frame_communitysearch)
+    closebutton:SetSize( 25, 25 )
+    closebutton:SetPos( frame_communitysearch:GetWide() - closebutton:GetWide(), 0)
+    closebutton:SetFont("TargetID")
+    closebutton:SetText("X")
+    closebutton:SetColor( COLHUD_SECONDARY )
+    closebutton.Paint = function( _, w, h ) end
+    closebutton.DoClick = function()
+        if IsValid(frame_communitysearch) then
+            frame_communitysearch:Close()
+        end
+    end
+
+    local entry = vgui.Create("DTextEntry", frame_communitysearch)
+    entry:SetSize( 500, 20 )
+    entry:SetPos( frame_communitysearch:GetWide() / 2 - entry:GetWide() / 2, 30)
+    entry:SetPlaceholderText("Search a community by name, and press enter for results.")
+    function entry:OnEnter()
+        frame_communitysearch_loading = vgui.Create("DLabel", frame_communitysearch)
+        frame_communitysearch_loading:SetFont( "TargetID" )
+        frame_communitysearch_loading:SetText("Fetching Communities...")
+        frame_communitysearch_loading:SizeToContents()
+        frame_communitysearch_loading:SetPos(frame_communitysearch:GetWide() / 2 - frame_communitysearch_loading:GetWide() / 2, 300)
+
+        if IsValid(communities) then
+            communities:Remove()
+        end
+
+        net.Start("as_community_requestcommunitiesbyname")
+            net.WriteString(entry:GetText())
+        net.SendToServer()
+    end
+end
+
+net.Receive( "as_community_sendcommunities", function()
+    local community = net.ReadTable()
+
+    if not IsValid(frame_communitysearch) then return end
+    frame_communitysearch_loading:Remove()
+
+    communities = vgui.Create("DPanel", frame_communitysearch)
+    communities:SetPos( 5, 55 )
+    communities:SetSize( frame_communitysearch:GetWide() - (communities:GetX() + 5), frame_communitysearch:GetTall() - (communities:GetY() + 5) )
+    function communities:Paint() end
+
+    local scroll_communities = vgui.Create("DScrollPanel", communities)
+    scroll_communities:SetSize( communities:GetWide(), communities:GetTall() )
+    scroll_communities.Paint = function(_,w,h)
+        surface.SetDrawColor( COLHUD_SECONDARY )
+        surface.DrawRect(0, 0, w, h)
+    end
+
+    local xpos, ypos = 5, 0
+    for k, v in pairs(community) do
+        local panel = vgui.Create("DPanel", scroll_communities)
+        panel:SetPos( xpos, ypos )
+        panel:SetSize( scroll_communities:GetWide() - 25, 50 )
+        function panel:Paint( w, h )
+            surface.SetDrawColor( COLHUD_PRIMARY )
+            surface.DrawRect( 0, 0, w, h )
+        end
+
+        local name = vgui.Create("DLabel", panel)
+        name:SetFont( "TargetID" )
+        name:SetText( v.name )
+        name:SetPos( 5, 5 )
+        name:SizeToContents()
+
+        local creator = vgui.Create("DLabel", panel)
+        creator:SetFont( "TargetIDSmall" )
+        creator:SetText( "Created by: " .. v.creator )
+        creator:SetPos( 5, 25 )
+        creator:SizeToContents()
+
+        local width, height = 80, 20
+        DefaultButton( "Offer Alliance", panel:GetWide() - (width + 5), 5, width, height, panel, function()
+            frame_communitysearch:Close()
+            net.Start("as_community_ally")
+                net.WriteInt( k, 32 )
+            net.SendToServer()
+        end)
+
+        DefaultButton( "Declare War", panel:GetWide() - (width + 5), 25, width, height, panel, function()
+            frame_communitysearch:Close()
+            net.Start("as_community_war")
+                net.WriteInt( k, 32 )
+            net.SendToServer()
+        end)
+
+        ypos = ypos + panel:GetTall() + 5
+    end
+end)
