@@ -1201,13 +1201,13 @@ function AS.Inventory.BuildPlayers()
 
         local community = vgui.Create("DLabel", panel)
         community:SetFont( "TargetID" )
-        community:SetText( "CommunityName" )
+        community:SetText( v:GetCommunityName() )
         community:SetPos( 100, 25 )
         community:SizeToContents()
 
         local title = vgui.Create("DLabel", panel)
         title:SetFont( "TargetID" )
-        title:SetText( "CommunityTitle" )
+        title:SetText( v:GetTitle() )
         title:SetPos( 100, 45 )
         title:SizeToContents()
 
