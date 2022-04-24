@@ -2,7 +2,7 @@ AddCSLuaFile()
 
 SWEP.Base = "armor_base"
 SWEP.Category = "Aftershock - Armors"
-SWEP.PrintName = "Combine Armor"
+SWEP.PrintName = "Juggernaut Armor"
 SWEP.Spawnable = false
 
 SWEP.ASID = "armor_juggernaut"

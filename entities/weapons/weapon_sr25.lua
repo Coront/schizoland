@@ -17,7 +17,7 @@ if CLIENT then
 	SWEP.Shell = "7.62x51"
 	
 	SWEP.WMAng = Vector(0, 0, 180)
-	SWEP.WMPos = Vector(-4.1, -9.3, 8)
+	SWEP.WMPos = Vector(-0.6, 8.7, 5)
 	SWEP.TargetViewModelFOV = 50
 	SWEP.CanPeek = true
 	SWEP.BlurOnAim = true

@@ -2,8 +2,8 @@ AddCSLuaFile()
 
 SWEP.Base = "armor_base"
 SWEP.Category = "Aftershock - Armors"
-SWEP.PrintName = "Exosuit Armor"
+SWEP.PrintName = "Riot Armor"
 SWEP.Spawnable = false
 
-SWEP.ASID = "armor_exo"
-SWEP.Model = "models/armor/exo.mdl"
+SWEP.ASID = "armor_riot"
+SWEP.Model = "models/player/police.mdl"

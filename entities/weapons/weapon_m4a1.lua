@@ -27,8 +27,8 @@ if CLIENT then
 		["c79"] = {bg = 2, sbg = 3},
 		["suppressor"] = {bg = 3, sbg = 1}}
 		
-	SWEP.WMAng = Vector(0, 0, 180)
-	SWEP.WMPos = Vector(-6.7, -19.5, 11.2)
+	SWEP.WMAng = Vector(180, -90, 0)
+	SWEP.WMPos = Vector(11, 0.4, 3.5)
 	
 	SWEP.HideWorldModel = true
 end

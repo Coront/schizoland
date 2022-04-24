@@ -182,6 +182,7 @@ hook.Add( "DoPlayerDeath", "AS_PlayerDeath", function( ply, attacker, dmginfo )
 
     --War
     if attacker:IsPlayer() and ply:IsPlayer() and CurTime() >= (attacker.NextWarRequest or 0) then
+        if attacker == ply then return end
         if not attacker:InCommunity() then return end
         if not ply:InCommunity() then return end
         if ply:IsAtWar( attacker:GetCommunity() ) then return end --Don't generate more requests from war?

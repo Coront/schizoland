@@ -712,3 +712,37 @@ AS.AddBaseItem("misc_chemicalbucket", {
         ["misc_chemical"] = 20,
     }
 })
+
+--Combine drops
+
+AS.AddBaseItem("misc_combinebroken", {
+    name = "Broken Coalition Armor",
+    desc = "A set of Coalition armor damaged in the fight it was recovered from.",
+    category = "misc",
+    model = "models/items/armor/combine.mdl",
+    color = Color( 140, 40, 40 ),
+    value = 100,
+    weight = 4,
+    hidden = true,
+    --craft = {
+        --["misc_scrap"] = 1,
+        --["misc_smallparts"] = 3,
+        --["misc_chemical"] = 0,
+    --}
+})
+
+AS.AddBaseItem("misc_elitebroken", {
+    name = "Broken Elite Coalition Armor",
+    desc = "A set of Elite Coalition armor damaged in the fight it was recovered from.",
+    category = "misc",
+    model = "models/items/armor/elite.mdl",
+    color = Color( 120, 40, 40 ),
+    value = 150,
+    weight = 4,
+    hidden = true,
+    --craft = {
+        --["misc_scrap"] = 1,
+        --["misc_smallparts"] = 3,
+        --["misc_chemical"] = 0,
+    --}
+})

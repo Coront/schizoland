@@ -414,7 +414,7 @@ function AS.Inventory.BuildInventory()
         local model = vgui.Create("SpawnIcon", weaponinfopanel)
         model:SetSize( weaponinfopanel:GetWide(), weaponinfopanel:GetWide() )
         model:SetPos( 0, weaponinfopanel:GetTall() / 2 - (model:GetTall() / 2) )
-        model:SetModel( AS.Items[v.ASID].model, AS.Items[v.ASID].skin or 0 )
+        model:SetModel( v.WM or v.WorldModel or "", AS.Items[v.ASID].skin or 0 )
         model:SetTooltip(AS.Items[v.ASID].name)
 
         local unequipwep = vgui.Create("DButton", weaponinfopanel)

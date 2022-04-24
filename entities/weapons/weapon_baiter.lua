@@ -8,8 +8,8 @@ if CLIENT then
 	SWEP.AimPos = Vector(-2.031, -5.177, 0.294)
 	SWEP.AimAng = Vector(2.391, 0, 0)
 
-	SWEP.WMAng = Vector( 0, 0, 180 )
-	SWEP.WMPos = Vector( -3.8, -12.3, 5.5 )
+	SWEP.WMAng = Vector( -180, -90, 0 )
+	SWEP.WMPos = Vector( 4, 1, 2.6 )
 	
 	SWEP.SprintPos = Vector(0, -2, 2.5)
 	SWEP.SprintAng = Vector(-30.433, 0, 0)

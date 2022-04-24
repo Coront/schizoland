@@ -48,6 +48,33 @@ AS.AddBaseItem("armor_bandit", {
     },
 })
 
+AS.AddBaseItem("armor_riot", {
+    name = "Riot Armor",
+    desc = "Armor built to reselble the armor used by pre-collapse riot police.",
+    category = "armor",
+    model = "models/items/armor/police.mdl",
+    wep = "armor_riot",
+    color = Color( 120, 40, 40 ),
+    value = 50,
+    weight = 3.5,
+    armor = {
+        ["movemult"] = 0.9,
+        [DMG_BULLET] = 22,
+        [DMG_SLASH] = 28,
+        [DMG_BURN] = 20,
+        [DMG_ENERGYBEAM] = 15,
+        [DMG_BLAST] = 25,
+    },
+    hidden = true,
+    class = "mercenary",
+    craft = {
+        ["misc_scrap"] = 100,
+        ["misc_smallparts"] = 70,
+        ["misc_chemical"] = 85,
+        ["misc_hide_antlion"] = 2,
+    },
+})
+
 AS.AddBaseItem("armor_recon", {
     name = "Recon Armor",
     desc = "A very light set of armor with technologies that improve the wearer's mobility.",
@@ -58,7 +85,7 @@ AS.AddBaseItem("armor_recon", {
     value = 200,
     weight = 4.5,
     armor = {
-        ["movemult"] = 1.2,
+        ["movemult"] = 1.25,
         [DMG_BULLET] = 25,
         [DMG_SLASH] = 24,
         [DMG_BURN] = 18,
@@ -86,7 +113,8 @@ AS.AddBaseItem("armor_exo", {
     value = 200,
     weight = 4.5,
     armor = {
-        ["movemult"] = 0.85,
+        ["movemult"] = 1.2,
+        ["carryinc"] = 0,
         [DMG_BULLET] = 35,
         [DMG_SLASH] = 25,
         [DMG_BURN] = 15,
@@ -105,8 +133,8 @@ AS.AddBaseItem("armor_exo", {
 })
 
 AS.AddBaseItem("armor_combine", {
-    name = "Combine Soldier Armor",
-    desc = "Armor that is worn commonly by combine soldiers. Has everything you need to protect yourself from basic wasteland elements.",
+    name = "Coalition Armor",
+    desc = "Armor that is worn commonly by post collapse soldiers. Has everything you need to protect yourself from basic wasteland elements.",
     category = "armor",
     model = "models/items/armor/combine.mdl",
     wep = "armor_combine",
@@ -124,6 +152,7 @@ AS.AddBaseItem("armor_combine", {
     hidden = true,
     class = "mercenary",
     craft = {
+        ["misc_combinebroken"] = 1,
         ["misc_scrap"] = 250,
         ["misc_smallparts"] = 300,
         ["misc_chemical"] = 375,
@@ -161,8 +190,8 @@ AS.AddBaseItem("armor_combat", {
 })
 
 AS.AddBaseItem("armor_elite", {
-    name = "Elite Combine Soldier Armor",
-    desc = "Some of the best armor worn by elite soldiers of the combine.",
+    name = "Elite Armor",
+    desc = "Some of the best armor worn by elite soldiers of the post collapse millitary.",
     category = "armor",
     model = "models/items/armor/elite.mdl",
     wep = "armor_elite",
@@ -179,9 +208,10 @@ AS.AddBaseItem("armor_elite", {
     hidden = true,
     class = "scavenger",
     craft = {
-        ["misc_scrap"] = 350,
-        ["misc_smallparts"] = 200,
-        ["misc_chemical"] = 300,
+        ["misc_elitebroken"] = 1,
+        ["misc_scrap"] = 400,
+        ["misc_smallparts"] = 250,
+        ["misc_chemical"] = 3,
         ["misc_hide_antlion"] = 4,
         ["misc_hide_guard"] = 2,
         ["misc_heavyplate"] = 1,
@@ -197,8 +227,8 @@ AS.AddBaseItem("armor_juggernaut", {
     value = 35,
     weight = 2,
     armor = {
-        ["movemult"] = 0.75, --Movespeed Mult
-        [DMG_BULLET] = 40, --Bullets
+        ["movemult"] = 0.6, --Movespeed Mult
+        [DMG_BULLET] = 70, --Bullets
         [DMG_SLASH] = 52, --Melee
         [DMG_BURN] = 10, --Fire
         [DMG_ENERGYBEAM] = 42, --Pulse

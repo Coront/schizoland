@@ -6,10 +6,12 @@ ENT.PrintName		= "Armor"
 ENT.Category		= "Aftershock"
 ENT.Spawnable		= false
 
-ENT.Model = "models/props_wasteland/controlroom_desk001b.mdl"
+ENT.Model = "models/magnusson_teleporter_off.mdl"
 
 ENT.CraftTable = {
-    ["armor_police"] = 1,
-    ["armor_combine"] = 1,
-    ["armor_supersoldier"] = 1,
+    ["armor_riot"] = 1,
+    ["armor_exo"] = 2,
+    ["armor_juggernaut"] = 3,
+    ["armor_combine"] = 4,
+    ["armor_elite"] = 5,
 }

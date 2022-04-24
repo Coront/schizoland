@@ -11,7 +11,6 @@ function ENT:Initialize()
 	self:SetCollisionGroup( COLLISION_GROUP_WEAPON )
 
 	self:SetDespawnTime( 300 ) --Sets a timer for an item to be deleted.
-	--self:MergeCheck() --Will run a function to see if an item can merge with any similar items in the area.
 end
 
 function ENT:SetDespawnTime( time )
@@ -21,25 +20,6 @@ end
 function ENT:GetDespawnTime()
 	return self.DespawnTime or CurTime() + 60
 end
-
---[[
-function ENT:MergeCheck() --This function will search for the same entities with similar ids to merge itself to in the area.
-	for k, v in pairs(ents.FindByClass("as_baseitem")) do
-		if self == v then continue end --Don't merge to ourself!!!
-		if self:GetPos():Distance(v:GetPos()) > 50 then continue end --The entities are too far
-		if self:GetItem() != v:GetItem() then continue end --The entities are not the same item
-		self:Remove()
-		v:Remove()
-
-		local newent = ents.Create("as_baseitem")
-		newent:SetPos(v:GetPos())
-		newent:SetAngles(v:GetAngles())
-		newent:SetItem(v:GetItem())
-		newent:SetAmount(v:GetAmount() + self:GetAmount())
-		newent:Spawn()
-	end
-end
-]]
 
 function ENT:Use( ply )
 	if not ply:CanCarryItem( self:GetItem(), self:GetAmount() ) then return end
