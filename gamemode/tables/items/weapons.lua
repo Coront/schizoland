@@ -330,7 +330,7 @@ AS.AddBaseItem("wep_sks", {
 
 AS.AddBaseItem("wep_m14", {
     name = "M14",
-    desc = "A long-ranged american that holds 20 rounds. Uses 7.62x51mm ammunition.",
+    desc = "A long-ranged american rifle that holds 20 rounds. Uses 7.62x51mm ammunition.",
     category = "weapon",
     model = "models/items/weapons/m14.mdl",
     wep = "weapon_m14",
