@@ -1,5 +1,5 @@
 ENT.Type 			= "anim"
-ENT.Base 			= "base_entity"
+ENT.Base 			= "base_anim"
 ENT.PrintName		= "Item Base"
 ENT.Author			= "Tampy"
 ENT.Purpose			= "Base item that contains data"
