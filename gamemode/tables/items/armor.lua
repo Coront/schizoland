@@ -76,6 +76,34 @@ AS.AddBaseItem("armor_recon", {
     },
 })
 
+AS.AddBaseItem("armor_exo", {
+    name = "Exosuit Armor",
+    desc = "A light set of armor that utilizes a mechanical suit to help with carrying heavy contents.",
+    category = "armor",
+    model = "models/items/armor/exo.mdl",
+    wep = "armor_exo",
+    color = Color( 120, 40, 40 ),
+    value = 200,
+    weight = 4.5,
+    armor = {
+        ["movemult"] = 0.85,
+        [DMG_BULLET] = 35,
+        [DMG_SLASH] = 25,
+        [DMG_BURN] = 15,
+        [DMG_ENERGYBEAM] = 39,
+        [DMG_BLAST] = 45,
+    },
+    hidden = true,
+    class = "mercenary",
+    craft = {
+        ["misc_scrap"] = 250,
+        ["misc_smallparts"] = 300,
+        ["misc_chemical"] = 375,
+        ["misc_hide_antlion"] = 3,
+        ["misc_hide_guard"] = 2,
+    },
+})
+
 AS.AddBaseItem("armor_combine", {
     name = "Combine Soldier Armor",
     desc = "Armor that is worn commonly by combine soldiers. Has everything you need to protect yourself from basic wasteland elements.",
@@ -114,6 +142,62 @@ AS.AddBaseItem("armor_combat", {
     weight = 2,
     armor = {
         ["movemult"] = 0.8, --Movespeed Mult
+        [DMG_BULLET] = 40, --Bullets
+        [DMG_SLASH] = 52, --Melee
+        [DMG_BURN] = 10, --Fire
+        [DMG_ENERGYBEAM] = 42, --Pulse
+        [DMG_BLAST] = 40, --Explosive
+    },
+    hidden = true,
+    class = "scavenger",
+    craft = {
+        ["misc_scrap"] = 350,
+        ["misc_smallparts"] = 200,
+        ["misc_chemical"] = 300,
+        ["misc_hide_antlion"] = 4,
+        ["misc_hide_guard"] = 2,
+        ["misc_heavyplate"] = 1,
+    },
+})
+
+AS.AddBaseItem("armor_elite", {
+    name = "Elite Combine Soldier Armor",
+    desc = "Some of the best armor worn by elite soldiers of the combine.",
+    category = "armor",
+    model = "models/items/armor/elite.mdl",
+    wep = "armor_elite",
+    value = 35,
+    weight = 2,
+    armor = {
+        ["movemult"] = 0.75, --Movespeed Mult
+        [DMG_BULLET] = 40, --Bullets
+        [DMG_SLASH] = 52, --Melee
+        [DMG_BURN] = 10, --Fire
+        [DMG_ENERGYBEAM] = 42, --Pulse
+        [DMG_BLAST] = 40, --Explosive
+    },
+    hidden = true,
+    class = "scavenger",
+    craft = {
+        ["misc_scrap"] = 350,
+        ["misc_smallparts"] = 200,
+        ["misc_chemical"] = 300,
+        ["misc_hide_antlion"] = 4,
+        ["misc_hide_guard"] = 2,
+        ["misc_heavyplate"] = 1,
+    },
+})
+
+AS.AddBaseItem("armor_juggernaut", {
+    name = "Juggernaut Armor",
+    desc = "An incredibly heavy set of ballistic armor. Heavily protects your most important vital spots. It's not exactly flexible for movement, though.",
+    category = "armor",
+    model = "models/items/armor/juggernaut.mdl",
+    wep = "armor_juggernaut",
+    value = 35,
+    weight = 2,
+    armor = {
+        ["movemult"] = 0.75, --Movespeed Mult
         [DMG_BULLET] = 40, --Bullets
         [DMG_SLASH] = 52, --Melee
         [DMG_BURN] = 10, --Fire
