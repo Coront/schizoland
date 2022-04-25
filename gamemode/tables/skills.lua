@@ -47,7 +47,7 @@ AS.AddBaseSkill( "treatment", {
 
 AS.AddBaseSkill( "farming", {
     name = "Farming",
-    desc = "Decreases the time it takes to produce food from plants. Leveled by harvesting plants.",
+    desc = "Decreases the time it takes for plants to produce food, and the time it takes to prune them. Leveled when plants produce food.",
     icon = "",
     max = 20,
     basexp = 1,

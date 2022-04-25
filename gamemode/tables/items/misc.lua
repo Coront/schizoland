@@ -115,6 +115,27 @@ AS.AddBaseItem("misc_gunpowderten", {
     }
 })
 
+AS.AddBaseItem("misc_fullmelon", {
+    name = "Melon",
+    desc = "A large and heathily grown melon. Can be sliced into four pieces, and consumed.",
+    category = "misc",
+    model = "models/props_junk/watermelon01.mdl",
+    value = 50,
+    weight = 2,
+    use = {
+        items = {
+            ["food_melon"] = 4,
+        },
+        soundcs = "physics/flesh/flesh_squishy_impact_hard4.wav",
+    },
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 0,
+        ["misc_smallparts"] = 0,
+        ["misc_chemical"] = 0,
+    }
+})
+
 AS.AddBaseItem("misc_heavyplate", {
     name = "Heavy Armor Plate",
     desc = "A heavy plate that is incredibly durable and rare. Required in the creation of some very efficient armors.",

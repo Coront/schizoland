@@ -43,7 +43,7 @@ function Workbench.Menu()
         pickup:SetTooltip("Pickup the entity and place it in your inventory.")
     end
     pickup.DoClick = function()
-        net.Start("as_workbench_pickup")
+        net.Start("as_tool_pickup")
             net.WriteEntity( ent )
         net.SendToServer()
         frame_workbench:Close()

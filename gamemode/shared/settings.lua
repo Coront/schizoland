@@ -137,6 +137,11 @@ SKL.Treatment = {
     deccooltime = 0.08,
     inceffectlength = 0.6,
 }
+SKL.Farming = {
+    incamt = 0.08,
+    decprunetime = 0.03,
+    decproducetime = 0.01,
+}
 --Satiation Settings
 SET.Satiation = {}
 SAT = SET.Satiation

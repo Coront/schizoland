@@ -29,18 +29,6 @@ function ENT:PlayerCanCraftItem( ply, item, amt )
 	return true
 end
 
-function ENT:PickedUp( ply )
-	self:Remove()
-
-	local item = FetchToolIDByClass( self:GetClass() )
-	if not item then AS.LuaError("Attempt to pick up an object with no entity tied, cannot find itemid - " .. self:GetClass()) return end
-
-	ply:ChatPrint("Picked up " .. AS.Items[item].name .. ".")
-	ply:AddItemToInventory( item, 1 )
-	ply:RemoveToolFromCache( item )
-	ply:ResyncInventory()
-end
-
 -- ███╗   ██╗███████╗████████╗██╗    ██╗ ██████╗ ██████╗ ██╗  ██╗██╗███╗   ██╗ ██████╗
 -- ████╗  ██║██╔════╝╚══██╔══╝██║    ██║██╔═══██╗██╔══██╗██║ ██╔╝██║████╗  ██║██╔════╝
 -- ██╔██╗ ██║█████╗     ██║   ██║ █╗ ██║██║   ██║██████╔╝█████╔╝ ██║██╔██╗ ██║██║  ███╗
@@ -49,17 +37,7 @@ end
 -- ╚═╝  ╚═══╝╚══════╝   ╚═╝    ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝ ╚═════╝
 
 util.AddNetworkString("as_workbench_open")
-util.AddNetworkString("as_workbench_pickup")
 util.AddNetworkString("as_workbench_craftitem")
-
-net.Receive("as_workbench_pickup", function( _, ply )
-	local ent = net.ReadEntity()
-
-	if not ent:PlayerCanPickUp( ply ) then return end
-	if ply:GetCarryWeight() + AS.Items[FetchToolIDByClass( ent:GetClass() )].weight > ply:MaxCarryWeight() then ply:ChatPrint("You are too overweight to carry this.") return end
-
-	ent:PickedUp( ply )
-end)
 
 net.Receive("as_workbench_craftitem", function( _, ply )
 	local ent = net.ReadEntity()
