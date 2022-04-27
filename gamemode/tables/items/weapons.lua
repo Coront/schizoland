@@ -328,23 +328,6 @@ AS.AddBaseItem("wep_sks", {
     },
 })
 
-AS.AddBaseItem("wep_AutoBarrett", {
-    name = "M82 Auto Xtreem 1337",
-    desc = "God too hides in fear of what he has created.",
-    category = "weapon",
-    model = "models/items/weapons/m82.mdl",
-    wep = "weapon_AutoBarrett",
-    value = 0,
-    weight = 0,
-    hidden = true,
-    class = "engineer",
-    craft = {
-        ["misc_scrap"] = 160,
-        ["misc_smallparts"] = 150,
-        ["misc_chemical"] = 120,
-    },
-})
-
 AS.AddBaseItem("wep_m14", {
     name = "M14",
     desc = "A long-ranged american rifle that holds 20 rounds. Uses 7.62x51mm ammunition.",
