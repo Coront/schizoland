@@ -161,6 +161,7 @@ function CalculateItemSalvage( itemid, amt ) --This will calculate the amount of
     for k, v in pairs( AS.Items[itemid].craft ) do
         if not SET.RawResources[k] then continue end --Ignore everything not a raw resource
         local toAmt = math.floor(v * SET.DestroyPerc) * amt
+        if toAmt < 1 then continue end
         tbl[k] = toAmt
     end
 

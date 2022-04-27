@@ -67,12 +67,12 @@ function ENT:Initialize()
 end
 
 function ENT:Think()
-    if self:GetPruneAmount() >= self.PruneLoss and CurTime() > self:GetNextProduce() then
-        local produceTime = self.GrowthLength
-        if self:HasObjectOwner() then
-            produceTime = produceTime * (1 - ( self:GetObjectOwner():GetSkillLevel("farming") * SKL.Farming.decproducetime ))
-        end
+    local produceTime = self.GrowthLength
+    if self:HasObjectOwner() then
+        produceTime = produceTime * (1 - ( self:GetObjectOwner():GetSkillLevel("farming") * SKL.Farming.decproducetime ))
+    end
 
+    if self:GetPruneAmount() >= self.PruneLoss and CurTime() > self:GetNextProduce() then
         self:SetPruneAmount( self:GetPruneAmount() - self.PruneLoss )
         self:SetNextProduce( CurTime() + produceTime )
         if self:HasObjectOwner() and self:GetObjectOwner():GetASClass() == "cultivator" then
@@ -95,7 +95,8 @@ function ENT:Think()
             ent:Spawn()
             constraint.Weld( ent, self, 0, 0, 0, true, false )
         end
-
+    elseif self:GetPruneAmount() < self.PruneLoss then
+        self:SetNextProduce( CurTime() + produceTime )
     end
 end
 

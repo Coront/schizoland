@@ -54,7 +54,7 @@ AS.AddBaseSkill( "farming", {
     power = 1.85,
 } )
 
-AS.AddBaseSkill( "Mining", {
+AS.AddBaseSkill( "mining", {
     name = "Mining",
     desc = "Decreases the time it takes for a miner to produce resources. Leveled by miner production.",
     icon = "",
@@ -63,7 +63,7 @@ AS.AddBaseSkill( "Mining", {
     power = 1.85,
 } )
 
-AS.AddBaseSkill( "Charisma", {
+AS.AddBaseSkill( "charisma", {
     name = "Charisma",
     desc = "(Work In Progress) Decreases the cost of items at traders, while increasing the price of items that are sold. Leveled by bartering with traders.",
     icon = "",

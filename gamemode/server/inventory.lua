@@ -165,6 +165,7 @@ function PlayerMeta:DestroyItem( item, amt )
     self:TakeItemFromInventory( item, amt )
     self:ChatPrint("Salvaged " .. itemname .. " (" .. amt .. ") for:")
     for k, v in pairs( CalculateItemSalvage(item, amt) ) do
+        if v < 1 then continue end
         self:AddItemToInventory( k, v )
         self:ChatPrint(AS.Items[k].name .. " (" .. v .. ")")
     end

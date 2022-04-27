@@ -111,6 +111,77 @@ AS.AddBaseItem("tool_plant_melon", {
     },
 })
 
+--  ██████╗ ███████╗███╗   ██╗███████╗██████╗  █████╗ ████████╗ ██████╗ ██████╗
+-- ██╔════╝ ██╔════╝████╗  ██║██╔════╝██╔══██╗██╔══██╗╚══██╔══╝██╔═══██╗██╔══██╗
+-- ██║  ███╗█████╗  ██╔██╗ ██║█████╗  ██████╔╝███████║   ██║   ██║   ██║██████╔╝
+-- ██║   ██║██╔══╝  ██║╚██╗██║██╔══╝  ██╔══██╗██╔══██║   ██║   ██║   ██║██╔══██╗
+-- ╚██████╔╝███████╗██║ ╚████║███████╗██║  ██║██║  ██║   ██║   ╚██████╔╝██║  ██║
+--  ╚═════╝ ╚══════╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝
+
+AS.AddBaseItem("tool_generator_solar", {
+    name = "Solar Panel",
+    desc = "Converts solar energy to electricity. Produces 25 electricity.",
+    category = "tool",
+    model = "models/hunter/plates/plate1x2.mdl",
+    ent = "as_generator_solar",
+    value = 250,
+    weight = 4,
+    class = "cultivator",
+    craft = {
+        ["misc_scrap"] = 0,
+        ["misc_smallparts"] = 0,
+        ["misc_chemical"] = 0,
+    },
+})
+
+AS.AddBaseItem("tool_generator_engine", {
+    name = "Gas Generator",
+    desc = "Uses gasoline to produce energy. Produces 75 electricity.",
+    category = "tool",
+    model = "models/props_vehicles/generatortrailer01.mdl",
+    ent = "as_generator_engine",
+    value = 250,
+    weight = 4,
+    class = "cultivator",
+    craft = {
+        ["misc_scrap"] = 0,
+        ["misc_smallparts"] = 0,
+        ["misc_chemical"] = 0,
+    },
+})
+
+AS.AddBaseItem("tool_generator_nuclear", {
+    name = "Nuclear Generator",
+    desc = "A large nuclear generator. Uses uranium to produce energy. Produces 150 electricity.",
+    category = "tool",
+    model = "models/props_canal/generator01.mdl",
+    ent = "as_generator_nuclear",
+    value = 250,
+    weight = 4,
+    class = "cultivator",
+    craft = {
+        ["misc_scrap"] = 0,
+        ["misc_smallparts"] = 0,
+        ["misc_chemical"] = 0,
+    },
+})
+
+AS.AddBaseItem("tool_generator_fusion", {
+    name = "Fusion Generator",
+    desc = "A fusion generator. Uses deuterium samples to produce energy. Produces 250 electricity.",
+    category = "tool",
+    model = "models/props_combine/combine_generator01.mdl",
+    ent = "as_generator_fusion",
+    value = 250,
+    weight = 4,
+    class = "cultivator",
+    craft = {
+        ["misc_scrap"] = 0,
+        ["misc_smallparts"] = 0,
+        ["misc_chemical"] = 0,
+    },
+})
+
 -- ██████╗ ██████╗  ██████╗ ██████╗ ██╗   ██╗ ██████╗████████╗██╗ ██████╗ ███╗   ██╗
 -- ██╔══██╗██╔══██╗██╔═══██╗██╔══██╗██║   ██║██╔════╝╚══██╔══╝██║██╔═══██╗████╗  ██║
 -- ██████╔╝██████╔╝██║   ██║██║  ██║██║   ██║██║        ██║   ██║██║   ██║██╔██╗ ██║
@@ -139,6 +210,7 @@ AS.AddBaseItem("tool_miner", {
     desc = "This thing will pound the ground to dig out usable resources for you. Would be incredibly useful if you had an army of them.",
     category = "tool",
     model = "models/props_combine/combinethumper001a.mdl",
+    ent = "as_miner",
     value = 300,
     weight = 15,
     class = "scavenger",
@@ -149,5 +221,28 @@ AS.AddBaseItem("tool_miner", {
         ["misc_sensorpod"] = 1,
         ["misc_electronicparts"] = 3,
         ["misc_servo"] = 3,
+    },
+})
+
+-- ███╗   ███╗██╗███████╗ ██████╗███████╗██╗     ██╗      █████╗ ███╗   ██╗███████╗ ██████╗ ██╗   ██╗███████╗
+-- ████╗ ████║██║██╔════╝██╔════╝██╔════╝██║     ██║     ██╔══██╗████╗  ██║██╔════╝██╔═══██╗██║   ██║██╔════╝
+-- ██╔████╔██║██║███████╗██║     █████╗  ██║     ██║     ███████║██╔██╗ ██║█████╗  ██║   ██║██║   ██║███████╗
+-- ██║╚██╔╝██║██║╚════██║██║     ██╔══╝  ██║     ██║     ██╔══██║██║╚██╗██║██╔══╝  ██║   ██║██║   ██║╚════██║
+-- ██║ ╚═╝ ██║██║███████║╚██████╗███████╗███████╗███████╗██║  ██║██║ ╚████║███████╗╚██████╔╝╚██████╔╝███████║
+-- ╚═╝     ╚═╝╚═╝╚══════╝ ╚═════╝╚══════╝╚══════╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝ ╚═════╝  ╚═════╝ ╚══════╝
+
+AS.AddBaseItem("tool_pylon", {
+    name = "Power Pylon",
+    desc = "A power pylon. Useful for conducting electricity. Can be used to simply store extra power, or as an extension for longer distances.",
+    category = "tool",
+    model = "models/props_c17/substation_transformer01d.mdl",
+    ent = "as_pylon",
+    value = 10,
+    weight = 1,
+    craft = {
+        ["misc_scrap"] = 20,
+        ["misc_smallparts"] = 30,
+        ["misc_chemical"] = 15,
+        ["misc_electronicparts"] = 1,
     },
 })

@@ -136,6 +136,78 @@ AS.AddBaseItem("misc_fullmelon", {
     }
 })
 
+AS.AddBaseItem("misc_uraniumpack", {
+    name = "Uranium Fuel (Packed)",
+    desc = "A pack of uranium-235. Can be unpacked and loaded into a nuclear generator.",
+    category = "misc",
+    model = "models/items/crossbowrounds.mdl",
+    value = 50,
+    weight = 2,
+    use = {
+        items = {
+            ["misc_uranium"] = 60,
+        },
+        soundcs = "entities/resources_1.wav",
+    },
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 0,
+        ["misc_smallparts"] = 4,
+        ["misc_chemical"] = 15,
+    }
+})
+
+AS.AddBaseItem("misc_uranium", {
+    name = "Uranium Fuel",
+    desc = "A single rod of uranium-235. Can be loaded into a nuclear generator.",
+    category = "misc",
+    model = "models/items/crossbowrounds.mdl",
+    value = 0,
+    weight = 0.05,
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 0,
+        ["misc_smallparts"] = 0,
+        ["misc_chemical"] = 0,
+    }
+})
+
+AS.AddBaseItem("misc_deuteriumpod", {
+    name = "Deuterium Fuel (Packed)",
+    desc = "A pod that contains several samples of deuterium. Can be unpacked.",
+    category = "misc",
+    model = "models/Items/combine_rifle_ammo01.mdl",
+    value = 50,
+    weight = 2.4,
+    use = {
+        items = {
+            ["misc_deuterium"] = 60,
+        },
+        soundcs = "entities/resources_1.wav",
+    },
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 0,
+        ["misc_smallparts"] = 5,
+        ["misc_chemical"] = 20,
+    }
+})
+
+AS.AddBaseItem("misc_deuterium", {
+    name = "Deuterium Fuel",
+    desc = "A sample of deuterium. Can be loaded into fusion reactor.",
+    category = "misc",
+    model = "models/Items/combine_rifle_ammo01.mdl",
+    value = 0,
+    weight = 0.04,
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 0,
+        ["misc_smallparts"] = 0,
+        ["misc_chemical"] = 0,
+    }
+})
+
 AS.AddBaseItem("misc_heavyplate", {
     name = "Heavy Armor Plate",
     desc = "A heavy plate that is incredibly durable and rare. Required in the creation of some very efficient armors.",
@@ -350,8 +422,8 @@ AS.AddBaseItem("misc_propane", {
 })
 
 AS.AddBaseItem("misc_gasoline", {
-    name = "Gasoline",
-    desc = "A jerry can that holds a homogeneous mixture of petroleum oil and many other substances, commonly referred to as gasoline. Used to power generators.",
+    name = "Gasoline Can",
+    desc = "A jerry can that holds a homogeneous mixture of petroleum oil and many other substances, commonly referred to as gasoline. Used to power gas generators.",
     category = "misc",
     model = "models/props_junk/metalgascan.mdl",
     value = 5,

@@ -142,6 +142,10 @@ SKL.Farming = {
     decprunetime = 0.03,
     decproducetime = 0.01,
 }
+SKL.Mining = {
+    incamt = 0.1,
+    decharvesttime = 0.03
+}
 --Satiation Settings
 SET.Satiation = {}
 SAT = SET.Satiation

@@ -22,7 +22,7 @@ net.Receive("as_tool_pickup", function( _, ply )
 
 	if not ent:PlayerCanPickUp( ply ) then return end
     local item = FetchToolIDByClass( ent:GetClass() )
-	if not item then AS.LuaError("Attempt to pick up an object with no entity tied, cannot find itemid - " .. self:GetClass()) return end
+	if not item then AS.LuaError("Attempt to pick up an object with no entity tied, cannot find itemid - " .. ent:GetClass()) return end
 	if ply:GetCarryWeight() + AS.Items[item].weight > ply:MaxCarryWeight() then ply:ChatPrint("You are too overweight to carry this.") return end
 
 	ent:PickedUp( ply, item )
