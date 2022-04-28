@@ -83,33 +83,6 @@ function ENT:Initialize()
     end
 end
 
-function ENT:Think()
-    local elecamt = 0
-    if self:GetActiveState() then --While on
-        elecamt = elecamt + self.PotentialElectricity
-
-        if not self.NoFuel and CurTime() > (self.NextFuelLoss or 0) then
-            self.NextFuelLoss = CurTime() + 1
-
-            self:RemoveFuelAmount( 1 )
-            if self:GetFuelAmount() <= 0 then
-                self:TogglePower()
-            end
-        end
-        if self.Solar then
-            local tr = util.TraceLine({
-                start = self:GetPos(),
-                endpos = self:GetPos() + self:GetAngles():Up() * 999999, --stfu
-                filter = self,
-            })
-            if tr.MatType != MAT_DEFAULT then
-                self:TogglePower()
-            end
-        end
-    end
-    self:SetElectricityAmount( elecamt )
-end
-
 -- ███╗   ██╗███████╗████████╗██╗    ██╗ ██████╗ ██████╗ ██╗  ██╗██╗███╗   ██╗ ██████╗
 -- ████╗  ██║██╔════╝╚══██╔══╝██║    ██║██╔═══██╗██╔══██╗██║ ██╔╝██║████╗  ██║██╔════╝
 -- ██╔██╗ ██║█████╗     ██║   ██║ █╗ ██║██║   ██║██████╔╝█████╔╝ ██║██╔██╗ ██║██║  ███╗

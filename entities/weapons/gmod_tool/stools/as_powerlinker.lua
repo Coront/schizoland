@@ -34,17 +34,15 @@ function TOOL:LeftClick( trace )
 
 		local newconstraint, rope = constraint.Rope( ent, outlet, 0, 0, entlpos, outletlpos, (entpos - outletpos):Length(), 100, 0, 3, "cable/cable2", false )
 
-		ent:AddObjectToOutlet( outlet )
-		outlet:AddObjectToInlet( ent )
+		print("here")
 		self:ClearObjects()
 
 		undo.Create("undone_powerlink")
 			undo.AddEntity( newconstraint )
 			if rope then undo.AddEntity( rope ) end
 
-			undo.AddFunction( function( data, code ) 
-				ent:RemoveObjectFromOutlet( outlet )
-				outlet:RemoveObjectFromInlet( ent )
+			undo.AddFunction( function( data, code )
+				print("here")
 			end)
 			undo.SetPlayer( ply )
 		undo.Finish()
@@ -67,6 +65,7 @@ if ( CLIENT ) then
 			draw.SimpleTextOutlined( tr.Entity.PrintName .. " [" .. tr.Entity:EntIndex() .. "]", "TargetID", ScrW() / 2, ScrH() * 0.55, COLHUD_DEFAULT, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 1, Color( 0, 0, 0 ) )
 			draw.SimpleTextOutlined( "Current Electricity: " .. elec, "TargetID", ScrW() / 2, ScrH() * 0.57, COLHUD_DEFAULT, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 1, Color( 0, 0, 0 ) )
 
+			--[[
 			if tr.Entity:HasInlets() then
 				local inlets = {}
 				for k, v in pairs( tr.Entity:GetInletTable() ) do
@@ -81,46 +80,9 @@ if ( CLIENT ) then
 					draw.SimpleTextOutlined( k, "TargetID", x, y, COLHUD_DEFAULT, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 1, Color( 0, 0, 0 ) )
 				end
 			end
-
-			if tr.Entity:HasOutlets() then
-				local outlets = {}
-				for k, v in pairs( tr.Entity:GetOutletTable() ) do
-					if not IsValid(k) then tr.Entity.PL.Outlets[k] = nil continue end
-					outlets[k.PrintName .. " [" .. k:EntIndex() .. "]"] = v
-				end
-
-				local x, y = ScrW() * 0.6, ScrH() * 0.6
-				draw.SimpleTextOutlined( "Outlets:", "TargetID", x, y, COLHUD_DEFAULT, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 1, Color( 0, 0, 0 ) )
-				for k, v in pairs(outlets) do
-					y = y + 20
-					draw.SimpleTextOutlined( k, "TargetID", x, y, COLHUD_DEFAULT, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 1, Color( 0, 0, 0 ) )
-				end
-			end
+			]]
 		end
 	end
-
-	hook.Add("PreDrawHalos", "AS_PowerLinker", function()
-		if not LocalPlayer():Alive() then return end
-		if not LocalPlayer():IsLoaded() then return end
-		if IsValid(LocalPlayer():GetActiveWeapon()) and LocalPlayer():GetActiveWeapon():GetClass() != "gmod_tool" then return end
-		local halos = {}
-		local col = COLHUD_DEFAULT
-		for k, v in pairs( ents.GetAll() ) do
-			if not v.AS_Conductor then continue end --skip everything not a conductor
-
-			local trace = util.TraceLine({
-				start = LocalPlayer():GetShootPos(),
-				endpos = LocalPlayer():GetShootPos() + (LocalPlayer():GetAimVector() * 500),
-				filter = LocalPlayer(),
-			})
-
-			if trace.Entity != v then continue end
-			halos[#halos + 1] = v
-		end
-
-		halo.Add( halos, col, 5, 5, 1, true, false )
-	end)
-
 end
 
 function TOOL.BuildCPanel(panel)

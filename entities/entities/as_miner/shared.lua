@@ -8,9 +8,6 @@ ENT.Spawnable		= false
 ENT.AutomaticFrameAdvance = true
 ENT.AS_OwnableObject = true
 ENT.AS_Conductor = true
-ENT.AS_PowerRequired = 50
-
-ENT.PL = {}
 
 ENT.MaxHealth = 350 --Object Health
 ENT.Items = { --items that we will potentially produce over time.
@@ -92,16 +89,6 @@ function ENT:CanMine()
 end
 
 function ENT:Think()
-    --[[
-    --Power
-    if self:HasInlets() then
-        for k, v in pairs( self:GetInletTable() ) do
-            if k:GetInlet
-        end
-    end
-    ]]
-
-    --Mining
     local nextharvest = self.ProduceLength
     if self:HasObjectOwner() then
         nextharvest = nextharvest * (1 - (self:GetObjectOwner():GetSkillLevel("mining") * SKL.Mining.decharvesttime))
