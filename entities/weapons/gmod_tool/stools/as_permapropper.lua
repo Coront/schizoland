@@ -197,6 +197,7 @@ hook.Add( "HUDPaint", "AS_Persists_Info", function()
     })
 
     if trace.Entity and trace.Entity:GetNWBool( "Persisted", false ) then
+        draw.DrawText( "Object: " .. trace.Entity:GetClass(), "TargetID", ScrW() * 0.5, ScrH() * 0.524, COLHUD_DEFAULT, TEXT_ALIGN_CENTER )
         draw.DrawText( "Placer: " .. trace.Entity:GetNWString( "PersistedOwner", "ERR_NONE" ), "TargetID", ScrW() * 0.5, ScrH() * 0.54, COLHUD_DEFAULT, TEXT_ALIGN_CENTER )
         draw.DrawText( "Date: " .. trace.Entity:GetNWString( "PersistedDate", "ERR_NONE" ), "TargetID", ScrW() * 0.5, ScrH() * 0.556, COLHUD_DEFAULT, TEXT_ALIGN_CENTER )
     end
