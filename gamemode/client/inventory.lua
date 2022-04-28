@@ -394,8 +394,8 @@ function AS.Inventory.BuildInventory()
     weaponscroll:SetOverlap( -2 )
 
     for k, v in SortedPairs( LocalPlayer():GetWeapons() ) do
-        if SET.DefaultWeapons[v:GetClass()] then continue end --Default weapons arent real get out of my walls
         if not v.ASID then continue end --stupid method but it works, need to tie an id to the weapons
+        if SET.DefaultWeapons[v:GetClass()] then continue end --Default weapons arent real get out of my walls
         if v.ASArmor then continue end
 
         local weaponinfopanel = vgui.Create("DPanel")

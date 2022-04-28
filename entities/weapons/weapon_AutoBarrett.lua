@@ -21,8 +21,6 @@ if CLIENT then
 	SWEP.BlurOnAim = true
 end
 
-SWEP.ASID = "wep_AutoBarrett"
-
 SWEP.BulletLength = 12.95
 SWEP.CaseLength = 99
 SWEP.EmptySound = Sound("hl1/fvox/ammo_depleted.wav")

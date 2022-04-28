@@ -23,8 +23,8 @@ if CLIENT then
 	["compm4"] = {bg = 2, sbg = 1},
 	["foregrip"] = {bg = 4, sbg = 1}}
 	
-	SWEP.WMAng = Vector(0, 90, 180)
-	SWEP.WMPos = Vector(-7.5, -0.5, 3.2)
+	SWEP.WMAng = Vector(0, 180, 180)
+	SWEP.WMPos = Vector(0.5, -8.5, 3.7)
 end
 
 SWEP.ASID = "wep_mp5"

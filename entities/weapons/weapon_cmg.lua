@@ -11,7 +11,7 @@ if CLIENT then
 	SWEP.Shell = "7.62x39"
 
 	SWEP.WMAng = Vector(0, 180, 180)
-	SWEP.WMPos = Vector(-0.4, -16.3, 0.3)
+	SWEP.WMPos = Vector(0.1, -9.3, 3.3)
 end
 
 SWEP.ASID = "wep_csmg"

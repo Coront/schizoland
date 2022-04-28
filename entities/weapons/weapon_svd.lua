@@ -18,8 +18,8 @@ if CLIENT then
 	SWEP.Shell = "7.62x51"
 	SWEP.AttachmentBGs = {["suppressor"] = {bg = 2, sbg = 1}}
 	
-	SWEP.WMAng = Vector(-10, 0, 180)
-	SWEP.WMPos = Vector(-3.6, -6, 5)
+	SWEP.WMAng = Vector(0, 0, 180)
+	SWEP.WMPos = Vector(-3.6, -6, 6.5)
 	SWEP.TargetViewModelFOV = 50
 	SWEP.CanPeek = true
 	SWEP.BlurOnAim = true
