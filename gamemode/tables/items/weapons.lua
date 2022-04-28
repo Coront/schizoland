@@ -463,23 +463,6 @@ AS.AddBaseItem("wep_pulselmg", {
     },
 })
 
-AS.AddBaseItem("wep_m60", {
-    name = "M60",
-    desc = "An incredibly heavy lmg that holds 100 rounds. Uses 7.62x51mm ammunition.",
-    category = "weapon",
-    model = "models/items/weapons/m60.mdl",
-    wep = "weapon_m60",
-    value = 100,
-    weight = 1.4,
-    hidden = true,
-    class = "engineer",
-    craft = {
-        ["misc_scrap"] = 325,
-        ["misc_smallparts"] = 300,
-        ["misc_chemical"] = 275,
-    },
-})
-
 -- ███████╗███╗   ██╗██╗██████╗ ███████╗██████╗
 -- ██╔════╝████╗  ██║██║██╔══██╗██╔════╝██╔══██╗
 -- ███████╗██╔██╗ ██║██║██████╔╝█████╗  ██████╔╝
