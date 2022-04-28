@@ -44,7 +44,15 @@ hook.Add("PostDrawOpaqueRenderables", "AS_ArmorOverlay", function()
     for k, v in pairs( player.GetAll() ) do
         if not v:IsLoaded() then continue end
         if not v:Alive() then continue end
-        if not v:HasArmor() then v.HideDefault = false v.LastArmorModel = nil continue end
+        if not v:HasArmor() then 
+            v.HideDefault = false 
+            timer.Simple( 0.1, function() --bruh
+                if v:Alive() then 
+                    v.LastArmorModel = nil 
+                end 
+            end) 
+            continue 
+        end 
         if v:HasArmor() and not v:GetArmorWep().ArmorModel then continue end
 
         render.SetBlend( 1 )
@@ -55,18 +63,18 @@ hook.Add("PostDrawOpaqueRenderables", "AS_ArmorOverlay", function()
             v.ArmorOverlay = ClientsideModel( armorwep.ArmorModel )
             v.ArmorOverlay:SetNoDraw( true )
         end
-        
+        v.LastArmorModel = armorwep.ArmorModel
+
         if v.ArmorOverlay:GetModel() != armorwep.ArmorModel then
             v.ArmorOverlay:SetModel( armorwep.ArmorModel )
-            v.LastArmorModel = armorwep.ArmorModel
         end
-        
+
         if armorwep.HideDefault then
             v.HideDefault = true
         else
             v.HideDefault = false
         end
-        
+
         if IsValid( v.ArmorOverlay ) then
             if armorwep.BoneMerge then --Bone merging
                 v.ArmorOverlay:SetParent( v )
@@ -79,6 +87,24 @@ hook.Add("PostDrawOpaqueRenderables", "AS_ArmorOverlay", function()
                 end
             end
             v.ArmorOverlay:DrawModel()
+        end
+    end
+end)
+
+hook.Add("PostDrawOpaqueRenderables", "AS_DeathDollArmor", function()
+    for k, v in pairs( player.GetAll() ) do
+        if v:Alive() then continue end
+        print(v.LastArmorModel)
+        if v:GetRagdollEntity() and IsValid(v:GetRagdollEntity()) and v.LastArmorModel then
+            local deathdoll = v:GetRagdollEntity()
+            if not deathdoll.ArmorOverlay then
+                deathdoll.ArmorOverlay = ClientsideModel( v.LastArmorModel )
+                deathdoll.ArmorOverlay:SetNoDraw( true )
+            end
+
+            deathdoll.ArmorOverlay:SetParent( deathdoll )
+            deathdoll.ArmorOverlay:AddEffects( EF_BONEMERGE )
+            deathdoll.ArmorOverlay:DrawModel()
         end
     end
 end)
