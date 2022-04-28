@@ -79,7 +79,7 @@ SWEP.Sounds["reload_empty_nomen"] = {[1] = {time = 0.6, sound = Sound("FAS2_M14.
 	[3] = {time = 1.9, sound = Sound("FAS2_M14.MagIn")},
 	[4] = {time = 2.35, sound = Sound("FAS2_M14.BoltRelease")}}
 	
-SWEP.FireModes = {"auto", "semi"}
+SWEP.FireModes = {"semi"}
 
 SWEP.Category = "FA:S 2 Weapons"
 SWEP.Base = "fas2_base"
