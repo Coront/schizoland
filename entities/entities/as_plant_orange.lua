@@ -16,6 +16,6 @@ ENT.Slots = { --Every key you make is another slot for the food to be grown. For
     [5] = Vector( -2.718262, -21.478027, 28.670868 ),
 }
 ENT.Food = "food_orange" --The food we should grow, by item ID.
-ENT.PruneMax = 100 --Maximum value of our prune.
-ENT.PruneLoss = 10 --Prune amount lossed per grown food.
+ENT.PruneMax = 120 --Maximum value of our prune.
+ENT.PruneLoss = 8 --Prune amount lossed per grown food.
 ENT.GrowthLength = 120 --How long it takes for the food to grow (in seconds).
