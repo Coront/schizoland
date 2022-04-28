@@ -327,6 +327,36 @@ AS.AddBaseItem("misc_seed_melon", {
     }
 })
 
+AS.AddBaseItem("misc_seed_herb", {
+    name = "Medicinal Herb Seeds",
+    desc = "A packet that contains herb seeds. Can be used to grow an herb plant, to harvest herbs.",
+    category = "misc",
+    model = "models/props_junk/cardboard_box004a.mdl",
+    value = 5,
+    weight = 0.2,
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 5,
+        ["misc_smallparts"] = 0,
+        ["misc_chemical"] = 20,
+    }
+})
+
+AS.AddBaseItem("misc_herb", {
+    name = "Medicinal Herb",
+    desc = "A herb that contains potential healing properties. Can be used to craft advanced medicine.",
+    category = "misc",
+    model = "models/items/misc/herb.mdl",
+    value = 5,
+    weight = 0.2,
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 0,
+        ["misc_smallparts"] = 0,
+        ["misc_chemical"] = 0,
+    }
+})
+
 AS.AddBaseItem("misc_solarfilmroll", {
     name = "Thin Solar Film Roll",
     desc = "A very thin roll that containers copper, indium, gallium, and selenide. Can absorb energy from the sun to be converted into electricity.",

@@ -111,6 +111,23 @@ AS.AddBaseItem("tool_plant_melon", {
     },
 })
 
+AS.AddBaseItem("tool_plant_herb", {
+    name = "Herb Box",
+    desc = "A box that is filled with soil that is rich in nutrients. It produces herbs if taken care of over time.",
+    category = "tool",
+    model = "models/tools/dirtbox.mdl",
+    ent = "as_plant_herb",
+    value = 250,
+    weight = 4,
+    class = "cultivator",
+    craft = {
+        ["misc_scrap"] = 400,
+        ["misc_smallparts"] = 450,
+        ["misc_chemical"] = 650,
+        ["misc_seed_herb"] = 1,
+    },
+})
+
 --  ██████╗ ███████╗███╗   ██╗███████╗██████╗  █████╗ ████████╗ ██████╗ ██████╗
 -- ██╔════╝ ██╔════╝████╗  ██║██╔════╝██╔══██╗██╔══██╗╚══██╔══╝██╔═══██╗██╔══██╗
 -- ██║  ███╗█████╗  ██╔██╗ ██║█████╗  ██████╔╝███████║   ██║   ██║   ██║██████╔╝
