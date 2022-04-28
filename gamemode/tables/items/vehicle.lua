@@ -347,24 +347,6 @@ AS.AddBaseItem("vehicle_tuscanforce", {
     },
 })
 
-AS.AddBaseItem("vehicle_roadrunnerflame", {
-    name = "Roadrunner Flame",
-    desc = "An upgraded version of the Roadrunner. Seats 4 people and can carry 275 pounds of items.",
-    category = "vehicle",
-    model = "models/source_vehicles/car003b_rebel.mdl",
-    ent = "car003b_rebel",
-    value = 500,
-    weight = 275,
-    nostore = true,
-    class = "engineer",
-    craft = {
-        ["misc_scrap"] = 750,
-        ["misc_smallparts"] = 850,
-        ["misc_chemical"] = 600,
-        ["vehicle_roadrunner"] = 1,
-    },
-})
-
 AS.AddBaseItem("vehicle_roadrunnercaddy", {
     name = "Roadrunner Caddy",
     desc = "An upgraded version of the Roadrunner. Seats 4 people and can carry 325 pounds of items.",
