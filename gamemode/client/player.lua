@@ -40,16 +40,19 @@ hook.Add( "ChatText", "AS_HideJoinLeave", function( index, name, text, type )
     if type == "joinleave" or type == "namechange" or type == "teamchange" then return true end
 end)
 
-hook.Add("PostDrawTranslucentRenderables", "AS_ArmorOverlay", function()
+hook.Add("PostDrawOpaqueRenderables", "AS_ArmorOverlay", function()
     for k, v in pairs( player.GetAll() ) do
         if not v:IsLoaded() then continue end
         if not v:Alive() then continue end
         if not v:HasArmor() then v.HideDefault = false v.LastArmorModel = nil continue end
         if v:HasArmor() and not v:GetArmorWep().ArmorModel then continue end
 
+        render.SetBlend( 1 )
+        render.SetLightingMode( 0 )
+
         local armorwep = v:GetArmorWep()
         if not IsValid( v.ArmorOverlay ) then --We'll create a new client model if they don't have one.
-            v.ArmorOverlay = ClientsideModel( armorwep.ArmorModel, RENDERGROUP_BOTH )
+            v.ArmorOverlay = ClientsideModel( armorwep.ArmorModel )
             v.ArmorOverlay:SetNoDraw( true )
         end
         
