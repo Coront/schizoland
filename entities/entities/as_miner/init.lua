@@ -97,12 +97,18 @@ end)
 net.Receive( "as_miner_takeitems", function( _, ply ) 
     local ent = net.ReadEntity()
 
+    local taketbl = {}
+    if table.Count(ent:GetInventory()) <= 0 then return end
     for k, v in pairs( ent:GetInventory() ) do
         ent:PlayerTakeItem( ply, k, v )
+        taketbl[AS.Items[k].name] = v
     end
 
     ply:ResyncInventory()
     ent:ResyncInventory()
 
-    ply:ChatPrint("You have taken everything from this miner.")
+    ply:ChatPrint("You have taken everything from this miner:")
+    for k, v in pairs( taketbl ) do
+        ply:ChatPrint( k .. " (" .. v .. ")" )
+    end
 end)

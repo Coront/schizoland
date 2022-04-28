@@ -157,17 +157,17 @@ function PlayerMeta:DropItem( item, amt )
     ent:PhysWake()
     ent:EmitSound(ITEMCUE.DROP)
 
-    self:ChatPrint("Dropped " .. itemname .. " (" .. amt .. ")")
+    self:ChatPrint("Dropped " .. itemname .. " (" .. amt .. ").")
 end
 
 function PlayerMeta:DestroyItem( item, amt )
     local itemname = AS.Items[item].name
     self:TakeItemFromInventory( item, amt )
-    self:ChatPrint("Salvaged " .. itemname .. " (" .. amt .. ") for:")
+    self:ChatPrint("Salvaged " .. itemname .. " (" .. amt .. ").")
     for k, v in pairs( CalculateItemSalvage(item, amt) ) do
         if v < 1 then continue end
         self:AddItemToInventory( k, v )
-        self:ChatPrint(AS.Items[k].name .. " (" .. v .. ")")
+        self:ChatPrint(AS.Items[k].name .. " (" .. v .. ") added to inventory.")
     end
     self:EmitSound(ITEMCUE.DESTROY)
 end
