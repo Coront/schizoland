@@ -102,7 +102,7 @@ if ( CLIENT ) then
 	hook.Add("PreDrawHalos", "AS_PowerLinker", function()
 		if not LocalPlayer():Alive() then return end
 		if not LocalPlayer():IsLoaded() then return end
-		if LocalPlayer():GetActiveWeapon():GetClass() != "gmod_tool" then return end
+		if IsValid(LocalPlayer():GetActiveWeapon()) and LocalPlayer():GetActiveWeapon():GetClass() != "gmod_tool" then return end
 		local halos = {}
 		local col = COLHUD_DEFAULT
 		for k, v in pairs( ents.GetAll() ) do

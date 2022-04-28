@@ -88,7 +88,6 @@ function ENT:CanMine()
         filter = {self},
     })
     if not tr.Hit then return false end
-    if self:GetElectricityAmount() < self.AS_PowerRequired then return false end
     return true
 end
 
@@ -126,6 +125,13 @@ function ENT:Think()
         self:SetNextHarvest( CurTime() + nextharvest )
     end
 
+    if ( SERVER ) then
+        if CurTime() > (self.NextResync or 0) then
+            self.NextResync = CurTime() + 5
+            self:ResyncStatus()
+        end
+    end
+
     self:NextThink( CurTime() + 0.1 )
     return true
 end
@@ -140,6 +146,14 @@ end
 if ( SERVER ) then
     
     util.AddNetworkString( "as_miner_syncinventory" )
+    util.AddNetworkString( "as_miner_syncstatus" )
+
+    function ENT:ResyncStatus()
+        net.Start("as_miner_syncstatus")
+            net.WriteEntity( self )
+            net.WriteBool( self:GetActiveState() )
+        net.Broadcast()
+    end
 
     function ENT:ResyncInventory()
         net.Start("as_miner_syncinventory")
@@ -149,6 +163,14 @@ if ( SERVER ) then
     end
 
 else
+
+    net.Receive( "as_miner_syncstatus", function()
+        local ent = net.ReadEntity()
+        if not IsValid(ent) then return end
+        local state = net.ReadBool()
+
+        ent:SetActiveState( state )
+    end)
 
     net.Receive( "as_miner_syncinventory", function()
         local ent = net.ReadEntity()
