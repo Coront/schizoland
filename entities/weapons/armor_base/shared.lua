@@ -18,3 +18,14 @@ SWEP.Secondary.Automatic	= true
 SWEP.Secondary.Ammo			= "none"
 
 SWEP.ASArmor = true
+
+hook.Add( "PlayerFootstep", "AS_ArmorFootstep", function( ply, pos, foot, sound, volume, rf )
+    if CLIENT and ply:HasArmor() then
+        local armor = ply:GetArmorWep()
+        if armor.Footsteps and (not armor.FootstepsSprinting or armor.FootstepsSprinting and ply:IsSprinting()) then
+            local snd = table.Random(armor.Footsteps)
+            ply:EmitSound( snd, 100, 100, volume, CHAN_STATIC )
+            return true
+        end
+    end
+end )
