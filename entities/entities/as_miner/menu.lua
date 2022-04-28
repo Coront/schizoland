@@ -96,6 +96,10 @@ function Miner.Menu()
         togglebtn:SetEnabled( false )
         togglebtn:SetTooltip( "The miner is unable to start." )
     end
+    if LocalPlayer():GetASClass() != "scavenger" then
+        togglebtn:SetEnabled( false )
+        togglebtn:SetTooltip( "You must be a scavenger to manage this miner." )
+    end
     togglebtn.DoClick = function()
         ent:TogglePower()
         net.Start( "as_miner_togglepower" )

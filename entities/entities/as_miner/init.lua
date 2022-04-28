@@ -69,6 +69,7 @@ util.AddNetworkString("as_miner_takeitems")
 net.Receive( "as_miner_togglepower", function( _, ply ) 
     local ent = net.ReadEntity()
     if ply:GetPos():Distance( ent:GetPos() ) > 300 then ply:ChatPrint("You are too far to toggle the state of this miner.") return end
+    if ply:GetASClass() != "scavenger" then ply:ChatPrint("You must be a scavenger to manage this miner.") return end
     local state = ent:GetActiveState()
 
     if not state then

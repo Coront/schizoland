@@ -100,6 +100,9 @@ function ENT:Think()
 
             local item = table.Random( self.Items )
             self:AddItemToInventory( item, 1 )
+            if self:GetObjectOwner():GetASClass() == "scavenger" then
+                self:GetObjectOwner():IncreaseSkillExperience("mining", SKL.Mining.incamt)
+            end
         end
 
         if not self:CanMine() then
@@ -116,6 +119,7 @@ function ENT:Think()
         if CurTime() > (self.NextResync or 0) then
             self.NextResync = CurTime() + 5
             self:ResyncStatus()
+            self:ResyncInventory()
         end
     end
 
