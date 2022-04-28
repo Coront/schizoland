@@ -52,7 +52,7 @@ AS.AddBaseItem("armor_riot", {
     name = "Riot Armor",
     desc = "Armor built to reselble the armor used by pre-collapse riot police.",
     category = "armor",
-    model = "models/items/armor/police.mdl",
+    model = "models/items/armor/metro.mdl",
     wep = "armor_riot",
     color = Color( 120, 40, 40 ),
     value = 50,
