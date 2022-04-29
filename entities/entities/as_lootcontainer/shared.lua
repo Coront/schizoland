@@ -99,6 +99,7 @@ if SERVER then
     net.Receive("as_lootcontainer_requestinventory", function( _, ply )
         local ent = net.ReadEntity()
         if not IsValid(ent) then return end
+        if ent:GetClass() != "as_lootcontainer" then return end
         net.Start("as_lootcontainer_syncinventory")
             net.WriteEntity( ent )
             net.WriteTable( ent:GetInventory() )
