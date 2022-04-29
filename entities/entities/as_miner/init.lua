@@ -98,8 +98,11 @@ end)
 net.Receive( "as_miner_takeitems", function( _, ply ) 
     local ent = net.ReadEntity()
 
-    local taketbl = {}
+    if ply:GetPos():Distance(ent:GetPos()) >= 300 then ply:ChatPrint("You are too far to collect from this miner.") return end
     if table.Count(ent:GetInventory()) <= 0 then return end
+    if ent:GetObjectOwner() != ply and ent:Health() > 0 then ply:ChatPrint("Only the owner can take from this miner, unless it is destroyed.") return end
+
+    local taketbl = {}
     for k, v in pairs( ent:GetInventory() ) do
         ent:PlayerTakeItem( ply, k, v )
         taketbl[AS.Items[k].name] = v
