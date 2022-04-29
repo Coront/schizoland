@@ -60,6 +60,10 @@ function GM:PlayerSpawnVehicle( ply, model, name, info )
     if ply:IsAdmin() then return true else ply:ChatPrint("Vehicle Spawning is disabled.") return false end
 end
 
+function GM:PlayerSpray( ply )
+    return true
+end
+
 hook.Add("EntityTakeDamage", "AS_PropDamageBlock", function( target, dmginfo)
     if IsValid(dmginfo:GetInflictor()) and  dmginfo:GetInflictor():GetClass() == "prop_physics" then dmginfo:SetDamage( 0 ) end
 end)

@@ -99,6 +99,15 @@ function AS.Settings.BuildOptions()
     ToggleButton("Play container sounds", xpos, ypos, settings_scroll, "as_container_sounds")
     addSpace( 0, 20 )
 
+    ValueSlider( "Thirdperson - Back", xpos, ypos, 5, 150, settings_scroll, "as_thirdperson_distance" )
+    addSpace( 0, 20 )
+
+    ValueSlider( "Thirdperson - Up", xpos, ypos, -10, 20, settings_scroll, "as_thirdperson_up" )
+    addSpace( 0, 20 )
+
+    ValueSlider( "Thirdperson - Side", xpos, ypos, -30, 30, settings_scroll, "as_thirdperson_side" )
+    addSpace( 0, 20 )
+
     resetX()
 
 --  ██████╗ ██╗   ██╗██╗
@@ -326,5 +335,8 @@ function AS.Settings.BuildOptions()
     addSpace( 0, 20 )
 
     KeyBind( "Own/Unown Objects", xpos, ypos, settings_scroll, "as_bind_ownership" )
+    addSpace( 0, 20 )
+
+    KeyBind( "Thirdperson", xpos, ypos, settings_scroll, "as_bind_thirdperson" )
     addSpace( 0, 20 )
 end

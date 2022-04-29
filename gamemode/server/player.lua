@@ -17,7 +17,7 @@ function GM:PlayerConnect( name, ip )
     end
 end
 
-function GM:PlayerInitialSpawn( ply ) --Player's first spawn. 
+function GM:PlayerInitialSpawn( ply ) --Player's first spawn.
     ply:SetNWBool( "as_spawned", false ) --Player just loaded in, they have not selected their profile yet.
     ply:ConCommand("as_spawnmenu")
 end

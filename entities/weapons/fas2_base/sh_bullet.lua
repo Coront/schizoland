@@ -15,7 +15,7 @@ local CommandNumber = reg.CUserCmd.CommandNumber
 function SWEP:FireBullet()
 	sp = GetShootPos(self.Owner)
 	math.randomseed(CurTime())
-	
+
 	Dir = (self.Owner:EyeAngles() + self.Owner:GetPunchAngle() + Angle(math.Rand(-self.CurCone, self.CurCone), math.Rand(-self.CurCone, self.CurCone), 0) * 25):Forward()
 
 	for i = 1, self.Shots do
