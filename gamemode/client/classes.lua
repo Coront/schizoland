@@ -18,9 +18,9 @@ function AS.Class.Open()
     end
 
     local scroll_classes = vgui.Create("DScrollPanel", frame_class)
-    local xpos, ypos = 5, 25
+    local xpos, ypos = 2, 25
     scroll_classes:SetPos( xpos, ypos )
-    scroll_classes:SetSize( scroll_classes:GetParent():GetWide() - (xpos * 2), 435 )
+    scroll_classes:SetSize( scroll_classes:GetParent():GetWide() - (xpos * 2), 437 )
     scroll_classes.Paint = function( self, w, h ) 
         draw.RoundedBox( 0, 0, 0, w, h, COLHUD_SECONDARY )
     end

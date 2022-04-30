@@ -9,7 +9,7 @@ AS.AddBaseItem("tool_armor", {
     name = "Armor Station",
     desc = "A station that allows mercenaries to craft armors.",
     category = "tool",
-    model = "models/props_wasteland/controlroom_desk001b.mdl",
+    model = "models/magnusson_teleporter_off.mdl",
     ent = "as_workbench_armor",
     value = 250,
     weight = 5,

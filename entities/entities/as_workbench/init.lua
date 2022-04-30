@@ -26,6 +26,7 @@ end
 
 function ENT:PlayerCanCraftItem( ply, item, amt )
 	if ply:GetPos():Distance(self:GetPos()) >= 200 then ply:ChatPrint("You are too far to craft this item.") return false end
+	if ply:GetASClass() != AS.Items[item].class then ply:ChatPrint("You must be a " .. AS.Items[item].class .. " to craft this!") return false end
 	return true
 end
 

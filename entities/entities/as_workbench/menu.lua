@@ -50,7 +50,7 @@ function Workbench.Menu()
     end
 
     local panel = vgui.Create("DPanel", frame_workbench)
-    local x, y, space = 5, 25, 10
+    local x, y, space = 3, 25, 6
     panel:SetPos( x, y )
     panel:SetSize( frame_workbench:GetWide() - space, (frame_workbench:GetTall() - x) - y )
     panel.Paint = function( self, w, h )
@@ -70,7 +70,8 @@ function Workbench.Menu()
 
     if ent.CraftTable["BaseClass"] then ent.CraftTable["BaseClass"] = nil end
     for k, v in SortedPairsByValue( ent.CraftTable ) do
-        if AS.Items[k] and not AS.Items[k].craft then AS.LuaError("Attempt to index crafting table from item with no craft table - " .. k) continue end
+        if not AS.Items[k] then continue end --Item doesnt exist
+        if AS.Items[k] and not AS.Items[k].craft then AS.LuaError("Attempt to index crafting table from item with no craft table - " .. k) continue end --item exists but no craft table
         Workbench.BuildRecipe( k )
     end
 end
@@ -79,8 +80,11 @@ net.Receive("as_workbench_open", Workbench.Menu)
 function Workbench.BuildRecipe( itemid )
     local id = AS.Items[itemid]
 
+    local isArmor = id.category == "armor" and true or false
+
     local item = workbench_itemlist:Add("DPanel")
-    item:SetSize(workbench_itemlist:GetWide() - 25, 100)
+    local height = isArmor and 240 or 90
+    item:SetSize(workbench_itemlist:GetWide() - 25, height)
     function item:Paint(w, h)
         surface.SetDrawColor( COLHUD_PRIMARY )
         surface.DrawRect( 0, 0, w, h )
@@ -96,7 +100,8 @@ function Workbench.BuildRecipe( itemid )
 
     local icon = vgui.Create( "SpawnIcon", item )
     icon:SetSize( 60, 60 )
-    icon:SetPos( 5, item:GetTall() / 2 - icon:GetTall() / 2 )
+    local ypos = isArmor and 15 or item:GetTall() / 2 - icon:GetTall() / 2
+    icon:SetPos( 5, ypos )
     icon:SetModel( id.model, id.skin or 0 )
     icon:SetTooltip( itemname .. "\n" .. itemdesc .. "\n\nRequirements:" .. itemreqs )
 
@@ -117,16 +122,69 @@ function Workbench.BuildRecipe( itemid )
     desc:SetWrap( true )
     desc:SetAutoStretchVertical( true )
 
+    if isArmor then
+        local armorpanel = vgui.Create("DPanel", item)
+        armorpanel:SetPos( 5, 80 )
+        armorpanel:SetSize( 405, 200 )
+        function armorpanel:Paint() end
+
+        local scroll_armorpanel = vgui.Create("DScrollPanel", armorpanel)
+        scroll_armorpanel:SetSize( scroll_armorpanel:GetParent():GetWide(), scroll_armorpanel:GetParent():GetTall() )
+        scroll_armorpanel.Paint = function() end
+
+        for k2, v2 in pairs( id.armor ) do
+            if not AS.DamageTypes[k2] then continue end
+
+            local statbg = scroll_armorpanel:Add( "DPanel" )
+            statbg:Dock( TOP )
+            statbg:DockMargin( 5, 7, 5, 0 )
+            statbg:SetSize( 0, 20 )
+            local TTtext = AS.DamageTypes[k2].name .. ": " .. v2 .. "%"
+            statbg:SetTooltip( TTtext )
+            statbg.Paint = function(_,w,h)
+                w = w - 65
+                surface.SetDrawColor( COLHUD_SECONDARY )
+                surface.DrawRect( 25, 0, w, h )
+                
+                surface.SetDrawColor( COLHUD_GOOD )
+                local length = (v2 / 100) * w
+                surface.DrawRect( 25, 0, length, h )
+                
+                local xpos = 31
+                for i = 1, 46 do
+                    
+                    surface.SetDrawColor( COLHUD_PRIMARY )
+                    surface.DrawRect( xpos, 0, 1, h )
+                    xpos = xpos + 7
+                end
+            end
+
+            local icon = vgui.Create("DImageButton", statbg)
+            icon:SetPos( 5, 0 )
+            icon:SetSize (16, 16)
+            icon:SetImage( AS.DamageTypes[k2].icon )
+            icon:SetColor(Color(255,255,255,255))
+
+            local amt = vgui.Create("DLabel", statbg)
+            amt:SetSize( 35, 20 )
+            amt:SetPos( 325 + amt:GetWide(), 0 )
+            amt:SetFont("TargetIDSmall")
+            amt:SetText( v2 .. "%" )
+
+        end
+    end
+
     if id.class then
         local classreq = vgui.Create("DLabel", item)
         classreq:SetText( "Class needed to craft: " .. translateClassNameID(id.class) )
         classreq:SetContentAlignment(4)
         classreq:SizeToContents()
-        classreq:SetPos( 100, 83 )
+        classreq:SetPos( 100, item:GetTall() - (classreq:GetTall() + 5) )
     end
 
     local scroll_reqs = vgui.Create("DScrollPanel", item)
-    scroll_reqs:SetSize( 125, 60 )
+    local height = isArmor and 210 or 60
+    scroll_reqs:SetSize( 125, height )
     scroll_reqs:SetPos( item:GetWide() - (scroll_reqs:GetWide() + 5), 5 )
     function scroll_reqs:Paint(w,h)
         surface.SetDrawColor( COLHUD_SECONDARY )

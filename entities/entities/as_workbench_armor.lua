@@ -11,7 +11,7 @@ ENT.Model = "models/magnusson_teleporter_off.mdl"
 ENT.CraftTable = {
     ["armor_riot"] = 1,
     ["armor_exo"] = 2,
-    ["armor_juggernaut"] = 3,
-    ["armor_combine"] = 4,
-    ["armor_elite"] = 5,
+    ["armor_combine"] = 3,
+    ["armor_elite"] = 4,
+    ["armor_juggernaut"] = 5,
 }
