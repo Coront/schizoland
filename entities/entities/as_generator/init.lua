@@ -51,6 +51,7 @@ util.AddNetworkString("as_generator_repair")
 
 net.Receive( "as_generator_togglepower", function( _, ply ) 
     local ent = net.ReadEntity()
+    if ent.Base != "as_generator" then return end
     if ply:GetPos():Distance( ent:GetPos() ) > 300 then ply:ChatPrint("You are too far to toggle the state of this generator.") return end
     local state = ent:GetActiveState()
 
@@ -67,6 +68,7 @@ end)
 
 net.Receive( "as_generator_addfuel", function( _, ply )
     local ent = net.ReadEntity()
+    if ent.Base != "as_generator" then return end
     local amt = net.ReadInt( 32 )
     if ply:GetPos():Distance( ent:GetPos() ) > 300 then ply:ChatPrint("You are too far to add fuel to this generator.") return end
     amt = math.Round(amt)
@@ -81,6 +83,7 @@ end)
 
 net.Receive( "as_generator_removefuel", function( _, ply )
     local ent = net.ReadEntity()
+    if ent.Base != "as_generator" then return end
     local amt = net.ReadInt( 32 )
     if not ent:CanRemoveFuel( ply ) then ply:ChatPrint("You cannot withdraw fuel from a generator that you do not own.") return end
     if ply:GetPos():Distance( ent:GetPos() ) > 300 then ply:ChatPrint("You are too far to withdraw fuel from this generator.") return end
@@ -96,6 +99,7 @@ end)
 
 net.Receive( "as_generator_repair", function( _, ply )
     local ent = net.ReadEntity()
+    if ent.Base != "as_generator" then return end
 
     if ent:Health() >= ent:GetMaxHealth() then ply:ChatPrint("This generator does not need to be repaired.") return end
     if ply:GetPos():Distance( ent:GetPos() ) > 300 then ply:ChatPrint("You are too far to repair this generator.") return end

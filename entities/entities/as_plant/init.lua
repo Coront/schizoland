@@ -43,6 +43,8 @@ util.AddNetworkString("as_plant_prune")
 
 net.Receive( "as_plant_prune", function( _, ply )
     local ent = net.ReadEntity()
+    if ent.Base != "as_plant" then return end
+    if ply:GetPos():Distance(ent:GetPos()) > 300 then ply:ChatPrint("You're too far.") return end
 
     if ply:GetASClass() != "cultivator" then ply:ChatPrint( "You must be a cultivator to prune this!" ) return end
     if not ent:CanPrune( ply ) then return end

@@ -43,6 +43,9 @@ util.AddNetworkString("as_workbench_craftitem")
 net.Receive("as_workbench_craftitem", function( _, ply )
 	local ent = net.ReadEntity()
 	if not IsValid(ent) then return end
+	if ent.Base != "as_workbench" then return end
+	if ply:GetPos():Distance(ent:GetPos()) > 300 then ply:ChatPrint("You're too far.") return end
+
 	local item = net.ReadString()
 	local amt = net.ReadInt( 32 )
 

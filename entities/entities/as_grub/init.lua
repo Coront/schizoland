@@ -65,6 +65,7 @@ util.AddNetworkString("as_grub_takeitems")
 
 net.Receive( "as_grub_takeitems", function( _, ply ) 
     local ent = net.ReadEntity()
+    if ent:GetClass() != "as_grub" then return end
 
     if ply:GetPos():Distance(ent:GetPos()) >= 300 then ply:ChatPrint("You are too far to collect from this grub.") return end
     if table.Count(ent:GetInventory()) <= 0 then return end

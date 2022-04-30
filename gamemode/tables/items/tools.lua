@@ -249,6 +249,21 @@ AS.AddBaseItem("tool_miner", {
 -- ██║ ╚═╝ ██║██║███████║╚██████╗███████╗███████╗███████╗██║  ██║██║ ╚████║███████╗╚██████╔╝╚██████╔╝███████║
 -- ╚═╝     ╚═╝╚═╝╚══════╝ ╚═════╝╚══════╝╚══════╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝ ╚═════╝  ╚═════╝ ╚══════╝
 
+AS.AddBaseItem("tool_vendor", {
+    name = "Vending Machine",
+    desc = "A vending machine. You can put junk in here that other players can buy.",
+    category = "tool",
+    model = "models/props_interiors/vendingmachinesoda01a.mdl",
+    ent = "as_vendor",
+    value = 10,
+    weight = 1,
+    craft = {
+        ["misc_scrap"] = 1000,
+        ["misc_smallparts"] = 800,
+        ["misc_chemical"] = 950,
+    },
+})
+
 AS.AddBaseItem("tool_pylon", {
     name = "Power Pylon",
     desc = "A power pylon. Useful for conducting electricity. Can be used to simply store extra power, or as an extension for longer distances.",

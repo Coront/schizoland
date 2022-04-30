@@ -285,3 +285,72 @@ function VerifySlider( max, callback )
 		frame_verifyslider:Close()
     end
 end
+
+--
+
+function SimplePanel( parent, width, height, x, y, color )
+    local panel = vgui.Create("DPanel", parent)
+    panel:SetPos( x, y )
+    panel:SetSize( width, height )
+    panel.Paint = function( _, w, h )
+        surface.SetDrawColor( color or Color(255, 255, 255) )
+        surface.DrawRect( 0, 0, w, h )
+    end
+
+    return panel
+end
+
+function SimpleLabel( parent, text, x, y, font )
+    font = font or "DermaDefault"
+    local label = vgui.Create("DLabel", parent )
+    label:SetPos( x, y )
+    label:SetFont( font )
+    label:SetText( text )
+    label:SizeToContents()
+
+    return label
+end
+
+function SimpleSpawnIcon( parent, model, size, x, y, tooltip )
+    local spawnicon = vgui.Create("SpawnIcon", parent )
+    spawnicon:SetModel( model )
+    spawnicon:SetPos( x, y )
+    spawnicon:SetSize( size, size )
+    spawnicon:SetTooltip( tooltip )
+
+    return spawnicon
+end
+
+function SimpleTextEntry( parent, phtext, sizex, sizey, x, y )
+    local entry = vgui.Create("DTextEntry", parent)
+    entry:SetPlaceholderText( phtext )
+    entry:SetSize( sizex, sizey )
+    entry:SetPos( x, y )
+
+    return entry
+end
+
+function SimpleButton( parent, text, width, height, x, y, callback )
+    local button = vgui.Create("DButton", parent)
+    button:SetSize(width, height)
+    button:SetPos(x, y)
+    button:SetText( text )
+    button.DoClick = function()
+        surface.PlaySound("buttons/button15.wav")
+        callback()
+    end
+
+    return button
+end
+
+function SimpleScroll( parent, width, height, x, y, color )
+    local scroll = vgui.Create("DScrollPanel", parent)
+    scroll:SetSize( width, height )
+    scroll:SetPos( x, y )
+    scroll.Paint = function( _, w, h )
+        surface.SetDrawColor( color or Color( 255, 255, 255 ) )
+        surface.DrawRect( 0, 0, w, h )
+    end
+
+    return scroll
+end

@@ -61,6 +61,9 @@ local function DatabaseCheck()
 	sql.Query("CREATE TABLE IF NOT EXISTS as_communities_members (pid INTEGER, cid INTEGER, title TEXT, rank TEXT)")
 	--Item Deployment Cache
 	sql.Query("CREATE TABLE IF NOT EXISTS as_cache_tools (pid INTEGER, tools TEXT)")
+	--Other Profiles
+	sql.Query("CREATE TABLE IF NOT EXISTS as_vendors (vid INTEGER PRIMARY KEY AUTOINCREMENT, pid INTEGER, name TEXT, sale TEXT, res TEXT, deleted TEXT)")
+	sql.Query("CREATE TABLE IF NOT EXISTS as_lockers (lid INTEGER PRIMARY KEY AUTOINCREMENT, pid INTEGER, name TEXT, items TEXT, deleted TEXT)")
 	--Mob Spawner
 	sql.Query("CREATE TABLE IF NOT EXISTS as_grids (map TEXT, data TEXT)")
 	--Other
