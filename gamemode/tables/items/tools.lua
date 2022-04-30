@@ -211,6 +211,7 @@ AS.AddBaseItem("tool_grub", {
     desc = "An antlion grub, born and raised with the intention of making chemicals.",
     category = "tool",
     model = "models/antlion_grub.mdl",
+    ent = "as_grub",
     value = 250,
     weight = 4,
     class = "cultivator",
