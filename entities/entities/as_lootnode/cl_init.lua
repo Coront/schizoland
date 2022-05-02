@@ -16,29 +16,27 @@ function ENT:Draw()
 end
 
 hook.Add( "HUDPaint", "AS_Node_Indicator", function()
-    for k, v in pairs( ents.FindByClass("as_lootnode") ) do
-        if v:GetPos():Distance(LocalPlayer():GetPos()) > 400 then continue end
-        if LocalPlayer():IsEventActive() then continue end
-        local trace = util.TraceLine({
-            start = LocalPlayer():EyePos(),
-            endpos = v:GetPos(),
-            mask = MASK_SOLID,
-            filter = {LocalPlayer()},
-        })
-        if trace.HitWorld then continue end
-        if IsValid(trace.Entity) and trace.Entity != v then continue end
+    local trace = util.TraceLine({
+        start = LocalPlayer():EyePos(),
+        endpos = LocalPlayer():EyePos() + LocalPlayer():EyeAngles():Forward() * 400,
+        filter = {LocalPlayer()},
+    })
 
-        local pos = v:GetPos() + v:OBBCenter()
-        local screen = pos:ToScreen()
-        local text = "Scavengable Node"
-        local bind = input.LookupBinding( "+use" )
+    if not IsValid(trace.Entity) then return end
+    if trace.Entity:GetClass() != "as_lootnode" then return end
+    if trace.Entity:GetPos():Distance(LocalPlayer():EyePos()) > 400 then return end
+    if LocalPlayer():IsEventActive() then return end
 
-        if v:GetPos():Distance(LocalPlayer():GetPos()) < 150 then
-            text = "Press [" .. string.upper(bind) .. "] to Scavenge"
-        end
+    local pos = trace.Entity:GetPos() + trace.Entity:OBBCenter()
+    local screen = pos:ToScreen()
+    local text = "Scavengable Node"
+    local bind = input.LookupBinding( "+use" )
 
-        draw.SimpleTextOutlined( text, "TargetID", screen.x, screen.y, COLHUD_DEFAULT, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM, 1, Color( 0, 0, 0 ) )
+    if trace.Entity:GetPos():Distance(LocalPlayer():EyePos()) < 150 then
+        text = "Press [" .. string.upper(bind) .. "] to Scavenge"
     end
+
+    draw.SimpleTextOutlined( text, "TargetID", screen.x, screen.y, COLHUD_DEFAULT, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM, 1, Color( 0, 0, 0 ) )
 end)
 
 net.Receive( "as_lootnode_syncnewitem", function() --I intentionally sync like this because i don't want to rewrite a player's entire inventory when we're just adding one item.
