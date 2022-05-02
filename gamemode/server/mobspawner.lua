@@ -466,6 +466,7 @@ end)
 hook.Add( "Think", "AS_EventCheck", function()
     for k, v in pairs( AS.Events ) do
         if not AS.Events[k].enable then continue end
+        if #player.GetAll() < (AS.Events[k].minplayers or 1) then continue end
 
         if PendingEvents[k] then
             if CurTime() > PendingEvents[k] then
