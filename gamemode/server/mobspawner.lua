@@ -299,10 +299,11 @@ function AS.Grid.SpawnMobs()
     --Now, since we have a table containing valid spawn points, we need to spawn NPCs on them.
     for mob, info in pairs( MOB.NPCs ) do
         local ValidSpawners = (info.indoor and info.outdoor and AllValidSpawners) or (info.indoor and AS.Grid.FetchValidIndoorSpawners( AllValidSpawners )) or (info.outdoor and AS.Grid.FetchValidOutdoorSpawners( AllValidSpawners ))
-
         local maxMobs = math.floor( (info.amt * MOB.SpawnMult) * (AS.Maps[game.GetMap()] and AS.Maps[game.GetMap()].MobMult or 1) )
         if #ents.FindByClass(mob) >= maxMobs then continue end --We've already capped this NPC, skip to the next one.
         local mobsToSpawn = maxMobs - #ents.FindByClass(mob) --How many NPCs we need to spawn.
+
+        if table.Count(ValidSpawners) <= 0 then continue end --no valid spawners still.
 
         for i = 1, mobsToSpawn do
             local spawnPoint = ValidSpawners[math.random(1, #ValidSpawners)]
