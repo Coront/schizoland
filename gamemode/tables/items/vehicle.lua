@@ -7,6 +7,7 @@ AS.AddBaseItem("vehicle_firecrackerred", {
     value = 500,
     weight = 200, --With vehicles, weight is actually the max weight of the vehicle's inventory, not how much it will weight in the player's inventory. Vehicles have no inventory weight.
     nostore = true,
+    novendor = true,
     class = "engineer",
     craft = {
         ["misc_scrap"] = 750,
@@ -28,6 +29,7 @@ AS.AddBaseItem("vehicle_firecrackeryellow", {
     value = 500,
     weight = 200,
     nostore = true,
+    novendor = true,
     class = "engineer",
     craft = {
         ["misc_scrap"] = 750,
@@ -49,6 +51,7 @@ AS.AddBaseItem("vehicle_markswagon", {
     value = 500,
     weight = 300,
     nostore = true,
+    novendor = true,
     class = "engineer",
     craft = {
         ["misc_scrap"] = 750,
@@ -70,6 +73,7 @@ AS.AddBaseItem("vehicle_tuscan", {
     value = 500,
     weight = 250,
     nostore = true,
+    novendor = true,
     class = "engineer",
     craft = {
         ["misc_scrap"] = 750,
@@ -91,6 +95,7 @@ AS.AddBaseItem("vehicle_roadrunner", {
     value = 500,
     weight = 250,
     nostore = true,
+    novendor = true,
     class = "engineer",
     craft = {
         ["misc_scrap"] = 750,
@@ -112,6 +117,7 @@ AS.AddBaseItem("vehicle_gaz", {
     value = 500,
     weight = 225,
     nostore = true,
+    novendor = true,
     class = "engineer",
     craft = {
         ["misc_scrap"] = 750,
@@ -133,6 +139,7 @@ AS.AddBaseItem("vehicle_van", {
     value = 500,
     weight = 400,
     nostore = true,
+    novendor = true,
     class = "engineer",
     craft = {
         ["misc_scrap"] = 750,
@@ -154,6 +161,7 @@ AS.AddBaseItem("vehicle_hardram", {
     value = 500,
     weight = 100,
     nostore = true,
+    novendor = true,
     class = "engineer",
     craft = {
         ["misc_scrap"] = 750,
@@ -175,6 +183,7 @@ AS.AddBaseItem("vehicle_towtruck", {
     value = 500,
     weight = 100,
     nostore = true,
+    novendor = true,
     class = "engineer",
     craft = {
         ["misc_scrap"] = 750,
@@ -196,6 +205,7 @@ AS.AddBaseItem("vehicle_truckblue", {
     value = 500,
     weight = 1000,
     nostore = true,
+    novendor = true,
     class = "engineer",
     craft = {
         ["misc_scrap"] = 750,
@@ -217,6 +227,7 @@ AS.AddBaseItem("vehicle_truckgreen", {
     value = 500,
     weight = 1000,
     nostore = true,
+    novendor = true,
     class = "engineer",
     craft = {
         ["misc_scrap"] = 750,
@@ -238,6 +249,7 @@ AS.AddBaseItem("vehicle_apc", {
     value = 500,
     weight = 400,
     nostore = true,
+    novendor = true,
     class = "engineer",
     craft = {
         ["misc_scrap"] = 750,
@@ -266,6 +278,7 @@ AS.AddBaseItem("vehicle_m80yellow", {
     value = 500,
     weight = 250,
     nostore = true,
+    novendor = true,
     class = "engineer",
     craft = {
         ["misc_scrap"] = 750,
@@ -284,6 +297,7 @@ AS.AddBaseItem("vehicle_m80red", {
     value = 500,
     weight = 250,
     nostore = true,
+    novendor = true,
     class = "engineer",
     craft = {
         ["misc_scrap"] = 750,
@@ -302,6 +316,7 @@ AS.AddBaseItem("vehicle_marksinternational", {
     value = 500,
     weight = 400,
     nostore = true,
+    novendor = true,
     class = "engineer",
     craft = {
         ["misc_scrap"] = 750,
@@ -320,6 +335,7 @@ AS.AddBaseItem("vehicle_tuscanlegacy", {
     value = 500,
     weight = 325,
     nostore = true,
+    novendor = true,
     class = "engineer",
     craft = {
         ["misc_scrap"] = 750,
@@ -338,6 +354,7 @@ AS.AddBaseItem("vehicle_tuscanforce", {
     value = 500,
     weight = 325,
     nostore = true,
+    novendor = true,
     class = "engineer",
     craft = {
         ["misc_scrap"] = 750,
@@ -356,6 +373,7 @@ AS.AddBaseItem("vehicle_roadrunnercaddy", {
     value = 500,
     weight = 325,
     nostore = true,
+    novendor = true,
     class = "engineer",
     craft = {
         ["misc_scrap"] = 750,
@@ -374,6 +392,7 @@ AS.AddBaseItem("vehicle_gaztt", {
     value = 500,
     weight = 300,
     nostore = true,
+    novendor = true,
     class = "engineer",
     craft = {
         ["misc_scrap"] = 750,
@@ -392,6 +411,7 @@ AS.AddBaseItem("vehicle_rebelvan", {
     value = 500,
     weight = 500,
     nostore = true,
+    novendor = true,
     class = "engineer",
     craft = {
         ["misc_scrap"] = 750,

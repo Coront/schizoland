@@ -257,6 +257,7 @@ AS.AddBaseItem("tool_vendor", {
     ent = "as_vendor",
     value = 10,
     weight = 1,
+    novendor = true,
     craft = {
         ["misc_scrap"] = 1000,
         ["misc_smallparts"] = 800,

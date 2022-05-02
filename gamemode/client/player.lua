@@ -47,7 +47,7 @@ hook.Add("PostDrawOpaqueRenderables", "AS_ArmorOverlay", function()
         if not v:HasArmor() then 
             v.HideDefault = false 
             timer.Simple( 0.1, function() --bruh
-                if v:Alive() then 
+                if IsValid(v) and v:Alive() then 
                     v.LastArmorModel = nil 
                 end 
             end) 

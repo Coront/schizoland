@@ -185,6 +185,7 @@ hook.Add( "DoPlayerDeath", "AS_PlayerDeath", function( ply, attacker, dmginfo )
         if attacker == ply then return end
         if not attacker:InCommunity() then return end
         if not ply:InCommunity() then return end
+        if ply:GetCommunity() == attacker:GetCommunity() then return end --no civil wars please
         if ply:IsAtWar( attacker:GetCommunity() ) then return end --Don't generate more requests from war?
 
         community.CreateDiplomacy( ply:GetCommunity(), "war", { --This create's a diplomacy of war, and we'll add some information.

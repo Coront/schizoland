@@ -102,7 +102,7 @@ util.AddNetworkString( "as_container_takeitem" )
 
 net.Receive( "as_container_takeitem", function(_, ply) 
 	local ent = net.ReadEntity()
-	if ent:GetClass() != "as_lootcontainer" then return end
+	if ent:GetClass() != "as_lootcontainer" and ent:GetClass() != "as_case" then return end
 	local item = net.ReadString()
 	local amt = net.ReadInt( 32 )
 

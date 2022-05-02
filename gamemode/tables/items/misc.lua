@@ -1,5 +1,3 @@
-
-
 -- ███████╗ ██████╗██████╗  █████╗ ██████╗     ██╗████████╗███████╗███╗   ███╗███████╗
 -- ██╔════╝██╔════╝██╔══██╗██╔══██╗██╔══██╗    ██║╚══██╔══╝██╔════╝████╗ ████║██╔════╝
 -- ███████╗██║     ██████╔╝███████║██████╔╝    ██║   ██║   █████╗  ██╔████╔██║███████╗
@@ -17,6 +15,7 @@ AS.AddBaseItem("misc_scrap", {
     value = 0,
     weight = 0,
     nostore = true,
+    novendor = true,
 })
 
 AS.AddBaseItem("misc_smallparts", {
@@ -28,6 +27,7 @@ AS.AddBaseItem("misc_smallparts", {
     value = 0,
     weight = 0,
     nostore = true,
+    novendor = true,
 })
 
 AS.AddBaseItem("misc_chemical", {
@@ -39,6 +39,7 @@ AS.AddBaseItem("misc_chemical", {
     value = 0,
     weight = 0,
     nostore = true,
+    novendor = true,
 })
 
 -- ██████╗  █████╗ ██████╗ ████████╗    ██╗████████╗███████╗███╗   ███╗███████╗

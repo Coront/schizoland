@@ -311,12 +311,35 @@ function SimpleLabel( parent, text, x, y, font )
     return label
 end
 
-function SimpleSpawnIcon( parent, model, size, x, y, tooltip )
+function SimpleSpawnIcon( parent, model, size, x, y, tooltip, callback )
     local spawnicon = vgui.Create("SpawnIcon", parent )
     spawnicon:SetModel( model )
     spawnicon:SetPos( x, y )
     spawnicon:SetSize( size, size )
     spawnicon:SetTooltip( tooltip )
+    spawnicon.DoClick = function()
+        if callback then
+            surface.PlaySound("buttons/button15.wav")
+            callback()
+        end
+    end
+
+    return spawnicon
+end
+
+function SimpleItemIcon( parent, item, size, x, y, tooltip, callback )
+    local spawnicon = vgui.Create("SpawnIcon", parent )
+    spawnicon:SetModel( AS.Items[item].model )
+    spawnicon:SetSkin( AS.Items[item].skin or 0 )
+    spawnicon:SetPos( x, y )
+    spawnicon:SetSize( size, size )
+    spawnicon:SetTooltip( tooltip )
+    spawnicon.DoClick = function()
+        if callback then
+            surface.PlaySound("buttons/button15.wav")
+            callback()
+        end
+    end
 
     return spawnicon
 end
@@ -353,4 +376,31 @@ function SimpleScroll( parent, width, height, x, y, color )
     end
 
     return scroll
+end
+
+function SimpleIconLayout( parent, width, height, x, y, color )
+    local list = vgui.Create("DIconLayout", parent)
+    list:SetPos( x, y )
+    list:SetSize( width, height )
+    list:SetSpaceY( 5 )
+    list:SetSpaceX( 5 )
+    list.Paint = function( _, w, h )
+        surface.SetDrawColor( color or Color( 255, 255, 255, 255 ) )
+        surface.DrawRect( 0, 0, w, h )
+    end
+
+    return list
+end
+
+function SimpleSlider( parent, text, width, height, x, y, min, max, decimal )
+    local slider = vgui.Create( "DNumSlider", parent )
+    slider:SetPos( x, y )
+    slider:SetSize( width, height )
+    slider:SetText( text )
+    slider:SetMin( min )
+    slider:SetMax( max )
+    slider:SetValue( 1 )
+    slider:SetDecimals( decimal and 1 or 0 )
+
+    return slider
 end
