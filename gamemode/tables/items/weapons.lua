@@ -20,6 +20,51 @@ AS.AddBaseItem("wep_knife", {
     },
 })
 
+AS.AddBaseItem("wep_crowbar", {
+    name = "Crowbar",
+    desc = "A tool that was once used to prying stuff off its hinges, and now for ultimate destruction.",
+    category = "weapon",
+    model = "models/weapons/w_crowbar.mdl",
+    wep = "weapon_crowbar",
+    value = 5,
+    weight = 0.3,
+    craft = {
+        ["misc_scrap"] = 25,
+        ["misc_smallparts"] = 15,
+        ["misc_chemical"] = 15,
+    },
+})
+
+AS.AddBaseItem("wep_stun", {
+    name = "Stunstick",
+    desc = "A baton that's used to shock misbehaving citizens.",
+    category = "weapon",
+    model = "models/weapons/w_stunbaton.mdl",
+    wep = "weapon_stunstick",
+    value = 5,
+    weight = 0.3,
+    craft = {
+        ["misc_scrap"] = 30,
+        ["misc_smallparts"] = 40,
+        ["misc_chemical"] = 25,
+    },
+})
+
+AS.AddBaseItem("wep_katana", {
+    name = "Katana",
+    desc = "A very long sword.",
+    category = "weapon",
+    model = "models/items/weapons/katana.mdl",
+    wep = "weapon_katana",
+    value = 5,
+    weight = 0.3,
+    craft = {
+        ["misc_scrap"] = 80,
+        ["misc_smallparts"] = 75,
+        ["misc_chemical"] = 60,
+    },
+})
+
 -- ██████╗ ██╗███████╗████████╗ ██████╗ ██╗     ███████╗
 -- ██╔══██╗██║██╔════╝╚══██╔══╝██╔═══██╗██║     ██╔════╝
 -- ██████╔╝██║███████╗   ██║   ██║   ██║██║     ███████╗

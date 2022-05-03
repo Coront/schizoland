@@ -582,6 +582,7 @@ function SWEP:PostDrawViewModel()
 		
 		self:Draw3D2DCamera()
 	end
+
 end
 
 function SWEP:DrawWorldModel()
