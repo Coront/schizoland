@@ -188,7 +188,7 @@ net.Receive( "as_vendor_deleteprofile", function( _, ply )
 	if ent:GetObjectOwner() != ply then return end
 
 	local profile = sql.QueryValue("SELECT pid FROM as_vendors WHERE vid = " .. vid)
-	if tonumber(profile) != ply.pid then return ply:ChatPrint("This is not your profile.") end
+	if tonumber(profile) != ply.pid then ply:ChatPrint("This is not your profile.") return end
 
 	for k, v in pairs( ents.FindByClass("as_vendor") ) do
 		if v:GetProfile() == vid then
@@ -216,7 +216,7 @@ net.Receive( "as_vendor_renameprofile", function( _, ply )
 	local vid = ent:GetProfile()
 	if vid == 0 then ply:ChatPrint("No Profile.") return end
 	local profile = sql.QueryValue("SELECT pid FROM as_vendors WHERE vid = " .. vid)
-	if tonumber(profile) != ply.pid then return ply:ChatPrint("This is not your profile.") end
+	if tonumber(profile) != ply.pid then ply:ChatPrint("This is not your profile.") return end
 
 	ply:RenameVendorProfile( vid, name )
 	ent:SetProfile( vid, name )
@@ -232,6 +232,7 @@ net.Receive( "as_vendor_setprofile", function( _, ply )
 	local vid = net.ReadInt( 32 )
 	local profile = sql.Query("SELECT * FROM as_vendors WHERE vid = " .. vid)[1]
 	if tonumber(profile.pid) != ply.pid then ply:ChatPrint("You do not own this profile.") return end
+	if profile.deleted != "NULL" then ply:ChatPrint("This profile is deleted.") return end
 	for k, v in pairs( ents.FindByClass("as_vendor") ) do
 		if v:GetProfile() == vid then
 			ply:ChatPrint("A vendor with this profile is already active.")
