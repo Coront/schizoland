@@ -198,8 +198,7 @@ else
         local prof = net.ReadInt(32)
         local name = net.ReadString()
 
-        ent:SetProfile( prof )
-        ent.name = name
+        ent:SetProfile( prof, name )
     end)
 
     net.Receive( "as_vendor_syncsales", function()
