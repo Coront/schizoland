@@ -83,7 +83,6 @@ hook.Add( "KeyPress", "AS_Treatment", function( ply, key )
 end)
 
 hook.Add( "EntityEmitSound", "AS_TimeScaleSounds", function( t )
-    local cheats = GetConVar( "sv_cheats" )
     local timeScale = GetConVar( "host_timescale" )
 
 	local p = t.Pitch
@@ -91,20 +90,12 @@ hook.Add( "EntityEmitSound", "AS_TimeScaleSounds", function( t )
 	if ( game.GetTimeScale() ~= 1 ) then
 		p = p * game.GetTimeScale()
 	end
-	
-	if ( timeScale:GetInt() ~= 1 and cheats >= 1 ) then
-		p = p * timeScale:GetInt()
-	end
 
 	if ( p ~= t.Pitch ) then
 		t.Pitch = math.Clamp( p, 0, 255 )
-		return true
 	end
 
-	if ( CLIENT and engine.GetDemoPlaybackTimeScale() ~= 1 ) then
-		t.Pitch = math.Clamp( t.Pitch * engine.GetDemoPlaybackTimeScale(), 0, 255 )
-		return true
-	end
+    return true
 end )
 
 hook.Add( "EntityEmitSound", "AS_NoConnectSound", function( tbl )

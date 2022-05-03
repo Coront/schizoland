@@ -344,11 +344,16 @@ function SimpleItemIcon( parent, item, size, x, y, tooltip, callback )
     return spawnicon
 end
 
-function SimpleTextEntry( parent, phtext, sizex, sizey, x, y )
+function SimpleTextEntry( parent, phtext, sizex, sizey, x, y, callback )
     local entry = vgui.Create("DTextEntry", parent)
     entry:SetPlaceholderText( phtext )
     entry:SetSize( sizex, sizey )
     entry:SetPos( x, y )
+    entry.OnEnter = function( self, text )
+        if callback then
+            callback( text )
+        end
+    end
 
     return entry
 end
@@ -392,6 +397,18 @@ function SimpleIconLayout( parent, width, height, x, y, color )
     return list
 end
 
+function SimpleLayoutPanel( parent, width, height, x, y, color )
+    local panel = parent:Add("DPanel")
+    panel:SetPos( x, y )
+    panel:SetSize( width, height )
+    panel.Paint = function( _, w, h )
+        surface.SetDrawColor( color or Color(255, 255, 255) )
+        surface.DrawRect( 0, 0, w, h )
+    end
+
+    return panel
+end
+
 function SimpleSlider( parent, text, width, height, x, y, min, max, decimal )
     local slider = vgui.Create( "DNumSlider", parent )
     slider:SetPos( x, y )
@@ -403,4 +420,37 @@ function SimpleSlider( parent, text, width, height, x, y, min, max, decimal )
     slider:SetDecimals( decimal and 1 or 0 )
 
     return slider
+end
+
+function SimpleSlider( parent, text, width, height, x, y, min, max, decimal )
+    local slider = vgui.Create( "DNumSlider", parent )
+    slider:SetPos( x, y )
+    slider:SetSize( width, height )
+    slider:SetText( text )
+    slider:SetMin( min )
+    slider:SetMax( max )
+    slider:SetValue( 1 )
+    slider:SetDecimals( decimal and 1 or 0 )
+
+    return slider
+end
+
+function SimpleWang( parent, width, height, x, y, min, max, decimal )
+    local wang = vgui.Create( "DNumberWang", parent )
+    wang:SetPos( x, y )
+    wang:SetSize( width, height )
+    wang:SetMin( min )
+    wang:SetMax( max )
+    wang:SetValue( 1 )
+    wang:SetDecimals( decimal and 1 or 0 )
+    wang.Think = function( self )
+        if self:GetValue() > self:GetMax() then
+            self:SetValue( self:GetMax() )
+        end
+        if self:GetValue() < self:GetMin() then
+            self:SetValue( self:GetMin() )
+        end
+    end
+
+    return wang
 end

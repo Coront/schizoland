@@ -265,6 +265,22 @@ AS.AddBaseItem("tool_vendor", {
     },
 })
 
+AS.AddBaseItem("tool_locker", {
+    name = "Personal Locker",
+    desc = "It's a personal storage locker. You can place belongings in here that you don't want to carry everywhere else.",
+    category = "tool",
+    model = "models/props_c17/Lockers001a.mdl",
+    ent = "as_locker",
+    value = 10,
+    weight = 1,
+    novendor = true,
+    craft = {
+        ["misc_scrap"] = 200,
+        ["misc_smallparts"] = 250,
+        ["misc_chemical"] = 225,
+    },
+})
+
 AS.AddBaseItem("tool_pylon", {
     name = "Power Pylon",
     desc = "A power pylon. Useful for conducting electricity. Can be used to simply store extra power, or as an extension for longer distances.",
