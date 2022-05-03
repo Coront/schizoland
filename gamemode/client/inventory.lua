@@ -776,6 +776,8 @@ function AS.Inventory.LoadCommunity( communitydata, memberdata )
     if not IsValid( communitypanel ) then return end
     if IsValid( communitypanel_loading ) then communitypanel_loading:Remove() end
 
+    local myPerms = communitydata.ranks[LocalPlayer():GetRank()].permissions
+
     local cname = vgui.Create("DLabel", communitypanel)
     cname:SetFont( "Trebuchet24" )
     cname:SetText( communitydata.name )
@@ -793,49 +795,55 @@ function AS.Inventory.LoadCommunity( communitydata, memberdata )
     local width, height = 270, 30
     local x, y = 600, 40
 
-    DefaultButton( "Update Community Description", x, y, width, height, communitypanel, function()
-        UpdateDescription()
-        frame_inventory:Close()
-    end)
-    y = y + height + 20
+    if myPerms["admin"] then
+        DefaultButton( "Update Community Description", x, y, width, height, communitypanel, function()
+            UpdateDescription()
+            frame_inventory:Close()
+        end)
+        y = y + height + 20
 
-    DefaultButton( "Create a Rank", x, y, width, height, communitypanel, function()
-        CreateRank()
-        frame_inventory:Close()
-    end)
-    y = y + height + 1
+        DefaultButton( "Create a Rank", x, y, width, height, communitypanel, function()
+            CreateRank()
+            frame_inventory:Close()
+        end)
+        y = y + height + 1
 
-    DefaultButton( "Modify a Rank", x, y, width, height, communitypanel, function()
-        ModifyRankSelect()
-        frame_inventory:Close()
-    end)
-    y = y + height + 1
-
-    DefaultButton( "Delete a Rank", x, y, width, height, communitypanel, function()
-        DeleteRank()
-        frame_inventory:Close()
-    end)
-    y = y + height + 20
-
-    DefaultButton( "Deploy Locker", x, y, width, height, communitypanel, function()
+        DefaultButton( "Modify a Rank", x, y, width, height, communitypanel, function()
+            ModifyRankSelect()
+            frame_inventory:Close()
+        end)
+        y = y + height + 1
     
-    end)
-    y = y + height + 1
+        DefaultButton( "Delete a Rank", x, y, width, height, communitypanel, function()
+            DeleteRank()
+            frame_inventory:Close()
+        end)
+        y = y + height + 20
+    end
 
-    DefaultButton( "Hide Locker", x, y, width, height, communitypanel, function()
-    
-    end)
-    y = y + height + 1
+    if myPerms["admin"] or myPerms["locker"] then
+        DefaultButton( "Deploy Locker", x, y, width, height, communitypanel, function()
+        
+        end)
+        y = y + height + 1
 
-    DefaultButton( "Deploy Stockpile", x, y, width, height, communitypanel, function()
-    
-    end)
-    y = y + height + 1
+        DefaultButton( "Hide Locker", x, y, width, height, communitypanel, function()
+        
+        end)
+        y = y + height + 1
+    end
 
-    DefaultButton( "Hide Stockpile", x, y, width, height, communitypanel, function()
-    
-    end)
-    y = y + height + 20
+    if myPerms["admin"] or myPerms["stockpile"] then
+        DefaultButton( "Deploy Stockpile", x, y, width, height, communitypanel, function()
+        
+        end)
+        y = y + height + 1
+
+        DefaultButton( "Hide Stockpile", x, y, width, height, communitypanel, function()
+        
+        end)
+        y = y + height + 20
+    end
 
     DefaultButton( "Leave Community", x, y, width, height, communitypanel, function()
         frame_inventory:Close()
@@ -846,14 +854,16 @@ function AS.Inventory.LoadCommunity( communitydata, memberdata )
     end)
     y = y + height + 1
 
-    DefaultButton( "Disband Community", x, y, width, height, communitypanel, function()
-        frame_inventory:Close()
-        Verify( function()
-            net.Start( "as_community_delete" )
-            net.SendToServer()
-        end, true)
-    end)
-    y = y + height + 20
+    if myPerms["admin"] then
+        DefaultButton( "Disband Community", x, y, width, height, communitypanel, function()
+            frame_inventory:Close()
+            Verify( function()
+                net.Start( "as_community_delete" )
+                net.SendToServer()
+            end, true)
+        end)
+        y = y + height + 20
+    end
 
     DefaultButton( "Search other communities", x, y, width, height, communitypanel, function()
         CommunitySearchWindow()
@@ -939,32 +949,38 @@ function AS.Inventory.LoadCommunity( communitydata, memberdata )
         local width, height = 100, 20
         local x, y = 445, 5
 
-        DefaultButton( "Change Title", x, y, width, height, panel, function()
-            ChangeTitle( v )
-        end)
-        y = y + height + 1
+        if myPerms["admin"] or myPerms["title"] then
+            DefaultButton( "Change Title", x, y, width, height, panel, function()
+                ChangeTitle( v )
+            end)
+            y = y + height + 1
+        end
 
-        DefaultButton( "Change Rank", x, y, width, height, panel, function()
-            local Menu = DermaMenu()
-            for k2, v2 in pairs( communitydata.ranks ) do
-                Menu:AddOption( v2.name, function()
-                    net.Start("as_community_changerank")
-                        net.WriteInt( k2, 32 )
-                        net.WriteInt( v.pid, 32 )
-                    net.SendToServer()
-                end)
-            end
-            Menu:Open()
-        end)
-        y = y + height + 30
+        if myPerms["admin"] then
+            DefaultButton( "Change Rank", x, y, width, height, panel, function()
+                local Menu = DermaMenu()
+                for k2, v2 in pairs( communitydata.ranks ) do
+                    Menu:AddOption( v2.name, function()
+                        net.Start("as_community_changerank")
+                            net.WriteInt( k2, 32 )
+                            net.WriteInt( v.pid, 32 )
+                        net.SendToServer()
+                    end)
+                end
+                Menu:Open()
+            end)
+            y = y + height + 30
+        end
 
-        DefaultButton( "Kick", x, y, width, height, panel, function()
-            net.Start("as_community_kickplayer")
-                net.WriteInt( v.pid, 32 )
-            net.SendToServer()
-            frame_inventory:Close()
-        end)
-        y = y + height + 1
+        if myPerms["admin"] or myPerms["kick"] then
+            DefaultButton( "Kick", x, y, width, height, panel, function()
+                net.Start("as_community_kickplayer")
+                    net.WriteInt( v.pid, 32 )
+                net.SendToServer()
+                frame_inventory:Close()
+            end)
+            y = y + height + 1
+        end
 
         ypos = ypos + panel:GetTall() + 5
     end
@@ -972,54 +988,56 @@ function AS.Inventory.LoadCommunity( communitydata, memberdata )
     csheets:AddSheet("Members", members, "icon16/user.png")
 
 --Invite
-    local invite = vgui.Create("DPanel", invite)
-    invite:SetSize( csheets:GetWide() - 15, csheets:GetTall() - 35 )
-    function invite:Paint() end
+    if myPerms["admin"] or myPerms["invite"] then
+        local invite = vgui.Create("DPanel", invite)
+        invite:SetSize( csheets:GetWide() - 15, csheets:GetTall() - 35 )
+        function invite:Paint() end
 
-    local scroll_invite = vgui.Create("DScrollPanel", invite)
-    scroll_invite:SetSize( invite:GetWide(), invite:GetTall() )
-    scroll_invite.Paint = function(_,w,h)
-        surface.SetDrawColor( COLHUD_SECONDARY )
-        surface.DrawRect(0, 0, w, h)
-    end
-
-    local xpos, ypos = 5, 5
-
-    for k, v in pairs( player.GetAll() ) do
-        if v:InCommunity() then continue end
-        if not v:IsLoaded() then continue end
-
-        local panel = vgui.Create("DPanel", scroll_invite)
-        panel:SetPos( xpos, ypos )
-        panel:SetSize( 550, 100 )
-        function panel:Paint( w, h )
-            surface.SetDrawColor( COLHUD_PRIMARY )
-            surface.DrawRect( 0, 0, w, h )
+        local scroll_invite = vgui.Create("DScrollPanel", invite)
+        scroll_invite:SetSize( invite:GetWide(), invite:GetTall() )
+        scroll_invite.Paint = function(_,w,h)
+            surface.SetDrawColor( COLHUD_SECONDARY )
+            surface.DrawRect(0, 0, w, h)
         end
 
-        local name = vgui.Create("DLabel", panel)
-        name:SetFont( "TargetID" )
-        name:SetText( v:Nickname() .. " (" .. (AS.Classes[v:GetNWString("as_class")].name or "") .. ")" )
-        name:SetPos( 100, 5 )
-        name:SizeToContents()
-        name:SetColor( AS.Classes[v:GetNWString("as_class")].color )
+        local xpos, ypos = 5, 5
 
-        CharacterIcon( v:GetModel(), 5, 5, panel:GetTall() - 10, panel:GetTall() - 10, panel )
+        for k, v in pairs( player.GetAll() ) do
+            if v:InCommunity() then continue end
+            if not v:IsLoaded() then continue end
 
-        local width, height = 100, 20
-        local x, y = 445, 5
+            local panel = vgui.Create("DPanel", scroll_invite)
+            panel:SetPos( xpos, ypos )
+            panel:SetSize( 550, 100 )
+            function panel:Paint( w, h )
+                surface.SetDrawColor( COLHUD_PRIMARY )
+                surface.DrawRect( 0, 0, w, h )
+            end
 
-        DefaultButton( "Invite", x, y, width, height, panel, function()
-            panel:Remove()
-            net.Start( "as_community_inviteplayer" )
-                net.WriteEntity( v )
-            net.SendToServer()
-        end)
+            local name = vgui.Create("DLabel", panel)
+            name:SetFont( "TargetID" )
+            name:SetText( v:Nickname() .. " (" .. (AS.Classes[v:GetNWString("as_class")].name or "") .. ")" )
+            name:SetPos( 100, 5 )
+            name:SizeToContents()
+            name:SetColor( AS.Classes[v:GetNWString("as_class")].color )
 
-        ypos = ypos + panel:GetTall() + 5
+            CharacterIcon( v:GetModel(), 5, 5, panel:GetTall() - 10, panel:GetTall() - 10, panel )
+
+            local width, height = 100, 20
+            local x, y = 445, 5
+
+            DefaultButton( "Invite", x, y, width, height, panel, function()
+                panel:Remove()
+                net.Start( "as_community_inviteplayer" )
+                    net.WriteEntity( v )
+                net.SendToServer()
+            end)
+
+            ypos = ypos + panel:GetTall() + 5
+        end
+
+        csheets:AddSheet("Invite Players", invite, "icon16/add.png")
     end
-
-    csheets:AddSheet("Invite Players", invite, "icon16/add.png")
 
     --Allies
     local allies = vgui.Create("DPanel", allies)
@@ -1050,13 +1068,15 @@ function AS.Inventory.LoadCommunity( communitydata, memberdata )
         info:SetPos( 5, 10 )
         info:SizeToContents()
 
-        local bheight, bwidth = 20, 100
-        DefaultButton( "End Alliance", 445, 10, bwidth, bheight, panel, function()
-            panel:Remove()
-            net.Start( "as_community_endally" )
-                net.WriteInt( k, 32 )
-            net.SendToServer()
-        end)
+        if myPerms["admin"] or myPerms["ally"] then
+            local bheight, bwidth = 20, 100
+            DefaultButton( "End Alliance", 445, 10, bwidth, bheight, panel, function()
+                panel:Remove()
+                net.Start( "as_community_endally" )
+                    net.WriteInt( k, 32 )
+                net.SendToServer()
+            end)
+        end
 
         ypos = ypos + panel:GetTall() + 5
     end
@@ -1092,13 +1112,15 @@ function AS.Inventory.LoadCommunity( communitydata, memberdata )
         info:SetPos( 5, 10 )
         info:SizeToContents()
 
-        local bheight, bwidth = 20, 100
-        DefaultButton( "Cancel War", 445, 10, bwidth, bheight, panel, function()
-            panel:Remove()
-            net.Start( "as_community_endwarrequest" )
-                net.WriteInt( k, 32 )
-            net.SendToServer()
-        end)
+        if myPerms["admin"] or myPerms["war"] then
+            local bheight, bwidth = 20, 100
+            DefaultButton( "Cancel War", 445, 10, bwidth, bheight, panel, function()
+                panel:Remove()
+                net.Start( "as_community_endwarrequest" )
+                    net.WriteInt( k, 32 )
+                net.SendToServer()
+            end)
+        end
 
         ypos = ypos + panel:GetTall() + 5
     end
@@ -1143,20 +1165,22 @@ function AS.Inventory.LoadCommunity( communitydata, memberdata )
         info:SetPos( 15, 25 )
         info:SizeToContents()
 
-        local bheight, bwidth = 20, 100
-        DefaultButton( "Accept", 5, panel:GetTall() - bheight - 5, bwidth, bheight, panel, function()
-            panel:Remove()
-            net.Start("as_community_acceptdiplomacy")
-                net.WriteInt( k, 32 )
-            net.SendToServer()
-        end)
+        if myPerms["admin"] or (diplotype == "war" and myPerms["war"]) or (diplotype == "ally" and myPerms["ally"]) then
+            local bheight, bwidth = 20, 100
+            DefaultButton( "Accept", 5, panel:GetTall() - bheight - 5, bwidth, bheight, panel, function()
+                panel:Remove()
+                net.Start("as_community_acceptdiplomacy")
+                    net.WriteInt( k, 32 )
+                net.SendToServer()
+            end)
 
-        DefaultButton( "Decline", bwidth + 10, panel:GetTall() - bheight - 5, bwidth, bheight, panel, function()
-            panel:Remove()
-            net.Start("as_community_declinediplomacy")
-                net.WriteInt( k, 32 )
-            net.SendToServer()
-        end)
+            DefaultButton( "Decline", bwidth + 10, panel:GetTall() - bheight - 5, bwidth, bheight, panel, function()
+                panel:Remove()
+                net.Start("as_community_declinediplomacy")
+                    net.WriteInt( k, 32 )
+                net.SendToServer()
+            end)
+        end
 
         ypos = ypos + panel:GetTall() + 5
     end

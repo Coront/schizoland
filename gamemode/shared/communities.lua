@@ -67,10 +67,12 @@ if ( SERVER ) then
             end
         end
 
-        net.Start("as_community_senddata")
-            net.WriteTable( Communities[ ply:GetCommunity() ] )
-            net.WriteTable( memtbl )
-        net.Send(ply)
+        if Communities[ ply:GetCommunity() ] then
+            net.Start("as_community_senddata")
+                net.WriteTable( Communities[ ply:GetCommunity() ] )
+                net.WriteTable( memtbl )
+            net.Send(ply)
+        end
     end)
 
     net.Receive("as_community_requestranks", function( _, ply )
