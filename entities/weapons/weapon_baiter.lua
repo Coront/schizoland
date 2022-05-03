@@ -34,6 +34,7 @@ SWEP.BulletLength = 9
 SWEP.CaseLength = 17.3
 
 SWEP.HoldType = "pistol"
+SWEP.RunHoldType = "normal"
 
 SWEP.Anims = {}
 SWEP.Anims.Draw_First = "draw"
