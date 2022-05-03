@@ -109,6 +109,7 @@ function GM:PlayerDeathThink( ply )
 end
 
 hook.Add( "DoPlayerDeath", "AS_PlayerDeath", function( ply, attacker, dmginfo )
+    ply:PlayCharacterSound( "Death", 95 )
     ply:ChatPrint("You died.")
 
     local contents = {} --Player's dropped contents
@@ -246,12 +247,28 @@ hook.Add( "EntityTakeDamage", "AS_ArmorResistance", function( victim, dmginfo )
     local armorres = AS.Items[curarmor].armor
     local dmgtype = dmginfo:GetDamageType()
     if not armorres[dmgtype] then return end --Defense value doesnt exist. ignore.
-    
+
     local overallDamage = dmginfo:GetDamage()
     local multDamage = 1 - (armorres[dmgtype] / 100)
     local toDamage = (overallDamage * multDamage)
     local damage = toDamage < 1 and 1 or math.Round( toDamage )
     dmginfo:SetDamage( damage )
+end)
+
+hook.Add( "EntityTakeDamage", "AS_DamageSounds", function( victim, dmginfo ) 
+    if not victim:IsPlayer() then return end
+    local ply = victim
+    local amt = dmginfo:GetDamage()
+    local type = dmginfo:GetDamageType()
+    if type != DMG_SLASH and type != DMG_BULLET and type != DMG_ENERGYBEAM then return end
+
+    if amt >= 15 and CurTime() > (ply.NextInjuredSound or 0) then
+        ply.NextInjuredSound = CurTime() + 10
+
+        local group = amt >= 15 and amt < 40 and "DamageLight" or "DamageHeavy"
+        local volume = amt >= 15 and amt < 40 and 70 or 80
+        ply:PlayCharacterSound( group, volume )
+    end
 end)
 
 hook.Add( "PlayerSay", "AS_PlayerChatLog", function( ply, text )
