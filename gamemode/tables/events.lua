@@ -9,6 +9,7 @@ AS.AddEvent( "antlion_guard", {
     mintime = 600, --Minimal time before we spawn in seconds
     maxtime = 1200, --Maximum time before we spawn
     max = 2, --Maximum amount of this event that can spawn at once
+    minplayers = 1, --Minimal players required on the server for this event to occur
     eventspot = false, --Should we only spawn in event spots?
     outdoor = true, --Spawn outdoor
     ent = "npc_as_antlionguard", --Entity to spawn
@@ -20,6 +21,7 @@ AS.AddEvent( "antlion_nest", {
     mintime = 600,
     maxtime = 1800,
     max = 1,
+    minplayers = 1,
     eventspot = true,
     outdoor = true,
     ent = "as_event_mound", --Replace this with the antlionnest entity when finished
@@ -32,6 +34,7 @@ AS.AddEvent( "zombie_horde", {
     mintime = 1800,
     maxtime = 7200,
     max = 1,
+    minplayers = 3,
     eventspot = true,
     outdoor = true,
     ent = "npc_as_fastzombie", --Replace this with the antlionnest entity when finished
@@ -45,6 +48,7 @@ AS.AddEvent( "raider_party", {
     mintime = 3600,
     maxtime = 6000,
     max = 1,
+    minplayers = 1,
     eventspot = true,
     outdoor = true,
     ent = "npc_as_raider",
@@ -58,6 +62,7 @@ AS.AddEvent( "combine_scout", {
     mintime = 4200,
     maxtime = 8000,
     max = 1,
+    minplayers = 5,
     eventspot = true,
     outdoor = true,
     ent = "as_event_canister",

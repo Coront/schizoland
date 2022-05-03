@@ -28,7 +28,7 @@ hook.Add( "PlayerButtonDown", "AS_Binds", function( ply, button )
         local tr = ply:TraceFromEyes( 200 )
 
         if button == GetConVarString("as_bind_inventory") then
-            if IsValid(tr.Entity) and tr.Entity:GetClass() == "prop_vehicle_jeep" and tr.Entity:GetObjectOwner() == ply then
+            if IsValid(tr.Entity) and tr.Entity:GetClass() == "prop_vehicle_jeep" and tr.Entity:GetObjectOwner() == ply and not LocalPlayer():InVehicle() then
                 AS.Storage.Menu( tr.Entity )
             else
                 AS.Inventory.Open()

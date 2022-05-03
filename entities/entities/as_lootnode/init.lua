@@ -106,6 +106,10 @@ function ENT:Use( ply )
             self:IncreaseSalvageSkill( ply )
             local roll = math.random( 0, 100 )
             if roll > (NOD.ScavengeChance + (SKL.Salvaging.incscavsuccess * ply:GetSkillLevel("salvaging"))) then return end --Player failed to find anything this time
+            if self:GetScavengesLeft() <= 0 then
+                self:Remove()
+            end
+
 
             --Canister Special
             if self:GetResourceType() == "Canister" then
@@ -176,10 +180,6 @@ function ENT:Use( ply )
             end
 
             ply:EmitSound( "entities/resources_" .. math.random( 1, 3 ) .. ".wav" )
-
-            if self:GetScavengesLeft() <= 0 then
-                self:Remove()
-            end
         end)
     else
         ply.Scavenging = false

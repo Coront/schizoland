@@ -48,7 +48,7 @@ AS_ClientConVar( "as_hud_effects_width", "150", true, false ) --Width
 AS_ClientConVar( "as_hud_effects_height", "10", true, false ) --Height
 AS_ClientConVar( "as_hud_effects_barspacing", "3", true, false ) --Spacing between bars
 -- Resources
-AS_ClientConVar( "as_hud_resources", "0", true, false ) --Enable?
+AS_ClientConVar( "as_hud_resources", "1", true, false ) --Enable?
 AS_ClientConVar( "as_hud_resources_xadd", "0", true, false ) --X position add
 AS_ClientConVar( "as_hud_resources_yadd", "0", true, false ) --Y position add
 -- Target Info
