@@ -78,12 +78,12 @@ function SWEP:PrimaryAttack()
             filter = self.Owner,
         })
         local ent = trace.Entity
-		if ent:GetClass() != "prop_vehicle_jeep" and ent:GetClass() != "prop_door_rotating" and ent:GetClass() != "func_door_rotating" and ent:GetClass() != "func_door" then return end
-
+		
 		if ent:GetObjectOwner() == self.Owner then
 			local ply = self.Owner
 			self:SetNextPrimaryFire( CurTime() + 1 )
 			if SERVER then
+				if ent:GetClass() != "prop_vehicle_jeep" and ent:GetClass() != "prop_door_rotating" and ent:GetClass() != "func_door_rotating" and ent:GetClass() != "func_door" then return end
 				ent:EmitSound("doors/door_locked2.wav")
 				ent:Fire( "lock", "", 0 )
 				if ent.VC_SeatTable and ent:IsVehicle() then
@@ -112,12 +112,12 @@ function SWEP:SecondaryAttack()
 		filter = self.Owner,
 	})
 	local ent = trace.Entity
-	if ent:GetClass() != "prop_vehicle_jeep" and ent:GetClass() != "prop_door_rotating" and ent:GetClass() != "func_door_rotating" and ent:GetClass() != "func_door" then return end
-
+	
 	if ent:GetObjectOwner() == self.Owner then
 		local ply = self.Owner
 		self:SetNextSecondaryFire( CurTime() + 1 )
 		if SERVER then
+			if ent:GetClass() != "prop_vehicle_jeep" and ent:GetClass() != "prop_door_rotating" and ent:GetClass() != "func_door_rotating" and ent:GetClass() != "func_door" then return end
 			ent:EmitSound("doors/door_latch3.wav")
 			ent:Fire( "unlock", "", 0 )
 			if ent.VC_SeatTable and ent:IsVehicle() then
