@@ -48,7 +48,6 @@ if SERVER then
         self:SetNWString( "as_referencemodel", model )
         self:SetModel(model)
         self:SetASClass(class)
-        self:SetNWString( "as_class", self:GetASClass() )
         self:SetHealth(stats.health)
         local health = SKL.Health
         if self:GetASClass() == "mercenary" then

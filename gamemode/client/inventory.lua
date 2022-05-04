@@ -1016,10 +1016,10 @@ function AS.Inventory.LoadCommunity( communitydata, memberdata )
 
             local name = vgui.Create("DLabel", panel)
             name:SetFont( "TargetID" )
-            name:SetText( v:Nickname() .. " (" .. (AS.Classes[v:GetNWString("as_class")].name or "") .. ")" )
+            name:SetText( v:Nickname() .. " (" .. (AS.Classes[v:GetASClass()].name or "") .. ")" )
             name:SetPos( 100, 5 )
             name:SizeToContents()
-            name:SetColor( AS.Classes[v:GetNWString("as_class")].color )
+            name:SetColor( AS.Classes[v:GetASClass()].color )
 
             CharacterIcon( v:GetModel(), 5, 5, panel:GetTall() - 10, panel:GetTall() - 10, panel )
 
@@ -1218,10 +1218,10 @@ function AS.Inventory.BuildPlayers()
 
         local name = vgui.Create("DLabel", panel)
         name:SetFont( "TargetID" )
-        name:SetText( v:Nickname() .. " (" .. (AS.Classes[v:GetNWString("as_class")].name or "") .. ")" )
+        name:SetText( v:Nickname() .. " (" .. (AS.Classes[v:GetASClass()].name or "") .. ")" )
         name:SetPos( 100, 5 )
         name:SizeToContents()
-        name:SetColor( AS.Classes[v:GetNWString("as_class")].color )
+        name:SetColor( AS.Classes[v:GetASClass()].color )
 
         local community = vgui.Create("DLabel", panel)
         community:SetFont( "TargetID" )

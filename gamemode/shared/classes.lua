@@ -1,9 +1,12 @@
 function PlayerMeta:SetASClass( class )
     self.Class = class
+    if ( SERVER ) then
+        self:ResyncClass()
+    end
 end
 
 function PlayerMeta:GetASClass()
-    return self.Class
+    return self.Class or "mercenary"
 end
 
 function PlayerMeta:CanChangeClass( class )
@@ -43,14 +46,25 @@ if ( SERVER ) then
 
     function PlayerMeta:ResyncClass()
         net.Start("as_classes_syncclass")
+            net.WriteEntity(self)
             net.WriteString(self:GetASClass())
-        net.Send(self)
+        net.Broadcast()
     end
+
+    hook.Add( "Think", "AS_ResyncClasses", function()
+        for k, v in pairs( player.GetAll() ) do
+            if CurTime() < (v.NextClassResync or 0) then continue end
+            v.NextClassResync = CurTime() + 10
+            v:ResyncClass()
+        end
+    end)
 
 elseif ( CLIENT ) then
 
     net.Receive("as_classes_syncclass", function()
-        LocalPlayer():SetASClass( net.ReadString() )
+        local ent = net.ReadEntity()
+        if not IsValid(ent) then return end
+        ent:SetASClass( net.ReadString() )
     end)
 
 end

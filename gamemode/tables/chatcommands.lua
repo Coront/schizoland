@@ -18,7 +18,7 @@ AS.AddChatCommand("yell", function( ply, args )
         local tab = {}
         table.insert( tab, color_blue )
         table.insert( tab, "(Yell) " )
-        table.insert( tab, AS.Classes[ply:GetNWString("as_class")].color )
+        table.insert( tab, AS.Classes[ply:GetASClass()].color )
         table.insert( tab, ply:Nickname() )
         table.insert( tab, color_white )
         local str = ""
@@ -39,7 +39,7 @@ AS.AddChatCommand("y", function( ply, args )
         local tab = {}
         table.insert( tab, color_blue )
         table.insert( tab, "(Yell) " )
-        table.insert( tab, AS.Classes[ply:GetNWString("as_class")].color )
+        table.insert( tab, AS.Classes[ply:GetASClass()].color )
         table.insert( tab, ply:Nickname() )
         table.insert( tab, color_white )
         local str = ""

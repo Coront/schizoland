@@ -10,7 +10,6 @@ function PlayerChangeClass( ply, cmd, args )
     end
 
     ply:SetASClass( class )
-    ply:ResyncClass()
     ply:Spawn()
     ply:ChatPrint("You are now a " .. AS.Classes[class].name .. "." )
 

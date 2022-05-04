@@ -9,7 +9,7 @@ function GM:OnPlayerChat( ply, txt, team, dead )
 	local tab = {}
 
 	if ( IsValid( ply ) ) then
-		table.insert( tab, AS.Classes[ply:GetNWString("as_class")].color )
+		table.insert( tab, AS.Classes[ply:GetASClass()].color )
 		table.insert( tab, ply:Nickname() )
 		table.insert( tab, color_white )
 		table.insert( tab, ": " .. txt )

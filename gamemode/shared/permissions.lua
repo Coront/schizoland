@@ -34,7 +34,7 @@ function GM:PhysgunDrop( ply, ent )
 end
 
 function GM:PlayerCanSeePlayersChat( text, team, listener, speaker )
-    if tobool(GetConVar("as_alltalk"):GetInt()) then return true end
+    if tobool(GetConVar("as_alltalk"):GetInt()) and listener:IsLoaded() then return true end
 
     if speaker and IsValid(speaker) then
         if listener:GetPos():Distance(speaker:GetPos()) > PERM.ChatDistance or not listener:IsLoaded() then --Player is too far to see this person's text.
@@ -46,7 +46,7 @@ function GM:PlayerCanSeePlayersChat( text, team, listener, speaker )
 end
 
 function GM:PlayerCanHearPlayersVoice( listener, speaker )
-    if tobool(GetConVar("as_alltalk"):GetInt()) then return true, false end
+    if tobool(GetConVar("as_alltalk"):GetInt()) and listener:IsLoaded() then return true, false end
 
     if listener:GetPos():Distance(speaker:GetPos()) > PERM.VoiceDistance or not listener:IsLoaded() then --Player is too far to hear this person's voice.
         return false

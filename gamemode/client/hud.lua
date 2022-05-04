@@ -347,8 +347,8 @@ function AftershockHUDVoice()
         surface.DrawRect( ASHUDVOICE_xpos, ASHUDVOICE_ypos, ASHUDVOICE_width, ASHUDVOICE_height, 1 )
         surface.SetDrawColor( COLHUD_DEFAULT )
         surface.DrawOutlinedRect( ASHUDVOICE_xpos, ASHUDVOICE_ypos, ASHUDVOICE_width, ASHUDVOICE_height, 1 )
-        local color = AS.Classes[k:GetNWString("as_class", nil)].color or COLHUD_DEFAULT
-        draw.SimpleTextOutlined( k:Nickname() .. " (" .. AS.Classes[k:GetNWString("as_class", nil)].name .. ")", "AftershockHUDSmall", ASHUDVOICE_xpos + 5, ASHUDVOICE_ypos + ASHUDVOICE_height - 3, color, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM, 1, Color(0,0,0) )
+        local color = AS.Classes[k:GetASClass()].color or COLHUD_DEFAULT
+        draw.SimpleTextOutlined( k:Nickname() .. " (" .. AS.Classes[k:GetASClass()].name .. ")", "AftershockHUDSmall", ASHUDVOICE_xpos + 5, ASHUDVOICE_ypos + ASHUDVOICE_height - 3, color, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM, 1, Color(0,0,0) )
 
         ASHUDVOICE_ypos = ASHUDVOICE_ypos + ASHUDVOICE_height + ASHUDVOICE_spacing
     end

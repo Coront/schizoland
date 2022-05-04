@@ -7,6 +7,7 @@ AS_ClientConVar( "as_thirdperson_up", "5", true, false )
 
 hook.Add( "CalcView", "AS_Thirdperson", function( ply, pos, angles, lastfov )
     if not Thirdperson.Enabled then return end
+    if ply:InVehicle() then return end
     if not ply:Alive() then return end
 
     local dist, side, up = math.Clamp( GetConVar("as_thirdperson_distance"):GetInt(), -20, 200 ), math.Clamp( GetConVar("as_thirdperson_side"):GetInt(), -40, 40 ), math.Clamp( GetConVar("as_thirdperson_up"):GetInt(), -20, 40 )
