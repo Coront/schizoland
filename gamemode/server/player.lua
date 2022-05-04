@@ -213,6 +213,11 @@ function GM:PlayerDeathSound( ply )
     return true --Will hide the player death sound.
 end
 
+hook.Add( "CanPlayerEnterVehicle", "AS_CarSeatLock", function( ply, vehicle, role )
+    if vehicle.Locked then return false end
+    return true
+end)
+
 hook.Add( "Think", "AS_PassiveHealing", function()
     for k, v in pairs(player.GetAll()) do
         if not v:IsLoaded() then continue end --We skip players who arent loaded for this check.

@@ -123,10 +123,11 @@ FAS_STAT_HOLSTER_START = 5
 FAS_STAT_HOLSTER_END = 6
 FAS_STAT_QUICKGRENADE = 7
 
-SWEP.Author            = "Spy"
-SWEP.Instructions    = "CONTEXT MENU KEY - Open customization menu\nUSE + RELOAD KEY - Change firemode\nUSE KEY + PRIMARY ATTACK KEY - Quick grenade"
+SWEP.Author            = ""
+SWEP.Instructions    = ""
 SWEP.Contact        = ""
 SWEP.Purpose        = ""
+SWEP.DrawWeaponInfoBox = false
 SWEP.HoldType = "ar2"
 SWEP.FirstDeploy = false
 

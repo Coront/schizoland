@@ -29,11 +29,12 @@ SWEP.FireModes = {"semi"}
 SWEP.Spawnable            = false
 SWEP.AdminSpawnable        = true
 
-SWEP.Author            = "Spy"
+SWEP.Author            = ""
 
 SWEP.Contact        = ""
 SWEP.Purpose        = ""
-SWEP.Instructions    = "PRIMARY ATTACK KEY - Slash\nSECONDARY ATTACK KEY - Stab"
+SWEP.Instructions    = ""
+SWEP.DrawWeaponInfoBox = false
 
 SWEP.ViewModelFOV    = 50
 SWEP.ViewModelFlip    = false
@@ -118,11 +119,7 @@ end
 
 local cl, hit, ef
 
-function SWEP:Deploy()
-    FAS2_PlayAnim(self, self.Anims.Draw)
-    return true
-end
-
+SWEP.DrawTime = 1
 function SWEP:Think()
 	CT = CurTime()
 
@@ -218,7 +215,13 @@ function SWEP:PrimaryAttack()
 	CT = CurTime()
 
     local anim = istable(self.Anims.Slash) and table.Random(self.Anims.Slash) or self.Anims.Slash
-	FAS2_PlayAnim(self, anim, 1)
+	
+	if CLIENT and self.Wep then
+		self.Wep:SetCycle(0)
+		self.Wep:SetSequence(anim)
+		self.Wep:SetPlaybackRate(1)
+	end
+
 	self:SetNextPrimaryFire(CT + self.NextSwing)
 	self.DamageWait = CT + self.ImpactDelay
 	self.Attacking = true
@@ -227,7 +230,9 @@ function SWEP:PrimaryAttack()
 	self.AttackType = "slash"
 
 	self.DamageAmount = self.Damage * (1 + (self:GetOwner():GetSkillLevel("strength") * SKL.Strength.dmgmultinc))
-	self:EmitSound(self.Sounds.Swing)
+	if SERVER then
+		self.Owner:EmitSound(self.Sounds.Swing)
+	end
 end
 
 function SWEP:SecondaryAttack()	
