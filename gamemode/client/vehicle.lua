@@ -6,7 +6,7 @@ hook.Add("HUDPaint", "AS_VehicleInfo", function()
     })
     local ent = trace.Entity
     if not IsValid(ent) then return end
-    if not ent:GetClass() == "prop_vehicle_jeep" then return end
+    if ent:GetClass() != "prop_vehicle_jeep" then return end
     if ent:GetObjectOwner() != LocalPlayer() then return end
     if LocalPlayer():InVehicle() then return end
 
