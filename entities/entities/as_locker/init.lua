@@ -35,7 +35,7 @@ function ENT:Use( ply )
 				self:EmitSound(self.Sounds.BreakInto, 150)
 				ply:StartTimedEvent( 20, true, function()
 					ply.Breaking = false
-					if IsValid( ent ) then
+					if IsValid( self ) then
 						self.Broken = true
 						self:EmitSound(self.Sounds.Broken, 100)
 						net.Start( "as_locker_open" )
