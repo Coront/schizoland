@@ -79,6 +79,7 @@ function AftershockHUD()
     local ply = LocalPlayer()
 
     if not ply:IsLoaded() then return end
+    if IsValid(ply:GetActiveWeapon()) and ply:GetActiveWeapon():GetClass() == "gmod_camera" then return end
     if not ply:Alive() then AftershockHUDDeath() return end
     AftershockHUDVoice()
 

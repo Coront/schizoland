@@ -28,11 +28,16 @@ function ENT:SetResources( tbl )
     self.Resources = tbl
     if ( SERVER ) then
         self:ResyncResources()
+        self:SaveResources()
     end
 end
 
 function ENT:GetResources()
     return self.Resources or {}
+end
+
+function ENT:GetResourceAmount( item )
+    return self:GetResources()[item] or 0
 end
 
 function ENT:AddResource( item, amt )
@@ -43,6 +48,11 @@ function ENT:AddResource( item, amt )
     self:SetResources( tbl )
 end
 
+function ENT:PlayerAddResource( ply, item, amt )
+    ply:TakeItemFromInventory( item, amt )
+    self:AddResource( item, amt )
+end
+
 function ENT:TakeResource( item, amt )
     if not AS.Items[item] then AS.LuaError("Attempt to take non-existant item from stockpile - " .. item) return end
 
@@ -50,6 +60,11 @@ function ENT:TakeResource( item, amt )
     tbl[item] = (tbl[item] or 0) - amt
     if tbl[item] <= 0 then tbl[item] = nil end
     self:SetResources( tbl )
+end
+
+function ENT:PlayerTakeResource( ply, item, amt )
+    self:TakeResource( item, amt )
+    ply:AddItemToInventory( item, amt )
 end
 
 -- Networking

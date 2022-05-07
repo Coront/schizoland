@@ -33,7 +33,12 @@ hook.Add("Think", "AS_TargetID", function()
     local ply = LocalPlayer()
     local wep = ply:GetActiveWeapon()
     local dist = wep and wep.dt and wep.dt.Status and wep.dt.Status == FAS_STAT_ADS and 12000 or 1000
-    local trace = ply:TraceFromEyes( dist )
+    local trace = util.TraceLine({
+        start = ply:GetShootPos(),
+        endpos = ply:GetShootPos() + (ply:GetAimVector() * dist),
+        filter = ply,
+        mask = MASK_SHOT
+    })
     local ent = trace.Entity
     local ignoreEnts = {
         ["prop_door_rotating"] = true,

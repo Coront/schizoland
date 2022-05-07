@@ -5,6 +5,9 @@
         },
         {
             "path": "..\\..\\addons\\ASNPCs"
+        },
+        {
+            "path": "..\\..\\addons\\ULX"
         }
     ]
 }

@@ -1,5 +1,5 @@
-Thirdperson = {}
-Thirdperson.Enabled = false
+Thirdperson = Thirdperson or {}
+Thirdperson.Enabled = Thirdperson.Enabled or false
 
 AS_ClientConVar( "as_thirdperson_distance", "40", true, false )
 AS_ClientConVar( "as_thirdperson_side", "15", true, false )

@@ -10,7 +10,7 @@ function ENT:Initialize()
 	self:SetMoveType( MOVETYPE_VPHYSICS )
 	self:SetCollisionGroup( COLLISION_GROUP_WEAPON )
 
-	self:SetDespawnTime( 300 ) --Sets a timer for an item to be deleted.
+	self:SetDespawnTime( 900 ) --Sets a timer for an item to be deleted.
 end
 
 function ENT:SetDespawnTime( time )
@@ -18,7 +18,7 @@ function ENT:SetDespawnTime( time )
 end
 
 function ENT:GetDespawnTime()
-	return self.DespawnTime or CurTime() + 60
+	return self.DespawnTime or 0
 end
 
 function ENT:Use( ply )
