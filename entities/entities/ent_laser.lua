@@ -4,23 +4,20 @@ ENT.Type = "anim"
 ENT.Base = "base_gmodentity"
 ENT.PrintName = "ent_laser"
 ENT.Category = "Aftershock - Fun"
-ENT.Spawnable = true
+ENT.Spawnable = false
 
 if ( SERVER ) then
     
     function ENT:Initialize()
         self:EmitSound("beams/beamstart5.wav", 150, 130, 1)
         self:SetModel("models/hunter/plates/plate075x8.mdl")
-        self:SetMaterial("models/props_combine/portalball001_sheet")
+        self:SetMaterial("models/debug/debugwhite")
+        self:SetColor( Color( 255, 0, 0 ) )
         self:PhysicsInit( SOLID_NONE )
         self:SetMoveType( MOVETYPE_VPHYSICS )
         self:SetSolid( SOLID_VPHYSICS )
         self:SetCollisionGroup( COLLISION_GROUP_INTERACTIVE )
-        if not self.Vertical then
-            local vert = math.random( 0, 1 )
-            if vert == 1 then self.Vertical = true end
-        end
-        ang = 0
+        local ang = 0
         if self.Vertical then ang = 90 end
         self:SetAngles( Angle( 0, 0, ang ) )
 
@@ -63,7 +60,7 @@ if ( SERVER ) then
                 self:SetPos(self:GetPos() + duck)
                 self.AdjustPosition = true
             else
-                local strafe = Vector( 0, math.random( -80, 80 ), 0 )
+                local strafe = Vector( 0, math.random( -195, 195 ), 0 )
                 self:SetPos(self:GetPos() + strafe)
                 self.AdjustPosition = true
             end

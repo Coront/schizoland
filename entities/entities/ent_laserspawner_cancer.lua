@@ -21,15 +21,19 @@ if ( SERVER ) then
         self.NextLaser = CurTime() + 3
     end
 
-    function ENT:CreateLaser()
+    function ENT:CreateLaser( vert )
         local ent = ents.Create("ent_laser")
         ent:SetPos( self:GetPos() )
+        if vert then
+            ent.Vertical = true
+        end
         ent:Spawn()
     end
 
     function ENT:Think()
         if CurTime() > self.NextLaser then
             self:CreateLaser()
+            self:CreateLaser( true )
             self.NextLaser = CurTime() + self.LaserDelay
         end
 
