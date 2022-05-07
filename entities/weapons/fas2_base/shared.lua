@@ -626,9 +626,8 @@ function SWEP:PrimaryAttack()
 	if self.FireMode == "safe" then
 		if IsFirstTimePredicted() then
 			self:CycleFiremodes()
+			return
 		end
-		
-		return
 	end
 	
 	if IsFirstTimePredicted() then
