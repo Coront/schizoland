@@ -622,7 +622,7 @@ function AS.Inventory.BuildSkills()
             local ply = LocalPlayer()
             local curxp = ply:GetSkillExperience( k ) - ExpForLevel( k, ply:GetSkillLevel( k ) - 1 )
             local nextxp = ExpForLevel( k, ply:GetSkillLevel( k ) + 1 ) - ExpForLevel( k, ply:GetSkillLevel( k ))
-            surface.DrawRect( (w - width) - 5, (h - height) - 5, (curxp / nextxp) * 740, 20)
+            surface.DrawRect( (w - width) - 5, (h - height) - 5, math.Clamp( (curxp / nextxp) * 840, 0, 840 ) , 20)
         end
 
         local skillname = vgui.Create("DLabel", itempanel)
@@ -823,24 +823,16 @@ function AS.Inventory.LoadCommunity( communitydata, memberdata )
 
     if myPerms["admin"] or myPerms["locker"] then
         DefaultButton( "Deploy Locker", x, y, width, height, communitypanel, function()
-        
-        end)
-        y = y + height + 1
-
-        DefaultButton( "Hide Locker", x, y, width, height, communitypanel, function()
-        
+            net.Start("as_community_deploylocker")
+            net.SendToServer()
         end)
         y = y + height + 1
     end
 
     if myPerms["admin"] or myPerms["stockpile"] then
         DefaultButton( "Deploy Stockpile", x, y, width, height, communitypanel, function()
-        
-        end)
-        y = y + height + 1
-
-        DefaultButton( "Hide Stockpile", x, y, width, height, communitypanel, function()
-        
+            net.Start("as_community_deploystockpile")
+            net.SendToServer()
         end)
         y = y + height + 20
     end

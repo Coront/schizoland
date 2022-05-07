@@ -207,12 +207,11 @@ function community.DeclareWar( cid, ocid )
         if not v:GetCommunity() == cid and not v:GetCommunity() == ocid then continue end
         if v:GetCommunity() == cid then
             v:ChatPrint("You are now at war with " .. Communities[ocid].name .. "!")
-            v:ResyncWars()
         end
         if v:GetCommunity() == ocid then
             v:ChatPrint("You are now at war with " .. Communities[cid].name .. "!")
-            v:ResyncWars()
         end
+        v:ResyncWars()
     end
 end
 
@@ -431,6 +430,17 @@ function PlayerMeta:EndAlliance( ocid )
     community.EndAlliance( self:GetCommunity(), ocid )
 end
 
+function PlayerMeta:DeployLocker()
+
+end
+
+function PlayerMeta:DeployStockpile()
+    local ent = ents.Create("as_community_stockpile")
+    ent:SetCommunity( self:GetCommunity(), self:GetCommunityName() )
+    ent:Spawn()
+    ent:SetPos( self:TracePosFromEyes( 300 ) + Vector( 0, 0, 80 ))
+end
+
 -- ██████╗ ██████╗ ███████╗    ██╗      ██████╗  █████╗ ██████╗ ███████╗██████╗
 -- ██╔══██╗██╔══██╗██╔════╝    ██║     ██╔═══██╗██╔══██╗██╔══██╗██╔════╝██╔══██╗
 -- ██████╔╝██████╔╝█████╗█████╗██║     ██║   ██║███████║██║  ██║█████╗  ██████╔╝
@@ -464,12 +474,11 @@ hook.Add( "Think", "AS_Communities_WarTime", function()
                     if not v3:GetCommunity() == k and not v3:GetCommunity() == k2 then continue end
                     if v3:GetCommunity() == k then
                         v3:ChatPrint("The war against " .. Communities[ k2 ].name .. " has ended.")
-                        v3:ResyncWars()
                     end
                     if v3:GetCommunity() == k2 then
                         v3:ChatPrint("The war against " .. Communities[ k ].name .. " has ended.")
-                        v3:ResyncWars()
                     end
+                    v3:ResyncWars()
                 end
             end
         end
@@ -503,6 +512,8 @@ util.AddNetworkString( "as_community_ally" )
 util.AddNetworkString( "as_community_war" )
 util.AddNetworkString( "as_community_endwarrequest" )
 util.AddNetworkString( "as_community_endally" )
+util.AddNetworkString( "as_community_deploylocker" )
+util.AddNetworkString( "as_community_deploystockpile" )
 
 net.Receive( "as_community_create", function( _, ply )
     local name = net.ReadString()
@@ -714,7 +725,7 @@ net.Receive( "as_community_endally", function( _, ply )
     ply:EndAlliance( cid )
 end)
 
-net.Receive( "as_community_endwarreq", function( _, ply ) 
+net.Receive( "as_community_endwarrequest", function( _, ply ) 
     local warid = net.ReadInt( 32 )
 
     if not ply:InCommunity() then ply:ChatPrint("You are not in a community.") return end
@@ -722,4 +733,34 @@ net.Receive( "as_community_endwarreq", function( _, ply )
 
     ply:ChatPrint("You have sent a request to end this war.")
     ply:EndWarRequest( warid )
+end)
+
+net.Receive( "as_community_deploylocker", function( _, ply )
+    if not ply:InCommunity() then ply:ChatPrint("You are not in a community.") return end
+    if not ply:HasPerm("locker") then ply:ChatPrint("You must have the permission 'locker' to deploy the community locker.") return end
+
+    for k, v in pairs( ents.FindByClass("as_community_locker") ) do
+        if v:GetCommunity() == ply:GetCommunity() then
+            ply:ChatPrint("Your community stockpile is already deployed.")
+            return
+        end
+    end
+
+    ply:ChatPrint("You have deployed your community's locker.")
+    ply:DeployLocker()
+end)
+
+net.Receive( "as_community_deploystockpile", function( _, ply )
+    if not ply:InCommunity() then ply:ChatPrint("You are not in a community.") return end
+    if not ply:HasPerm("stockpile") then ply:ChatPrint("You must have the permission 'stockpile' to deploy the community stockpile.") return end
+
+    for k, v in pairs( ents.FindByClass("as_community_stockpile") ) do
+        if v:GetCommunity() == ply:GetCommunity() then
+            ply:ChatPrint("Your community stockpile is already deployed.")
+            return
+        end
+    end
+
+    ply:ChatPrint("You have deployed your community's stockpile.")
+    ply:DeployStockpile()
 end)

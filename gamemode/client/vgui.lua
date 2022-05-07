@@ -416,20 +416,7 @@ function SimpleSlider( parent, text, width, height, x, y, min, max, decimal )
     slider:SetText( text )
     slider:SetMin( min )
     slider:SetMax( max )
-    slider:SetValue( 1 )
-    slider:SetDecimals( decimal and 1 or 0 )
-
-    return slider
-end
-
-function SimpleSlider( parent, text, width, height, x, y, min, max, decimal )
-    local slider = vgui.Create( "DNumSlider", parent )
-    slider:SetPos( x, y )
-    slider:SetSize( width, height )
-    slider:SetText( text )
-    slider:SetMin( min )
-    slider:SetMax( max )
-    slider:SetValue( 1 )
+    slider:SetValue( 0 )
     slider:SetDecimals( decimal and 1 or 0 )
 
     return slider
