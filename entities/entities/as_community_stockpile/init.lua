@@ -121,7 +121,9 @@ net.Receive("as_stockpile_addresource", function( _, ply )
     if ent:GetClass() != "as_community_stockpile" then return end
     if ply:GetPos():Distance(ent:GetPos()) > 300 then ply:ChatPrint("You are too far away.") return end
     if ent:GetCommunity() != ply:GetCommunity() and not ent.Broken then ply:ChatPrint("Unable to store.") return end
-    
+
+    if not ply:Alive() then return end
+
     local scrap = net.ReadInt( 32 )
     if scrap < 0 then scrap = 0 end
     if scrap > ply:GetItemCount( "misc_scrap" ) then scrap = ply:GetItemCount( "misc_scrap" ) end
@@ -157,6 +159,8 @@ net.Receive("as_stockpile_takeresource", function( _, ply )
     if ent:GetClass() != "as_community_stockpile" then return end
     if ply:GetPos():Distance( ent:GetPos() ) > 300 then ply:ChatPrint("You are too far away.") return end
     if ent:GetCommunity() != ply:GetCommunity() and not ent.Broken then ply:ChatPrint("Unable to withdraw.") return end
+
+    if not ply:Alive() then return end
 
     local scrap = net.ReadInt( 32 )
     if scrap < 0 then scrap = 0 end

@@ -431,7 +431,10 @@ function PlayerMeta:EndAlliance( ocid )
 end
 
 function PlayerMeta:DeployLocker()
-
+    local ent = ents.Create("as_community_storage")
+    ent:SetCommunity( self:GetCommunity(), self:GetCommunityName() )
+    ent:Spawn()
+    ent:SetPos( self:TracePosFromEyes( 300 ) + Vector( 0, 0, 12 ))
 end
 
 function PlayerMeta:DeployStockpile()
@@ -739,9 +742,9 @@ net.Receive( "as_community_deploylocker", function( _, ply )
     if not ply:InCommunity() then ply:ChatPrint("You are not in a community.") return end
     if not ply:HasPerm("locker") then ply:ChatPrint("You must have the permission 'locker' to deploy the community locker.") return end
 
-    for k, v in pairs( ents.FindByClass("as_community_locker") ) do
+    for k, v in pairs( ents.FindByClass("as_community_storage") ) do
         if v:GetCommunity() == ply:GetCommunity() then
-            ply:ChatPrint("Your community stockpile is already deployed.")
+            ply:ChatPrint("Your community storage is already deployed.")
             return
         end
     end
