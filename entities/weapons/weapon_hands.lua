@@ -43,6 +43,14 @@ SWEP.HitRange = 70
 SWEP.NextSwing = 0.75
 SWEP.ImpactDelay = 0.1
 
+function SWEP:Deploy()
+	if self.Drawn then
+		FAS2_PlayAnim( self, "fists_draw" )
+	end
+
+	return true
+end
+
 function SWEP:PrimaryAttack()	
 	if not IsFirstTimePredicted() then return end
 
@@ -103,7 +111,7 @@ function SWEP:PrimaryAttack()
 	end
 end
 
-function SWEP:SecondaryAttack()	
+function SWEP:SecondaryAttack()
 	if self.Drawn then return end
 
 	local trace = util.TraceLine({
@@ -145,7 +153,7 @@ end
 
 function SWEP:ToggleDrawn()
 	if self.Drawn then
-		self.Drawn = false 
+		self.Drawn = false
 		self.HoldType = "normal"
 		FAS2_PlayAnim( self, "fists_holster" )
 	else
