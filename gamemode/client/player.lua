@@ -160,7 +160,17 @@ end)
 -- ██║ ╚████║███████╗   ██║   ╚███╔███╔╝╚██████╔╝██║  ██║██║  ██╗██║██║ ╚████║╚██████╔╝
 -- ╚═╝  ╚═══╝╚══════╝   ╚═╝    ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝ ╚═════╝
 
+AS_ClientConVar( "as_gameplay_deathstinger", "1", true, false )
+
 net.Receive( "as_chatmessage", function()
     local tbl = net.ReadTable()
     chat.AddText( unpack( tbl ) )
+end)
+
+net.Receive( "as_deathstinger", function()
+    local snd = net.ReadString()
+
+    if tobool( GetConVar("as_gameplay_deathstinger"):GetInt() ) then 
+        surface.PlaySound( snd )
+    end
 end)

@@ -112,6 +112,17 @@ hook.Add( "DoPlayerDeath", "AS_PlayerDeath", function( ply, attacker, dmginfo )
     ply:PlayCharacterSound( "Death", 95 )
     ply:ChatPrint("You died.")
 
+    local snd = {
+        "music/stingers/hl1_stinger_song16.mp3",
+        "music/stingers/hl1_stinger_song7.mp3",
+        "music/stingers/hl1_stinger_song8.mp3",
+        "music/stingers/hl1_stinger_song28.mp3",
+    }
+    local tosnd = table.Random(snd)
+    net.Start("as_deathstinger")
+        net.WriteString( tosnd )
+    net.Send(ply)
+
     local contents = {} --Player's dropped contents
     for k, v in pairs( ply:GetWeapons() ) do
         if not v.ASID then continue end
@@ -292,3 +303,4 @@ end)
 -- ╚═╝  ╚═══╝╚══════╝   ╚═╝    ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝ ╚═════╝
 
 util.AddNetworkString( "as_chatmessage" )
+util.AddNetworkString( "as_deathstinger" )

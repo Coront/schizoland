@@ -96,7 +96,10 @@ function AS.Settings.BuildOptions()
     ToggleButton("Verify certain actions - Example: Destroying Items", xpos, ypos, settings_scroll, "as_gameplay_verify")
     addSpace( 0, 20 )
 
-    ToggleButton("Play container sounds", xpos, ypos, settings_scroll, "as_container_sounds")
+    ToggleButton("Play Container Sounds", xpos, ypos, settings_scroll, "as_container_sounds")
+    addSpace( 0, 20 )
+
+    ToggleButton("Play Death Stingers", xpos, ypos, settings_scroll, "as_gameplay_deathstinger")
     addSpace( 0, 20 )
 
     ValueSlider( "Thirdperson - Back", xpos, ypos, 5, 150, settings_scroll, "as_thirdperson_distance" )
