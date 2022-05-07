@@ -343,7 +343,9 @@ function AS.Grid.SpawnNodes()
         local spawnPointPos = spawnPoint["pos"]:ToTable()
         local position = Vector( spawnPointPos[1] + math.random( spawnPoint["distance"] * -1, spawnPoint["distance"] ), spawnPointPos[2] + math.random(spawnPoint["distance"] * -1 , spawnPoint["distance"] ), spawnPointPos[3] )
 
-        if util.IsInWorld( position ) then
+        if util.IsInWorld( position ) then 
+            position = isIndoor and position + Vector( 0, 0, 30 ) or position
+
             local ent = ents.Create("as_lootnode")
             ent:SetPos(position)
             ent:SetAngles( Angle(0, math.random( 0, 360 ), 0) )

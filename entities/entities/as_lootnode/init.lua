@@ -110,7 +110,6 @@ function ENT:Use( ply )
                 self:Remove()
             end
 
-
             --Canister Special
             if self:GetResourceType() == "Canister" then
                 local roll = math.random( 0, 9 )
