@@ -125,11 +125,14 @@ function ENT:GetCarryWeight()
 end
 
 function ENT:CanWithdrawItem( ply, item, amt )
+    if not ply:Alive() then return false end
     if ply:GetCarryWeight() + (AS.Items[item].weight * amt) > ply:MaxCarryWeight() then ply:ChatPrint("You are too overweight to withdraw this.") return false end
     return true
 end
 
 function ENT:CanStoreItem( ply, item, amt )
+    if not ply:Alive() then return false end
+    if AS.Items[item].nostore then ply:ChatPrint("This item cannot be stored.") return false end
     if self:GetCarryWeight() + (AS.Items[item].weight * amt) > self.ProfileCapacity then ply:ChatPrint("The profile is too full to store this.") return false end
     return true
 end
