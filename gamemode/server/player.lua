@@ -70,6 +70,12 @@ function GM:PlayerSpawn( ply )
         end
         ply.ItemReturns = nil
     end
+
+    if table.Count(Communities[ply:GetCommunity()].wars) >= 1 then
+        ply:ChatPrint("Temporary Godmode Enabled (Reason: War).")
+        ply:GodEnable()
+        ply.DisableGodmodeIn = CurTime() + 60
+    end
 end
 
 function GM:PlayerDisconnected( ply )
@@ -251,6 +257,30 @@ hook.Add( "Think", "AS_PassiveHealing", function()
             if v:Health() >= v:GetMaxHealth() then
                 v:SetHealth( v:GetMaxHealth() )
             end
+        end
+    end
+end)
+
+hook.Add( "Think", "AS_TempGodmode", function()
+    for k, v in pairs(player.GetAll()) do
+        if not v.DisableGodmodeIn or v.DisableGodmodeIn == 0 then continue end
+
+        if CurTime() > v.DisableGodmodeIn then
+            v.DisableGodmodeIn = 0
+            v:GodDisable()
+            v:ChatPrint("Temporary Godmode Disabled.")
+        end
+    end
+end)
+
+hook.Add( "EntityTakeDamage", "AS_TempGodmode", function( victim, dmginfo ) 
+    if not victim:IsPlayer() then return end
+    local ply = victim
+
+    if ply:HasGodMode() then
+        local attacker = dmginfo:GetAttacker()
+        if attacker and IsValid(attacker) and attacker:IsPlayer() then
+            attacker:ChatPrint( victim:Nickname() .. " has temporary godmode enabled.")
         end
     end
 end)
