@@ -92,7 +92,7 @@ function SWEP:Reload()
 	return
 end
 
-local Mins, Maxs = Vector(-12, -12, -12), Vector(12, 12, 12)
+local Mins, Maxs = Vector(0, -39, -1), Vector(0, 30, 1)
 
 local isply, isnpc, ang
 
