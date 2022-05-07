@@ -58,7 +58,11 @@ function ENT:Initialize()
             end
         end
     else
-        _, model = table.Random( NOD.ScrapNodeModelsIndoor )
+        if resourcetype == "Scrap" then
+            _, model = table.Random( NOD.ScrapNodeModelsIndoor )
+        elseif resourcetype == "Chemical" then
+            model = "models/props_c17/oildrum001.mdl"
+        end
     end
 	self:SetModel( model )
     self:SetSkin( math.random( 0, self:SkinCount() ) )
