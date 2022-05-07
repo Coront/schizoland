@@ -576,6 +576,7 @@ SWEP.Recoil = 3
 SWEP.RecoilHorizontal = 1.1
 
 -- Reload related
+SWEP.ReloadTime = 5
 SWEP.ReloadTime_1 = 5
 SWEP.ReloadTime_2 = 4.6
 SWEP.ReloadTime_3 = 4.2
