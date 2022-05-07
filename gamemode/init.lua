@@ -59,6 +59,7 @@ local function DatabaseCheck()
 	--Communities
 	sql.Query("CREATE TABLE IF NOT EXISTS as_communities (cid INTEGER, data TEXT, deleted)")
 	sql.Query("CREATE TABLE IF NOT EXISTS as_communities_members (pid INTEGER, cid INTEGER, title TEXT, rank TEXT)")
+	sql.Query("CREATE TABLE IF NOT EXISTS as_communities_storage (cid INTEGER, res TEXT, inv TEXT)")
 	--Item Deployment Cache
 	sql.Query("CREATE TABLE IF NOT EXISTS as_cache_tools (pid INTEGER, tools TEXT)")
 	--Other Profiles

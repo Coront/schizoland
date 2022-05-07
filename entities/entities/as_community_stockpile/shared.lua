@@ -6,6 +6,17 @@ ENT.Purpose			= "Store Resources"
 ENT.Category		= "Aftershock"
 ENT.Spawnable		= false
 
+ENT.Sounds = {}
+ENT.Sounds.Access = "physics/wood/wood_box_impact_hard4.wav"
+ENT.Sounds.Manage = {
+    "physics/body/body_medium_impact_soft1.wav",
+    "physics/body/body_medium_impact_soft2.wav",
+    "physics/body/body_medium_impact_soft3.wav",
+    "physics/body/body_medium_impact_soft4.wav"
+}
+ENT.Sounds.BreakInto = "ambient/materials/wood_creak1.wav"
+ENT.Sounds.Broken = "physics/wood/wood_box_break1.wav"
+
 function ENT:SetCommunity( int, name )
     name = name or ""
 
@@ -21,7 +32,7 @@ function ENT:GetCommunity()
 end
 
 function ENT:GetCommunityName()
-    return self.name
+    return self.name or ""
 end
 
 function ENT:SetResources( tbl )
@@ -73,7 +84,7 @@ if ( SERVER ) then
 
     util.AddNetworkString( "as_stockpile_synccommunity" )
     util.AddNetworkString( "as_stockpile_syncresources" )
-    
+
     function ENT:ResyncCommunity()
         net.Start("as_stockpile_synccommunity")
             net.WriteEntity( self )
@@ -88,7 +99,7 @@ if ( SERVER ) then
             net.WriteTable( self:GetResources() )
         net.Broadcast()
     end
-    
+
     function ENT:Think()
         if CurTime() > (self.NextResync or 0) then
             self.NextResync = CurTime() + 5
@@ -105,7 +116,7 @@ elseif ( CLIENT ) then
         if not IsValid(ent) then return end
         local cid = net.ReadInt( 32 )
         local name = net.ReadString()
-        
+
         ent:SetCommunity( cid, name )
     end)
 
@@ -113,7 +124,7 @@ elseif ( CLIENT ) then
         local ent = net.ReadEntity()
         if not IsValid( ent ) then return end
         local res = net.ReadTable()
-        
+
         ent:SetResources( res )
     end)
 
