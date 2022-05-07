@@ -40,7 +40,8 @@ if SERVER then
         local equipment = util.JSONToTable(sql.QueryValue("SELECT equipped FROM as_characters_inventory WHERE pid = " .. self.pid)) or {}
         local community = tonumber(sql.QueryValue("SELECT cid FROM as_communities_members WHERE pid = " .. self.pid)) or 0
         local rank = tonumber(sql.QueryValue("SELECT rank FROM as_communities_members WHERE pid = " .. self.pid)) or -1
-        local title = sql.QueryValue("SELECT title FROM as_communities_members WHERE pid = " .. self.pid)
+        local title = sql.QueryValue("SELECT title FROM as_communities_members WHERE pid = " .. self.pid) or ""
+        title = title == "NULL" and "" or title
 
         self:Spawn()
 
@@ -95,7 +96,7 @@ if SERVER then
 
         self.FullyLoadedCharacter = true --Don't touch this, although it looks pointless it's a failsafe to prevent character's data from getting wiped should they ever encounter an error while loading.
 
-        if table.Count(Communities[self:GetCommunity()].wars) >= 1 then
+        if self:InCommunity() and table.Count(Communities[self:GetCommunity()].wars) >= 1 then
             self:ChatPrint("You are currently at war with other communities. Keep your eyes peeled.")
         end
 

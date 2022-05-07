@@ -71,7 +71,7 @@ function GM:PlayerSpawn( ply )
         ply.ItemReturns = nil
     end
 
-    if table.Count(Communities[ply:GetCommunity()].wars) >= 1 then
+    if ply:InCommunity() and table.Count(Communities[ply:GetCommunity()].wars) >= 1 then
         ply:ChatPrint("Temporary Godmode Enabled (Reason: War).")
         ply:GodEnable()
         ply.DisableGodmodeIn = CurTime() + 60
