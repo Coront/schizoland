@@ -116,8 +116,8 @@ AS.AddBaseItem("wep_m1911", {
     class = "engineer",
     craft = {
         ["misc_scrap"] = 45,
-        ["misc_smallparts"] = 60,
-        ["misc_chemical"] = 35,
+        ["misc_smallparts"] = 55,
+        ["misc_chemical"] = 60,
     },
 })
 
@@ -132,9 +132,9 @@ AS.AddBaseItem("wep_ots", {
     hidden = true,
     class = "engineer",
     craft = {
-        ["misc_scrap"] = 40,
-        ["misc_smallparts"] = 70,
-        ["misc_chemical"] = 35,
+        ["misc_scrap"] = 75,
+        ["misc_smallparts"] = 85,
+        ["misc_chemical"] = 50,
     },
 })
 
@@ -150,8 +150,8 @@ AS.AddBaseItem("wep_deagle", {
     class = "engineer",
     craft = {
         ["misc_scrap"] = 115,
-        ["misc_smallparts"] = 90,
-        ["misc_chemical"] = 85,
+        ["misc_smallparts"] = 125,
+        ["misc_chemical"] = 100,
     },
 })
 
@@ -166,9 +166,9 @@ AS.AddBaseItem("wep_raging", {
     hidden = true,
     class = "engineer",
     craft = {
-        ["misc_scrap"] = 130,
-        ["misc_smallparts"] = 80,
-        ["misc_chemical"] = 95,
+        ["misc_scrap"] = 90,
+        ["misc_smallparts"] = 100,
+        ["misc_chemical"] = 85,
     },
 })
 
@@ -190,15 +190,15 @@ AS.AddBaseItem("wep_mp5", {
     hidden = true,
     class = "engineer",
     craft = {
-        ["misc_scrap"] = 70,
-        ["misc_smallparts"] = 85,
-        ["misc_chemical"] = 80,
+        ["misc_scrap"] = 80,
+        ["misc_smallparts"] = 90,
+        ["misc_chemical"] = 50,
     },
 })
 
 AS.AddBaseItem("wep_bizon", {
     name = "PP-19 Bizon",
-    desc = "A compact SMG that holds 30 rounds. Uses 9x19mm ammunition.",
+    desc = "A high-capacity SMG that holds 64 rounds. Uses 9x19mm ammunition.",
     category = "weapon",
     model = "models/items/weapons/bizon.mdl",
     wep = "weapon_bizon",
@@ -207,9 +207,9 @@ AS.AddBaseItem("wep_bizon", {
     hidden = true,
     class = "engineer",
     craft = {
-        ["misc_scrap"] = 85,
-        ["misc_smallparts"] = 125,
-        ["misc_chemical"] = 95,
+        ["misc_scrap"] = 120,
+        ["misc_smallparts"] = 100,
+        ["misc_chemical"] = 65,
     },
 })
 
@@ -224,9 +224,9 @@ AS.AddBaseItem("wep_mac11", {
     hidden = true,
     class = "engineer",
     craft = {
-        ["misc_scrap"] = 85,
-        ["misc_smallparts"] = 125,
-        ["misc_chemical"] = 95,
+        ["misc_scrap"] = 80,
+        ["misc_smallparts"] = 90,
+        ["misc_chemical"] = 55,
     },
 })
 
@@ -241,9 +241,9 @@ AS.AddBaseItem("wep_csmg", {
     hidden = true,
     class = "engineer",
     craft = {
-        ["misc_scrap"] = 175,
-        ["misc_smallparts"] = 140,
-        ["misc_chemical"] = 115,
+        ["misc_scrap"] = 140,
+        ["misc_smallparts"] = 185,
+        ["misc_chemical"] = 135,
     },
 })
 
@@ -265,77 +265,9 @@ AS.AddBaseItem("wep_g36", {
     hidden = true,
     class = "engineer",
     craft = {
-        ["misc_scrap"] = 140,
-        ["misc_smallparts"] = 125,
-        ["misc_chemical"] = 105,
-    },
-})
-
-AS.AddBaseItem("wep_ak12", {
-    name = "AK-12",
-    desc = "A tough rifle that holds 30 rounds. Uses 7.62x39mm ammunition.",
-    category = "weapon",
-    model = "models/items/weapons/ak12.mdl",
-    wep = "weapon_ak12",
-    value = 100,
-    weight = 1.4,
-    hidden = true,
-    class = "engineer",
-    craft = {
-        ["misc_scrap"] = 175,
-        ["misc_smallparts"] = 150,
-        ["misc_chemical"] = 125,
-    },
-})
-
-AS.AddBaseItem("wep_ak47", {
-    name = "AK-47",
-    desc = "A well-known rifle that holds 30 rounds. Uses 7.62x39mm ammunition.",
-    category = "weapon",
-    model = "models/items/weapons/ak47.mdl",
-    wep = "weapon_ak47",
-    value = 100,
-    weight = 1.4,
-    hidden = true,
-    class = "engineer",
-    craft = {
-        ["misc_scrap"] = 160,
-        ["misc_smallparts"] = 155,
-        ["misc_chemical"] = 115,
-    },
-})
-
-AS.AddBaseItem("wep_sg550", {
-    name = "SG 550",
-    desc = "A rifle that holds 30 rounds. Uses 5.56x45mm ammunition.",
-    category = "weapon",
-    model = "models/items/weapons/sg550.mdl",
-    wep = "weapon_sg550",
-    value = 100,
-    weight = 1.4,
-    hidden = true,
-    class = "engineer",
-    craft = {
-        ["misc_scrap"] = 185,
+        ["misc_scrap"] = 165,
         ["misc_smallparts"] = 140,
-        ["misc_chemical"] = 125,
-    },
-})
-
-AS.AddBaseItem("wep_sako", {
-    name = "RK-95 Sako",
-    desc = "A balanced rifle that holds 30 rounds. Uses 7.62x39mm ammunition.",
-    category = "weapon",
-    model = "models/items/weapons/sako.mdl",
-    wep = "weapon_sako",
-    value = 100,
-    weight = 1.4,
-    hidden = true,
-    class = "engineer",
-    craft = {
-        ["misc_scrap"] = 175,
-        ["misc_smallparts"] = 160,
-        ["misc_chemical"] = 135,
+        ["misc_chemical"] = 110,
     },
 })
 
@@ -350,9 +282,26 @@ AS.AddBaseItem("wep_m4a1", {
     hidden = true,
     class = "engineer",
     craft = {
-        ["misc_scrap"] = 180,
+        ["misc_scrap"] = 195,
         ["misc_smallparts"] = 165,
-        ["misc_chemical"] = 140,
+        ["misc_chemical"] = 150,
+    },
+})
+
+AS.AddBaseItem("wep_sg550", {
+    name = "SG 550",
+    desc = "A rifle that holds 30 rounds. Uses 5.56x45mm ammunition.",
+    category = "weapon",
+    model = "models/items/weapons/sg550.mdl",
+    wep = "weapon_sg550",
+    value = 100,
+    weight = 1.4,
+    hidden = true,
+    class = "engineer",
+    craft = {
+        ["misc_scrap"] = 200,
+        ["misc_smallparts"] = 170,
+        ["misc_chemical"] = 165,
     },
 })
 
@@ -370,6 +319,57 @@ AS.AddBaseItem("wep_sks", {
         ["misc_scrap"] = 160,
         ["misc_smallparts"] = 150,
         ["misc_chemical"] = 120,
+    },
+})
+
+AS.AddBaseItem("wep_ak47", {
+    name = "AK-47",
+    desc = "A well-known rifle that holds 30 rounds. Uses 7.62x39mm ammunition.",
+    category = "weapon",
+    model = "models/items/weapons/ak47.mdl",
+    wep = "weapon_ak47",
+    value = 100,
+    weight = 1.4,
+    hidden = true,
+    class = "engineer",
+    craft = {
+        ["misc_scrap"] = 180,
+        ["misc_smallparts"] = 170,
+        ["misc_chemical"] = 145,
+    },
+})
+
+AS.AddBaseItem("wep_sako", {
+    name = "RK-95 Sako",
+    desc = "A balanced rifle that holds 30 rounds. Uses 7.62x39mm ammunition.",
+    category = "weapon",
+    model = "models/items/weapons/sako.mdl",
+    wep = "weapon_sako",
+    value = 100,
+    weight = 1.4,
+    hidden = true,
+    class = "engineer",
+    craft = {
+        ["misc_scrap"] = 225,
+        ["misc_smallparts"] = 200,
+        ["misc_chemical"] = 195,
+    },
+})
+
+AS.AddBaseItem("wep_ak12", {
+    name = "AK-12",
+    desc = "A tough rifle that holds 30 rounds. Uses 7.62x39mm ammunition.",
+    category = "weapon",
+    model = "models/items/weapons/ak12.mdl",
+    wep = "weapon_ak12",
+    value = 100,
+    weight = 1.4,
+    hidden = true,
+    class = "engineer",
+    craft = {
+        ["misc_scrap"] = 265,
+        ["misc_smallparts"] = 280,
+        ["misc_chemical"] = 240,
     },
 })
 
