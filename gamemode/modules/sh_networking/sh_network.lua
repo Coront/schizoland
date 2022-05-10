@@ -2,7 +2,7 @@
 Quick Warning, DO NOT modify this file unless you are ABSOLUTELY SURE you know what you're doing. The networking data needs to be handled very
 carefully or it can cause issues with the server entirely. 
 
-Net messages should never be sent extremely quickly, and should never be unneccessarily large.
+General rule is net messages should never be sent extremely quickly, and should never be unneccessarily large.
 ]]
 
 Networking = {}

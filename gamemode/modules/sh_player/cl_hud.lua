@@ -232,11 +232,14 @@ function AftershockHUD()
     local targetinfo = tobool(GetConVar("as_hud_targetinfo"):GetInt())
     local target = LocalPlayer():GetActiveTarget()
     if targetinfo and target and IsValid(target) and target:Alive() then
+
         local col = (target:IsNextBot() or target:IsNPC()) and (target.Hostile and target:Hostile() or false) and COLHUD_BAD:ToTable() or COLHUD_DEFAULT:ToTable()
         col = target:IsPlayer() and target:InCommunity() and (target:GetCommunity() == LocalPlayer():GetCommunity() or CommunityAllies[target:GetCommunity()]) and COLHUD_GOOD:ToTable() or col
         col = target:IsPlayer() and target:InCommunity() and (CommunityWars[target:GetCommunity()]) and COLHUD_BAD:ToTable() or col
-        local alpha = 255
-        local newcol = Color( col[1], col[2], col[3], alpha )
+        if (LocalPlayer():GetActiveTargetLength() - CurTime()) > 0.8 then
+            Target_Alpha = math.Approach(Target_Alpha, 255, 3) or 0
+        end
+        local newcol = Color( col[1], col[2], col[3], Target_Alpha )
         surface.SetDrawColor( newcol )
         local xadd, yadd = GetConVar("as_hud_targetinfo_xadd"):GetInt(), GetConVar("as_hud_targetinfo_yadd"):GetInt()
         local x, y, width, height, outline = ((ScrW() * 0.5) + xadd), ((ScrH() * 0.88) + yadd), (GetConVar("as_hud_targetinfo_width"):GetInt() * HUD_SCALE), (GetConVar("as_hud_targetinfo_height"):GetInt() * HUD_SCALE), (1)
@@ -244,10 +247,10 @@ function AftershockHUD()
         local name = target:IsPlayer() and target:Nickname() or target.PrintName or target:GetClass()
         local namey = y - 5
         if target:IsPlayer() and target:InCommunity() then
-            draw.SimpleTextOutlined( target:GetCommunityName() .. " - " .. target:GetTitle(), "AftershockHUDVerySmall", x, y - 5, newcol, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM, outline, Color(0,0,0))
+            draw.SimpleTextOutlined( target:GetCommunityName() .. " - " .. target:GetTitle(), "AftershockHUDVerySmall", x, y - 5, newcol, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM, outline, Color(0,0,0,Target_Alpha))
             namey = namey - (12 * HUD_SCALE)
         end
-        draw.SimpleTextOutlined(name, "AftershockHUD", x, namey, newcol, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM, outline, Color(0,0,0))
+        draw.SimpleTextOutlined(name, "AftershockHUD", x, namey, newcol, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM, outline, Color(0,0,0,Target_Alpha))
         x = x - (width / 2)
         surface.DrawOutlinedRect( x, y, width, height, outline )
         surface.DrawRect( x + 2, y + 2, ((health / maxhealth) * width) - 4, height - 4 )
@@ -261,8 +264,15 @@ function AftershockHUD()
         if tobool(GetConVar("as_hud_targetinfo_amount"):GetInt()) then
             x = x + (width / 2)
             y = y + height
-            draw.SimpleTextOutlined( target:Health() .. " / " .. maxhealth, "AftershockHUDSmall", x, y, newcol, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, outline, Color(0,0,0) )
+            draw.SimpleTextOutlined( target:Health() .. " / " .. maxhealth, "AftershockHUDSmall", x, y, newcol, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, outline, Color(0,0,0,Target_Alpha) )
         end
+
+        if (LocalPlayer():GetActiveTargetLength() - CurTime()) < 0.8 then
+            Target_Alpha = math.Approach(Target_Alpha, 0, -1) or 0
+        end
+    end
+    if not target and Target_Alpha > 0 then
+        Target_Alpha = 0
     end
 
     local ownership = tobool(GetConVar("as_hud_ownership"):GetInt())
