@@ -75,7 +75,7 @@ end
 
 function ENT:PlayerTakeResource( ply, item, amt )
     self:TakeResource( item, amt )
-    ply:AddItemToInventory( item, amt, true )
+    ply:AddItemToInventory( item, amt )
 end
 
 -- ███╗   ██╗███████╗████████╗██╗    ██╗ ██████╗ ██████╗ ██╗  ██╗██╗███╗   ██╗ ██████╗

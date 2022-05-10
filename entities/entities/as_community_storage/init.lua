@@ -118,8 +118,9 @@ net.Receive( "as_cstorage_deposititem", function( _, ply )
 	local ent = net.ReadEntity()
 	if not IsValid( ent ) then ply:ResyncInventory() ent:ResyncInventory() return end
 	if ent:GetClass() != "as_community_storage" then ply:ResyncInventory() ent:ResyncInventory() return end
-	if ent:GetObjectOwner() != ply and not ent.Broken then ply:ResyncInventory() ent:ResyncInventory() return end
+	if ent:GetCommunity() != ply:GetCommunity() and not ent.Broken then ply:ResyncInventory() ent:ResyncInventory() return end
 	if ent:GetPos():Distance(ply:GetPos()) > 300 then ply:ChatPrint("You're too far to deposit.") ply:ResyncInventory() ent:ResyncInventory() return end
+
 
 	local item = net.ReadString()
 	local amt = net.ReadUInt( NWSetting.ItemAmtBits )
@@ -137,7 +138,7 @@ net.Receive( "as_cstorage_withdrawitem", function( _, ply )
 	local ent = net.ReadEntity()
 	if not IsValid( ent ) then ply:ResyncInventory() ent:ResyncInventory() return end
 	if ent:GetClass() != "as_community_storage" then ply:ResyncInventory() ent:ResyncInventory() return end
-	if ent:GetObjectOwner() != ply and not ent.Broken then ply:ResyncInventory() ent:ResyncInventory() return end
+	if ent:GetCommunity() != ply:GetCommunity() and not ent.Broken then ply:ResyncInventory() ent:ResyncInventory() return end
 	if ent:GetPos():Distance(ply:GetPos()) > 300 then ply:ChatPrint("You're too far to withdraw.") ply:ResyncInventory() ent:ResyncInventory() return end
 
 	local item = net.ReadString()
