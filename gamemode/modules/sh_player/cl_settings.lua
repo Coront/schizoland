@@ -111,6 +111,9 @@ function AS.CLSettings.BuildOptions()
     ValueSlider( "Thirdperson - Side", xpos, ypos, -30, 30, settings_scroll, "as_thirdperson_side" )
     addSpace( 0, 20 )
 
+    ToggleButton("Thirdperson - Firstperson ADS", xpos, ypos, settings_scroll, "as_thirdperson_fpads")
+    addSpace( 0, 20 )
+
     resetX()
 
 --  ██████╗ ██╗   ██╗██╗
