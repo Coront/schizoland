@@ -33,7 +33,7 @@ function SWEP:CalcView(ply, pos, ang, fov)
 	]]
 	
 	if self.dt.Status == FAS_STAT_ADS then
-		self.CurFOVMod = Lerp(FT * 10, self.CurFOVMod, self.AimFOV)
+		self.CurFOVMod = Lerp(FT * 25, self.CurFOVMod, self.AimFOV)
 	else
 		self.CurFOVMod = Lerp(FT * 10, self.CurFOVMod, 0)
 	end
@@ -65,6 +65,12 @@ end
 
 function SWEP:AdjustMouseSensitivity()
 	if self.dt.Status == FAS_STAT_ADS then
+
+		if self.ScopeMat then
+			local fov = GetConVarNumber("fov_desired")
+			local diff = (fov - self.AimFOV)
+			return 1 * (diff / fov)
+		end
 
 		if self.Peeking then
 			return 0.5

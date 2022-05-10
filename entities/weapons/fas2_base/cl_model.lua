@@ -578,7 +578,9 @@ function SWEP:PostDrawViewModel()
 		vm:FrameAdvance(FT)
 		vm:SetupBones()
 		vm:SetParent(VM)
-		vm:DrawModel()
+		if not self.ScopeMat or (self.ScopeMat and self.dt.Status != FAS_STAT_ADS) then
+			vm:DrawModel()
+		end
 		
 		self:Draw3D2DCamera()
 	end

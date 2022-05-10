@@ -138,3 +138,20 @@ function SWEP:DrawHUD()
 		end
 	end
 end
+
+ScopeCache = ScopeCache or {}
+hook.Add("HUDPaintBackground", "FAS2Scope", function()
+	local wep = LocalPlayer():GetActiveWeapon()
+	if wep.ScopeMat and wep.dt.Status == FAS_STAT_ADS then
+		local h = ScrH()
+		local w = h * 1.7777777777777777777777777777778
+		local tex = wep.ScopeMat or "ph_scope/ph_scope_lens"
+		ScopeCache[tex] = ScopeCache[tex] or Material(tex)
+		
+		surface.SetDrawColor(White)
+		render.UpdateRefractTexture()
+		surface.SetMaterial(ScopeCache[tex])
+		surface.DrawTexturedRect((ScrW()*0.5) - (w*0.5),0, w,h*1.01)
+		render.UpdateRefractTexture()
+	end
+end)

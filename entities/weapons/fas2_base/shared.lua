@@ -640,7 +640,7 @@ function SWEP:PrimaryAttack()
 			return
 		end
 
-		if self:Clip1() < self.ConsumePerShot then
+		if self:Clip1() < (self.ConsumePerShot or 1) then
 			return
 		end
 		

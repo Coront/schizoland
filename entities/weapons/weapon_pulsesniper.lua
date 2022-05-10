@@ -5,14 +5,15 @@ if CLIENT then
     SWEP.Slot = 3
     SWEP.SlotPos = 0
 
-	SWEP.AimPos = Vector(-2.201, -4.646, 0.675)
-	SWEP.AimAng = Vector(0.264, 0, 0)
+	SWEP.AimPos = Vector(-6.3,-10,-6)
+	SWEP.AimAng = Vector(0, 0, 0)
 
 	SWEP.Shell = "7.62x39"
 
 	SWEP.WMAng = Vector(0, 180, 180)
 	SWEP.WMPos = Vector(0.2, -16.9, 1.1)
-	SWEP.CrosshairShow = true
+
+	SWEP.ScopeMat = "ph_scope/ph_scope_lens4"
 end
 
 SWEP.ASID = "wep_pulsesniper"
@@ -94,7 +95,7 @@ SWEP.AimCone = 0.003
 SWEP.SpreadPerShot = 0.025
 SWEP.MaxSpreadInc = 0.07
 SWEP.SpreadCooldown = 0.18
-SWEP.AimFOV = 10
+SWEP.AimFOV = 80
 
 -- Recoil related
 SWEP.Recoil = 1.8
