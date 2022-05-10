@@ -489,7 +489,7 @@ function SWEP:PostDrawViewModel()
 		mod = 1
 		
 		if self.dt.Status == FAS_STAT_ADS then
-			mod = 0.25
+			mod = 0
 		end
 		
 		if ong and (self.Owner:Crouching() or self.Owner:KeyDown(IN_DUCK)) and self.dt.Status != FAS_STAT_ADS and self.dt.Status != FAS_STAT_CUSTOMIZE then
