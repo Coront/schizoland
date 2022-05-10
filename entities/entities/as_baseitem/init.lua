@@ -22,11 +22,22 @@ function ENT:GetDespawnTime()
 end
 
 function ENT:Use( ply )
-	if not ply:CanCarryItem( self:GetItem(), self:GetAmount() ) then return end
-
-	self:Remove()
-	self:EmitSound("physics/body/body_medium_impact_soft1.wav")
-	ply:AddItemToInventory( self:GetItem(), self:GetAmount() )
+	if ply:CanCarryItem( self:GetItem(), self:GetAmount(), true ) then
+		self:Remove()
+		self:EmitSound("physics/body/body_medium_impact_soft1.wav")
+		ply:AddItemToInventory( self:GetItem(), self:GetAmount() )
+	else
+		local amt = self:CalcCanCarry( ply )
+		if amt > 0 then
+			self:SetAmount( self:GetAmount() - amt)
+			self:EmitSound("physics/body/body_medium_impact_soft1.wav")
+			ply:AddItemToInventory( self:GetItem(), amt )
+			ply:ChatPrint("You managed to take " .. amt .. ", you are too overweight to take the rest.")
+		else
+			ply:ChatPrint("You are too overweight to carry this.")
+			return
+		end
+	end
 end
 
 function ENT:Think()

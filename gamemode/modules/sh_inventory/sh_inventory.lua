@@ -60,10 +60,10 @@ function PlayerMeta:MaxCarryWeight()
     return SKL.DefaultCarryWeight + (SKL.Strength.carryweight * self:GetSkillLevel("strength")) + scavbonus
 end
 
-function PlayerMeta:CanCarryItem( item, amt )
+function PlayerMeta:CanCarryItem( item, amt, notext )
     amt = amt and amt > 0 and math.Round(amt) or 1
     local toweight = AS.Items[item].category == "vehicle" and 0 or AS.Items[item].weight * amt
-    if self:GetCarryWeight() + toweight > self:MaxCarryWeight() and not SET.RawResources[item] then self:ChatPrint("You are too overweight to carry this.") return false end
+    if self:GetCarryWeight() + toweight > self:MaxCarryWeight() and not SET.RawResources[item] then if not notext then self:ChatPrint("You are too overweight to carry this.") end return false end
     return true
 end
 

@@ -21,3 +21,21 @@ end
 function ENT:GetAmount()
 	return self:GetNWInt( "Amount", 1 )
 end
+
+function ENT:CalcCanCarry( ply )
+	local item = self:GetItem()
+	local amt = self:GetAmount()
+
+	local carryamt = 0
+	local carrywgt = 0
+	for i = 1, amt do
+		if ply:GetCarryWeight() + (carrywgt + AS.Items[item].weight) < ply:MaxCarryWeight() then
+			carryamt = carryamt + 1
+			carrywgt = carrywgt + AS.Items[item].weight
+		else
+			break
+		end
+	end
+
+	return carryamt
+end
