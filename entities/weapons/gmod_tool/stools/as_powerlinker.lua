@@ -34,7 +34,7 @@ function TOOL:LeftClick( trace )
 
 		local newconstraint, rope = constraint.Rope( ent, outlet, 0, 0, entlpos, outletlpos, (entpos - outletpos):Length(), 100, 0, 3, "cable/cable2", false )
 
-		print("here")
+		ply:ChatPrint("establishlink")
 		self:ClearObjects()
 
 		undo.Create("undone_powerlink")
@@ -42,7 +42,7 @@ function TOOL:LeftClick( trace )
 			if rope then undo.AddEntity( rope ) end
 
 			undo.AddFunction( function( data, code )
-				print("here")
+				ply:ChatPrint("destroylink")
 			end)
 			undo.SetPlayer( ply )
 		undo.Finish()
