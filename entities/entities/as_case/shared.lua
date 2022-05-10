@@ -96,7 +96,7 @@ if ( SERVER ) then
     function ENT:ResyncInventory()
         net.Start("as_case_syncinventory")
             net.WriteEntity( self )
-            net.WriteInventory( self:GetInventory() )
+            net.WriteTable( self:GetInventory() )
         net.Broadcast() --Everyone needs it
     end
 
@@ -104,7 +104,7 @@ if ( SERVER ) then
         for k, v in pairs( ents.FindByClass("as_case") ) do
             net.Start("as_case_syncinventory")
                 net.WriteEntity(v)
-                net.WriteInventory( v:GetInventory() )
+                net.WriteTable( v:GetInventory() )
             net.Send( ply )
         end
     end
@@ -115,7 +115,7 @@ else
     net.Receive("as_case_syncinventory", function()
         local ent = net.ReadEntity()
         if not IsValid( ent ) then return end 
-        local inv = net.ReadInventory()
+        local inv = net.ReadTable()
         if not ent.SetInventory then return end
         ent:SetInventory( inv )
     end)

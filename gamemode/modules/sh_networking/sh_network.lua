@@ -5,10 +5,10 @@ carefully or it can cause issues with the server entirely.
 Net messages should never be sent extremely quickly, and should never be unneccessarily large.
 ]]
 
-AS.Networking = {}
+Networking = {}
 
-AS.Networking.Settings = {}
-NWSetting = AS.Networking.Settings
+Networking.Settings = {}
+NWSetting = Networking.Settings
 
 --Bit Counts (Reference net.WriteInt)
 NWSetting.MaxDifferentItems = 10
