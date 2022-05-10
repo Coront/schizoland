@@ -65,7 +65,8 @@ function GM:PlayerSpray( ply )
 end
 
 hook.Add("EntityTakeDamage", "AS_PropDamageBlock", function( target, dmginfo)
-    if IsValid(dmginfo:GetInflictor()) and  dmginfo:GetInflictor():GetClass() == "prop_physics" then dmginfo:SetDamage( 0 ) end
+    if IsValid(dmginfo:GetInflictor()) and dmginfo:GetInflictor():GetClass() == "prop_physics" then dmginfo:SetDamage( 0 ) end
+    if IsValid(dmginfo:GetInflictor()) and dmginfo:GetInflictor():GetClass() == "prop_vehicle_jeep" then dmginfo:SetDamage( 0 ) end
 end)
 
 hook.Add("EntityTakeDamage", "AS_PvE", function( target, dmginfo )
