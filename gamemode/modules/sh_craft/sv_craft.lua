@@ -9,7 +9,7 @@ util.AddNetworkString( "as_crafting_craftitem" )
 
 net.Receive( "as_crafting_craftitem", function( _, ply )
     local item = net.ReadString()
-    local amt = net.ReadInt( 32 )
+    local amt = net.ReadUInt( NWSetting.ItemCraftBits )
 
     --We are crafting an item, so first we must validate that the item they are trying to craft exists, can be crafted
     if not AS.Items[item] then ply:ChatPrint("This isnt a valid item.") ply:ResyncInventory() return end --item doesnt exist

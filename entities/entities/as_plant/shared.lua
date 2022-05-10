@@ -115,7 +115,7 @@ if ( SERVER ) then
     function ENT:ResyncPrune()
         net.Start("as_plant_syncprune")
             net.WriteEntity( self )
-            net.WriteInt( self:GetPruneAmount(), 32 )
+            net.WriteUInt( self:GetPruneAmount(), 11 )
         net.Broadcast()
     end
 
@@ -124,7 +124,7 @@ else
     net.Receive( "as_plant_syncprune", function()
         local ent = net.ReadEntity()
         if not IsValid(ent) then return end
-        local amt = net.ReadInt( 32 )
+        local amt = net.ReadUInt( 11 )
 
         ent:SetPruneAmount( amt )
     end)

@@ -122,7 +122,7 @@ net.Receive( "as_cstorage_deposititem", function( _, ply )
 	if ent:GetPos():Distance(ply:GetPos()) > 300 then ply:ChatPrint("You're too far to deposit.") ply:ResyncInventory() ent:ResyncInventory() return end
 
 	local item = net.ReadString()
-	local amt = net.ReadInt( 32 )
+	local amt = net.ReadUInt( NWSetting.ItemAmtBits )
 	if amt <= 0 then amt = 1 end
 	if amt > ply:GetItemCount( item ) then amt = ply:GetItemCount( item ) end
 	if amt == 0 then ply:ChatPrint("You dont have this.") ply:ResyncInventory() ent:ResyncInventory() return end
@@ -141,7 +141,7 @@ net.Receive( "as_cstorage_withdrawitem", function( _, ply )
 	if ent:GetPos():Distance(ply:GetPos()) > 300 then ply:ChatPrint("You're too far to withdraw.") ply:ResyncInventory() ent:ResyncInventory() return end
 
 	local item = net.ReadString()
-	local amt = net.ReadInt( 32 )
+	local amt = net.ReadUInt( NWSetting.ItemAmtBits )
 	if amt <= 0 then amt = 1 end
 	if amt > ent:GetItemCount( item ) then amt = ent:GetItemCount( item ) end
 	if amt == 0 then ply:ChatPrint("Item doesn't exist in locker.") ply:ResyncInventory() ent:ResyncInventory() return end

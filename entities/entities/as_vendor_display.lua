@@ -251,7 +251,7 @@ if ( CLIENT ) then
             net.Start( "as_vendor_item_purchase" )
                 net.WriteEntity( vend )
                 net.WriteString( item )
-                net.WriteInt( 1, 32 )
+                net.WriteUInt( 1, NWSetting.ItemAmtBits )
             net.SendToServer()
         end)
         create:SetPos( (panel:GetWide() / 2) - (create:GetWide() / 2), panel:GetTall() - (create:GetTall() + 5) )

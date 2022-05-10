@@ -47,7 +47,7 @@ hook.Add( "PlayerButtonDown", "AS_LootContainer", function( ply, button )
                     net.Start("as_container_takeitem")
                         net.WriteEntity( frame_container.ent )
                         net.WriteString( itemid )
-                        net.WriteInt( amt, 32 )
+                        net.WriteUInt( amt, NWSetting.ItemAmtBits )
                     net.SendToServer()
                 end
             else
@@ -61,7 +61,7 @@ hook.Add( "PlayerButtonDown", "AS_LootContainer", function( ply, button )
                     net.Start("as_case_takeammo")
                         net.WriteEntity( frame_container.ent )
                         net.WriteString( itemid )
-                        net.WriteInt( amt, 32 )
+                        net.WriteUInt( amt, 15 )
                     net.SendToServer()
                 end
             end

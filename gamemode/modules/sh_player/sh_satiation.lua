@@ -117,8 +117,8 @@ if SERVER then
 
     function PlayerMeta:ResyncSatiation()
         net.Start("as_syncsatiation")
-            net.WriteInt( self:GetHunger(), 32 )
-            net.WriteInt( self:GetThirst(), 32 )
+            net.WriteUInt( self:GetHunger(), 8 )
+            net.WriteUInt( self:GetThirst(), 8 )
         net.Send(self)
     end
     concommand.Add("as_resyncsatiation", function(ply) ply:ResyncSatiation() end)
@@ -126,8 +126,8 @@ if SERVER then
 elseif CLIENT then
 
     net.Receive("as_syncsatiation", function()
-        local hunger = net.ReadInt( 32 )
-        local thirst = net.ReadInt( 32 )
+        local hunger = net.ReadUInt( 8 )
+        local thirst = net.ReadUInt( 8 )
     
         LocalPlayer():SetHunger( hunger )
         LocalPlayer():SetThirst( thirst )

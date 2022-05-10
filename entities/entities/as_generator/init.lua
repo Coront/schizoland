@@ -69,7 +69,7 @@ end)
 net.Receive( "as_generator_addfuel", function( _, ply )
     local ent = net.ReadEntity()
     if ent.Base != "as_generator" then return end
-    local amt = net.ReadInt( 32 )
+    local amt = net.ReadUInt( NWSetting.ItemAmtBits )
     if ply:GetPos():Distance( ent:GetPos() ) > 300 then ply:ChatPrint("You are too far to add fuel to this generator.") return end
     amt = math.Round(amt)
     if amt < 1 then amt = 1 end
@@ -84,7 +84,7 @@ end)
 net.Receive( "as_generator_removefuel", function( _, ply )
     local ent = net.ReadEntity()
     if ent.Base != "as_generator" then return end
-    local amt = net.ReadInt( 32 )
+    local amt = net.ReadUInt( NWSetting.ItemAmtBits )
     if not ent:CanRemoveFuel( ply ) then ply:ChatPrint("You cannot withdraw fuel from a generator that you do not own.") return end
     if ply:GetPos():Distance( ent:GetPos() ) > 300 then ply:ChatPrint("You are too far to withdraw fuel from this generator.") return end
     amt = math.Round(amt)

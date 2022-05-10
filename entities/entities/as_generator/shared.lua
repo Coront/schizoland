@@ -97,7 +97,7 @@ if ( SERVER ) then
     function ENT:ResyncInfo()
         net.Start("as_generator_resync")
             net.WriteEntity( self )
-            net.WriteInt( self:GetFuelAmount(), 32 )
+            net.WriteUInt( self:GetFuelAmount(), 16 )
             net.WriteBool( self:GetActiveState() )
         net.Broadcast()
     end
@@ -107,7 +107,7 @@ else
     net.Receive( "as_generator_resync", function()
         local ent = net.ReadEntity()
         if not IsValid(ent) then return end
-        local amt = net.ReadInt( 32 )
+        local amt = net.ReadUInt( 16 )
         local state = net.ReadBool()
 
         ent:SetFuelAmount( amt )

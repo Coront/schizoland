@@ -169,7 +169,7 @@ if ( SERVER ) then
     function ENT:ResyncProfile()
         net.Start("as_vendor_syncprofile")
             net.WriteEntity( self )
-            net.WriteInt( self:GetProfile(), 32 )
+            net.WriteUInt( self:GetProfile(), NWSetting.LockerAmtBits )
             net.WriteString( self.name )
         net.Broadcast()
     end
@@ -195,7 +195,7 @@ else
     net.Receive( "as_vendor_syncprofile", function()
         local ent = net.ReadEntity()
         if not IsValid(ent) then return end
-        local prof = net.ReadInt(32)
+        local prof = net.ReadUInt( NWSetting.LockerAmtBits )
         local name = net.ReadString()
 
         ent:SetProfile( prof, name )

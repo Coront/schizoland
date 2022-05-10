@@ -87,7 +87,7 @@ if SERVER then
     --This function will resync a player's inventory if an error with information that was sent from the client was caught.
     function PlayerMeta:ResyncBank()
         net.Start("as_syncbank")
-            net.WriteTable(self:GetBank())
+            net.WriteInventory(self:GetBank())
         net.Send(self)
     end
     concommand.Add("as_resyncbank", function(ply) ply:ResyncBank() end)
@@ -95,7 +95,7 @@ if SERVER then
 elseif CLIENT then
 
     net.Receive("as_syncbank", function()
-        local bank = net.ReadTable()
+        local bank = net.ReadInventory()
         LocalPlayer():SetBank( bank )
     end)
 

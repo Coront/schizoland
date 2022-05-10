@@ -45,7 +45,7 @@ net.Receive( "as_case_takeammo", function(_, ply)
 	local ent = net.ReadEntity()
     if ent:GetClass() != "as_case" then return end
 	local item = net.ReadString()
-	local amt = net.ReadInt( 32 )
+	local amt = net.ReadUInt( 15 )
 
 	--We are going to take ammo from a case. We need to make sure that the case actually CONTAINS the ammo, and the right amount.
 	if not AS.Items[item] then ply:ChatPrint("This isnt a valid item.") ply:ResyncInventory() ent:ResyncInventory() return end --Person might try an invalid item

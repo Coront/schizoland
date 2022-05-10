@@ -86,7 +86,7 @@ function ENT:StoreItem( ply, item, amt )
         net.Start("as_locker_invtolocker")
             net.WriteEntity( self )
             net.WriteString( item )
-            net.WriteInt( amt, 32 )
+            net.WriteUInt( amt, NWSetting.ItemAmtBits )
         net.SendToServer()
     end
 end
@@ -99,7 +99,7 @@ function ENT:WithdrawItem( ply, item, amt )
         net.Start("as_locker_lockertoinv")
             net.WriteEntity( self )
             net.WriteString( item )
-            net.WriteInt( amt, 32 )
+            net.WriteUInt( amt, NWSetting.ItemAmtBits )
         net.SendToServer()
     end
 end
@@ -168,7 +168,7 @@ if ( SERVER ) then
     function ENT:ResyncProfile()
         net.Start("as_locker_syncprofile")
             net.WriteEntity( self )
-            net.WriteInt( self:GetProfile(), 32 )
+            net.WriteUInt( self:GetProfile(), NWSetting.ItemAmtBits )
             net.WriteString( self.name )
         net.Broadcast()
     end
@@ -185,7 +185,7 @@ elseif ( CLIENT ) then
     net.Receive( "as_locker_syncprofile", function()
         local ent = net.ReadEntity()
         if not IsValid( ent ) then return end
-        local profile = net.ReadInt( 32 )
+        local profile = net.ReadUInt( NWSetting.ItemAmtBits )
         local name = net.ReadString()
 
         ent:SetProfile( profile, name )

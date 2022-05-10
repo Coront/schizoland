@@ -42,7 +42,7 @@ util.AddNetworkString("as_storage_pickup")
 
 net.Receive( "as_storage_tostore", function( _, ply )
     local item = net.ReadString()
-    local amt = net.ReadInt( 32 )
+    local amt = net.ReadUInt( NWSetting.ItemAmtBits )
     local ent = net.ReadEntity()
     if not IsValid( ent ) then return end
 
@@ -64,7 +64,7 @@ end )
 
 net.Receive( "as_storage_toinventory", function( _, ply )
     local item = net.ReadString()
-    local amt = net.ReadInt( 32 )
+    local amt = net.ReadUInt( NWSetting.ItemAmtBits )
     local ent = net.ReadEntity()
     if not IsValid( ent ) then return end
 

@@ -124,15 +124,15 @@ net.Receive("as_stockpile_addresource", function( _, ply )
 
     if not ply:Alive() then return end
 
-    local scrap = net.ReadInt( 32 )
+    local scrap = net.ReadUInt( NWSetting.ItemAmtBits )
     if scrap < 0 then scrap = 0 end
     if scrap > ply:GetItemCount( "misc_scrap" ) then scrap = ply:GetItemCount( "misc_scrap" ) end
 
-    local smallp = net.ReadInt( 32 )
+    local smallp = net.ReadUInt( NWSetting.ItemAmtBits )
     if smallp < 0 then smallp = 0 end
     if smallp > ply:GetItemCount( "misc_smallparts" ) then smallp = ply:GetItemCount( "misc_smallparts" ) end
     
-    local chem = net.ReadInt( 32 )
+    local chem = net.ReadUInt( NWSetting.ItemAmtBits )
     if chem < 0 then chem = 0 end
     if chem > ply:GetItemCount( "misc_chemical" ) then chem = ply:GetItemCount( "misc_chemical" ) end
 
@@ -161,15 +161,15 @@ net.Receive("as_stockpile_takeresource", function( _, ply )
 
     if not ply:Alive() then return end
 
-    local scrap = net.ReadInt( 32 )
+    local scrap = net.ReadUInt( NWSetting.ItemAmtBits )
     if scrap < 0 then scrap = 0 end
     if scrap > ent:GetResourceAmount( "misc_scrap" ) then scrap = ent:GetResourceAmount( "misc_scrap" ) end
 
-    local smallp = net.ReadInt( 32 )
+    local smallp = net.ReadUInt( NWSetting.ItemAmtBits )
     if smallp < 0 then smallp = 0 end
     if smallp > ent:GetResourceAmount( "misc_smallparts" ) then smallp = ent:GetResourceAmount( "misc_smallparts" ) end
 
-    local chem = net.ReadInt( 32 )
+    local chem = net.ReadUInt( NWSetting.ItemAmtBits )
     if chem < 0 then chem = 0 end
     if chem > ent:GetResourceAmount( "misc_chemical" ) then chem = ent:GetResourceAmount( "misc_chemical" ) end
 

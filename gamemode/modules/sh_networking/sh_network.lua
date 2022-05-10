@@ -14,6 +14,10 @@ NWSetting = AS.Networking.Settings
 NWSetting.MaxDifferentItems = 10
 NWSetting.ItemNameBits = 8
 NWSetting.ItemAmtBits = 20
+NWSetting.ItemCraftBits = 11
+NWSetting.VendorPriceBits = 13
+NWSetting.CommunityAmtBits = 16 --How many communities you think there would be max
+NWSetting.LockerAmtBits = 16 --How many profiles you think there would be max (I KNOW IT SAYS LOCKER JUST ASSUME ITS FOR ALL ENTITIES WITH PROFILES)
 
 -- ██╗    ██╗██████╗ ██╗████████╗██╗███╗   ██╗ ██████╗
 -- ██║    ██║██╔══██╗██║╚══██╔══╝██║████╗  ██║██╔════╝

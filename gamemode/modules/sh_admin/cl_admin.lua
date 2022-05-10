@@ -318,7 +318,7 @@ function ItemMenu()
                 LocalPlayer():AddItemToInventory( item, amt )
                 net.Start("as_admin_spawnitem")
                     net.WriteString(item)
-                    net.WriteInt( amt, 32 )
+                    net.WriteUInt( amt, NWSetting.ItemAmtBits )
                 net.SendToServer()
             end
             panel.DoClick = function()

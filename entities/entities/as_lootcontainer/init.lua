@@ -104,7 +104,7 @@ net.Receive( "as_container_takeitem", function(_, ply)
 	local ent = net.ReadEntity()
 	if ent:GetClass() != "as_lootcontainer" and ent:GetClass() != "as_case" then return end
 	local item = net.ReadString()
-	local amt = net.ReadInt( 32 )
+	local amt = net.ReadUInt( NWSetting.ItemAmtBits )
 
 	--We are going to take an item from a container. We need to make sure that the container actually CONTAINS the item, and the right amount.
 	if not AS.Items[item] then ply:ChatPrint("This isnt a valid item.") ply:ResyncInventory() ent:ResyncInventory() return end --Person might try an invalid item

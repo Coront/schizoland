@@ -235,7 +235,7 @@ end)
 
 net.Receive("as_inventory_unequipammo", function( _, ply ) 
     local item = net.ReadString()
-    local amt = net.ReadInt( 32 )
+    local amt = net.ReadUInt( NWSetting.ItemAmtBits )
 
     --We will be unequipping ammunition, so we will have to validate that the ammo they want to unequip that they actually have and they have the corrent amount as well.
     if not AS.Items[item] then ply:ChatPrint("This isnt a valid item.") ply:ResyncInventory() return end --The weapon the player tried to unequip ammo that isnt an item?
@@ -252,7 +252,7 @@ end)
 
 net.Receive("as_inventory_dropitem", function( _, ply )
     local item = net.ReadString()
-    local amt = net.ReadInt( 32 )
+    local amt = net.ReadUInt( NWSetting.ItemAmtBits )
 
     --Since we are dropping an item, we need to verify that the item exists, that the player has it, and that they are dropping a valid amount of it.
     if CurTime() < (ply.NextItemDrop or 0) then ply:ChatPrint("Please wait " .. math.Round(ply.NextItemDrop - CurTime(), 2) .. " seconds before dropping another item." ) return end
@@ -271,7 +271,7 @@ end)
 
 net.Receive("as_inventory_destroyitem", function( _, ply )
     local item = net.ReadString()
-    local amt = net.ReadInt( 32 )
+    local amt = net.ReadUInt( NWSetting.ItemAmtBits )
 
     --We will be destroying an item, so we just need to verify that the item exists, the player has it, and they have the amount they specified to destroy.
     if not AS.Items[item] then ply:ChatPrint("This isnt a valid item.") ply:ResyncInventory() return end --Person might try an invalid item

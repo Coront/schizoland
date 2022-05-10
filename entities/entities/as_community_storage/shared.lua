@@ -72,7 +72,7 @@ function ENT:PlayerStoreItem( ply, item, amt )
         net.Start("as_cstorage_deposititem")
             net.WriteEntity( self )
             net.WriteString( item )
-            net.WriteInt( amt, 32 )
+            net.WriteUInt( amt, NWSetting.ItemAmtBits )
         net.SendToServer()
     end
 end
@@ -94,7 +94,7 @@ function ENT:PlayerTakeItem( ply, item, amt )
         net.Start("as_cstorage_withdrawitem")
             net.WriteEntity( self )
             net.WriteString( item )
-            net.WriteInt( amt, 32 )
+            net.WriteUInt( amt, NWSetting.ItemAmtBits )
         net.SendToServer()
     end
 end
@@ -138,7 +138,7 @@ if ( SERVER ) then
     function ENT:ResyncCommunity()
         net.Start("as_cstorage_synccommunity")
             net.WriteEntity(self)
-            net.WriteInt(self:GetCommunity(), 32)
+            net.WriteUInt(self:GetCommunity(), NWSetting.CommunityAmtBits)
             net.WriteString(self:GetCommunityName())
         net.Broadcast()
     end
@@ -164,7 +164,7 @@ elseif ( CLIENT ) then
     net.Receive("as_cstorage_synccommunity", function()
         local ent = net.ReadEntity()
         if not IsValid( ent ) then return end
-        local cid = net.ReadInt( 32 )
+        local cid = net.ReadUInt( NWSetting.CommunityAmtBits )
         local name = net.ReadString()
 
         ent:SetCommunity( cid, name )

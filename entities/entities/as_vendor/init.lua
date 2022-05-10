@@ -176,7 +176,7 @@ end)
 net.Receive( "as_vendor_deleteprofile", function( _, ply ) 
 	local ent = net.ReadEntity()
 	if not IsValid( ent ) then return end
-	local vid = net.ReadInt( 32 )
+	local vid = net.ReadUInt( NWSetting.LockerAmtBits )
 
 	if ent:GetClass() != "as_vendor" then return end
 	if ent:GetObjectOwner() != ply then return end
@@ -223,7 +223,7 @@ net.Receive( "as_vendor_setprofile", function( _, ply )
 	if ent:GetObjectOwner() != ply then return end
 	if ent:GetProfile() != 0 then ply:ChatPrint("This vendor already has a profile selected.") return end
 
-	local vid = net.ReadInt( 32 )
+	local vid = net.ReadUInt( NWSetting.LockerAmtBits )
 	local profile = sql.Query("SELECT * FROM as_vendors WHERE vid = " .. vid)[1]
 	if tonumber(profile.pid) != ply.pid then ply:ChatPrint("You do not own this profile.") return end
 	if profile.deleted != "NULL" then ply:ChatPrint("This profile is deleted.") return end
@@ -284,22 +284,22 @@ net.Receive( "as_vendor_item_list", function( _, ply )
 	if not AS.Items[item] then return end --fake item
 	if AS.Items[item].novendor then ply:ChatPrint("This item cannot be sold in a vendor.") return end --cannot be put in a vendor.
 
-	local amount = net.ReadInt( 32 )
+	local amount = net.ReadUInt( NWSetting.ItemAmtBits )
 	if amount <= 0 then amount = 1 end
 	if amount > ply:GetItemCount( item ) then amount = ply:GetItemCount( item ) end
 	if amount == 0 then ply:ChatPrint("You need an item in order to list it.") return end --Player doesnt have this item.
 
 	if ent:CarryWeight() + (AS.Items[item].weight * amount) > ent.ProfileCapacity then ply:ChatPrint("This profile has reached its weight capacity.") return end
 
-	local scrap = net.ReadInt( 32 )
+	local scrap = net.ReadUInt( NWSetting.VendorPriceBits )
 	if scrap < 0 then scrap = 0 end
 	if scrap > ent.MaxPrice then scrap = ent.MaxPrice end
 
-	local sp = net.ReadInt( 32 )
+	local sp = net.ReadUInt( NWSetting.VendorPriceBits )
 	if sp < 0 then sp = 0 end
 	if sp > ent.MaxPrice then sp = ent.MaxPrice end
 
-	local chem = net.ReadInt( 32 )
+	local chem = net.ReadUInt( NWSetting.VendorPriceBits )
 	if chem < 0 then chem = 0 end
 	if chem > ent.MaxPrice then chem = ent.MaxPrice end
 
@@ -321,7 +321,7 @@ net.Receive( "as_vendor_item_unlist", function( _, ply )
 	if not AS.Items[item] then return end
 	if not ent:SaleExists( item ) then return end
 
-	local amount = net.ReadInt( 32 )
+	local amount = net.ReadUInt( NWSetting.ItemAmtBits )
 	if amount <= 0 then amount = 1 end
 	if amount > ent:GetSaleAmount( item ) then amount = ent:GetSaleAmount( item ) end
 	if amount == 0 then ply:ChatPrint("This profile doesn't have this item.") return end
@@ -342,15 +342,15 @@ net.Receive( "as_vendor_item_modifyprice", function( _, ply )
 	if not AS.Items[item] then return end --fake item
 	if not ent:SaleExists( item ) then return end
 
-	local scrap = net.ReadInt( 32 )
+	local scrap = net.ReadUInt( NWSetting.VendorPriceBits )
 	if scrap < 0 then scrap = 0 end
 	if scrap > ent.MaxPrice then scrap = ent.MaxPrice end
 
-	local sp = net.ReadInt( 32 )
+	local sp = net.ReadUInt( NWSetting.VendorPriceBits )
 	if sp < 0 then sp = 0 end
 	if sp > ent.MaxPrice then sp = ent.MaxPrice end
 
-	local chem = net.ReadInt( 32 )
+	local chem = net.ReadUInt( NWSetting.VendorPriceBits )
 	if chem < 0 then chem = 0 end
 	if chem > ent.MaxPrice then chem = ent.MaxPrice end
 
@@ -380,7 +380,7 @@ net.Receive( "as_vendor_item_purchase", function( _, ply )
 	local item = net.ReadString()
 	if not ent:SaleExists( item ) then return end
 
-	local amt = net.ReadInt( 32 )
+	local amt = net.ReadUInt( NWSetting.ItemAmtBits )
 	if amt <= 0 then amt = 1 end
 	if amt > ent:GetSaleAmount( item ) then amt = ent:GetSaleAmount( item ) end
 	if amt == 0 then return end

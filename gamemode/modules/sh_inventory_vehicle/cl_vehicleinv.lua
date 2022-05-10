@@ -197,7 +197,7 @@ function AS.Storage.BuildInventory( ent )
 
             net.Start("as_storage_tostore")
                 net.WriteString( item )
-                net.WriteInt( amt, 32 )
+                net.WriteUInt( amt, NWSetting.ItemAmtBits )
                 net.WriteEntity( ent )
             net.SendToServer()
         end
@@ -295,7 +295,7 @@ function AS.Storage.BuildStorage( ent )
 
             net.Start("as_storage_toinventory")
                 net.WriteString( item )
-                net.WriteInt( amt, 32 )
+                net.WriteUInt( amt, NWSetting.ItemAmtBits )
                 net.WriteEntity( ent )
             net.SendToServer()
         end

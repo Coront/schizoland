@@ -142,7 +142,7 @@ end)
 net.Receive( "as_locker_deleteprofile", function( _, ply ) 
 	local ent = net.ReadEntity()
 	if not IsValid( ent ) then return end
-	local lid = net.ReadInt( 32 )
+	local lid = net.ReadUInt( NWSetting.LockerAmtBits )
 
 	if ent:GetClass() != "as_locker" then return end
 	if ent:GetObjectOwner() != ply then return end
@@ -191,7 +191,7 @@ net.Receive( "as_locker_setprofile", function( _, ply )
 	if ent:GetProfile() != 0 then ply:ChatPrint("This locker already has a profile selected.") return end
 	if ent:GetPos():Distance(ply:GetPos()) > 300 then ply:ChatPrint("You're too far to manage this.") return end
 
-	local lid = net.ReadInt( 32 )
+	local lid = net.ReadUInt( NWSetting.LockerAmtBits )
 	local profile = sql.Query("SELECT * FROM as_lockers WHERE lid = " .. lid)[1]
 	if tonumber(profile.pid) != ply.pid then ply:ChatPrint("You do not own this profile.") return end
 	if profile.deleted != "NULL" then ply:ChatPrint("This profile is deleted.") return end
@@ -232,7 +232,7 @@ net.Receive( "as_locker_invtolocker", function( _, ply )
 	if ent:GetPos():Distance(ply:GetPos()) > 300 then ply:ChatPrint("You're too far to deposit.") ply:ResyncInventory() ent:ResyncInventory() return end
 
 	local item = net.ReadString()
-	local amt = net.ReadInt( 32 )
+	local amt = net.ReadUInt( NWSetting.ItemAmtBits )
 	if amt <= 0 then amt = 1 end
 	if amt > ply:GetItemCount( item ) then amt = ply:GetItemCount( item ) end
 	if amt == 0 then ply:ChatPrint("You dont have this.") ply:ResyncInventory() ent:ResyncInventory() return end
@@ -252,7 +252,7 @@ net.Receive( "as_locker_lockertoinv", function( _, ply )
 	if ent:GetPos():Distance(ply:GetPos()) > 300 then ply:ChatPrint("You're too far to withdraw.") ply:ResyncInventory() ent:ResyncInventory() return end
 
 	local item = net.ReadString()
-	local amt = net.ReadInt( 32 )
+	local amt = net.ReadUInt( NWSetting.ItemAmtBits )
 	if amt <= 0 then amt = 1 end
 	if amt > ent:GetItemCount( item ) then amt = ent:GetItemCount( item ) end
 	if amt == 0 then ply:ChatPrint("Item doesn't exist in locker.") ply:ResyncInventory() ent:ResyncInventory() return end

@@ -94,7 +94,7 @@ if ( SERVER ) then
     function ENT:ResyncCommunity()
         net.Start("as_stockpile_synccommunity")
             net.WriteEntity( self )
-            net.WriteInt( self:GetCommunity(), 32 )
+            net.WriteUInt( self:GetCommunity(), NWSetting.CommunityAmtBits )
             net.WriteString( self:GetCommunityName() )
         net.Broadcast()
     end
@@ -120,7 +120,7 @@ elseif ( CLIENT ) then
     net.Receive( "as_stockpile_synccommunity", function()
         local ent = net.ReadEntity()
         if not IsValid(ent) then return end
-        local cid = net.ReadInt( 32 )
+        local cid = net.ReadUInt( NWSetting.CommunityAmtBits )
         local name = net.ReadString()
 
         ent:SetCommunity( cid, name )
