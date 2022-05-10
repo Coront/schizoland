@@ -57,7 +57,8 @@ end
 
 function PlayerMeta:MaxCarryWeight()
     local scavbonus = self:GetASClass() == "scavenger" and CLS.Scavenger.carryweightinc or 0
-    return SKL.DefaultCarryWeight + (SKL.Strength.carryweight * self:GetSkillLevel("strength")) + scavbonus
+    local armor = self:HasArmor() and AS.Items[self:GetArmor()].armor["carryinc"] or 0
+    return SKL.DefaultCarryWeight + (SKL.Strength.carryweight * self:GetSkillLevel("strength")) + scavbonus + armor
 end
 
 function PlayerMeta:CanCarryItem( item, amt, notext )
