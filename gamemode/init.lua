@@ -4,7 +4,6 @@
 -- ╚════██║██╔══╝  ██╔══██╗╚██╗ ██╔╝██╔══╝  ██╔══██╗╚════██║██║██║  ██║██╔══╝      ██║██║╚██╗██║██║   ██║   ██║██╔══██║██║     ██║ ███╔╝  ██╔══██║   ██║   ██║██║   ██║██║╚██╗██║
 -- ███████║███████╗██║  ██║ ╚████╔╝ ███████╗██║  ██║███████║██║██████╔╝███████╗    ██║██║ ╚████║██║   ██║   ██║██║  ██║███████╗██║███████╗██║  ██║   ██║   ██║╚██████╔╝██║ ╚████║
 -- ╚══════╝╚══════╝╚═╝  ╚═╝  ╚═══╝  ╚══════╝╚═╝  ╚═╝╚══════╝╚═╝╚═════╝ ╚══════╝    ╚═╝╚═╝  ╚═══╝╚═╝   ╚═╝   ╚═╝╚═╝  ╚═╝╚══════╝╚═╝╚══════╝╚═╝  ╚═╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝
--- Desc: Most of the gamemode modules are sorted in the server/shared/client folders. You won't find much other than initialization here.
 
 GAMEMODEFIRSTLOAD = GAMEMODEFIRSTLOAD or false
 
@@ -14,38 +13,9 @@ else
 	MsgC( Color(0,0,255), "[AS] Reloading game files...\n" )
 end
 
-AddCSLuaFile("cl_init.lua")
-print("CS File: cl_init.lua")
-AddCSLuaFile("shared.lua")
-print("CS File: shared.lua")
-AddCSLuaFile( "tablebase.lua" )
-print("CS File: tablebase.lua")
-include("shared.lua")
-print("Server File: shared.lua")
-include("tablebase.lua")
-print("Server File: tablebase.lua")
-
-for k, v in pairs( file.Find("aftershock/gamemode/client/*.lua",  "LUA") ) do
-	AddCSLuaFile("client/" .. v)
-end
-print("CS Folder: client/*.lua")
-
-for k, v in pairs( file.Find("aftershock/gamemode/server/*.lua", "LUA") ) do
-	include("server/" .. v)
-end
-print("Server Folder: server/*.lua")
-
-for k, v in pairs( file.Find("aftershock/gamemode/shared/*.lua",  "LUA") ) do
-	include("shared/" .. v)
-end
-print("Server Folder: shared/*.lua")
-
-for k, v in pairs( AS.FileIncludes ) do
-    for k2, v2 in pairs( file.Find("aftershock/gamemode/" .. v .. "*.lua", "LUA") ) do
-        include( v .. v2 )
-    end
-	print("Server Folder: " .. v .. "*.lua")
-end
+include( "shared.lua" )
+AddCSLuaFile( "shared.lua" )
+AddCSLuaFile( "cl_init.lua" )
 
 -- Databases
 DATABASECHECKED = DATABASECHECKED or false

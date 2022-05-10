@@ -1,3 +1,89 @@
+-- ███████╗ ██████╗ ███╗   ██╗████████╗███████╗
+-- ██╔════╝██╔═══██╗████╗  ██║╚══██╔══╝██╔════╝
+-- █████╗  ██║   ██║██╔██╗ ██║   ██║   ███████╗
+-- ██╔══╝  ██║   ██║██║╚██╗██║   ██║   ╚════██║
+-- ██║     ╚██████╔╝██║ ╚████║   ██║   ███████║
+-- ╚═╝      ╚═════╝ ╚═╝  ╚═══╝   ╚═╝   ╚══════╝
+
+surface.CreateFont( "AftershockTitle", {
+	font 		= "TargetID",
+	extended 	= false,
+	size 		= 102,
+	weight 		= 1000,
+	blursize 	= 0,
+	scanlines 	= 0,
+	antialias 	= false,
+	underline 	= false,
+	italic 		= false,
+	strikeout 	= false,
+	symbol 		= false,
+	rotary 		= false,
+	shadow 		= true,
+	additive 	= false,
+	outline 	= true,
+})
+
+surface.CreateFont( "AftershockButton", {
+	font 		= "TargetID",
+	extended 	= false,
+	size 		= 30,
+	weight 		= 1000,
+	blursize 	= 0,
+	scanlines 	= 0,
+	antialias 	= true,
+	underline 	= false,
+	italic 		= false,
+	strikeout 	= false,
+	symbol 		= false,
+	rotary 		= false,
+	shadow 		= false,
+	additive 	= false,
+	outline 	= false,
+})
+
+surface.CreateFont( "AftershockButtonSmall", {
+	font 		= "TargetID",
+	extended 	= false,
+	size 		= 20,
+	weight 		= 1000,
+	blursize 	= 0,
+	scanlines 	= 0,
+	antialias 	= true,
+	underline 	= false,
+	italic 		= false,
+	strikeout 	= false,
+	symbol 		= false,
+	rotary 		= false,
+	shadow 		= false,
+	additive 	= false,
+	outline 	= false,
+})
+
+surface.CreateFont( "AftershockText", {
+	font 		= "TargetID",
+	extended 	= false,
+	size 		= 20,
+	weight 		= 1000,
+	blursize 	= 0,
+	scanlines 	= 0,
+	antialias 	= true,
+	underline 	= false,
+	italic 		= false,
+	strikeout 	= false,
+	symbol 		= false,
+	rotary 		= false,
+	shadow 		= false,
+	additive 	= false,
+	outline 	= false,
+})
+
+-- ██████╗ ███████╗██████╗ ███╗   ███╗ █████╗
+-- ██╔══██╗██╔════╝██╔══██╗████╗ ████║██╔══██╗
+-- ██║  ██║█████╗  ██████╔╝██╔████╔██║███████║
+-- ██║  ██║██╔══╝  ██╔══██╗██║╚██╔╝██║██╔══██║
+-- ██████╔╝███████╗██║  ██║██║ ╚═╝ ██║██║  ██║
+-- ╚═════╝ ╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝
+
 function MainMenuButton( text, x, y, width, height, parent, callback )
     local button = vgui.Create("DButton", parent)
     button:SetSize(width, height)

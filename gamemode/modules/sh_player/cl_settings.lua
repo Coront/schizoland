@@ -1,12 +1,12 @@
-AS.Settings = {}
+AS.CLSettings = {}
 
-function AS.Settings.SetToDefault()
+function AS.CLSettings.SetToDefault()
     for k, v in pairs( ConVarDefaults ) do
         RunConsoleCommand( k, v )
     end
 end
 
-function AS.Settings.Menu()
+function AS.CLSettings.Menu()
     if IsValid(frame_settings) then frame_settings:Close() end
 
     frame_settings = vgui.Create("DFrame")
@@ -22,15 +22,15 @@ function AS.Settings.Menu()
         surface.DrawRect( 0, 0, w, h )
     end
 
-    AS.Settings.BuildOptions()
+    AS.CLSettings.BuildOptions()
 
     function frame_settings:OnClose()
         SettingsOpen = false
     end
 end
-concommand.Add("as_settings", AS.Settings.Menu)
+concommand.Add("as_settings", AS.CLSettings.Menu)
 
-function AS.Settings.BuildOptions()
+function AS.CLSettings.BuildOptions()
     local xpos = 10
     local ypos = 5
     local function addSpace(x, y)
@@ -48,7 +48,7 @@ function AS.Settings.BuildOptions()
 -- ╚██████╗╚██████╔╝███████╗╚██████╔╝██║  ██║███████║
 --  ╚═════╝ ╚═════╝ ╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝
 
-    DefaultButton( "Use Default Settings", xpos, ypos, 150, 20, settings_scroll, AS.Settings.SetToDefault )
+    DefaultButton( "Use Default Settings", xpos, ypos, 150, 20, settings_scroll, AS.CLSettings.SetToDefault )
     addSpace( 0, 20 )
 
     SectionLabel( "Colors", xpos, ypos, settings_scroll )

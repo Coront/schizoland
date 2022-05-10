@@ -1,3 +1,17 @@
+AS.Classes = {}
+function AS.AddBaseClass( id, data )
+    AS.Classes = AS.Classes or {}
+
+    AS.Classes[id] = data
+end
+
+--  ██████╗██╗      █████╗ ███████╗███████╗███████╗███████╗
+-- ██╔════╝██║     ██╔══██╗██╔════╝██╔════╝██╔════╝██╔════╝
+-- ██║     ██║     ███████║███████╗███████╗█████╗  ███████╗
+-- ██║     ██║     ██╔══██║╚════██║╚════██║██╔══╝  ╚════██║
+-- ╚██████╗███████╗██║  ██║███████║███████║███████╗███████║
+--  ╚═════╝╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝╚══════╝
+
 AS.AddBaseClass( "mercenary", {
     name = "Mercenary",
     desc = "Mercenaries are the local combatants. They have a boosted overall health frame, and knowledge on making some tough and durable armors, but lack the ability to perform anything else efficiently.",

@@ -4,7 +4,6 @@
 -- ╚════██║██╔══██║██╔══██║██╔══██╗██╔══╝  ██║  ██║    ██║██║╚██╗██║██║   ██║   ██║██╔══██║██║     ██║ ███╔╝  ██╔══██║   ██║   ██║██║   ██║██║╚██╗██║
 -- ███████║██║  ██║██║  ██║██║  ██║███████╗██████╔╝    ██║██║ ╚████║██║   ██║   ██║██║  ██║███████╗██║███████╗██║  ██║   ██║   ██║╚██████╔╝██║ ╚████║
 -- ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═════╝     ╚═╝╚═╝  ╚═══╝╚═╝   ╚═╝   ╚═╝╚═╝  ╚═╝╚══════╝╚═╝╚══════╝╚═╝  ╚═╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝
--- Desc: Mainly initialization.
 
 AS = {}
 
@@ -29,33 +28,9 @@ COLHUD_QUINARY = AS.Colors.Quinary
 PlayerMeta = FindMetaTable( "Player" )
 EntityMeta = FindMetaTable( "Entity" )
 
+include( "_moduleloader.lua" )
 if SERVER then
-	AddCSLuaFile("tablebase.lua")
-else
-    include("tablebase.lua")
-end
-
-for k, v in pairs( file.Find("aftershock/gamemode/shared/*.lua", "LUA") ) do
-    if SERVER then 
-        AddCSLuaFile("shared/" .. v)
-    else
-        include("shared/" .. v)
-    end
-end
-
-AS.FileIncludes = {
-    "tables/",
-    "tables/items/",
-}
-
-for k, v in pairs( AS.FileIncludes ) do
-    for k2, v2 in pairs( file.Find("aftershock/gamemode/" .. v .. "*.lua", "LUA") ) do
-        if SERVER then
-            AddCSLuaFile( v .. v2 )
-        else
-            include( v  .. v2 )
-        end
-    end
+    AddCSLuaFile( "_moduleloader.lua" )
 end
 
 -- ███████╗ ██████╗ ██╗   ██╗███╗   ██╗██████╗      ██████╗██╗   ██╗███████╗███████╗
