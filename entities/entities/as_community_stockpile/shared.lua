@@ -75,7 +75,7 @@ end
 
 function ENT:PlayerTakeResource( ply, item, amt )
     self:TakeResource( item, amt )
-    ply:AddItemToInventory( item, amt )
+    ply:AddItemToInventory( item, amt, true )
 end
 
 -- ███╗   ██╗███████╗████████╗██╗    ██╗ ██████╗ ██████╗ ██╗  ██╗██╗███╗   ██╗ ██████╗
@@ -102,7 +102,7 @@ if ( SERVER ) then
     function ENT:ResyncResources()
         net.Start("as_stockpile_syncresources")
             net.WriteEntity( self )
-            net.WriteTable( self:GetResources() )
+            net.WriteInventory( self:GetResources() )
         net.Broadcast()
     end
 
@@ -129,7 +129,7 @@ elseif ( CLIENT ) then
     net.Receive( "as_stockpile_syncresources", function()
         local ent = net.ReadEntity()
         if not IsValid( ent ) then return end
-        local res = net.ReadTable()
+        local res = net.ReadInventory()
 
         ent:SetResources( res )
     end)

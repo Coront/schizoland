@@ -48,7 +48,7 @@ net.Receive("as_admin_spawnitem", function( _, ply )
     local item = net.ReadString()
     local amt = net.ReadInt( 32 )
 
-    if not ply:IsAdmin() then ply:ChatPrint("You are not an admin.") ply:ResyncInventory() return end
+    if not ply:IsAdmin() then ply:ChatPrint("You are not an admin.") return end
 
     ply:AdminSpawnItem( item, amt )
 end)

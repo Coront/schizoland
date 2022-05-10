@@ -148,7 +148,6 @@ net.Receive("as_stockpile_addresource", function( _, ply )
         ent:PlayerAddResource( ply, "misc_chemical", chem )
         ply:ChatPrint( "Stored " .. chem .. " " .. AS.Items["misc_chemical"].name .. ".")
     end
-    ply:ResyncInventory()
 
     ent:QuickPlayRandomSound( ent.Sounds.Manage, 55 )
 end)
@@ -186,7 +185,6 @@ net.Receive("as_stockpile_takeresource", function( _, ply )
         ent:PlayerTakeResource( ply, "misc_chemical", chem )
         ply:ChatPrint( "Withdrew " .. chem .. " " .. AS.Items["misc_chemical"].name .. ".")
     end
-    ply:ResyncInventory()
 
     ent:QuickPlayRandomSound( ent.Sounds.Manage, 55 )
 end)

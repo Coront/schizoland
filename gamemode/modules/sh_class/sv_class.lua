@@ -5,7 +5,6 @@ function PlayerChangeClass( ply, cmd, args )
     if tobool(GetConVar("as_classchangecost"):GetInt()) then
         for k, v in pairs( SET.ClassChangeCostTbl ) do
             ply:TakeItemFromInventory( k, v )
-            ply:ResyncInventory()
         end
     end
 

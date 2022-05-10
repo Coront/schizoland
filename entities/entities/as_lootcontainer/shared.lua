@@ -63,7 +63,7 @@ end
 
 function ENT:PlayerTakeItem( ply, itemid, amt )
     self:TakeItemFromInventory( itemid, amt )
-    ply:AddItemToInventory( itemid, amt )
+    ply:AddItemToInventory( itemid, amt, true )
 end
 
 function ENT:SetNextGeneration( time )
@@ -82,7 +82,7 @@ if SERVER then
     function ENT:ResyncInventory()
         net.Start("as_lootcontainer_syncinventory")
             net.WriteEntity( self )
-            net.WriteTable( self:GetInventory() )
+            net.WriteInventory( self:GetInventory() )
         net.Broadcast() --Broadcasting, because everyone needs this info.
     end
 
@@ -90,7 +90,7 @@ if SERVER then
         for k, v in pairs( ents.FindByClass("as_lootcontainer") ) do
             net.Start("as_lootcontainer_syncinventory")
                 net.WriteEntity(v)
-                net.WriteTable( v:GetInventory() )
+                net.WriteInventory( v:GetInventory() )
             net.Send( ply )
         end
     end
@@ -102,19 +102,18 @@ if SERVER then
         if ent:GetClass() != "as_lootcontainer" then return end
         net.Start("as_lootcontainer_syncinventory")
             net.WriteEntity( ent )
-            net.WriteTable( ent:GetInventory() )
+            net.WriteInventory( ent:GetInventory() )
         net.Send( ply )
     end)
 
 elseif CLIENT then
 
-    function ContainerInventorySync()
+    net.Receive( "as_lootcontainer_syncinventory", function()
         local ent = net.ReadEntity()
         if not IsValid(ent) then return end
         if not ent.SetInventory then return end
-        ent:SetInventory( net.ReadTable() )
-    end
-    net.Receive( "as_lootcontainer_syncinventory", ContainerInventorySync )
+        ent:SetInventory( net.ReadInventory() )
+    end)
 
     timer.Create( "as_autoresync_containers", 3, 0, function()
         for k, v in pairs( ents.FindByClass("as_lootcontainer") ) do

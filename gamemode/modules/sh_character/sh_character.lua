@@ -2,6 +2,10 @@ function PlayerMeta:IsLoaded()
     return self:GetNWBool("as_spawned", false)
 end
 
+function PlayerMeta:GetPID()
+    return self.pid
+end
+
 function PlayerMeta:Nickname() --Returns the player's name.
     return self:GetNWString("as_name", self.name) or self:Nick()
 end
@@ -28,19 +32,19 @@ if SERVER then
         self:UnSpectate()
         self:AllowFlashlight( true )
         self.pid = playerid
-        local name = sql.QueryValue("SELECT name FROM as_characters WHERE pid = " .. self.pid)
-        local model = sql.QueryValue("SELECT model FROM as_characters WHERE pid = " .. self.pid)
+        local name = sql.QueryValue("SELECT name FROM as_characters WHERE pid = " .. self:GetPID())
+        local model = sql.QueryValue("SELECT model FROM as_characters WHERE pid = " .. self:GetPID())
         local _, classbackup = table.Random(AS.Classes)
-        local class = sql.QueryValue("SELECT class FROM as_characters WHERE pid = " .. self.pid) or classbackup
-        local stats = sql.Query("SELECT * FROM as_characters_stats WHERE pid = " .. self.pid)[1]
-        local skills = util.JSONToTable(sql.QueryValue("SELECT skills FROM as_characters_skills WHERE pid = " .. self.pid)) or {}
-        local inv = util.JSONToTable(sql.QueryValue("SELECT inv FROM as_characters_inventory WHERE pid = " .. self.pid)) or {}
-        local toolcache = util.JSONToTable(sql.QueryValue("SELECT tools FROM as_cache_tools WHERE pid = " .. self.pid)) or {}
-        local bank = util.JSONToTable(sql.QueryValue("SELECT bank FROM as_characters_inventory WHERE pid = " .. self.pid)) or {}
-        local equipment = util.JSONToTable(sql.QueryValue("SELECT equipped FROM as_characters_inventory WHERE pid = " .. self.pid)) or {}
-        local community = tonumber(sql.QueryValue("SELECT cid FROM as_communities_members WHERE pid = " .. self.pid)) or 0
-        local rank = tonumber(sql.QueryValue("SELECT rank FROM as_communities_members WHERE pid = " .. self.pid)) or -1
-        local title = sql.QueryValue("SELECT title FROM as_communities_members WHERE pid = " .. self.pid) or ""
+        local class = sql.QueryValue("SELECT class FROM as_characters WHERE pid = " .. self:GetPID()) or classbackup
+        local stats = sql.Query("SELECT * FROM as_characters_stats WHERE pid = " .. self:GetPID())[1]
+        local skills = util.JSONToTable(sql.QueryValue("SELECT skills FROM as_characters_skills WHERE pid = " .. self:GetPID())) or {}
+        local inv = util.JSONToTable(sql.QueryValue("SELECT inv FROM as_characters_inventory WHERE pid = " .. self:GetPID())) or {}
+        local toolcache = util.JSONToTable(sql.QueryValue("SELECT tools FROM as_cache_tools WHERE pid = " .. self:GetPID())) or {}
+        local bank = util.JSONToTable(sql.QueryValue("SELECT bank FROM as_characters_inventory WHERE pid = " .. self:GetPID())) or {}
+        local equipment = util.JSONToTable(sql.QueryValue("SELECT equipped FROM as_characters_inventory WHERE pid = " .. self:GetPID())) or {}
+        local community = tonumber(sql.QueryValue("SELECT cid FROM as_communities_members WHERE pid = " .. self:GetPID())) or 0
+        local rank = tonumber(sql.QueryValue("SELECT rank FROM as_communities_members WHERE pid = " .. self:GetPID())) or -1
+        local title = sql.QueryValue("SELECT title FROM as_communities_members WHERE pid = " .. self:GetPID()) or ""
         title = title == "NULL" and "" or title
 
         self:Spawn()
@@ -63,7 +67,7 @@ if SERVER then
         self:SetInventory(inv)
         self:SetBank(bank)
         for k, v in pairs(toolcache) do --Player apparently had deployed tools when they disconnected. We'll give them back.
-            self:AddItemToInventory( k, v )
+            self:AddItemToInventory( k, v, true )
         end
         self:SetToolCache({}) --This will erase the cache
         self:SaveToolCache() --Then save it to the database
@@ -89,8 +93,8 @@ if SERVER then
             net.WriteInt(self:GetHunger(), 32)
             net.WriteInt(self:GetThirst(), 32)
             net.WriteInt(self:GetPlaytime(), 32)
-            net.WriteTable(self:GetInventory())
-            net.WriteTable(self:GetBank())
+            net.WriteInventory(self:GetInventory())
+            net.WriteInventory(self:GetBank())
             net.WriteTable(self:GetSkills())
         net.Send(self)
 
@@ -111,8 +115,8 @@ elseif CLIENT then
         ply:SetHunger(net.ReadInt(32))
         ply:SetThirst(net.ReadInt(32))
         ply:SetPlaytime(net.ReadInt(32))
-        ply:SetInventory(net.ReadTable())
-        ply:SetBank(net.ReadTable())
+        ply:SetInventory(net.ReadInventory())
+        ply:SetBank(net.ReadInventory())
         ply:SetSkills(net.ReadTable())
     end)
 

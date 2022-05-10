@@ -185,7 +185,7 @@ if ( SERVER ) then
         if IsValid(self:GetObjectOwner()) then
             net.Start("as_vendor_syncresource")
                 net.WriteEntity( self )
-                net.WriteTable( self:GetResources() )
+                net.WriteInventory( self:GetResources() )
             net.Send( self:GetObjectOwner() )
         end
     end
@@ -212,9 +212,9 @@ else
     net.Receive( "as_vendor_syncresource", function()
         local ent = net.ReadEntity()
         if not IsValid(ent) then return end
-        local inv = net.ReadTable()
+        local res = net.ReadInventory()
 
-        ent:SetResources( inv )
+        ent:SetResources( res )
     end)
 
 end

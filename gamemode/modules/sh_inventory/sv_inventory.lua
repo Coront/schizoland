@@ -35,7 +35,6 @@ function PlayerMeta:UseItem( item )
             self:ChatPrint( AS.Items[k].name .. " (" .. v .. ") added to inventory.")
             self:AddItemToInventory( k, v )
         end
-        self:ResyncInventory()
     end
     if use.health then
         self:SetHealth( math.Clamp( self:Health() + use.health, 1, self:GetMaxHealth() ) )
@@ -170,6 +169,17 @@ function PlayerMeta:DestroyItem( item, amt )
         self:ChatPrint(AS.Items[k].name .. " (" .. v .. ") added to inventory.")
     end
     self:EmitSound(ITEMCUE.DESTROY)
+end
+
+-- ██████╗  █████╗ ████████╗ █████╗ ██████╗  █████╗ ███████╗███████╗
+-- ██╔══██╗██╔══██╗╚══██╔══╝██╔══██╗██╔══██╗██╔══██╗██╔════╝██╔════╝
+-- ██║  ██║███████║   ██║   ███████║██████╔╝███████║███████╗█████╗
+-- ██║  ██║██╔══██║   ██║   ██╔══██║██╔══██╗██╔══██║╚════██║██╔══╝
+-- ██████╔╝██║  ██║   ██║   ██║  ██║██████╔╝██║  ██║███████║███████╗
+-- ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═════╝ ╚═╝  ╚═╝╚══════╝╚══════╝
+
+function PlayerMeta:SaveInventory()
+    sql.Query("UPDATE as_characters_inventory SET inv = " .. SQLStr( util.TableToJSON( self:GetInventory(), true ) ) .. " WHERE pid = " .. self:GetPID() )
 end
 
 -- ███╗   ██╗███████╗████████╗██╗    ██╗ ██████╗ ██████╗ ██╗  ██╗██╗███╗   ██╗ ██████╗

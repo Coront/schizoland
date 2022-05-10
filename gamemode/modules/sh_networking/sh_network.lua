@@ -24,11 +24,11 @@ NWSetting.ItemAmtBits = 20
 
 --[[
     net.WriteInventory()
-    Desc: Will compress item keys into data to be sent. Use this rather than net.WriteTable for player inventories.
+    Desc: Will write individual keys as a string and the item amount. Use this rather than net.WriteTable for player inventories.
 ]]
 function net.WriteInventory( inventory )
     local reps = table.Count( inventory )
-    net.WriteUInt( reps, NWSetting.MaxDifferentItems )
+    net.WriteUInt( reps, NWSetting.MaxDifferentItems ) --The read function needs to know how many times it should repeat reading the information.
 
     for k, v in pairs( inventory ) do
         local id = k

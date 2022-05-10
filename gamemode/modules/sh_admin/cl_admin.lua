@@ -314,6 +314,7 @@ function ItemMenu()
             local weight = v.weight or "weight?" .. k
             panel:SetTooltip(name .. "\n" .. desc .. "\nValue: " .. value .. "\nWeight: " .. weight)
             local function giveItem( item, amt )
+                if not LocalPlayer():IsAdmin() then return end
                 LocalPlayer():AddItemToInventory( item, amt )
                 net.Start("as_admin_spawnitem")
                     net.WriteString(item)

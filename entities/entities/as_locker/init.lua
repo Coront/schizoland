@@ -134,7 +134,6 @@ net.Receive( "as_locker_createprofile", function( _, ply )
 		for k, v in pairs( ent.ProfileCost ) do
 			ply:TakeItemFromInventory( k, v )
 		end
-		ply:ResyncInventory()
 
 		ply:EstablishLockerProfile( name )
 	end

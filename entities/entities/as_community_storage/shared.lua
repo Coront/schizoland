@@ -88,7 +88,7 @@ end
 
 function ENT:PlayerTakeItem( ply, item, amt )
     self:TakeItemFromInventory( item, amt )
-    ply:AddItemToInventory( item, amt )
+    ply:AddItemToInventory( item, amt, true )
 
     if ( CLIENT ) then
         net.Start("as_cstorage_withdrawitem")
@@ -146,7 +146,7 @@ if ( SERVER ) then
     function ENT:ResyncInventory()
         net.Start("as_cstorage_syncinventory")
             net.WriteEntity(self)
-            net.WriteTable(self:GetInventory())
+            net.WriteInventory(self:GetInventory())
         net.Broadcast()
     end
 
@@ -173,7 +173,7 @@ elseif ( CLIENT ) then
     net.Receive("as_cstorage_syncinventory", function()
         local ent = net.ReadEntity()
         if not IsValid( ent ) then return end
-        local inv = net.ReadTable()
+        local inv = net.ReadInventory()
 
         ent:SetInventory( inv )
     end)

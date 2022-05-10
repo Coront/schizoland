@@ -27,7 +27,6 @@ function PlayerMeta:PickUpStorage( ent )
 	self:ChatPrint("Picked up " .. AS.Items[item].name .. ".")
 	self:AddItemToInventory( item, 1 )
 	self:RemoveToolFromCache( item )
-	self:ResyncInventory()
 end
 
 -- ███╗   ██╗███████╗████████╗██╗    ██╗ ██████╗ ██████╗ ██╗  ██╗██╗███╗   ██╗ ██████╗

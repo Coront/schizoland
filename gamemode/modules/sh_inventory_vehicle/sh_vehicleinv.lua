@@ -35,7 +35,7 @@ end
 
 function PlayerMeta:WithdrawItem( item, amt )
     self:TakeItemFromBank( item, amt )
-    self:AddItemToInventory( item, amt )
+    self:AddItemToInventory( item, amt, true )
 end
 
 function PlayerMeta:HasInBank( item, amt )

@@ -74,11 +74,6 @@ end
 
 function ENT:GiveItemToPlayer( ply, item, amt )
     ply:AddItemToInventory( item, amt )
-    net.Start("as_lootnode_syncnewitem")
-        net.WriteString( item )
-        net.WriteInt( amt, 32 )
-    net.Send( ply )
-
     ply:ChatPrint( AS.Items[item].name .. " (" .. amt .. ") added to inventory." )
 end
 

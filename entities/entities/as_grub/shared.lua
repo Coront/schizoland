@@ -64,7 +64,7 @@ end
 
 function ENT:PlayerTakeItem( ply, item, amt )
     self:TakeItemFromInventory( item, amt )
-    ply:AddItemToInventory( item, amt )
+    ply:AddItemToInventory( item, amt, true )
 end
 
 function ENT:SetNextProduce( time )
@@ -151,7 +151,7 @@ if ( SERVER ) then
     function ENT:ResyncInventory()
         net.Start("as_grub_syncinventory")
             net.WriteEntity( self )
-            net.WriteTable( self:GetInventory() )
+            net.WriteInventory( self:GetInventory() )
         net.Broadcast()
     end
 
@@ -160,7 +160,7 @@ else
     net.Receive( "as_grub_syncinventory", function()
         local ent = net.ReadEntity()
         if not IsValid(ent) then return end
-        local inv = net.ReadTable()
+        local inv = net.ReadInventory()
 
         ent:SetInventory( inv )
     end)

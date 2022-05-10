@@ -5,6 +5,7 @@ function EntityMeta:PickedUp( ply, item )
 	ply:ChatPrint("Picked up " .. AS.Items[item].name .. ".")
 	ply:AddItemToInventory( item, 1 )
 	ply:RemoveToolFromCache( item )
+
 	ply:ResyncInventory()
 end
 
@@ -26,6 +27,7 @@ net.Receive("as_tool_pickup", function( _, ply )
 	if not item then AS.LuaError("Attempt to pick up an object with no entity tied, cannot find itemid - " .. ent:GetClass()) return end
 	if ply:GetCarryWeight() + AS.Items[item].weight > ply:MaxCarryWeight() then ply:ChatPrint("You are too overweight to carry this.") return end
 
+	print("!?!?!??!?!")
 	if ent.PickupDelay then
 		ply:ChatPrint("This object has a pickup delay. You will pick it up in " .. ent.PickupDelay .. " seconds.")
 		ent.PickupDelayActive = true

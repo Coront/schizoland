@@ -56,7 +56,7 @@ function ENT:PlayerTakeItem( ply, itemid, amt )
         ply:SetRecentInvDelay( CurTime() + SET.PlyCombatLength )
         ply:AddRecentInvItem( itemid, amt )
     end
-    ply:AddItemToInventory( itemid, amt )
+    ply:AddItemToInventory( itemid, amt, true )
 end
 
 function ENT:PlayerTakeAmmo( ply, itemid, amt )
@@ -96,7 +96,7 @@ if ( SERVER ) then
     function ENT:ResyncInventory()
         net.Start("as_case_syncinventory")
             net.WriteEntity( self )
-            net.WriteTable( self:GetInventory() )
+            net.WriteInventory( self:GetInventory() )
         net.Broadcast() --Everyone needs it
     end
 
@@ -104,7 +104,7 @@ if ( SERVER ) then
         for k, v in pairs( ents.FindByClass("as_case") ) do
             net.Start("as_case_syncinventory")
                 net.WriteEntity(v)
-                net.WriteTable( v:GetInventory() )
+                net.WriteInventory( v:GetInventory() )
             net.Send( ply )
         end
     end
@@ -115,14 +115,14 @@ else
     net.Receive("as_case_syncinventory", function()
         local ent = net.ReadEntity()
         if not IsValid( ent ) then return end 
-        local inv = net.ReadTable()
+        local inv = net.ReadInventory()
         if not ent.SetInventory then return end
         ent:SetInventory( inv )
     end)
 
-    timer.Create( "as_autoresync_cases", 3, 0, function()
+    timer.Create( "as_autoresync_cases", 5, 0, function()
         for k, v in pairs( ents.FindByClass("as_case") ) do
-            if v.GetInventory and table.Count(v:GetInventory() or {}) != 0 then continue end
+            if table.Count(v:GetInventory()) > 0 then continue end
             net.Start("as_lootcontainer_requestinventory") --Cases utilize the lootcontainer inventory system, so this isnt a concern.
                 net.WriteEntity(v)
             net.SendToServer()

@@ -39,13 +39,6 @@ hook.Add( "HUDPaint", "AS_Node_Indicator", function()
     draw.SimpleTextOutlined( text, "TargetID", screen.x, screen.y, COLHUD_DEFAULT, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM, 1, Color( 0, 0, 0 ) )
 end)
 
-net.Receive( "as_lootnode_syncnewitem", function() --I intentionally sync like this because i don't want to rewrite a player's entire inventory when we're just adding one item.
-    local item = net.ReadString()
-    local amt = net.ReadInt(32)
-
-    LocalPlayer():AddItemToInventory( item, amt )
-end)
-
 net.Receive( "as_lootnode_syncskillinc", function()
     LocalPlayer():IncreaseSkillExperience("salvaging", SKL.Salvaging.incamt)
 end)

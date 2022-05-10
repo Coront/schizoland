@@ -27,11 +27,6 @@ function ENT:Use( ply )
 	self:Remove()
 	self:EmitSound("physics/body/body_medium_impact_soft1.wav")
 	ply:AddItemToInventory( self:GetItem(), self:GetAmount() )
-
-	net.Start("as_item_pickup")
-		net.WriteString( self:GetItem() )
-		net.WriteInt( self:GetAmount(), 32 )
-	net.Send(ply)
 end
 
 function ENT:Think()
@@ -54,5 +49,4 @@ end
 -- ██║ ╚████║███████╗   ██║   ╚███╔███╔╝╚██████╔╝██║  ██║██║  ██╗██║██║ ╚████║╚██████╔╝
 -- ╚═╝  ╚═══╝╚══════╝   ╚═╝    ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝ ╚═════╝
 
-util.AddNetworkString("as_item_pickup")
 util.AddNetworkString("as_item_syncinfo")

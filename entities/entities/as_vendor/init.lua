@@ -58,7 +58,6 @@ function PlayerMeta:CreateSale( ent, item, amount, scrapcost, spcost, chemcost )
 	self:TakeItemFromInventory( item, amount )
 	ent:AddSale( item, { amt = amount, scrap = scrapcost, smallp = spcost, chemical = chemcost} )
 	ent:SaveSales()
-	self:ResyncInventory()
 
 	self:ChatPrint("You have created a sale for " .. AS.Items[item].name .. " (" .. amount .. ").")
 end
@@ -67,7 +66,6 @@ function PlayerMeta:AddToExistingSale( ent, item, amount )
 	self:TakeItemFromInventory( item, amount )
 	ent:AddToExistingSale( item, amount )
 	ent:SaveSales()
-	self:ResyncInventory()
 
 	self:ChatPrint("You have added to an existing sale " .. AS.Items[item].name .. " (" .. amount .. ")")
 end
@@ -76,7 +74,6 @@ function PlayerMeta:WithdrawItemFromSale( ent, item, amount )
 	ent:TakeFromExistingSale( item, amount )
 	self:AddItemToInventory( item, amount )
 	ent:SaveSales()
-	self:ResyncInventory()
 
 	self:ChatPrint("You have withdrawn " .. AS.Items[item].name .. " (" .. amount .. ")")
 end
@@ -110,7 +107,6 @@ function PlayerMeta:PurchaseItem( ent, reqs, item, amt )
 	ent:TakeFromExistingSale( item, amt )
 	self:AddItemToInventory( item, amt )
 	ent:SaveSales()
-	self:ResyncInventory()
 
 	ent:EmitSound( "buttons/lever7.wav" )
 	self:ChatPrint("You have purchased " .. AS.Items[item].name .. " (" .. amt .. ")")
@@ -122,8 +118,6 @@ function PlayerMeta:WithdrawResources( ent )
 		self:AddItemToInventory( k, v )
 		self:ChatPrint(AS.Items[k].name .. " (" .. v .. ") added to inventory.")
 	end
-
-	self:ResyncInventory()
 end
 
 -- ███╗   ██╗███████╗████████╗██╗    ██╗ ██████╗ ██████╗ ██╗  ██╗██╗███╗   ██╗ ██████╗

@@ -55,7 +55,6 @@ if ( SERVER ) then
                     if self.ItemAmt <= 0 then ply:ChatPrint("There is nothing left to harvest.") return end
                     self.ItemAmt = self.ItemAmt - 1
                     ply:AddItemToInventory( self.Item, 1 )
-                    ply:ResyncInventory()
                     ply:ChatPrint( AS.Items[self.Item].name .. " (1) added to inventory." )
                 end)
             else

@@ -56,7 +56,7 @@ end
 
 function ENT:WithdrawFuel( ply, amt )
     self:RemoveFuelAmount( (self.FuelLength * amt) )
-    ply:AddItemToInventory( self.Fuel, amt )
+    ply:AddItemToInventory( self.Fuel, amt, true )
 end
 
 function ENT:CanRemoveFuel( ply )

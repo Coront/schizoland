@@ -159,7 +159,6 @@ hook.Add( "DoPlayerDeath", "AS_PlayerDeath", function( ply, attacker, dmginfo )
         ply:TakeItemFromInventory( k, reslost )
         contents[k] = reslost
     end
-    ply:ResyncInventory()
 
     --Recent Inventory
     if ply:HasRecentInventory() then --Player has recently taken items from a claimed case. We will make them drop those items.
@@ -169,7 +168,6 @@ hook.Add( "DoPlayerDeath", "AS_PlayerDeath", function( ply, attacker, dmginfo )
             if not ply:HasInInventory( k, v ) then continue end
             ply:TakeItemFromInventory( k, v )
             contents[k] = (contents[k] or 0) + v
-            ply:ResyncInventory()
         end
 
         ply:ClearRecentInv()

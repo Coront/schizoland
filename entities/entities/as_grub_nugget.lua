@@ -29,7 +29,6 @@ function ENT:Use( ply )
     self:Remove()
     ply:AddItemToInventory( "misc_chemical", self:GetAmount() )
     ply:ChatPrint("Picked up " .. self:GetAmount() .. " chemicals.")
-    ply:ResyncInventory()
 end
 
 function ENT:Draw()
