@@ -237,7 +237,7 @@ function AftershockHUD()
         col = target:IsPlayer() and target:InCommunity() and (target:GetCommunity() == LocalPlayer():GetCommunity() or CommunityAllies[target:GetCommunity()]) and COLHUD_GOOD:ToTable() or col
         col = target:IsPlayer() and target:InCommunity() and (CommunityWars[target:GetCommunity()]) and COLHUD_BAD:ToTable() or col
         if (LocalPlayer():GetActiveTargetLength() - CurTime()) > 0.8 then
-            Target_Alpha = math.Approach(Target_Alpha, 255, 3) or 0
+            Target_Alpha = math.Approach((Target_Alpha or 0), 255, 3) or 0
         end
         local newcol = Color( col[1], col[2], col[3], Target_Alpha )
         surface.SetDrawColor( newcol )
@@ -271,7 +271,7 @@ function AftershockHUD()
             Target_Alpha = math.Approach(Target_Alpha, 0, -1) or 0
         end
     end
-    if not target and Target_Alpha > 0 then
+    if not target and (Target_Alpha or 0) > 0 then
         Target_Alpha = 0
     end
 
