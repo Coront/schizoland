@@ -67,7 +67,7 @@ function PlayerMeta:UseItem( item )
         self:SendLua( "LocalPlayer():EmitSound('" .. use.soundcs .. "', 40)" )
     end
     if use.func then
-        use.func()
+        use.func( self )
     end
 end
 
@@ -194,6 +194,7 @@ util.AddNetworkString("as_inventory_useitem")
 util.AddNetworkString("as_inventory_equipitem")
 util.AddNetworkString("as_inventory_unequipitem")
 util.AddNetworkString("as_inventory_unequipammo")
+util.AddNetworkString("as_inventory_unequipatch")
 util.AddNetworkString("as_inventory_dropitem")
 util.AddNetworkString("as_inventory_destroyitem")
 
@@ -248,6 +249,16 @@ net.Receive("as_inventory_unequipammo", function( _, ply )
 
     --We're verified, so run the actual function.
     ply:UnequipAmmo( item, amt )
+end)
+
+net.Receive("as_inventory_unequipatch", function( _, ply )
+    local item = net.ReadString()
+
+    if not AS.Items[item] then ply:ChatPrint("This isnt a valid item.") ply:ResyncInventory() return end
+    if not ply:HasAttachment( item ) then ply:ChatPrint("You don't have this attachment.") ply:ResyncInventory() return end
+
+    ply:RemoveAttachment( item )
+    ply:AddItemToInventory( item, 1, true )
 end)
 
 net.Receive("as_inventory_dropitem", function( _, ply )

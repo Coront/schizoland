@@ -486,6 +486,45 @@ function AS.Inventory.BuildInventory()
         weaponscroll:AddPanel( ammoinfopanel )
     end
 
+    for k, v in SortedPairs( LocalPlayer():GetAttachmentInventory() ) do
+        local itemid = v
+        if not AS.Items[itemid] then continue end
+
+        local atchinfopanel = vgui.Create("DPanel")
+        atchinfopanel:SetSize( 85, weaponscroll:GetTall() )
+        function atchinfopanel:Paint(w,h)
+            surface.SetDrawColor( COLHUD_PRIMARY )
+            surface.DrawRect( 0, 0, w, h )
+        end
+
+        local name = vgui.Create("DLabel", atchinfopanel)
+        name:SetPos( 0, 5 )
+        name:SetFont("TargetIDSmall")
+        name:SetText( AS.Items[itemid].name )
+        name:SetSize( atchinfopanel:GetWide(), 15 )
+
+        local model = vgui.Create("SpawnIcon", atchinfopanel)
+        model:SetSize( atchinfopanel:GetWide(), atchinfopanel:GetWide() )
+        model:SetPos( 0, atchinfopanel:GetTall() / 2 - (model:GetWide() / 2) )
+        model:SetModel( AS.Items[itemid].model, AS.Items[itemid].skin or 0 )
+        model:SetTooltip(AS.Items[itemid].name)
+
+        local unequipatch = vgui.Create("DButton", atchinfopanel)
+        unequipatch:SetSize( atchinfopanel:GetWide() - 2, 18  )
+        unequipatch:SetPos( 1, atchinfopanel:GetTall() - unequipatch:GetTall() - 2)
+        unequipatch:SetText("Unequip")
+        function unequipatch:DoClick()
+            if not LocalPlayer():CanUnequipItem( itemid ) then return end
+            LocalPlayer():AddItemToInventory( itemid )
+            self:GetParent():Remove()
+            net.Start("as_inventory_unequipatch")
+                net.WriteString( itemid )
+            net.SendToServer()
+        end
+
+        weaponscroll:AddPanel( atchinfopanel )
+    end
+
 --Armor Panel
     local armorpanel = vgui.Create( "DPanel", inventory )
     armorpanel:SetPos( 453, 477 )

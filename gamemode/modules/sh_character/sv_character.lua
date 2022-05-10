@@ -21,7 +21,7 @@ function PlayerMeta:CreateCharacter( name, model, class )
     sql.Query( "INSERT INTO as_characters VALUES ( NULL, " .. SQLStr(self:SteamID()) .. ", " .. SQLStr(name) .. ", " .. SQLStr(model) .. ", " .. SQLStr(class) .. ", " .. SQLStr( os.date( "%m/%d/%y - %I:%M %p", os.time() ) ) .. ", NULL, NULL )" )
     local pids = sql.Query("SELECT pid FROM as_characters")
     local newpid = tonumber(sql.Query("SELECT pid FROM as_characters")[#pids]["pid"])
-    sql.Query( "INSERT INTO as_characters_inventory VALUES ( " .. newpid .. ", NULL, NULL, NULL )" )
+    sql.Query( "INSERT INTO as_characters_inventory VALUES ( " .. newpid .. ", NULL, NULL, NULL, NULL )" )
     sql.Query( "INSERT INTO as_characters_skills VALUES ( " .. newpid .. ", NULL )" )
     local health = class == "scavenger" and SKL.Health * CLS.Scavenger.healthmult or class == "mercenary" and SKL.Health * CLS.Mercenary.healthmult or SKL.Health
     sql.Query( "INSERT INTO as_characters_stats VALUES ( " .. newpid .. ", " .. health .. ", 100, 100, 0 )" )
@@ -58,7 +58,7 @@ function PlayerMeta:SaveCharacter()
             end
         end
     end
-    sql.Query( "UPDATE as_characters_inventory SET inv = " .. SQLStr(util.TableToJSON( self:GetInventory(), true )) .. ", bank = " .. SQLStr(util.TableToJSON( self:GetBank(), true )) .. ", equipped = " .. SQLStr(util.TableToJSON( equipped, true )) .. " WHERE pid = " .. pid )
+    sql.Query( "UPDATE as_characters_inventory SET inv = " .. SQLStr(util.TableToJSON( self:GetInventory(), true )) .. ", bank = " .. SQLStr(util.TableToJSON( self:GetBank(), true )) .. ", atch = " .. SQLStr(util.TableToJSON( self:GetAttachmentInventory(), true )) .. ", equipped = " .. SQLStr(util.TableToJSON( equipped, true )) .. " WHERE pid = " .. pid )
     sql.Query( "UPDATE as_characters_skills SET skills = " .. SQLStr(util.TableToJSON( self:GetSkills(), true )) .. " WHERE pid = " .. pid )
     sql.Query( "UPDATE as_characters_stats SET health = " .. self:Health() .. ", hunger = " .. self:GetHunger() .. ", thirst = " .. self:GetThirst() .. ", playtime = " .. self:GetPlaytime() .. " WHERE pid = " .. pid )
     sql.Query( "UPDATE as_characters SET class = " .. SQLStr( self:GetASClass() ) .. ", laston = " .. SQLStr( os.date( "%m/%d/%y - %I:%M %p", os.time() ) ) .. " WHERE pid = " .. pid )

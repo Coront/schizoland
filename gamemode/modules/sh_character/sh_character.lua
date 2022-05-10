@@ -40,6 +40,7 @@ if SERVER then
         local skills = util.JSONToTable(sql.QueryValue("SELECT skills FROM as_characters_skills WHERE pid = " .. self:GetPID())) or {}
         local inv = util.JSONToTable(sql.QueryValue("SELECT inv FROM as_characters_inventory WHERE pid = " .. self:GetPID())) or {}
         local toolcache = util.JSONToTable(sql.QueryValue("SELECT tools FROM as_cache_tools WHERE pid = " .. self:GetPID())) or {}
+        local atch = util.JSONToTable(sql.QueryValue("SELECT atch FROM as_characters_inventory WHERE pid = " .. self:GetPID())) or {}
         local bank = util.JSONToTable(sql.QueryValue("SELECT bank FROM as_characters_inventory WHERE pid = " .. self:GetPID())) or {}
         local equipment = util.JSONToTable(sql.QueryValue("SELECT equipped FROM as_characters_inventory WHERE pid = " .. self:GetPID())) or {}
         local community = tonumber(sql.QueryValue("SELECT cid FROM as_communities_members WHERE pid = " .. self:GetPID())) or 0
@@ -66,6 +67,7 @@ if SERVER then
         self:SetSkills(skills)
         self:SetInventory(inv)
         self:SetBank(bank)
+        self:SetAttachmentInventory( atch )
         for k, v in pairs(toolcache) do --Player apparently had deployed tools when they disconnected. We'll give them back.
             self:AddItemToInventory( k, v, true )
         end
@@ -118,6 +120,12 @@ elseif CLIENT then
         ply:SetInventory(net.ReadInventory())
         ply:SetBank(net.ReadInventory())
         ply:SetSkills(net.ReadTable())
+
+        timer.Simple( 3, function() --gmod gamer moment
+            if IsValid( ply ) and ply:Alive() then
+                RunConsoleCommand("as_resyncattachments")
+            end
+        end)
     end)
 
 end

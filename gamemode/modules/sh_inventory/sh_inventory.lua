@@ -71,6 +71,7 @@ function PlayerMeta:CanUseItem( item )
     if not self:Alive() then self:ChatPrint("You are dead, you cannot use this.") return false end
     if AS.Items[item].use and AS.Items[item].use.health and self:Health() >= self:GetMaxHealth() then self:ChatPrint("You don't need this right now.") return false end
     if AS.Items[item].use and AS.Items[item].use.health and self:HasStatus( "healingsickness" ) then self:ChatPrint("You cannot use this with " .. AS.Effects["healingsickness"].name .. " active.") return false end
+    if self:HasAttachment( item ) then self:ChatPrint("You already have this attachment equipped.") return false end
     return true
 end
 
