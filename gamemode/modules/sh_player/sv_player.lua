@@ -138,6 +138,10 @@ hook.Add( "DoPlayerDeath", "AS_PlayerDeath", function( ply, attacker, dmginfo )
             contents.ammo[translateAmmoNameID(game.GetAmmoName(v:GetPrimaryAmmoType()))] = v:Clip1()
         end
     end
+    for k, v in pairs( ply:GetAttachmentInventory() ) do
+        if not AS.Items[v] then continue end
+        contents[v] = 1
+    end
     for k, v in pairs( ply:GetAmmo() ) do
         if not translateAmmoNameID( game.GetAmmoName(k) ) then continue end --not a AS ammotype
         contents.ammo = contents.ammo or {}
