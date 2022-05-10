@@ -1,18 +1,18 @@
 AS.AddBaseItem("ammo_9mm", {
     name = "9x19mm",
-    desc = "40 rounds of 9x19mm ammunition. Used mainly in pistols and a couple SMGs.",
+    desc = "A box with 40 rounds of 9x19mm ammunition.",
     category = "ammo",
     model = "models/items/ammo/9mmbox.mdl",
     value = 5,
-    weight = 0.4,
+    weight = 0.5,
     use = {
         ammotype = "pistol",
         ammoamt = 40,
     },
     class = "engineer",
     craft = {
-        ["misc_scrap"] = 5,
-        ["misc_smallparts"] = 15,
+        ["misc_scrap"] = 15,
+        ["misc_smallparts"] = 0,
         ["misc_chemical"] = 10,
         ["misc_munitionpress"] = 0,
         ["misc_gunpowder"] = 1,
@@ -21,11 +21,11 @@ AS.AddBaseItem("ammo_9mm", {
 
 AS.AddBaseItem("ammo_45acp", {
     name = ".45 ACP",
-    desc = "40 rounds of .45 ACP ammunition. Used in the M1911, Mac11, and CMG.",
+    desc = "A box with 40 rounds of .45 ACP ammunition.",
     category = "ammo",
     model = "models/items/ammo/45acpbox.mdl",
     value = 10,
-    weight = 0.4,
+    weight = 0.6,
     use = {
         ammotype = "AlyxGun",
         ammoamt = 40,
@@ -33,9 +33,9 @@ AS.AddBaseItem("ammo_45acp", {
     hidden = true,
     class = "engineer",
     craft = {
-        ["misc_scrap"] = 10,
-        ["misc_smallparts"] = 20,
-        ["misc_chemical"] = 10,
+        ["misc_scrap"] = 15,
+        ["misc_smallparts"] = 0,
+        ["misc_chemical"] = 15,
         ["misc_munitionpress"] = 0,
         ["misc_gunpowder"] = 1,
     },
@@ -43,11 +43,11 @@ AS.AddBaseItem("ammo_45acp", {
 
 AS.AddBaseItem("ammo_44mag", {
     name = ".44 Magnum",
-    desc = "20 rounds of .44 Magnum, a powerful cartridge. Used in the Raging Bull.",
+    desc = "A box with 20 rounds of .44 Magnum.",
     category = "ammo",
     model = "models/items/ammo/44magbox.mdl",
     value = 15,
-    weight = 0.6,
+    weight = 0.75,
     use = {
         ammotype = "357",
         ammoamt = 20,
@@ -55,9 +55,9 @@ AS.AddBaseItem("ammo_44mag", {
     hidden = true,
     class = "engineer",
     craft = {
-        ["misc_scrap"] = 25,
-        ["misc_smallparts"] = 20,
-        ["misc_chemical"] = 15,
+        ["misc_scrap"] = 15,
+        ["misc_smallparts"] = 0,
+        ["misc_chemical"] = 20,
         ["misc_munitionpress"] = 0,
         ["misc_gunpowder"] = 1,
     },
@@ -65,11 +65,11 @@ AS.AddBaseItem("ammo_44mag", {
 
 AS.AddBaseItem("ammo_50ae", {
     name = ".50 Action Express",
-    desc = "20 rounds of .50 AE, a very strong bullet. Used in the Desert Eagle.",
+    desc = "A box with 20 rounds of .50 Action Express.",
     category = "ammo",
     model = "models/Items/357ammobox.mdl",
     value = 15,
-    weight = 0.6,
+    weight = 0.75,
     use = {
         ammotype = "CombineHeavyCannon",
         ammoamt = 20,
@@ -77,8 +77,8 @@ AS.AddBaseItem("ammo_50ae", {
     hidden = true,
     class = "engineer",
     craft = {
-        ["misc_scrap"] = 20,
-        ["misc_smallparts"] = 20,
+        ["misc_scrap"] = 15,
+        ["misc_smallparts"] = 0,
         ["misc_chemical"] = 20,
         ["misc_munitionpress"] = 0,
         ["misc_gunpowder"] = 1,
@@ -87,7 +87,7 @@ AS.AddBaseItem("ammo_50ae", {
 
 AS.AddBaseItem("ammo_buckshot", {
     name = "12-Gauge Buckshot",
-    desc = "20 shells of 12-Gauge Buckshot. Blast your enemies away. Used in Shotguns.",
+    desc = "A box with 20 shells of 12-Gauge Buckshot.",
     category = "ammo",
     model = "models/Items/BoxBuckshot.mdl",
     value = 20,
@@ -99,8 +99,8 @@ AS.AddBaseItem("ammo_buckshot", {
     hidden = true,
     class = "engineer",
     craft = {
-        ["misc_scrap"] = 25,
-        ["misc_smallparts"] = 20,
+        ["misc_scrap"] = 20,
+        ["misc_smallparts"] = 0,
         ["misc_chemical"] = 20,
         ["misc_munitionpress"] = 0,
         ["misc_gunpowder"] = 2,
@@ -109,11 +109,11 @@ AS.AddBaseItem("ammo_buckshot", {
 
 AS.AddBaseItem("ammo_762x39", {
     name = "7.62x39mm",
-    desc = "60 rounds of 7.62x39mm. Commonly used in rifles.",
+    desc = "A box with 60 rounds of 7.62x39mm ammunition.",
     category = "ammo",
     model = "models/items/ammo/762x39box.mdl",
     value = 15,
-    weight = 0.8,
+    weight = 1,
     use = {
         ammotype = "smg1",
         ammoamt = 60,
@@ -121,17 +121,17 @@ AS.AddBaseItem("ammo_762x39", {
     hidden = true,
     class = "engineer",
     craft = {
-        ["misc_scrap"] = 15,
-        ["misc_smallparts"] = 25,
-        ["misc_chemical"] = 20,
+        ["misc_scrap"] = 20,
+        ["misc_smallparts"] = 0,
+        ["misc_chemical"] = 15,
         ["misc_munitionpress"] = 0,
-        ["misc_gunpowder"] = 1,
+        ["misc_gunpowder"] = 2,
     },
 })
 
 AS.AddBaseItem("ammo_556x45", {
     name = "5.56x45mm",
-    desc = "75 rounds of 5.56x45mm. Commonly used in rifles.",
+    desc = "A box with 75 rounds of 5.56x39mm ammunition.",
     category = "ammo",
     model = "models/Items/BoxMRounds.mdl",
     value = 15,
@@ -144,20 +144,20 @@ AS.AddBaseItem("ammo_556x45", {
     class = "engineer",
     craft = {
         ["misc_scrap"] = 20,
-        ["misc_smallparts"] = 20,
+        ["misc_smallparts"] = 0,
         ["misc_chemical"] = 15,
         ["misc_munitionpress"] = 0,
-        ["misc_gunpowder"] = 1,
+        ["misc_gunpowder"] = 2,
     },
 })
 
 AS.AddBaseItem("ammo_pulse", {
     name = "Pulse Battery",
-    desc = "A battery with 50 charges. Used in pulse weaponry.",
+    desc = "A battery with 50 pulse charges.",
     category = "ammo",
     model = "models/Items/combine_rifle_cartridge01.mdl",
     value = 20,
-    weight = 1,
+    weight = 1.5,
     use = {
         ammotype = "striderminigun",
         ammoamt = 50,
@@ -165,19 +165,19 @@ AS.AddBaseItem("ammo_pulse", {
     hidden = true,
     class = "scientist",
     craft = {
-        ["misc_scrap"] = 25,
-        ["misc_smallparts"] = 5,
-        ["misc_chemical"] = 25,
+        ["misc_scrap"] = 20,
+        ["misc_smallparts"] = 0,
+        ["misc_chemical"] = 20,
     },
 })
 
 AS.AddBaseItem("ammo_762x51", {
     name = "7.62x51mm",
-    desc = "20 rounds of 7.62x51mm. Commonly used in snipers and other heavy weaponry.",
+    desc = "A box with 20 rounds of 7.62x51mm ammunition.",
     category = "ammo",
     model = "models/Items/BoxSRounds.mdl",
     value = 25,
-    weight = 1,
+    weight = 1.5,
     use = {
         ammotype = "sniperround",
         ammoamt = 20,
@@ -186,7 +186,7 @@ AS.AddBaseItem("ammo_762x51", {
     class = "engineer",
     craft = {
         ["misc_scrap"] = 25,
-        ["misc_smallparts"] = 15,
+        ["misc_smallparts"] = 0,
         ["misc_chemical"] = 25,
         ["misc_munitionpress"] = 0,
         ["misc_gunpowder"] = 2,
@@ -195,12 +195,12 @@ AS.AddBaseItem("ammo_762x51", {
 
 AS.AddBaseItem("ammo_50bmg", {
     name = ".50 BMG",
-    desc = "20 rounds of .50 BMG. A round of this size and potential power doesn't even need to hit someone to kill them. Used in the M82 Barret.",
+    desc = "A box with 20 rounds of .50 BMG.",
     category = "ammo",
     model = "models/items/ammo/50bmgbox.mdl",
     color = Color( 120, 40, 40 ),
     value = 40,
-    weight = 1,
+    weight = 2.5,
     use = {
         ammotype = "sniperpenetratedround",
         ammoamt = 20,
@@ -208,9 +208,9 @@ AS.AddBaseItem("ammo_50bmg", {
     hidden = true,
     class = "engineer",
     craft = {
-        ["misc_scrap"] = 30,
-        ["misc_smallparts"] = 30,
-        ["misc_chemical"] = 40,
+        ["misc_scrap"] = 35,
+        ["misc_smallparts"] = 0,
+        ["misc_chemical"] = 30,
         ["misc_munitionpress"] = 0,
         ["misc_gunpowder"] = 3,
     },
@@ -218,11 +218,11 @@ AS.AddBaseItem("ammo_50bmg", {
 
 AS.AddBaseItem("ammo_gl", {
     name = "40mm HE",
-    desc = "A single shell of a 40mm High Explosive. Use it wisely.",
+    desc = "A single 40mm High Explosive, impact-action.",
     category = "ammo",
     model = "models/items/ar2_grenade.mdl",
     value = 25,
-    weight = 1,
+    weight = 1.5,
     use = {
         ammotype = "SMG1_Grenade",
         ammoamt = 1,
@@ -230,10 +230,9 @@ AS.AddBaseItem("ammo_gl", {
     hidden = true,
     class = "engineer",
     craft = {
-        ["misc_scrap"] = 20,
-        ["misc_smallparts"] = 20,
-        ["misc_chemical"] = 30,
-        ["misc_munitionpress"] = 0,
-        ["misc_gunpowder"] = 2,
+        ["misc_scrap"] = 25,
+        ["misc_smallparts"] = 5,
+        ["misc_chemical"] = 20,
+        ["misc_gunpowder"] = 3,
     },
 })
