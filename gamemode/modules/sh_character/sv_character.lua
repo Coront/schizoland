@@ -124,7 +124,7 @@ end
 net.Receive("as_characters_finishcharacter", FinishCharacter)
 
 function DeleteCharacter(len, ply)
-    local pid = net.ReadUInt( NWSetting.LockerAmtBits )
+    local pid = net.ReadUInt( NWSetting.UIDAmtBits )
 
     local owner = sql.QueryValue("SELECT steamid FROM as_characters WHERE pid = " .. pid)
     if ply:SteamID() != owner then ply:Kick("This isn't your character") return end
@@ -135,7 +135,7 @@ end
 net.Receive("as_characters_deletecharacter", DeleteCharacter)
 
 function CheckoutCharacter(len, ply)
-    local pid = net.ReadUInt( NWSetting.LockerAmtBits )
+    local pid = net.ReadUInt( NWSetting.UIDAmtBits )
 
     local owner = sql.QueryValue("SELECT steamid FROM as_characters WHERE pid = " .. pid)
     if ply:SteamID() != owner then ply:Kick("This isn't your character") return end

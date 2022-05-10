@@ -582,7 +582,7 @@ net.Receive( "as_community_leave", function( _, ply )
 end)
 
 net.Receive( "as_community_kickplayer", function( _, ply )
-    local pid = tonumber( net.ReadUInt( NWSetting.LockerAmtBits ) )
+    local pid = tonumber( net.ReadUInt( NWSetting.UIDAmtBits ) )
 
     if not ply:InCommunity() then ply:ChatPrint("You are not in a community.") return end
     if not ply:HasPerm( "kick" ) then ply:ChatPrint("You must have the permission 'kick' to kick players.") return end
@@ -593,7 +593,7 @@ net.Receive( "as_community_kickplayer", function( _, ply )
 end)
 
 net.Receive( "as_community_changetitle", function( _, ply ) 
-    local pid = tonumber( net.ReadUInt( NWSetting.LockerAmtBits ) )
+    local pid = tonumber( net.ReadUInt( NWSetting.UIDAmtBits ) )
     local title = net.ReadString()
 
     if not ply:InCommunity() then ply:ChatPrint("You are not in a community.") return end
@@ -626,7 +626,7 @@ net.Receive( "as_community_createrank", function( _, ply )
 end)
 
 net.Receive( "as_community_deleterank", function( _, ply )
-    local rankid = net.ReadUInt( NWSetting.LockerAmtBits )
+    local rankid = net.ReadUInt( NWSetting.UIDAmtBits )
 
     if not ply:InCommunity() then ply:ChatPrint("You are not in a community.") return end
     if not ply:HasPerm( "admin" ) then ply:ChatPrint( "You must have the permission 'admin' to delete ranks." ) return end
@@ -636,7 +636,7 @@ net.Receive( "as_community_deleterank", function( _, ply )
 end)
 
 net.Receive( "as_community_modifyrank", function( _, ply )
-    local rankid = net.ReadUInt( NWSetting.LockerAmtBits )
+    local rankid = net.ReadUInt( NWSetting.UIDAmtBits )
     local name = net.ReadString()
     local perms = net.ReadTable()
 
@@ -656,8 +656,8 @@ net.Receive( "as_community_modifyrank", function( _, ply )
 end)
 
 net.Receive( "as_community_changerank", function( _, ply ) 
-    local rankid = net.ReadUInt( NWSetting.LockerAmtBits )
-    local pid = net.ReadUInt( NWSetting.LockerAmtBits )
+    local rankid = net.ReadUInt( NWSetting.UIDAmtBits )
+    local pid = net.ReadUInt( NWSetting.UIDAmtBits )
 
     if not ply:InCommunity() then ply:ChatPrint("You are not in a community.") return end
     if not ply:HasPerm("admin") then ply:ChatPrint("You must have the permission 'admin' to modify ranks.") return end
@@ -677,7 +677,7 @@ net.Receive( "as_community_updatedescription", function( _, ply )
 end)
 
 net.Receive( "as_community_acceptdiplomacy", function( _, ply ) 
-    local diploid = net.ReadUInt( NWSetting.LockerAmtBits )
+    local diploid = net.ReadUInt( NWSetting.UIDAmtBits )
 
     if not ply:InCommunity() then ply:ChatPrint("You are not in a community.") return end
     local diplotype = Communities[ply:GetCommunity()].pending[diploid].type
@@ -689,7 +689,7 @@ net.Receive( "as_community_acceptdiplomacy", function( _, ply )
 end)
 
 net.Receive( "as_community_declinediplomacy", function( _, ply ) 
-    local diploid = net.ReadUInt( NWSetting.LockerAmtBits )
+    local diploid = net.ReadUInt( NWSetting.UIDAmtBits )
 
     if not ply:InCommunity() then ply:ChatPrint("You are not in a community.") return end
     local diplotype = Communities[ply:GetCommunity()].pending[diploid].type
@@ -700,7 +700,7 @@ net.Receive( "as_community_declinediplomacy", function( _, ply )
 end)
 
 net.Receive( "as_community_ally", function( _, ply ) 
-    local cid = net.ReadUInt( NWSetting.LockerAmtBits )
+    local cid = net.ReadUInt( NWSetting.UIDAmtBits )
 
     if not ply:InCommunity() then ply:ChatPrint("You are not in a community.") return end
     if not ply:HasPerm("ally") then ply:ChatPrint("You must have the permission 'ally' to send alliance requests to other communities.") return end
@@ -710,7 +710,7 @@ net.Receive( "as_community_ally", function( _, ply )
 end)
 
 net.Receive( "as_community_war", function( _, ply ) 
-    local cid = net.ReadUInt( NWSetting.LockerAmtBits )
+    local cid = net.ReadUInt( NWSetting.UIDAmtBits )
 
     if not ply:InCommunity() then ply:ChatPrint("You are not in a community.") return end
     if not ply:HasPerm("war") then ply:ChatPrint("You must have the permission 'war' to send war requests to other communities.") return end
@@ -720,7 +720,7 @@ net.Receive( "as_community_war", function( _, ply )
 end)
 
 net.Receive( "as_community_endally", function( _, ply ) 
-    local cid = net.ReadUInt( NWSetting.LockerAmtBits )
+    local cid = net.ReadUInt( NWSetting.UIDAmtBits )
 
     if not ply:InCommunity() then ply:ChatPrint("You are not in a community.") return end
     if not ply:HasPerm("ally") then ply:ChatPrint("You must have the permission 'ally' to end alliances with other communities.") return end
@@ -729,7 +729,7 @@ net.Receive( "as_community_endally", function( _, ply )
 end)
 
 net.Receive( "as_community_endwarrequest", function( _, ply ) 
-    local warid = net.ReadUInt( NWSetting.LockerAmtBits )
+    local warid = net.ReadUInt( NWSetting.UIDAmtBits )
 
     if not ply:InCommunity() then ply:ChatPrint("You are not in a community.") return end
     if not ply:HasPerm("war") then ply:ChatPrint("You must have the permission 'war' to send requests to end a war.") return end

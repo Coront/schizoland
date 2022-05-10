@@ -142,7 +142,7 @@ end)
 net.Receive( "as_locker_deleteprofile", function( _, ply ) 
 	local ent = net.ReadEntity()
 	if not IsValid( ent ) then return end
-	local lid = net.ReadUInt( NWSetting.LockerAmtBits )
+	local lid = net.ReadUInt( NWSetting.UIDAmtBits )
 
 	if ent:GetClass() != "as_locker" then return end
 	if ent:GetObjectOwner() != ply then return end
@@ -191,7 +191,7 @@ net.Receive( "as_locker_setprofile", function( _, ply )
 	if ent:GetProfile() != 0 then ply:ChatPrint("This locker already has a profile selected.") return end
 	if ent:GetPos():Distance(ply:GetPos()) > 300 then ply:ChatPrint("You're too far to manage this.") return end
 
-	local lid = net.ReadUInt( NWSetting.LockerAmtBits )
+	local lid = net.ReadUInt( NWSetting.UIDAmtBits )
 	local profile = sql.Query("SELECT * FROM as_lockers WHERE lid = " .. lid)[1]
 	if tonumber(profile.pid) != ply.pid then ply:ChatPrint("You do not own this profile.") return end
 	if profile.deleted != "NULL" then ply:ChatPrint("This profile is deleted.") return end

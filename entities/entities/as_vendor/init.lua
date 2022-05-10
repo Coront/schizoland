@@ -176,7 +176,7 @@ end)
 net.Receive( "as_vendor_deleteprofile", function( _, ply ) 
 	local ent = net.ReadEntity()
 	if not IsValid( ent ) then return end
-	local vid = net.ReadUInt( NWSetting.LockerAmtBits )
+	local vid = net.ReadUInt( NWSetting.UIDAmtBits )
 
 	if ent:GetClass() != "as_vendor" then return end
 	if ent:GetObjectOwner() != ply then return end
@@ -223,7 +223,7 @@ net.Receive( "as_vendor_setprofile", function( _, ply )
 	if ent:GetObjectOwner() != ply then return end
 	if ent:GetProfile() != 0 then ply:ChatPrint("This vendor already has a profile selected.") return end
 
-	local vid = net.ReadUInt( NWSetting.LockerAmtBits )
+	local vid = net.ReadUInt( NWSetting.UIDAmtBits )
 	local profile = sql.Query("SELECT * FROM as_vendors WHERE vid = " .. vid)[1]
 	if tonumber(profile.pid) != ply.pid then ply:ChatPrint("You do not own this profile.") return end
 	if profile.deleted != "NULL" then ply:ChatPrint("This profile is deleted.") return end
