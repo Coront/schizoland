@@ -179,10 +179,9 @@ if SERVER then
 
     util.AddNetworkString("as_syncinventory")
 
-    --This function will resync a player's inventory if an error with information that was sent from the client was caught.
     function PlayerMeta:ResyncInventory()
         net.Start("as_syncinventory")
-            net.WriteTable(self:GetInventory())
+            net.WriteInventory( self:GetInventory() )
         net.Send(self)
     end
     concommand.Add("as_resyncinventory", function(ply) ply:ResyncInventory() end)
@@ -190,7 +189,7 @@ if SERVER then
 elseif CLIENT then
 
     net.Receive("as_syncinventory", function()
-        local inv = net.ReadTable()
+        local inv = net.ReadInventory()
         LocalPlayer():SetInventory( inv )
     end)
 
