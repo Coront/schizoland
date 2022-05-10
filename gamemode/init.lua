@@ -25,7 +25,7 @@ local function DatabaseCheck()
 	sql.Query("CREATE TABLE IF NOT EXISTS as_characters (pid INTEGER PRIMARY KEY AUTOINCREMENT, steamid TEXT, name TEXT, model TEXT, class TEXT, created TEXT, laston TEXT, deleted TEXT)")
 	sql.Query("CREATE TABLE IF NOT EXISTS as_characters_stats (pid INTEGER, health INTEGER, hunger INTEGER, thirst INTEGER, playtime INTEGER)")
 	sql.Query("CREATE TABLE IF NOT EXISTS as_characters_skills (pid INTEGER, skills TEXT)")
-	sql.Query("CREATE TABLE IF NOT EXISTS as_characters_inventory (pid INTEGER, inv TEXT, bank TEXT, equipped TEXT)")
+	sql.Query("CREATE TABLE IF NOT EXISTS as_characters_inventory (pid INTEGER, inv TEXT, bank TEXT, atch TEXT, equipped TEXT)")
 	--Communities
 	sql.Query("CREATE TABLE IF NOT EXISTS as_communities (cid INTEGER, data TEXT, deleted)")
 	sql.Query("CREATE TABLE IF NOT EXISTS as_communities_members (pid INTEGER, cid INTEGER, title TEXT, rank TEXT)")
@@ -70,6 +70,7 @@ local WorkshopFastDL = {
 }
 
 local WorkshopFastDLMaps = {
+	--Value here does do something, make sure the map's name is tied to the key, or the fast dl wont identify it.
 	["2795340202"] = "r_postnukemetro_dry",
 	["2225370566"] = "rp_outercanals_p",
 	["2220973603"] = "rp_mojave_v3_p",
