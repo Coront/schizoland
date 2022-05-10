@@ -639,6 +639,10 @@ function SWEP:PrimaryAttack()
 			self.ReloadState = 3
 			return
 		end
+
+		if self:Clip1() < self.ConsumePerShot then
+			return
+		end
 		
 		if self.dt.Status == FAS_STAT_CUSTOMIZE then
 			return
@@ -765,7 +769,8 @@ function SWEP:PrimaryAttack()
 		self:SetNextPrimaryFire(CT + self.FireDelay)
 	end
 	
-	self:TakePrimaryAmmo(1)
+	local amt = self.ConsumePerShot or 1
+	self:TakePrimaryAmmo( amt )
 	
 	//self:SetNextSecondaryFire(CT + 0.1)
 	
@@ -807,7 +812,8 @@ function SWEP:SecondaryAttack()
 		self:EmitSound(table.Random(self.AimSounds), 50, 100)
 	end
 	
-	self:SetNextPrimaryFire(CT + 0.1)
+	local del = CurTime() < self:GetNextPrimaryFire() and self:GetNextPrimaryFire() or CurTime() + .1
+	self:SetNextPrimaryFire(del)
 	self:SetNextSecondaryFire(CT + 0.1)
 	self.ReloadWait = CT + 0.3
 
