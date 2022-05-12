@@ -64,6 +64,10 @@ AS_ClientConVar( "as_hud_ownership", "1", true, false )
 AS_ClientConVar( "as_hud_stress", "1", true, false )
 AS_ClientConVar( "as_hud_stress_xadd", "0", true, false )
 AS_ClientConVar( "as_hud_stress_yadd", "0", true, false )
+-- Injured Indication
+AS_ClientConVar( "as_hud_injured", "1", true, false )
+AS_ClientConVar( "as_hud_injured_heartbeat", "1", true, false )
+AS_ClientConVar( "as_hud_injured_wake", "35", true, false ) --Percentage of health the player needs to be below for the injured hud to awake.
 
 -- Connection Information
 AS_ClientConVar( "as_connectioninfo", "1", true, false ) --Show connection information?
@@ -82,6 +86,7 @@ function AftershockHUD()
     if IsValid(ply:GetActiveWeapon()) and ply:GetActiveWeapon():GetClass() == "gmod_camera" then return end
     if not ply:Alive() then AftershockHUDDeath() return end
     AftershockHUDVoice()
+    AftershockHUDInjured()
 
     local bar = tobool(GetConVar("as_hud_healthbar"):GetInt())
     if bar then
@@ -365,6 +370,26 @@ function AftershockHUDVoice()
     end
 end
 
+function AftershockHUDInjured()
+    local healthratio = Lerp( LocalPlayer():Health() / LocalPlayer():GetMaxHealth(), 0, 1 )
+    local healthinjured = LocalPlayer():GetMaxHealth() * (GetConVar("as_hud_injured_wake"):GetInt() / 100)
+    local injured = tobool(GetConVar("as_hud_injured"):GetInt()) and healthratio < (GetConVar("as_hud_injured_wake"):GetInt() / 100)
+    if injured then
+        local severityratio = Lerp( 1 - (LocalPlayer():Health() / healthinjured), 0, 1 )
+        local alpha = 255 * severityratio
+        surface.SetDrawColor( Color( 255, 255, 255, alpha ) )
+        surface.SetMaterial( Material( "hud/aftershock/bloodoverlay" ) )
+        surface.DrawTexturedRect( 0, 0, ScrW(), ScrH() )
+
+        local heartbeat = tobool(GetConVar("as_hud_injured_heartbeat"):GetInt())
+        if heartbeat and CurTime() > (NextHeartbeat or 0) then
+            NextHeartbeat = CurTime() + (1.5 - (0.7 * severityratio))
+            pitch = 100 + (30 * severityratio)
+            LocalPlayer():EmitSound( "player/heartbeat.wav", 75, pitch, severityratio, CHAN_STATIC )
+        end
+    end
+end
+
 hook.Add( "PlayerStartVoice", "AS_VoiceStart", function( ply )
     HUD_TALKINGPLAYERS[ply] = true
 
@@ -515,11 +540,11 @@ hook.Add( "HUDPaint", "AS_HUD", function()
         BuildASFonts()
     end
 
-    if tobool(GetConVar("as_connectioninfo"):GetInt()) then
-        ConnectionInformation()
-    end
-
     if tobool(GetConVar("as_hud"):GetInt()) then
         AftershockHUD()
+    end
+
+    if tobool(GetConVar("as_connectioninfo"):GetInt()) then
+        ConnectionInformation()
     end
 end)
