@@ -10,19 +10,33 @@ function AS.CLSettings.Menu()
     if IsValid(frame_settings) then frame_settings:Close() end
 
     frame_settings = vgui.Create("DFrame")
-    frame_settings:SetSize(500, 500)
+    frame_settings:SetSize(600, 600)
     frame_settings:Center()
     frame_settings:MakePopup()
-    frame_settings:SetTitle( "Settings" )
-
-    settings_scroll = vgui.Create("DScrollPanel", frame_settings)
-    settings_scroll:Dock( FILL )
-    function settings_scroll:Paint( w, h )
+    frame_settings:SetTitle( "" )
+    frame_settings:ShowCloseButton( false )
+    function frame_settings:Paint( w, h )
         surface.SetDrawColor( COLHUD_SECONDARY )
         surface.DrawRect( 0, 0, w, h )
+
+        surface.SetMaterial( Material("gui/aftershock/default.png") )
+        surface.SetDrawColor( Color( 255, 255, 255, 255 ) )
+        surface.DrawTexturedRect( 0, 0, w, h )
     end
 
-    AS.CLSettings.BuildOptions()
+    local cbuttonsize = 18
+    local closebutton = CreateCloseButton( frame_settings, cbuttonsize, frame_settings:GetWide() - cbuttonsize - 5, 3 )
+
+    local x, y = 32, 25
+    local sheets = CreateSheetPanel( frame_settings, frame_settings:GetWide() - x - 36, frame_settings:GetTall() - y - 35, x, y )
+
+    AddSheet( sheets, "Gameplay", "icon16/controller.png", AS.CLSettings.BuildGameplay( sheets ) )
+    AddSheet( sheets, "Colors", "icon16/color_wheel.png", AS.CLSettings.BuildColors( sheets ) )
+    AddSheet( sheets, "GUI", "icon16/application.png", AS.CLSettings.BuildGUI( sheets ) )
+    AddSheet( sheets, "HUD", "icon16/monitor.png", AS.CLSettings.BuildHUD( sheets ) )
+    AddSheet( sheets, "Performance", "icon16/chart_bar.png", AS.CLSettings.BuildPerformance( sheets ) )
+    AddSheet( sheets, "Key Binds", "icon16/keyboard.png", AS.CLSettings.BuildBinds( sheets ) )
+    AddSheet( sheets, "Other", "icon16/asterisk_yellow.png", AS.CLSettings.BuildOthers( sheets ) )
 
     function frame_settings:OnClose()
         SettingsOpen = false
@@ -30,319 +44,431 @@ function AS.CLSettings.Menu()
 end
 concommand.Add("as_settings", AS.CLSettings.Menu)
 
-function AS.CLSettings.BuildOptions()
-    local xpos = 10
+function AS.CLSettings.BuildGameplay( parent )
+    local scroll = vgui.Create("DScrollPanel", parent)
+    scroll:SetPos( 27, 21 )
+    scroll:SetSize( parent:GetWide() - (scroll:GetX() * 2) - 3, parent:GetTall() - (scroll:GetY() * 2) - 8 )
+
+    local xpos = 0
     local ypos = 5
     local function addSpace(x, y)
         xpos = (xpos + (x or 0))
         ypos = (ypos + (y or 0)) 
     end
     local function resetX()
-        xpos = 10
+        xpos = 3
     end
 
---  ██████╗ ██████╗ ██╗      ██████╗ ██████╗ ███████╗
--- ██╔════╝██╔═══██╗██║     ██╔═══██╗██╔══██╗██╔════╝
--- ██║     ██║   ██║██║     ██║   ██║██████╔╝███████╗
--- ██║     ██║   ██║██║     ██║   ██║██╔══██╗╚════██║
--- ╚██████╗╚██████╔╝███████╗╚██████╔╝██║  ██║███████║
---  ╚═════╝ ╚═════╝ ╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝
+    -- General
 
-    DefaultButton( "Use Default Settings", xpos, ypos, 150, 20, settings_scroll, AS.CLSettings.SetToDefault )
-    addSpace( 0, 20 )
-
-    SectionLabel( "Colors", xpos, ypos, settings_scroll )
+    SectionLabel( "General", xpos, ypos, scroll )
     addSpace( 0, 35 )
 
-    ValueSlider( "Default - Red", xpos, ypos, 0, 255, settings_scroll, "as_hud_color_default_r", "default" )
+    ToggleButton("Verify Actions (Example: Salvaging Items)", xpos, ypos, scroll, "as_gameplay_verify")
     addSpace( 0, 20 )
 
-    ValueSlider( "Default - Green", xpos, ypos, 0, 255, settings_scroll, "as_hud_color_default_g", "default" )
+    ToggleButton("Loot Container Sounds (Exceptions may exist)", xpos, ypos, scroll, "as_container_sounds")
     addSpace( 0, 20 )
 
-    ValueSlider( "Default - Blue", xpos, ypos, 0, 255, settings_scroll, "as_hud_color_default_b", "default" )
-    addSpace( 0, 30 )
-
-    ValueSlider( "Good - Red", xpos, ypos, 0, 255, settings_scroll, "as_hud_color_good_r", "good" )
+    ToggleButton("Death Sound Cues", xpos, ypos, scroll, "as_gameplay_deathstinger")
     addSpace( 0, 20 )
 
-    ValueSlider( "Good - Green", xpos, ypos, 0, 255, settings_scroll, "as_hud_color_good_g", "good" )
-    addSpace( 0, 20 )
+    -- Low Health Indication
 
-    ValueSlider( "Good - Blue", xpos, ypos, 0, 255, settings_scroll, "as_hud_color_good_b", "good" )
-    addSpace( 0, 30 )
-
-    ValueSlider( "Bad - Red", xpos, ypos, 0, 255, settings_scroll, "as_hud_color_bad_r", "bad" )
-    addSpace( 0, 20 )
-
-    ValueSlider( "Bad - Green", xpos, ypos, 0, 255, settings_scroll, "as_hud_color_bad_g", "bad" )
-    addSpace( 0, 20 )
-
-    ValueSlider( "Bad - Blue", xpos, ypos, 0, 255, settings_scroll, "as_hud_color_bad_b", "bad" )
-    addSpace( 0, 20 )
-
-    resetX()
-
---  ██████╗  █████╗ ███╗   ███╗███████╗██████╗ ██╗      █████╗ ██╗   ██╗
--- ██╔════╝ ██╔══██╗████╗ ████║██╔════╝██╔══██╗██║     ██╔══██╗╚██╗ ██╔╝
--- ██║  ███╗███████║██╔████╔██║█████╗  ██████╔╝██║     ███████║ ╚████╔╝
--- ██║   ██║██╔══██║██║╚██╔╝██║██╔══╝  ██╔═══╝ ██║     ██╔══██║  ╚██╔╝
--- ╚██████╔╝██║  ██║██║ ╚═╝ ██║███████╗██║     ███████╗██║  ██║   ██║
---  ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝╚═╝     ╚══════╝╚═╝  ╚═╝   ╚═╝
-
-    SectionLabel( "Gameplay", xpos, ypos, settings_scroll )
+    SectionLabel( "Health Indication", xpos, ypos, scroll )
     addSpace( 0, 35 )
 
-    ToggleButton("Verify certain actions - Example: Destroying Items", xpos, ypos, settings_scroll, "as_gameplay_verify")
+    ToggleButton("Enable Low Health Indication", xpos, ypos, scroll, "as_hud_injured")
+    addSpace( 20, 20 )
+
+    ToggleButton("Heartbeat Sounds", xpos, ypos, scroll, "as_hud_injured_heartbeat")
     addSpace( 0, 20 )
 
-    ToggleButton("Play Container Sounds", xpos, ypos, settings_scroll, "as_container_sounds")
-    addSpace( 0, 20 )
+    ValueSlider( "Health Activate Percent", xpos, ypos, 1, 99, scroll, "as_hud_injured_wake" )
+    addSpace( -20, 20 )
 
-    ToggleButton("Play Death Stingers", xpos, ypos, settings_scroll, "as_gameplay_deathstinger")
-    addSpace( 0, 20 )
+    -- Thirdperson
 
-    ValueSlider( "Thirdperson - Back", xpos, ypos, 5, 150, settings_scroll, "as_thirdperson_distance" )
-    addSpace( 0, 20 )
-
-    ValueSlider( "Thirdperson - Up", xpos, ypos, -10, 20, settings_scroll, "as_thirdperson_up" )
-    addSpace( 0, 20 )
-
-    ValueSlider( "Thirdperson - Side", xpos, ypos, -30, 30, settings_scroll, "as_thirdperson_side" )
-    addSpace( 0, 20 )
-
-    ToggleButton("Thirdperson - Firstperson ADS", xpos, ypos, settings_scroll, "as_thirdperson_fpads")
-    addSpace( 0, 20 )
-
-    resetX()
-
---  ██████╗ ██╗   ██╗██╗
--- ██╔════╝ ██║   ██║██║
--- ██║  ███╗██║   ██║██║
--- ██║   ██║██║   ██║██║
--- ╚██████╔╝╚██████╔╝██║
---  ╚═════╝  ╚═════╝ ╚═╝
-
-    SectionLabel( "GUI", xpos, ypos, settings_scroll )
+    SectionLabel( "Thirdperson", xpos, ypos, scroll )
     addSpace( 0, 35 )
 
-    ToggleButton("Inventory: Hold-To-Open", xpos, ypos, settings_scroll, "as_menu_inventory_holdtoopen")
+    ToggleButton("Firstperson when ADS", xpos, ypos, scroll, "as_thirdperson_fpads")
     addSpace( 0, 20 )
 
-    ToggleButton("Inventory: Disable Categorization", xpos, ypos, settings_scroll, "as_menu_inventory_singlepanel")
+    ValueSlider( "Camera - Back", xpos, ypos, 5, 150, scroll, "as_thirdperson_distance" )
     addSpace( 0, 20 )
 
-    resetX()
+    ValueSlider( "Camera - Up", xpos, ypos, -10, 20, scroll, "as_thirdperson_up" )
+    addSpace( 0, 20 )
 
--- ██╗  ██╗██╗   ██╗██████╗
--- ██║  ██║██║   ██║██╔══██╗
--- ███████║██║   ██║██║  ██║
--- ██╔══██║██║   ██║██║  ██║
--- ██║  ██║╚██████╔╝██████╔╝
--- ╚═╝  ╚═╝ ╚═════╝ ╚═════╝
+    ValueSlider( "Camera - Side", xpos, ypos, -30, 30, scroll, "as_thirdperson_side" )
+    addSpace( 0, 20 )
 
-    SectionLabel( "HUD", xpos, ypos, settings_scroll )
+    return scroll
+end
+
+function AS.CLSettings.BuildColors( parent )
+    local scroll = vgui.Create("DScrollPanel", parent)
+    scroll:SetPos( 27, 21 )
+    scroll:SetSize( parent:GetWide() - (scroll:GetX() * 2) - 3, parent:GetTall() - (scroll:GetY() * 2) - 8 )
+
+    local xpos = 0
+    local ypos = 5
+    local function addSpace(x, y)
+        xpos = (xpos + (x or 0))
+        ypos = (ypos + (y or 0)) 
+    end
+    local function resetX()
+        xpos = 3
+    end
+
+    SectionLabel( "Default / HUD", xpos, ypos, scroll )
     addSpace( 0, 35 )
 
-    ToggleButton( "Enable HUD", xpos, ypos, settings_scroll, "as_hud")
+    ValueSlider( "Red", xpos, ypos, 0, 255, scroll, "as_hud_color_default_r", "default" )
     addSpace( 0, 20 )
 
-    ValueSlider( "HUD Scale", xpos, ypos, 0.6, 2.5, settings_scroll, "as_hud_scale", nil, true )
+    ValueSlider( "Green", xpos, ypos, 0, 255, scroll, "as_hud_color_default_g", "default" )
+    addSpace( 0, 20 )
+
+    ValueSlider( "Blue", xpos, ypos, 0, 255, scroll, "as_hud_color_default_b", "default" )
+    addSpace( 0, 20 )
+
+    SectionLabel( "Good Indication", xpos, ypos, scroll )
+    addSpace( 0, 35 )
+
+    ValueSlider( "Red", xpos, ypos, 0, 255, scroll, "as_hud_color_good_r", "good" )
+    addSpace( 0, 20 )
+
+    ValueSlider( "Green", xpos, ypos, 0, 255, scroll, "as_hud_color_good_g", "good" )
+    addSpace( 0, 20 )
+
+    ValueSlider( "Blue", xpos, ypos, 0, 255, scroll, "as_hud_color_good_b", "good" )
+    addSpace( 0, 20 )
+
+    SectionLabel( "Bad Indication", xpos, ypos, scroll )
+    addSpace( 0, 35 )
+
+    ValueSlider( "Red", xpos, ypos, 0, 255, scroll, "as_hud_color_bad_r", "bad" )
+    addSpace( 0, 20 )
+
+    ValueSlider( "Green", xpos, ypos, 0, 255, scroll, "as_hud_color_bad_g", "bad" )
+    addSpace( 0, 20 )
+
+    ValueSlider( "Blue", xpos, ypos, 0, 255, scroll, "as_hud_color_bad_b", "bad" )
+    addSpace( 0, 20 )
+
+    return scroll
+end
+
+function AS.CLSettings.BuildGUI( parent )
+    local scroll = vgui.Create("DScrollPanel", parent)
+    scroll:SetPos( 27, 21 )
+    scroll:SetSize( parent:GetWide() - (scroll:GetX() * 2) - 3, parent:GetTall() - (scroll:GetY() * 2) - 8 )
+
+    local xpos = 0
+    local ypos = 5
+    local function addSpace(x, y)
+        xpos = (xpos + (x or 0))
+        ypos = (ypos + (y or 0)) 
+    end
+    local function resetX()
+        xpos = 3
+    end
+
+    SectionLabel( "Inventory", xpos, ypos, scroll )
+    addSpace( 0, 35 )
+
+    ToggleButton("Hold To Open", xpos, ypos, scroll, "as_menu_inventory_holdtoopen")
+    addSpace( 0, 20 )
+
+    ToggleButton("No Item Categorization", xpos, ypos, scroll, "as_menu_inventory_singlepanel")
+    addSpace( 0, 20 )
+
+    return scroll
+end
+
+function AS.CLSettings.BuildHUD( parent )
+    local scroll = vgui.Create("DScrollPanel", parent)
+    scroll:SetPos( 27, 21 )
+    scroll:SetSize( parent:GetWide() - (scroll:GetX() * 2) - 3, parent:GetTall() - (scroll:GetY() * 2) - 8 )
+
+    local xpos = 0
+    local ypos = 5
+    local function addSpace(x, y)
+        xpos = (xpos + (x or 0))
+        ypos = (ypos + (y or 0)) 
+    end
+    local function resetX()
+        xpos = 3
+    end
+
+    SectionLabel( "Gameplay HUD", xpos, ypos, scroll )
+    addSpace( 0, 35 )
+
+    ToggleButton( "Enable HUD", xpos, ypos, scroll, "as_hud")
+    addSpace( 0, 20 )
+
+    ValueSlider( "HUD Scale", xpos, ypos, 0.6, 2.5, scroll, "as_hud_scale", nil, true )
     addSpace( 20, 20 )
 
-    ToggleButton("Enable Health Bar", xpos, ypos, settings_scroll, "as_hud_healthbar")
+    SectionLabel( "Health Bar", xpos, ypos, scroll )
+    addSpace( 0, 35 )
+
+    ToggleButton("Enable Health Bar", xpos, ypos, scroll, "as_hud_healthbar")
     addSpace( 20, 20 )
 
-    ToggleButton("Enable Health Bar Amounts", xpos, ypos, settings_scroll, "as_hud_healthbar_amount")
+    ToggleButton("Enable Health Bar Amounts", xpos, ypos, scroll, "as_hud_healthbar_amount")
     addSpace( 0, 20 )
 
-    ValueSlider( "Health Bar X-Pos", xpos, ypos, -2000, 2000, settings_scroll, "as_hud_healthbar_xadd" )
+    ValueSlider( "Health Bar X-Pos", xpos, ypos, -2000, 2000, scroll, "as_hud_healthbar_xadd" )
     addSpace( 0, 20 )
 
-    ValueSlider( "Health Bar Y-Pos", xpos, ypos, -2000, 2000, settings_scroll, "as_hud_healthbar_yadd" )
+    ValueSlider( "Health Bar Y-Pos", xpos, ypos, -2000, 2000, scroll, "as_hud_healthbar_yadd" )
     addSpace( 0, 20 )
 
-    ValueSlider( "Health Bar Width", xpos, ypos, 5, 2000, settings_scroll, "as_hud_healthbar_width" )
+    ValueSlider( "Health Bar Width", xpos, ypos, 5, 2000, scroll, "as_hud_healthbar_width" )
     addSpace( 0, 20 )
 
-    ValueSlider( "Health Bar Height", xpos, ypos, 5, 50, settings_scroll, "as_hud_healthbar_height" )
+    ValueSlider( "Health Bar Height", xpos, ypos, 5, 50, scroll, "as_hud_healthbar_height" )
     addSpace( -20, 20 )
 
-    ToggleButton("Enable Satiation Bars", xpos, ypos, settings_scroll, "as_hud_satiationbars")
+    SectionLabel( "Satiation Bars", xpos, ypos, scroll )
+    addSpace( 0, 35 )
+
+    ToggleButton("Enable Satiation Bars", xpos, ypos, scroll, "as_hud_satiationbars")
     addSpace( 20, 20 )
 
-    ToggleButton("Enable Satiation Bars Amount", xpos, ypos, settings_scroll, "as_hud_satiationbars_amount")
+    ToggleButton("Enable Satiation Bars Amount", xpos, ypos, scroll, "as_hud_satiationbars_amount")
     addSpace( 0, 20 )
 
-    ToggleButton("Show Satiated Indicator", xpos, ypos, settings_scroll, "as_hud_satiationbars_showindic")
+    ToggleButton("Show Satiated Indicator", xpos, ypos, scroll, "as_hud_satiationbars_showindic")
     addSpace( 0, 20 )
 
-    ValueSlider( "Satiation Bars X-Pos", xpos, ypos, -2000, 2000, settings_scroll, "as_hud_satiationbars_xadd" )
+    ValueSlider( "Satiation Bars X-Pos", xpos, ypos, -2000, 2000, scroll, "as_hud_satiationbars_xadd" )
     addSpace( 0, 20 )
 
-    ValueSlider( "Satiation Bars Y-Pos", xpos, ypos, -2000, 2000, settings_scroll, "as_hud_satiationbars_yadd" )
+    ValueSlider( "Satiation Bars Y-Pos", xpos, ypos, -2000, 2000, scroll, "as_hud_satiationbars_yadd" )
     addSpace( 0, 20 )
 
-    ValueSlider( "Satiation Bars Width", xpos, ypos, 5, 2000, settings_scroll, "as_hud_satiationbars_width" )
+    ValueSlider( "Satiation Bars Width", xpos, ypos, 5, 2000, scroll, "as_hud_satiationbars_width" )
     addSpace( 0, 20 )
 
-    ValueSlider( "Satiation Bars Height", xpos, ypos, 5, 50, settings_scroll, "as_hud_satiationbars_height" )
+    ValueSlider( "Satiation Bars Height", xpos, ypos, 5, 50, scroll, "as_hud_satiationbars_height" )
     addSpace( -20, 20 )
 
-    ToggleButton("Enable Effects", xpos, ypos, settings_scroll, "as_hud_effects")
+    SectionLabel( "Status Effects", xpos, ypos, scroll )
+    addSpace( 0, 35 )
+
+    ToggleButton("Enable Effects", xpos, ypos, scroll, "as_hud_effects")
     addSpace( 20, 20 )
 
-    ToggleButton("Enable Effects Amounts", xpos, ypos, settings_scroll, "as_hud_effects_amount")
+    ToggleButton("Enable Effects Amounts", xpos, ypos, scroll, "as_hud_effects_amount")
     addSpace( 0, 20 )
 
-    ValueSlider( "Effects X-Pos", xpos, ypos, -2000, 2000, settings_scroll, "as_hud_effects_xadd" )
+    ValueSlider( "Effects X-Pos", xpos, ypos, -2000, 2000, scroll, "as_hud_effects_xadd" )
     addSpace( 0, 20 )
 
-    ValueSlider( "Effects Y-Pos", xpos, ypos, -2000, 2000, settings_scroll, "as_hud_effects_yadd" )
+    ValueSlider( "Effects Y-Pos", xpos, ypos, -2000, 2000, scroll, "as_hud_effects_yadd" )
     addSpace( 0, 20 )
 
-    ValueSlider( "Effects Icon Size", xpos, ypos, 16, 32, settings_scroll, "as_hud_effects_iconsize" )
+    ValueSlider( "Effects Icon Size", xpos, ypos, 16, 32, scroll, "as_hud_effects_iconsize" )
     addSpace( 0, 20 )
 
-    ValueSlider( "Effects Bar Width", xpos, ypos, 5, 2000, settings_scroll, "as_hud_effects_width" )
+    ValueSlider( "Effects Bar Width", xpos, ypos, 5, 2000, scroll, "as_hud_effects_width" )
     addSpace( 0, 20 )
 
-    ValueSlider( "Effects Bar Height", xpos, ypos, 5, 50, settings_scroll, "as_hud_effects_height" )
+    ValueSlider( "Effects Bar Height", xpos, ypos, 5, 50, scroll, "as_hud_effects_height" )
     addSpace( 0, 20 )
 
-    ValueSlider( "Y Spacing Between Effects", xpos, ypos, 0, 15, settings_scroll, "as_hud_effects_barspacing" )
+    ValueSlider( "Y Spacing Between Effects", xpos, ypos, 0, 15, scroll, "as_hud_effects_barspacing" )
     addSpace( -20, 20 )
 
-    ToggleButton("Enable Resource Count", xpos, ypos, settings_scroll, "as_hud_resources")
+    SectionLabel( "Resource Display", xpos, ypos, scroll )
+    addSpace( 0, 35 )
+
+    ToggleButton("Enable Resource Count", xpos, ypos, scroll, "as_hud_resources")
     addSpace( 20, 20 )
 
-    ValueSlider("Resource X-Pos", xpos, ypos, -2000, 2000, settings_scroll, "as_hud_resources_xadd")
+    ValueSlider("Resource X-Pos", xpos, ypos, -2000, 2000, scroll, "as_hud_resources_xadd")
     addSpace( 0, 20 )
 
-    ValueSlider("Resource Y-Pos", xpos, ypos, -2000, 2000, settings_scroll, "as_hud_resources_yadd")
+    ValueSlider("Resource Y-Pos", xpos, ypos, -2000, 2000, scroll, "as_hud_resources_yadd")
     addSpace( -20, 20 )
 
-    ToggleButton( "Enable Target Info", xpos, ypos, settings_scroll, "as_hud_targetinfo" )
+    SectionLabel( "Target Information", xpos, ypos, scroll )
+    addSpace( 0, 35 )
+
+    ToggleButton( "Enable Target Info", xpos, ypos, scroll, "as_hud_targetinfo" )
     addSpace( 20, 20 )
 
-    ToggleButton( "Enable Target Info Amounts", xpos, ypos, settings_scroll, "as_hud_targetinfo_amount" )
+    ToggleButton( "Enable Target Info Amounts", xpos, ypos, scroll, "as_hud_targetinfo_amount" )
     addSpace( 0, 20 )
 
-    ValueSlider( "Target Info X-Pos", xpos, ypos, -2000, 2000, settings_scroll, "as_hud_targetinfo_xadd" )
+    ValueSlider( "Target Info X-Pos", xpos, ypos, -2000, 2000, scroll, "as_hud_targetinfo_xadd" )
     addSpace( 0, 20 )
 
-    ValueSlider( "Target Info Y-Pos", xpos, ypos, -2000, 2000, settings_scroll, "as_hud_targetinfo_yadd" )
+    ValueSlider( "Target Info Y-Pos", xpos, ypos, -2000, 2000, scroll, "as_hud_targetinfo_yadd" )
     addSpace( 0, 20 )
 
-    ValueSlider( "Target Info Width", xpos, ypos, 5, 2000, settings_scroll, "as_hud_targetinfo_width" )
+    ValueSlider( "Target Info Width", xpos, ypos, 5, 2000, scroll, "as_hud_targetinfo_width" )
     addSpace( 0, 20 )
 
-    ValueSlider( "Target Info Height", xpos, ypos, 5, 50, settings_scroll, "as_hud_targetinfo_height" )
+    ValueSlider( "Target Info Height", xpos, ypos, 5, 50, scroll, "as_hud_targetinfo_height" )
     addSpace( -20, 20 )
 
-    ToggleButton( "Enable Combat Warning", xpos, ypos, settings_scroll, "as_hud_stress" )
+    SectionLabel( "Combat Warning", xpos, ypos, scroll )
+    addSpace( 0, 35 )
+
+    ToggleButton( "Enable Combat Warning", xpos, ypos, scroll, "as_hud_stress" )
     addSpace( 20, 20 )
 
-    ValueSlider( "Combat Warning X-Pos", xpos, ypos, -2000, 2000, settings_scroll, "as_hud_stress_xadd" )
+    ValueSlider( "Combat Warning X-Pos", xpos, ypos, -2000, 2000, scroll, "as_hud_stress_xadd" )
     addSpace( 0, 20 )
 
-    ValueSlider( "Combat Warning Y-Pos", xpos, ypos, -2000, 2000, settings_scroll, "as_hud_stress_yadd" )
+    ValueSlider( "Combat Warning Y-Pos", xpos, ypos, -2000, 2000, scroll, "as_hud_stress_yadd" )
     addSpace( -20, 20 )
 
-    ToggleButton("Enable Event Bars", xpos, ypos, settings_scroll, "as_hud_timeevent")
+    SectionLabel( "Timer Bars", xpos, ypos, scroll )
+    addSpace( 0, 35 )
+
+    ToggleButton("Enable Timer Bars", xpos, ypos, scroll, "as_hud_timeevent")
     addSpace( 20, 20 )
 
-    ToggleButton("Show Event Bar Percent", xpos, ypos, settings_scroll, "as_hud_timeevent_percent")
+    ToggleButton("Show Timer Bar Percent", xpos, ypos, scroll, "as_hud_timeevent_percent")
     addSpace( 0, 20 )
 
     resetX()
 
---Connection Information
+    SectionLabel( "Connection Information", xpos, ypos, scroll )
+    addSpace( 0, 35 )
 
-    ToggleButton("Enable Connection Information", xpos, ypos, settings_scroll, "as_connectioninfo")
+    ToggleButton("Enable Connection Information", xpos, ypos, scroll, "as_connectioninfo")
     addSpace( 20, 20 )
 
-    ValueSlider( "Update Rate", xpos, ypos, 0, 3, settings_scroll, "as_connectioninfo_update", nil, true )
+    ValueSlider( "Update Rate", xpos, ypos, 0, 3, scroll, "as_connectioninfo_update", nil, true )
     addSpace( 0, 20 )
 
-    ToggleButton("Show Ping", xpos, ypos, settings_scroll, "as_connectioninfo_ping")
+    ToggleButton("Show Ping", xpos, ypos, scroll, "as_connectioninfo_ping")
     addSpace( 20, 20 )
 
-    ToggleButton("Only show Ping when spiking", xpos, ypos, settings_scroll, "as_connectioninfo_ping_warning")
+    ToggleButton("Only show Ping when spiking", xpos, ypos, scroll, "as_connectioninfo_ping_warning")
     addSpace( 0, 20 )
 
-    ValueSlider( "Spiking Ping", xpos, ypos, 30, 400, settings_scroll, "as_connectioninfo_ping_warning_amt" )
+    ValueSlider( "Spiking Ping", xpos, ypos, 30, 400, scroll, "as_connectioninfo_ping_warning_amt" )
     addSpace( -20, 20 )
 
-    ToggleButton("Show FPS", xpos, ypos, settings_scroll, "as_connectioninfo_fps")
+    ToggleButton("Show FPS", xpos, ypos, scroll, "as_connectioninfo_fps")
     addSpace( 20, 20 )
 
-    ToggleButton("Only show FPS when dropping", xpos, ypos, settings_scroll, "as_connectioninfo_fps_warning")
+    ToggleButton("Only show FPS when dropping", xpos, ypos, scroll, "as_connectioninfo_fps_warning")
     addSpace( 0, 20 )
 
-    ValueSlider( "Dropping FPS", xpos, ypos, 1, 200, settings_scroll, "as_connectioninfo_fps_warning_amt" )
+    ValueSlider( "Dropping FPS", xpos, ypos, 1, 200, scroll, "as_connectioninfo_fps_warning_amt" )
     addSpace( 0, 20 )
 
-    resetX()
+    return scroll
+end
 
--- ██████╗ ███████╗██████╗ ███████╗ ██████╗ ██████╗ ███╗   ███╗ █████╗ ███╗   ██╗ ██████╗███████╗
--- ██╔══██╗██╔════╝██╔══██╗██╔════╝██╔═══██╗██╔══██╗████╗ ████║██╔══██╗████╗  ██║██╔════╝██╔════╝
--- ██████╔╝█████╗  ██████╔╝█████╗  ██║   ██║██████╔╝██╔████╔██║███████║██╔██╗ ██║██║     █████╗
--- ██╔═══╝ ██╔══╝  ██╔══██╗██╔══╝  ██║   ██║██╔══██╗██║╚██╔╝██║██╔══██║██║╚██╗██║██║     ██╔══╝
--- ██║     ███████╗██║  ██║██║     ╚██████╔╝██║  ██║██║ ╚═╝ ██║██║  ██║██║ ╚████║╚██████╗███████╗
--- ╚═╝     ╚══════╝╚═╝  ╚═╝╚═╝      ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝╚══════╝
+function AS.CLSettings.BuildPerformance( parent )
+    local scroll = vgui.Create("DScrollPanel", parent)
+    scroll:SetPos( 27, 21 )
+    scroll:SetSize( parent:GetWide() - (scroll:GetX() * 2) - 3, parent:GetTall() - (scroll:GetY() * 2) - 8 )
 
-    SectionLabel( "Performance", xpos, ypos, settings_scroll )
-    addSpace( 0, 30 )
+    local xpos = 0
+    local ypos = 5
+    local function addSpace(x, y)
+        xpos = (xpos + (x or 0))
+        ypos = (ypos + (y or 0)) 
+    end
+    local function resetX()
+        xpos = 3
+    end
 
-    ToggleButton("GMod Multi-Core", xpos, ypos, settings_scroll, "gmod_mcore_test")
+    SectionLabel( "General", xpos, ypos, scroll )
+    addSpace( 0, 35 )
+
+    ToggleButton("GMod Multi-Core", xpos, ypos, scroll, "gmod_mcore_test")
     addSpace( 0, 20 )
 
-    ValueSlider( "Item Render Distance", xpos, ypos, 100, 4000, settings_scroll, "as_item_renderdist" )
+    ValueSlider( "Item Render Distance", xpos, ypos, 100, 4000, scroll, "as_item_renderdist" )
     addSpace( 0, 20 )
 
-    ValueSlider( "Entity Render Distance", xpos, ypos, 500, 8000, settings_scroll, "as_entity_renderdist" )
+    ValueSlider( "Entity Render Distance", xpos, ypos, 500, 8000, scroll, "as_entity_renderdist" )
     addSpace( 0, 20 )
 
-    resetX()
+    return scroll
+end
 
--- ██████╗ ██╗███╗   ██╗██████╗ ███████╗
--- ██╔══██╗██║████╗  ██║██╔══██╗██╔════╝
--- ██████╔╝██║██╔██╗ ██║██║  ██║███████╗
--- ██╔══██╗██║██║╚██╗██║██║  ██║╚════██║
--- ██████╔╝██║██║ ╚████║██████╔╝███████║
--- ╚═════╝ ╚═╝╚═╝  ╚═══╝╚═════╝ ╚══════╝
+function AS.CLSettings.BuildBinds( parent )
+    local scroll = vgui.Create("DScrollPanel", parent)
+    scroll:SetPos( 27, 21 )
+    scroll:SetSize( parent:GetWide() - (scroll:GetX() * 2) - 3, parent:GetTall() - (scroll:GetY() * 2) - 8 )
 
-    SectionLabel( "Key Binds", xpos, ypos, settings_scroll )
-    addSpace( 0, 30 )
+    local xpos = 0
+    local ypos = 5
+    local function addSpace(x, y)
+        xpos = (xpos + (x or 0))
+        ypos = (ypos + (y or 0)) 
+    end
+    local function resetX()
+        xpos = 3
+    end
 
-    SmallLabel( "Left click the button to start a bind, press any button to\nset the bind. Press 'Escape' to cancel a bind.", xpos, ypos, settings_scroll )
+    SmallLabel( "Left click the button to start a bind, press any button to\nset the bind. Press 'Escape' to cancel a bind.", xpos, ypos, scroll )
     addSpace( 0, 40 )
 
-    KeyBind( "Inventory", xpos, ypos, settings_scroll, "as_bind_inventory" )
+    KeyBind( "Inventory", xpos, ypos, scroll, "as_bind_inventory" )
     addSpace( 0, 20 )
 
-    KeyBind( "Skills", xpos, ypos, settings_scroll, "as_bind_skills" )
+    KeyBind( "Skills", xpos, ypos, scroll, "as_bind_skills" )
     addSpace( 0, 20 )
 
-    KeyBind( "Missions", xpos, ypos, settings_scroll, "as_bind_missions" )
+    KeyBind( "Missions", xpos, ypos, scroll, "as_bind_missions" )
     addSpace( 0, 20 )
 
-    KeyBind( "Statistics", xpos, ypos, settings_scroll, "as_bind_stats" )
+    KeyBind( "Statistics", xpos, ypos, scroll, "as_bind_stats" )
     addSpace( 0, 20 )
 
-    KeyBind( "Players", xpos, ypos, settings_scroll, "as_bind_players" )
+    KeyBind( "Players", xpos, ypos, scroll, "as_bind_players" )
     addSpace( 0, 20 )
 
-    KeyBind( "Classes", xpos, ypos, settings_scroll, "as_bind_class" )
+    KeyBind( "Classes", xpos, ypos, scroll, "as_bind_class" )
     addSpace( 0, 20 )
 
-    KeyBind( "Crafting", xpos, ypos, settings_scroll, "as_bind_craft" )
+    KeyBind( "Crafting", xpos, ypos, scroll, "as_bind_craft" )
     addSpace( 0, 20 )
 
-    KeyBind( "Own/Unown Objects", xpos, ypos, settings_scroll, "as_bind_ownership" )
+    KeyBind( "Own/Unown Objects", xpos, ypos, scroll, "as_bind_ownership" )
     addSpace( 0, 20 )
 
-    KeyBind( "Thirdperson", xpos, ypos, settings_scroll, "as_bind_thirdperson" )
+    KeyBind( "Thirdperson", xpos, ypos, scroll, "as_bind_thirdperson" )
     addSpace( 0, 20 )
+
+    return scroll
+end
+
+function AS.CLSettings.BuildOthers( parent )
+    local scroll = vgui.Create("DScrollPanel", parent)
+    scroll:SetPos( 27, 21 )
+    scroll:SetSize( parent:GetWide() - (scroll:GetX() * 2) - 3, parent:GetTall() - (scroll:GetY() * 2) - 8 )
+
+    local xpos = 0
+    local ypos = 5
+    local function addSpace(x, y)
+        xpos = (xpos + (x or 0))
+        ypos = (ypos + (y or 0)) 
+    end
+    local function resetX()
+        xpos = 0
+    end
+
+    DefaultButton( "Reset All Settings", xpos, ypos, 515, 25, scroll, function()
+        Verify( function()
+            AS.CLSettings.SetToDefault()
+        end, true)
+    end)
+    addSpace( 0, 20 )
+
+    return scroll
 end

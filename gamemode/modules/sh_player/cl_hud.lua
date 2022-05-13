@@ -67,7 +67,7 @@ AS_ClientConVar( "as_hud_stress_yadd", "0", true, false )
 -- Injured Indication
 AS_ClientConVar( "as_hud_injured", "1", true, false )
 AS_ClientConVar( "as_hud_injured_heartbeat", "1", true, false )
-AS_ClientConVar( "as_hud_injured_wake", "35", true, false ) --Percentage of health the player needs to be below for the injured hud to awake.
+AS_ClientConVar( "as_hud_injured_wake", "40", true, false ) --Percentage of health the player needs to be below for the injured hud to awake.
 
 -- Connection Information
 AS_ClientConVar( "as_connectioninfo", "1", true, false ) --Show connection information?

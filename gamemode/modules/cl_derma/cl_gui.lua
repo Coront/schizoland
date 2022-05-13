@@ -527,3 +527,48 @@ function SimpleWang( parent, width, height, x, y, min, max, decimal )
 
     return wang
 end
+
+-- ███╗   ██╗███████╗██╗    ██╗    ██████╗ ███████╗██████╗ ███╗   ███╗ █████╗
+-- ████╗  ██║██╔════╝██║    ██║    ██╔══██╗██╔════╝██╔══██╗████╗ ████║██╔══██╗
+-- ██╔██╗ ██║█████╗  ██║ █╗ ██║    ██║  ██║█████╗  ██████╔╝██╔████╔██║███████║
+-- ██║╚██╗██║██╔══╝  ██║███╗██║    ██║  ██║██╔══╝  ██╔══██╗██║╚██╔╝██║██╔══██║
+-- ██║ ╚████║███████╗╚███╔███╔╝    ██████╔╝███████╗██║  ██║██║ ╚═╝ ██║██║  ██║
+-- ╚═╝  ╚═══╝╚══════╝ ╚══╝╚══╝     ╚═════╝ ╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝
+
+function CreateCloseButton( parent, size, x, y )
+    local button = vgui.Create("DButton", parent)
+    button:SetSize( size, size )
+    button:SetPos( x, y )
+    button:SetFont("TargetID")
+    button:SetText("")
+    function button:Paint( w, h )
+        surface.SetMaterial( Material("gui/aftershock/button/close.png") )
+        surface.SetDrawColor( 255, 255, 255, 255 )
+        surface.DrawTexturedRect( 0, 0, w, h )
+    end
+    function button:DoClick()
+        if IsValid(button:GetParent()) then
+            button:GetParent():Close()
+        end
+    end
+
+    return button
+end
+
+function CreateSheetPanel( parent, width, height, x, y, color )
+    color = color or Color( 255, 255, 255, 0 )
+
+    local sheet = vgui.Create("DPropertySheet", parent)
+    sheet:SetPos( x, y )
+    sheet:SetFadeTime( 0.2 )
+    sheet:SetSize( width, height )
+    function sheet:Paint( w, h )
+        surface.SetDrawColor( color )
+        surface.DrawRect( 0, 0, w, h )
+    end
+
+    return sheet
+end
+function AddSheet( parent, name, icon, child )
+    parent:AddSheet(name, child, icon)
+end
