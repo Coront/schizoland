@@ -17,6 +17,21 @@ AS.AddBaseItem("food_unsatiate", {
     }
 })
 
+-- ██████╗  █████╗ ██╗    ██╗
+-- ██╔══██╗██╔══██╗██║    ██║
+-- ██████╔╝███████║██║ █╗ ██║
+-- ██╔══██╗██╔══██║██║███╗██║
+-- ██║  ██║██║  ██║╚███╔███╔╝
+-- ╚═╝  ╚═╝╚═╝  ╚═╝ ╚══╝╚══╝
+
+--  ██████╗ ██████╗  ██████╗ ██╗  ██╗███████╗██████╗
+-- ██╔════╝██╔═══██╗██╔═══██╗██║ ██╔╝██╔════╝██╔══██╗
+-- ██║     ██║   ██║██║   ██║█████╔╝ █████╗  ██║  ██║
+-- ██║     ██║   ██║██║   ██║██╔═██╗ ██╔══╝  ██║  ██║
+-- ╚██████╗╚██████╔╝╚██████╔╝██║  ██╗███████╗██████╔╝
+--  ╚═════╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═════╝
+
+
 AS.AddBaseItem("food_beans", {
     name = "Can of Beans",
     desc = "An old aluminum can that contains perfectly good beans.",
@@ -46,6 +61,9 @@ AS.AddBaseItem("food_meat_antlion", {
     use = {
         hunger = 15,
         soundcs = "npc/headcrab/headbite.wav",
+        stat = {
+            [1] = {effect = "poison", length = 10, stack = true},
+        },
     },
     hidden = true,
     craft = {
@@ -71,25 +89,6 @@ AS.AddBaseItem("food_cooked_antlion", {
         ["misc_scrap"] = 10,
         ["misc_smallparts"] = 5,
         ["misc_chemical"] = 15,
-    }
-})
-
-AS.AddBaseItem("food_potato", {
-    name = "Potato",
-    desc = "It's a potato. Apparently these are still grown.",
-    category = "food",
-    model = "models/props_phx/misc/potato.mdl",
-    value = 2,
-    weight = 0.15,
-    use = {
-        hunger = 15,
-        soundcs = "npc/headcrab/headbite.wav",
-    },
-    hidden = true,
-    craft = {
-        ["misc_scrap"] = 0,
-        ["misc_smallparts"] = 0,
-        ["misc_chemical"] = 0,
     }
 })
 
@@ -186,7 +185,10 @@ AS.AddBaseItem("food_dirty_water", {
         soundcs = "npc/barnacle/barnacle_gulp1.wav",
         items = {
             ["misc_emptybottle"] = 1,
-        }
+        },
+        stat = {
+            [1] = {effect = "poison", length = 5, stack = true},
+        },
     },
     hidden = true,
     craft = {
@@ -231,6 +233,9 @@ AS.AddBaseItem("food_milk", {
     use = {
         thirst = 15,
         soundcs = "npc/barnacle/barnacle_gulp1.wav",
+        stat = {
+            [1] = {effect = "poison", length = 3, stack = true},
+        },
     },
     hidden = true,
     craft = {

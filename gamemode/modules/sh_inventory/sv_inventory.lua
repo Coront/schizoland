@@ -10,7 +10,7 @@ function PlayerMeta:ValidateInventory() --This function will cycle through a pla
     end
     self:SetInventory( inv )
 
-    if #invaliditems > 0 then
+    if table.Count(invaliditems) > 0 then
         self:ChatPrint("Invalid items have been detected in your inventory, and have been cleared:")
         for k, v in pairs(invaliditems) do
             self:ChatPrint(k .. "(" .. v .. ")")
@@ -56,7 +56,11 @@ function PlayerMeta:UseItem( item )
     if use.hunger or use.thirst then self:ResyncSatiation() end
     if use.stat then
         for k, v in pairs( use.stat ) do
-            self:AddStatus( v.effect, v.length )
+            local length = v.length
+            if (v.stack or false) then
+                length = self.Status and self.Status[v.effect] and (self.Status[v.effect].time - CurTime()) + v.length or v.length
+            end
+            self:AddStatus( v.effect, length )
             self:ResyncStatuses()
         end
     end
