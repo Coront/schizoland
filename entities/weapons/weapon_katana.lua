@@ -90,4 +90,4 @@ SWEP.Sounds.Hit["Default"] = SWEP.Sounds.Hit[MAT_FLESH]
 SWEP.Damage = 27
 SWEP.HitRange = 90
 SWEP.NextSwing = 1.2
-SWEP.ImpactDelay = 0.15
+SWEP.ImpactDelay = 0.1
