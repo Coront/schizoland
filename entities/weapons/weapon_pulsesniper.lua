@@ -44,7 +44,7 @@ SWEP.Sounds["reload"] = {
 	[2] = {time = 1.2, sound = Sound("weapons/ar2/ar2_reload_push.wav")},
 }
 
-SWEP.FireModes = {"auto", "semi"}
+SWEP.FireModes = {"semi"}
 
 SWEP.Category = "FA:S 2 Weapons"
 SWEP.Base = "fas2_base"
