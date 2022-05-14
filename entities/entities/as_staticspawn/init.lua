@@ -46,12 +46,12 @@ function ENT:CreateNPC()
 end
 
 function ENT:Think()
-    self.SpawnTime = self.SpawnTime or 3600
+    self.SpawnTime = self.SpawnTime or 4800
     if not tobool(GetConVar("as_occupation"):GetInt()) then return end
 
     if CurTime() > self:GetNextSpawn() then
         if self.Disabled then --Intentionally pushing the time to stop rapid thinking of this function.
-            self:SetNextSpawn( CurTime() + 10 )
+            self:SetNextSpawn( CurTime() + 60 )
             return 
         end
 
