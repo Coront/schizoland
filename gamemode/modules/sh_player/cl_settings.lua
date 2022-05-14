@@ -37,6 +37,7 @@ function AS.CLSettings.Menu()
     AddSheet( sheets, "Performance", "icon16/chart_bar.png", AS.CLSettings.BuildPerformance( sheets ) )
     AddSheet( sheets, "Key Binds", "icon16/keyboard.png", AS.CLSettings.BuildBinds( sheets ) )
     AddSheet( sheets, "Other", "icon16/asterisk_yellow.png", AS.CLSettings.BuildOthers( sheets ) )
+    AddSheet( sheets, "Credits", "icon16/group.png", AS.CLSettings.BuildCredits( sheets ) )
 
     function frame_settings:OnClose()
         SettingsOpen = false
@@ -469,6 +470,36 @@ function AS.CLSettings.BuildOthers( parent )
         end, true)
     end)
     addSpace( 0, 20 )
+
+    return scroll
+end
+
+function AS.CLSettings.BuildCredits( parent )
+    local scroll = vgui.Create("DScrollPanel", parent)
+    scroll:SetPos( 27, 21 )
+    scroll:SetSize( parent:GetWide() - (scroll:GetX() * 2) - 3, parent:GetTall() - (scroll:GetY() * 2) - 8 )
+
+    local xpos = 0
+    local ypos = 5
+    local function addSpace(x, y)
+        xpos = (xpos + (x or 0))
+        ypos = (ypos + (y or 0)) 
+    end
+    local function resetX()
+        xpos = 0
+    end
+
+    SectionLabel( "Aftershock Credits", xpos, ypos, scroll )
+    addSpace( 0, 30 )
+
+    for k, v in SortedPairs( SET.Credits ) do
+        DefaultButton( "*", xpos, ypos, 20, 20, scroll, function()
+            gui.OpenURL( v.profile )
+        end)
+        addSpace( 22, 0 )
+        SmallLabel( v.player, xpos, ypos, scroll )
+        addSpace( -22, 22 )
+    end
 
     return scroll
 end

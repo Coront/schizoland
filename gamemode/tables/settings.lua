@@ -254,6 +254,12 @@ NOD.ScavItems = { --Table containing potential items that will spawn if a item i
     ["misc_solarfilmroll"] = 40,
     ["misc_wheel"] = 40,
 }
+SET.Credits = {
+    [1] = {player = "Tampster - Programmer", profile = "https://steamcommunity.com/id/xXSaltLord420Xx/"},
+    [2] = {player = "ZJEX - Modeler", profile = "https://steamcommunity.com/id/Zjex72"},
+    [3] = {player = "Bizz - UI Designs (from Fallout: Decay)", profile = "https://steamcommunity.com/id/BizzPDX"},
+    [4] = {player = "Eldarstorm - Gamemode Concept (PostnukeRP)", profile = "https://steamcommunity.com/id/eldarstorm"},
+}
 
 
 
