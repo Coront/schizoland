@@ -6,6 +6,7 @@ function ENT:Initialize()
 	self:SetModel("models/props_junk/wood_crate001a_chunk05.mdl")
 	self:PhysicsInit( SOLID_VPHYSICS )
 	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetUseType( SIMPLE_USE )
 	self:SetSolid( SOLID_VPHYSICS )
 	self.FireActive = false
 	self.FireSound = "ambient/fire/mtov_flame2.wav"

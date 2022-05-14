@@ -54,7 +54,7 @@ AS.AddBaseItem("misc_hide_antlion", {
     name = "Antlion Hide",
     desc = "A hide, harvested from an antlion. Useful in the creation of some items.",
     category = "misc",
-    model = "models/gibs/antlion_gib_large_2.mdl",
+    model = "models/gibs/antlion_gib_large_1.mdl",
     value = 10,
     weight = 0.75,
     hidden = true,

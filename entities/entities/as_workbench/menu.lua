@@ -8,83 +8,74 @@ function Workbench.Menu()
     if IsValid(frame_workbench) then frame_workbench:Close() end
 
     frame_workbench = vgui.Create("DFrame")
-    frame_workbench:SetSize(700, 500)
+    frame_workbench:SetSize(650, 600)
     frame_workbench:Center()
     frame_workbench:MakePopup()
     frame_workbench:SetDraggable( false )
     frame_workbench:SetTitle( "" )
     frame_workbench:ShowCloseButton( false )
-    frame_workbench.Paint = function(_,w,h)
-        surface.SetDrawColor( COLHUD_PRIMARY )
+    function frame_workbench:Paint( w, h )
+        surface.SetDrawColor( COLHUD_SECONDARY )
         surface.DrawRect( 0, 0, w, h )
+
+        surface.SetMaterial( Material("gui/aftershock/default.png") )
+        surface.SetDrawColor( Color( 255, 255, 255, 255 ) )
+        surface.DrawTexturedRect( 0, 0, w, h )
     end
 
-    local closebutton = vgui.Create("DButton", frame_workbench)
-    closebutton:SetSize( 25, 25 )
-    closebutton:SetPos( frame_workbench:GetWide() - closebutton:GetWide(), 0)
-    closebutton:SetFont("TargetID")
-    closebutton:SetText("X")
-    closebutton:SetColor( COLHUD_SECONDARY )
-    closebutton.Paint = function( _, w, h ) end
-    closebutton.DoClick = function()
-        if IsValid(frame_workbench) then
+    local cbuttonsize = 18
+    local closebutton = CreateCloseButton( frame_workbench, cbuttonsize, frame_workbench:GetWide() - cbuttonsize - 5, 3 )
+
+    if ent:IsObjectOwnable() then
+        local pickup = vgui.Create("DButton", frame_workbench)
+        pickup:SetSize( 80, 20 )
+        pickup:SetPos( 2, 1 )
+        pickup:SetText("Pick Up")
+        pickup:SetEnabled( false )
+        pickup:SetTooltip("You are not the owner of this object.")
+        if ent:PlayerCanPickUp( LocalPlayer() ) then
+            pickup:SetEnabled( true )
+            pickup:SetTooltip("Pickup the object and place it in your inventory.")
+        end
+        function pickup:DoClick()
+            net.Start("as_tool_pickup")
+                net.WriteEntity( ent )
+            net.SendToServer()
             frame_workbench:Close()
         end
     end
 
-    local pickup = vgui.Create("DButton", frame_workbench)
-    pickup:SetSize( 80, 20 )
-    pickup:SetPos( 5, 3 )
-    pickup:SetText("Pick Up")
-    pickup:SetEnabled( false )
-    pickup:SetTooltip("You are not the owner of this object.")
-    if ent:PlayerCanPickUp( LocalPlayer() ) then
-        pickup:SetEnabled( true )
-        pickup:SetTooltip("Pickup the entity and place it in your inventory.")
-    end
-    pickup.DoClick = function()
-        net.Start("as_tool_pickup")
-            net.WriteEntity( ent )
-        net.SendToServer()
-        frame_workbench:Close()
-    end
-
     local panel = vgui.Create("DPanel", frame_workbench)
-    local x, y, space = 3, 25, 6
+    local x, y, space = 34, 25, 73
     panel:SetPos( x, y )
-    panel:SetSize( frame_workbench:GetWide() - space, (frame_workbench:GetTall() - x) - y )
-    panel.Paint = function( self, w, h )
-        surface.SetDrawColor( COLHUD_SECONDARY )
-        surface.DrawRect( 0, 0, w, h )
-    end
+    panel:SetSize( frame_workbench:GetWide() - space, (frame_workbench:GetTall() - x) - y - 1 )
+    function panel:Paint( self, w, h ) end
 
     local scroll = vgui.Create("DScrollPanel", panel)
-    scroll:SetSize( panel:GetWide(), 0 )
-    scroll:Dock( FILL )
-    scroll:DockMargin( 5, 5, 5, 5 )
+    scroll:SetSize( panel:GetWide(), panel:GetTall() )
 
     workbench_itemlist = vgui.Create( "DIconLayout", scroll )
     workbench_itemlist:SetSize( scroll:GetWide(), scroll:GetTall() )
-    workbench_itemlist:SetSpaceY( 5 )
-    workbench_itemlist:SetSpaceX( 5 )
+    workbench_itemlist:SetSpaceY( 2 )
+    workbench_itemlist:SetSpaceX( 0 )
 
     if ent.CraftTable["BaseClass"] then ent.CraftTable["BaseClass"] = nil end
     for k, v in SortedPairsByValue( ent.CraftTable ) do
         if not AS.Items[k] then continue end --Item doesnt exist
         if AS.Items[k] and not AS.Items[k].craft then AS.LuaError("Attempt to index crafting table from item with no craft table - " .. k) continue end --item exists but no craft table
-        Workbench.BuildRecipe( k )
+        Workbench.BuildRecipe( workbench_itemlist, k )
     end
 end
 net.Receive("as_workbench_open", Workbench.Menu)
 
-function Workbench.BuildRecipe( itemid )
+function Workbench.BuildRecipe( parent, itemid )
     local id = AS.Items[itemid]
 
     local isArmor = id.category == "armor" and true or false
 
-    local item = workbench_itemlist:Add("DPanel")
-    local height = isArmor and 240 or 90
-    item:SetSize(workbench_itemlist:GetWide() - 25, height)
+    local item = parent:Add("DPanel")
+    local height = isArmor and 240 or 110
+    item:SetSize(parent:GetWide() - 15, height)
     function item:Paint(w, h)
         surface.SetDrawColor( COLHUD_PRIMARY )
         surface.DrawRect( 0, 0, w, h )
@@ -99,8 +90,8 @@ function Workbench.BuildRecipe( itemid )
     end
 
     local icon = vgui.Create( "SpawnIcon", item )
-    icon:SetSize( 60, 60 )
-    local ypos = isArmor and 15 or item:GetTall() / 2 - icon:GetTall() / 2
+    icon:SetSize( 75, 75 )
+    local ypos = isArmor and 5 or item:GetTall() / 2 - icon:GetTall() / 2
     icon:SetPos( 5, ypos )
     icon:SetModel( id.model, id.skin or 0 )
     icon:SetTooltip( itemname .. "\n" .. itemdesc .. "\n\nRequirements:" .. itemreqs )
@@ -110,11 +101,11 @@ function Workbench.BuildRecipe( itemid )
     name:SetText( itemname )
     name:SetContentAlignment(4)
     name:SizeToContents()
-    name:SetPos( 70, 10 )
+    name:SetPos( 85, 10 )
 
     local scroll_desc = vgui.Create("DScrollPanel", item)
-    scroll_desc:SetSize( 440, 55 )
-    scroll_desc:SetPos( 85, 25 )
+    scroll_desc:SetSize( 320, 60 )
+    scroll_desc:SetPos( 100, 25 )
 
     local desc = vgui.Create("DLabel", scroll_desc)
     desc:SetText( itemdesc )
@@ -180,10 +171,15 @@ function Workbench.BuildRecipe( itemid )
         classreq:SetContentAlignment(4)
         classreq:SizeToContents()
         classreq:SetPos( 100, item:GetTall() - (classreq:GetTall() + 5) )
+        if LocalPlayer():GetASClass() == id.class then
+            classreq:SetColor( COLHUD_GOOD )
+        else
+            classreq:SetColor( COLHUD_BAD )
+        end
     end
 
     local scroll_reqs = vgui.Create("DScrollPanel", item)
-    local height = isArmor and 210 or 60
+    local height = isArmor and 210 or 80
     scroll_reqs:SetSize( 125, height )
     scroll_reqs:SetPos( item:GetWide() - (scroll_reqs:GetWide() + 5), 5 )
     function scroll_reqs:Paint(w,h)
@@ -200,7 +196,12 @@ function Workbench.BuildRecipe( itemid )
         if not AS.Items[k2] then AS.LuaError("Attmept to index an item that doens't exist via crafting - " .. k2) return end
         local panel = reqlist:Add("DPanel")
         panel:SetSize( reqlist:GetWide() - 16, 20 )
-        function panel:Paint(w,h) end
+        function panel:Paint(w,h)
+            if (SET.RawResources[k2] and v2 != 0 or not SET.RawResources[k2]) and not LocalPlayer():HasInInventory( k2, v2 ) then
+                surface.SetDrawColor( COLHUD_BAD )
+                surface.DrawRect( 0, 0, w, h )
+            end
+        end
 
         local name = vgui.Create("DLabel", panel)
         name:SetText( "(" .. v2 .. ") " .. AS.Items[k2].name )
@@ -215,7 +216,7 @@ function Workbench.BuildRecipe( itemid )
         silkicon:SetPos(panel:GetWide() - (silkicon:GetWide() + 2), 2)
         local silkimageicon = "icon16/cross.png"
         local paneltt = "You do not have enough " .. AS.Items[k2].name .. "(s) to craft this item.\n\nYou have: " .. LocalPlayer():GetItemCount( k2 ) .. "\nYou need: " .. v2 - LocalPlayer():GetItemCount( k2 )
-        if LocalPlayer():HasInInventory( k2, v2 ) then
+        if SET.RawResources[k2] and v2 == 0 or LocalPlayer():HasInInventory( k2, v2 ) then
             silkimageicon = "icon16/tick.png"
             paneltt = "You have enough " .. AS.Items[k2].name .. "(s) to craft this item.\n\nYou have: " .. LocalPlayer():GetItemCount( k2 ) .. "\nAfter craft remaining: " .. LocalPlayer():GetItemCount( k2 ) - v2
         end

@@ -53,6 +53,13 @@ function ENT:Think()
 	end
 end
 
+function ENT:Touch( otherEnt )
+	if IsValid(self) and self:GetItem() == "misc_emptybottle" and otherEnt:GetClass() == "as_watersource" then
+		self:SetItem("food_dirty_water")
+		self:EmitSound("ambient/water/water_spray" .. math.random( 1, 3 ) .. ".wav")
+	end
+end
+
 -- ███╗   ██╗███████╗████████╗██╗    ██╗ ██████╗ ██████╗ ██╗  ██╗██╗███╗   ██╗ ██████╗
 -- ████╗  ██║██╔════╝╚══██╔══╝██║    ██║██╔═══██╗██╔══██╗██║ ██╔╝██║████╗  ██║██╔════╝
 -- ██╔██╗ ██║█████╗     ██║   ██║ █╗ ██║██║   ██║██████╔╝█████╔╝ ██║██╔██╗ ██║██║  ███╗

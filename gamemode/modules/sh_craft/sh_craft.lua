@@ -5,6 +5,7 @@ function PlayerMeta:CanCraftItem( item, amt )
 
     if AS.Items[item].class and self:GetASClass() != AS.Items[item].class then return false end
     for k, v in pairs( AS.Items[item].craft ) do
+        if SET.RawResources[k] and v == 0 then continue end
         if not self:HasInInventory( k, v * amt ) then return false end
     end
 

@@ -55,8 +55,8 @@ AS.AddBaseItem("tool_workbench", {
 })
 
 AS.AddBaseItem("tool_pulse", {
-    name = "Pulse Assembly Station",
-    desc = "A station that allows scientists to assemble pulse weaponry.",
+    name = "Science Station",
+    desc = "A station that allows scientists to assemble pulse weaponry and other items.",
     category = "tool",
     model = "models/props_combine/combine_interface002.mdl",
     ent = "as_workbench_pulse",

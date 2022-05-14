@@ -235,7 +235,12 @@ function AS.Craft.BuildList( parent, category )
             if not AS.Items[k2] then AS.LuaError("Attmept to index an item that doens't exist via crafting - " .. k2) return end
             local panel = reqlist:Add("DPanel")
             panel:SetSize( reqlist:GetWide() - 16, 20 )
-            function panel:Paint(w,h) end
+            function panel:Paint(w,h)
+                if (SET.RawResources[k2] and v2 != 0 or not SET.RawResources[k2]) and not LocalPlayer():HasInInventory( k2, v2 ) then
+                    surface.SetDrawColor( COLHUD_BAD )
+                    surface.DrawRect( 0, 0, w, h )
+                end
+            end
 
             local name = vgui.Create("DLabel", panel)
             name:SetText( "(" .. v2 .. ") " .. AS.Items[k2].name )
@@ -250,7 +255,7 @@ function AS.Craft.BuildList( parent, category )
             silkicon:SetPos(panel:GetWide() - (silkicon:GetWide() + 2), 2)
             local silkimageicon = "icon16/cross.png"
             local paneltt = "You do not have enough " .. AS.Items[k2].name .. "(s) to craft this item.\n\nYou have: " .. LocalPlayer():GetItemCount( k2 ) .. "\nYou need: " .. v2 - LocalPlayer():GetItemCount( k2 )
-            if LocalPlayer():HasInInventory( k2, v2 ) then
+            if SET.RawResources[k2] and v2 == 0 or LocalPlayer():HasInInventory( k2, v2 ) then
                 silkimageicon = "icon16/tick.png"
                 paneltt = "You have enough " .. AS.Items[k2].name .. "(s) to craft this item.\n\nYou have: " .. LocalPlayer():GetItemCount( k2 ) .. "\nAfter craft remaining: " .. LocalPlayer():GetItemCount( k2 ) - v2
             end

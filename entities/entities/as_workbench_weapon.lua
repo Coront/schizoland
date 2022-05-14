@@ -47,4 +47,14 @@ ENT.CraftTable = {
     ["wep_sr25"] = 30,
     --Special
     ["wep_gl"] = 31,
+    --Mods
+    ["c79"] = 32,
+    ["compm4"] = 33,
+    ["eotech"] = 34,
+    ["foregrip"] = 35,
+    ["leupold"] = 36,
+    ["pso1"] = 37,
+    ["sks20mag"] = 38,
+    ["suppressor"] = 39,
+    ["tritiumsights"] = 40,
 }
