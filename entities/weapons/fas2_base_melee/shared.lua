@@ -92,7 +92,7 @@ function SWEP:Reload()
 	return
 end
 
-local Mins, Maxs = Vector(0, -39, -1), Vector(0, 30, 1)
+local Mins, Maxs = Vector(0, -15, -1), Vector(0, 15, 1)
 
 local isply, isnpc, ang
 
@@ -172,8 +172,9 @@ function SWEP:Think()
 						dmg:SetInflictor(self)
 						dmg:SetDamageForce(force * 500)
 						ent:TakeDamageInfo(dmg)
-                        local snd = istable(self.Sounds.Hit) and table.Random(self.Sounds.Hit) or self.Sounds.Hit
-						self:GetOwner():EmitSound(snd, 70, 100)
+                        local snd = self.Sounds.Hit and self.Sounds.Hit[tr.MatType] and table.Random(self.Sounds.Hit[tr.MatType]) or table.Random(self.Sounds.Hit["Default"])
+						snd = Sound( snd )
+						sound.Play( snd, tr.HitPos, 75, 100, 0.8 )
 					end
 					hit = true
 					if tr.MatType == MAT_FLESH or tr.MatType == MAT_ANTLION or tr.MatType == MAT_ALIENFLESH or tr.MatType == MAT_BLOODYFLESH then
@@ -194,45 +195,76 @@ function SWEP:Think()
 						dmg:SetInflictor(self)
 						dmg:SetDamageForce(force * 500)
 						ent:TakeDamageInfo(dmg)
-                        local snd = istable(self.Sounds.HitWall) and table.Random(self.Sounds.HitWall) or self.Sounds.HitWall
-						self:GetOwner():EmitSound(snd, 70, 100)
+                        local snd = self.Sounds.Hit and self.Sounds.Hit[tr.MatType] and table.Random(self.Sounds.Hit[tr.MatType]) or table.Random(self.Sounds.Hit["Default"])
+						snd = Sound( snd )
+						if self.Sounds.HitLocal then
+							self.Owner:EmitSound( snd, 100, 100, 1, CHAN_WEAPON)
+						else
+							sound.Play( snd, tr.HitPos, 75, 100, 0.8 )
+						end
 					end
-					
 				end
 			end
 			if tr.HitWorld then
 				if SERVER then
-                    local snd = istable(self.Sounds.HitWall) and table.Random(self.Sounds.HitWall) or self.Sounds.HitWall
-					self:GetOwner():EmitSound(snd, 70, 100)
+					local snd = self.Sounds.Hit and self.Sounds.Hit[tr.MatType] and table.Random(self.Sounds.Hit[tr.MatType]) or table.Random(self.Sounds.Hit["Default"])
+					snd = Sound( snd )
+					if self.Sounds.HitLocal then
+						self.Owner:EmitSound( snd, 100, 100, 1, CHAN_WEAPON)
+					else
+						sound.Play( snd, tr.HitPos, 75, 100, 0.8 )
+					end
 				end
 			end
 		end
 	end
-end
 
-function SWEP:PrimaryAttack()	
-	if not IsFirstTimePredicted() then return end
-	CT = CurTime()
-
-    local anim = istable(self.Anims.Slash) and table.Random(self.Anims.Slash) or self.Anims.Slash
-	
-	if CLIENT and self.Wep then
+	if CT > (self.NextIdle or 0) and self.Wep and not self.NoIdleRefresh then
 		self.Wep:SetCycle(0)
-		self.Wep:SetSequence(anim)
+		self.Wep:SetSequence(self.Anims.Idle)
 		self.Wep:SetPlaybackRate(1)
 	end
+end
 
-	self:SetNextPrimaryFire(CT + self.NextSwing)
-	self.DamageWait = CT + self.ImpactDelay
-	self.Attacking = true
+function SWEP:PrimaryAttack()
+	CT = CurTime()
+	if CT < self:GetNextPrimaryFire() then return end
+	
+	local trace = util.TraceHull({
+		start = self.Owner:GetShootPos(),
+		endpos = self.Owner:GetShootPos() + self.Owner:EyeAngles():Forward() * self.HitRange,
+		filter = self.Owner,
+		mins = Mins,
+		maxs = Maxs,
+	})
 
-	self.Owner:SetAnimation(PLAYER_ATTACK1)
-	self.AttackType = "slash"
-
-	self.DamageAmount = self.Damage * (1 + (self:GetOwner():GetSkillLevel("strength") * SKL.Strength.dmgmultinc))
-	if SERVER then
-		self.Owner:EmitSound(self.Sounds.Swing)
+	local anim
+	if trace.Hit then
+		anim = istable(self.Anims.Slash) and table.Random(self.Anims.Slash) or self.Anims.Slash
+	else
+		anim = istable(self.Anims.SlashMiss) and table.Random(self.Anims.SlashMiss) or self.Anims.SlashMiss
 	end
+
+	if IsFirstTimePredicted() then
+		self.DamageWait = CT + self.ImpactDelay
+		self.Attacking = true
+
+		self.Owner:SetAnimation(PLAYER_ATTACK1)
+		self.AttackType = "slash"
+
+		self.NextIdle = CT + (self.ImpactDelay + 0.4)
+
+		if (SERVER) then
+			self.Owner:EmitSound(self.Sounds.Swing)
+		elseif (CLIENT) and self.Wep then
+			self.Wep:SetCycle(0)
+			self.Wep:SetSequence(anim)
+			self.Wep:SetPlaybackRate(1)
+		end
+
+		self.DamageAmount = self.Damage * (1 + (self:GetOwner():GetSkillLevel("strength") * SKL.Strength.dmgmultinc))
+	end
+	self:SetNextPrimaryFire(CT + self.NextSwing)
 end
 
 function SWEP:SecondaryAttack()	

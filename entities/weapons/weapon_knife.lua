@@ -18,20 +18,30 @@ SWEP.WMPos = Vector( -1, -0.4, 1.5 )
 SWEP.HoldType = "knife"
 
 SWEP.Anims = {}
-SWEP.Anims.Draw_First = "draw"
 SWEP.Anims.Draw = "draw"
+SWEP.Anims.Idle = "idle"
 SWEP.Anims.Holster = "idle"
-SWEP.Anims.Slash = "midslash1"
-SWEP.Anims.Idle = "idle_cycle"
+SWEP.Anims.SlashMiss = {
+	"midslash1",
+	"midslash2",
+}
+SWEP.Anims.Slash = {
+	"midslash1",
+	"midslash2",
+	"stab"
+}
 
 SWEP.Sounds = {}
 SWEP.Sounds.Swing = "weapons/knife/knife_slash1.wav"
-SWEP.Sounds.HitWall = "weapons/knife/knife_hitwall1.wav"
-SWEP.Sounds.Hit = {
+SWEP.Sounds.Hit = {}
+SWEP.Sounds.Hit[MAT_FLESH] = {
 	"weapons/knife/knife_hit1.wav",
 	"weapons/knife/knife_hit2.wav",
 	"weapons/knife/knife_hit3.wav",
 	"weapons/knife/knife_hit4.wav",
+}
+SWEP.Sounds.Hit["Default"] = {
+	"weapons/knife/knife_hitwall1.wav"
 }
 
 SWEP.Damage = 18

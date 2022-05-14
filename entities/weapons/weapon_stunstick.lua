@@ -18,16 +18,23 @@ SWEP.WMPos = Vector( 1, -6, -4 )
 SWEP.HoldType = "melee"
 
 SWEP.Anims = {}
-SWEP.Anims.Draw_First = "draw"
 SWEP.Anims.Draw = "draw"
-SWEP.Anims.Holster = "holster"
-SWEP.Anims.Slash = {"misscenter1", "misscenter2"}
 SWEP.Anims.Idle = "idle01"
+SWEP.Anims.Holster = "holster"
+SWEP.Anims.SlashMiss = {
+	"misscenter1",
+	"misscenter2"
+}
+SWEP.Anims.Slash = {
+	"hitcenter1",
+	"hitcenter2",
+	"hitcenter3",
+}
 
 SWEP.Sounds = {}
 SWEP.Sounds.Swing = "weapons/stunstick/stunstick_swing1.wav"
-SWEP.Sounds.HitWall = "weapons/stunstick/stunstick_impact1.wav"
-SWEP.Sounds.Hit = {
+SWEP.Sounds.Hit = {}
+SWEP.Sounds.Hit["Default"] = {
 	"weapons/stunstick/stunstick_fleshhit1.wav",
 	"weapons/stunstick/stunstick_fleshhit2.wav",
 }
