@@ -132,7 +132,7 @@ hook.Add( "Think", "AS_Effect_Poison", function()
         local severepoison = v:HasStatus( "poisonsevere" ) and true or false
 
         v.Poison_NextTick = CurTime() + (severepoison and 0.39 or 0.99)
-        if ( SERVER ) and v:Alive() then
+        if ( SERVER ) and v:Alive() and not v.Devmode then
             if v:Health() > 1 then
                 v:SetHealth( v:Health() - 1 )
             else
