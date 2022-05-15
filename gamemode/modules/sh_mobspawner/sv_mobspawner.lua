@@ -66,6 +66,7 @@ function AS.Grid.Save( ply )
     end
 
     ply:ChatPrint("Finished! Total of " .. #ActiveGrid .. " Spawner(s) on " .. game.GetMap() .. ".")
+    print( game.GetMap() .. " grid saved by " .. ply:Nick() )
 end
 concommand.Add( "as_grid_save", AS.Grid.Save )
 

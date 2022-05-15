@@ -174,7 +174,7 @@ function SWEP:Think()
 						ent:TakeDamageInfo(dmg)
                         local snd = self.Sounds.Hit and self.Sounds.Hit[tr.MatType] and table.Random(self.Sounds.Hit[tr.MatType]) or table.Random(self.Sounds.Hit["Default"])
 						snd = Sound( snd )
-						sound.Play( snd, tr.HitPos, 75, 100, 0.8 )
+						sound.Play( snd, tr.HitPos, 75, 100, 1 )
 					end
 					hit = true
 					if tr.MatType == MAT_FLESH or tr.MatType == MAT_ANTLION or tr.MatType == MAT_ALIENFLESH or tr.MatType == MAT_BLOODYFLESH then
@@ -200,7 +200,7 @@ function SWEP:Think()
 						if self.Sounds.HitLocal then
 							self.Owner:EmitSound( snd, 100, 100, 1, CHAN_WEAPON)
 						else
-							sound.Play( snd, tr.HitPos, 75, 100, 0.8 )
+							sound.Play( snd, tr.HitPos, 75, 100, 1 )
 						end
 					end
 				end
@@ -212,7 +212,7 @@ function SWEP:Think()
 					if self.Sounds.HitLocal then
 						self.Owner:EmitSound( snd, 100, 100, 1, CHAN_WEAPON)
 					else
-						sound.Play( snd, tr.HitPos, 75, 100, 0.8 )
+						sound.Play( snd, tr.HitPos, 75, 100, 1 )
 					end
 				end
 			end
