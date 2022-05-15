@@ -1235,6 +1235,7 @@ function AS.Inventory.BuildPlayers()
     local xpos, ypos = 5, 5
 
     for k, v in pairs( player.GetAll() ) do
+        if not IsValid(v) then continue end
         if not v:IsLoaded() then continue end
 
         local panel = vgui.Create("DPanel", scroll_players)
