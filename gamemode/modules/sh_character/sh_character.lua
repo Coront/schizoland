@@ -11,9 +11,7 @@ function PlayerMeta:Nickname() --Returns the player's name.
 end
 
 function PlayerMeta:IsFemale()
-    if string.find( self:GetNWString( "as_referencemodel" ), "female" ) then
-        return true 
-    end
+    if AS.CharacterModels[self:GetNWString( "as_referencemodel" )].female then return true end
     return false
 end
 

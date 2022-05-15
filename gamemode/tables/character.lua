@@ -1,3 +1,92 @@
+-- ███╗   ███╗ ██████╗ ██████╗ ███████╗██╗     ███████╗
+-- ████╗ ████║██╔═══██╗██╔══██╗██╔════╝██║     ██╔════╝
+-- ██╔████╔██║██║   ██║██║  ██║█████╗  ██║     ███████╗
+-- ██║╚██╔╝██║██║   ██║██║  ██║██╔══╝  ██║     ╚════██║
+-- ██║ ╚═╝ ██║╚██████╔╝██████╔╝███████╗███████╗███████║
+-- ╚═╝     ╚═╝ ╚═════╝ ╚═════╝ ╚══════╝╚══════╝╚══════╝
+
+AS.CharacterModels = {
+    --Male 1
+    ["models/player/group01/male_01.mdl"] = {name = "Male 1"},
+    ["models/kayf/humans/group01/male_01.mdl"] = {name = "Male 1 - Leather Jacket"},
+    ["models/kayf/humans/group02/male_01.mdl"] = {name = "Male 1 - Flannel"},
+    --Male 2
+    ["models/player/group01/male_02.mdl"] = {name = "Male 2"},
+    ["models/player/group02/male_02.mdl"] = {name = "Male 2 - Cotton"},
+    ["models/kayf/humans/group01/male_02.mdl"] = {name = "Male 2 - Hoodie"},
+    ["models/kayf/humans/group02/male_02.mdl"] = {name = "Male 2 - Uniform"},
+    --Male 3
+    ["models/player/group01/male_03.mdl"] = {name = "Male 3"},
+    ["models/kayf/humans/group01/male_03.mdl"] = {name = "Male 3 - Leather Jacket"},
+    ["models/kayf/humans/group02/male_03.mdl"] = {name = "Male 3 - Flannel"},
+    --Male 4
+    ["models/player/group01/male_04.mdl"] = {name = "Male 4"},
+    ["models/player/group02/male_04.mdl"] = {name = "Male 4 - Cotton"},
+    ["models/kayf/humans/group01/male_04.mdl"] = {name = "Male 4 - Hoodie"},
+    --Male 5
+    ["models/player/group01/male_05.mdl"] = {name = "Male 5"},
+    ["models/kayf/humans/group01/male_05.mdl"] = {name = "Male 5 - Leather Jacket"},
+    ["models/kayf/humans/group02/male_05.mdl"] = {name = "Male 5 - Flannel"},
+    --Male 6
+    ["models/player/group01/male_06.mdl"] = {name = "Male 6"},
+    ["models/player/group02/male_06.mdl"] = {name = "Male 6 - Cotton"},
+    ["models/kayf/humans/group01/male_06.mdl"] = {name = "Male 6 - Hoodie"},
+    ["models/kayf/humans/group02/male_06.mdl"] = {name = "Male 6 - Uniform"},
+    --Male 7
+    ["models/player/group01/male_07.mdl"] = {name = "Male 7"},
+    ["models/kayf/humans/group01/male_07.mdl"] = {name = "Male 7 - Leather Jacket"},
+    ["models/kayf/humans/group02/male_07.mdl"] = {name = "Male 7 - Flannel"},
+    --Male 8
+    ["models/player/group01/male_08.mdl"] = {name = "Male 8"},
+    ["models/player/group02/male_08.mdl"] = {name = "Male 8 - Cotton"},
+    ["models/kayf/humans/group01/male_08.mdl"] = {name = "Male 8 - Hoodie"},
+    ["models/kayf/humans/group02/male_08.mdl"] = {name = "Male 8 - Uniform"},
+    --Male 9
+    ["models/player/group01/male_09.mdl"] = {name = "Male 9"},
+    ["models/kayf/humans/group01/male_09.mdl"] = {name = "Male 9 - Leather Jacket"},
+    ["models/kayf/humans/group02/male_09.mdl"] = {name = "Male 9 - Flannel"},
+
+    --Female 1
+    ["models/player/group01/female_01.mdl"] = {name = "Female 1", female = true},
+    ["models/kayf/humans/group01/female_01.mdl"] = {name = "Female 1 - Tracksuit", female = true},
+    ["models/kayf/humans/group02/female_01.mdl"] = {name = "Female 1 - Casual", female = true},
+    --Female 2
+    ["models/player/group01/female_02.mdl"] = {name = "Female 2", female = true},
+    ["models/kayf/humans/group01/female_02.mdl"] = {name = "Female 2 - Tracksuit", female = true},
+    ["models/kayf/humans/group02/female_02.mdl"] = {name = "Female 2 - Casual", female = true},
+    --Female 3
+    ["models/player/group01/female_03.mdl"] = {name = "Female 3", female = true},
+    ["models/kayf/humans/group01/female_03.mdl"] = {name = "Female 3 - Tracksuit", female = true},
+    ["models/kayf/humans/group02/female_03.mdl"] = {name = "Female 3 - Casual", female = true},
+    --Female 4
+    ["models/player/group01/female_04.mdl"] = {name = "Female 4", female = true},
+    ["models/kayf/humans/group01/female_04.mdl"] = {name = "Female 4 - Tracksuit", female = true},
+    ["models/kayf/humans/group02/female_04.mdl"] = {name = "Female 4 - Casual", female = true},
+    --Female 5
+    ["models/player/group01/female_05.mdl"] = {name = "Female 5", female = true},
+    ["models/kayf/humans/group01/female_07.mdl"] = {name = "Female 5 - Tracksuit", female = true},
+    ["models/kayf/humans/group02/female_07.mdl"] = {name = "Female 5 - Casual", female = true},
+    --Female 6
+    ["models/player/group01/female_06.mdl"] = {name = "Female 6", female = true},
+    ["models/kayf/humans/group01/female_06.mdl"] = {name = "Female 6 - Tracksuit", female = true},
+    ["models/kayf/humans/group02/female_06.mdl"] = {name = "Female 6 - Casual", female = true},
+}
+
+function FindModelByName( name )
+    for k, v in pairs( AS.CharacterModels ) do
+        if v.name == name then
+            return k
+        end
+    end
+end
+
+-- ███████╗ ██████╗ ██╗   ██╗███╗   ██╗██████╗ ███████╗
+-- ██╔════╝██╔═══██╗██║   ██║████╗  ██║██╔══██╗██╔════╝
+-- ███████╗██║   ██║██║   ██║██╔██╗ ██║██║  ██║███████╗
+-- ╚════██║██║   ██║██║   ██║██║╚██╗██║██║  ██║╚════██║
+-- ███████║╚██████╔╝╚██████╔╝██║ ╚████║██████╔╝███████║
+-- ╚══════╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═══╝╚═════╝ ╚══════╝
+
 AS.CharacterSounds = {}
 AS.CharacterSounds.Male = {}
 AS.CharacterSounds.Female = {}

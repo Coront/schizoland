@@ -91,12 +91,12 @@ function AS.CharacterSelect.NewCharacter( new )
     modellist:SetPos( scroll:GetWide() / 2 - modellist:GetWide() / 2, 175)
     modellist:SetMultiSelect( false )
     modellist:AddColumn( "Models" )
-    for k, v in SortedPairs(SET.SelectableModels) do
-        modellist:AddLine(k)
+    for k, v in SortedPairsByMemberValue(AS.CharacterModels, "name") do
+        modellist:AddLine(v.name)
     end
-    local _, selectedModel = table.Random(SET.SelectableModels)
+    local _, selectedModel = table.Random(AS.CharacterModels)
     function modellist:OnRowSelected( _, row )
-        selectedModel = row:GetValue(1)
+        selectedModel = FindModelByName( row:GetValue(1) )
         surface.PlaySound(UICUE.SELECT)
     end
 

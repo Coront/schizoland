@@ -115,7 +115,7 @@ function FinishCharacter(len, ply)
     for k, v in pairs(SET.BannedWords) do
         if string.find(name:lower(), v) then ply:Kick("Inappropriate name usage") return end
     end
-    if not SET.SelectableModels[model] then model = table.Random(SET.SelectableModels) ply:ChatPrint("Model validation failed. One was automatically assigned to you.") end --Dude literally tried to use a model that doesn't exist. We'll pick one for them.
+    if not AS.CharacterModels[model] then model = table.Random(AS.CharacterModels) ply:ChatPrint("Model validation failed. One was automatically assigned to you.") end --Dude literally tried to use a model that doesn't exist. We'll pick one for them.
     local _, classbackup = table.Random(AS.Classes)
     if not AS.Classes[class] then class = classbackup ply:ChatPrint("Class validation failed. One was automatically assigned to you.") return end --Apparently tried to use a invalid class. We will also pick one for them.
 
