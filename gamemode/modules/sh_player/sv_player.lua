@@ -147,6 +147,7 @@ hook.Add( "DoPlayerDeath", "AS_PlayerDeath", function( ply, attacker, dmginfo )
         contents.ammo = contents.ammo or {}
         contents.ammo[translateAmmoNameID(game.GetAmmoName(k))] = (contents.ammo[translateAmmoNameID(game.GetAmmoName(k))] or 0) + v
     end
+    ply:SetAttachmentInventory( {} ) --Wipe Attachments
 
     if not tobool(GetConVar("as_cases"):GetInt()) then
         ply:ChatPrint("Your items will be returned to you when you respawn.")
