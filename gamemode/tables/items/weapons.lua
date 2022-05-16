@@ -9,7 +9,7 @@ AS.AddBaseItem("wep_knife", {
     name = "Knife",
     desc = "A crappy old knife that has been sharpened to be usable again.",
     category = "weapon",
-    model = "models/weapons/w_knife_t.mdl",
+    model = "models/weapons/w_knife_ct.mdl",
     wep = "weapon_knife",
     value = 5,
     weight = 1,

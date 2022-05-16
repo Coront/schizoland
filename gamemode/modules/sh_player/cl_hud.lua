@@ -25,18 +25,19 @@ AS_ClientConVar( "as_hud_color_bad_g", "50", true, false )
 AS_ClientConVar( "as_hud_color_bad_b", "50", true, false )
 -- Health Bar
 AS_ClientConVar( "as_hud_healthbar", "1", true, false ) --Enable?
-AS_ClientConVar( "as_hud_healthbar_amount", "1", true, false ) --Enable amount?
+AS_ClientConVar( "as_hud_healthbar_amount", "0", true, false ) --Enable amount?
 AS_ClientConVar( "as_hud_healthbar_xadd", "0", true, false ) --X position add
 AS_ClientConVar( "as_hud_healthbar_yadd", "0", true, false ) --Y position add
 AS_ClientConVar( "as_hud_healthbar_width", "200", true, false ) --Width
-AS_ClientConVar( "as_hud_healthbar_height", "20", true, false ) --Height
+AS_ClientConVar( "as_hud_healthbar_height", "15", true, false ) --Height
 -- Satiation Bars
 AS_ClientConVar( "as_hud_satiationbars", "1", true, false ) --Enable?
 AS_ClientConVar( "as_hud_satiationbars_amount", "0", true, false ) --Enable amount?
 AS_ClientConVar( "as_hud_satiationbars_xadd", "0", true, false ) --X position add
 AS_ClientConVar( "as_hud_satiationbars_yadd", "0", true, false ) --Y position add
-AS_ClientConVar( "as_hud_satiationbars_width", "150", true, false ) --Width
+AS_ClientConVar( "as_hud_satiationbars_width", "100", true, false ) --Width
 AS_ClientConVar( "as_hud_satiationbars_height", "10", true, false ) --Height
+AS_ClientConVar( "as_hud_satiationbars_showwhenneeded", "1", true, false ) --Show only hunger or thirst needed?
 AS_ClientConVar( "as_hud_satiationbars_showindic", "1", true, false )
 -- Effects
 AS_ClientConVar( "as_hud_effects", "1", true, false ) --Enable
@@ -96,13 +97,16 @@ function AftershockHUD()
         local ypos = GetConVar("as_hud_healthbar_yadd"):GetInt()
         local width = GetConVar("as_hud_healthbar_width"):GetInt() * HUD_SCALE
         local height = GetConVar("as_hud_healthbar_height"):GetInt() * HUD_SCALE
-        local barx, bary, width, height, outline = (xpos + (80)), ((ypos - height) + (ScrH() * 0.94)), (width), (height), (1)
+        local barx, bary, width, height, outline = (xpos + (100)), ((ypos - height) + (ScrH() * 0.92)), (width), (height), (1)
+
+        draw.SimpleTextOutlined("HP", "AftershockHUD", barx, bary + (height / 2) - (2 * HUD_SCALE), COLHUD_DEFAULT, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER, outline, Color(0,0,0))
+        barx = barx + (35 * HUD_SCALE)
 
         surface.SetDrawColor(COLHUD_DEFAULT) --Set color to hud color
         surface.DrawOutlinedRect(barx, bary, width, height, outline) --Health bar outline
         surface.DrawRect(barx + 2, bary + 2, (health / maxhealth) * (width - 4), height - 4) --Health bar
 
-        local hp, amtx, amty, outline = (health), ((xpos + width) + (85)), ((ypos - (height / 1.9)) + (ScrH() * 0.94)), (1)
+        local hp, amtx, amty, outline = (health), ((xpos + width + barx) + (5)), bary + (height / 2) - (2 * HUD_SCALE), (1)
         if ply.Devmode then
             surface.SetDrawColor( Color( 255, 255, 255, 255 ) )
             surface.SetMaterial( Material( "icon16/shield.png" ) )
@@ -123,48 +127,71 @@ function AftershockHUD()
         local thirst = ply:GetThirst()
         local maxhunger = ply:GetMaxHunger()
         local maxthirst = ply:GetMaxThirst()
+        local showwhenneeded = tobool(GetConVar("as_hud_satiationbars_showwhenneeded"):GetInt())
         local xpos = GetConVar("as_hud_satiationbars_xadd"):GetInt()
         local ypos = GetConVar("as_hud_satiationbars_yadd"):GetInt()
         local width = GetConVar("as_hud_satiationbars_width"):GetInt() * HUD_SCALE
         local height = GetConVar("as_hud_satiationbars_height"):GetInt() * HUD_SCALE
-        local barx, bary, width, height, outline = (xpos + 80), (ypos + (ScrH() * 0.941)), (width), (height), (1)
         local iconsize = 10
+        local barx, bary, width, height, outline = (xpos + (100) + ((35 - iconsize - 2) * HUD_SCALE)), (ypos + (ScrH() * 0.922)), (width), (height), (1)
+        local col = COLHUD_DEFAULT:ToTable()
+        local colgood = COLHUD_GOOD:ToTable()
 
-        --Hunger Bar
-        surface.SetDrawColor( Color( 255, 255, 255, 255 ) )
-        surface.SetMaterial( Material( "icon16/cup.png" ) )
-        surface.DrawTexturedRect( barx, bary + (height / 2) - (iconsize / 2), iconsize * HUD_SCALE, iconsize * HUD_SCALE )
-        barx = barx + (12 * HUD_SCALE)
-        surface.SetDrawColor(COLHUD_DEFAULT) --Set color to hud color
-        surface.DrawOutlinedRect(barx, bary, width, height, outline) --Hunger bar outline
-        surface.DrawRect(barx + 2, bary + 2, (hunger / maxhunger) * (width - 4), height - 4) --Hunger bar
-        --Buff Pos
-        if tobool(GetConVar("as_hud_satiationbars_showindic"):GetInt()) then
-            surface.SetDrawColor(COLHUD_GOOD)
-            surface.DrawRect( (barx - 1) + ((width / maxhunger) * SAT.SatBuffs), bary + 1, 1, height - 2)
+        Hunger_Alpha = Hunger_Alpha or 0
+        Thirst_Alpha = Thirst_Alpha or 0
+        if not showwhenneeded or showwhenneeded and hunger < SAT.SatBuffs then
+            Hunger_Alpha = math.Approach( Hunger_Alpha, 255, FrameTime() * 400 )
+        else
+            Hunger_Alpha = math.Approach( Hunger_Alpha, 0, FrameTime() * -400 )
         end
-        barx = barx - (12 * HUD_SCALE)
-        --Thirst Bar
-        bary = bary + (height + 1)
-        surface.SetDrawColor( Color( 255, 255, 255, 255 ) )
-        surface.SetMaterial( Material( "icon16/drink.png" ) )
-        surface.DrawTexturedRect( barx, bary + (height / 2) - (iconsize / 2), iconsize * HUD_SCALE, iconsize * HUD_SCALE )
-        barx = barx + (12 * HUD_SCALE)
-        surface.SetDrawColor(COLHUD_DEFAULT)
-        surface.DrawOutlinedRect(barx, bary, width, height) --Thirst bar outline
-        surface.DrawRect( barx + 2, bary + 2, (thirst / maxthirst) * (width - 4), height - 4) --Thirst bar
-        --Buff Pos
-        if tobool(GetConVar("as_hud_satiationbars_showindic"):GetInt()) then
-            surface.SetDrawColor(COLHUD_GOOD)
-            surface.DrawRect( (barx - 1) + ((width / maxthirst) * SAT.SatBuffs), bary + 1, 1, height - 2)
+        if not showwhenneeded or showwhenneeded and thirst < SAT.SatBuffs then
+            Thirst_Alpha = math.Approach( Thirst_Alpha, 255, FrameTime() * 400 )
+        else
+            Thirst_Alpha = math.Approach( Thirst_Alpha, 0, FrameTime() * -400 )
+        end
+
+        if Hunger_Alpha > 0 then
+            --Hunger Bar
+            surface.SetDrawColor( Color( 255, 255, 255, Hunger_Alpha ) )
+            surface.SetMaterial( Material( "icon16/cup.png" ) )
+            surface.DrawTexturedRect( barx, bary, iconsize * HUD_SCALE, iconsize * HUD_SCALE )
+            barx = barx + (12 * HUD_SCALE)
+            surface.SetDrawColor( Color( col[1], col[2], col[3], Hunger_Alpha ) ) --Set color to hud color
+            surface.DrawOutlinedRect(barx, bary, width, height, outline) --Hunger bar outline
+            surface.DrawRect(barx + 2, bary + 2, (hunger / maxhunger) * (width - 4), height - 4) --Hunger bar
+            --Buff Pos
+            if tobool(GetConVar("as_hud_satiationbars_showindic"):GetInt()) then
+                surface.SetDrawColor( Color( colgood[1], colgood[2], colgood[3], Hunger_Alpha ) )
+                surface.DrawRect( (barx - 1) + ((width / maxhunger) * SAT.SatBuffs), bary + 1, 1, height - 2)
+            end
+            barx = barx - (12 * HUD_SCALE)
+            bary = bary + (height + 1)
+        end
+        if Thirst_Alpha > 0 then
+            --Thirst Bar
+            surface.SetDrawColor( Color( 255, 255, 255, Thirst_Alpha ) )
+            surface.SetMaterial( Material( "icon16/drink.png" ) )
+            surface.DrawTexturedRect(barx, bary, iconsize * HUD_SCALE, iconsize * HUD_SCALE )
+            surface.SetDrawColor( Color( col[1], col[2], col[3], Thirst_Alpha ) )
+            surface.DrawOutlinedRect(barx + (12 * HUD_SCALE), bary, width, height) --Thirst bar outline
+            surface.DrawRect( barx + (12 * HUD_SCALE) + 2, bary + 2, (thirst / maxthirst) * (width - 4), height - 4) --Thirst bar
+            --Buff Pos
+            if tobool(GetConVar("as_hud_satiationbars_showindic"):GetInt()) then
+                surface.SetDrawColor( Color( colgood[1], colgood[2], colgood[3], Thirst_Alpha ))
+                surface.DrawRect( (barx + (12 * HUD_SCALE) - 1) + ((width / maxthirst) * SAT.SatBuffs), bary + 1, 1, height - 2)
+            end
         end
 
         local amt = tobool(GetConVar("as_hud_satiationbars_amount"):GetInt())
         if amt then --Will draw satiation amount if enabled
-            local hunger, thirst, amtx, amty, outline = (hunger), (thirst), (barx + width + 2), (bary - (height) / 2 - 1), (1)
-            draw.SimpleTextOutlined(hunger, "AftershockHUDVerySmall", amtx, amty, COLHUD_DEFAULT, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER, outline, Color(0,0,0))
+            local hunger, thirst, amtx, amty, outline = (hunger), (thirst), (barx + width + (15 * HUD_SCALE)), (bary - (height) / 2 - 2), (1)
+            if Hunger_Alpha > 0 then
+                draw.SimpleTextOutlined(hunger, "AftershockHUDVerySmall", amtx, amty, Color( col[1], col[2], col[3], Hunger_Alpha ), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER, outline, Color(0,0,0,Hunger_Alpha))
+            end
             amty = amty + (height)
-            draw.SimpleTextOutlined(thirst, "AftershockHUDVerySmall", amtx, amty, COLHUD_DEFAULT, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER, outline, Color(0,0,0))
+            if Thirst_Alpha > 0 then
+                draw.SimpleTextOutlined(thirst, "AftershockHUDVerySmall", amtx, amty, Color( col[1], col[2], col[3], Thirst_Alpha ), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER, outline, Color(0,0,0,Thirst_Alpha))
+            end
         end
     end
 
@@ -175,7 +202,7 @@ function AftershockHUD()
         local ypos = GetConVar("as_hud_effects_yadd"):GetInt()
         local width = GetConVar("as_hud_effects_width"):GetInt() * HUD_SCALE
         local height = GetConVar("as_hud_effects_height"):GetInt() * HUD_SCALE
-        local barx, bary, width, height, outline = (xpos + 80), (ypos + (ScrH() * 0.935)), (width), (height), (1)
+        local barx, bary, width, height, outline = (xpos + 100), (ypos + (ScrH() * 0.915)), (width), (height), (1)
         local iconspace = 3
         local barspace = 2
         local spacebetweenbars = GetConVar("as_hud_effects_barspacing"):GetInt()
@@ -220,7 +247,7 @@ function AftershockHUD()
         local ypos = GetConVar("as_hud_resources_yadd"):GetInt()
         local width = 80 * HUD_SCALE
         local height = 20 * HUD_SCALE
-        local barx, bary, width, height, spacing, outline = (xpos - width + (ScrW() - 80)), (ypos - height + (ScrH() - 50)), (width), (height), 13 * HUD_SCALE, 1
+        local barx, bary, width, height, spacing, outline = (xpos - width + (ScrW() - 100)), (ypos - height + (ScrH() - 80)), (width), (height), 13 * HUD_SCALE, 1
 
         for k, v in SortedPairs( res, true ) do
             surface.SetDrawColor( 20, 20, 20, 150 )
@@ -242,7 +269,7 @@ function AftershockHUD()
         col = target:IsPlayer() and target:InCommunity() and (target:GetCommunity() == LocalPlayer():GetCommunity() or CommunityAllies[target:GetCommunity()]) and COLHUD_GOOD:ToTable() or col
         col = target:IsPlayer() and target:InCommunity() and (CommunityWars[target:GetCommunity()]) and COLHUD_BAD:ToTable() or col
         if (LocalPlayer():GetActiveTargetLength() - CurTime()) > 0.8 then
-            Target_Alpha = math.Approach((Target_Alpha or 0), 255, 3) or 0
+            Target_Alpha = math.Approach((Target_Alpha or 0), 255, FrameTime() * 300) or 0
         end
         local newcol = Color( col[1], col[2], col[3], Target_Alpha )
         surface.SetDrawColor( newcol )
@@ -273,7 +300,7 @@ function AftershockHUD()
         end
 
         if (LocalPlayer():GetActiveTargetLength() - CurTime()) < 0.8 then
-            Target_Alpha = math.Approach(Target_Alpha, 0, -1) or 0
+            Target_Alpha = math.Approach(Target_Alpha, 0, FrameTime() * -200) or 0
         end
     end
     if not target and (Target_Alpha or 0) > 0 then

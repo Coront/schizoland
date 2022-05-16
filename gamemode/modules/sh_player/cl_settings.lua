@@ -240,6 +240,9 @@ function AS.CLSettings.BuildHUD( parent )
     ToggleButton("Enable Satiation Bars", xpos, ypos, scroll, "as_hud_satiationbars")
     addSpace( 20, 20 )
 
+    ToggleButton("Only Show When Needed", xpos, ypos, scroll, "as_hud_satiationbars_showwhenneeded")
+    addSpace( 0, 20 )
+
     ToggleButton("Enable Satiation Bars Amount", xpos, ypos, scroll, "as_hud_satiationbars_amount")
     addSpace( 0, 20 )
 
