@@ -128,6 +128,7 @@ function PlayerMeta:GetAllTools() --Will return a table of a player's deployed t
     local tbl = {}
     for k, v in pairs( ents.GetAll() ) do
         if not v.AS_OwnableObject and self:GetNWBool( "AS_OwnableObject", false ) then continue end --Ignore everything that's not an ownable object
+        if self:GetClass() == "prop_door_rotating" or self:GetClass() == "func_door_rotating" or self:GetClass() == "func_door" then continue end
         if not IsValid(v:GetObjectOwner()) then continue end
         if v:GetObjectOwner() != self then continue end
         tbl[k] = v
