@@ -268,7 +268,7 @@ function AftershockHUD()
         local col = (target:IsNextBot() or target:IsNPC()) and (target.Hostile and target:Hostile() or false) and COLHUD_BAD:ToTable() or COLHUD_DEFAULT:ToTable()
         col = target:IsPlayer() and target:InCommunity() and (target:GetCommunity() == LocalPlayer():GetCommunity() or CommunityAllies[target:GetCommunity()]) and COLHUD_GOOD:ToTable() or col
         col = target:IsPlayer() and target:InCommunity() and (CommunityWars[target:GetCommunity()]) and COLHUD_BAD:ToTable() or col
-        if (LocalPlayer():GetActiveTargetLength() - CurTime()) > 0.8 then
+        if (LocalPlayer():GetActiveTargetLength() - CurTime()) > 1.2 then
             Target_Alpha = math.Approach((Target_Alpha or 0), 255, FrameTime() * 300) or 0
         end
         local newcol = Color( col[1], col[2], col[3], Target_Alpha )
@@ -299,7 +299,7 @@ function AftershockHUD()
             draw.SimpleTextOutlined( target:Health() .. " / " .. maxhealth, "AftershockHUDSmall", x, y, newcol, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, outline, Color(0,0,0,Target_Alpha) )
         end
 
-        if (LocalPlayer():GetActiveTargetLength() - CurTime()) < 0.8 then
+        if (LocalPlayer():GetActiveTargetLength() - CurTime()) < 1.2 then
             Target_Alpha = math.Approach(Target_Alpha, 0, FrameTime() * -200) or 0
         end
     end

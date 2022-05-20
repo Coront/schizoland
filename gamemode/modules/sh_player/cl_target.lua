@@ -48,7 +48,7 @@ hook.Add("Think", "AS_TargetID", function()
     if IsValid(ent) and not ignoreEnts[ent:GetClass()] and (ent:Health() > 0 or ent:IsPlayer() or ent:IsNPC() or ent:IsNextBot()) then
         if ent:IsPlayer() and ent:GetMoveType() == MOVETYPE_NOCLIP then return end
         ply:SetActiveTarget( trace.Entity )
-        ply:SetActiveTargetLength( CurTime() + 3 )
+        ply:SetActiveTargetLength( CurTime() + 5 )
         ply:SetInitialTargetLength( CurTime() )
     end
 
