@@ -6,6 +6,19 @@ ENT.Purpose			= "Sell your junk in it."
 ENT.Category		= "Aftershock"
 ENT.Spawnable		= false
 ENT.AS_OwnableObject = true
+ENT.AS_Conductor = true
+
+function ENT:Initialize()
+    if ( SERVER ) then
+        self:SetModel( "models/props_interiors/vendingmachinesoda01a.mdl" )
+        self:PhysicsInit( SOLID_VPHYSICS )
+        self:SetUseType( SIMPLE_USE )
+        self:SetSolid( SOLID_VPHYSICS )
+        self:SetMoveType( MOVETYPE_VPHYSICS )
+    end
+
+	self:SetPowerUsage( 25 )
+end
 
 ENT.ProfileCost = { --Cost of resources/items to make a profile
     ["misc_scrap"] = 200,

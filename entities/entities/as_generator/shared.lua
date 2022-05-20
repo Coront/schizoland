@@ -7,6 +7,7 @@ ENT.Category		= "Aftershock"
 ENT.Spawnable		= false
 ENT.AS_OwnableObject = true
 ENT.AS_Conductor = true
+ENT.AS_Generator = true
 
 function ENT:SetActiveState( bool )
     self.Active = bool
@@ -22,11 +23,13 @@ function ENT:TogglePower()
             self:StopSound( self.Sound )
         end
         self:SetActiveState( false )
+        self:SetPower( 0 )
     else
         if ( SERVER ) then
             self:EmitSound( self.Sound )
         end
         self:SetActiveState( true )
+        self:SetPower( self.PowerProduced )
     end
 end
 

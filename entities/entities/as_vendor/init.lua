@@ -3,20 +3,18 @@ AddCSLuaFile( "cl_init.lua" )
 AddCSLuaFile( "menu.lua" )
 include( "shared.lua" )
 
-function ENT:Initialize()
-	self:SetModel( "models/props_interiors/vendingmachinesoda01a.mdl" )
-	self:PhysicsInit( SOLID_VPHYSICS )
-	self:SetUseType( SIMPLE_USE )
-	self:SetSolid( SOLID_VPHYSICS )
-	self:SetMoveType( MOVETYPE_VPHYSICS )
-end
-
 function ENT:Use( ply )
 	local profiles = ply:FetchVendorProfiles()
-	net.Start( "as_vendor_open" )
-		net.WriteEntity( self )
-		net.WriteTable( profiles )
-	net.Send( ply )
+	if self:GetPower() >= self:GetPowerUsage() then
+		net.Start( "as_vendor_open" )
+			net.WriteEntity( self )
+			net.WriteTable( profiles )
+		net.Send( ply )
+	else
+		net.Start( "as_tool_nopower" )
+			net.WriteEntity( self )
+		net.Send( ply )
+	end
 end
 
 -- ██████╗ ██████╗  ██████╗ ███████╗██╗██╗     ███████╗███████╗

@@ -24,17 +24,20 @@ function TOOL:LeftClick( trace )
 	self:SetStage( objects + 1 )
 
 	if ( objects ) > 0 then
-		local ent,		outlet		=	self:GetEnt( 1 ),		self:GetEnt( 2 )
-		local entpos,	outletpos	=	self:GetPos( 1 ),		self:GetPos( 2 )
-		local entlpos,	outletlpos	=	self:GetLocalPos( 1 ),	self:GetLocalPos( 2 )
+		local ent,		otherEnt		=	self:GetEnt( 1 ),		self:GetEnt( 2 )
+		local entpos,	otherEntpos	=	self:GetPos( 1 ),		self:GetPos( 2 )
+		local entlpos,	otherEntlpos	=	self:GetLocalPos( 1 ),	self:GetLocalPos( 2 )
 
-		if ent == outlet then ply:ChatPrint("You cannot link an entity to itself.") self:ClearObjects() return end
-		if outlet.PL and outlet.PL.NoInlet then ply:ChatPrint("This object cannot intake electricity.") self:ClearObjects() return end
-		if entpos:Distance( outletpos ) > 400 then ply:ChatPrint("This link is too far!") self:ClearObjects() return end
+		if ent == otherEnt then ply:ChatPrint("You cannot link an entity to itself.") self:ClearObjects() return end
+		if otherEnt.PL and otherEnt.PL.NoInlet then ply:ChatPrint("This object cannot intake electricity.") self:ClearObjects() return end
+		if entpos:Distance( otherEntpos ) > 400 then ply:ChatPrint("This link is too far!") self:ClearObjects() return end
+		if ent:GetLinks()[otherEnt] or otherEnt:GetLinks()[ent] then ply:ChatPrint("These objects are already linked.") self:ClearObjects() return end
 
-		local newconstraint, rope = constraint.Rope( ent, outlet, 0, 0, entlpos, outletlpos, (entpos - outletpos):Length(), 100, 0, 3, "cable/cable2", false )
+		local newconstraint, rope = constraint.Rope( ent, otherEnt, 0, 0, entlpos, otherEntlpos, (entpos - otherEntpos):Length(), 100, 0, 3, "cable/cable2", false )
 
-		ply:ChatPrint("establishlink")
+		ent:EstablishLink( otherEnt )
+		ent:UpdatePower()
+		otherEnt:UpdatePower()
 		self:ClearObjects()
 
 		undo.Create("undone_powerlink")
@@ -42,7 +45,9 @@ function TOOL:LeftClick( trace )
 			if rope then undo.AddEntity( rope ) end
 
 			undo.AddFunction( function( data, code )
-				ply:ChatPrint("destroylink")
+				ent:DestroyLink( otherEnt )
+				ent:UpdatePower()
+				otherEnt:UpdatePower()
 			end)
 			undo.SetPlayer( ply )
 		undo.Finish()
@@ -59,28 +64,10 @@ if ( CLIENT ) then
 		local tr = ply:TraceFromEyes( 500 )
 
 		if IsValid(tr.Entity) and (tr.Entity.AS_Conductor) then
-			local ptbl = tr.Entity.PL or {}
-			local elec = ptbl.Electricity or 0
+			local elec = tr.Entity:GetPower()
 
 			draw.SimpleTextOutlined( tr.Entity.PrintName .. " [" .. tr.Entity:EntIndex() .. "]", "TargetID", ScrW() / 2, ScrH() * 0.55, COLHUD_DEFAULT, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 1, Color( 0, 0, 0 ) )
 			draw.SimpleTextOutlined( "Current Electricity: " .. elec, "TargetID", ScrW() / 2, ScrH() * 0.57, COLHUD_DEFAULT, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 1, Color( 0, 0, 0 ) )
-
-			--[[
-			if tr.Entity:HasInlets() then
-				local inlets = {}
-				for k, v in pairs( tr.Entity:GetInletTable() ) do
-					if not IsValid(k) then tr.Entity.PL.Inlets[k] = nil continue end
-					inlets[k.PrintName .. " [" .. k:EntIndex() .. "]"] = v
-				end
-
-				local x, y = ScrW() * 0.4, ScrH() * 0.6
-				draw.SimpleTextOutlined( "Inlets:", "TargetID", x, y, COLHUD_DEFAULT, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 1, Color( 0, 0, 0 ) )
-				for k, v in pairs(inlets) do
-					y = y + 20
-					draw.SimpleTextOutlined( k, "TargetID", x, y, COLHUD_DEFAULT, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 1, Color( 0, 0, 0 ) )
-				end
-			end
-			]]
 		end
 	end
 end
@@ -88,6 +75,6 @@ end
 function TOOL.BuildCPanel(panel)
 	panel:AddControl("Header", {
 		Text = "Power Linker",
-		Description = "This tool allows players to initialize and establish electricity links between one or more entities, allowing them to power the object. Order in which this tool DOES matter. The first entity you select will initialize an outlet for it. The second entity will establish it, adding the first object to it's inlet table and the second object to the first object's outlet table."
+		Description = "Work In Progress"
 	})
 end

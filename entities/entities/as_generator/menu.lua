@@ -72,7 +72,7 @@ function Generator.Menu()
 
     local toggled = vgui.Create( "DLabel", panel )
     toggled:SetFont( "TargetID" )
-    local str = ent:GetActiveState() and "True (" .. ent.PotentialElectricity .. " Electricity)" or "False ( 0 Electricity )"
+    local str = ent:GetActiveState() and "True (" .. ent.PowerProduced .. " Electricity)" or "False ( 0 Electricity )"
     toggled:SetText( "Running: " .. str )
     local col = ent:GetActiveState() and COLHUD_GOOD or COLHUD_BAD
     toggled:SetColor( col )
