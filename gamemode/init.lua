@@ -38,6 +38,7 @@ local function DatabaseCheck()
 	--Mob Spawner
 	sql.Query("CREATE TABLE IF NOT EXISTS as_grids (map TEXT, data TEXT)")
 	--Other
+	sql.Query("CREATE TABLE IF NOT EXISTS as_playerdata (steamid TEXT, name TEXT, ip TEXT, firstconnect TEXT)")
 	sql.Query("CREATE TABLE IF NOT EXISTS as_chatlog (steamid TEXT, name TEXT, str TEXT, time TEXT)")
 	DATABASECHECKED = true --Don't see the purpose of reloading this multiple times, just restart the server, it's a new table anyways.
 end
