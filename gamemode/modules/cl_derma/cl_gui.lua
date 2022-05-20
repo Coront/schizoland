@@ -44,7 +44,7 @@ surface.CreateFont( "AftershockButton", {
 surface.CreateFont( "AftershockButtonSmall", {
 	font 		= "TargetID",
 	extended 	= false,
-	size 		= 20,
+	size 		= 21,
 	weight 		= 1000,
 	blursize 	= 0,
 	scanlines 	= 0,
@@ -95,24 +95,63 @@ function MainMenuButton( text, x, y, width, height, parent, callback )
         callback()
     end
     button.HoveredOnce = false
-    button.Paint = function(self, w, h)
+    function button:Paint(w, h)
         local thickness = 1
         local gap = 0
         surface.SetDrawColor( COLHUD_DEFAULT )
         surface.DrawOutlinedRect( 0, 0, w, h, thickness)
+
+        self.IntColor = self.IntColor or COLHUD_SECONDARY
+        self.TxtColor = self.TxtColor or COLHUD_DEFAULT
+        local fadeSpeed = 500
+
         if self:IsHovered() then
-            surface.SetDrawColor( COLHUD_DEFAULT )
-            button:SetColor( COLHUD_SECONDARY )
+
+            local col = self.IntColor:ToTable()
+            local toCol = COLHUD_DEFAULT:ToTable()
+            col[1] = math.Approach( col[1], toCol[1], FrameTime() * fadeSpeed )
+            col[2] = math.Approach( col[2], toCol[2], FrameTime() * fadeSpeed )
+            col[3] = math.Approach( col[3], toCol[3], FrameTime() * fadeSpeed )
+            self.IntColor = Color( col[1], col[2], col[3], 255 )
+
             if not self.HoveredOnce then
                 surface.PlaySound( UICUE.HOVER )
                 self.HoveredOnce = true
             end
+            surface.SetDrawColor( self.IntColor )
+
+            local txtcol = self.TxtColor:ToTable()
+            local txtToCol = COLHUD_SECONDARY:ToTable()
+            txtcol[1] = math.Approach( txtcol[1], txtToCol[1], FrameTime() * fadeSpeed )
+            txtcol[2] = math.Approach( txtcol[2], txtToCol[2], FrameTime() * fadeSpeed )
+            txtcol[3] = math.Approach( txtcol[3], txtToCol[3], FrameTime() * fadeSpeed )
+            self.TxtColor = Color( txtcol[1], txtcol[2], txtcol[3], 255 )
+
+            self:SetColor( self.TxtColor )
+
         else
+
+            local col = self.IntColor:ToTable()
+            local toCol = COLHUD_SECONDARY:ToTable()
+            col[1] = math.Approach( col[1], toCol[1], FrameTime() * fadeSpeed )
+            col[2] = math.Approach( col[2], toCol[2], FrameTime() * fadeSpeed )
+            col[3] = math.Approach( col[3], toCol[3], FrameTime() * fadeSpeed )
+            self.IntColor = Color( col[1], col[2], col[3], 255 )
+
             if self.HoveredOnce then
                 self.HoveredOnce = false
             end
-            surface.SetDrawColor( COLHUD_SECONDARY )
-            button:SetColor( COLHUD_DEFAULT )
+            surface.SetDrawColor( self.IntColor )
+
+            local txtcol = self.TxtColor:ToTable()
+            local txtToCol = COLHUD_DEFAULT:ToTable()
+            txtcol[1] = math.Approach( txtcol[1], txtToCol[1], FrameTime() * fadeSpeed )
+            txtcol[2] = math.Approach( txtcol[2], txtToCol[2], FrameTime() * fadeSpeed )
+            txtcol[3] = math.Approach( txtcol[3], txtToCol[3], FrameTime() * fadeSpeed )
+            self.TxtColor = Color( txtcol[1], txtcol[2], txtcol[3], 255 )
+
+            self:SetColor( self.TxtColor )
+
         end
         surface.DrawRect( thickness + gap, thickness + gap, w - ((thickness + gap) * 2), h - ((thickness + gap) * 2) )
     end
@@ -151,19 +190,6 @@ function Button( text, x, y, width, height, parent, callback )
     button.Paint = function(_, w, h)
         surface.SetDrawColor( COLHUD_SECONDARY )
         surface.DrawRect( 0, 0, w, h )
-    end
-end
-
-function DefaultButton( text, x, y, width, height, parent, callback )
-    local button = vgui.Create("DButton")
-    if parent then button:SetParent(parent) end
-    button:SetSize(width, height)
-    button:SetPos(x, y)
-    button:SetFont("AftershockButtonSmall")
-    button:SetText( text )
-    button.DoClick = function()
-        surface.PlaySound("buttons/button15.wav")
-        callback()
     end
 end
 

@@ -22,13 +22,13 @@ function AS.CharacterSelect.Menu()
     frame_characters:SetTitle( "" )
     frame_characters:ShowCloseButton( false )
     frame_characters.Paint = function(_,w,h)
-        surface.SetDrawColor( COLHUD_PRIMARY )
+        surface.SetDrawColor( COLHUD_DEFAULT )
         surface.DrawRect( 0, 0, w, h )
     end
 
     scroll_characters = vgui.Create("DScrollPanel", frame_characters)
-    scroll_characters:SetPos(5, 5)
-    scroll_characters:SetSize(frame_characters:GetWide() - 10, frame_characters:GetTall() - 65)
+    scroll_characters:SetPos(2, 2)
+    scroll_characters:SetSize(frame_characters:GetWide() - 4, frame_characters:GetTall() - 64)
     scroll_characters.Paint = function(_,w,h)
         surface.SetDrawColor( COLHUD_SECONDARY )
         surface.DrawRect(0, 0, w, h)
@@ -261,13 +261,15 @@ function AS.CharacterSelect.BuildCharacters( characters, chardata )
 end
 
 function AS.CharacterSelect.BuildButtons(characters)
-    local xpos = 5
-    local ypos = frame_characters:GetTall() - 55
+    local xpos = 2
+    local ypos = frame_characters:GetTall() - 60
+    local width = 164
+    local height = 58
     local function addSpace()
-        xpos = xpos + 165
+        xpos = xpos + width + 2
     end
 
-    Button( "Select Character", xpos, ypos, 160, 50, frame_characters, function()
+    Button( "Select Character", xpos, ypos, width, height, frame_characters, function()
         frame_characters:Close()
         Character:Remove()
         net.Start("as_characters_loadcharacter")
@@ -277,9 +279,9 @@ function AS.CharacterSelect.BuildButtons(characters)
     addSpace()
 
     if #characters >= SET.MaxCharacters then
-        Button( "Max Characters", xpos, ypos, 160, 50, frame_characters, function() end)
+        Button( "Max Characters", xpos, ypos, width, height, frame_characters, function() end)
     else
-        Button( "New Character", xpos, ypos, 160, 50, frame_characters, function()
+        Button( "New Character", xpos, ypos, width, height, frame_characters, function()
             frame_characters:Close()
             Character:Remove()
             AS.CharacterSelect.NewCharacter()
@@ -287,7 +289,7 @@ function AS.CharacterSelect.BuildButtons(characters)
     end
     addSpace()
 
-    Button( "Delete Character", xpos, ypos, 160, 50, frame_characters, function()
+    Button( "Delete Character", xpos, ypos, width, height, frame_characters, function()
         Verify(function()
             net.Start("as_characters_deletecharacter")
                 net.WriteUInt(selectedChar, NWSetting.UIDAmtBits)
