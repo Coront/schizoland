@@ -40,6 +40,7 @@ local function DatabaseCheck()
 	--Other
 	sql.Query("CREATE TABLE IF NOT EXISTS as_playerdata (steamid TEXT, name TEXT, ip TEXT, firstconnect TEXT)")
 	sql.Query("CREATE TABLE IF NOT EXISTS as_chatlog (steamid TEXT, name TEXT, str TEXT, time TEXT)")
+	sql.Query("CREATE TABLE IF NOT EXISTS plogs (steamid TEXT, type TEXT, str TEXT, time TEXT)")
 	DATABASECHECKED = true --Don't see the purpose of reloading this multiple times, just restart the server, it's a new table anyways.
 end
 if not DATABASECHECKED then DatabaseCheck() end
