@@ -42,6 +42,11 @@ net.Receive("as_admin_modifyconvar", function( _, ply )
 
     convar = GetConVar(convar)
     convar:SetString( value )
+
+    plogs.PlayerLog(ply, "Admin", ply:NameID() .. " set server convar " .. convar:GetName() .. " to " .. value, {
+        ["Name"] 	= ply:Name(),
+        ["SteamID"]	= ply:SteamID(),
+    })
 end)
 
 net.Receive("as_admin_spawnitem", function( _, ply )
@@ -51,6 +56,11 @@ net.Receive("as_admin_spawnitem", function( _, ply )
     if not ply:IsAdmin() then ply:ChatPrint("You are not an admin.") return end
 
     ply:AdminSpawnItem( item, amt )
+
+    plogs.PlayerLog(ply, "Admin", ply:NameID() .. " spawned item " .. AS.Items[item].name .. " (" .. amt .. ")", {
+        ["Name"] 	= ply:Name(),
+        ["SteamID"]	= ply:SteamID(),
+    })
 end)
 
 net.Receive("as_admin_changeskillxp", function( _, ply )
@@ -62,10 +72,18 @@ net.Receive("as_admin_changeskillxp", function( _, ply )
     if amt > 0 then
         ply:ChatPrint("Added " .. amt .. " experience to " .. skill .. ".")
         ply:IncreaseSkillExperience( skill, amt )
+        plogs.PlayerLog(ply, "Admin", ply:NameID() .. " added " .. amt ..  " " .. skill .. " experience", {
+            ["Name"] 	= ply:Name(),
+            ["SteamID"]	= ply:SteamID(),
+        })
     else
         amt = -amt
         ply:ChatPrint("Removed " .. amt .. " experience from " .. skill .. ".")
         ply:DecreaseSkillExperience( skill, amt )
+        plogs.PlayerLog(ply, "Admin", ply:NameID() .. " removed " .. amt ..  " " .. skill .. " experience", {
+            ["Name"] 	= ply:Name(),
+            ["SteamID"]	= ply:SteamID(),
+        })
     end
     ply:ResyncSkills()
 end)

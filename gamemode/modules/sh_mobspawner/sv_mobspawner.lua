@@ -436,6 +436,11 @@ concommand.Add( "as_event_spawn", function( ply, cmd, args )
         print(ply:Nickname() .. " (" .. ply:Nick() .. ") spawned an event: " .. args[1])
     end
     AS.Grid.SpawnEvent( args[1] )
+
+    plogs.PlayerLog(ply, "Admin", ply:NameID() .. " spawned event " .. args[1], {
+        ["Name"] 	= ply:Name(),
+        ["SteamID"]	= ply:SteamID(),
+    })
 end)
 
 function AS.Grid.GenerateEvent( id ) --This will generate an event, as in put it into the pending table and wait to be called.
