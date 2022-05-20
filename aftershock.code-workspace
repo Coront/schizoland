@@ -8,6 +8,9 @@
         },
         {
             "path": "..\\..\\addons\\ULX"
+        },
+        {
+            "path": "..\\..\\addons\\Admin_PLogs"
         }
     ]
 }
