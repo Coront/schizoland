@@ -11,12 +11,7 @@ ENT.MaxHealth = 100 --Our health before being destroyed.
 ENT.NoFuel = true --Don't need fuel.
 ENT.Solar = true --Needs to trace the skybox to function.
 ENT.Sound = "" --Passive loop sound we play
-ENT.PotentialElectricity = 25 --The amount of potential electricity we will produce. Basically how much to make when turned on.
-
---Aftershock Powerlinking System
-ENT.PL = {}
-POWER = ENT.PL
-POWER.NoInlet = true --We will not intake electricity by any means.
+ENT.PowerProduced = 25 --The amount of potential electricity we will produce. Basically how much to make when turned on.
 
 if ( CLIENT ) then
 

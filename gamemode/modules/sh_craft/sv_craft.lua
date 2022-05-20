@@ -22,4 +22,10 @@ net.Receive( "as_crafting_craftitem", function( _, ply )
 
     --Everything ran is valid, now we run the main function.
     ply:CraftItem( item, amt )
+
+    plogs.PlayerLog(ply, "Craft", ply:NameID() .. " crafted " .. AS.Items[item].name .. " (" .. amt .. ").", {
+        ["Name"] 	= ply:Name(),
+        ["SteamID"]	= ply:SteamID(),
+        ["Item"]	= AS.Items[item].name .. " (" .. amt .. ")",
+    })
 end)

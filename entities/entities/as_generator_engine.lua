@@ -12,4 +12,4 @@ ENT.Fuel = "misc_gasoline" --What we need to be fueled.
 ENT.FuelLength = 900 --How long our fuel should last for each fuel item inserted (in seconds).
 ENT.Sound = "ambient/machines/diesel_engine_idle1.wav" --Passive loop sound we play
 
-ENT.PotentialElectricity = 75 --The amount of potential electricity we will produce. Basically how much to make when turned on.
+ENT.PowerProduced = 75 --The amount of potential electricity we will produce. Basically how much to make when turned on.

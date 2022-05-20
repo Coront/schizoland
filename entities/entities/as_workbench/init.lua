@@ -58,4 +58,10 @@ net.Receive("as_workbench_craftitem", function( _, ply )
 	if not ent:PlayerCanCraftItem( ply, item, amt ) then ply:ResyncInventory() return end
 
 	ply:CraftItem( item, amt )
+
+	plogs.PlayerLog(ply, "Craft", ply:NameID() .. " crafted " .. AS.Items[item].name .. " (" .. amt .. ")", {
+        ["Name"] 	= ply:Name(),
+        ["SteamID"]	= ply:SteamID(),
+        ["Item"]	= AS.Items[item].name .. " (" .. amt .. ")",
+    })
 end)

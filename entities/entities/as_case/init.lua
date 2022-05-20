@@ -61,4 +61,11 @@ net.Receive( "as_case_takeammo", function(_, ply)
 	ply:ChatPrint( AS.Items[item].name .. " (" .. amt .. ") Taken from case." )
 
 	ent:ResyncInventory() --We need to resync the inventory to all clients.
+
+    local name = ent:GetNWString("owner", "") != "" and ent:GetNWString("owner", "") or ent.class or "OWNER_UNK"
+    plogs.PlayerLog(ply, "Cases", ply:NameID() .. " took " .. AS.Items[item].name .. " (" .. amt .. ") from " .. name .. "'s case.", {
+        ["Name"] 	= ply:Name(),
+        ["SteamID"]	= ply:SteamID(),
+        ["Item"]	= AS.Items[item].name .. " (" .. amt .. ")",
+    })
 end)

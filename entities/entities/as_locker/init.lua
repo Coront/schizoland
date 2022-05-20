@@ -137,6 +137,12 @@ net.Receive( "as_locker_createprofile", function( _, ply )
 
 		ply:EstablishLockerProfile( name )
 	end
+
+	plogs.PlayerLog(ply, "Storage", ply:NameID() .. " created locker profile: " .. name, {
+        ["Name"] 	= ply:Name(),
+        ["SteamID"]	= ply:SteamID(),
+        ["LockerName"]	= name,
+    })
 end)
 
 net.Receive( "as_locker_deleteprofile", function( _, ply ) 
@@ -159,6 +165,12 @@ net.Receive( "as_locker_deleteprofile", function( _, ply )
 	end
 
 	ply:DeleteLockerProfile( lid )
+
+	plogs.PlayerLog(ply, "Storage", ply:NameID() .. " deleted locker profile: " .. lid, {
+        ["Name"] 	= ply:Name(),
+        ["SteamID"]	= ply:SteamID(),
+        ["LockerID"]	= lid,
+    })
 end)
 
 net.Receive( "as_locker_renameprofile", function( _, ply ) 
@@ -181,6 +193,12 @@ net.Receive( "as_locker_renameprofile", function( _, ply )
 
 	ply:RenameLockerProfile( lockerid, name )
 	ent:SetProfile( lockerid, name )
+
+	plogs.PlayerLog(ply, "Storage", ply:NameID() .. " updated locker profile name: " .. name, {
+        ["Name"] 	= ply:Name(),
+        ["SteamID"]	= ply:SteamID(),
+        ["LockerName"]	= name,
+    })
 end)
 
 net.Receive( "as_locker_setprofile", function( _, ply ) 
@@ -207,6 +225,13 @@ net.Receive( "as_locker_setprofile", function( _, ply )
 	ply:ChatPrint("You have loaded the profile: " .. profile.name)
 	ent:SetProfile( lid, profile.name )
 	ent:SetInventory( inv )
+
+	plogs.PlayerLog(ply, "Storage", ply:NameID() .. " set locker profile " .. ent:GetProfileName(), {
+        ["Name"] 	= ply:Name(),
+        ["SteamID"]	= ply:SteamID(),
+        ["Locker"] = ent:GetProfileName(),
+        ["Entity"]	= ent,
+    })
 end)
 
 --[[
@@ -241,6 +266,13 @@ net.Receive( "as_locker_invtolocker", function( _, ply )
 
 	ent:QuickPlayRandomSound( ent.Sounds.Manage, 55 )
 	ent:StoreItem( ply, item, amt )
+
+	plogs.PlayerLog(ply, "Storage", ply:NameID() .. " stored " .. AS.Items[item].name .. " (" .. amt .. ") in locker " .. ent:GetProfileName(), {
+        ["Name"] 	= ply:Name(),
+        ["SteamID"]	= ply:SteamID(),
+        ["Item"]	= AS.Items[item].name .. " (" .. amt .. ")",
+        ["Locker"]	= ent:GetProfileName(),
+    })
 end)
 
 net.Receive( "as_locker_lockertoinv", function( _, ply )
@@ -261,4 +293,11 @@ net.Receive( "as_locker_lockertoinv", function( _, ply )
 
 	ent:QuickPlayRandomSound( ent.Sounds.Manage, 55 )
 	ent:WithdrawItem( ply, item, amt )
+
+	plogs.PlayerLog(ply, "Storage", ply:NameID() .. " withdrew " .. AS.Items[item].name .. " (" .. amt .. ") from locker " .. ent:GetProfileName(), {
+        ["Name"] 	= ply:Name(),
+        ["SteamID"]	= ply:SteamID(),
+        ["Item"]	= AS.Items[item].name .. " (" .. amt .. ")",
+        ["Locker"]	= ent:GetProfileName(),
+    })
 end)

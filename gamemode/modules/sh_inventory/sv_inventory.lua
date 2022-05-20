@@ -212,6 +212,12 @@ net.Receive("as_inventory_useitem", function( _, ply )
 
     --We're verified, so run the actual function.
     ply:UseItem( item )
+
+    plogs.PlayerLog(ply, "Items", ply:NameID() .. " used " .. AS.Items[item].name, {
+        ["Name"] 	= ply:Name(),
+        ["SteamID"]	= ply:SteamID(),
+        ["Item"]	= AS.Items[item].name,
+    })
 end)
 
 net.Receive("as_inventory_equipitem", function( _, ply ) 
@@ -224,6 +230,12 @@ net.Receive("as_inventory_equipitem", function( _, ply )
 
     --We're verified, so run the actual function.
     ply:EquipItem( item )
+
+    plogs.PlayerLog(ply, "Items", ply:NameID() .. " equipped " .. AS.Items[item].name, {
+        ["Name"] 	= ply:Name(),
+        ["SteamID"]	= ply:SteamID(),
+        ["Item"]	= AS.Items[item].name,
+    })
 end)
 
 net.Receive("as_inventory_unequipitem", function( _, ply ) 
@@ -236,6 +248,12 @@ net.Receive("as_inventory_unequipitem", function( _, ply )
 
     --We're verified, so run the actual function.
     ply:UnequipItem( item )
+
+    plogs.PlayerLog(ply, "Items", ply:NameID() .. " unequipped " .. AS.Items[item].name, {
+        ["Name"] 	= ply:Name(),
+        ["SteamID"]	= ply:SteamID(),
+        ["Item"]	= AS.Items[item].name,
+    })
 end)
 
 net.Receive("as_inventory_unequipammo", function( _, ply ) 
@@ -253,6 +271,12 @@ net.Receive("as_inventory_unequipammo", function( _, ply )
 
     --We're verified, so run the actual function.
     ply:UnequipAmmo( item, amt )
+
+    plogs.PlayerLog(ply, "Items", ply:NameID() .. " unequipped ammo " .. AS.Items[item].name .. " (" .. amt .. ")", {
+        ["Name"] 	= ply:Name(),
+        ["SteamID"]	= ply:SteamID(),
+        ["Item"]	= AS.Items[item].name,
+    })
 end)
 
 net.Receive("as_inventory_unequipatch", function( _, ply )
@@ -263,6 +287,12 @@ net.Receive("as_inventory_unequipatch", function( _, ply )
 
     ply:RemoveAttachment( item )
     ply:AddItemToInventory( item, 1, true )
+
+    plogs.PlayerLog(ply, "Items", ply:NameID() .. " equipped attachment " .. AS.Items[item].name, {
+        ["Name"] 	= ply:Name(),
+        ["SteamID"]	= ply:SteamID(),
+        ["Item"]	= AS.Items[item].name,
+    })
 end)
 
 net.Receive("as_inventory_dropitem", function( _, ply )
@@ -282,6 +312,12 @@ net.Receive("as_inventory_dropitem", function( _, ply )
     --We're verified, so we'll run the actual function.
     ply.NextItemDrop = CurTime() + 0.1
     ply:DropItem( item, amt )
+
+    plogs.PlayerLog(ply, "Items", ply:NameID() .. " dropped " .. AS.Items[item].name .. " (" .. amt .. ")", {
+        ["Name"] 	= ply:Name(),
+        ["SteamID"]	= ply:SteamID(),
+        ["Item"]	= AS.Items[item].name,
+    })
 end)
 
 net.Receive("as_inventory_destroyitem", function( _, ply )
@@ -300,4 +336,10 @@ net.Receive("as_inventory_destroyitem", function( _, ply )
 
     --Contents are verified. Running the actual function.
     ply:DestroyItem( item, amt )
+
+    plogs.PlayerLog(ply, "Items", ply:NameID() .. " salvaged " .. AS.Items[item].name .. " (" .. amt .. ")", {
+        ["Name"] 	= ply:Name(),
+        ["SteamID"]	= ply:SteamID(),
+        ["Item"]	= AS.Items[item].name,
+    })
 end)

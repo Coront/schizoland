@@ -60,6 +60,12 @@ net.Receive( "as_storage_tostore", function( _, ply )
 
     --Everything is verified, we'll run the function.
     ply:DepositItem( item, amt )
+
+    plogs.PlayerLog(ply, "Storage", ply:NameID() .. " stored " .. AS.Items[item].name .. " (" .. amt .. ") in vehicle inventory.", {
+        ["Name"] 	= ply:Name(),
+        ["SteamID"]	= ply:SteamID(),
+        ["Item"]	= AS.Items[item].name .. " (" .. amt .. ")",
+    })
 end )
 
 net.Receive( "as_storage_toinventory", function( _, ply )
@@ -82,6 +88,12 @@ net.Receive( "as_storage_toinventory", function( _, ply )
 
     --It's all verified.
     ply:WithdrawItem( item, amt )
+
+    plogs.PlayerLog(ply, "Storage", ply:NameID() .. " withdrew " .. AS.Items[item].name .. " (" .. amt .. ") from vehicle inventory.", {
+        ["Name"] 	= ply:Name(),
+        ["SteamID"]	= ply:SteamID(),
+        ["Item"]	= AS.Items[item].name .. " (" .. amt .. ")",
+    })
 end )
 
 net.Receive("as_storage_pickup", function( _, ply )

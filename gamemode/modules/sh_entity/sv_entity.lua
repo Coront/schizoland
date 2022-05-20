@@ -38,4 +38,10 @@ net.Receive("as_tool_pickup", function( _, ply )
 	else
 		ent:PickedUp( ply, item )
 	end
+
+	plogs.PlayerLog(ply, "Items", ply:NameID() .. " picked up " .. AS.Items[item].name, {
+        ["Name"] 	= ply:Name(),
+        ["SteamID"]	= ply:SteamID(),
+        ["Item"]	= AS.Items[item].name,
+    })
 end)
