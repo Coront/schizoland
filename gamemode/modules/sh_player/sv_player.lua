@@ -20,6 +20,10 @@ end
 function GM:PlayerInitialSpawn( ply ) --Player's first spawn.
     ply:SetNWBool( "as_spawned", false ) --Player just loaded in, they have not selected their profile yet.
     ply:ConCommand("as_spawnmenu")
+
+    if not sql.QueryValue("SELECT * FROM as_playerdata WHERE steamid = " .. SQLStr(ply:SteamID()) ) then
+        sql.Query("INSERT INTO as_playerdata VALUES( " .. SQLStr( ply:SteamID() ) .. ", " .. SQLStr( ply:Nick() ) .. ", " .. SQLStr( ply:IPAddress() ) .. ", " .. SQLStr( os.date( "%m/%d/%y - %I:%M %p", os.time() ) ) .. ")")
+    end
 end
 
 function GM:PlayerSpawn( ply )
