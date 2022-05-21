@@ -290,6 +290,30 @@ function AS.Grid.FetchValidIndoorSpawners( tbl ) --Every indoor spawner that is 
     return NewValidSpawners
 end
 
+function AS.Grid.ValidSpawnerByMobs( tbl ) --Spawners that only spawns mobs
+    local ValidSpawners = tbl
+    local NewValidSpawners = {}
+
+    for _, info in pairs( ValidSpawners ) do
+        if not info.mobs then continue end
+        NewValidSpawners[#NewValidSpawners + 1] = info
+    end
+
+    return NewValidSpawners
+end
+
+function AS.Grid.ValidSpawnerByNodes( tbl ) --Spawners that only spawns nodes
+    local ValidSpawners = tbl
+    local NewValidSpawners = {}
+
+    for _, info in pairs( ValidSpawners ) do
+        if not info.nodes then continue end
+        NewValidSpawners[#NewValidSpawners + 1] = info
+    end
+
+    return NewValidSpawners
+end
+
 function AS.Grid.SpawnMobs()
     if not tobool(GetConVar("as_mobs"):GetInt()) then return end
 
@@ -300,6 +324,7 @@ function AS.Grid.SpawnMobs()
     --Now, since we have a table containing valid spawn points, we need to spawn NPCs on them.
     for mob, info in pairs( MOB.NPCs ) do
         local ValidSpawners = (info.indoor and info.outdoor and AllValidSpawners) or (info.indoor and AS.Grid.FetchValidIndoorSpawners( AllValidSpawners )) or (info.outdoor and AS.Grid.FetchValidOutdoorSpawners( AllValidSpawners ))
+        ValidSpawners = AS.Grid.ValidSpawnerByMobs( ValidSpawners )
         local maxMobs = math.floor( (info.amt * MOB.SpawnMult) * (AS.Maps[game.GetMap()] and AS.Maps[game.GetMap()].MobMult or 1) )
         if #ents.FindByClass(mob) >= maxMobs then continue end --We've already capped this NPC, skip to the next one.
         local mobsToSpawn = maxMobs - #ents.FindByClass(mob) --How many NPCs we need to spawn.
@@ -332,6 +357,7 @@ function AS.Grid.SpawnNodes()
 
     --Similar with mobs, we need to find a valid spawn location.
     local ValidSpawners = AS.Grid.FetchValidSpawners()
+    ValidSpawners = AS.Grid.ValidSpawnerByNodes( ValidSpawners )
     if #ValidSpawners <= 0 then return end --None are valid
     local SpawnerCap = {}
 
