@@ -70,6 +70,7 @@ local WorkshopFastDL = {
 	["462119296"] = "FA:S 2.0 Alpha SWEPs - Unused Weapons (Unofficial)",
 	["201027186"] = "FA:S 2.0 Alpha SWEPs - Misc",
 	["579832711"] = "Sniper Scope Overlays",
+	["104691717"] = "PAC3",
 }
 
 local WorkshopFastDLMaps = {
