@@ -92,6 +92,13 @@ AS.AddEffect( "adrenaline", {
     type = "positive",
 } )
 
+AS.AddEffect( "suppression", {
+    name = "Suppression",
+    desc = "Nullifies all incoming negative effects.",
+    icon = "icon16/bug_delete.png",
+    type = "positive",
+} )
+
 -- ██╗  ██╗ ██████╗  ██████╗ ██╗  ██╗███████╗
 -- ██║  ██║██╔═══██╗██╔═══██╗██║ ██╔╝██╔════╝
 -- ███████║██║   ██║██║   ██║█████╔╝ ███████╗

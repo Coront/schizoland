@@ -183,14 +183,14 @@ AS.AddBaseItem("med_antidote", {
     skin = 1,
     value = 15,
     weight = 0.5,
-    --[[
     use = {
         sound = "items/medshot4.wav",
         stat = {
-            [1] = {effect = "adrenaline", length = 60},
+            [1] = {effect = "poison", length = 0},
+            [2] = {effect = "poisonsevere", length = 0}, --SHHHHHH
+            [3] = {effect = "medicalitem", length = 10},
         },
     },
-    ]]
     hidden = true,
     class = "scientist",
     craft = {
@@ -209,14 +209,12 @@ AS.AddBaseItem("med_suppression", {
     skin = 1,
     value = 15,
     weight = 0.5,
-    --[[
     use = {
         sound = "items/medshot4.wav",
         stat = {
-            [1] = {effect = "adrenaline", length = 60},
+            [1] = {effect = "suppression", length = 300},
         },
     },
-    ]]
     hidden = true,
     class = "scientist",
     craft = {
