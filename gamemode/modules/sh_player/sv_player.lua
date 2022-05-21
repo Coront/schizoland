@@ -156,71 +156,65 @@ hook.Add( "DoPlayerDeath", "AS_PlayerDeath", function( ply, attacker, dmginfo )
     if not tobool(GetConVar("as_cases"):GetInt()) then
         ply:ChatPrint("Your items will be returned to you when you respawn.")
         ply.ItemReturns = contents
-
-        return --prevent the rest of the code from running
-    end
-
-    --resources
-    for k, v in pairs( ply:GetInventory() ) do
-        if k != "misc_scrap" and k != "misc_smallparts" and k != "misc_chemical" then continue end --skip everything that isnt a resource
-        local reslost = math.ceil(v * (1 / SET.DeathResCost))
-        if reslost <= 0 then continue end
-        ply:TakeItemFromInventory( k, reslost )
-        contents[k] = reslost
-    end
-
-    --Recent Inventory
-    if ply:HasRecentInventory() then --Player has recently taken items from a claimed case. We will make them drop those items.
-        ply:ChatPrint("Recent items you have taken from a case have been dropped.")
-
-        for k, v in pairs( ply:GetRecentInv() ) do
-            if not ply:HasInInventory( k, v ) then continue end
-            ply:TakeItemFromInventory( k, v )
-            contents[k] = (contents[k] or 0) + v
+    else
+        --resources
+        for k, v in pairs( ply:GetInventory() ) do
+            if k != "misc_scrap" and k != "misc_smallparts" and k != "misc_chemical" then continue end --skip everything that isnt a resource
+            local reslost = math.ceil(v * (1 / SET.DeathResCost))
+            if reslost <= 0 then continue end
+            ply:TakeItemFromInventory( k, reslost )
+            contents[k] = reslost
         end
 
-        ply:ClearRecentInv()
-        ply:SetRecentInvDelay( 0 )
-    end
+        --Recent Inventory
+        if ply:HasRecentInventory() then --Player has recently taken items from a claimed case. We will make them drop those items.
+            ply:ChatPrint("Recent items you have taken from a case have been dropped.")
 
-    --Entity
-    if table.Count(contents) > 0 then
-        local ent = ents.Create("as_case")
-        local trace = util.TraceLine({
-            start = ply:GetPos() + ply:OBBCenter(),
-            endpos = (ply:GetPos() + ply:OBBCenter()) + Vector( 0, 0, -9999 ),
-            filter = {ent, ply},
-        })
-        ent:SetPos( trace.HitPos + (ent:OBBCenter() + Vector( 0, 0, 20 )) )
-        ent:SetInventory( contents )
-        timer.Simple( 0.1, function() --im literally seetheing rn
-            ent:ResyncInventory()
-        end)
-        ent:Spawn()
-        local phys = ent:GetPhysicsObject()
-        phys:EnableMotion( false )
-        ent:SetNWString("owner", ply:Nickname())
-        if attacker:IsPlayer() and ply != attacker then
-            ent:SetNWEntity("killer", attacker)
+            for k, v in pairs( ply:GetRecentInv() ) do
+                if not ply:HasInInventory( k, v ) then continue end
+                ply:TakeItemFromInventory( k, v )
+                contents[k] = (contents[k] or 0) + v
+            end
+
+            ply:ClearRecentInv()
+            ply:SetRecentInvDelay( 0 )
+        end
+
+        --Entity
+        if table.Count(contents) > 0 then
+            local ent = ents.Create("as_case")
+            local trace = util.TraceLine({
+                start = ply:GetPos() + ply:OBBCenter(),
+                endpos = (ply:GetPos() + ply:OBBCenter()) + Vector( 0, 0, -9999 ),
+                filter = {ent, ply},
+            })
+            ent:SetPos( trace.HitPos + (ent:OBBCenter() + Vector( 0, 0, 20 )) )
+            ent:SetInventory( contents )
+            timer.Simple( 0.1, function() --im literally seetheing rn
+                ent:ResyncInventory()
+            end)
+            ent:Spawn()
+            local phys = ent:GetPhysicsObject()
+            phys:EnableMotion( false )
+            ent:SetNWString("owner", ply:Nickname())
+            if attacker:IsPlayer() and ply != attacker then
+                ent:SetNWEntity("killer", attacker)
+            end
         end
     end
 
     --War
     if attacker:IsPlayer() and ply:IsPlayer() and CurTime() >= (attacker.NextWarRequest or 0) then
-        if attacker == ply then return end
-        if not attacker:InCommunity() then return end
-        if not ply:InCommunity() then return end
-        if ply:GetCommunity() == attacker:GetCommunity() then return end --no civil wars please
-        if ply:IsAtWar( attacker:GetCommunity() ) then return end --Don't generate more requests from war?
+        if not attacker == ply and attacker:InCommunity() and ply:InCommunity() and not ply:GetCommunity() == attacker:GetCommunity() and not ply:IsAtWar( attacker:GetCommunity() ) then
+            community.CreateDiplomacy( ply:GetCommunity(), "war", { --This create's a diplomacy of war, and we'll add some information.
+                cid = attacker:GetCommunity(),
+                cname = attacker:GetCommunityName(),
+                text = "The community, " .. attacker:GetCommunityName() .. ", has committed an act of war!\n\n" .. attacker:Nickname() .. " killed " .. ply:Nickname() .. " on " .. os.date( "%m/%d/%y - %I:%M %p", os.time() ) .. ".",
+            })
 
-        community.CreateDiplomacy( ply:GetCommunity(), "war", { --This create's a diplomacy of war, and we'll add some information.
-            cid = attacker:GetCommunity(),
-            cname = attacker:GetCommunityName(),
-            text = "The community, " .. attacker:GetCommunityName() .. ", has committed an act of war!\n\n" .. attacker:Nickname() .. " killed " .. ply:Nickname() .. " on " .. os.date( "%m/%d/%y - %I:%M %p", os.time() ) .. ".",
-        })
-
-        attacker:ChatPrint("You have committed an act of war.")
-        attacker.NextWarRequest = CurTime() + 900 --This just stops us from making too many war requests in a short period of time.
+            attacker:ChatPrint("You have committed an act of war.")
+            attacker.NextWarRequest = CurTime() + 900 --This just stops us from making too many war requests in a short period of time.
+        end
     end
 
     ply:ClearAllStatuses()
