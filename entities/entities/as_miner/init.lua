@@ -101,6 +101,7 @@ net.Receive( "as_miner_takeitems", function( _, ply )
     end
 
     ent:ResyncInventory()
+    ply:ResyncInventory()
 
     ply:ChatPrint("You have taken everything from this miner:")
     for k, v in pairs( taketbl ) do
