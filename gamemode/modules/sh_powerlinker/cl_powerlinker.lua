@@ -56,7 +56,7 @@ function PowerlessMenu()
 
     local name = vgui.Create( "DLabel", panel )
     name:SetFont( "TargetID" )
-    name:SetText( "No Power!\n(Need " .. ent:GetPowerUsage() .. ")" )
+    name:SetText( "No Power!\n(Need " .. math.abs( ent:GetPower() ) .. ")" )
     name:SetContentAlignment( 4 )
     name:SizeToContents()
     name:SetPos( panel:GetWide() / 2 - name:GetWide() / 2, panel:GetTall() / 2 - name:GetTall() / 2 )

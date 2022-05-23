@@ -8,6 +8,8 @@ ENT.Spawnable		= false
 ENT.AS_OwnableObject = true
 ENT.AS_Conductor = true
 
+ENT.PowerNeeded = 25
+
 function ENT:Initialize()
     if ( SERVER ) then
         self:SetModel( "models/props_interiors/vendingmachinesoda01a.mdl" )
@@ -17,7 +19,7 @@ function ENT:Initialize()
         self:SetMoveType( MOVETYPE_VPHYSICS )
     end
 
-	self:SetPowerUsage( 25 )
+	self:SetPower( -self.PowerNeeded )
 end
 
 ENT.ProfileCost = { --Cost of resources/items to make a profile

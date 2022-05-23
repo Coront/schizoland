@@ -7,3 +7,5 @@ ENT.Category		= "Aftershock"
 ENT.Spawnable		= false
 ENT.AS_OwnableObject = true
 ENT.AS_Conductor = true
+
+ENT.PowerNeeded = 0

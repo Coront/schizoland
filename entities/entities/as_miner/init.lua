@@ -3,17 +3,6 @@ AddCSLuaFile( "cl_init.lua" )
 AddCSLuaFile( "menu.lua" )
 include( "shared.lua" )
 
-function ENT:Initialize()
-    self:SetModel( "models/props_combine/combinethumper002.mdl" )
-    self:PhysicsInit( SOLID_VPHYSICS )
-    self:SetUseType( SIMPLE_USE )
-    self:SetSolid( SOLID_VPHYSICS )
-    self:SetMoveType( MOVETYPE_VPHYSICS )
-
-    self:SetHealth( self.MaxHealth )
-    self:SetMaxHealth( self.MaxHealth )
-end
-
 function ENT:Use( ply )
     net.Start( "as_miner_open" )
         net.WriteEntity( self )

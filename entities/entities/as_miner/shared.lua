@@ -16,6 +16,23 @@ ENT.Items = { --items that we will potentially produce over time.
 }
 ENT.ProduceLength = 60 --Time it takes for us to randomly produce an item.
 
+ENT.PowerNeeded = 75
+
+function ENT:Initialize()
+    if ( SERVER ) then
+        self:SetModel( "models/props_combine/combinethumper002.mdl" )
+        self:PhysicsInit( SOLID_VPHYSICS )
+        self:SetUseType( SIMPLE_USE )
+        self:SetSolid( SOLID_VPHYSICS )
+        self:SetMoveType( MOVETYPE_VPHYSICS )
+
+        self:SetHealth( self.MaxHealth )
+        self:SetMaxHealth( self.MaxHealth )
+    end
+
+    self:SetPower( -self.PowerNeeded )
+end
+
 function ENT:SetInventory( tbl )
     self.Inventory = tbl
 end
@@ -85,6 +102,7 @@ function ENT:CanMine()
         filter = {self},
     })
     if not tr.Hit then return false end
+    if self:GetPower() < 0 then return false end
     return true
 end
 

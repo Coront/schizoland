@@ -5,7 +5,7 @@ include( "shared.lua" )
 
 function ENT:Use( ply )
 	local profiles = ply:FetchVendorProfiles()
-	if self:GetPower() >= self:GetPowerUsage() then
+	if self:GetPower() >= 0 then
 		net.Start( "as_vendor_open" )
 			net.WriteEntity( self )
 			net.WriteTable( profiles )

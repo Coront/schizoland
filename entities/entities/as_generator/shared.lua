@@ -23,14 +23,13 @@ function ENT:TogglePower()
             self:StopSound( self.Sound )
         end
         self:SetActiveState( false )
-        self:SetPower( 0 )
     else
         if ( SERVER ) then
             self:EmitSound( self.Sound )
         end
         self:SetActiveState( true )
-        self:SetPower( self.PowerProduced )
     end
+    self:UpdatePower()
 end
 
 function ENT:SetFuelAmount( amt )
@@ -83,6 +82,29 @@ function ENT:Initialize()
 
         self:SetHealth( self.MaxHealth )
         self:SetMaxHealth( self.MaxHealth )
+    end
+end
+
+function ENT:Think()
+    if self:GetActiveState() then --While on
+        if not self.NoFuel and CurTime() > (self.NextFuelLoss or 0) then
+            self.NextFuelLoss = CurTime() + 1
+
+            self:RemoveFuelAmount( 1 )
+            if self:GetFuelAmount() <= 0 then
+                self:TogglePower()
+            end
+        end
+        if self.Solar then
+            local tr = util.TraceLine({
+                start = self:GetPos(),
+                endpos = self:GetPos() + self:GetAngles():Up() * 999999, --stfu
+                filter = self,
+            })
+            if tr.MatType != MAT_DEFAULT then
+                self:TogglePower()
+            end
+        end
     end
 end
 

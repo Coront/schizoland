@@ -33,11 +33,9 @@ function TOOL:LeftClick( trace )
 		if entpos:Distance( otherEntpos ) > 400 then ply:ChatPrint("This link is too far!") self:ClearObjects() return end
 		if ent:GetLinks()[otherEnt] or otherEnt:GetLinks()[ent] then ply:ChatPrint("These objects are already linked.") self:ClearObjects() return end
 
-		local newconstraint, rope = constraint.Rope( ent, otherEnt, 0, 0, entlpos, otherEntlpos, (entpos - otherEntpos):Length(), 100, 0, 3, "cable/cable2", false )
+		local newconstraint, rope = constraint.Rope( ent, otherEnt, 0, 0, entlpos, otherEntlpos, (entpos - otherEntpos):Length(), 100, 0, 2, "cable/cable2", false )
 
-		ent:EstablishLink( otherEnt )
-		ent:UpdatePower()
-		otherEnt:UpdatePower()
+		EstablishLink( ent, otherEnt )
 		self:ClearObjects()
 
 		undo.Create("undone_powerlink")
@@ -45,9 +43,7 @@ function TOOL:LeftClick( trace )
 			if rope then undo.AddEntity( rope ) end
 
 			undo.AddFunction( function( data, code )
-				ent:DestroyLink( otherEnt )
-				ent:UpdatePower()
-				otherEnt:UpdatePower()
+				DestroyLink( ent, otherEnt )
 			end)
 			undo.SetPlayer( ply )
 		undo.Finish()
@@ -55,6 +51,41 @@ function TOOL:LeftClick( trace )
 		ply:AddCleanup( "ropeconstraints", newconstraint )		
 		ply:AddCleanup( "ropeconstraints", rope )
 	end
+end
+
+function TOOL:RightClick( trace )
+	local ply = self:GetOwner()
+
+	if not trace.Entity:IsValid() then return end
+	if not trace.Entity.AS_Conductor then return end --Only conductor objects work
+
+	if ( CLIENT ) then return true end
+
+	local ent = trace.Entity
+
+	for k, v in pairs( ent:GetLinks() ) do
+		DestroyLink( ent, k )
+	end
+	if ent:HasGenerator() then
+		for k, v in pairs( ents.GetAll() ) do
+			if not v:CanLink() then continue end
+			if not v:HasGeneratorProvider() then continue end
+			if not v:GetGeneratorProvider() == ent then continue end
+			local generator = v:GetGenerator()
+			local generatorLinks = generator:GetLinks()
+			generatorLinks[ v ] = nil
+			generator:SetLinks( generatorLinks )
+			v:ClearGeneratorProvider()
+			v:ClearGenerator()
+
+			generator:UpdatePower()
+			v:UpdatePower()
+		end
+	end
+	ent:ClearLinks()
+	ent:UpdatePower()
+
+	constraint.RemoveConstraints( ent, "Rope" )
 end
 
 if ( CLIENT ) then
@@ -66,8 +97,11 @@ if ( CLIENT ) then
 		if IsValid(tr.Entity) and (tr.Entity.AS_Conductor) then
 			local elec = tr.Entity:GetPower()
 
-			draw.SimpleTextOutlined( tr.Entity.PrintName .. " [" .. tr.Entity:EntIndex() .. "]", "TargetID", ScrW() / 2, ScrH() * 0.55, COLHUD_DEFAULT, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 1, Color( 0, 0, 0 ) )
-			draw.SimpleTextOutlined( "Current Electricity: " .. elec, "TargetID", ScrW() / 2, ScrH() * 0.57, COLHUD_DEFAULT, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 1, Color( 0, 0, 0 ) )
+			draw.SimpleTextOutlined( tr.Entity.PrintName .. " [" .. tr.Entity:EntIndex() .. "]", "TargetID", ScrW() / 2, ScrH() * 0.565, COLHUD_DEFAULT, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 1, Color( 0, 0, 0 ) )
+			draw.SimpleTextOutlined( "Current Electricity: " .. elec, "TargetID", ScrW() / 2, ScrH() * 0.585, COLHUD_DEFAULT, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 1, Color( 0, 0, 0 ) )
+			if tr.Entity:HasGenerator() and IsValid(tr.Entity:GetGenerator()) then
+				draw.SimpleTextOutlined( "Generator: " .. tr.Entity:GetGenerator().PrintName .. " [" .. tr.Entity:GetGenerator():EntIndex() .. "]", "TargetID", ScrW() / 2, ScrH() * 0.605, COLHUD_DEFAULT, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 1, Color( 0, 0, 0 ) )
+			end
 		end
 	end
 end
