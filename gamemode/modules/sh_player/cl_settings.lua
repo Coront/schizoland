@@ -395,6 +395,15 @@ function AS.CLSettings.BuildPerformance( parent )
     ToggleButton("GMod Multi-Core", xpos, ypos, scroll, "gmod_mcore_test")
     addSpace( 0, 20 )
 
+    ToggleButton("Draw 3D Skybox", xpos, ypos, scroll, "r_3dsky")
+    addSpace( 0, 20 )
+
+    ToggleButton("Draw NPC Guns", xpos, ypos, scroll, "asnpc_drawing_guns")
+    addSpace( 0, 20 )
+
+    ValueSlider( "LOD Quality ( > = Worse )", xpos, ypos, -1, 2, scroll, "r_lod" )
+    addSpace( 0, 20 )
+
     ValueSlider( "Item Render Distance", xpos, ypos, 100, 4000, scroll, "as_item_renderdist" )
     addSpace( 0, 20 )
 
