@@ -49,6 +49,7 @@ AS.AddBaseItem("wep_stun", {
         ["misc_scrap"] = 25,
         ["misc_smallparts"] = 30,
         ["misc_chemical"] = 20,
+        ["misc_electronicparts"] = 1,
     },
 })
 
@@ -155,6 +156,7 @@ AS.AddBaseItem("wep_deagle", {
         ["misc_scrap"] = 120,
         ["misc_smallparts"] = 125,
         ["misc_chemical"] = 110,
+        ["misc_weaponkit"] = 0,
     },
 })
 
@@ -172,6 +174,7 @@ AS.AddBaseItem("wep_raging", {
         ["misc_scrap"] = 115,
         ["misc_smallparts"] = 120,
         ["misc_chemical"] = 100,
+        ["misc_weaponkit"] = 0,
     },
 })
 
@@ -305,6 +308,7 @@ AS.AddBaseItem("wep_sg550", {
         ["misc_scrap"] = 225,
         ["misc_smallparts"] = 205,
         ["misc_chemical"] = 200,
+        ["misc_weaponkit"] = 0,
     },
 })
 
@@ -356,6 +360,7 @@ AS.AddBaseItem("wep_sako", {
         ["misc_scrap"] = 215,
         ["misc_smallparts"] = 200,
         ["misc_chemical"] = 195,
+        ["misc_weaponkit"] = 0,
     },
 })
 
@@ -373,6 +378,7 @@ AS.AddBaseItem("wep_ak12", {
         ["misc_scrap"] = 235,
         ["misc_smallparts"] = 240,
         ["misc_chemical"] = 210,
+        ["misc_weaponkit"] = 0,
     },
 })
 
@@ -432,6 +438,7 @@ AS.AddBaseItem("wep_ks23", {
         ["misc_scrap"] = 210,
         ["misc_smallparts"] = 235,
         ["misc_chemical"] = 225,
+        ["misc_weaponkit"] = 0,
     },
 })
 
@@ -456,6 +463,7 @@ AS.AddBaseItem("wep_rpk", {
         ["misc_scrap"] = 280,
         ["misc_smallparts"] = 275,
         ["misc_chemical"] = 300,
+        ["misc_weaponkit"] = 0,
     },
 })
 
@@ -473,6 +481,7 @@ AS.AddBaseItem("wep_m249", {
         ["misc_scrap"] = 300,
         ["misc_smallparts"] = 315,
         ["misc_chemical"] = 320,
+        ["misc_weaponkit"] = 0,
     },
 })
 
@@ -515,6 +524,7 @@ AS.AddBaseItem("wep_m24", {
         ["misc_scrap"] = 210,
         ["misc_smallparts"] = 180,
         ["misc_chemical"] = 200,
+        ["misc_weaponkit"] = 0,
     },
 })
 
@@ -532,6 +542,7 @@ AS.AddBaseItem("wep_m14", {
         ["misc_scrap"] = 220,
         ["misc_smallparts"] = 200,
         ["misc_chemical"] = 215,
+        ["misc_weaponkit"] = 0,
     },
 })
 
@@ -549,6 +560,7 @@ AS.AddBaseItem("wep_svd", {
         ["misc_scrap"] = 225,
         ["misc_smallparts"] = 240,
         ["misc_chemical"] = 250,
+        ["misc_weaponkit"] = 0,
     },
 })
 
@@ -566,6 +578,7 @@ AS.AddBaseItem("wep_sr25", {
         ["misc_scrap"] = 250,
         ["misc_smallparts"] = 275,
         ["misc_chemical"] = 265,
+        ["misc_weaponkit"] = 0,
     },
 })
 
@@ -596,7 +609,6 @@ AS.AddBaseItem("wep_m82", {
     value = 100,
     weight = 12,
     hidden = true,
-    class = "engineer",
     craft = {
         ["misc_scrap"] = 420,
         ["misc_smallparts"] = 380,

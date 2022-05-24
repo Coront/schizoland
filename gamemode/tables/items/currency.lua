@@ -1,3 +1,4 @@
+--[[
 AS.AddBaseItem("currency_dollar", {
     name = "Dollar",
     desc = "One of the few if not only currency that is still used.",
@@ -6,3 +7,4 @@ AS.AddBaseItem("currency_dollar", {
     value = 1,
     weight = 0,
 })
+]]

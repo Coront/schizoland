@@ -49,7 +49,7 @@ function Workbench.Menu()
     local x, y, space = 34, 25, 73
     panel:SetPos( x, y )
     panel:SetSize( frame_workbench:GetWide() - space, (frame_workbench:GetTall() - x) - y - 1 )
-    function panel:Paint( self, w, h ) end
+    function panel:Paint( w, h ) end
 
     local scroll = vgui.Create("DScrollPanel", panel)
     scroll:SetSize( panel:GetWide(), panel:GetTall() )

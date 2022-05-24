@@ -125,7 +125,7 @@ AS.AddBaseItem("ammo_762x39", {
         ["misc_smallparts"] = 0,
         ["misc_chemical"] = 15,
         ["misc_munitionpress"] = 0,
-        ["misc_gunpowder"] = 2,
+        ["misc_gunpowder"] = 1,
     },
 })
 
@@ -147,7 +147,7 @@ AS.AddBaseItem("ammo_556x45", {
         ["misc_smallparts"] = 0,
         ["misc_chemical"] = 15,
         ["misc_munitionpress"] = 0,
-        ["misc_gunpowder"] = 2,
+        ["misc_gunpowder"] = 1,
     },
 })
 
