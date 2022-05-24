@@ -109,6 +109,6 @@ end
 function TOOL.BuildCPanel(panel)
 	panel:AddControl("Header", {
 		Text = "Power Linker",
-		Description = "Work In Progress"
+		Description = "This tool allows players to establish electricity links between objects, allowing them to be active conductors and power different objects."
 	})
 end
