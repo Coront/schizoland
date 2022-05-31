@@ -860,7 +860,7 @@ AS.AddBaseItem("misc_bleach", {
             ["misc_emptybottle"] = 1,
         },
         stat = {
-            [1] = {effect = "poisonsevere", length = 10, stack = true},
+            [1] = {effect = "poisonsevere", length = 20, stack = true},
         },
     },
     hidden = true,
