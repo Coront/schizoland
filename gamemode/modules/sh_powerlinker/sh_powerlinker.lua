@@ -208,19 +208,16 @@ function DestroyLink( ent1, ent2 )
         generatorLinks[ ent1 ] = nil
         generator:SetLinks( generatorLinks )
         ent1:ClearGenerator()
+        ent1:UpdatePower()
     elseif ent2:HasGenerator() then --First entity is the generator
         local generator = ent2:GetGenerator()
         local generatorLinks = generator:GetLinks()
         generatorLinks[ ent2 ] = nil
         generator:SetLinks( generatorLinks )
         ent2:ClearGenerator()
+        ent2:UpdatePower()
     end
-
-    --Then we'll just update the power calculations.
-    ent1:UpdatePower()
-    ent2:UpdatePower()
 end
-
 
 function EntityMeta:UpdatePower() --This function will update the power calculations of an object. Please be mindful that you update every object that is linked, and you should avoid looping this function inside itself.
     local power = 0 --Obviously, there will never be any power to begin with.
