@@ -31,6 +31,7 @@ function AS.CLSettings.Menu()
     local sheets = CreateSheetPanel( frame_settings, frame_settings:GetWide() - x - 36, frame_settings:GetTall() - y - 35, x, y )
 
     AddSheet( sheets, "Gameplay", "icon16/controller.png", AS.CLSettings.BuildGameplay( sheets ) )
+    AddSheet( sheets, "Audio", "icon16/sound.png", AS.CLSettings.BuildAudio( sheets ) )
     AddSheet( sheets, "Colors", "icon16/color_wheel.png", AS.CLSettings.BuildColors( sheets ) )
     AddSheet( sheets, "GUI", "icon16/application.png", AS.CLSettings.BuildGUI( sheets ) )
     AddSheet( sheets, "HUD", "icon16/monitor.png", AS.CLSettings.BuildHUD( sheets ) )
@@ -65,27 +66,18 @@ function AS.CLSettings.BuildGameplay( parent )
     SectionLabel( "General", xpos, ypos, scroll )
     addSpace( 0, 35 )
 
-    ToggleButton("Verify Actions (Example: Salvaging Items)", xpos, ypos, scroll, "as_gameplay_verify")
-    addSpace( 0, 20 )
-
-    ToggleButton("Loot Container Sounds (Exceptions may exist)", xpos, ypos, scroll, "as_container_sounds")
-    addSpace( 0, 20 )
-
-    ToggleButton("Death Sound Cues", xpos, ypos, scroll, "as_gameplay_deathstinger")
+    ToggleButton("Prompt Irreversible Actions (Example: Verification for salvaging an item)", xpos, ypos, scroll, "as_gameplay_verify")
     addSpace( 0, 20 )
 
     -- Low Health Indication
 
-    SectionLabel( "Health Indication", xpos, ypos, scroll )
+    SectionLabel( "Low Health Indication", xpos, ypos, scroll )
     addSpace( 0, 35 )
 
     ToggleButton("Enable Low Health Indication", xpos, ypos, scroll, "as_hud_injured")
     addSpace( 20, 20 )
 
-    ToggleButton("Heartbeat Sounds", xpos, ypos, scroll, "as_hud_injured_heartbeat")
-    addSpace( 0, 20 )
-
-    ValueSlider( "Health Activate Percent", xpos, ypos, 1, 99, scroll, "as_hud_injured_wake" )
+    ValueSlider( "Awake at Health Amt (%)", xpos, ypos, 1, 99, scroll, "as_hud_injured_wake" )
     addSpace( -20, 20 )
 
     -- Thirdperson
@@ -103,6 +95,43 @@ function AS.CLSettings.BuildGameplay( parent )
     addSpace( 0, 20 )
 
     ValueSlider( "Camera - Side", xpos, ypos, -30, 30, scroll, "as_thirdperson_side" )
+    addSpace( 0, 20 )
+
+    return scroll
+end
+
+function AS.CLSettings.BuildAudio( parent )
+    local scroll = vgui.Create("DScrollPanel", parent)
+    scroll:SetPos( 27, 21 )
+    scroll:SetSize( parent:GetWide() - (scroll:GetX() * 2) - 3, parent:GetTall() - (scroll:GetY() * 2) - 8 )
+
+    local xpos = 0
+    local ypos = 5
+    local function addSpace(x, y)
+        xpos = (xpos + (x or 0))
+        ypos = (ypos + (y or 0)) 
+    end
+    local function resetX()
+        xpos = 3
+    end
+
+    -- General
+
+    SectionLabel( "General", xpos, ypos, scroll )
+    addSpace( 0, 35 )
+
+    ToggleButton("Loot Container Sounds", xpos, ypos, scroll, "as_container_sounds")
+    addSpace( 0, 20 )
+
+    ToggleButton("Play Music on Death", xpos, ypos, scroll, "as_gameplay_deathstinger")
+    addSpace( 0, 20 )
+
+    -- Low Health Indication
+
+    SectionLabel( "Low Health Indication", xpos, ypos, scroll )
+    addSpace( 0, 35 )
+
+    ToggleButton("Heartbeat Sounds", xpos, ypos, scroll, "as_hud_injured_heartbeat")
     addSpace( 0, 20 )
 
     return scroll
