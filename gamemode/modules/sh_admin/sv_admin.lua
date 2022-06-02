@@ -33,6 +33,9 @@ end)
 util.AddNetworkString("as_admin_modifyconvar")
 util.AddNetworkString("as_admin_spawnitem")
 util.AddNetworkString("as_admin_changeskillxp")
+util.AddNetworkString("as_admin_inventory_request")
+util.AddNetworkString("as_admin_inventory_send")
+util.AddNetworkString("as_admin_inventory_deleteitem")
 
 net.Receive("as_admin_modifyconvar", function( _, ply )
     local convar = net.ReadString()
@@ -86,4 +89,45 @@ net.Receive("as_admin_changeskillxp", function( _, ply )
         })
     end
     ply:ResyncSkills()
+end)
+
+net.Receive( "as_admin_inventory_request", function( _, ply ) 
+    if not ply:IsAdmin() then ply:ChatPrint("RIP BOZO") return end
+
+    local ent = net.ReadEntity()
+    if not IsValid(ent) then ply:ChatPrint("Player not found.") return end
+    if not ent:IsPlayer() then ply:ChatPrint("Not a player.") return end
+
+    net.Start("as_admin_inventory_send")
+        net.WriteEntity( ent )
+        net.WriteInventory( ent:GetInventory() )
+    net.Send(ply)
+    plogs.PlayerLog(ply, "Admin", ply:NameID() .. " requested to view " .. ent:Nickname() .. "'s inventory.", {
+        ["Name"] 	= ply:Name(),
+        ["SteamID"]	= ply:SteamID(),
+    })
+end)
+
+net.Receive( "as_admin_inventory_deleteitem", function( _, ply )
+    if not ply:IsAdmin() then ply:ChatPrint("Cope Harder") return end
+
+    local ent = net.ReadEntity()
+    if not IsValid(ent) then ply:ChatPrint("Player not found.") return end
+    if not ent:IsPlayer() then ply:ChatPrint("Not a player.") return end
+
+    local item = net.ReadString()
+    if not ent:HasInInventory( item ) then ply:ChatPrint("Player does not have this item.") return end
+
+    local amt = net.ReadUInt( NWSetting.ItemAmtBits )
+    if amt > ent:GetItemCount( item ) then amt = ent:GetItemCount( item ) end
+    if amt < 0 then amt = 1 end
+
+    ent:TakeItemFromInventory( item, amt )
+    ent:ChatPrint("An admin has deleted " .. item .. " (" .. amt .. ") from your inventory.")
+    ply:ChatPrint("You have deleted " .. item .. " (" .. amt .. ") from " .. ent:Nickname() .. "'s inventory.")
+    plogs.PlayerLog(ply, "Admin", ply:NameID() .. " deleted " .. item .. " (" .. amt .. ") in " .. ent:Nickname() .. "'s inventory", {
+        ["Name"] 	= ply:Name(),
+        ["SteamID"]	= ply:SteamID(),
+        ["Item"] = item .. " (" .. amt .. ")"
+    })
 end)

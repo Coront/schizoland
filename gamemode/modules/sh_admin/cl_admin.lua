@@ -442,3 +442,129 @@ function SkillsMenu()
     end
 end
 concommand.Add("as_skills", SkillsMenu)
+
+net.Receive( "as_admin_inventory_send", function()
+    local otherPly = net.ReadEntity()
+    local inv = net.ReadInventory()
+
+    if IsValid(frame_admin_inventory) then frame_admin_inventory:Close() end
+
+    frame_admin_inventory = vgui.Create("DFrame")
+    frame_admin_inventory:SetSize(500, 400)
+    frame_admin_inventory:Center()
+    frame_admin_inventory:MakePopup()
+    frame_admin_inventory:SetDraggable( false )
+    frame_admin_inventory:SetTitle( otherPly:Nickname() .. "'s inventory" )
+    frame_admin_inventory:ShowCloseButton( true )
+    frame_admin_inventory.Paint = function(_,w,h)
+        surface.SetDrawColor( COLHUD_PRIMARY )
+        surface.DrawRect( 0, 0, w, h )
+    end
+
+    local sheets_items = vgui.Create("DPropertySheet", frame_admin_inventory)
+    sheets_items:SetPos(0, 25)
+    sheets_items:SetFadeTime( 0 )
+    sheets_items:SetSize( sheets_items:GetParent():GetWide(), sheets_items:GetParent():GetTall() - sheets_items:GetTall() )
+    function sheets_items:Paint( w, h )
+        surface.SetDrawColor( COLHUD_SECONDARY )
+        surface.DrawRect( 0, 0, w, h )
+    end
+
+    function BuildItemList( parent, category )
+        local scroll_items = vgui.Create("DScrollPanel", parent)
+        scroll_items:SetSize( scroll_items:GetParent():GetWide(), 0 )
+        scroll_items.Paint = function() end
+
+        local itemlist = vgui.Create("DIconLayout", scroll_items)
+        itemlist:SetSize(scroll_items:GetWide() - 10, scroll_items:GetTall())
+        itemlist:SetSpaceY( 5 )
+        itemlist:SetSpaceX( 5 )
+
+        for k, v in SortedPairs( inv ) do
+            local info = AS.Items[k]
+            if category then
+                if info.category != category then continue end
+            end
+            local name = info.name or "name?" .. k
+            local desc = info.desc or "desc?" .. k
+            local weight = info.weight or "weight?" .. k
+
+            local panel = itemlist:Add("SpawnIcon")
+            panel:SetSize( 60, 60 )
+
+            local itemamt = vgui.Create("DLabel", panel)
+            itemamt:SetFont("TargetID")
+            itemamt:SetText( inv[k] )
+            itemamt:SetContentAlignment( 3 )
+            itemamt:SizeToContents()
+            itemamt:SetPos( (panel:GetWide() - itemamt:GetWide()) - 2, panel:GetTall() - itemamt:GetTall() )
+            local function itemamtUpdate()
+                if inv[k] then
+                    if IsValid( itemamt ) then
+                        itemamt:SetText( inv[k] )
+                        itemamt:SizeToContents()
+                        itemamt:SetPos( (panel:GetWide() - itemamt:GetWide()) - 2, panel:GetTall() - itemamt:GetTall() )
+                    end
+                else
+                    if IsValid( panel ) then
+                        panel:Remove()
+                    end
+                end
+            end
+            panel:SetModel( AS.Items[k].model, AS.Items[k].skin or 0 )
+            panel:SetTooltip( name )
+            local function deleteItem( item, amt )
+                inv[item] = (inv[item] or 0) - math.ceil(amt)
+                if inv[item] <= 0 then inv[item] = nil end
+                itemamtUpdate()
+                net.Start("as_admin_inventory_deleteitem")
+                    net.WriteEntity( otherPly )
+                    net.WriteString( item )
+                    net.WriteUInt( amt, NWSetting.ItemAmtBits )
+                net.SendToServer()
+            end
+            function panel:DoClick()
+                local options = vgui.Create("DMenu")
+                options:AddOption("Delete 1", function()
+                    deleteItem( k, 1 )
+                end)
+                options:AddOption("Delete X", function()
+                    VerifySlider( inv[k], function( amt )
+                        deleteItem( k, amt )
+                    end )
+                end)
+                options:AddOption("Delete All", function()
+                    deleteItem( k, v )
+                end)
+                options:Open()
+            end
+            panel.Paint = function(self,w,h)
+                if info.color then
+                    surface.SetDrawColor( info.color )
+                else
+                    surface.SetDrawColor( COLHUD_PRIMARY )
+                end
+                surface.DrawRect( 0, 0, w, h )
+            end
+        end
+
+        return scroll_items
+    end
+
+    function BuildAllSheets()
+        sheets_items:AddSheet("Weapons", BuildItemList(sheets_items, "weapon"), "icon16/gun.png")
+        sheets_items:AddSheet("Armor", BuildItemList(sheets_items, "armor"), "icon16/user.png")
+        sheets_items:AddSheet("Ammo", BuildItemList(sheets_items, "ammo"), "icon16/briefcase.png")
+        sheets_items:AddSheet("Medical", BuildItemList(sheets_items, "med"), "icon16/heart.png")
+        sheets_items:AddSheet("Food", BuildItemList(sheets_items, "food"), "icon16/cup.png")
+        sheets_items:AddSheet("Vehicle", BuildItemList(sheets_items, "vehicle"), "icon16/car.png")
+        sheets_items:AddSheet("Tool", BuildItemList(sheets_items, "tool"), "icon16/wrench.png")
+        sheets_items:AddSheet("Misc", BuildItemList(sheets_items, "misc"), "icon16/cog.png")
+    end
+
+    if GetConVar("as_menu_inventory_singlepanel"):GetInt() < 1 then
+        BuildAllSheets()
+    else
+        sheets_items:AddSheet("All", BuildItemList(sheets_items), "icon16/add.png")
+    end
+end)

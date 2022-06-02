@@ -1277,6 +1277,15 @@ function AS.Inventory.BuildPlayers()
             ping:SetText( "Ping: " .. v:Ping() .. " m/s" )
         end
 
+        if LocalPlayer():IsAdmin() then
+            local width, height = 150, 20
+            DefaultButton( "View Inventory (Admin)", panel:GetWide() - width - 5, panel:GetTall() - height - 5, width, height, panel, function()
+                net.Start("as_admin_inventory_request")
+                    net.WriteEntity( v )
+                net.SendToServer()
+            end)
+        end
+
         ypos = ypos + panel:GetTall() + 5
     end
 
