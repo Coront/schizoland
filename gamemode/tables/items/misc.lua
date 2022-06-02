@@ -703,7 +703,7 @@ AS.AddBaseItem("misc_shoe", {
 })
 
 AS.AddBaseItem("misc_wrench", {
-    name = "Old wrench",
+    name = "Old Wrench",
     desc = "An old wrench, too old to be useful. Might serve better use as scrap.",
     category = "misc",
     model = "models/props_c17/tools_wrench01a.mdl",
@@ -735,7 +735,7 @@ AS.AddBaseItem("misc_leadpipe", {
 })
 
 AS.AddBaseItem("misc_phonereceiver", {
-    name = "Broken phone receiver",
+    name = "Broken Phone Receiver",
     desc = "A destroyed phone receiver.",
     category = "misc",
     model = "models/props_trainstation/payphone_reciever001a.mdl",
@@ -783,7 +783,7 @@ AS.AddBaseItem("misc_lamp", {
 })
 
 AS.AddBaseItem("misc_damagedtransceiver", {
-    name = "Damaged transceiver",
+    name = "Damaged Transceiver",
     desc = "A damaged transceiver, possibly beyond repair.",
     category = "misc",
     model = "models/props_lab/reciever01b.mdl",
@@ -799,7 +799,7 @@ AS.AddBaseItem("misc_damagedtransceiver", {
 })
 
 AS.AddBaseItem("misc_bustedcomputer", {
-    name = "Busted computer",
+    name = "Busted Computer",
     desc = "Theres not much use for this anymore. A good source of small parts though.",
     category = "misc",
     model = "models/props_lab/harddrive01.mdl",
@@ -815,7 +815,7 @@ AS.AddBaseItem("misc_bustedcomputer", {
 })
 
 AS.AddBaseItem("misc_cleaner", {
-    name = "Discarded cleaner",
+    name = "Discarded Cleaner",
     desc = "A bottle of cleaner. It's empty, unfortunately.",
     category = "misc",
     model = "models/props_junk/garbage_plasticbottle002a.mdl",
@@ -831,7 +831,7 @@ AS.AddBaseItem("misc_cleaner", {
 })
 
 AS.AddBaseItem("misc_acid", {
-    name = "Bottle of acid",
+    name = "Bottle of Acid",
     desc = "A bottle of an acidic chemical. Can be salvaged for chemicals.",
     category = "misc",
     model = "models/props_junk/garbage_milkcarton001a.mdl",
@@ -872,7 +872,7 @@ AS.AddBaseItem("misc_bleach", {
 })
 
 AS.AddBaseItem("misc_fireextinguisher", {
-    name = "Expired fire extinguisher",
+    name = "Expired Fire Extinguisher",
     desc = "An expired fire extinguisher, Not sure if there will be any fires that need to be put out soon.",
     category = "misc",
     model = "models/props/cs_office/Fire_Extinguisher.mdl",
