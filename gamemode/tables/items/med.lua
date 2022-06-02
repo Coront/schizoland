@@ -223,3 +223,34 @@ AS.AddBaseItem("med_suppression", {
         ["misc_chemical"] = 65,
     }
 })
+
+--  ██████╗ ████████╗██╗  ██╗███████╗██████╗
+-- ██╔═══██╗╚══██╔══╝██║  ██║██╔════╝██╔══██╗
+-- ██║   ██║   ██║   ███████║█████╗  ██████╔╝
+-- ██║   ██║   ██║   ██╔══██║██╔══╝  ██╔══██╗
+-- ╚██████╔╝   ██║   ██║  ██║███████╗██║  ██║
+--  ╚═════╝    ╚═╝   ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝
+
+AS.AddBaseItem("misc_expbook", {
+    name = "Book of Experience",
+    desc = "A strange book. Contains information that might improve one of your skills, but is also extremely fragile. Cannot be dropped or traded.",
+    category = "misc",
+    model = "models/props_lab/binderredlabel.mdl",
+    color = Color( 160, 130, 0 ),
+    value = 0,
+    weight = 0,
+    use = {
+        func = function( ply )
+            ply:ChatPrint("itemuse_misc_expbook")
+        end,
+    },
+    hidden = true,
+    nodrop = true,
+    nostore = true,
+    novendor = true,
+    craft = {
+        ["misc_scrap"] = 0,
+        ["misc_smallparts"] = 0,
+        ["misc_chemical"] = 0,
+    }
+})
