@@ -217,10 +217,17 @@ hook.Add( "DoPlayerDeath", "AS_PlayerDeath", function( ply, attacker, dmginfo )
         end
     end
 
+    --Stat
+    if attacker:IsPlayer() and not attacker == ply then
+        attacker:AddToStatistic( "kills_player", 1 )
+    end
+
     ply:ClearAllStatuses()
     ply:ResyncStatuses()
     ply:SetHealth( 15 ) --This is just so it doesnt save 0 to the player's health in the database.
     ply:SaveCharacter()
+
+    ply:AddToStatistic( "deaths", 1 )
 end)
 
 function GM:GetFallDamage( ply, speed )

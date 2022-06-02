@@ -35,6 +35,11 @@ if SERVER then
         local _, classbackup = table.Random(AS.Classes)
         local class = sql.QueryValue("SELECT class FROM as_characters WHERE pid = " .. self:GetPID()) or classbackup
         local stats = sql.Query("SELECT * FROM as_characters_stats WHERE pid = " .. self:GetPID())[1]
+        local stattbl = sql.Query("SELECT * FROM as_characters_statistics WHERE pid = " .. self:GetPID())
+        local statistics = {}
+        for k, v in pairs( stattbl ) do
+            statistics[v.key] = v.value
+        end
         local skills = util.JSONToTable(sql.QueryValue("SELECT skills FROM as_characters_skills WHERE pid = " .. self:GetPID())) or {}
         local inv = util.JSONToTable(sql.QueryValue("SELECT inv FROM as_characters_inventory WHERE pid = " .. self:GetPID())) or {}
         local toolcache = util.JSONToTable(sql.QueryValue("SELECT tools FROM as_cache_tools WHERE pid = " .. self:GetPID())) or {}
@@ -82,6 +87,7 @@ if SERVER then
             end
         end
         self:SetPlaytime(stats.playtime)
+        self:SetStatistics( statistics )
         self:SetCommunity( tonumber(community) )
         self:SetRank( rank )
         self:SetTitle( title )

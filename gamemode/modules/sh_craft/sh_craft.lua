@@ -67,5 +67,7 @@ function PlayerMeta:CraftItem( item, amt )
             ent:PhysWake()
             ent:EmitSound(ITEMCUE.DROP)
         end)
+
+        self:AddToStatistic( "item_craft", 1 )
     end
 end

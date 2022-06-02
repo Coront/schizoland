@@ -70,8 +70,11 @@ if ( SERVER ) then
     function ENT:OnTakeDamage( dmg )
         self:SetHealth( self:Health() - dmg:GetDamage() )
 
-        if self:Health() <= 0 then
+        if self:Health() <= 0 and not self.Destroyed then
             self:Destroy()
+            dmg:GetAttacker():AddToStatistic( "mounds", 1 )
+            dmg:GetAttacker():AddItemToInventory( "misc_expbook", 1 )
+            dmg:GetAttacker():ChatPrint( AS.Items["misc_expbook"].name .. " (1) added to inventory.")
         end
     end
 
