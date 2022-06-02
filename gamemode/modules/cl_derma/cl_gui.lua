@@ -201,12 +201,13 @@ function SectionLabel( text, x, y, parent )
     label:SizeToContents()
 end
 
-function SmallLabel( text, x, y, parent )
+function SmallLabel( text, x, y, parent, color )
     local label = vgui.Create("DLabel", parent)
     label:SetFont( "TargetID" )
     label:SetText(text)
     label:SetPos(x, y)
     label:SizeToContents()
+    label:SetColor( color or Color( 255, 255, 255 ) )
 end
 
 function ValueSlider( text, x, y, min, max, parent, convar, color, decimals )

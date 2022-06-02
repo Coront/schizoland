@@ -68,6 +68,6 @@ function PlayerMeta:CraftItem( item, amt )
             ent:EmitSound(ITEMCUE.DROP)
         end)
 
-        self:AddToStatistic( "item_craft", 1 )
+        self:AddToStatistic( "item_craft", amt )
     end
 end

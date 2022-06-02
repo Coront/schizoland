@@ -178,7 +178,7 @@ function PlayerMeta:DestroyItem( item, amt )
     end
     self:EmitSound(ITEMCUE.DESTROY)
 
-    self:AddToStatistic( "item_salvage", 1 )
+    self:AddToStatistic( "item_salvage", amt )
 end
 
 -- ██████╗  █████╗ ████████╗ █████╗ ██████╗  █████╗ ███████╗███████╗

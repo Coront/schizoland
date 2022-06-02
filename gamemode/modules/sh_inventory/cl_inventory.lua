@@ -730,44 +730,30 @@ function AS.Inventory.BuildStats()
         surface.DrawRect(0, 0, w, h)
     end
 
-    local xpos, ypos, statx = 5, 0, 250
+    local xpos, ypos, statx, col, col2 = 5, 3, 300, Color( 220, 220, 220 ), Color( 160, 160, 160 )
+    local curcol = col
+    local function AddStat( name, value )
+        SmallLabel( name, xpos, ypos, scroll_stats, curcol )
+        SmallLabel( value, xpos + statx, ypos, scroll_stats, curcol )
+        ypos = ypos + 20
+        if curcol == col then curcol = col2 elseif curcol == col2 then curcol = col end
+    end
     local function addSpace() ypos = ypos + 20 end
-    local function addXSpace( amt ) xpos = xpos + amt end
 
-    SmallLabel( "Playtime", xpos, ypos, scroll_stats )
-    SmallLabel( LocalPlayer():GetPlaytimeHourMin(), xpos + statx, ypos, scroll_stats )
-    addSpace()
-
-    SmallLabel( "Overall Kills", xpos, ypos, scroll_stats )
-    SmallLabel( 0, xpos + statx, ypos, scroll_stats )
-    addSpace()
-    addXSpace( 15 )
-
-    SmallLabel( "Wasteland Threats Killed", xpos, ypos, scroll_stats )
-    SmallLabel( 0, xpos + statx, ypos, scroll_stats )
-    addSpace()
-
-    SmallLabel( "Players Killed", xpos, ypos, scroll_stats )
-    SmallLabel( 0, xpos + statx, ypos, scroll_stats )
-    addSpace()
-    addXSpace( -15 )
-
-    SmallLabel( "Overall Scavenges", xpos, ypos, scroll_stats )
-    SmallLabel( 0, xpos + statx, ypos, scroll_stats )
-    addSpace()
-    addXSpace( 15 )
-
-    SmallLabel( "Containers Looted", xpos, ypos, scroll_stats )
-    SmallLabel( 0, xpos + statx, ypos, scroll_stats )
-    addSpace()
-
-    SmallLabel( "Nodes Scavenged", xpos, ypos, scroll_stats )
-    SmallLabel( 0, xpos + statx, ypos, scroll_stats )
-    addSpace()
-
-    SmallLabel( "Nodes Depleted", xpos, ypos, scroll_stats )
-    SmallLabel( 0, xpos + statx, ypos, scroll_stats )
-    addSpace()
+    AddStat( "Playtime", LocalPlayer():GetPlaytimeHourMin() )
+    AddStat( "Deaths", LocalPlayer():GetStat("deaths") )
+    AddStat( "Players Killed", LocalPlayer():GetStat("kills_player") )
+    AddStat( "Enemies Killed", LocalPlayer():GetStat("kills_npc") )
+    AddStat( "Nodes Scavenged", LocalPlayer():GetStat("scavenges") )
+    AddStat( "Nodes Depleted", LocalPlayer():GetStat("depletions") )
+    AddStat( "Scrap from scavenging", LocalPlayer():GetStat("scrap") )
+    AddStat( "Small Parts from scavenging", LocalPlayer():GetStat("smallparts") )
+    AddStat( "Chemicals from scavenging", LocalPlayer():GetStat("chemicals") )
+    AddStat( "Items from scavenging", LocalPlayer():GetStat("items") )
+    AddStat( "Items Used", LocalPlayer():GetStat("item_uses") )
+    AddStat( "Items Salvaged", LocalPlayer():GetStat("item_salvage") )
+    AddStat( "Items Crafted", LocalPlayer():GetStat("item_craft") )
+    AddStat( "Antlion Mounds Destroyed", LocalPlayer():GetStat("mounds") )
 
     return stats
 end

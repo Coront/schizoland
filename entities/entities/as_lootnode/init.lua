@@ -135,6 +135,11 @@ function ENT:Use( ply )
                 local amt = math.random( math.floor(NOD.ResBaseMin + (SKL.Salvaging.incminres * ply:GetSkillLevel("salvaging")) ) + scavbonus, math.floor(NOD.ResBaseMax + (SKL.Salvaging.incmaxres * ply:GetSkillLevel("salvaging")) ) + scavbonus )
                 if ply:CanCarryItem( item, amt ) then
                     self:GiveItemToPlayer( ply, item, amt )
+                    if item == "misc_smallparts" then
+                        ply:AddToStatistic( "smallparts", amt )
+                    else
+                        ply:AddToStatistic( "scrap", amt )
+                    end
                 else
                     self:DropItem( item, amt )
                 end
@@ -143,6 +148,7 @@ function ENT:Use( ply )
                 local amt = math.random( math.floor(NOD.ResBaseMin + (SKL.Salvaging.incminres * ply:GetSkillLevel("salvaging")) ) + scavbonus, math.floor(NOD.ResBaseMax + (SKL.Salvaging.incmaxres * ply:GetSkillLevel("salvaging")) ) + scavbonus )
                 if ply:CanCarryItem( item, amt ) then
                     self:GiveItemToPlayer( ply, item, amt )
+                    ply:AddToStatistic( "chemicals", amt )
                 else
                     self:DropItem( item, amt )
                 end
@@ -171,6 +177,7 @@ function ENT:Use( ply )
 						if not id then AS.LuaError("Attempt to index an item that doesn't exist " .. k ) break end
 						if ply:CanCarryItem( k, 1 ) then
                             self:GiveItemToPlayer( ply, k, 1 )
+                            ply:AddToStatistic( "items", 1 )
                         else
                             self:DropItem( k, 1 )
                         end
