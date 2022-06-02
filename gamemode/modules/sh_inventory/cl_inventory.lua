@@ -215,19 +215,21 @@ function AS.Inventory.BuildInventory()
                     net.SendToServer()
                 end
                 if AS.Items[k].category != "tool" and AS.Items[k].category != "vehicle" then
-                    if v > 1 then
-                        options:AddOption("Drop 1", function()
-                            dropItem( k, 1 )
-                        end)
-                        options:AddOption("Drop X", function()
-                            VerifySlider( LocalPlayer():GetInventory()[k], function( amt )
-                                dropItem( k, amt )
-                            end )
+                    if not AS.Items[k].nodrop then
+                        if v > 1 then
+                            options:AddOption("Drop 1", function()
+                                dropItem( k, 1 )
+                            end)
+                            options:AddOption("Drop X", function()
+                                VerifySlider( LocalPlayer():GetInventory()[k], function( amt )
+                                    dropItem( k, amt )
+                                end )
+                            end)
+                        end
+                        options:AddOption("Drop All", function()
+                            dropItem( k, v )
                         end)
                     end
-                    options:AddOption("Drop All", function()
-                        dropItem( k, v )
-                    end)
                 else
                     options:AddOption("Deploy", function()
                         dropItem( k, 1 )

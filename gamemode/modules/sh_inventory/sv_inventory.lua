@@ -73,6 +73,10 @@ function PlayerMeta:UseItem( item )
     if use.func then
         use.func( self )
     end
+
+    if not use.ammotype then --no ammo because ammo can be unequipped.
+        self:AddToStatistic( "item_uses", 1 )
+    end
 end
 
 function PlayerMeta:EquipItem( item )
@@ -173,6 +177,8 @@ function PlayerMeta:DestroyItem( item, amt )
         self:ChatPrint(AS.Items[k].name .. " (" .. v .. ") added to inventory.")
     end
     self:EmitSound(ITEMCUE.DESTROY)
+
+    self:AddToStatistic( "item_salvage", 1 )
 end
 
 -- ██████╗  █████╗ ████████╗ █████╗ ██████╗  █████╗ ███████╗███████╗
@@ -308,6 +314,7 @@ net.Receive("as_inventory_dropitem", function( _, ply )
     local inv = ply:GetInventory()
     if amt > inv[item] then amt = inv[item] end --Person might try higher numbers than what they actually have
     amt = math.Round(amt) --Person might try decimals
+    if AS.Items[item].nodrop then ply:ChatPrint("This item cannot be dropped.") ply:ResyncInventory() return end
 
     --We're verified, so we'll run the actual function.
     ply.NextItemDrop = CurTime() + 0.1

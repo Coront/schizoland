@@ -10,9 +10,9 @@ AS.AddBaseItem("my_item", {
     color = Color( 255, 255, 255 ) --Item's background color (optional)
     value = 1, --Item's game value
     weight = 1, --Item's game weight
-    nodrop = true, --Item cannot be dropped by players (optional)
-    notrade = true, --Item cannot be traded by players (optional)
+    nodrop = false, --Item cannot be dropped by players (optional)
     nostore = false, --Item cannot be put in storage (optional)
+    novendor = false, --Item cannot be put in vendor (optional)
     use = { --A table that will contain settings of what to do when used.
         health = 0, --Will give the player heath. Can be negative to retract health.
         hunger = 0, --Will give the player hunger (as in make them less hungry). Can be negative to retract hunger.
