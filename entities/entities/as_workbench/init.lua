@@ -45,10 +45,10 @@ net.Receive("as_workbench_craftitem", function( _, ply )
 	if not IsValid(ent) then return end
 	if ent.Base != "as_workbench" then return end
 	if ply:GetPos():Distance(ent:GetPos()) > 300 then ply:ChatPrint("You're too far.") return end
-
+	
 	local item = net.ReadString()
 	local amt = net.ReadUInt( NWSetting.ItemCraftBits )
-
+	
 	if not AS.Items[item] then ply:ChatPrint("This isnt a valid item.") ply:ResyncInventory() return end --item doesnt exist
 	if not ent.CraftTable then ply:ChatPrint("This isnt a workbench.") ply:ResyncInventory() return end
     if not ent.CraftTable[item] then ply:ChatPrint("You cannot make this item at this workbench.") ply:ResyncInventory() return end --Item exists but is not craftable at this workbench
