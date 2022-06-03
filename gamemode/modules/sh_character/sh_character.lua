@@ -37,8 +37,10 @@ if SERVER then
         local stats = sql.Query("SELECT * FROM as_characters_stats WHERE pid = " .. self:GetPID())[1]
         local stattbl = sql.Query("SELECT * FROM as_characters_statistics WHERE pid = " .. self:GetPID())
         local statistics = {}
-        for k, v in pairs( stattbl ) do
-            statistics[v.key] = v.value
+        if stattbl and istable(stattbl) then
+            for k, v in pairs( stattbl ) do
+                statistics[v.key] = v.value
+            end
         end
         local skills = util.JSONToTable(sql.QueryValue("SELECT skills FROM as_characters_skills WHERE pid = " .. self:GetPID())) or {}
         local inv = util.JSONToTable(sql.QueryValue("SELECT inv FROM as_characters_inventory WHERE pid = " .. self:GetPID())) or {}
