@@ -276,7 +276,7 @@ function AftershockHUD()
         local xadd, yadd = GetConVar("as_hud_targetinfo_xadd"):GetInt(), GetConVar("as_hud_targetinfo_yadd"):GetInt()
         local x, y, width, height, outline = ((ScrW() * 0.5) + xadd), ((ScrH() * 0.88) + yadd), (GetConVar("as_hud_targetinfo_width"):GetInt() * HUD_SCALE), (GetConVar("as_hud_targetinfo_height"):GetInt() * HUD_SCALE), (1)
         local health, maxhealth = (math.Clamp(target:Health(), 0, target:GetMaxHealth())), (target:GetMaxHealth())
-        local name = target:IsPlayer() and target:Nickname() or target.PrintName or target:GetClass()
+        local name = target:IsPlayer() and target:Nickname() or target:GetNWString("Name", "") != "" and target:GetNWString("Name", "") or target.PrintName or target:GetClass()
         local namey = y - 5
         if target:IsPlayer() and target:InCommunity() then
             draw.SimpleTextOutlined( target:GetCommunityName() .. " - " .. target:GetTitle(), "AftershockHUDVerySmall", x, y - 5, newcol, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM, outline, Color(0,0,0,Target_Alpha))
