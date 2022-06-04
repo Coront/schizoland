@@ -218,7 +218,7 @@ hook.Add( "DoPlayerDeath", "AS_PlayerDeath", function( ply, attacker, dmginfo )
     end
 
     --Stat
-    if attacker:IsPlayer() and not attacker == ply then
+    if attacker:IsPlayer() and attacker != ply then
         attacker:AddToStatistic( "kills_player", 1 )
     end
 
