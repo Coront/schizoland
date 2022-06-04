@@ -90,3 +90,18 @@ hook.Add( "PlayerSay", "AS_ChatCommands", function( ply, txt, team )
         return ""
     end
 end)
+
+--  ██████╗ ████████╗██╗  ██╗███████╗██████╗
+-- ██╔═══██╗╚══██╔══╝██║  ██║██╔════╝██╔══██╗
+-- ██║   ██║   ██║   ███████║█████╗  ██████╔╝
+-- ██║   ██║   ██║   ██╔══██║██╔══╝  ██╔══██╗
+-- ╚██████╔╝   ██║   ██║  ██║███████╗██║  ██║
+--  ╚═════╝    ╚═╝   ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝
+
+concommand.Add( "as_chatcommands", function( ply, cmd, args )
+    print( "----[[ Existing Chat Commands ]]----" )
+
+    for k, v in pairs( AS.ChatCommands ) do
+        print( "/" .. k )
+    end
+end)
