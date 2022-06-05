@@ -74,7 +74,7 @@ AS.AddBaseSkill( "mining", {
     basexp = 1,
     power = 1.85,
 } )
-
+--[[
 AS.AddBaseSkill( "charisma", {
     name = "Charisma",
     desc = "(Work In Progress) Decreases the cost of items at traders, while increasing the price of items that are sold. Leveled by bartering with traders.",
@@ -83,3 +83,4 @@ AS.AddBaseSkill( "charisma", {
     basexp = 1,
     power = 1.85,
 } )
+]]

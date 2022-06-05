@@ -653,19 +653,17 @@ function AS.Inventory.BuildSkills()
     skills.Paint = function() end
 
     local scroll_skills = vgui.Create("DScrollPanel", skills)
-    scroll_skills:SetSize( 774, 0 )
-    scroll_skills:Dock( FILL )
-    scroll_skills:DockMargin( 0, 0, 0, 0 )
+    scroll_skills:SetSize( sheets:GetWide() - 15, sheets:GetTall() - 40 )
     scroll_skills.Paint = function(_,w,h)
         surface.SetDrawColor( COLHUD_SECONDARY )
         surface.DrawRect(0, 0, w, h)
     end
 
+    local ypos = 5
     for k, v in SortedPairs( AS.Skills ) do
         local itempanel = scroll_skills:Add( "DPanel" )
-        itempanel:Dock( TOP )
-        itempanel:DockMargin( 5, 5, 5, 0 )
-        itempanel:SetSize( 0, 100 )
+        itempanel:SetPos( 5, ypos )
+        itempanel:SetSize( scroll_skills:GetWide() - 25, 100 )
         itempanel.Paint = function(_,w,h)
             surface.SetDrawColor( COLHUD_PRIMARY )
             surface.DrawRect( 0, 0, w, h )
@@ -676,9 +674,13 @@ function AS.Inventory.BuildSkills()
             --Bar
             surface.SetDrawColor( COLHUD_TERTIARY )
             local ply = LocalPlayer()
-            local curxp = ply:GetSkillExperience( k ) - ExpForLevel( k, ply:GetSkillLevel( k ) - 1 )
-            local nextxp = ExpForLevel( k, ply:GetSkillLevel( k ) + 1 ) - ExpForLevel( k, ply:GetSkillLevel( k ))
-            surface.DrawRect( (w - width) - 5, (h - height) - 5, math.Clamp( (curxp / nextxp) * 840, 0, 840 ) , 20)
+            local curxp = ply:GetSkillExperience( k ) --ply:GetSkillExperience( k ) - ExpForLevel( k, ply:GetSkillLevel( k ) - 1 )
+            local nextxp = ExpForLevel( k, ply:GetSkillLevel( k ) ) --ExpForLevel( k, ply:GetSkillLevel( k ) + 1 ) - ExpForLevel( k, ply:GetSkillLevel( k ))
+            if ply:GetSkillLevel( k ) > 1 then
+                curxp = ply:GetSkillExperience( k ) - ExpForLevel( k, ply:GetSkillLevel( k ) - 1 )
+                nextxp = ExpForLevel( k, ply:GetSkillLevel( k ) + 1 ) - ExpForLevel( k, ply:GetSkillLevel( k ) )
+            end
+            surface.DrawRect( (w - width) - 5, (h - height) - 5, math.Clamp( (curxp / nextxp) * width, 0, width), height)
         end
 
         local skillname = vgui.Create("DLabel", itempanel)
@@ -689,7 +691,7 @@ function AS.Inventory.BuildSkills()
 
         local scroll_desc = vgui.Create("DScrollPanel", itempanel)
         scroll_desc:SetPos( 20, 22 )
-        scroll_desc:SetSize( 800, 35 )
+        scroll_desc:SetSize( itempanel:GetWide() - 30, 35 )
 
         local desc = vgui.Create("DLabel", scroll_desc)
         desc:SetText( v.desc )
@@ -714,6 +716,8 @@ function AS.Inventory.BuildSkills()
                 self:SizeToContents()
             end
         end
+
+        ypos = ypos + itempanel:GetTall() + 5
     end
 
     return skills
