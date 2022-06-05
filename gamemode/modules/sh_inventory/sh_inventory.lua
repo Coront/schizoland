@@ -124,6 +124,23 @@ function FetchToolIDByClass( class )
     return item
 end
 
+function PlayerMeta:CountCategoryAmount( category )
+    local str = 0
+
+    for k, v in pairs( self:GetInventory() ) do
+        if AS.Items[k].category != category then continue end
+        str = str + 1
+    end
+
+    if str > 0 then
+        str = " (" .. str .. ")"
+    elseif str == 0 then
+        str = ""
+    end
+
+    return str
+end
+
 function PlayerMeta:GetAllTools() --Will return a table of a player's deployed tools
     local tbl = {}
     for k, v in pairs( ents.GetAll() ) do

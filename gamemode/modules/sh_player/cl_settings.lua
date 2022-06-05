@@ -466,9 +466,6 @@ function AS.CLSettings.BuildBinds( parent )
     KeyBind( "Skills", xpos, ypos, scroll, "as_bind_skills" )
     addSpace( 0, 20 )
 
-    KeyBind( "Missions", xpos, ypos, scroll, "as_bind_missions" )
-    addSpace( 0, 20 )
-
     KeyBind( "Statistics", xpos, ypos, scroll, "as_bind_stats" )
     addSpace( 0, 20 )
 

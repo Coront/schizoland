@@ -11,6 +11,7 @@ AS.Inventory = {}
 
 AS_ClientConVar( "as_menu_inventory_holdtoopen", "1", true, false )
 AS_ClientConVar( "as_menu_inventory_singlepanel", "0", true, false )
+AS_ClientConVar( "as_menu_inventory_itemiconsize", "60", true, false )
 
 function AS.Inventory.Open( tab )
     if not LocalPlayer():IsLoaded() then return end
@@ -18,49 +19,45 @@ function AS.Inventory.Open( tab )
     if IsValid(frame_inventory) then frame_inventory:Close() end
 
     frame_inventory = vgui.Create("DFrame")
-    frame_inventory:SetSize(900, 700)
+    frame_inventory:SetSize(900, 750)
     frame_inventory:Center()
     frame_inventory:MakePopup()
     frame_inventory:SetDraggable( false )
     frame_inventory:SetTitle( "" )
     frame_inventory:ShowCloseButton( false )
-    frame_inventory.Paint = function(_,w,h)
+    function frame_inventory:Paint( w, h )
         surface.SetDrawColor( COLHUD_PRIMARY )
         surface.DrawRect( 0, 0, w, h )
+
+        surface.SetMaterial( Material("gui/aftershock/default.png") )
+        surface.SetDrawColor( Color( 255, 255, 255, 255 ) )
+        surface.DrawTexturedRect( 0, 0, w, h )
     end
     if GetConVar("as_menu_inventory_holdtoopen"):GetInt() > 0 then
         frame_inventory.Think = function( self )
-            if not input.IsButtonDown( input.GetKeyCode( GetConVarString("as_bind_inventory") ) ) and not input.IsButtonDown( input.GetKeyCode( GetConVarString("as_bind_stats") ) ) and not input.IsButtonDown( input.GetKeyCode( GetConVarString("as_bind_skills") ) ) and not input.IsButtonDown( input.GetKeyCode( GetConVarString("as_bind_missions") ) ) and not input.IsButtonDown( input.GetKeyCode( GetConVarString("as_bind_players") ) ) then
+            if not input.IsButtonDown( input.GetKeyCode( GetConVarString("as_bind_inventory") ) ) 
+            and not input.IsButtonDown( input.GetKeyCode( GetConVarString("as_bind_stats") ) ) 
+            and not input.IsButtonDown( input.GetKeyCode( GetConVarString("as_bind_skills") ) ) 
+            and not input.IsButtonDown( input.GetKeyCode( GetConVarString("as_bind_players") ) ) then
                 self:Close()
             end
         end
     end
 
-    sheets = vgui.Create("DPropertySheet", frame_inventory)
-    sheets:SetPos(5, 5)
-    sheets:SetFadeTime( 0 )
-    sheets:SetSize( frame_inventory:GetWide() - (sheets:GetX() * 2), frame_inventory:GetTall() - (sheets:GetY() * 2))
-    sheets.Paint = function() end
+    local cbuttonsize = 24
+    local closebutton = CreateCloseButton( frame_inventory, cbuttonsize, frame_inventory:GetWide() - cbuttonsize - 6, 3 )
 
-    local closebutton = vgui.Create("DButton", frame_inventory)
-    closebutton:SetSize( 25, 25 )
-    closebutton:SetPos( frame_inventory:GetWide() - closebutton:GetWide(), 0)
-    closebutton:SetFont("TargetID")
-    closebutton:SetText("X")
-    closebutton:SetColor( COLHUD_SECONDARY )
-    closebutton.Paint = function( _, w, h ) end
-    closebutton.DoClick = function()
-        if IsValid(frame_inventory) then
-            frame_inventory:Close()
-        end
-    end
+    local x, y = 47, 31
+    sheets = CreateSheetPanel( frame_inventory, frame_inventory:GetWide() - x - 56, frame_inventory:GetTall() - y - 45, x, y )
 
     sheets:AddSheet("Inventory", AS.Inventory.BuildInventory(), "icon16/box.png")
     sheets:AddSheet("Skills", AS.Inventory.BuildSkills(), "icon16/user.png")
-    sheets:AddSheet("Missions", AS.Inventory.BuildMissions(), "icon16/map.png")
     sheets:AddSheet("Community", AS.Inventory.BuildCommunity(), "icon16/vcard.png")
     sheets:AddSheet("Statistics", AS.Inventory.BuildStats(), "icon16/chart_line.png")
     sheets:AddSheet("Players", AS.Inventory.BuildPlayers(), "icon16/user_gray.png")
+    --[[
+    sheets:AddSheet("Missions", AS.Inventory.BuildMissions(), "icon16/map.png")
+    ]]
 
     if tab then
         sheets:SetActiveTab( sheets:GetItems()[tab].Tab )
@@ -80,25 +77,39 @@ function AS.Inventory.BuildInventory()
 
 -- Items Panel
     local itempanel = vgui.Create( "DPanel", inventory )
-    itempanel:SetSize( 570, 450 )
-    itempanel:Dock( LEFT )
-    itempanel:DockMargin( 0, 0, 0, 180 )
+    itempanel:SetSize( 485, 450 )
     function itempanel:Paint(w,h)
         surface.SetDrawColor( COLHUD_SECONDARY )
         surface.DrawRect( 0, 0, w, h )
     end
 
-    local weightlbl = vgui.Create("DLabel", itempanel)
+    local weightpanel = vgui.Create( "DPanel", itempanel )
+    weightpanel:SetPos( 5, itempanel:GetTall() - 25 )
+    weightpanel:SetSize( itempanel:GetWide() - (weightpanel:GetX() * 2), 20 )
+    function weightpanel:Paint(w,h)
+        surface.SetDrawColor( Color( 150, 150, 150 ) )
+        surface.DrawRect( 0, 0, w, h )
+
+        surface.SetDrawColor( COLHUD_DEFAULT )
+        surface.DrawRect( 0, 0, (LocalPlayer():GetCarryWeight() / LocalPlayer():MaxCarryWeight()) * w, h )
+    end
+
+    local weightlbl = vgui.Create("DLabel", weightpanel)
     weightlbl:SetFont("TargetID")
     weightlbl:SetText( "Weight: " .. LocalPlayer():GetCarryWeight() .. " / " .. LocalPlayer():MaxCarryWeight() )
     weightlbl:SetContentAlignment( 3 )
     weightlbl:SizeToContents()
-    weightlbl:SetPos( 5, 3 )
+    weightlbl:SetPos( weightpanel:GetWide() / 2 - weightlbl:GetWide() / 2, 0 )
+    if LocalPlayer():GetCarryWeight() <= LocalPlayer():MaxCarryWeight() then
+        weightlbl:SetColor( Color( 255, 255, 255 ) )
+    else
+        weightlbl:SetColor( COLHUD_BAD )
+    end
 
     local sheets_items = vgui.Create("DPropertySheet", itempanel)
-    sheets_items:SetPos(0, 25)
+    sheets_items:SetPos(0, 0)
     sheets_items:SetFadeTime( 0 )
-    sheets_items:SetSize( sheets_items:GetParent():GetWide(), sheets_items:GetParent():GetTall() - sheets_items:GetPos() )
+    sheets_items:SetSize( sheets_items:GetParent():GetWide(), sheets_items:GetParent():GetTall() - (weightpanel:GetTall() + 5) )
     sheets_items.Paint = function() end
 
     function BuildItemList( parent, category )
@@ -121,7 +132,8 @@ function AS.Inventory.BuildInventory()
             local weight = info.weight or "weight?" .. k
 
             local panel = itemlist:Add("SpawnIcon")
-            panel:SetSize( 60, 60 )
+            local size = GetConVar("as_menu_inventory_itemiconsize"):GetInt()
+            panel:SetSize( size, size )
 
             local itemamt = vgui.Create("DLabel", panel)
             itemamt:SetFont("TargetID")
@@ -272,12 +284,16 @@ function AS.Inventory.BuildInventory()
                 end
             end
             panel.Paint = function(self,w,h)
+                local col = COLHUD_PRIMARY:ToTable()
+                surface.SetDrawColor( col[1], col[2], col[3], 100 )
+                surface.DrawRect( 0, 0, w, h )
+
                 if info.color then
                     surface.SetDrawColor( info.color )
                 else
                     surface.SetDrawColor( COLHUD_PRIMARY )
                 end
-                surface.DrawRect( 0, 0, w, h )
+                surface.DrawOutlinedRect( 0, 0, w, h, 1 )
             end
         end
 
@@ -285,14 +301,14 @@ function AS.Inventory.BuildInventory()
     end
 
     function BuildAllSheets()
-        sheets_items:AddSheet("Weapons", BuildItemList(sheets_items, "weapon"), "icon16/gun.png")
-        sheets_items:AddSheet("Armor", BuildItemList(sheets_items, "armor"), "icon16/user.png")
-        sheets_items:AddSheet("Ammo", BuildItemList(sheets_items, "ammo"), "icon16/briefcase.png")
-        sheets_items:AddSheet("Medical", BuildItemList(sheets_items, "med"), "icon16/heart.png")
-        sheets_items:AddSheet("Food", BuildItemList(sheets_items, "food"), "icon16/cup.png")
-        sheets_items:AddSheet("Vehicle", BuildItemList(sheets_items, "vehicle"), "icon16/car.png")
-        sheets_items:AddSheet("Tool", BuildItemList(sheets_items, "tool"), "icon16/wrench.png")
-        sheets_items:AddSheet("Misc", BuildItemList(sheets_items, "misc"), "icon16/cog.png")
+        sheets_items:AddSheet("Weapons" .. LocalPlayer():CountCategoryAmount( "weapon" ), BuildItemList(sheets_items, "weapon"), "icon16/gun.png")
+        sheets_items:AddSheet("Armor" .. LocalPlayer():CountCategoryAmount( "armor" ), BuildItemList(sheets_items, "armor"), "icon16/user.png")
+        sheets_items:AddSheet("Ammo" .. LocalPlayer():CountCategoryAmount( "ammo" ), BuildItemList(sheets_items, "ammo"), "icon16/briefcase.png")
+        sheets_items:AddSheet("Medical" .. LocalPlayer():CountCategoryAmount( "med" ), BuildItemList(sheets_items, "med"), "icon16/heart.png")
+        sheets_items:AddSheet("Food" .. LocalPlayer():CountCategoryAmount( "food" ), BuildItemList(sheets_items, "food"), "icon16/cup.png")
+        sheets_items:AddSheet("Vehicle" .. LocalPlayer():CountCategoryAmount( "vehicle" ), BuildItemList(sheets_items, "vehicle"), "icon16/car.png")
+        sheets_items:AddSheet("Tool" .. LocalPlayer():CountCategoryAmount( "tool" ), BuildItemList(sheets_items, "tool"), "icon16/wrench.png")
+        sheets_items:AddSheet("Misc" .. LocalPlayer():CountCategoryAmount( "misc" ), BuildItemList(sheets_items, "misc"), "icon16/cog.png")
     end
 
     if GetConVar("as_menu_inventory_singlepanel"):GetInt() < 1 then
@@ -303,9 +319,8 @@ function AS.Inventory.BuildInventory()
 
 --Character Panel
     local characterpanel = vgui.Create( "DPanel", inventory )
-    characterpanel:SetSize( 300, 494 )
-    characterpanel:Dock( RIGHT )
-    characterpanel:DockMargin( 5, 0, 0, 180 )
+    characterpanel:SetSize( sheets:GetWide() - (itempanel:GetWide() + 10), itempanel:GetTall() )
+    characterpanel:SetPos( itempanel:GetWide() + 10, 0 )
     function characterpanel:Paint(w,h)
         surface.SetDrawColor( COLHUD_SECONDARY )
         surface.DrawRect( 0, 0, w, h )
@@ -383,17 +398,17 @@ function AS.Inventory.BuildInventory()
 
 --Weapons/Ammo Panel
     local weaponpanel = vgui.Create( "DPanel", inventory )
-    weaponpanel:SetPos( 0, 477 )
-    weaponpanel:SetSize( 450, 175 )
+    weaponpanel:SetPos( 0, itempanel:GetTall() + 10 )
+    weaponpanel:SetSize( sheets:GetWide() / 2, 175 )
     function weaponpanel:Paint(w,h)
         surface.SetDrawColor( COLHUD_SECONDARY )
         surface.DrawRect( 0, 0, w, h )
     end
 
     local weaponscroll = vgui.Create( "DHorizontalScroller", weaponpanel )
-    weaponscroll:SetSize( weaponscroll:GetParent():GetWide() - 5, weaponscroll:GetParent():GetTall() - 5 )
-    weaponscroll:SetPos( 2, 2 )
-    weaponscroll:SetOverlap( -2 )
+    weaponscroll:SetSize( weaponscroll:GetParent():GetWide() - 5, weaponscroll:GetParent():GetTall() - 10 )
+    weaponscroll:SetPos( 5, 5 )
+    weaponscroll:SetOverlap( -3 )
 
     for k, v in SortedPairs( LocalPlayer():GetWeapons() ) do
         if not v.ASID then continue end --stupid method but it works, need to tie an id to the weapons
@@ -401,14 +416,14 @@ function AS.Inventory.BuildInventory()
         if v.ASArmor then continue end
 
         local weaponinfopanel = vgui.Create("DPanel")
-        weaponinfopanel:SetSize( 85, weaponscroll:GetTall() )
+        weaponinfopanel:SetSize( 100, weaponscroll:GetTall() - (weaponscroll:GetY() * 2) )
         function weaponinfopanel:Paint(w,h)
             surface.SetDrawColor( COLHUD_PRIMARY )
             surface.DrawRect( 0, 0, w, h )
         end
 
         local weaponname = vgui.Create("DLabel", weaponinfopanel)
-        weaponname:SetPos( 0, 5 )
+        weaponname:SetPos( 3, 3 )
         weaponname:SetFont("TargetIDSmall")
         weaponname:SetText( AS.Items[v.ASID].name )
         weaponname:SetSize( weaponinfopanel:GetWide(), 15 )
@@ -421,7 +436,7 @@ function AS.Inventory.BuildInventory()
 
         local unequipwep = vgui.Create("DButton", weaponinfopanel)
         unequipwep:SetSize( weaponinfopanel:GetWide() - 2, 18  )
-        unequipwep:SetPos( 1, weaponinfopanel:GetTall() - unequipwep:GetTall() - 2)
+        unequipwep:SetPos( 1, weaponinfopanel:GetTall() - 10)
         unequipwep:SetText("Unequip")
         function unequipwep:DoClick()
             if not LocalPlayer():CanUnequipItem( v.ASID ) then return end
@@ -440,7 +455,7 @@ function AS.Inventory.BuildInventory()
         if not itemid then continue end --doesnt have any item information, not a real item please leave my walls
 
         local ammoinfopanel = vgui.Create("DPanel")
-        ammoinfopanel:SetSize( 85, weaponscroll:GetTall() )
+        ammoinfopanel:SetSize( 85, weaponscroll:GetTall() - (weaponscroll:GetY() * 2)  )
         function ammoinfopanel:Paint(w,h)
             surface.SetDrawColor( COLHUD_PRIMARY )
             surface.DrawRect( 0, 0, w, h )
@@ -468,7 +483,7 @@ function AS.Inventory.BuildInventory()
         if amttopackage > 0 then
             local unequipammo = vgui.Create("DButton", ammoinfopanel)
             unequipammo:SetSize( ammoinfopanel:GetWide() - 2, 18  )
-            unequipammo:SetPos( 1, ammoinfopanel:GetTall() - unequipammo:GetTall() - 2)
+            unequipammo:SetPos( 1, ammoinfopanel:GetTall() - 10)
             unequipammo:SetText("Unequip")
             function unequipammo:DoClick()
                 VerifySlider( amttopackage, function( amt )
@@ -493,7 +508,7 @@ function AS.Inventory.BuildInventory()
         if not AS.Items[itemid] then continue end
 
         local atchinfopanel = vgui.Create("DPanel")
-        atchinfopanel:SetSize( 85, weaponscroll:GetTall() )
+        atchinfopanel:SetSize( 85, weaponscroll:GetTall() - (weaponscroll:GetY() * 2)  )
         function atchinfopanel:Paint(w,h)
             surface.SetDrawColor( COLHUD_PRIMARY )
             surface.DrawRect( 0, 0, w, h )
@@ -513,7 +528,7 @@ function AS.Inventory.BuildInventory()
 
         local unequipatch = vgui.Create("DButton", atchinfopanel)
         unequipatch:SetSize( atchinfopanel:GetWide() - 2, 18  )
-        unequipatch:SetPos( 1, atchinfopanel:GetTall() - unequipatch:GetTall() - 2)
+        unequipatch:SetPos( 1, atchinfopanel:GetTall() - 10)
         unequipatch:SetText("Unequip")
         function unequipatch:DoClick()
             if not LocalPlayer():CanUnequipItem( itemid ) then return end
@@ -529,15 +544,15 @@ function AS.Inventory.BuildInventory()
 
 --Armor Panel
     local armorpanel = vgui.Create( "DPanel", inventory )
-    armorpanel:SetPos( 453, 477 )
-    armorpanel:SetSize( 421, 175 )
+    armorpanel:SetPos( weaponpanel:GetWide() + 10, weaponpanel:GetY() )
+    armorpanel:SetSize( sheets:GetWide() - (weaponpanel:GetWide() + 25), weaponpanel:GetTall() )
     function armorpanel:Paint(w,h)
         surface.SetDrawColor( COLHUD_SECONDARY )
         surface.DrawRect( 0, 0, w, h )
     end
 
     local armor = vgui.Create( "DPanel", armorpanel )
-    armor:SetPos( 3, 3 )
+    armor:SetPos( 5, 5 )
     armor:SetSize( 100, armorpanel:GetTall() - (armor:GetY() * 2) )
     function armor:Paint(w,h)
         surface.SetDrawColor( COLHUD_PRIMARY )
@@ -545,9 +560,9 @@ function AS.Inventory.BuildInventory()
     end
 
     local armorname = vgui.Create("DLabel", armor)
-    armorname:SetPos( 0, 5 )
+    armorname:SetPos( 3, 3 )
     armorname:SetFont("TargetIDSmall")
-    armorname:SetText( "No Armor" )
+    armorname:SetText( "Clothes" )
     armorname:SetSize( armor:GetWide(), 15 )
 
     if LocalPlayer():HasArmor() then
@@ -557,8 +572,8 @@ function AS.Inventory.BuildInventory()
         armorname:SetText( AS.Items[curarmor].name )
 
         local stats = vgui.Create( "DPanel", armorpanel )
-        stats:SetPos( 105, 3 )
-        stats:SetSize( armorpanel:GetWide() - (stats:GetX() + 3), armorpanel:GetTall() - (stats:GetY() * 2) )
+        stats:SetPos( armor:GetWide() + 10, 5 )
+        stats:SetSize( armorpanel:GetWide() - (stats:GetX() + 5), armorpanel:GetTall() - (stats:GetY() * 2) )
         function stats:Paint(w,h)
             surface.SetDrawColor( COLHUD_PRIMARY )
             surface.DrawRect( 0, 0, w, h )
@@ -568,30 +583,29 @@ function AS.Inventory.BuildInventory()
         scroll_stats:SetSize( scroll_stats:GetParent():GetWide(), scroll_stats:GetParent():GetTall() )
         scroll_stats.Paint = function() end
 
+        local ypos = 10
         for k, v in pairs( AS.Items[curarmor].armor ) do
             if not AS.DamageTypes[k] then continue end
 
             local statbg = scroll_stats:Add( "DPanel" )
-            statbg:Dock( TOP )
-            statbg:DockMargin( 5, 7, 5, 0 )
-            statbg:SetSize( 0, 20 )
+            statbg:SetPos( 0, ypos )
+            statbg:SetSize( scroll_stats:GetWide(), 25 )
             local TTtext = AS.DamageTypes[k].name .. ": " .. v .. "%"
             statbg:SetTooltip( TTtext )
             statbg.Paint = function(_,w,h)
-                w = w - 73
+                w = w - 65
                 surface.SetDrawColor( COLHUD_SECONDARY )
                 surface.DrawRect( 25, 0, w, h )
-                
+
                 surface.SetDrawColor( COLHUD_GOOD )
                 local length = (v / 100) * w
                 surface.DrawRect( 25, 0, length, h )
-                
+
                 local xpos = 30
-                for i = 1, 45 do
-                    
+                for i = 1, 21 do
                     surface.SetDrawColor( COLHUD_PRIMARY )
                     surface.DrawRect( xpos, 0, 1, h )
-                    xpos = xpos + 5
+                    xpos = xpos + 9
                 end
             end
 
@@ -603,10 +617,11 @@ function AS.Inventory.BuildInventory()
 
             local amt = vgui.Create("DLabel", statbg)
             amt:SetSize( 35, 20 )
-            amt:SetPos( 295 - amt:GetWide(), 0 )
+            amt:SetPos( 220, 3 )
             amt:SetFont("TargetIDSmall")
             amt:SetText( v .. "%" )
 
+            ypos = ypos + 30
         end
 
         local armormodel = vgui.Create("SpawnIcon", armor)
@@ -722,9 +737,7 @@ function AS.Inventory.BuildStats()
     stats.Paint = function() end
 
     local scroll_stats = vgui.Create("DScrollPanel", stats)
-    scroll_stats:SetSize( 774, 0 )
-    scroll_stats:Dock( FILL )
-    scroll_stats:DockMargin( 0, 0, 0, 0 )
+    scroll_stats:SetSize( sheets:GetWide(), sheets:GetTall() )
     scroll_stats.Paint = function(_,w,h)
         surface.SetDrawColor( COLHUD_SECONDARY )
         surface.DrawRect(0, 0, w, h)
@@ -1212,9 +1225,7 @@ function AS.Inventory.BuildPlayers()
     players.Paint = function() end
 
     local scroll_players = vgui.Create("DScrollPanel", players)
-    scroll_players:SetSize( 774, 0 )
-    scroll_players:Dock( FILL )
-    scroll_players:DockMargin( 0, 0, 0, 0 )
+    scroll_players:SetSize( sheets:GetWide() - 15, sheets:GetTall() )
     scroll_players.Paint = function(_,w,h)
         surface.SetDrawColor( COLHUD_SECONDARY )
         surface.DrawRect(0, 0, w, h)
@@ -1228,7 +1239,7 @@ function AS.Inventory.BuildPlayers()
 
         local panel = vgui.Create("DPanel", scroll_players)
         panel:SetPos( xpos, ypos )
-        panel:SetSize( 850, 100 )
+        panel:SetSize( scroll_players:GetWide() - (xpos * 2), 100 )
         function panel:Paint( w, h )
             surface.SetDrawColor( COLHUD_PRIMARY )
             surface.DrawRect( 0, 0, w, h )
