@@ -72,6 +72,7 @@ local WorkshopFastDL = {
 	["201027186"] = "FA:S 2.0 Alpha SWEPs - Misc",
 	["579832711"] = "Sniper Scope Overlays",
 	["104691717"] = "PAC3",
+	["108424005"] = "Keypad Tool and Cracker with Wire Support",
 }
 
 local WorkshopFastDLMaps = {
