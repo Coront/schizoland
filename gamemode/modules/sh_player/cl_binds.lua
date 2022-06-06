@@ -7,10 +7,6 @@ AS_ClientConVar( "as_bind_craft", "F4", true, false )
 AS_ClientConVar( "as_bind_ownership", "F11", true, false )
 AS_ClientConVar( "as_bind_thirdperson", "g", true, false )
 
-function GetConVarString( convar )
-    return GetConVar(convar):GetString()
-end
-
 function GetKeyName( button )
     return input.GetKeyName( button )
 end
