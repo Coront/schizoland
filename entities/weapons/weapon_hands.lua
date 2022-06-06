@@ -61,11 +61,11 @@ function SWEP:Initialize()
 
 	end
 
-	self:SetNWBool("Drawn", false)
+	self.Drawn = false
 end
 
 function SWEP:Deploy()
-	if self:GetNWBool( "Drawn", false ) then
+	if self.Drawn then
 		FAS2_PlayAnim( self, "fists_draw" )
 	end
 
@@ -76,7 +76,7 @@ function SWEP:PrimaryAttack()
 	CT = CurTime()
 	if CT < self:GetNextPrimaryFire() then return end
 
-	if self:GetNWBool( "Drawn", false ) then
+	if self.Drawn then
 
 		local anim = istable(self.Anims.Slash) and table.Random(self.Anims.Slash) or self.Anims.Slash
 
@@ -133,7 +133,7 @@ function SWEP:PrimaryAttack()
 end
 
 function SWEP:SecondaryAttack()
-	if self:GetNWBool( "Drawn", false ) then return end
+	if self.Drawn then return end
 
 	local trace = util.TraceLine({
 		start = self.Owner:EyePos(),
@@ -173,13 +173,41 @@ function SWEP:Reload()
 end
 
 function SWEP:ToggleDrawn()
-	if self:GetNWBool( "Drawn", false ) then
-		self:SetNWBool( "Drawn", false )
+	if self.Drawn then
+		self.Drawn = false
 		self.HoldType = "normal"
 		FAS2_PlayAnim( self, "fists_holster" )
 	else
-		self:SetNWBool( "Drawn", true )
+		self.Drawn = true
 		self.HoldType = "fist"
 		FAS2_PlayAnim( self, "fists_draw" )
 	end
+
+	if ( SERVER ) then
+		self:UpdateState()
+	end
+end
+
+-- Networking
+
+if ( SERVER ) then
+	
+	util.AddNetworkString("aswep_hands_updatestate")
+
+	function SWEP:UpdateState()
+		net.Start("aswep_hands_updatestate")
+			net.WriteEntity( self )
+			net.WriteBit( self.Drawn )
+		net.Broadcast()
+	end
+
+elseif ( CLIENT ) then
+
+	net.Receive("aswep_hands_updatestate", function()
+		local ent = net.ReadEntity()
+		local state = tobool(net.ReadBit())
+
+		ent.Drawn = state
+	end)
+
 end
