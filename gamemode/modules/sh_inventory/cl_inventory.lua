@@ -383,18 +383,76 @@ function AS.Inventory.BuildInventory()
         end
     end
 
-    local charname = vgui.Create("DLabel", characterdisplay)
+    local charname = vgui.Create("DLabel", characterpanel)
     charname:SetPos( 5, 5 )
     charname:SetFont("TargetID")
     charname:SetText( LocalPlayer():Nickname() )
     charname:SizeToContents()
 
-    local class = vgui.Create("DLabel", characterdisplay)
+    local class = vgui.Create("DLabel", characterpanel)
     class:SetPos( 5, 25 )
     class:SetFont("TargetID")
     class:SetText( translateClassNameID( LocalPlayer():GetASClass() ) )
     class:SetColor( AS.Classes[LocalPlayer():GetASClass()].color )
     class:SizeToContents()
+
+    local hunger = vgui.Create("DPanel", characterpanel)
+    hunger:SetPos( 15, characterpanel:GetTall() - 30)
+    hunger:SetSize( 120, 10 )
+    function hunger:Paint( w, h )
+        surface.SetDrawColor( COLHUD_DEFAULT )
+        surface.DrawOutlinedRect( 0, 0, w, h, 1 )
+        surface.DrawRect( 0, 0, (LocalPlayer():GetHunger() / LocalPlayer():GetMaxHunger()) * w, h )
+
+        surface.SetDrawColor( COLHUD_GOOD )
+        surface.DrawRect( ((w / LocalPlayer():GetMaxHunger()) * SAT.SatBuffs), 1, 1, h - 2)
+    end
+
+    local hungericon = vgui.Create("DPanel", characterdisplay)
+    hungericon:SetPos( 3, characterpanel:GetTall() - 30 )
+    hungericon:SetSize( 10, 10 )
+    function hungericon:Paint( w, h )
+        surface.SetDrawColor( Color( 255, 255, 255, 255 ) )
+        surface.SetMaterial( Material("icon16/cup.png") )
+        surface.DrawTexturedRect( 0, 0, w, h )
+    end
+
+    local hungeramt = vgui.Create("DLabel", characterdisplay)
+    hungeramt:SetPos( hungericon:GetWide() + hunger:GetWide() + 10, characterpanel:GetTall() - 33 )
+    hungeramt:SetFont("TargetIDSmall")
+    function hungeramt:Think()
+        hungeramt:SetText( (LocalPlayer():GetHunger() / LocalPlayer():GetMaxHunger()) * 100 .. "%" )
+        hungeramt:SizeToContents()
+    end
+
+    local thirst = vgui.Create("DPanel", characterdisplay)
+    thirst:SetPos( 15, characterpanel:GetTall() - 15)
+    thirst:SetSize( 120, 10 )
+    function thirst:Paint( w, h )
+        surface.SetDrawColor( COLHUD_DEFAULT )
+        surface.DrawOutlinedRect( 0, 0, w, h, 1 )
+        surface.DrawRect( 0, 0, (LocalPlayer():GetThirst() / LocalPlayer():GetMaxThirst()) * w, h )
+
+        surface.SetDrawColor( COLHUD_GOOD )
+        surface.DrawRect( ((w / LocalPlayer():GetMaxThirst()) * SAT.SatBuffs), 1, 1, h - 2)
+    end
+
+    local thirsticon = vgui.Create("DPanel", characterdisplay)
+    thirsticon:SetPos( 3, characterpanel:GetTall() - 15 )
+    thirsticon:SetSize( 10, 10 )
+    function thirsticon:Paint( w, h )
+        surface.SetDrawColor( Color( 255, 255, 255, 255 ) )
+        surface.SetMaterial( Material("icon16/drink.png") )
+        surface.DrawTexturedRect( 0, 0, w, h )
+    end
+
+    local thirstamt = vgui.Create("DLabel", characterdisplay)
+    thirstamt:SetPos( thirsticon:GetWide() + thirst:GetWide() + 10, characterpanel:GetTall() - 18 )
+    thirstamt:SetFont("TargetIDSmall")
+    function thirstamt:Think()
+        thirstamt:SetText( (LocalPlayer():GetThirst() / LocalPlayer():GetMaxThirst()) * 100 .. "%" )
+        thirstamt:SizeToContents()
+    end
 
 --Weapons/Ammo Panel
     local weaponpanel = vgui.Create( "DPanel", inventory )
