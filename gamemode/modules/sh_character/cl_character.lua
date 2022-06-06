@@ -21,17 +21,20 @@ function AS.CharacterSelect.Menu()
     frame_characters:SetDraggable( false )
     frame_characters:SetTitle( "" )
     frame_characters:ShowCloseButton( false )
-    frame_characters.Paint = function(_,w,h)
-        surface.SetDrawColor( COLHUD_DEFAULT )
+    function frame_characters:Paint( w, h )
+        surface.SetDrawColor( COLHUD_PRIMARY )
         surface.DrawRect( 0, 0, w, h )
     end
 
     scroll_characters = vgui.Create("DScrollPanel", frame_characters)
     scroll_characters:SetPos(2, 2)
     scroll_characters:SetSize(frame_characters:GetWide() - 4, frame_characters:GetTall() - 64)
-    scroll_characters.Paint = function(_,w,h)
+    function scroll_characters:Paint( w, h )
         surface.SetDrawColor( COLHUD_SECONDARY )
         surface.DrawRect(0, 0, w, h)
+
+        surface.SetDrawColor( COLHUD_DEFAULT )
+        surface.DrawOutlinedRect( 0, 0, w, h, 1 )
     end
 
     loading_characters = vgui.Create("DLabel", scroll_characters)
@@ -53,44 +56,51 @@ function AS.CharacterSelect.NewCharacter( new )
     frame_newcharacter:SetDraggable( false )
     frame_newcharacter:SetTitle( "" )
     frame_newcharacter:ShowCloseButton( false )
-    frame_newcharacter.Paint = function(_,w,h)
+    function frame_newcharacter:Paint( w, h )
         surface.SetDrawColor( COLHUD_PRIMARY )
         surface.DrawRect( 0, 0, w, h )
     end
 
     local scroll = vgui.Create("DScrollPanel", frame_newcharacter)
-    scroll:SetPos(10, 10)
-    scroll:SetSize(frame_characters:GetWide() - 20, frame_characters:GetTall() - 125)
-    scroll.Paint = function(_,w,h)
+    scroll:SetPos(2, 2)
+    scroll:SetSize(frame_characters:GetWide() - 4, frame_characters:GetTall() - 60)
+    function scroll:Paint( w, h )
         surface.SetDrawColor( COLHUD_SECONDARY )
         surface.DrawRect(0, 0, w, h)
+
+        surface.SetDrawColor( COLHUD_DEFAULT )
+        surface.DrawOutlinedRect( 0, 0, w, h, 1 )
     end
 
     if not new then --I use this to id new players, but its the same thing if a player doesnt have any characters.
-        Button( "< Back", 0, frame_newcharacter:GetTall() - 40, 100, 40, frame_newcharacter, function()
+        Button( "< Back", 25, frame_newcharacter:GetTall() - 50, 100, 40, frame_newcharacter, function()
             frame_newcharacter:Close()
             CharacterNew:Remove()
             RunConsoleCommand("as_characters")
         end)
     end
 
+    SectionLabel( "Name", 5, 5, scroll )
+
     local name = scroll:Add("DTextEntry")
     name:SetPlaceholderText("Enter your character's name.")
     name:SetValue("")
-    name:SetSize( 400, 20 )
-    name:SetPos(scroll:GetWide() / 2 - name:GetWide() / 2, 50 )
+    name:SetSize( 480, 20 )
+    name:SetPos(scroll:GetWide() / 2 - name:GetWide() / 2, 35 )
 
     local nameinfo = scroll:Add("DLabel")
-    nameinfo:SetSize(400, 70)
-    nameinfo:SetPos(scroll:GetWide() / 2 - nameinfo:GetWide() / 2, 70 )
+    nameinfo:SetSize(480, 70)
+    nameinfo:SetPos(scroll:GetWide() / 2 - nameinfo:GetWide() / 2, 50 )
     nameinfo:SetWrap(true)
-    nameinfo:SetText("Remember that the name you enter will be displayed to other players on the game. This name cannot contain special characters or numbers. Please also make sure that your name is appropriate for everyone.\n\nYou will not be able to change your name freely.")
+    nameinfo:SetText("The name you enter will be displayed to other players on the game. This name cannot contain special characters or numbers. Please also make sure that your name is appropriate for everyone.\n\nYou will not be able to freely change your name after creation.")
+
+    SectionLabel( "Appearance", 5, 140, scroll )
 
     local modellist = scroll:Add("DListView")
-    modellist:SetSize(400, 150)
+    modellist:SetSize(480, 150)
     modellist:SetPos( scroll:GetWide() / 2 - modellist:GetWide() / 2, 175)
     modellist:SetMultiSelect( false )
-    modellist:AddColumn( "Models" )
+    modellist:AddColumn( "Clothes" )
     for k, v in SortedPairsByMemberValue(AS.CharacterModels, "name") do
         modellist:AddLine(v.name)
     end
@@ -101,22 +111,24 @@ function AS.CharacterSelect.NewCharacter( new )
     end
 
     local modelinfo = scroll:Add("DLabel")
-    modelinfo:SetSize(400, 55)
+    modelinfo:SetSize(480, 65)
     modelinfo:SetPos(scroll:GetWide() / 2 - modelinfo:GetWide() / 2, 330 )
     modelinfo:SetWrap(true)
-    modelinfo:SetText("Your character model will be your physical appearance to other players on the game.\n\nYou will not be able to freely change your character model.")
+    modelinfo:SetText("Your selected appearance will be what you look like to other players. This will also be your default clothing when you are not wearing any armor. You can preview your appearance in the character panel to the right.\n\nYou will not be able to freely change your appearance after creation.")
+
+    SectionLabel( "Class", 5, 420, scroll )
 
     local selectedClass = "mercenary"
 
     local classdesc = scroll:Add("DLabel")
-    classdesc:SetSize(400, 100)
-    classdesc:SetPos(scroll:GetWide() / 2 - classdesc:GetWide() / 2, 570 )
+    classdesc:SetSize(480, 100)
+    classdesc:SetPos(scroll:GetWide() / 2 - classdesc:GetWide() / 2, 555 )
     classdesc:SetWrap(true)
     classdesc:SetText( "Selected Class: " .. translateClassNameID( selectedClass ) .. "\n\n" .. AS.Classes[selectedClass].desc )
 
     local classlist = scroll:Add("DListView")
-    classlist:SetSize(400, 150)
-    classlist:SetPos( scroll:GetWide() / 2 - classlist:GetWide() / 2, 420)
+    classlist:SetSize(480, 103)
+    classlist:SetPos( scroll:GetWide() / 2 - classlist:GetWide() / 2, 450)
     classlist:SetMultiSelect( false )
     classlist:AddColumn( "Classes" )
     for k, v in SortedPairs(AS.Classes) do
@@ -128,20 +140,9 @@ function AS.CharacterSelect.NewCharacter( new )
         classdesc:SetText( "Selected Class: " .. translateClassNameID( selectedClass ) .. "\n\n" .. AS.Classes[selectedClass].desc )
     end
 
-    local tutorial = scroll:Add("DCheckBoxLabel")
-    tutorial:SetText("Enable Tutorial (WIP)")
-    tutorial:SizeToContents()
-    tutorial:SetPos((scroll:GetWide() / 2) - (tutorial:GetWide() / 2), 750)
-
-    local tutorialinfo = scroll:Add("DLabel")
-    tutorialinfo:SetText("The tutorial offers to players an explaination on certain basics of the game. It is recommended for newer players to have this enabled if you need help understanding certain systems when first interacting with them. Even with this disabled, there will be a in-game booklet that you can reference for help.")
-    tutorialinfo:SetSize(400, 60)
-    tutorialinfo:SetPos((scroll:GetWide() / 2) - (tutorialinfo:GetWide() / 2), 765 )
-    tutorialinfo:SetWrap(true)
-
     local button = vgui.Create("DButton", frame_newcharacter)
     button:SetSize(200, 50)
-    button:SetPos(frame_newcharacter:GetWide() / 2 - button:GetWide() / 2, frame_newcharacter:GetTall() * 0.9)
+    button:SetPos(frame_newcharacter:GetWide() / 2 - button:GetWide() / 2, frame_newcharacter:GetTall() - 55)
     button:SetFont("AftershockButtonSmall")
     button.DoClick = function()
         surface.PlaySound("buttons/button15.wav")
@@ -153,15 +154,21 @@ function AS.CharacterSelect.NewCharacter( new )
             net.WriteString(selectedClass)
         net.SendToServer()
     end
-    button.Paint = function(_, w, h)
+    function button:Paint( w, h )
         surface.SetDrawColor( COLHUD_SECONDARY )
         surface.DrawRect( 0, 0, w, h )
+
+        surface.SetDrawColor( COLHUD_DEFAULT )
+        surface.DrawOutlinedRect( 0, 0, w, h, 1 )
     end
-    button.Think = function()
+    function button:Think()
         if string.len(name:GetValue()) < SET.MinNameLength and button:IsEnabled() then
             button:SetEnabled( false )
             button:SetText("Enter a name.")
-        elseif string.len(name:GetValue()) >= SET.MinNameLength and not button:IsEnabled() then
+        elseif string.len(name:GetValue()) > SET.MaxNameLength and button:IsEnabled() then
+            button:SetEnabled( false )
+            button:SetText("Name is too long.")
+        elseif string.len(name:GetValue()) >= SET.MinNameLength and string.len(name:GetValue()) <= SET.MaxNameLength and not button:IsEnabled() then
             button:SetEnabled( true )
             button:SetText("Finish")
         end
@@ -218,37 +225,97 @@ function AS.CharacterSelect.BuildCharacters( characters, chardata )
         panel:Dock( TOP )
         panel:DockMargin( 3, 3, 3, 0 )
         panel:SetText("")
-        panel.Paint = function(_,w,h)
-            if selectedChar and selectedChar == v.pid then
-                surface.SetDrawColor( COLHUD_GOOD )
+        function panel:Paint( w, h )
+            local thickness = 1
+            local gap = 0
+            surface.SetDrawColor( COLHUD_DEFAULT )
+            surface.DrawOutlinedRect( 0, 0, w, h, thickness)
+
+            self.IntColor = self.IntColor or COLHUD_SECONDARY
+            self.TxtColor = self.TxtColor or COLHUD_DEFAULT
+            local fadeSpeed = 500
+
+            if self:IsHovered() or selectedChar == v.pid then
+
+                local col = self.IntColor:ToTable()
+                local toCol = COLHUD_DEFAULT:ToTable()
+                col[1] = math.Approach( col[1], toCol[1], FrameTime() * fadeSpeed )
+                col[2] = math.Approach( col[2], toCol[2], FrameTime() * fadeSpeed )
+                col[3] = math.Approach( col[3], toCol[3], FrameTime() * fadeSpeed )
+                self.IntColor = Color( col[1], col[2], col[3], 255 )
+
+                if not self.HoveredOnce then
+                    self.HoveredOnce = true
+                end
+                surface.SetDrawColor( self.IntColor )
+
+                local txtcol = self.TxtColor:ToTable()
+                local txtToCol = COLHUD_SECONDARY:ToTable()
+                txtcol[1] = math.Approach( txtcol[1], txtToCol[1], FrameTime() * fadeSpeed )
+                txtcol[2] = math.Approach( txtcol[2], txtToCol[2], FrameTime() * fadeSpeed )
+                txtcol[3] = math.Approach( txtcol[3], txtToCol[3], FrameTime() * fadeSpeed )
+                self.TxtColor = Color( txtcol[1], txtcol[2], txtcol[3], 255 )
+
+                self:SetColor( self.TxtColor )
+
             else
-                surface.SetDrawColor( COLHUD_PRIMARY )
+
+                local col = self.IntColor:ToTable()
+                local toCol = COLHUD_SECONDARY:ToTable()
+                col[1] = math.Approach( col[1], toCol[1], FrameTime() * fadeSpeed )
+                col[2] = math.Approach( col[2], toCol[2], FrameTime() * fadeSpeed )
+                col[3] = math.Approach( col[3], toCol[3], FrameTime() * fadeSpeed )
+                self.IntColor = Color( col[1], col[2], col[3], 255 )
+
+                if self.HoveredOnce then
+                    self.HoveredOnce = false
+                end
+                surface.SetDrawColor( self.IntColor )
+
+                local txtcol = self.TxtColor:ToTable()
+                local txtToCol = COLHUD_DEFAULT:ToTable()
+                txtcol[1] = math.Approach( txtcol[1], txtToCol[1], FrameTime() * fadeSpeed )
+                txtcol[2] = math.Approach( txtcol[2], txtToCol[2], FrameTime() * fadeSpeed )
+                txtcol[3] = math.Approach( txtcol[3], txtToCol[3], FrameTime() * fadeSpeed )
+                self.TxtColor = Color( txtcol[1], txtcol[2], txtcol[3], 255 )
+
+                self:SetColor( self.TxtColor )
+
             end
-            surface.DrawRect( 0, 0, w, h )
+            surface.DrawRect( thickness + gap, thickness + gap, w - ((thickness + gap) * 2), h - ((thickness + gap) * 2) )
         end
         function panel:DoClick()
             selectedChar = v.pid
             surface.PlaySound(UICUE.SELECT)
         end
 
-        CharacterIcon( v.model, 5, 5, 75, 75, panel, function() panel.DoClick() end)
+        CharacterIcon( v.model, 5, 5, 75, 75, panel, function() 
+            panel.DoClick() 
+        end,
+        AS.Classes[v.class].color)
 
         local name = vgui.Create("DLabel", panel)
         name:SetPos( 85, 0 )
         name:SetFont("AftershockText")
-        name:SetText(v.name .. " (" .. translateClassNameID( chardata[v.pid].class ) .. ")")
-        name:SetColor( AS.Classes[ chardata[v.pid].class ].color )
+        name:SetText(v.name)
         name:SizeToContents()
 
+        local class = vgui.Create("DLabel", panel)
+        class:SetPos( 85, 20 )
+        class:SetFont("AftershockText")
+        class:SetText( translateClassNameID( chardata[v.pid].class ) )
+        class:SetColor( AS.Classes[ chardata[v.pid].class ].color )
+        class:SizeToContents()
+
         local health = vgui.Create("DLabel", panel)
-        health:SetPos( 85, 20 )
+        health:SetPos( 85, 40 )
         health:SetFont("AftershockText")
         local hp = chardata[v.pid] and chardata[v.pid].health or "char?health"
         health:SetText("Health: " .. hp)
         health:SizeToContents()
 
         local playtime = vgui.Create("DLabel", panel)
-        playtime:SetPos( 85, 40 )
+        playtime:SetPos( 85, 60 )
         playtime:SetFont("AftershockText")
         local pt = chardata[v.pid] and chardata[v.pid].playtime or "char?playtime"
         if pt == "NULL" then

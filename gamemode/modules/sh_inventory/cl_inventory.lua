@@ -81,16 +81,20 @@ function AS.Inventory.BuildInventory()
     function itempanel:Paint(w,h)
         surface.SetDrawColor( COLHUD_SECONDARY )
         surface.DrawRect( 0, 0, w, h )
+
+        surface.SetDrawColor( COLHUD_DEFAULT )
+        surface.DrawOutlinedRect( 0, 0, w, h, 1 )
     end
 
     local weightpanel = vgui.Create( "DPanel", itempanel )
     weightpanel:SetPos( 5, itempanel:GetTall() - 25 )
     weightpanel:SetSize( itempanel:GetWide() - (weightpanel:GetX() * 2), 20 )
     function weightpanel:Paint(w,h)
-        surface.SetDrawColor( Color( 150, 150, 150 ) )
-        surface.DrawRect( 0, 0, w, h )
-
         surface.SetDrawColor( COLHUD_DEFAULT )
+        surface.DrawOutlinedRect( 0, 0, w, h )
+
+        local col = COLHUD_DEFAULT:ToTable()
+        surface.SetDrawColor( col[1], col[2], col[3], 150 )
         surface.DrawRect( 0, 0, (LocalPlayer():GetCarryWeight() / LocalPlayer():MaxCarryWeight()) * w, h )
     end
 
@@ -99,7 +103,7 @@ function AS.Inventory.BuildInventory()
     weightlbl:SetText( "Weight: " .. LocalPlayer():GetCarryWeight() .. " / " .. LocalPlayer():MaxCarryWeight() )
     weightlbl:SetContentAlignment( 3 )
     weightlbl:SizeToContents()
-    weightlbl:SetPos( weightpanel:GetWide() / 2 - weightlbl:GetWide() / 2, 0 )
+    weightlbl:SetPos( weightpanel:GetWide() / 2 - weightlbl:GetWide() / 2, 1 )
     if LocalPlayer():GetCarryWeight() <= LocalPlayer():MaxCarryWeight() then
         weightlbl:SetColor( Color( 255, 255, 255 ) )
     else
@@ -284,8 +288,8 @@ function AS.Inventory.BuildInventory()
                 end
             end
             panel.Paint = function(self,w,h)
-                local col = COLHUD_PRIMARY:ToTable()
-                surface.SetDrawColor( col[1], col[2], col[3], 100 )
+                local col = info.color and info.color:ToTable() or COLHUD_PRIMARY:ToTable()
+                surface.SetDrawColor( col[1], col[2], col[3], 50 )
                 surface.DrawRect( 0, 0, w, h )
 
                 if info.color then
@@ -319,11 +323,14 @@ function AS.Inventory.BuildInventory()
 
 --Character Panel
     local characterpanel = vgui.Create( "DPanel", inventory )
-    characterpanel:SetSize( sheets:GetWide() - (itempanel:GetWide() + 10), itempanel:GetTall() )
+    characterpanel:SetSize( sheets:GetWide() - (itempanel:GetWide() + 26), itempanel:GetTall() )
     characterpanel:SetPos( itempanel:GetWide() + 10, 0 )
     function characterpanel:Paint(w,h)
         surface.SetDrawColor( COLHUD_SECONDARY )
         surface.DrawRect( 0, 0, w, h )
+
+        surface.SetDrawColor( COLHUD_DEFAULT )
+        surface.DrawOutlinedRect( 0, 0, w, h, 1 )
     end
 
     local characterdisplay = vgui.Create( "DModelPanel", characterpanel )
@@ -400,7 +407,8 @@ function AS.Inventory.BuildInventory()
     hunger:SetPos( 15, characterpanel:GetTall() - 30)
     hunger:SetSize( 120, 10 )
     function hunger:Paint( w, h )
-        surface.SetDrawColor( COLHUD_DEFAULT )
+        local col = COLHUD_DEFAULT:ToTable()
+        surface.SetDrawColor( col[1], col[2], col[3], 150 )
         surface.DrawOutlinedRect( 0, 0, w, h, 1 )
         surface.DrawRect( 0, 0, (LocalPlayer():GetHunger() / LocalPlayer():GetMaxHunger()) * w, h )
 
@@ -429,7 +437,8 @@ function AS.Inventory.BuildInventory()
     thirst:SetPos( 15, characterpanel:GetTall() - 15)
     thirst:SetSize( 120, 10 )
     function thirst:Paint( w, h )
-        surface.SetDrawColor( COLHUD_DEFAULT )
+        local col = COLHUD_DEFAULT:ToTable()
+        surface.SetDrawColor( col[1], col[2], col[3], 150 )
         surface.DrawOutlinedRect( 0, 0, w, h, 1 )
         surface.DrawRect( 0, 0, (LocalPlayer():GetThirst() / LocalPlayer():GetMaxThirst()) * w, h )
 
@@ -461,6 +470,9 @@ function AS.Inventory.BuildInventory()
     function weaponpanel:Paint(w,h)
         surface.SetDrawColor( COLHUD_SECONDARY )
         surface.DrawRect( 0, 0, w, h )
+
+        surface.SetDrawColor( COLHUD_DEFAULT )
+        surface.DrawOutlinedRect( 0, 0, w, h, 1 )
     end
 
     local weaponscroll = vgui.Create( "DHorizontalScroller", weaponpanel )
@@ -603,10 +615,13 @@ function AS.Inventory.BuildInventory()
 --Armor Panel
     local armorpanel = vgui.Create( "DPanel", inventory )
     armorpanel:SetPos( weaponpanel:GetWide() + 10, weaponpanel:GetY() )
-    armorpanel:SetSize( sheets:GetWide() - (weaponpanel:GetWide() + 25), weaponpanel:GetTall() )
+    armorpanel:SetSize( sheets:GetWide() - (weaponpanel:GetWide() + 26), weaponpanel:GetTall() )
     function armorpanel:Paint(w,h)
         surface.SetDrawColor( COLHUD_SECONDARY )
         surface.DrawRect( 0, 0, w, h )
+
+        surface.SetDrawColor( COLHUD_DEFAULT )
+        surface.DrawOutlinedRect( 0, 0, w, h, 1 )
     end
 
     local armor = vgui.Create( "DPanel", armorpanel )

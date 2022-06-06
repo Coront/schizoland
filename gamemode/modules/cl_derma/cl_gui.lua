@@ -157,10 +157,24 @@ function MainMenuButton( text, x, y, width, height, parent, callback )
     end
 end
 
-function CharacterIcon( model, x, y, width, height, parent, callback )
-	local Icon = vgui.Create( "DModelPanel", parent )
-	Icon:SetPos(x, y)
-	Icon:SetSize(width, height)
+function CharacterIcon( model, x, y, width, height, parent, callback, bgcol )
+    local bgpanel = vgui.Create("DPanel", parent)
+    bgpanel:SetPos( x, y )
+    bgpanel:SetSize( width, height )
+    function bgpanel:Paint( w, h )
+        bgcol = bgcol or COLHUD_DEFAULT
+
+        local col = bgcol:ToTable()
+        surface.SetDrawColor( col[1], col[2], col[3], 25 )
+        surface.DrawRect( 0, 0, w, h )
+    
+        surface.SetDrawColor( col[1], col[2], col[3] )
+        surface.DrawOutlinedRect( 0, 0, w, h, 1 )
+    end
+
+	local Icon = vgui.Create( "DModelPanel", bgpanel )
+	Icon:SetPos( 1, 1 )
+	Icon:SetSize(width - 2, height - 2)
 	Icon:SetFOV(5.6)
 	Icon:SetModel(model)
     local eyepos = Icon.Entity:GetBonePosition(Icon.Entity:LookupBone("ValveBiped.Bip01_Head1")) or Vector(0,0,0)
@@ -168,9 +182,9 @@ function CharacterIcon( model, x, y, width, height, parent, callback )
 	Icon:SetCamPos( eyepos - Vector(-120,0,-10) )
     Icon.Entity:SetEyeTarget(eyepos-Vector(0, -6, -2))
 	Icon:SetAnimated( false )
-    Icon.LayoutEntity = function() return end
+    function Icon:LayoutEntity() end
     if callback then
-        Icon.DoClick = function()
+        function Icon:DoClick() 
             callback()
         end
     end
@@ -183,13 +197,68 @@ function Button( text, x, y, width, height, parent, callback )
     button:SetPos(x, y)
     button:SetFont("AftershockButtonSmall")
     button:SetText( text )
-    button.DoClick = function()
+    function button:DoClick()
         surface.PlaySound("buttons/button15.wav")
         callback()
     end
-    button.Paint = function(_, w, h)
-        surface.SetDrawColor( COLHUD_SECONDARY )
-        surface.DrawRect( 0, 0, w, h )
+    function button:Paint(w, h)
+        local thickness = 1
+        local gap = 0
+        surface.SetDrawColor( COLHUD_DEFAULT )
+        surface.DrawOutlinedRect( 0, 0, w, h, thickness)
+
+        self.IntColor = self.IntColor or COLHUD_SECONDARY
+        self.TxtColor = self.TxtColor or COLHUD_DEFAULT
+        local fadeSpeed = 500
+
+        if self:IsHovered() then
+
+            local col = self.IntColor:ToTable()
+            local toCol = COLHUD_DEFAULT:ToTable()
+            col[1] = math.Approach( col[1], toCol[1], FrameTime() * fadeSpeed )
+            col[2] = math.Approach( col[2], toCol[2], FrameTime() * fadeSpeed )
+            col[3] = math.Approach( col[3], toCol[3], FrameTime() * fadeSpeed )
+            self.IntColor = Color( col[1], col[2], col[3], 255 )
+
+            if not self.HoveredOnce then
+                self.HoveredOnce = true
+            end
+            surface.SetDrawColor( self.IntColor )
+
+            local txtcol = self.TxtColor:ToTable()
+            local txtToCol = COLHUD_SECONDARY:ToTable()
+            txtcol[1] = math.Approach( txtcol[1], txtToCol[1], FrameTime() * fadeSpeed )
+            txtcol[2] = math.Approach( txtcol[2], txtToCol[2], FrameTime() * fadeSpeed )
+            txtcol[3] = math.Approach( txtcol[3], txtToCol[3], FrameTime() * fadeSpeed )
+            self.TxtColor = Color( txtcol[1], txtcol[2], txtcol[3], 255 )
+
+            self:SetColor( self.TxtColor )
+
+        else
+
+            local col = self.IntColor:ToTable()
+            local toCol = COLHUD_SECONDARY:ToTable()
+            col[1] = math.Approach( col[1], toCol[1], FrameTime() * fadeSpeed )
+            col[2] = math.Approach( col[2], toCol[2], FrameTime() * fadeSpeed )
+            col[3] = math.Approach( col[3], toCol[3], FrameTime() * fadeSpeed )
+            self.IntColor = Color( col[1], col[2], col[3], 255 )
+
+            if self.HoveredOnce then
+                self.HoveredOnce = false
+            end
+            surface.SetDrawColor( self.IntColor )
+
+            local txtcol = self.TxtColor:ToTable()
+            local txtToCol = COLHUD_DEFAULT:ToTable()
+            txtcol[1] = math.Approach( txtcol[1], txtToCol[1], FrameTime() * fadeSpeed )
+            txtcol[2] = math.Approach( txtcol[2], txtToCol[2], FrameTime() * fadeSpeed )
+            txtcol[3] = math.Approach( txtcol[3], txtToCol[3], FrameTime() * fadeSpeed )
+            self.TxtColor = Color( txtcol[1], txtcol[2], txtcol[3], 255 )
+
+            self:SetColor( self.TxtColor )
+
+        end
+        surface.DrawRect( thickness + gap, thickness + gap, w - ((thickness + gap) * 2), h - ((thickness + gap) * 2) )
     end
 end
 
