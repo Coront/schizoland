@@ -9,6 +9,7 @@ SET.RawResources = { --Raw resources table, functions will reference this when l
 }
 SET.MaxCharacters = 5 --Maximum characters players are allowed to have.
 SET.MinNameLength = 3 --Minimal length of a players name.
+SET.MaxNameLength = 50 --Maximum length of a players name.
 SET.BankWeight = 1000 --Maximum weight a player's bank can hold.
 SET.HealthUpdating = 5 --Seconds until passive health updates
 SET.ClassChangeCostTbl = { --If classchangecost is on, what do player's have to pay to change?
