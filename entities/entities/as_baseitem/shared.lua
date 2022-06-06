@@ -15,7 +15,7 @@ function ENT:SetAmount( amt )
 end
 
 function ENT:GetItem()
-	return self:GetNWString( "ItemID", "item?itemid" )
+	return self:GetNWString( "ItemID", "misc_towels" )
 end
 
 function ENT:GetAmount()
