@@ -215,6 +215,19 @@ function AS.CLSettings.BuildGUI( parent )
     ToggleButton("No Item Categorization", xpos, ypos, scroll, "as_menu_inventory_singlepanel")
     addSpace( 0, 20 )
 
+    CreateComboBox( scroll, 200, 20, xpos, ypos, "Item Icon Size", {
+        ["Small"] = function() 
+            RunConsoleCommand( "as_menu_inventory_itemiconsize", 52 )
+        end,
+        ["Medium"] = function() 
+            RunConsoleCommand( "as_menu_inventory_itemiconsize", 60 )
+        end,
+        ["Large"] = function() 
+            RunConsoleCommand( "as_menu_inventory_itemiconsize", 71 )
+        end,
+    } )
+    addSpace( 0, 20 )
+
     return scroll
 end
 
