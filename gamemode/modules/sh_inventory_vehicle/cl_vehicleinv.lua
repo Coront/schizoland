@@ -9,37 +9,30 @@ function AS.Storage.Menu( ent )
     ent:EmitSound(STORAGECUE.OPEN)
 
     frame_storage = vgui.Create("DFrame")
-    frame_storage:SetSize(800, 600)
+    frame_storage:SetSize(960, 700)
     frame_storage:Center()
     frame_storage:MakePopup()
     frame_storage:SetDraggable( false )
     frame_storage:SetTitle( "" )
     frame_storage:ShowCloseButton( false )
-    frame_storage.Paint = function(_,w,h)
+    function frame_storage:Paint( w, h )
         surface.SetDrawColor( COLHUD_PRIMARY )
         surface.DrawRect( 0, 0, w, h )
+
+        surface.SetMaterial( Material("gui/aftershock/default.png") )
+        surface.SetDrawColor( Color( 255, 255, 255, 255 ) )
+        surface.DrawTexturedRect( 0, 0, w, h )
     end
     function frame_storage:Think()
         if not IsValid(ent) then frame_storage:Close() end
     end
 
-    local closebutton = vgui.Create("DButton", frame_storage)
-    closebutton:SetSize( 25, 25 )
-    closebutton:SetPos( frame_storage:GetWide() - closebutton:GetWide(), 0)
-    closebutton:SetFont("TargetID")
-    closebutton:SetText("X")
-    closebutton:SetColor( COLHUD_SECONDARY )
-    closebutton.Paint = function( _, w, h ) end
-    closebutton.DoClick = function()
-        if IsValid(frame_storage) then
-            frame_storage:Close()
-            ent:EmitSound(STORAGECUE.CLOSE)
-        end
-    end
+    local cbuttonsize = 24
+    local closebutton = CreateCloseButton( frame_storage, cbuttonsize, frame_storage:GetWide() - cbuttonsize - 6, 3 )
 
     local pickup = vgui.Create("DButton", frame_storage)
     pickup:SetSize( 80, 20 )
-    pickup:SetPos( frame_storage:GetWide() - closebutton:GetWide() - pickup:GetWide(), 3 )
+    pickup:SetPos( frame_storage:GetWide() - (cbuttonsize + 10) - pickup:GetWide(), 4 )
     pickup:SetText("Pick Up")
     pickup:SetEnabled( false )
     pickup:SetTooltip("You are not the owner of this object.")
@@ -47,32 +40,53 @@ function AS.Storage.Menu( ent )
         pickup:SetEnabled( true )
         pickup:SetTooltip("Pickup the entity and place it in your inventory.")
     end
-    pickup.DoClick = function()
+    function pickup:DoClick()
         net.Start("as_storage_pickup")
             net.WriteEntity( ent )
         net.SendToServer()
         frame_storage:Close()
     end
+    function pickup:Paint( w, h )
+        if self:IsHovered() then
+            surface.SetDrawColor( COLHUD_DEFAULT )
+            self:SetColor( COLHUD_SECONDARY )
+        else
+            surface.SetDrawColor( COLHUD_SECONDARY )
+            self:SetColor( COLHUD_DEFAULT )
+        end
+        surface.DrawRect( 0, 0, w, h )
+
+        surface.SetDrawColor( COLHUD_DEFAULT )
+        surface.DrawOutlinedRect( 0, 0, w, h, 1 )
+    end
+
+    local invbutton = DefaultButton( "Inventory", pickup:GetX() - 80, 4, 80, 20, frame_storage, function()
+        frame_storage:Close()
+        AS.Inventory.Open( 1, true )
+    end)
 
     local inventory = vgui.Create("DLabel", frame_storage)
     inventory:SetFont("TargetID")
     inventory:SetText( "Inventory" )
     inventory:SetContentAlignment( 3 )
     inventory:SizeToContents()
-    inventory:SetPos( 8, 3 )
+    inventory:SetPos( 55, 32 )
 
     inventorypanel = vgui.Create("DPanel", frame_storage)
-    local x, y, space = 5, 25, 10
+    local x, y, space = 50, 50, 60
     inventorypanel:SetPos( x, y )
-    inventorypanel:SetSize( (frame_storage:GetWide() / 2) - space, (frame_storage:GetTall() - x) - y )
-    inventorypanel.Paint = function( self, w, h )
+    inventorypanel:SetSize( (frame_storage:GetWide() / 2) - space, (frame_storage:GetTall() - 45) - y )
+    function inventorypanel:Paint( w, h )
         surface.SetDrawColor( COLHUD_SECONDARY )
         surface.DrawRect( 0, 0, w, h )
+
+        surface.SetDrawColor( COLHUD_DEFAULT )
+        surface.DrawOutlinedRect( 0, 0, w, h, 1 )
     end
 
     inventorysearchbar = vgui.Create( "DTextEntry", inventorypanel )
     inventorysearchbar:Dock( TOP )
-    inventorysearchbar:DockMargin( 0, 0, 0, 0 )
+    inventorysearchbar:DockMargin( 1, 1, 1, 0 )
     inventorysearchbar:SetSize( 0, 25 )
     inventorysearchbar:SetPlaceholderText( "Search an item here. Hit enter to submit." )
     inventorysearchbar.OnEnter = function( self )
@@ -80,12 +94,31 @@ function AS.Storage.Menu( ent )
         AS.Storage.BuildInventory( ent )
     end
 
-    weightlbl = vgui.Create("DLabel", inventorypanel)
+    local weight = vgui.Create("DPanel", inventorypanel)
+    weight:SetPos( 5, inventorypanel:GetTall() - 25 )
+    weight:SetSize( inventorypanel:GetWide() - 10, 20 )
+    function weight:Paint( w, h )
+        local col = COLHUD_DEFAULT:ToTable()
+        surface.SetDrawColor( col[1], col[2], col[3], 150 )
+        surface.DrawRect( 0, 0, (LocalPlayer():GetCarryWeight() / LocalPlayer():MaxCarryWeight()) * w, h )
+
+        surface.SetDrawColor( COLHUD_DEFAULT )
+        surface.DrawOutlinedRect( 0, 0, w, h, 1 )
+    end
+
+    weightlbl = vgui.Create("DLabel", weight)
     weightlbl:SetFont("TargetID")
     weightlbl:SetText( "Weight: " .. LocalPlayer():GetCarryWeight() .. " / " .. LocalPlayer():MaxCarryWeight() )
     weightlbl:SetContentAlignment( 3 )
     weightlbl:SizeToContents()
-    weightlbl:SetPos( 5, 27 )
+    weightlbl:SetPos( weight:GetWide() / 2 - weightlbl:GetWide() / 2, 1 )
+    function weightlbl:Think()
+        if LocalPlayer():GetCarryWeight() <= LocalPlayer():MaxCarryWeight() then
+            weightlbl:SetColor( Color( 255, 255, 255 ) )
+        else
+            weightlbl:SetColor( COLHUD_BAD )
+        end
+    end
 
     AS.Storage.BuildInventory( ent )
 
@@ -94,15 +127,18 @@ function AS.Storage.Menu( ent )
     storage:SetText( "Storage" )
     storage:SetContentAlignment( 3 )
     storage:SizeToContents()
-    storage:SetPos( frame_storage:GetWide() / 2 + 5, 3 )
+    storage:SetPos( frame_storage:GetWide() / 2 + 5, 32 )
 
     storagepanel = vgui.Create("DPanel", frame_storage)
-    local x, y, space = 5, 25, 10
-    storagepanel:SetPos( inventorypanel:GetWide() + space, y )
-    storagepanel:SetSize( (frame_storage:GetWide() / 2) - (space / 2), (frame_storage:GetTall() - x) - y )
-    storagepanel.Paint = function( self, w, h )
+    local x, y, space = 60, 50, 60
+    storagepanel:SetPos( inventorypanel:GetWide() + x, y )
+    storagepanel:SetSize( (frame_storage:GetWide() / 2) - space, (frame_storage:GetTall() - 45) - y )
+    function storagepanel:Paint( w, h )
         surface.SetDrawColor( COLHUD_SECONDARY )
         surface.DrawRect( 0, 0, w, h )
+
+        surface.SetDrawColor( COLHUD_DEFAULT )
+        surface.DrawOutlinedRect( 0, 0, w, h, 1 )
     end
 
     banksearchbar = vgui.Create( "DTextEntry", storagepanel )
@@ -115,12 +151,31 @@ function AS.Storage.Menu( ent )
         AS.Storage.BuildStorage( ent )
     end
 
-    bankweightlbl = vgui.Create("DLabel", storagepanel)
+    local bankweight = vgui.Create("DPanel", storagepanel)
+    bankweight:SetPos( 5, storagepanel:GetTall() - 25 )
+    bankweight:SetSize( storagepanel:GetWide() - 10, 20 )
+    function bankweight:Paint( w, h )
+        local col = COLHUD_DEFAULT:ToTable()
+        surface.SetDrawColor( col[1], col[2], col[3], 150 )
+        surface.DrawRect( 0, 0, (LocalPlayer():GetBankWeight() / LocalPlayer():MaxBankWeight( ent:GetNWString("ASID") )) * w, h )
+
+        surface.SetDrawColor( COLHUD_DEFAULT )
+        surface.DrawOutlinedRect( 0, 0, w, h, 1 )
+    end
+
+    bankweightlbl = vgui.Create("DLabel", bankweight)
     bankweightlbl:SetFont("TargetID")
     bankweightlbl:SetText( "Weight: " .. LocalPlayer():GetBankWeight() .. " / " .. LocalPlayer():MaxBankWeight( ent:GetNWString("ASID") ) )
     bankweightlbl:SetContentAlignment( 3 )
     bankweightlbl:SizeToContents()
-    bankweightlbl:SetPos( 5, 27 )
+    bankweightlbl:SetPos( weight:GetWide() / 2 - bankweightlbl:GetWide() / 2, 1 )
+    function bankweightlbl:Think()
+        if LocalPlayer():GetBankWeight() <= LocalPlayer():MaxBankWeight( ent:GetNWString("ASID") ) then
+            bankweightlbl:SetColor( Color( 255, 255, 255 ) )
+        else
+            bankweightlbl:SetColor( COLHUD_BAD )
+        end
+    end
 
     AS.Storage.BuildStorage( ent )
 end
@@ -128,9 +183,8 @@ net.Receive( "as_storage_open", AS.Storage.Menu )
 
 function AS.Storage.BuildInventory( ent )
     local itemscrollpanel = vgui.Create("DScrollPanel", inventorypanel)
-    itemscrollpanel:SetSize( inventorypanel:GetWide(), 0 )
-    itemscrollpanel:Dock( FILL )
-    itemscrollpanel:DockMargin( 0, 25, 0, 0 )
+    itemscrollpanel:SetPos( 5, inventorysearchbar:GetTall() + 5 )
+    itemscrollpanel:SetSize( inventorypanel:GetWide() - 10, inventorypanel:GetTall() - (inventorysearchbar:GetTall() + 5) - 30 )
 
     inventoryitemlist = vgui.Create( "DIconLayout", itemscrollpanel )
     inventoryitemlist:SetSize( itemscrollpanel:GetWide(), itemscrollpanel:GetTall() )
@@ -147,18 +201,23 @@ function AS.Storage.BuildInventory( ent )
         local weight = info.weight or "weight?" .. k
 
         local panel = inventoryitemlist:Add("SpawnIcon")
-        panel:SetSize( 58, 58 )
+        local size = GetConVar("as_menu_inventory_itemiconsize"):GetInt()
+        panel:SetSize( size, size )
         panel:SetModel( info.model, info.skin or 0 )
         local TTtext = v > 1 and name .. "\n" .. desc .. "\nWeight: " .. weight .. " [" .. (isnumber(weight) and weight * v or "w?") .. "]" or name .. "\n" .. desc .. "\nWeight: " .. weight
         tooltipadd = tooltipadd or ""
         panel:SetTooltip(TTtext .. tooltipadd)
-        panel.Paint = function(self,w,h)
-            if AS.Items[k].color then
-                surface.SetDrawColor( AS.Items[k].color )
+        function panel:Paint( w, h )
+            local col = info.color and info.color:ToTable() or COLHUD_PRIMARY:ToTable()
+            surface.SetDrawColor( col[1], col[2], col[3], 50 )
+            surface.DrawRect( 0, 0, w, h )
+
+            if info.color then
+                surface.SetDrawColor( info.color )
             else
                 surface.SetDrawColor( COLHUD_PRIMARY )
             end
-            surface.DrawRect( 0, 0, w, h )
+            surface.DrawOutlinedRect( 0, 0, w, h, 1 )
         end
 
         local itemamt = vgui.Create("DLabel", panel)
@@ -203,7 +262,7 @@ function AS.Storage.BuildInventory( ent )
         end
 
         panel.DoClick = function( self )
-            depositItem( k, LocalPlayer():GetInventory()[k] )
+            depositItem( k, 1 )
         end
         panel.DoRightClick = function( self )
             local options = vgui.Create("DMenu")
@@ -227,9 +286,8 @@ end
 
 function AS.Storage.BuildStorage( ent )
     local itemscrollpanel = vgui.Create("DScrollPanel", storagepanel)
-    itemscrollpanel:SetSize( storagepanel:GetWide(), 0 )
-    itemscrollpanel:Dock( FILL )
-    itemscrollpanel:DockMargin( 0, 25, 0, 0 )
+    itemscrollpanel:SetPos( 5, inventorysearchbar:GetTall() + 5 )
+    itemscrollpanel:SetSize( inventorypanel:GetWide() - 10, inventorypanel:GetTall() - (inventorysearchbar:GetTall() + 5) - 30 )
 
     storageitemlist = vgui.Create( "DIconLayout", itemscrollpanel )
     storageitemlist:SetSize( itemscrollpanel:GetWide(), itemscrollpanel:GetTall() )
@@ -245,18 +303,23 @@ function AS.Storage.BuildStorage( ent )
         local weight = info.weight or "weight?" .. k
 
         local panel = storageitemlist:Add("SpawnIcon")
-        panel:SetSize( 58, 58 )
+        local size = GetConVar("as_menu_inventory_itemiconsize"):GetInt()
+        panel:SetSize( size, size )
         panel:SetModel( info.model, info.skin or 0 )
         local TTtext = v > 1 and name .. "\n" .. desc .. "\nWeight: " .. weight .. " [" .. (isnumber(weight) and weight * v or "w?") .. "]" or name .. "\n" .. desc .. "\nWeight: " .. weight
         tooltipadd = tooltipadd or ""
         panel:SetTooltip(TTtext .. tooltipadd)
-        panel.Paint = function(self,w,h)
-            if AS.Items[k].color then
-                surface.SetDrawColor( AS.Items[k].color )
+        function panel:Paint( w, h )
+            local col = info.color and info.color:ToTable() or COLHUD_PRIMARY:ToTable()
+            surface.SetDrawColor( col[1], col[2], col[3], 50 )
+            surface.DrawRect( 0, 0, w, h )
+
+            if info.color then
+                surface.SetDrawColor( info.color )
             else
                 surface.SetDrawColor( COLHUD_PRIMARY )
             end
-            surface.DrawRect( 0, 0, w, h )
+            surface.DrawOutlinedRect( 0, 0, w, h, 1 )
         end
 
         local itemamt = vgui.Create("DLabel", panel)
@@ -301,7 +364,7 @@ function AS.Storage.BuildStorage( ent )
         end
 
         panel.DoClick = function( self )
-            withdrawItem( k, LocalPlayer():GetBank()[k] )
+            withdrawItem( k, 1 )
         end
         panel.DoRightClick = function( self )
             local options = vgui.Create("DMenu")
