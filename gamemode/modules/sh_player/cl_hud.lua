@@ -426,7 +426,7 @@ hook.Add( "PlayerStartVoice", "AS_VoiceStart", function( ply )
     panel:SetSize( ASHUDVOICE_iconsize, ASHUDVOICE_iconsize )
     panel:SetPos( ASHUDVOICE_xpos + 1, ASHUDVOICE_ypos + 1 )
     panel.Paint = function() end
-    CharacterIcon( ply:GetModel(), 0, 0, panel:GetWide(), panel:GetTall(), panel )
+    CharacterIcon( ply:GetModel(), 0, 0, panel:GetWide(), panel:GetTall(), panel, nil, Color( 0, 0, 0, 0 ))
     HUD_TALKINGPLAYERSPANELS[ply] = panel
 
     return true --Hides the default voice UI

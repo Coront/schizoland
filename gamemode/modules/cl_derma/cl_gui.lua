@@ -168,7 +168,7 @@ function CharacterIcon( model, x, y, width, height, parent, callback, bgcol )
         surface.SetDrawColor( col[1], col[2], col[3], 25 )
         surface.DrawRect( 0, 0, w, h )
     
-        surface.SetDrawColor( col[1], col[2], col[3] )
+        surface.SetDrawColor( col[1], col[2], col[3], col[4] )
         surface.DrawOutlinedRect( 0, 0, w, h, 1 )
     end
 
@@ -316,9 +316,22 @@ function DefaultButton( text, x, y, width, height, parent, callback )
     button:SetSize(width, height)
     button:SetPos(x, y)
     button:SetText( text )
-    button.DoClick = function()
+    function button:DoClick()
         surface.PlaySound("buttons/button15.wav")
-        callback()
+        callback( self )
+    end
+    function button:Paint( w, h )
+        if self:IsHovered() then
+            surface.SetDrawColor( COLHUD_DEFAULT )
+            self:SetColor( COLHUD_SECONDARY )
+        else
+            surface.SetDrawColor( COLHUD_SECONDARY )
+            self:SetColor( COLHUD_DEFAULT )
+        end
+        surface.DrawRect( 0, 0, w, h )
+
+        surface.SetDrawColor( COLHUD_DEFAULT )
+        surface.DrawOutlinedRect( 0, 0, w, h, 1 )
     end
 end
 
@@ -667,4 +680,18 @@ function CreateSheetPanel( parent, width, height, x, y, color )
 end
 function AddSheet( parent, name, icon, child )
     parent:AddSheet(name, child, icon)
+end
+
+function CreateComboBox( parent, width, height, x, y, placeholder, options )
+    local combo = vgui.Create("DComboBox", parent)
+    combo:SetPos( x, y )
+    combo:SetSize( width, height )
+    combo:SetValue( placeholder )
+    function combo:OnSelect( self, index, value )
+        options[index]()
+    end
+
+    for k, v in pairs( options ) do
+        combo:AddChoice( k )
+    end
 end

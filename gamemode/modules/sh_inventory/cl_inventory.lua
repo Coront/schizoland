@@ -490,6 +490,9 @@ function AS.Inventory.BuildInventory()
         function weaponinfopanel:Paint(w,h)
             surface.SetDrawColor( COLHUD_PRIMARY )
             surface.DrawRect( 0, 0, w, h )
+
+            surface.SetDrawColor( COLHUD_DEFAULT )
+            surface.DrawOutlinedRect( 0, 0, w, h, 1 )
         end
 
         local weaponname = vgui.Create("DLabel", weaponinfopanel)
@@ -504,18 +507,14 @@ function AS.Inventory.BuildInventory()
         model:SetModel( v.WM or v.WorldModel or "", AS.Items[v.ASID].skin or 0 )
         model:SetTooltip(AS.Items[v.ASID].name)
 
-        local unequipwep = vgui.Create("DButton", weaponinfopanel)
-        unequipwep:SetSize( weaponinfopanel:GetWide() - 2, 18  )
-        unequipwep:SetPos( 1, weaponinfopanel:GetTall() - 10)
-        unequipwep:SetText("Unequip")
-        function unequipwep:DoClick()
+        DefaultButton( "Unequip", 3, weaponinfopanel:GetTall() - 12, weaponinfopanel:GetWide() - 6, 18, weaponinfopanel, function( self )
             if not LocalPlayer():CanUnequipItem( v.ASID ) then return end
             LocalPlayer():AddItemToInventory( v.ASID )
             self:GetParent():Remove()
             net.Start("as_inventory_unequipitem")
                 net.WriteString( v.ASID )
             net.SendToServer()
-        end
+        end)
 
         weaponscroll:AddPanel( weaponinfopanel )
     end
@@ -525,14 +524,17 @@ function AS.Inventory.BuildInventory()
         if not itemid then continue end --doesnt have any item information, not a real item please leave my walls
 
         local ammoinfopanel = vgui.Create("DPanel")
-        ammoinfopanel:SetSize( 85, weaponscroll:GetTall() - (weaponscroll:GetY() * 2)  )
+        ammoinfopanel:SetSize( 100, weaponscroll:GetTall() - (weaponscroll:GetY() * 2)  )
         function ammoinfopanel:Paint(w,h)
             surface.SetDrawColor( COLHUD_PRIMARY )
             surface.DrawRect( 0, 0, w, h )
+
+            surface.SetDrawColor( COLHUD_DEFAULT )
+            surface.DrawOutlinedRect( 0, 0, w, h, 1 )
         end
 
         local ammoname = vgui.Create("DLabel", ammoinfopanel)
-        ammoname:SetPos( 0, 5 )
+        ammoname:SetPos( 3, 3 )
         ammoname:SetFont("TargetIDSmall")
         ammoname:SetText( AS.Items[itemid].name )
         ammoname:SetSize( ammoinfopanel:GetWide(), 15 )
@@ -544,18 +546,14 @@ function AS.Inventory.BuildInventory()
         model:SetTooltip(AS.Items[itemid].name)
 
         local ammoamt = vgui.Create("DLabel", ammoinfopanel)
-        ammoamt:SetPos( 1, model:GetY() + model:GetTall() + 5 )
+        ammoamt:SetPos( 1, model:GetY() + model:GetTall() )
         ammoamt:SetFont("TargetIDSmall")
         ammoamt:SetText( "x" .. v )
         ammoamt:SizeToContents()
 
         local amttopackage = math.floor(v / AS.Items[itemid].use.ammoamt)
         if amttopackage > 0 then
-            local unequipammo = vgui.Create("DButton", ammoinfopanel)
-            unequipammo:SetSize( ammoinfopanel:GetWide() - 2, 18  )
-            unequipammo:SetPos( 1, ammoinfopanel:GetTall() - 10)
-            unequipammo:SetText("Unequip")
-            function unequipammo:DoClick()
+            DefaultButton( "Unequip", 3, ammoinfopanel:GetTall() - 12, ammoinfopanel:GetWide() - 6, 18, ammoinfopanel, function( self )
                 VerifySlider( amttopackage, function( amt )
                     if not LocalPlayer():CanUnequipAmmo( itemid, amt ) then return end
                     LocalPlayer():AddItemToInventory( itemid, amt )
@@ -567,7 +565,7 @@ function AS.Inventory.BuildInventory()
                         net.WriteUInt( amt, NWSetting.ItemAmtBits )
                     net.SendToServer()
                 end)
-            end
+            end)
         end
 
         weaponscroll:AddPanel( ammoinfopanel )
@@ -578,14 +576,17 @@ function AS.Inventory.BuildInventory()
         if not AS.Items[itemid] then continue end
 
         local atchinfopanel = vgui.Create("DPanel")
-        atchinfopanel:SetSize( 85, weaponscroll:GetTall() - (weaponscroll:GetY() * 2)  )
+        atchinfopanel:SetSize( 100, weaponscroll:GetTall() - (weaponscroll:GetY() * 2)  )
         function atchinfopanel:Paint(w,h)
             surface.SetDrawColor( COLHUD_PRIMARY )
             surface.DrawRect( 0, 0, w, h )
+
+            surface.SetDrawColor( COLHUD_DEFAULT )
+            surface.DrawOutlinedRect( 0, 0, w, h, 1 )
         end
 
         local name = vgui.Create("DLabel", atchinfopanel)
-        name:SetPos( 0, 5 )
+        name:SetPos( 3, 3 )
         name:SetFont("TargetIDSmall")
         name:SetText( AS.Items[itemid].name )
         name:SetSize( atchinfopanel:GetWide(), 15 )
@@ -596,18 +597,14 @@ function AS.Inventory.BuildInventory()
         model:SetModel( AS.Items[itemid].model, AS.Items[itemid].skin or 0 )
         model:SetTooltip(AS.Items[itemid].name)
 
-        local unequipatch = vgui.Create("DButton", atchinfopanel)
-        unequipatch:SetSize( atchinfopanel:GetWide() - 2, 18  )
-        unequipatch:SetPos( 1, atchinfopanel:GetTall() - 10)
-        unequipatch:SetText("Unequip")
-        function unequipatch:DoClick()
+        DefaultButton( "Unequip", 3, atchinfopanel:GetTall() - 12, atchinfopanel:GetWide() - 6, 18, atchinfopanel, function( self )
             if not LocalPlayer():CanUnequipItem( itemid ) then return end
             LocalPlayer():AddItemToInventory( itemid )
             self:GetParent():Remove()
             net.Start("as_inventory_unequipatch")
                 net.WriteString( itemid )
             net.SendToServer()
-        end
+        end)
 
         weaponscroll:AddPanel( atchinfopanel )
     end
@@ -630,6 +627,9 @@ function AS.Inventory.BuildInventory()
     function armor:Paint(w,h)
         surface.SetDrawColor( COLHUD_PRIMARY )
         surface.DrawRect( 0, 0, w, h )
+
+        surface.SetDrawColor( COLHUD_DEFAULT )
+        surface.DrawOutlinedRect( 0, 0, w, h, 1 )
     end
 
     local armorname = vgui.Create("DLabel", armor)
@@ -650,6 +650,9 @@ function AS.Inventory.BuildInventory()
         function stats:Paint(w,h)
             surface.SetDrawColor( COLHUD_PRIMARY )
             surface.DrawRect( 0, 0, w, h )
+
+            surface.SetDrawColor( COLHUD_DEFAULT )
+            surface.DrawOutlinedRect( 0, 0, w, h, 1 )
         end
 
         local scroll_stats = vgui.Create("DScrollPanel", stats)
@@ -683,7 +686,7 @@ function AS.Inventory.BuildInventory()
             end
 
             local icon = vgui.Create("DImageButton", statbg)
-            icon:SetPos( 5, 0 )
+            icon:SetPos( 5, 4 )
             icon:SetSize (16, 16)
             icon:SetImage( AS.DamageTypes[k].icon )
             icon:SetColor(Color(255,255,255,255))
@@ -703,11 +706,7 @@ function AS.Inventory.BuildInventory()
         armormodel:SetModel( AS.Items[curarmor].model, AS.Items[curarmor].skin or 0 )
         armormodel:SetTooltip(AS.Items[curarmor].name)
 
-        local unequiparmor = vgui.Create("DButton", armor)
-        unequiparmor:SetSize( armor:GetWide() - 2, 18  )
-        unequiparmor:SetPos( 1, armor:GetTall() - unequiparmor:GetTall() - 2)
-        unequiparmor:SetText("Unequip Armor")
-        function unequiparmor:DoClick()
+        DefaultButton( "Unequip", 3, armor:GetTall() - 22, armor:GetWide() - 6, 18, armor, function( self )
             if not LocalPlayer():CanUnequipItem( curarmor ) then return end
             LocalPlayer():AddItemToInventory( curarmor )
             self:GetParent():Remove()
@@ -715,7 +714,7 @@ function AS.Inventory.BuildInventory()
             net.Start("as_inventory_unequipitem")
                 net.WriteString( curarmor )
             net.SendToServer()
-        end
+        end)
     end
 
     return inventory
@@ -910,7 +909,7 @@ function AS.Inventory.LoadCommunity( communitydata, memberdata )
     creator:SetColor( Color( 255, 255, 255) )
 
     local width, height = 270, 30
-    local x, y = 600, 40
+    local x, y = 510, 40
 
     if myPerms["admin"] then
         DefaultButton( "Update Community Description", x, y, width, height, communitypanel, function()
@@ -981,7 +980,7 @@ function AS.Inventory.LoadCommunity( communitydata, memberdata )
     y = y + height + 1
 
     local descpanel = vgui.Create("DPanel", communitypanel)
-    descpanel:SetPos( 600, 460 )
+    descpanel:SetPos( 510, 460 )
     descpanel:SetSize( 270, 194 )
     function descpanel:Paint( w, h )
         surface.SetDrawColor( COLHUD_SECONDARY )
@@ -998,7 +997,7 @@ function AS.Inventory.LoadCommunity( communitydata, memberdata )
 
     local csheets = vgui.Create("DPropertySheet", communitypanel)
     csheets:SetPos( 0, 40 )
-    csheets:SetSize( csheets:GetParent():GetWide() - 300, csheets:GetParent():GetTall() - 75 )
+    csheets:SetSize( csheets:GetParent():GetWide() - 290, csheets:GetParent():GetTall() - 75 )
     csheets:SetFadeTime( 0 )
     function csheets:Paint( w, h )
         surface.SetDrawColor( COLHUD_SECONDARY )
@@ -1022,13 +1021,13 @@ function AS.Inventory.LoadCommunity( communitydata, memberdata )
     for k, v in pairs( memberdata ) do
         local panel = vgui.Create("DPanel", scroll_members)
         panel:SetPos( xpos, ypos )
-        panel:SetSize( 550, 100 )
+        panel:SetSize( 490, 100 )
         function panel:Paint( w, h )
             surface.SetDrawColor( COLHUD_PRIMARY )
             surface.DrawRect( 0, 0, w, h )
         end
 
-        CharacterIcon( v.model, 5, 5, panel:GetTall() - 10, panel:GetTall() - 10, panel )
+        CharacterIcon( v.model, 5, 5, panel:GetTall() - 10, panel:GetTall() - 10, panel, nil, AS.Classes[v.class].color )
 
         local name = vgui.Create("DLabel", panel)
         name:SetFont( "TargetID" )
@@ -1056,7 +1055,7 @@ function AS.Inventory.LoadCommunity( communitydata, memberdata )
         laston:SizeToContents()
 
         local width, height = 100, 20
-        local x, y = 445, 5
+        local x, y = panel:GetWide() - width - 10, 5
 
         if myPerms["admin"] or myPerms["title"] then
             DefaultButton( "Change Title", x, y, width, height, panel, function()
@@ -1130,7 +1129,7 @@ function AS.Inventory.LoadCommunity( communitydata, memberdata )
             name:SizeToContents()
             name:SetColor( AS.Classes[v:GetASClass()].color )
 
-            CharacterIcon( v:GetModel(), 5, 5, panel:GetTall() - 10, panel:GetTall() - 10, panel )
+            CharacterIcon( v:GetModel(), 5, 5, panel:GetTall() - 10, panel:GetTall() - 10, panel, nil, AS.Classes[v:GetASClass()].color )
 
             local width, height = 100, 20
             local x, y = 445, 5
@@ -1322,7 +1321,7 @@ function AS.Inventory.BuildPlayers()
             surface.DrawRect( 0, 0, w, h )
         end
 
-        CharacterIcon( v:GetModel(), 5, 5, panel:GetTall() - 10, panel:GetTall() - 10, panel )
+        CharacterIcon( v:GetModel(), 5, 5, panel:GetTall() - 10, panel:GetTall() - 10, panel, nil, AS.Classes[v:GetASClass()].color )
 
         local name = vgui.Create("DLabel", panel)
         name:SetFont( "TargetID" )
