@@ -13,9 +13,11 @@ AS_ClientConVar( "as_menu_inventory_holdtoopen", "1", true, false )
 AS_ClientConVar( "as_menu_inventory_singlepanel", "0", true, false )
 AS_ClientConVar( "as_menu_inventory_itemiconsize", "60", true, false )
 
-function AS.Inventory.Open( tab )
+NextInventoryOpen = 0
+function AS.Inventory.Open( tab, forcehold )
     if not LocalPlayer():IsLoaded() then return end
     if not LocalPlayer():Alive() then return end
+    if CurTime() < NextInventoryOpen then return end
     if IsValid(frame_inventory) then frame_inventory:Close() end
 
     frame_inventory = vgui.Create("DFrame")
@@ -33,7 +35,7 @@ function AS.Inventory.Open( tab )
         surface.SetDrawColor( Color( 255, 255, 255, 255 ) )
         surface.DrawTexturedRect( 0, 0, w, h )
     end
-    if GetConVar("as_menu_inventory_holdtoopen"):GetInt() > 0 then
+    if GetConVar("as_menu_inventory_holdtoopen"):GetInt() > 0 and not forcehold then
         frame_inventory.Think = function( self )
             if not input.IsButtonDown( input.GetKeyCode( GetConVarString("as_bind_inventory") ) ) 
             and not input.IsButtonDown( input.GetKeyCode( GetConVarString("as_bind_stats") ) ) 
@@ -58,6 +60,18 @@ function AS.Inventory.Open( tab )
     --[[
     sheets:AddSheet("Missions", AS.Inventory.BuildMissions(), "icon16/map.png")
     ]]
+
+    local classes = DefaultButton( "Classes (" .. GetConVarString("as_bind_class") .. ")", sheets:GetWide() - 168, 3, 80, 20, sheets, function()
+        AS.Class.Open()
+        NextInventoryOpen = CurTime() + 0.1
+        frame_inventory:Close()
+    end)
+
+    local crafting = DefaultButton( "Crafting (" .. GetConVarString("as_bind_craft") .. ")", sheets:GetWide() - 88, 3, 80, 20, sheets, function()
+        AS.Craft.Open()
+        NextInventoryOpen = CurTime() + 0.1
+        frame_inventory:Close()
+    end)
 
     if tab then
         sheets:SetActiveTab( sheets:GetItems()[tab].Tab )
