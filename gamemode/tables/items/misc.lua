@@ -575,6 +575,22 @@ AS.AddBaseItem("misc_broken_elite", {
     }
 })
 
+AS.AddBaseItem("misc_gyro", {
+    name = "Gyroscope",
+    desc = "An extremely advanced piece of technology. Very rare, too. Used in crafting.",
+    category = "misc",
+    model = "models/maxofs2d/hover_rings.mdl",
+    color = Color( 236, 190, 0 ),
+    value = 150,
+    weight = 5,
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 15,
+        ["misc_smallparts"] = 5,
+        ["misc_chemical"] = 10,
+    }
+})
+
 -- ████████╗ ██████╗  ██████╗ ██╗         ██╗████████╗███████╗███╗   ███╗███████╗
 -- ╚══██╔══╝██╔═══██╗██╔═══██╗██║         ██║╚══██╔══╝██╔════╝████╗ ████║██╔════╝
 --    ██║   ██║   ██║██║   ██║██║         ██║   ██║   █████╗  ██╔████╔██║███████╗
