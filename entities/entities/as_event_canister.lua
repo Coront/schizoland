@@ -13,7 +13,8 @@ if ( SERVER ) then
         self:StartCanister()
 
         self.NPCS = { --Modify this table if you need to change NPC values.
-            ["npc_as_soldier"] = 5, --Key is NPC, Value is amount
+            ["npc_as_soldier"] = 4, --Key is NPC, Value is amount
+            ["npc_as_scout"] = 1,
             ["npc_as_super"] = 1,
             ["npc_as_hunter"] = 2,
         }
