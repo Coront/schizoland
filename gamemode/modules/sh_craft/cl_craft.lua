@@ -184,7 +184,7 @@ function AS.Craft.BuildList( parent, category )
             classreq:SetText( "Class needed to craft: " .. translateClassNameID(AS.Items[k].class) )
             classreq:SetContentAlignment(4)
             classreq:SizeToContents()
-            classreq:SetPos( 100, panel:GetTall() - (classreq:GetTall() + 5) )
+            classreq:SetPos( 270, panel:GetTall() - (classreq:GetTall() + 7) )
             if LocalPlayer():GetASClass() == AS.Items[k].class then
                 classreq:SetColor( COLHUD_GOOD )
             else
