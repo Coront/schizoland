@@ -301,7 +301,7 @@ function AS.Inventory.BuildInventory()
                     if not IsValid( frame_inventory ) then options:Hide() end
                 end
             end
-            panel.Paint = function(self,w,h)
+            function panel:Paint( w, h )
                 local col = info.color and info.color:ToTable() or COLHUD_PRIMARY:ToTable()
                 surface.SetDrawColor( col[1], col[2], col[3], 50 )
                 surface.DrawRect( 0, 0, w, h )
