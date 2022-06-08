@@ -321,16 +321,25 @@ function DefaultButton( text, x, y, width, height, parent, callback )
         callback( self )
     end
     function button:Paint( w, h )
-        if self:IsHovered() then
-            surface.SetDrawColor( COLHUD_DEFAULT )
-            self:SetColor( COLHUD_SECONDARY )
+        if self:IsEnabled() then
+            if self:IsHovered() then
+                surface.SetDrawColor( COLHUD_DEFAULT )
+                self:SetColor( COLHUD_SECONDARY )
+            else
+                surface.SetDrawColor( COLHUD_SECONDARY )
+                self:SetColor( COLHUD_DEFAULT )
+            end
         else
-            surface.SetDrawColor( COLHUD_SECONDARY )
-            self:SetColor( COLHUD_DEFAULT )
+            surface.SetDrawColor( Color( 60, 60, 60 ) )
+            self:SetColor( COLHUD_BAD )
         end
         surface.DrawRect( 0, 0, w, h )
 
-        surface.SetDrawColor( COLHUD_DEFAULT )
+        if self:IsEnabled() then
+            surface.SetDrawColor( COLHUD_DEFAULT )
+        else
+            surface.SetDrawColor( COLHUD_BAD )
+        end
         surface.DrawOutlinedRect( 0, 0, w, h, 1 )
     end
 end
