@@ -33,3 +33,20 @@ function ENT:Think()
         end
     end
 end
+
+hook.Add( "EntityTakeDamage", "as_staticspawners_timerpush", function( ent, dmg )
+    --This hook will basically tell the timers to fully reset if one of the NPCs were to take damage. This is so they aren't respawning unreasonably quick.
+    if not ent:IsNextBot() then return end
+    if ent:GetClass() != "npc_as_raider" and ent:GetClass() != "npc_as_raider_sniper" then return end
+    if not ent.StaticSpawned then return end
+
+    for k, v in pairs( ents.FindByClass( "as_staticspawn" ) ) do --Pushing the respawn timer for the NPCs
+        v:SetNextSpawn( CurTime() + 4800 )
+    end
+
+    for k, v in pairs( ents.FindByClass( "as_lootcontainer" ) ) do --Pushing the respawn timer for the weapon loot container.
+        if v:GetContainer() == "gunbox" then
+            v:SetNextGeneration( CurTime() + AS.Loot[v:GetContainer()].generation.time )
+        end
+    end
+end)

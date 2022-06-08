@@ -41,6 +41,7 @@ function ENT:CreateNPC()
     if self:GetForceHold() then
         ent.GuardingForceHold = true
     end
+    ent.StaticSpawned = true
 
     self.CurrentNPC = ent
 end
