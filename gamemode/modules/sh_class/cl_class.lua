@@ -6,21 +6,25 @@ function AS.Class.Open()
     if IsValid(frame_class) then frame_class:Close() end
 
     frame_class = vgui.Create("DFrame")
-    frame_class:SetSize(700, 465)
+    frame_class:SetSize(800, 565)
     frame_class:Center()
     frame_class:MakePopup()
     frame_class:SetDraggable( false )
-    frame_class:SetTitle( "Class Menu" )
+    frame_class:SetTitle( "" )
     frame_class:ShowCloseButton( false )
-    frame_class.Paint = function(_,w,h)
+    function frame_class:Paint( w, h )
         surface.SetDrawColor( COLHUD_PRIMARY )
         surface.DrawRect( 0, 0, w, h )
+
+        surface.SetMaterial( Material("gui/aftershock/default.png") )
+        surface.SetDrawColor( Color( 255, 255, 255, 255 ) )
+        surface.DrawTexturedRect( 0, 0, w, h )
     end
 
     local scroll_classes = vgui.Create("DScrollPanel", frame_class)
-    local xpos, ypos = 2, 25
+    local xpos, ypos = 42, 24
     scroll_classes:SetPos( xpos, ypos )
-    scroll_classes:SetSize( scroll_classes:GetParent():GetWide() - (xpos * 2), 437 )
+    scroll_classes:SetSize( scroll_classes:GetParent():GetWide() - (xpos * 2) - 7, 507 )
     scroll_classes.Paint = function( self, w, h ) 
         draw.RoundedBox( 0, 0, 0, w, h, COLHUD_SECONDARY )
     end
@@ -31,18 +35,8 @@ function AS.Class.Open()
     itemlist:SetSpaceY( 5 )
     itemlist:SetSpaceX( 5 )
 
-    local closebutton = vgui.Create("DButton", frame_class)
-    closebutton:SetSize( 25, 25 )
-    closebutton:SetPos( frame_class:GetWide() - closebutton:GetWide(), 0)
-    closebutton:SetFont("TargetID")
-    closebutton:SetText("X")
-    closebutton:SetColor( COLHUD_SECONDARY )
-    closebutton.Paint = function( _, w, h ) end
-    closebutton.DoClick = function()
-        if IsValid(frame_class) then
-            frame_class:Close()
-        end
-    end
+    local cbuttonsize = 16
+    local closebutton = CreateCloseButton( frame_class, cbuttonsize, frame_class:GetWide() - cbuttonsize - 6, 3 )
 
     local disclaimer = itemlist:Add("DLabel")
     disclaimer:SetFont("TargetIDSmall")
@@ -75,10 +69,13 @@ end
 function AS.Class.BuildList( parent )
     for k, v in pairs( AS.Classes ) do
         local panel = parent:Add("DPanel")
-        panel:SetSize( parent:GetWide(), 70 )
+        panel:SetSize( parent:GetWide(), 85 )
         function panel:Paint(w, h)
             surface.SetDrawColor( COLHUD_PRIMARY )
             surface.DrawRect( 0, 0, w, h )
+
+            surface.SetDrawColor( COLHUD_DEFAULT )
+            surface.DrawOutlinedRect( 0, 0, w, h, 1 )
         end
 
         local icon = vgui.Create("SpawnIcon", panel)
@@ -96,7 +93,7 @@ function AS.Class.BuildList( parent )
         name:SetPos( 70, 0 )
 
         local scroll_desc = vgui.Create("DScrollPanel", panel)
-        scroll_desc:SetSize( 500, 50 )
+        scroll_desc:SetSize( 500, 70 )
         scroll_desc:SetPos( 85, 15 )
 
         local desc = vgui.Create("DLabel", scroll_desc)
@@ -119,6 +116,28 @@ function AS.Class.BuildList( parent )
         function change:DoClick()
             frame_class:Close()
             RunConsoleCommand( "as_changeclass", k )
+        end
+        function change:Paint( w, h )
+            if self:IsEnabled() then
+                if self:IsHovered() then
+                    surface.SetDrawColor( COLHUD_DEFAULT )
+                    self:SetColor( COLHUD_SECONDARY )
+                else
+                    surface.SetDrawColor( COLHUD_SECONDARY )
+                    self:SetColor( COLHUD_DEFAULT )
+                end
+            else
+                surface.SetDrawColor( Color( 60, 60, 60 ) )
+                self:SetColor( COLHUD_BAD )
+            end
+            surface.DrawRect( 0, 0, w, h )
+    
+            if self:IsEnabled() then
+                surface.SetDrawColor( COLHUD_DEFAULT )
+            else
+                surface.SetDrawColor( COLHUD_BAD )
+            end
+            surface.DrawOutlinedRect( 0, 0, w, h, 1 )
         end
     end
 end
