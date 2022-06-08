@@ -9,7 +9,7 @@ function ContainerMenu( ent )
 
     frame_container = vgui.Create("DFrame")
     frame_container:SetPos( ScrW() * 0.51, ScrH() * 0.515 )
-    frame_container:SetSize(300, 200)
+    frame_container:SetSize(350, 250)
     frame_container:SetDraggable( false )
     frame_container:SetTitle( "" )
     frame_container:ShowCloseButton( false )
@@ -17,6 +17,10 @@ function ContainerMenu( ent )
     function frame_container:Paint( w, h )
         surface.SetDrawColor( COLHUD_PRIMARY )
         surface.DrawRect( 0, 0, w, h )
+
+        surface.SetMaterial( Material("gui/aftershock/default.png") )
+        surface.SetDrawColor( Color( 255, 255, 255, 255 ) )
+        surface.DrawTexturedRect( 0, 0, w, h )
     end
     function frame_container:OnClose()
         if tobool(GetConVar("as_container_sounds"):GetInt()) and isContainer and IsValid( frame_container.ent ) and AS.Loot[ent:GetContainer()] and AS.Loot[ent:GetContainer()].closesound then
@@ -26,8 +30,8 @@ function ContainerMenu( ent )
     frame_container.selectedItem = nil
 
     local scroll_items = vgui.Create("DScrollPanel", frame_container)
-    scroll_items:SetPos( 5, 5 )
-    scroll_items:SetSize( frame_container:GetWide() - (scroll_items:GetX() * 2), frame_container:GetTall() - (scroll_items:GetY() * 4.5) )
+    scroll_items:SetPos( 18, 10 )
+    scroll_items:SetSize( frame_container:GetWide() - (scroll_items:GetX() * 2) - 3, frame_container:GetTall() - (scroll_items:GetY() + 15) )
     scroll_items.Paint = function(_,w,h)
         surface.SetDrawColor( COLHUD_SECONDARY )
         surface.DrawRect(0, 0, w, h)
@@ -44,7 +48,7 @@ function ContainerMenu( ent )
     buttonshelp:SetText( "[" .. string.upper(KEYBIND_USE) .. "] Quick Take Item    [" .. string.upper( input.LookupBinding( "+reload" ) ) .. "] Mouse" )
     buttonshelp:SetContentAlignment( 3 )
     buttonshelp:SizeToContents()
-    buttonshelp:SetPos( frame_container:GetWide() / 2 - (buttonshelp:GetWide() / 2), frame_container:GetTall() - buttonshelp:GetTall() - 1 )
+    buttonshelp:SetPos( frame_container:GetWide() / 2 - (buttonshelp:GetWide() / 2), frame_container:GetTall() - buttonshelp:GetTall() - 17 )
 
     panel = {}
     for k, v in SortedPairs( ent:GetInventory() ) do
@@ -54,25 +58,46 @@ function ContainerMenu( ent )
         if not frame_container.selectedItem then frame_container.selectedItem = {ID = k, amt = v} end
 
         panel[k] = itemlist:Add("DPanel")
-        panel[k]:SetSize( itemlist:GetWide(), 50 )
-        panel[k].Paint = function(self,w,h)
+        panel[k]:SetSize( itemlist:GetWide() - 16, 60 )
+        local pan = panel[k]
+        function pan:Paint( w, h )
             if frame_container.selectedItem.ID == k then
-                surface.SetDrawColor( COLHUD_GOOD )
+                surface.SetDrawColor( COLHUD_DEFAULT )
+            else
+                local col = COLHUD_PRIMARY:ToTable()
+                surface.SetDrawColor( col[1], col[2], col[3], 70 )
+            end
+            surface.DrawRect( 0, 0, w, h )
+
+            surface.SetDrawColor( COLHUD_DEFAULT )
+            surface.DrawOutlinedRect( 0, 0, w, h, 1 )
+        end
+
+        local iconpanel = vgui.Create("DPanel", panel[k])
+        iconpanel:SetSize( panel[k]:GetTall() - 2, panel[k]:GetTall() - 2 )
+        iconpanel:SetPos( 1, 1 )
+        function iconpanel:Paint( w, h )
+            local col = info.color and info.color:ToTable() or COLHUD_PRIMARY:ToTable()
+            surface.SetDrawColor( col[1], col[2], col[3], 50 )
+            surface.DrawRect( 0, 0, w, h )
+
+            if info.color then
+                surface.SetDrawColor( info.color )
             else
                 surface.SetDrawColor( COLHUD_PRIMARY )
             end
-            surface.DrawRect( 0, 0, w, h )
+            surface.DrawOutlinedRect( 0, 0, w, h, 1 )
         end
 
-        local icon = vgui.Create("SpawnIcon", panel[k])
-        icon:SetSize( panel[k]:GetTall(), panel[k]:GetTall() )
+        local icon = vgui.Create("SpawnIcon", iconpanel)
+        icon:SetSize( iconpanel:GetWide(), iconpanel:GetTall() )
 
         local name = vgui.Create("DLabel", panel[k])
         name:SetFont("TargetID")
         name:SetText( info.name .. " (" .. v .. ")" )
         name:SetContentAlignment( 3 )
         name:SizeToContents()
-        name:SetPos( icon:GetWide() + 5, 0 )
+        name:SetPos( icon:GetWide() + 5, 3 )
         function frame_container.containeritemamtUpdate( key )
             if frame_container.ent:GetInventory()[key] and IsValid(frame_container.ent:GetInventory()[key]) and frame_container.ent:GetInventory()[key] > 1 then
                 if IsValid( name ) then
@@ -127,25 +152,45 @@ function ContainerMenu( ent )
             if not frame_container.selectedItem then frame_container.selectedItem = {ID = k, amt = v, ammo = true} end
 
             panel[k] = itemlist:Add("DPanel")
-            panel[k]:SetSize( itemlist:GetWide(), 50 )
+            panel[k]:SetSize( itemlist:GetWide() - 16, 60 )
             panel[k].Paint = function(self,w,h)
                 if frame_container.selectedItem.ID == k then
-                    surface.SetDrawColor( COLHUD_GOOD )
+                    surface.SetDrawColor( COLHUD_DEFAULT )
+                else
+                    local col = COLHUD_PRIMARY:ToTable()
+                    surface.SetDrawColor( col[1], col[2], col[3], 70 )
+                end
+                surface.DrawRect( 0, 0, w, h )
+
+                surface.SetDrawColor( COLHUD_DEFAULT )
+                surface.DrawOutlinedRect( 0, 0, w, h, 1 )
+            end
+
+            local iconpanel = vgui.Create("DPanel", panel[k])
+            iconpanel:SetSize( panel[k]:GetTall() - 2, panel[k]:GetTall() - 2 )
+            iconpanel:SetPos( 1, 1 )
+            function iconpanel:Paint( w, h )
+                local col = info.color and info.color:ToTable() or COLHUD_PRIMARY:ToTable()
+                surface.SetDrawColor( col[1], col[2], col[3], 50 )
+                surface.DrawRect( 0, 0, w, h )
+
+                if info.color then
+                    surface.SetDrawColor( info.color )
                 else
                     surface.SetDrawColor( COLHUD_PRIMARY )
                 end
-                surface.DrawRect( 0, 0, w, h )
+                surface.DrawOutlinedRect( 0, 0, w, h, 1 )
             end
 
-            local icon = vgui.Create("SpawnIcon", panel[k])
-            icon:SetSize( panel[k]:GetTall(), panel[k]:GetTall() )
+            local icon = vgui.Create("SpawnIcon", iconpanel)
+            icon:SetSize( iconpanel:GetTall(), iconpanel:GetTall() )
 
             local name = vgui.Create("DLabel", panel[k])
             name:SetFont("TargetID")
             name:SetText( info.name .. " (" .. v .. ")" )
             name:SetContentAlignment( 3 )
             name:SizeToContents()
-            name:SetPos( icon:GetWide() + 5, 0 )
+            name:SetPos( icon:GetWide() + 5, 3 )
             function frame_container.containerammoamtUpdate( key )
                 if frame_container.ent:GetInventory().ammo and frame_container.ent:GetInventory().ammo[key] then
                     if IsValid( name ) then
