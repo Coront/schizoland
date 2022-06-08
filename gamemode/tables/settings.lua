@@ -159,6 +159,7 @@ MOB.NPCs = {
     ["npc_as_zombie"] = {amt = 8, indoor = true, outdoor = true},
     ["npc_as_fastzombie"] = {amt = 5, outdoor = true},
     ["npc_as_poisonzombie"] = {amt = 5, indoor = true},
+    ["npc_as_zombiecrawler"] = {amt = 5, indoor = true},
     ["npc_as_bandit"] = {amt = 4, outdoor = true},
     ["npc_as_antlion"] = {amt = 3, outdoor = true},
 }
