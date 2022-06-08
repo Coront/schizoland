@@ -89,7 +89,7 @@ SKL.Movement = 163.5 --Player starts with 165 move speed.
 SKL.SprintMovement = 248.5 --Player starts with 250 sprint move speed.
 SKL.DefaultCarryWeight = 74 --Player starts with 20 carry weight.
 SKL.Strength = {
-    incamt = 0.02, --Amount to increase per melee impact
+    incamt = 0.025, --Amount to increase per melee impact
     dmgmultinc = 0.08, --(1+(level*dmgmultinc)) The number to mult overall damage by per level, as in higher means more damage per level.
     carryweight = 1, --Max weight increase per level
 }
@@ -99,7 +99,7 @@ SKL.Endurance = {
     runspeed = 1.5, --Run speed increase per level
 }
 SKL.WeaponHandling = {
-    incamt = 0.001, --Amount to increase per shot
+    incamt = 0.002, --Amount to increase per shot
     recoilmultloss = 0.02, --(1-(level*recoilmultloss)) The number to mult overall recoil by per level, as in higher means less recoil per level.
     reloadmultinc = 0.013, --(1+(level*reloadmultinc)) The number to mult reload speed by per level, as in higher means faster reloading per level.
 }
@@ -117,12 +117,12 @@ SKL.Treatment = {
     inceffectlength = 0.6,
 }
 SKL.Farming = {
-    incamt = 0.08,
+    incamt = 0.01,
     decprunetime = 0.03,
     decproducetime = 0.01,
 }
 SKL.Mining = {
-    incamt = 0.1,
+    incamt = 0.01,
     decharvesttime = 0.03
 }
 --Satiation Settings
