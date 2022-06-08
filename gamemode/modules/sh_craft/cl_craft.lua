@@ -8,15 +8,19 @@ function AS.Craft.Open()
     if IsValid(frame_craft) then frame_craft:Close() end
 
     frame_craft = vgui.Create("DFrame")
-    frame_craft:SetSize(600, 700)
+    frame_craft:SetSize(700, 800)
     frame_craft:Center()
     frame_craft:MakePopup()
     frame_craft:SetDraggable( false )
-    frame_craft:SetTitle( "Hand Crafting" )
+    frame_craft:SetTitle( "" )
     frame_craft:ShowCloseButton( false )
-    frame_craft.Paint = function(_,w,h)
+    function frame_craft:Paint( w, h )
         surface.SetDrawColor( COLHUD_PRIMARY )
         surface.DrawRect( 0, 0, w, h )
+
+        surface.SetMaterial( Material("gui/aftershock/default.png") )
+        surface.SetDrawColor( Color( 255, 255, 255, 255 ) )
+        surface.DrawTexturedRect( 0, 0, w, h )
     end
     if GetConVar("as_menu_craft_holdtoopen"):GetInt() > 0 then
         frame_craft.Think = function( self )
@@ -27,26 +31,16 @@ function AS.Craft.Open()
     end
 
     local sheets = vgui.Create("DPropertySheet", frame_craft)
-    sheets:SetPos(2, 25)
+    sheets:SetPos(36, 34)
     sheets:SetFadeTime( 0 )
-    sheets:SetSize( frame_craft:GetWide() - (sheets:GetX() * 2), frame_craft:GetTall() - (sheets:GetY() + 2 ))
-    sheets.Paint = function( self, w, h ) 
+    sheets:SetSize( frame_craft:GetWide() - (sheets:GetX() * 2) - 6, frame_craft:GetTall() - (sheets:GetY() + 46 ))
+    function sheets:Paint( w, h )
         surface.SetDrawColor( COLHUD_SECONDARY )
         surface.DrawRect( 0, 0, w, h )
     end
 
-    local closebutton = vgui.Create("DButton", frame_craft)
-    closebutton:SetSize( 25, 25 )
-    closebutton:SetPos( frame_craft:GetWide() - closebutton:GetWide(), 0)
-    closebutton:SetFont("TargetID")
-    closebutton:SetText("X")
-    closebutton:SetColor( COLHUD_SECONDARY )
-    closebutton.Paint = function( _, w, h ) end
-    closebutton.DoClick = function()
-        if IsValid(frame_craft) then
-            frame_craft:Close()
-        end
-    end
+    local cbuttonsize = 24
+    local closebutton = CreateCloseButton( frame_craft, cbuttonsize, frame_craft:GetWide() - cbuttonsize - 5, 5 )
 
     sheets:AddSheet("Weapons", AS.Craft.BuildList(sheets, "weapon"), "icon16/gun.png")
     sheets:AddSheet("Armor", AS.Craft.BuildList(sheets, "armor"), "icon16/user.png")
@@ -83,17 +77,36 @@ function AS.Craft.BuildList( parent, category )
         local isArmor = category == "armor" and true or false
 
         local panel = itemlist:Add("DPanel")
-        local height = isArmor and 240 or 90
+        local height = isArmor and 240 or 110
         panel:SetSize( scroll_items:GetWide() - 35, height )
         function panel:Paint(w, h)
-            surface.SetDrawColor( COLHUD_PRIMARY )
+            local col = COLHUD_PRIMARY:ToTable()
+            surface.SetDrawColor( col[1], col[2], col[3], 100 )
             surface.DrawRect( 0, 0, w, h )
+
+            surface.SetDrawColor( COLHUD_DEFAULT )
+            surface.DrawOutlinedRect( 0, 0, w, h, 1 )
         end
 
-        local icon = vgui.Create( "SpawnIcon", panel )
-        icon:SetSize( 60, 60 )
-        local ypos = isArmor and 15 or panel:GetTall() / 2 - icon:GetTall() / 2
-        icon:SetPos( 5, ypos )
+        local iconpanel = vgui.Create( "DPanel", panel )
+        iconpanel:SetSize( 60, 60 )
+        local ypos = isArmor and 15 or panel:GetTall() / 2 - iconpanel:GetTall() / 2
+        iconpanel:SetPos( 5, ypos )
+        function iconpanel:Paint( w, h )
+            local col = v.color and v.color:ToTable() or COLHUD_PRIMARY:ToTable()
+            surface.SetDrawColor( col[1], col[2], col[3], 50 )
+            surface.DrawRect( 0, 0, w, h )
+
+            if v.color then
+                surface.SetDrawColor( v.color )
+            else
+                surface.SetDrawColor( COLHUD_PRIMARY )
+            end
+            surface.DrawOutlinedRect( 0, 0, w, h, 1 )
+        end
+
+        local icon = vgui.Create( "SpawnIcon", iconpanel )
+        icon:SetSize( iconpanel:GetWide(), iconpanel:GetTall() )
         icon:SetModel( v.model, v.skin or 0 )
         icon:SetTooltip( itemname .. "\n" .. itemdesc .. "\n\nRequirements:" .. itemreqs )
 
@@ -180,7 +193,7 @@ function AS.Craft.BuildList( parent, category )
         end
 
         local scroll_reqs = vgui.Create("DScrollPanel", panel)
-        local height = isArmor and 210 or 60
+        local height = isArmor and 210 or 80
         scroll_reqs:SetSize( 125, height )
         scroll_reqs:SetPos( panel:GetWide() - (scroll_reqs:GetWide() + 5), 5 )
         function scroll_reqs:Paint(w,h)
@@ -225,6 +238,28 @@ function AS.Craft.BuildList( parent, category )
                 net.WriteUInt( 1, NWSetting.ItemCraftBits )
             net.SendToServer()
             frame_craft:Close()
+        end
+        function craft:Paint( w, h )
+            if self:IsEnabled() then
+                if self:IsHovered() then
+                    surface.SetDrawColor( COLHUD_DEFAULT )
+                    self:SetColor( COLHUD_SECONDARY )
+                else
+                    surface.SetDrawColor( COLHUD_SECONDARY )
+                    self:SetColor( COLHUD_DEFAULT )
+                end
+            else
+                surface.SetDrawColor( Color( 60, 60, 60 ) )
+                self:SetColor( COLHUD_BAD )
+            end
+            surface.DrawRect( 0, 0, w, h )
+
+            if self:IsEnabled() then
+                surface.SetDrawColor( COLHUD_DEFAULT )
+            else
+                surface.SetDrawColor( COLHUD_BAD )
+            end
+            surface.DrawOutlinedRect( 0, 0, w, h, 1 )
         end
 
         if LocalPlayer():CanCraftItem( k ) then
