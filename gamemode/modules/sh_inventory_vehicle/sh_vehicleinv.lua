@@ -73,6 +73,14 @@ function PlayerMeta:CanWithdrawItem( ent, item, amt )
     return true
 end
 
+function PlayerMeta:NearVehicle()
+    for k, v in pairs( ents.FindByClass("prop_vehicle_jeep") ) do
+        if self:GetPos():Distance(v:GetPos()) > 200 then continue end
+        if v:GetObjectOwner() != self then continue end
+        return v
+    end
+end
+
 -- ███╗   ██╗███████╗████████╗██╗    ██╗ ██████╗ ██████╗ ██╗  ██╗██╗███╗   ██╗ ██████╗
 -- ████╗  ██║██╔════╝╚══██╔══╝██║    ██║██╔═══██╗██╔══██╗██║ ██╔╝██║████╗  ██║██╔════╝
 -- ██╔██╗ ██║█████╗     ██║   ██║ █╗ ██║██║   ██║██████╔╝█████╔╝ ██║██╔██╗ ██║██║  ███╗

@@ -24,6 +24,7 @@ hook.Add( "PlayerButtonDown", "AS_Binds", function( ply, button )
 
         if button == GetConVarString("as_bind_inventory") then
             if IsValid(tr.Entity) and tr.Entity:GetClass() == "prop_vehicle_jeep" and tr.Entity:GetObjectOwner() == ply and not LocalPlayer():InVehicle() then
+                tr.Entity:EmitSound(STORAGECUE.OPEN)
                 AS.Storage.Menu( tr.Entity )
             else
                 AS.Inventory.Open()

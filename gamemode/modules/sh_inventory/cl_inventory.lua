@@ -61,6 +61,15 @@ function AS.Inventory.Open( tab, forcehold )
     sheets:AddSheet("Missions", AS.Inventory.BuildMissions(), "icon16/map.png")
     ]]
 
+    local nearvehicle = LocalPlayer():NearVehicle()
+    if nearvehicle then
+        local vehicleinv = DefaultButton( "Vehicle Inv", sheets:GetWide() - 248, 3, 80, 20, sheets, function()
+            AS.Storage.Menu( nearvehicle )
+            NextInventoryOpen = CurTime() + 0.1
+            frame_inventory:Close()
+        end)
+    end
+
     local classes = DefaultButton( "Classes (" .. GetConVarString("as_bind_class") .. ")", sheets:GetWide() - 168, 3, 80, 20, sheets, function()
         AS.Class.Open()
         NextInventoryOpen = CurTime() + 0.1

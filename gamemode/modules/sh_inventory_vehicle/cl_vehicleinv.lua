@@ -6,7 +6,6 @@ function AS.Storage.Menu( ent )
     if not IsValid(ent) then return end
 
     if IsValid(frame_storage) then frame_storage:Close() end
-    ent:EmitSound(STORAGECUE.OPEN)
 
     frame_storage = vgui.Create("DFrame")
     frame_storage:SetSize(960, 700)
