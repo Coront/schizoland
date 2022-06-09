@@ -1139,7 +1139,7 @@ function AS.Inventory.LoadCommunity( communitydata, memberdata )
 
             local panel = vgui.Create("DPanel", scroll_invite)
             panel:SetPos( xpos, ypos )
-            panel:SetSize( 550, 100 )
+            panel:SetSize( 490, 100 )
             function panel:Paint( w, h )
                 surface.SetDrawColor( COLHUD_PRIMARY )
                 surface.DrawRect( 0, 0, w, h )
@@ -1155,7 +1155,7 @@ function AS.Inventory.LoadCommunity( communitydata, memberdata )
             CharacterIcon( v:GetModel(), 5, 5, panel:GetTall() - 10, panel:GetTall() - 10, panel, nil, AS.Classes[v:GetASClass()].color )
 
             local width, height = 100, 20
-            local x, y = 445, 5
+            local x, y = panel:GetWide() - width - 10, 5
 
             DefaultButton( "Invite", x, y, width, height, panel, function()
                 panel:Remove()
@@ -1187,7 +1187,7 @@ function AS.Inventory.LoadCommunity( communitydata, memberdata )
     for k, v in pairs( communitydata.allies ) do
         local panel = vgui.Create("DPanel", scroll_allies)
         panel:SetPos( xpos, ypos )
-        panel:SetSize( 550, 40 )
+        panel:SetSize( 490, 40 )
         function panel:Paint( w, h )
             surface.SetDrawColor( COLHUD_PRIMARY )
             surface.DrawRect( 0, 0, w, h )
@@ -1231,7 +1231,7 @@ function AS.Inventory.LoadCommunity( communitydata, memberdata )
     for k, v in pairs( communitydata.wars ) do
         local panel = vgui.Create("DPanel", scroll_wars)
         panel:SetPos( xpos, ypos )
-        panel:SetSize( 550, 40 )
+        panel:SetSize( 490, 40 )
         function panel:Paint( w, h )
             surface.SetDrawColor( COLHUD_PRIMARY )
             surface.DrawRect( 0, 0, w, h )
@@ -1277,7 +1277,7 @@ function AS.Inventory.LoadCommunity( communitydata, memberdata )
 
         local panel = vgui.Create("DPanel", scroll_pending)
         panel:SetPos( xpos, ypos )
-        panel:SetSize( 550, 100 )
+        panel:SetSize( 490, 100 )
         function panel:Paint( w, h )
             surface.SetDrawColor( COLHUD_PRIMARY )
             surface.DrawRect( 0, 0, w, h )
