@@ -1201,7 +1201,7 @@ function AS.Inventory.LoadCommunity( communitydata, memberdata )
 
         if myPerms["admin"] or myPerms["ally"] then
             local bheight, bwidth = 20, 100
-            DefaultButton( "End Alliance", 445, 10, bwidth, bheight, panel, function()
+            DefaultButton( "End Alliance", panel:GetWide() - bwidth - 10, 10, bwidth, bheight, panel, function()
                 panel:Remove()
                 net.Start( "as_community_endally" )
                     net.WriteUInt( k, NWSetting.UIDAmtBits )
@@ -1245,7 +1245,7 @@ function AS.Inventory.LoadCommunity( communitydata, memberdata )
 
         if myPerms["admin"] or myPerms["war"] then
             local bheight, bwidth = 20, 100
-            DefaultButton( "Cancel War", 445, 10, bwidth, bheight, panel, function()
+            DefaultButton( "Cancel War", panel:GetWide() - bwidth - 10, 10, bwidth, bheight, panel, function()
                 panel:Remove()
                 net.Start( "as_community_endwarrequest" )
                     net.WriteUInt( k, NWSetting.UIDAmtBits )
