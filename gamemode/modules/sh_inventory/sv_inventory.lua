@@ -143,6 +143,7 @@ function PlayerMeta:DeployTool( item )
 end
 
 function PlayerMeta:DropItem( item, amt )
+    if not self:CanDropItem( item ) then return end
     local itemname = AS.Items[item].name
 
     local ent

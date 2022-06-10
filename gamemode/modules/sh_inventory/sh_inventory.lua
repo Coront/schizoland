@@ -83,6 +83,12 @@ function PlayerMeta:CanEquipItem( item )
     return true
 end
 
+function PlayerMeta:CanDropItem( item )
+    if not self:Alive() then self:ChatPrint("You are dead, you cannot drop this.") return false end
+    if self:InCombat() then self:ChatPrint("You cannot drop this while in combat.") return false end
+    return true
+end
+
 function PlayerMeta:CanUnequipItem( item )
     if not self:Alive() then self:ChatPrint("You are dead, you cannot unequip this.") return false end
     if self:InCombat() then self:ChatPrint("You cannot unequip this while in combat.") return false end

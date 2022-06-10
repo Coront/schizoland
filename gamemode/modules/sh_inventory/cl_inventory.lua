@@ -204,14 +204,8 @@ function AS.Inventory.BuildInventory()
                     net.Start("as_inventory_equipitem")
                         net.WriteString( k )
                     net.SendToServer()
-                elseif AS.Items[k].category == "tool" then
-                    LocalPlayer():TakeItemFromInventory( k, 1 )
-                    itemamtUpdate()
-                    net.Start("as_inventory_dropitem")
-                        net.WriteString( k )
-                        net.WriteUInt( 1, NWSetting.ItemAmtBits )
-                    net.SendToServer()
-                elseif AS.Items[k].category == "vehicle" then
+                elseif AS.Items[k].category == "tool" or AS.Items[k].category == "vehicle" then
+                    if not LocalPlayer():CanDropItem( k ) then return end
                     LocalPlayer():TakeItemFromInventory( k, 1 )
                     itemamtUpdate()
                     net.Start("as_inventory_dropitem")
@@ -246,6 +240,7 @@ function AS.Inventory.BuildInventory()
                 end
                 --Drop
                 local function dropItem( item, amt )
+                    if not LocalPlayer():CanDropItem( k ) then return end
                     LocalPlayer():TakeItemFromInventory( item, amt )
                     itemamtUpdate()
                     net.Start("as_inventory_dropitem")
