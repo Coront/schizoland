@@ -174,6 +174,18 @@ end
 
 function SWEP:ToggleDrawn()
 	if self.Drawn then
+		self:SetDrawn( false )
+	else
+		self:SetDrawn( true )
+	end
+
+	if ( SERVER ) then
+		self:UpdateState()
+	end
+end
+
+function SWEP:SetDrawn( bool )
+	if not bool then
 		self.Drawn = false
 		self.HoldType = "normal"
 		FAS2_PlayAnim( self, "fists_holster" )
@@ -191,7 +203,7 @@ end
 -- Networking
 
 if ( SERVER ) then
-	
+
 	util.AddNetworkString("aswep_hands_updatestate")
 
 	function SWEP:UpdateState()
@@ -207,7 +219,7 @@ elseif ( CLIENT ) then
 		local ent = net.ReadEntity()
 		local state = tobool(net.ReadBit())
 
-		ent.Drawn = state
+		ent:SetDrawn( state )
 	end)
 
 end
