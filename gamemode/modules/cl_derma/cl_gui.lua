@@ -400,8 +400,12 @@ function Verify( callback, critical ) --Critical is for some actions that are ab
     frame_verify:SetDraggable( false )
     frame_verify:SetTitle( "" )
     frame_verify:ShowCloseButton( false )
-    frame_verify.Paint = function(_,w,h)
-		draw.RoundedBox( 8, 0, 0, w, h, COLHUD_PRIMARY)
+    function frame_verify:Paint( w, h )
+        surface.SetDrawColor( COLHUD_SECONDARY )
+        surface.DrawRect( 0, 0, w, h )
+
+        surface.SetDrawColor( COLHUD_DEFAULT )
+        surface.DrawOutlinedRect( 0, 0, w, h, 1 )
     end
 
 	local infotext = vgui.Create("DLabel", frame_verify)
@@ -412,26 +416,17 @@ function Verify( callback, critical ) --Critical is for some actions that are ab
     infotext:SizeToContents()
     infotext:SetPos( frame_verify:GetWide() / 2 - infotext:GetWide() / 2, frame_verify:GetTall() * 0.4)
 
-	local yes = vgui.Create("DButton", frame_verify)
-    yes:SetSize(100, 20)
-    yes:SetPos(frame_verify:GetWide() * 0.075, (frame_verify:GetTall() - yes:GetTall()) * 0.9)
-	yes:SetText("Yes")
-    yes.DoClick = function()
-        surface.PlaySound(UICUE.ACCEPT)
+    local width, height, space = 100, 20, 25
+    DefaultButton( "Yes", space, frame_verify:GetTall() - 35, width, height, frame_verify, function()
 		if callback then
 			callback()
 		end
 		frame_verify:Close()
-    end
+    end)
 
-	local no = vgui.Create("DButton", frame_verify)
-    no:SetSize(100, 20)
-    no:SetPos((frame_verify:GetWide() - no:GetWide()) * 0.9, (frame_verify:GetTall() - yes:GetTall()) * 0.9)
-	no:SetText("No")
-    no.DoClick = function()
-        surface.PlaySound(UICUE.DECLINE)
+    DefaultButton( "No", frame_verify:GetWide() - width - space, frame_verify:GetTall() - 35, width, height, frame_verify, function()
 		frame_verify:Close()
-    end
+    end)
 end
 
 function VerifySlider( max, callback )
@@ -443,22 +438,13 @@ function VerifySlider( max, callback )
     frame_verifyslider:MakePopup()
     frame_verifyslider:SetDraggable( false )
     frame_verifyslider:SetTitle( "" )
-    frame_verifyslider:ShowCloseButton( false )
-    frame_verifyslider.Paint = function(_,w,h)
-		draw.RoundedBox( 8, 0, 0, w, h, COLHUD_PRIMARY)
-    end
+    frame_verifyslider:ShowCloseButton( true )
+    function frame_verifyslider:Paint( w, h )
+        surface.SetDrawColor( COLHUD_SECONDARY )
+        surface.DrawRect( 0, 0, w, h )
 
-	local closebutton = vgui.Create("DButton", frame_verifyslider)
-    closebutton:SetSize( 25, 25 )
-    closebutton:SetPos( frame_verifyslider:GetWide() - closebutton:GetWide(), 0)
-    closebutton:SetFont("TargetID")
-    closebutton:SetText("X")
-    closebutton:SetColor( COLHUD_SECONDARY )
-    closebutton.Paint = function( _, w, h ) end
-    closebutton.DoClick = function()
-        if IsValid(frame_verifyslider) then
-            frame_verifyslider:Close()
-        end
+        surface.SetDrawColor( COLHUD_DEFAULT )
+        surface.DrawOutlinedRect( 0, 0, w, h, 1 )
     end
 
 	local infotext = vgui.Create("DLabel", frame_verifyslider)
@@ -475,22 +461,16 @@ function VerifySlider( max, callback )
 	slider:SetMin( 1 )
 	slider:SetMax( max )
 	slider:SetDecimals( 0 )
-	slider:SetDark( true )
+	slider:SetDark( false )
 
-	local accept = vgui.Create("DButton", frame_verifyslider)
-    accept:SetSize(100, 20)
-    accept:SetPos(frame_verifyslider:GetWide() / 2 - (accept:GetWide() / 2), (frame_verifyslider:GetTall() - accept:GetTall()) * 0.9)
-	accept:SetText("Accept")
-    accept.DoClick = function()
-        surface.PlaySound( UICUE.ACCEPT )
+    local width, height = 150, 20
+    DefaultButton( "Accept", frame_verifyslider:GetWide() / 2 - (width / 2), frame_verifyslider:GetTall() - height - 15, width, height, frame_verifyslider, function()
 		if callback then
 			callback( slider:GetValue() )
 		end
 		frame_verifyslider:Close()
-    end
+    end)
 end
-
---
 
 function SimplePanel( parent, width, height, x, y, color )
     local panel = vgui.Create("DPanel", parent)
