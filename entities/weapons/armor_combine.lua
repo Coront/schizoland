@@ -2,7 +2,7 @@ AddCSLuaFile()
 
 SWEP.Base = "armor_base"
 SWEP.Category = "Aftershock - Armors"
-SWEP.PrintName = "Combine Armor"
+SWEP.PrintName = "Coalition Armor"
 SWEP.Spawnable = false
 
 SWEP.ASID = "armor_combine" --Aftershock ID. The armor will reference this ItemID for information.
