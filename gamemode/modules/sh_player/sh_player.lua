@@ -16,7 +16,7 @@ function GM:Move( ply, mv ) --I'm intentionally overriding this so we don't use 
     ply:SetWalkSpeed( movespeed )
     ply:SetSlowWalkSpeed( 75 )
     ply:SetDuckSpeed( 0.4 )
-    ply:SetJumpPower( 200 )
+    ply:SetJumpPower( 225 )
     ply:SetViewOffset( Vector( 0, 0, 61 ) )
     ply:SetViewOffsetDucked( Vector( 0, 0, 35 ) )
 end
