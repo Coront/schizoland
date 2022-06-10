@@ -673,3 +673,20 @@ AS.AddBaseItem("wep_lockpick", {
         ["misc_multitool"] = 0,
     },
 })
+
+AS.AddBaseItem("wep_breach", {
+    name = "Breaching Charge",
+    desc = "A charge that allows you to blast a door off its hinges.",
+    category = "weapon",
+    model = "models/weapons/w_slam.mdl",
+    wep = "weapon_breach",
+    value = 80,
+    weight = 2,
+    class = "scientist",
+    craft = {
+        ["misc_scrap"] = 80,
+        ["misc_smallparts"] = 40,
+        ["misc_chemical"] = 60,
+        ["misc_gunpowder"] = 2,
+    },
+})
