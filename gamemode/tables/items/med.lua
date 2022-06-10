@@ -241,7 +241,24 @@ AS.AddBaseItem("misc_expbook", {
     weight = 0,
     use = {
         func = function( ply )
-            ply:ChatPrint("itemuse_misc_expbook")
+            local skills = {
+                "strength",
+                "endurance",
+                "weaponhandling",
+                "salvaging",
+            }
+            for k, v in pairs( skills ) do --We're excluding all skills that are already maxed.
+                if ply:GetSkillLevel( v ) >= AS.Skills[v].max then
+                    skills[v] = nil
+                end
+            end
+            local skill = table.Random( skills )
+            local amt = math.random( 30, 150 )
+            amt = amt * 0.01 --because math.random only uses whole numbers, how unfortunate.
+
+            ply:IncreaseSkillExperience( skill, amt )
+            ply:ChatPrint( AS.Skills[skill].name .. " +" .. amt .. " experience" )
+            ply:ResyncSkills()
         end,
     },
     hidden = true,
