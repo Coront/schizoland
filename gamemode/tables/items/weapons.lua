@@ -639,3 +639,37 @@ AS.AddBaseItem("wep_gl", {
         ["misc_chemical"] = 170,
     },
 })
+
+AS.AddBaseItem("wep_keypadcracker", {
+    name = "Keypad Cracker",
+    desc = "A tool that allows you to hack keypads in order to bypass their security features.",
+    category = "weapon",
+    model = "models/weapons/w_c4.mdl",
+    wep = "weapon_keypadcracker",
+    value = 80,
+    weight = 2,
+    class = "scientist",
+    craft = {
+        ["misc_scrap"] = 40,
+        ["misc_smallparts"] = 50,
+        ["misc_chemical"] = 25,
+        ["misc_electronicparts"] = 1,
+    },
+})
+
+AS.AddBaseItem("wep_lockpick", {
+    name = "Lockpick",
+    desc = "A tool that allows you to force open doors that are locked.",
+    category = "weapon",
+    model = "models/props_c17/TrapPropeller_Lever.mdl",
+    wep = "weapon_lockpick",
+    value = 80,
+    weight = 1.5,
+    class = "scientist",
+    craft = {
+        ["misc_scrap"] = 50,
+        ["misc_smallparts"] = 30,
+        ["misc_chemical"] = 20,
+        ["misc_multitool"] = 0,
+    },
+})
