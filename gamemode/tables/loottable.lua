@@ -449,7 +449,7 @@ AS.AddLootTable( "guncabinet", {
             ["misc_metalcan"] = {tickets = 50, min = 1, max = 1},
             ["misc_towels"] = {tickets = 50, min = 1, max = 1},
             ["misc_wrench"] = {tickets = 30, min = 1, max = 1},
-            ["ammo_9x19"] = {tickets = 15, min = 1, max = 1},
+            ["ammo_9mm"] = {tickets = 15, min = 1, max = 1},
         },
     },
 } )
