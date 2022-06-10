@@ -439,7 +439,7 @@ AS.AddBaseItem("misc_axel", {
 
 AS.AddBaseItem("misc_engine", {
     name = "Makeshift Engine",
-    desc = "A handmade engine. WIth the use of fuel, it can create electricity the use of magnets and also produce a rotary motion, which can be useful for other means.",
+    desc = "A handmade engine. With the use of fuel, it can create electricity the use of magnets and also produce a rotary motion, which can be useful for other means.",
     category = "misc",
     model = "models/props_c17/trappropeller_engine.mdl",
     value = 25,
@@ -532,7 +532,7 @@ AS.AddBaseItem("misc_emptybottle", {
 
 AS.AddBaseItem("misc_broken_combine", {
     name = "Broken Coalition Armor",
-    desc = "A full set of destroyed coalition armor. WIth the proper materials, it can be repaired to be useable again.",
+    desc = "A full set of destroyed coalition armor. With the proper materials, it can be repaired to be useable again.",
     category = "misc",
     model = "models/items/armor/combine.mdl",
     value = 100,
@@ -580,7 +580,7 @@ AS.AddBaseItem("misc_gyro", {
     desc = "An extremely advanced piece of technology. Very rare, too. Used in crafting.",
     category = "misc",
     model = "models/maxofs2d/hover_rings.mdl",
-    color = Color( 236, 190, 0 ),
+    color = Color( 235, 190, 0 ),
     value = 150,
     weight = 5,
     hidden = true,
