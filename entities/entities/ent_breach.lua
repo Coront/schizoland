@@ -64,6 +64,7 @@ if ( SERVER ) then
         door:SetCollisionGroup( COLLISION_GROUP_WEAPON )
         door:SetColor( Color( 0, 0, 0, 0 ) )
         door:SetPos( door:GetPos() + Vector( 0, 0, -200 ) )
+        door:Fire( "unlock", "", 0)
 
         timer.Simple( 300, function()
             if IsValid(door) then
