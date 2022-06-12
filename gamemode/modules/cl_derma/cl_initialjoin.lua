@@ -40,7 +40,7 @@ Here is a quick rundown of the basic rules:
 - Trading in-game items for real-world contents will result in a permanent ban.
 - Do not disconnect from active situations.
 
-These rules do NOT represent all of the rules. This is to just to help players quickly jump into the game. We ask that you at some point educate yourself on all of the rules. There is a link below if you wish to do that at this moment.
+These rules do NOT represent all of the rules. This is to just to help players quickly jump into the game. We ask that you at some point educate yourself on all of the rules. There is a link below if you wish to do that at this moment. You may also access the rules by typing /rules in chat.
 ]]
 
     local text = vgui.Create("DLabel", scroll)
@@ -53,7 +53,7 @@ These rules do NOT represent all of the rules. This is to just to help players q
     local link = vgui.Create("DLabelURL", scroll)
     link:SetText( "Open Rules" )
     link:SetURL( GAMEMODE.Rules )
-    link:SetPos( 10, scroll:GetTall() - 100 )
+    link:SetPos( 10, scroll:GetTall() - 90 )
     link:SetSize( 100, 20 )
     link:SetColor( COLHUD_DEFAULT )
 

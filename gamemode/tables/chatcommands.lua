@@ -71,6 +71,10 @@ AS.AddChatCommand("y", function( ply, args )
     end
 end)
 
+AS.AddChatCommand("rules", function( ply, args )
+    ply:SendLua("gui.OpenURL('" .. GAMEMODE.Rules .. "')")
+end)
+
 -- ██╗  ██╗ ██████╗  ██████╗ ██╗  ██╗███████╗
 -- ██║  ██║██╔═══██╗██╔═══██╗██║ ██╔╝██╔════╝
 -- ███████║██║   ██║██║   ██║█████╔╝ ███████╗
