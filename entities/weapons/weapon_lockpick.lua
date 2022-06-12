@@ -146,7 +146,7 @@ function SWEP:Think()
 				local snd = table.Random( lockpickSounds, 30, 90 )
 				ply:EmitSound( snd )
 			end
-			if CurTime() > self:GetSucceedTime() then
+			if CurTime() > self:GetSucceedTime() and IsValid( self:GetTargetDoor() ) then
 				self:LockpickSucceed()
 			end
 		end
