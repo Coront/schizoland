@@ -103,6 +103,23 @@ AS.AddMapData( "r_postnukemetro_dry", {
     },
 })
 
+AS.AddMapData( "gm_disaster_v3_nodust", {
+    MobMult = 1.4,
+    NodeMult = 1.4,
+    Load = {
+        pos = Vector(-2286.38, 1584.63, -351.75),
+        ang = Angle(8.16, -45.89),
+    },
+    Spawns = {
+        Vector( -12651.86, 1255.97, -791.97 ),
+        Vector( -12651.86, 1389.25, -791.97 ),
+        Vector( -12768.82, 1389.25, -791.97 ),
+        Vector( -12768.82, 1255.97, -791.97 ),
+        Vector( -12855.82, 1255.97, -791.97 ),
+        Vector( -12855.82, 1389.97, -791.97 ),
+    },
+})
+
 AS.AddMapData( "gm_fork", {
     MobMult = 3,
     NodeMult = 3,
