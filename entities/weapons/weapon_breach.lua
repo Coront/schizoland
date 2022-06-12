@@ -48,8 +48,8 @@ function SWEP:PrimaryAttack()
 			door:EmitSound( "weapons/c4/c4_plant.wav", 80, 120 )
 
 			local ent = ents.Create("ent_breach")
-			ent:SetPos( tr.HitPos - ply:EyeAngles():Forward() * 2 )
-			ent:SetAngles( door:GetAngles() + Angle( 90, 0, 0 ) )
+			ent:SetPos( tr.HitPos + tr.HitNormal )
+			ent:SetAngles( tr.HitNormal:Angle() + Angle( 90, 0, 0 ) )
 			ent:Spawn()
 			ent:SetDoor( door )
 			ent.Deployer = ply

@@ -56,7 +56,7 @@ if ( SERVER ) then
         newdoor:Spawn()
         newdoor:SetPos( door:GetPos() )
         newdoor:SetAngles( door:GetAngles() )
-        newdoor:SetModelScale( 0.9 )
+        newdoor:SetModelScale( 0.95, 0 )
         newdoor:Activate()
         newdoor:SetCollisionGroup( COLLISION_GROUP_WEAPON )
 
@@ -65,13 +65,15 @@ if ( SERVER ) then
         door:SetColor( Color( 0, 0, 0, 0 ) )
         door:SetPos( door:GetPos() + Vector( 0, 0, -200 ) )
         door:Fire( "unlock", "", 0)
+        door.Breached = true
 
         timer.Simple( 300, function()
-            if IsValid(door) then
+            if IsValid(door) and door.Breached then
                 door:SetMaterial("")
                 door:SetCollisionGroup( 0 )
                 door:SetColor( Color( 255, 255, 255, 255 ) )
                 door:SetPos( door:GetPos() + Vector( 0, 0, 200 ) )
+                door.Breached = false
             end
 
             if IsValid(newdoor) then
