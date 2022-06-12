@@ -7,7 +7,11 @@ function PlayerMeta:GetPID()
 end
 
 function PlayerMeta:Nickname() --Returns the player's name.
-    return self:GetNWString("as_name", self.name) != "" and self:GetNWString("as_name", self.name) or self:Nick()
+    if IsValid(self) then
+        return self:GetNWString("as_name", self.name) != "" and self:GetNWString("as_name", self.name) or self:Nick()
+    else
+        return ""
+    end
 end
 
 function PlayerMeta:IsFemale()

@@ -117,6 +117,7 @@ elseif CLIENT then
 
     timer.Create( "as_autoresync_containers", 3, 0, function()
         for k, v in pairs( ents.FindByClass("as_lootcontainer") ) do
+            if not IsValid(v) then continue end
             if table.Count(v:GetInventory()) != 0 then continue end
             net.Start("as_lootcontainer_requestinventory")
                 net.WriteEntity(v)

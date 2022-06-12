@@ -434,8 +434,10 @@ end)
 
 hook.Add( "PlayerEndVoice", "AS_VoiceEnd", function( ply )
     HUD_TALKINGPLAYERS[ply] = nil
-    HUD_TALKINGPLAYERSPANELS[ply]:Remove()
-    HUD_TALKINGPLAYERSPANELS[ply] = nil
+    if IsValid( HUD_TALKINGPLAYERSPANELS[ply] ) then
+        HUD_TALKINGPLAYERSPANELS[ply]:Remove()
+        HUD_TALKINGPLAYERSPANELS[ply] = nil
+    end
 end)
 
 timer.Create( "AS_CleanupVoice", 10, 0, function()
@@ -551,7 +553,7 @@ hook.Add( "HUDPaint", "AS_HUD", function()
     COLHUD_DEFAULT = Color(GetConVar("as_hud_color_default_r"):GetInt(), GetConVar("as_hud_color_default_g"):GetInt(), GetConVar("as_hud_color_default_b"):GetInt(), 255)
     COLHUD_GOOD = Color(GetConVar("as_hud_color_good_r"):GetInt(), GetConVar("as_hud_color_good_g"):GetInt(), GetConVar("as_hud_color_good_b"):GetInt(), 255)
     COLHUD_BAD = Color(GetConVar("as_hud_color_bad_r"):GetInt(), GetConVar("as_hud_color_bad_g"):GetInt(), GetConVar("as_hud_color_bad_b"):GetInt(), 255)
-    HUD_SCALE = GetConVar("as_hud_scale"):GetFloat()
+    HUD_SCALE = GetConVar("as_hud_scale"):GetFloat() or 1
 
     --I hate myself for this
     ASHUDVOICE_height = 85 * HUD_SCALE

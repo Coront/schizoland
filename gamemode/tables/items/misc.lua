@@ -680,7 +680,7 @@ AS.AddBaseItem("misc_emptysodacan", {
     weight = 0.1,
     hidden = true,
     craft = {
-        ["misc_scrap"] = 4,
+        ["misc_scrap"] = 3,
         ["misc_smallparts"] = 0,
         ["misc_chemical"] = 0,
     }
@@ -729,7 +729,7 @@ AS.AddBaseItem("misc_wrench", {
     hidden = true,
     craft = {
         ["misc_scrap"] = 6,
-        ["misc_smallparts"] = 4,
+        ["misc_smallparts"] = 5,
         ["misc_chemical"] = 0,
     }
 })
@@ -744,8 +744,8 @@ AS.AddBaseItem("misc_leadpipe", {
     weight = 1.5,
     hidden = true,
     craft = {
-        ["misc_scrap"] = 6,
-        ["misc_smallparts"] = 8,
+        ["misc_scrap"] = 10,
+        ["misc_smallparts"] = 5,
         ["misc_chemical"] = 2,
     }
 })
@@ -761,7 +761,7 @@ AS.AddBaseItem("misc_phonereceiver", {
     hidden = true,
     craft = {
         ["misc_scrap"] = 4,
-        ["misc_smallparts"] = 0,
+        ["misc_smallparts"] = 7,
         ["misc_chemical"] = 0,
     }
 })
@@ -776,8 +776,8 @@ AS.AddBaseItem("misc_pulley", {
     weight = 3,
     hidden = true,
     craft = {
-        ["misc_scrap"] = 12,
-        ["misc_smallparts"] = 7,
+        ["misc_scrap"] = 10,
+        ["misc_smallparts"] = 8,
         ["misc_chemical"] = 1,
     }
 })
@@ -793,7 +793,7 @@ AS.AddBaseItem("misc_lamp", {
     hidden = true,
     craft = {
         ["misc_scrap"] = 6,
-        ["misc_smallparts"] = 2,
+        ["misc_smallparts"] = 5,
         ["misc_chemical"] = 0,
     }
 })
@@ -825,14 +825,14 @@ AS.AddBaseItem("misc_bustedcomputer", {
     hidden = true,
     craft = {
         ["misc_scrap"] = 5,
-        ["misc_smallparts"] = 9,
+        ["misc_smallparts"] = 11,
         ["misc_chemical"] = 0,
     }
 })
 
 AS.AddBaseItem("misc_cleaner", {
     name = "Discarded Cleaner",
-    desc = "A bottle of cleaner. It's empty, unfortunately.",
+    desc = "A bottle of cleaner. It's moslty empty, unfortunately.",
     category = "misc",
     model = "models/props_junk/garbage_plasticbottle002a.mdl",
     color = Color( 60, 60, 60 ),
@@ -840,9 +840,9 @@ AS.AddBaseItem("misc_cleaner", {
     weight = 0.1,
     hidden = true,
     craft = {
-        ["misc_scrap"] = 4,
+        ["misc_scrap"] = 2,
         ["misc_smallparts"] = 0,
-        ["misc_chemical"] = 0,
+        ["misc_chemical"] = 4,
     }
 })
 
@@ -897,8 +897,8 @@ AS.AddBaseItem("misc_fireextinguisher", {
     weight = 3,
     hidden = true,
     craft = {
-        ["misc_scrap"] = 4,
-        ["misc_smallparts"] = 0,
+        ["misc_scrap"] = 6,
+        ["misc_smallparts"] = 3,
         ["misc_chemical"] = 9,
     }
 })

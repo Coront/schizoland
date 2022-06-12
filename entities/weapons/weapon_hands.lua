@@ -218,6 +218,7 @@ elseif ( CLIENT ) then
 	net.Receive("aswep_hands_updatestate", function()
 		local ent = net.ReadEntity()
 		local state = tobool(net.ReadBit())
+		if not IsValid(ent) then return end
 
 		ent:SetDrawn( state )
 	end)

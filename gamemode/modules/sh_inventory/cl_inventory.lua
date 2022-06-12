@@ -1319,7 +1319,7 @@ function AS.Inventory.BuildPlayers()
     players.Paint = function() end
 
     local scroll_players = vgui.Create("DScrollPanel", players)
-    scroll_players:SetSize( sheets:GetWide() - 15, sheets:GetTall() )
+    scroll_players:SetSize( sheets:GetWide() - 15, sheets:GetTall() - 35 )
     scroll_players.Paint = function(_,w,h)
         surface.SetDrawColor( COLHUD_SECONDARY )
         surface.DrawRect(0, 0, w, h)
@@ -1333,7 +1333,7 @@ function AS.Inventory.BuildPlayers()
 
         local panel = vgui.Create("DPanel", scroll_players)
         panel:SetPos( xpos, ypos )
-        panel:SetSize( scroll_players:GetWide() - (xpos * 2), 100 )
+        panel:SetSize( scroll_players:GetWide() - (xpos * 2) - 15, 100 )
         function panel:Paint( w, h )
             surface.SetDrawColor( COLHUD_PRIMARY )
             surface.DrawRect( 0, 0, w, h )
@@ -1367,7 +1367,9 @@ function AS.Inventory.BuildPlayers()
         ping:SizeToContents()
         ping:SetColor( Color( 0, 185, 200) )
         function ping:Think()
-            ping:SetText( "Ping: " .. v:Ping() .. " m/s" )
+            if IsValid(v) then
+                ping:SetText( "Ping: " .. (v:Ping() or 0) .. " m/s" )
+            end
         end
 
         if LocalPlayer():IsAdmin() then
