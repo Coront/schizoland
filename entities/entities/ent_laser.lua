@@ -56,7 +56,7 @@ if ( SERVER ) then
         if not (self.AdjustPosition or false) then
             if not self.Vertical then
                 local roll = math.random( 1, 2 )
-                local duck = roll == 1 and Vector( 0, 0, 50 ) or Vector( 0, 0, 10 )
+                local duck = roll == 1 and Vector( 0, 0, 50 ) or Vector( 0, 0, 25 )
                 self:SetPos(self:GetPos() + duck)
                 self.AdjustPosition = true
             else
@@ -66,7 +66,7 @@ if ( SERVER ) then
             end
         end
         if CurTime() > self.Lifetime then self:Remove() end
-        self:SetPos( self:GetPos() + self:GetAngles():Forward() * -20 )
+        self:SetPos( self:GetPos() + self:GetAngles():Forward() * -self.Speed )
         self:PerformTrace()
 
         self:NextThink( CurTime() + 0.01 )
