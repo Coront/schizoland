@@ -11,7 +11,7 @@ SET.MaxCharacters = 5 --Maximum characters players are allowed to have.
 SET.MinNameLength = 3 --Minimal length of a players name.
 SET.MaxNameLength = 50 --Maximum length of a players name.
 SET.BankWeight = 1000 --Maximum weight a player's bank can hold.
-SET.HealthUpdating = 5 --Seconds until passive health updates
+SET.HealthUpdating = 3 --Seconds until passive health updates
 SET.ClassChangeCostTbl = { --If classchangecost is on, what do player's have to pay to change?
     ["misc_scrap"] = 100,
     ["misc_smallparts"] = 100,
@@ -65,6 +65,10 @@ PERM.ToolWhitelist = { --Tools that regular players can use
     ["stacker_improved"] = true,
     ["colour"] = true,
     ["material"] = true,
+    ["advdupe2"] = true,
+    ["keypad_willox"] = true,
+    ["fading_door"] = true,
+    ["textscreen"] = true,
 }
 PERM.VoiceDistance = 1500
 PERM.ChatDistance = 500
@@ -206,12 +210,12 @@ NOD.ScavItems = { --Table containing potential items that will spawn if a item i
     --Med
     ["med_bag"] = 250,
     --Food
-    ["food_beans"] = 1000,
+    ["food_beans"] = 1200,
     ["food_milk"] = 850,
     ["food_dirty_water"] = 600,
     ["food_clean_water"] = 400,
     --Misc
-    ["misc_gunpowder"] = 850,
+    ["misc_gunpowder"] = 950,
     ["misc_gunpowderten"] = 85,
     ["misc_uraniumpack"] = 125,
     ["misc_deuteriumpod"] = 125,

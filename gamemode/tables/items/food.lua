@@ -236,7 +236,6 @@ AS.AddBaseItem("food_cooked_beans", {
         soundcs = "npc/headcrab/headbite.wav",
     },
     hidden = true,
-    class = "cultivator",
     craft = {
         ["misc_scrap"] = 0,
         ["misc_smallparts"] = 0,
@@ -264,7 +263,7 @@ AS.AddBaseItem("food_clean_water", {
     craft = {
         ["misc_scrap"] = 0,
         ["misc_smallparts"] = 0,
-        ["misc_chemical"] = 4,
+        ["misc_chemical"] = 2,
         ["food_dirty_water"] = 1,
     },
 })
@@ -289,7 +288,7 @@ AS.AddBaseItem("food_purified_water", {
     craft = {
         ["misc_scrap"] = 0,
         ["misc_smallparts"] = 0,
-        ["misc_chemical"] = 2,
+        ["misc_chemical"] = 1,
         ["food_dirty_water"] = 1,
     },
 })

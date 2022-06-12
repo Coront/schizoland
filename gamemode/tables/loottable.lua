@@ -28,6 +28,7 @@ AS.AddLootTable( "drawer", {
             ["misc_smallparts"] = {tickets = 95, min = 1, max = 2},
             ["misc_chemical"] = {tickets = 90, min = 1, max = 2},
             --Items
+            ["food_beans"] = {tickets = 60, min = 1, max = 1},
             ["misc_towels"] = {tickets = 60, min = 1, max = 1},
             ["misc_emptysodacan"] = {tickets = 50, min = 1, max = 1},
             ["misc_metalcan"] = {tickets = 50, min = 1, max = 1},
@@ -54,6 +55,7 @@ AS.AddLootTable( "drawer2", {
             ["misc_smallparts"] = {tickets = 95, min = 1, max = 2},
             ["misc_chemical"] = {tickets = 90, min = 1, max = 1},
             --Items
+            ["food_beans"] = {tickets = 60, min = 1, max = 1},
             ["misc_towels"] = {tickets = 60, min = 1, max = 1},
             ["misc_emptysodacan"] = {tickets = 50, min = 1, max = 1},
             ["misc_metalcan"] = {tickets = 50, min = 1, max = 1},
@@ -79,6 +81,7 @@ AS.AddLootTable( "desk", {
             ["misc_smallparts"] = {tickets = 95, min = 1, max = 2},
             ["misc_chemical"] = {tickets = 90, min = 1, max = 1},
             --Items
+            ["food_beans"] = {tickets = 60, min = 1, max = 1},
             ["misc_metalcan"] = {tickets = 60, min = 1, max = 1},
             ["misc_phonereceiver"] = {tickets = 55, min = 1, max = 1},
             ["misc_wrench"] = {tickets = 50, min = 1, max = 1},
@@ -106,6 +109,7 @@ AS.AddLootTable( "desk2", {
             ["misc_smallparts"] = {tickets = 95, min = 1, max = 2},
             ["misc_chemical"] = {tickets = 90, min = 1, max = 1},
             --Items
+            ["food_beans"] = {tickets = 60, min = 1, max = 1},
             ["misc_metalcan"] = {tickets = 60, min = 1, max = 1},
             ["misc_phonereceiver"] = {tickets = 55, min = 1, max = 1},
             ["misc_wrench"] = {tickets = 50, min = 1, max = 1},
@@ -134,6 +138,7 @@ AS.AddLootTable( "dresser", {
             ["misc_smallparts"] = {tickets = 95, min = 1, max = 2},
             ["misc_chemical"] = {tickets = 90, min = 1, max = 1},
             --Items
+            ["food_beans"] = {tickets = 60, min = 1, max = 1},
             ["misc_towels"] = {tickets = 50, min = 1, max = 1},
             ["misc_metalcan"] = {tickets = 50, min = 1, max = 1},
             ["misc_shoe"] = {tickets = 45, min = 1, max = 1},
@@ -189,7 +194,7 @@ AS.AddLootTable( "fridge", {
             ["misc_metalcan"] = {tickets = 50, min = 1, max = 2},
             ["misc_leadpipe"] = {tickets = 35, min = 1, max = 1},
             ["food_orange"] = {tickets = 40, min = 1, max = 3},
-            ["misc_melon"] = {tickets = 20, min = 1, max = 1},
+            ["misc_fullmelon"] = {tickets = 20, min = 1, max = 1},
             ["misc_emptybottle"] = {tickets = 40, min = 1, max = 1},
             ["food_beans"] = {tickets = 40, min = 1, max = 1},
             ["food_meat"] = {tickets = 20, min = 1, max = 1},
@@ -235,6 +240,7 @@ AS.AddLootTable( "box", {
             ["misc_smallparts"] = {tickets = 95, min = 1, max = 1},
             ["misc_chemical"] = {tickets = 90, min = 1, max = 1},
             --Items
+            ["food_beans"] = {tickets = 60, min = 1, max = 1},
             ["misc_emptysodacan"] = {tickets = 60, min = 1, max = 1},
             ["misc_metalcan"] = {tickets = 60, min = 1, max = 1},
             ["misc_shoe"] = {tickets = 55, min = 1, max = 1},
@@ -269,6 +275,7 @@ AS.AddLootTable( "crate", {
             ["misc_smallparts"] = {tickets = 95, min = 1, max = 3},
             ["misc_chemical"] = {tickets = 95, min = 1, max = 2},
             --Items
+            ["food_beans"] = {tickets = 60, min = 1, max = 1},
             ["misc_leadpipe"] = {tickets = 40, min = 1, max = 1},
             ["misc_wrench"] = {tickets = 45, min = 1, max = 1},
             ["misc_pulley"] = {tickets = 35, min = 1, max = 1},
@@ -302,6 +309,7 @@ AS.AddLootTable( "dumpster", {
             ["misc_smallparts"] = {tickets = 95, min = 1, max = 2},
             ["misc_chemical"] = {tickets = 95, min = 1, max = 2},
             --Items
+            ["food_beans"] = {tickets = 60, min = 1, max = 1},
             ["misc_emptysodacan"] = {tickets = 60, min = 1, max = 2},
             ["misc_metalcan"] = {tickets = 60, min = 1, max = 2},
             ["misc_shoe"] = {tickets = 55, min = 1, max = 1},

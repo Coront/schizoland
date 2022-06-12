@@ -33,11 +33,10 @@ AS.AddBaseItem("tool_stove", {
     weight = 10,
     class = "cultivator",
     craft = {
-        ["misc_scrap"] = 300,
-        ["misc_smallparts"] = 400,
-        ["misc_chemical"] = 350,
+        ["misc_scrap"] = 250,
+        ["misc_smallparts"] = 200,
+        ["misc_chemical"] = 275,
         ["misc_propane"] = 1,
-        ["misc_servo"] = 2,
     },
 })
 

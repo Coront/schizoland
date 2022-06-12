@@ -19,7 +19,8 @@ function ENT:SetTitle( str )
 end
 
 function ENT:GetTitle()
-    return self.Title or self:GetObjectOwner():Nickname() .. "'s Paper"
+    local name = IsValid(self:GetObjectOwner()) and self:GetObjectOwner():Nickname() or "unknown"
+    return self.Title or name .. "'s Paper"
 end
 
 function ENT:SetParagraph( str )

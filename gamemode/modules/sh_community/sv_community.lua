@@ -57,7 +57,7 @@ end
 
 function community.Delete( cid )
     for k, v in pairs( player.GetAll() ) do --We'll go through all the players on the server and clear their community vars.
-        if not v:GetCommunity() == cid then continue end
+        if v:GetCommunity() != cid then continue end --ignore players not part of this community
         v:ClearCommunity()
         v:ClearRank()
         v:ClearTitle()

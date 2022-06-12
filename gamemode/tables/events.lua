@@ -38,7 +38,7 @@ AS.AddEvent( "zombie_horde", {
     eventspot = true,
     outdoor = true,
     ent = "npc_as_fastzombie", --Replace this with the antlionnest entity when finished
-    entamt = {min = 20, max = 30},
+    entamt = {min = 10, max = 20},
     notify = {"A large horde of fast zombies have been spotted out in the wasteland."},
 } )
 
@@ -58,7 +58,7 @@ AS.AddEvent( "raider_party", {
 
 AS.AddEvent( "combine_scout", {
     name = "Coalition Scout",
-    enable = true,
+    enable = false,
     mintime = 4200,
     maxtime = 8000,
     max = 1,

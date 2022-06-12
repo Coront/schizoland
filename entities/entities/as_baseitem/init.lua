@@ -26,6 +26,11 @@ function ENT:Use( ply )
 		self:Remove()
 		self:EmitSound("physics/body/body_medium_impact_soft1.wav")
 		ply:AddItemToInventory( self:GetItem(), self:GetAmount() )
+		plogs.PlayerLog(ply, "Items", ply:NameID() .. " picked up " .. AS.Items[self:GetItem()].name .. " (" .. self:GetAmount() .. ")", {
+			["Name"] 	= ply:Name(),
+			["SteamID"]	= ply:SteamID(),
+			["Item"]	= AS.Items[self:GetItem()].name .. " (" .. self:GetAmount() .. ")",
+		})
 	else
 		local amt = self:CalcCanCarry( ply )
 		if amt > 0 then
@@ -37,6 +42,11 @@ function ENT:Use( ply )
 			ply:ChatPrint("You are too overweight to carry this.")
 			return
 		end
+		plogs.PlayerLog(ply, "Items", ply:NameID() .. " picked up " .. AS.Items[self:GetItem()].name .. " (" .. amt .. ")", {
+			["Name"] 	= ply:Name(),
+			["SteamID"]	= ply:SteamID(),
+			["Item"]	= AS.Items[self:GetItem()].name .. " (" .. amt .. ")",
+		})
 	end
 end
 

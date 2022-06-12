@@ -59,7 +59,7 @@ function GM:CanTool( ply, tr, toolname, tool, button )
     if ply:IsAdmin() then return true end
     if SERVER and tobool(GetConVar("as_nosandbox"):GetInt()) then ply:ChatPrint("No Sandboxing is enabled. You cannot do this.") return false end
     if not PERM.ToolWhitelist[toolname] then return false end
-    if tr.Entity:GetObjectOwner() != ply then return false end
+    if tr.Entity:GetObjectOwner() != ply and toolname != "advdupe2" and toolname != "keypad_willox" then return false end
     return true
 end
 
