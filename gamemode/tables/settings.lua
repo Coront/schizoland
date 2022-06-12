@@ -231,6 +231,7 @@ NOD.ScavItems = { --Table containing potential items that will spawn if a item i
     ["misc_fusioncore"] = 50,
     ["misc_carbattery"] = 150,
     ["misc_axel"] = 150,
+    ["misc_wheel"] = 125,
     ["misc_propane"] = 150,
     ["misc_emptybottle"] = 800,
 }

@@ -69,6 +69,9 @@ function AS.CLSettings.BuildGameplay( parent )
     ToggleButton("Prompt Irreversible Actions (Example: Verification for salvaging an item)", xpos, ypos, scroll, "as_gameplay_verify")
     addSpace( 0, 20 )
 
+    ValueSlider( "Headbobbing", xpos, ypos, 0, 2, scroll, "fas2_headbob_intensity", nil, true )
+    addSpace( 0, 20 )
+
     -- Low Health Indication
 
     SectionLabel( "Low Health Indication", xpos, ypos, scroll )
