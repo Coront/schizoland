@@ -113,6 +113,7 @@ function TOOL:LeftClick(tr)
 	ent:Spawn()
 
 	ent:SetPlayer(ply)
+	ent:SetObjectOwner( ply )
 
 	local freeze = util.tobool(self:GetClientNumber("freeze"))
 	local weld = util.tobool(self:GetClientNumber("weld"))

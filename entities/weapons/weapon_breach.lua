@@ -53,6 +53,12 @@ function SWEP:PrimaryAttack()
 			ent:Spawn()
 			ent:SetDoor( door )
 			ent.Deployer = ply
+
+			local owner = IsValid(door:GetObjectOwner()) and door:GetObjectOwner():Nickname() or "none"
+			plogs.PlayerLog(ply, "Items", ply:NameID() .. " placed a breach charge on door (" .. door:EntIndex() .. ") owned by " .. owner, {
+				["Name"] 	= ply:Name(),
+				["SteamID"]	= ply:SteamID(),
+			})
 		end
 	end
 end

@@ -53,6 +53,12 @@ function SWEP:PrimaryAttack()
 
 	if (SERVER) and IsFirstTimePredicted() and door and IsValid(door) and lockpickEnts[door:GetClass()] and not self:IsLockpicking() then
 		self:StartLockpicking( door )
+
+		local owner = IsValid(door:GetObjectOwner()) and door:GetObjectOwner():Nickname() or "none"
+		plogs.PlayerLog(ply, "Items", ply:NameID() .. " started lockpicking door (" .. door:EntIndex() .. ") owned by " .. owner, {
+			["Name"] 	= ply:Name(),
+			["SteamID"]	= ply:SteamID(),
+		})
 	end
 end
 

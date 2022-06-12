@@ -63,6 +63,10 @@ function SWEP:SetupDataTables()
 	self:NetworkVar( "Int", 0, "CrackTime" )
 end
 
+function SWEP:GetCrackTime()
+	return 15
+end
+
 function SWEP:PrimaryAttack()
 	if self.IsCracking or not IsValid(self.Owner) then return end
 
@@ -88,6 +92,13 @@ function SWEP:PrimaryAttack()
 					
 				end
 			end)
+
+			local ply = self:GetOwner()
+			local owner = IsValid(ent:GetObjectOwner()) and ent:GetObjectOwner():Nickname() or "none"
+			plogs.PlayerLog(ply, "Items", ply:NameID() .. " used a keypad cracker on keypad (" .. ent:EntIndex() .. ") owned by " .. owner, {
+				["Name"] 	= ply:Name(),
+				["SteamID"]	= ply:SteamID(),
+			})
 		else
 			self.Dots = self.Dots or ""
 			
