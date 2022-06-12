@@ -89,17 +89,21 @@ end)
 
 hook.Add( "KeyPress", "AS_DrinkWater", function( ply, key )
     if key == IN_USE and ply:WaterLevel() == 1 then
-        local waterdrinkdelay = 0.5
-
-        ply.NextWaterDrink = ply.NextWaterDrink or CurTime() + waterdrinkdelay
-        if CurTime() > ply.NextWaterDrink and ply:GetThirst() < 100 then
-            local length = ply.Status and ply.Status["poison"] and (ply.Status["poison"].time - CurTime()) + 5 or 5
-            ply:AddStatus( "poison", length )
-            ply:AddThirst( 10 )
-            ply.NextWaterDrink = CurTime() + waterdrinkdelay
-            if SERVER then
-                ply:EmitSound( "npc/barnacle/barnacle_gulp1.wav" )
+        if IsFirstTimePredicted() and ( CLIENT ) then
+            local options = vgui.Create("DMenu")
+            if ply:GetThirst() < 100 then
+                options:AddOption("Drink", function()
+                    net.Start("as_player_drinkwater")
+                    net.SendToServer()
+                end)
             end
+            if ply:HasInInventory( "misc_emptybottle", 1 ) then
+                options:AddOption("Fill Empty Bottle", function()
+                    net.Start("as_player_fillwaterbottle")
+                    net.SendToServer()
+                end)
+            end
+            options:Open( ScrW() / 2, ScrH() / 2 )
         end
     end
 end)
@@ -114,6 +118,8 @@ end)
 if SERVER then
 
     util.AddNetworkString("as_syncsatiation")
+    util.AddNetworkString("as_player_drinkwater")
+    util.AddNetworkString("as_player_fillwaterbottle")
 
     function PlayerMeta:ResyncSatiation()
         net.Start("as_syncsatiation")
@@ -122,6 +128,32 @@ if SERVER then
         net.Send(self)
     end
     concommand.Add("as_resyncsatiation", function(ply) ply:ResyncSatiation() end)
+
+    net.Receive("as_player_drinkwater", function( _, ply )
+        if ply:WaterLevel() != 1 then return end --Player not near water
+
+        local waterdrinkdelay = 0.5
+        ply.NextWaterDrink = ply.NextWaterDrink or CurTime() + waterdrinkdelay
+        if CurTime() > ply.NextWaterDrink and ply:GetThirst() < 100 then
+            local length = ply.Status and ply.Status["poison"] and (ply.Status["poison"].time - CurTime()) + 5 or 5
+            ply:AddStatus( "poison", length )
+            ply:AddThirst( 10 )
+            ply.NextWaterDrink = CurTime() + waterdrinkdelay
+            ply:EmitSound( "npc/barnacle/barnacle_gulp1.wav" )
+            ply:ResyncSatiation()
+            ply:ResyncStatuses()
+        end
+    end)
+
+    net.Receive("as_player_fillwaterbottle", function( _, ply )
+        if ply:WaterLevel() != 1 then return end --Player not near water
+        if not ply:HasInInventory("misc_emptybottle", 1) then return end --No water bottle
+
+        ply:TakeItemFromInventory("misc_emptybottle", 1)
+        ply:AddItemToInventory("food_dirty_water", 1)
+        ply:ChatPrint( AS.Items["food_dirty_water"].name .. " (1) added to inventory.")
+        ply:EmitSound("ambient/water/water_spray" .. math.random( 1, 3 ) .. ".wav")
+    end)
 
 elseif CLIENT then
 
