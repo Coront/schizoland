@@ -32,7 +32,7 @@ function ENT:ShouldStopTimer()
 		end
 	end
 	for k, v in pairs( ents.FindByClass("prop_physics") ) do
-		if not v.Owner then continue end
+		if not v:HasObjectOwner() then continue end
 		if v:GetPos():Distance(self:GetPos()) < 3000 then --A player's prop is too close, assuming they're building in the area.
 			return true 
 		end

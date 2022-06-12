@@ -122,7 +122,7 @@ else
 
     timer.Create( "as_autoresync_cases", 5, 0, function()
         for k, v in pairs( ents.FindByClass("as_case") ) do
-            if v.GetInventory and table.Count(v:GetInventory() or {}) > 0 then continue end
+            if not IsValid(v) then continue end
             net.Start("as_lootcontainer_requestinventory") --Cases utilize the lootcontainer inventory system, so this isnt a concern.
                 net.WriteEntity(v)
             net.SendToServer()
