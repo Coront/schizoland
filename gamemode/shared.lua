@@ -10,6 +10,7 @@ AS = {}
 DeriveGamemode("sandbox")
 GM.Name = "Aftershock"
 GM.Discord = "https://discord.gg/S3xQjZefuF"
+GM.Rules = "https://docs.google.com/document/d/1gtxH4Jcli8R9vZIke9wXKbgNIh_EmCdDNx8T-TnhIDQ/edit?usp=sharing"
 
 --Shared Variables
 AS.Colors = {}

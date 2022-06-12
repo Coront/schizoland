@@ -308,6 +308,8 @@ function ToggleButton( text, x, y, parent, convar )
     label:SetText(text)
     label:SetPos(x + 20, y)
     label:SizeToContents()
+
+    return checkbox
 end
 
 function DefaultButton( text, x, y, width, height, parent, callback )
