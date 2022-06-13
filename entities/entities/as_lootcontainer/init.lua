@@ -27,7 +27,7 @@ function ENT:ShouldStopTimer()
 		if not v:IsLoaded() then continue end
 		if not v:Alive() then continue end
 		if v:IsDeveloping() then continue end
-		if v:GetPos():Distance(self:GetPos()) < 2000 then --A player is too close, we should stop the timer.
+		if v:GetPos():Distance(self:GetPos()) < 3000 then --A player is too close, we should stop the timer.
 			return true
 		end
 	end
@@ -49,9 +49,12 @@ end
 
 function ENT:Think()
 	if self:GetContainer() != "" and self:ShouldStopTimer() then
-		self:SetNextGeneration( CurTime() + (self:GetNextGeneration() - CurTime()) ) --based programming skills
+		self.PauseTimer = self.PauseTimer or (self:GetNextGeneration() - CurTime())
+		self:SetNextGeneration( CurTime() + self.PauseTimer )
+		return
 	end
 
+	self.PauseTimer = nil
 	if self:GetContainer() != "" and CurTime() > self:GetNextGeneration() then
 		self:GenerateLoot()
 		self:SetNextGeneration( CurTime() + AS.Loot[self:GetContainer()].generation.time )
