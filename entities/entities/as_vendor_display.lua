@@ -211,11 +211,11 @@ end
 -- ╚═╝     ╚═╝╚══════╝╚═╝  ╚═══╝ ╚═════╝
 
 if ( CLIENT ) then
-    
+
     net.Receive("as_vendor_display_purchaseitem", function()
         local vend = net.ReadEntity()
         local item = net.ReadString()
-    
+
         local frame = vgui.Create("DFrame")
         frame:SetSize(300, 120)
         frame:Center()

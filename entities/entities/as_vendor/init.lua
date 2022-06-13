@@ -374,6 +374,7 @@ net.Receive( "as_vendor_item_purchase", function( _, ply )
 	if ent:GetClass() != "as_vendor" then return end
 	if ent:GetObjectOwner() == ply then ply:ChatPrint("You cannot purchase items from your own vending machine.") return end
 	if ent:GetProfile() == 0 then ply:ChatPrint("No profile is loaded.") return end
+	if ent:GetPower() < 0 then ply:ChatPrint("The vendor that owns this item is unpowered!") return end
 
 	local item = net.ReadString()
 	if not ent:SaleExists( item ) then return end
