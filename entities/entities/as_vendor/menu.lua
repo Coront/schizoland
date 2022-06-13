@@ -66,6 +66,7 @@ function Vendor.Menu()
             Vendor.BuildShop( panel, ent:GetSales() )
         end
     else
+        if ent:GetObjectOwner() != LocalPlayer() then frame_vendor:Close() LocalPlayer():ChatPrint("This vendor does not have an assigned profiled.") end
         if #profiles <= 0 then
             frame_vendor:Close()
             Vendor.NewProfile( true )

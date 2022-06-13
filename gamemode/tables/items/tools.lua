@@ -97,7 +97,7 @@ AS.AddBaseItem("tool_plant_orange", {
         ["misc_scrap"] = 300,
         ["misc_smallparts"] = 250,
         ["misc_chemical"] = 400,
-        ["misc_seed_orange"] = 1,
+        ["misc_seed_orange"] = 4,
     },
 })
 
@@ -114,7 +114,7 @@ AS.AddBaseItem("tool_plant_melon", {
         ["misc_scrap"] = 450,
         ["misc_smallparts"] = 400,
         ["misc_chemical"] = 600,
-        ["misc_seed_melon"] = 1,
+        ["misc_seed_melon"] = 4,
     },
 })
 
@@ -131,7 +131,7 @@ AS.AddBaseItem("tool_plant_herb", {
         ["misc_scrap"] = 300,
         ["misc_smallparts"] = 300,
         ["misc_chemical"] = 350,
-        ["misc_seed_herb"] = 1,
+        ["misc_seed_herb"] = 3,
     },
 })
 

@@ -141,7 +141,7 @@ function SWEP:SecondaryAttack()
 		filter = self.Owner,
 	})
 	local ent = trace.Entity
-	
+
 	if ent:GetObjectOwner() == self.Owner then
 		local ply = self.Owner
 		self:SetNextSecondaryFire( CurTime() + 1 )

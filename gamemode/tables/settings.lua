@@ -269,7 +269,6 @@ SET.BannedWords = {
     "nigger",
     "nigga",
     "niglet",
-    "nig",
     "nickgur",
     "spic",
     "wetback",

@@ -12,13 +12,10 @@ end
 
 function GM:PhysgunPickup( ply, ent )
     if ply:IsAdmin() then return true end
-    if ent:GetNWBool( "NoObjectOwner", false ) then return false end
-    if (ent:GetObjectOwner() != ply) then return false end
-    if not PERM.Physgunable[ent:GetClass()] then return false end
-    if ent:GetPos():Distance(ply:GetPos()) > 2000 then return false end
-    if not ply:IsAdmin() then
-        ent:SetCollisionGroup( COLLISION_GROUP_WORLD )
-    end
+    if ent:GetNWBool( "NoObjectOwner", false ) then return false end -- can have no owner
+    if ent:GetPos():Distance(ply:GetPos()) > 2000 then return false end -- too far
+    if ent:GetObjectOwner() != ply or ent.Owner and IsValid(ent.Owner) and ent.Owner != ply then return false end -- not owner
+    ent:SetCollisionGroup( COLLISION_GROUP_WORLD )
 
     return true
 end
