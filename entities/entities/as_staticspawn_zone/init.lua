@@ -32,6 +32,13 @@ function ENT:Think()
             v.Disabled = false
         end
     end
+
+    for k, v in pairs( ents.FindByClass("prop_physics*") ) do
+        if v:GetPos():Distance( self:GetPos() ) >= self:GetZoneDistance() then continue end
+        if not IsValid(v:GetObjectOwner()) and v.MapProp then continue end
+        v:GetObjectOwner():ChatPrint("You prop has been removed as it is too close to the occupation zone.")
+        v:Remove()
+    end
 end
 
 hook.Add( "EntityTakeDamage", "as_staticspawners_timerpush", function( ent, dmg )

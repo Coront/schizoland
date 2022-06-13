@@ -1,6 +1,13 @@
 function GM:PlayerSpawnProp( ply, model )
     if not ply:IsAdmin() and tobool(GetConVar("as_nosandbox"):GetInt()) then ply:ChatPrint("No Sandboxing is enabled. You cannot do this.") return false end
 
+    for k, v in pairs( ents.FindByClass("as_staticspawn_zone") ) do
+        if v:GetPos():Distance( ply:GetPos() ) <= v:GetZoneDistance() then
+            ply:ChatPrint("You cannot spawn props while inside an occupation zone.")
+            return false 
+        end
+    end
+
     local TotalProps = 0
     for k, v in pairs( ents.FindByClass("prop_physics") ) do
         if v.Owner == ply then
@@ -30,6 +37,16 @@ function GM:OnPhysgunPickup( ply, ent )
         ent:SetColor( Color( 255, 255, 255, 255 ) )
         ent.NewSpawn = false
     end
+end
+
+function GM:CanPlayerUnfreeze( ply, ent, phys )
+    if ply:IsAdmin() then return true end
+    if ent:GetNWBool( "NoObjectOwner", false ) then return false end -- can have no owner
+    if ent:GetPos():Distance(ply:GetPos()) > 2000 then return false end -- too far
+    if ent:GetObjectOwner() != ply or ent.Owner and IsValid(ent.Owner) and ent.Owner != ply then return false end -- not owner
+    ent:SetCollisionGroup( COLLISION_GROUP_WORLD )
+
+    return true
 end
 
 function GM:PlayerSpawnEffect( ply, model )
