@@ -70,6 +70,11 @@ if ( SERVER ) then
     function ENT:OnTakeDamage( dmg )
         self:SetHealth( self:Health() - dmg:GetDamage() )
 
+        if dmg:GetDamageType() == DMG_SLASH then
+            dmg:GetAttacker():IncreaseSkillExperience( "strength", 0.03 )
+            dmg:GetAttacker():ResyncSkills()
+        end
+
         if self:Health() <= 0 and not self.Destroyed then
             self:Destroy()
             dmg:GetAttacker():AddToStatistic( "mounds", 1 )
