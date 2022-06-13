@@ -40,7 +40,7 @@ end
 if ( SERVER ) then
 
     util.AddNetworkString("as_resourcepack_resync")
-    util.AddNetworkString("as_resourcepack_requestres")
+    util.AddNetworkString("as_resourcepack_requestinventory")
 
     function ENT:ResyncResources()
         net.Start("as_resourcepack_resync")
@@ -51,7 +51,7 @@ if ( SERVER ) then
         net.Broadcast()
     end
 
-    net.Receive("as_case_requestinventory", function( _, ply )
+    net.Receive("as_resourcepack_requestinventory", function( _, ply )
         local ent = net.ReadEntity()
         if not IsValid(ent) then return end
 
@@ -68,7 +68,6 @@ elseif ( CLIENT ) then
     net.Receive("as_resourcepack_resync", function()
         local ent = net.ReadEntity()
         if not IsValid( ent ) then return end
-        print("here")
         local scrap = net.ReadUInt( NWSetting.ItemAmtBits )
         local smallparts = net.ReadUInt( NWSetting.ItemAmtBits )
         local chemicals = net.ReadUInt( NWSetting.ItemAmtBits )
@@ -81,7 +80,7 @@ elseif ( CLIENT ) then
     timer.Create( "as_autoresync_respack", 3, 0, function()
         for k, v in pairs( ents.FindByClass("as_resourcepack") ) do
             if not IsValid(v) then continue end
-            net.Start("as_case_requestinventory") --Cases utilize the lootcontainer inventory system, so this isnt a concern.
+            net.Start("as_resourcepack_requestinventory") --Cases utilize the lootcontainer inventory system, so this isnt a concern.
                 net.WriteEntity(v)
             net.SendToServer()
         end
