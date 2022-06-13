@@ -99,8 +99,8 @@ function ENT:Use( ply )
         self:EmitSound( "ambient/levels/streetwar/building_rubble" .. math.random( 1, 5 ) .. ".wav" )
         ply.Scavenging = true
         ply:StartTimedEvent( scavtime, true, function()
-            if not IsValid( self ) then return end
             ply.Scavenging = false
+            if not IsValid( self ) then return end
             self:SetScavengesLeft( self:GetScavengesLeft() - 1 )
             self:IncreaseSalvageSkill( ply )
             local roll = math.random( 0, 100 )

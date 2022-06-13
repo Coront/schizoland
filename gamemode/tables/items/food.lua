@@ -32,7 +32,7 @@ AS.AddBaseItem("food_beans", {
     value = 2,
     weight = 0.2,
     use = {
-        hunger = 10,
+        hunger = 15,
         soundcs = "npc/headcrab/headbite.wav",
     },
     hidden = true,
@@ -51,7 +51,7 @@ AS.AddBaseItem("food_meat", {
     value = 2,
     weight = 1,
     use = {
-        hunger = 10,
+        hunger = 15,
         soundcs = "npc/headcrab/headbite.wav",
         stat = {
             [1] = {effect = "poison", length = 10, stack = true},
@@ -95,7 +95,7 @@ AS.AddBaseItem("food_meat_guard", {
     value = 2,
     weight = 4,
     use = {
-        hunger = 20,
+        hunger = 40,
         soundcs = "npc/headcrab/headbite.wav",
         stat = {
             [1] = {effect = "poison", length = 30, stack = true},
@@ -118,7 +118,7 @@ AS.AddBaseItem("food_dirty_water", {
     value = 3,
     weight = 1,
     use = {
-        thirst = 15,
+        thirst = 20,
         soundcs = "npc/barnacle/barnacle_gulp1.wav",
         items = {
             ["misc_emptybottle"] = 1,
@@ -165,7 +165,7 @@ AS.AddBaseItem("food_soda", {
     value = 2,
     weight = 0.2,
     use = {
-        thirst = 10,
+        thirst = 15,
         soundcs = "npc/barnacle/barnacle_gulp1.wav",
     },
     hidden = true,
@@ -232,14 +232,14 @@ AS.AddBaseItem("food_cooked_beans", {
     value = 2,
     weight = 0.2,
     use = {
-        hunger = 15,
+        hunger = 20,
         soundcs = "npc/headcrab/headbite.wav",
     },
     hidden = true,
     craft = {
         ["misc_scrap"] = 0,
         ["misc_smallparts"] = 0,
-        ["misc_chemical"] = 3,
+        ["misc_chemical"] = 2,
         ["food_beans"] = 1,
     }
 })
@@ -253,7 +253,7 @@ AS.AddBaseItem("food_clean_water", {
     value = 5,
     weight = 1,
     use = {
-        thirst = 15,
+        thirst = 20,
         soundcs = "npc/barnacle/barnacle_gulp1.wav",
         items = {
             ["misc_emptybottle"] = 1,
@@ -277,7 +277,7 @@ AS.AddBaseItem("food_purified_water", {
     value = 5,
     weight = 1,
     use = {
-        thirst = 20,
+        thirst = 25,
         soundcs = "npc/barnacle/barnacle_gulp1.wav",
         items = {
             ["misc_emptybottle"] = 1,
@@ -302,15 +302,15 @@ AS.AddBaseItem("food_cooked_meat", {
     value = 2,
     weight = 1,
     use = {
-        hunger = 35,
+        hunger = 40,
         soundcs = "npc/headcrab/headbite.wav",
     },
     hidden = true,
     class = "cultivator",
     craft = {
-        ["misc_scrap"] = 10,
-        ["misc_smallparts"] = 5,
-        ["misc_chemical"] = 15,
+        ["misc_scrap"] = 5,
+        ["misc_smallparts"] = 0,
+        ["misc_chemical"] = 10,
         ["food_meat"] = 1,
     }
 })
@@ -324,15 +324,15 @@ AS.AddBaseItem("food_cooked_antlion", {
     value = 2,
     weight = 1.5,
     use = {
-        hunger = 45,
+        hunger = 50,
         soundcs = "npc/headcrab/headbite.wav",
     },
     hidden = true,
     class = "cultivator",
     craft = {
-        ["misc_scrap"] = 15,
+        ["misc_scrap"] = 5,
         ["misc_smallparts"] = 5,
-        ["misc_chemical"] = 20,
+        ["misc_chemical"] = 10,
         ["food_meat_antlion"] = 1,
     }
 })
@@ -346,15 +346,15 @@ AS.AddBaseItem("food_cooked_guard", {
     value = 2,
     weight = 3.5,
     use = {
-        hunger = 65,
+        hunger = 70,
         soundcs = "npc/headcrab/headbite.wav",
     },
     hidden = true,
     class = "cultivator",
     craft = {
-        ["misc_scrap"] = 20,
+        ["misc_scrap"] = 10,
         ["misc_smallparts"] = 10,
-        ["misc_chemical"] = 30,
+        ["misc_chemical"] = 25,
         ["food_meat_guard"] = 1,
     }
 })
@@ -368,8 +368,8 @@ AS.AddBaseItem("food_soup", {
     value = 15,
     weight = 1,
     use = {
-        hunger = 20,
-        thirst = 25,
+        hunger = 30,
+        thirst = 20,
         items = {
             ["misc_emptybottle"] = 1,
         },
@@ -378,9 +378,9 @@ AS.AddBaseItem("food_soup", {
     hidden = true,
     class = "cultivator",
     craft = {
-        ["misc_scrap"] = 20,
-        ["misc_smallparts"] = 10,
-        ["misc_chemical"] = 25,
+        ["misc_scrap"] = 10,
+        ["misc_smallparts"] = 5,
+        ["misc_chemical"] = 20,
         ["food_purified_water"] = 1,
     },
 })
@@ -394,15 +394,15 @@ AS.AddBaseItem("food_coffee", {
     value = 10,
     weight = 0.6,
     use = {
-        hunger = 15,
-        thirst = 20,
+        hunger = 20,
+        thirst = 25,
         soundcs = "npc/barnacle/barnacle_gulp1.wav",
     },
     hidden = true,
     class = "cultivator",
     craft = {
         ["misc_scrap"] = 15,
-        ["misc_smallparts"] = 10,
-        ["misc_chemical"] = 20,
+        ["misc_smallparts"] = 5,
+        ["misc_chemical"] = 15,
     },
 })

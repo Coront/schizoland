@@ -137,7 +137,7 @@ if SERVER then
         if CurTime() > ply.NextWaterDrink and ply:GetThirst() < 100 then
             local length = ply.Status and ply.Status["poison"] and (ply.Status["poison"].time - CurTime()) + 5 or 5
             ply:AddStatus( "poison", length )
-            ply:AddThirst( 10 )
+            ply:AddThirst( 15 )
             ply.NextWaterDrink = CurTime() + waterdrinkdelay
             ply:EmitSound( "npc/barnacle/barnacle_gulp1.wav" )
             ply:ResyncSatiation()
