@@ -446,6 +446,9 @@ function AS.CLSettings.BuildPerformance( parent )
     ToggleButton("Draw NPC Guns", xpos, ypos, scroll, "asnpc_drawing_guns")
     addSpace( 0, 20 )
 
+    ToggleButton("Enable PAC3", xpos, ypos, scroll, "pac_enable")
+    addSpace( 0, 20 )
+
     ValueSlider( "LOD Quality ( > = Worse )", xpos, ypos, -1, 2, scroll, "r_lod" )
     addSpace( 0, 20 )
 
