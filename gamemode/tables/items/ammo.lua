@@ -165,9 +165,9 @@ AS.AddBaseItem("ammo_pulse", {
     hidden = true,
     class = "scientist",
     craft = {
-        ["misc_scrap"] = 20,
-        ["misc_smallparts"] = 0,
-        ["misc_chemical"] = 20,
+        ["misc_scrap"] = 30,
+        ["misc_smallparts"] = 5,
+        ["misc_chemical"] = 25,
     },
 })
 
