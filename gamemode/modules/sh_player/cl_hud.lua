@@ -380,23 +380,6 @@ function ConnectionInformation()
     end
 end
 
-function AftershockHUDVoice()
-    if table.Count(HUD_TALKINGPLAYERS) <= 0 then return end --No one is talking, lets not run this.
-
-    for k, v in pairs( HUD_TALKINGPLAYERS ) do
-        if not IsValid(k) then continue end
-        local bg = COLHUD_SECONDARY:ToTable()
-        surface.SetDrawColor( bg[1], bg[2], bg[3], 150 )
-        surface.DrawRect( ASHUDVOICE_xpos, ASHUDVOICE_ypos, ASHUDVOICE_width, ASHUDVOICE_height, 1 )
-        surface.SetDrawColor( COLHUD_DEFAULT )
-        surface.DrawOutlinedRect( ASHUDVOICE_xpos, ASHUDVOICE_ypos, ASHUDVOICE_width, ASHUDVOICE_height, 1 )
-        local color = AS.Classes[k:GetASClass()].color or COLHUD_DEFAULT
-        draw.SimpleTextOutlined( k:Nickname() .. " (" .. AS.Classes[k:GetASClass()].name .. ")", "AftershockHUDSmall", ASHUDVOICE_xpos + 5, ASHUDVOICE_ypos + ASHUDVOICE_height - 3, color, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM, 1, Color(0,0,0) )
-
-        ASHUDVOICE_ypos = ASHUDVOICE_ypos + ASHUDVOICE_height + ASHUDVOICE_spacing
-    end
-end
-
 function AftershockHUDInjured()
     local healthratio = Lerp( LocalPlayer():Health() / LocalPlayer():GetMaxHealth(), 0, 1 )
     local healthinjured = LocalPlayer():GetMaxHealth() * (GetConVar("as_hud_injured_wake"):GetInt() / 100)
@@ -417,16 +400,40 @@ function AftershockHUDInjured()
     end
 end
 
+function AftershockHUDVoice()
+    if table.Count(HUD_TALKINGPLAYERS) <= 0 then return end --No one is talking, lets not run this.
+
+    for k, v in pairs( HUD_TALKINGPLAYERS ) do
+        if not IsValid(k) then continue end
+        ASHUDVOICE_ypos = ASHUDVOICE_ypos + ASHUDVOICE_height + ASHUDVOICE_spacing
+    end
+end
+
 hook.Add( "PlayerStartVoice", "AS_VoiceStart", function( ply )
     HUD_TALKINGPLAYERS[ply] = true
 
     ASHUDVOICE_iconsize = 64 * HUD_SCALE
 
     local panel = vgui.Create("DPanel")
-    panel:SetSize( ASHUDVOICE_iconsize, ASHUDVOICE_iconsize )
+    panel:SetSize( ASHUDVOICE_width, ASHUDVOICE_height )
     panel:SetPos( ASHUDVOICE_xpos + 1, ASHUDVOICE_ypos + 1 )
-    panel.Paint = function() end
-    CharacterIcon( ply:GetModel(), 0, 0, panel:GetWide(), panel:GetTall(), panel, nil, Color( 0, 0, 0, 0 ))
+    function panel:Paint( w, h )
+        local col = COLHUD_SECONDARY:ToTable()
+        surface.SetDrawColor( col[1], col[2], col[3], 100 )
+        surface.DrawRect( 0, 0, w, h )
+
+        surface.SetDrawColor( COLHUD_DEFAULT )
+        surface.DrawOutlinedRect( 0, 0, w, h, 1 )
+    end
+
+    local label = vgui.Create("DLabel", panel)
+    label:SetFont( "AftershockHUDSmall" )
+    label:SetText(ply:Nickname())
+    label:SetPos(5, ASHUDVOICE_iconsize + 0)
+    label:SizeToContents()
+    label:SetColor( AS.Classes[ply:GetASClass()].color )
+
+    CharacterIcon( ply:GetModel(), 0, 0, 60, 60, panel, nil, Color( 0, 0, 0, 0 ))
     HUD_TALKINGPLAYERSPANELS[ply] = panel
 
     return true --Hides the default voice UI
@@ -434,7 +441,7 @@ end)
 
 hook.Add( "PlayerEndVoice", "AS_VoiceEnd", function( ply )
     HUD_TALKINGPLAYERS[ply] = nil
-    if IsValid( HUD_TALKINGPLAYERSPANELS[ply] ) then
+    if HUD_TALKINGPLAYERSPANELS[ply] and IsValid( HUD_TALKINGPLAYERSPANELS[ply] ) then
         HUD_TALKINGPLAYERSPANELS[ply]:Remove()
         HUD_TALKINGPLAYERSPANELS[ply] = nil
     end
@@ -446,6 +453,12 @@ timer.Create( "AS_CleanupVoice", 10, 0, function()
             v:Remove()
             HUD_TALKINGPLAYERS[ k ] = nil
         end
+    end
+end)
+
+concommand.Add("as_flushvoices", function( ply, cmd, args )
+    for k, v in pairs( HUD_TALKINGPLAYERSPANELS ) do
+        v:Remove()
     end
 end)
 
