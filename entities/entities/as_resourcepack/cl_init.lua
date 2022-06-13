@@ -9,7 +9,7 @@ function ENT:Draw()
     end
 end
 
-hook.Add( "HUDPaint", "AS_ItemInfo", function()
+hook.Add( "HUDPaint", "AS_PackInfo", function()
     local maxdist = 300
     local pickupdist = 100
 

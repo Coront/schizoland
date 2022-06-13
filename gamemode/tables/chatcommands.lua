@@ -21,10 +21,11 @@ AS.AddChatCommand("devmode", function( ply, args ) --callback will always return
 end)
 
 AS.AddChatCommand("roll", function( ply, args )
+    local max = tonumber(args[2]) or 6
+    local dice = math.random( 1, max )
+
     for k, v in pairs( player.GetAll() ) do
         if v:GetPos():Distance( ply:GetPos() ) > PERM.ChatDistance then continue end
-        local max = tonumber(args[2]) or 6
-        local dice = math.random( 1, max )
         v:ChatPrint( "** " .. ply:Nickname() .. " rolled " .. dice .. " out of " .. max)
     end
 end)
