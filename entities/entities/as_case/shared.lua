@@ -117,7 +117,7 @@ if ( SERVER ) then
         if ent:GetClass() != "as_case" then return end
         net.Start("as_case_syncinventory")
             net.WriteEntity( ent )
-            net.WriteInventory( ent:GetInventory() )
+            net.WriteTable( ent:GetInventory() )
         net.Send( ply )
     end)
 
@@ -126,7 +126,7 @@ else
     net.Receive("as_case_syncinventory", function()
         local ent = net.ReadEntity()
         if not IsValid( ent ) then return end 
-        local inv = net.ReadInventory()
+        local inv = net.ReadTable()
         if not ent.SetInventory then return end
         ent:SetInventory( inv )
     end)
