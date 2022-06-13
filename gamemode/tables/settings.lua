@@ -18,7 +18,7 @@ SET.ClassChangeCostTbl = { --If classchangecost is on, what do player's have to 
     ["misc_chemical"] = 100,
 }
 SET.CraftTime = 1 --Craft time per item (seconds)
-SET.DestroyPerc = 0.3 --Percentage of resources to receive from an item when breaking it down.
+SET.DestroyPerc = 0.4 --Percentage of resources to receive from an item when breaking it down.
 SET.DeathResCost = 30 --Percentage of player's resources (scrap, smallparts, chemicals) that will be lost upon death.
 SET.DeathWait = 10 --How long a player must wait before respawning.
 SET.CombatLength = 10 --Default combat length
@@ -34,7 +34,7 @@ PERM = SET.PERM
 PERM.Physgunable = { --Entities that are allowed to be physgunned by normal players.
     ["prop_physics"] = true,
 }
-PERM.MaxProps = 50 --Maximum props a player can spawn.
+PERM.MaxProps = 75 --Maximum props a player can spawn.
 PERM.PropBlacklist = { --Props that are forbidden from being spawned
     ["models/props_c17/oildrum001_explosive.mdl"] = true, --Explosive
     ["models/Combine_Helicopter/helicopter_bomb01.mdl"] = true, --Explosive
