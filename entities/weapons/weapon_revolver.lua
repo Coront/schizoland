@@ -225,7 +225,7 @@ SWEP.DeployAnimSpeed = 0.65
 
 -- Firing related
 SWEP.Shots = 1
-SWEP.FireDelay = 60/75
+SWEP.FireDelay = 60/115
 SWEP.Damage = 59
 SWEP.FireSound = Sound("FAS2_RAGINGBULL")
 SWEP.CantSuppress = true
