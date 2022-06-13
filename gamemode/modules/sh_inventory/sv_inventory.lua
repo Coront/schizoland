@@ -208,6 +208,7 @@ util.AddNetworkString("as_inventory_unequipammo")
 util.AddNetworkString("as_inventory_unequipatch")
 util.AddNetworkString("as_inventory_dropitem")
 util.AddNetworkString("as_inventory_dropammo")
+util.AddNetworkString("as_inventory_droprespack")
 util.AddNetworkString("as_inventory_destroyitem")
 
 net.Receive("as_inventory_useitem", function( _, ply ) 
@@ -354,6 +355,55 @@ net.Receive("as_inventory_dropammo", function( _, ply )
         ["Name"] 	= ply:Name(),
         ["SteamID"]	= ply:SteamID(),
         ["Item"]	= AS.Items[item].name,
+    })
+end)
+
+net.Receive("as_inventory_droprespack", function( _, ply )
+    local scrap = net.ReadUInt( NWSetting.ItemAmtBits )
+    local sp = net.ReadUInt( NWSetting.ItemAmtBits )
+    local chem = net.ReadUInt( NWSetting.ItemAmtBits )
+
+    --Since we are dropping an item, we need to verify that the item exists, that the player has it, and that they are dropping a valid amount of it.
+    if CurTime() < (ply.NextItemDrop or 0) then ply:ChatPrint("Please wait " .. math.Round(ply.NextItemDrop - CurTime(), 2) .. " seconds before dropping another item." ) return end
+    if not ply:Alive() then ply:ChatPrint("You cannot drop items while being dead.") ply:ResyncInventory() return end
+    if scrap < 0 then scrap = 0 end
+    if scrap > ply:GetItemCount("misc_scrap") then scrap = ply:GetItemCount("misc_scrap") end
+    if sp < 0 then sp = 0 end
+    if sp > ply:GetItemCount("misc_smallparts") then sp = ply:GetItemCount("misc_smallparts") end
+    if chem < 0 then chem = 0 end
+    if chem > ply:GetItemCount("misc_chemical") then chem = ply:GetItemCount("misc_chemical") end
+    if scrap == 0 and sp == 0 and chem == 0 then return end
+
+    --We're verified, so we'll run the actual function.
+    ply.NextItemDrop = CurTime() + 0.1
+
+    if scrap >= 1 then
+        ply:TakeItemFromInventory("misc_scrap", scrap)
+    end
+    if sp >= 1 then
+        ply:TakeItemFromInventory("misc_smallparts", sp)
+    end
+    if chem >= 1 then
+        ply:TakeItemFromInventory("misc_chemical", chem)
+    end
+
+    local ent = ents.Create("as_resourcepack")
+    ent:SetPos( ply:TracePosFromEyes(200) + Vector( 0, 0, 20 ) )
+    ent:Spawn()
+    ent:SetScrap( scrap )
+    ent:SetSmallParts( sp )
+    ent:SetChemicals( chem )
+    ent:EmitSound(ITEMCUE.DROP)
+    timer.Simple( 0.1, function()
+        if IsValid( ent ) then
+            ent:ResyncResources()
+        end
+    end)
+
+    plogs.PlayerLog(ply, "Items", ply:NameID() .. " dropped resource pack ( " .. scrap .. " Scrap, " .. sp .. " Small Parts, " .. chem .. " Chemicals )", {
+        ["Name"] 	= ply:Name(),
+        ["SteamID"]	= ply:SteamID(),
+        ["Amt"]	= scrap .. " | " .. sp .. " | " .. chem,
     })
 end)
 

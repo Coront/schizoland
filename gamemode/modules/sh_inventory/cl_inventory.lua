@@ -61,6 +61,12 @@ function AS.Inventory.Open( tab, forcehold )
     sheets:AddSheet("Missions", AS.Inventory.BuildMissions(), "icon16/map.png")
     ]]
 
+    local respack = DefaultButton( "Resource Pack", sheets:GetWide() - 338, 3, 80, 20, sheets, function()
+        ResPack()
+        NextInventoryOpen = CurTime() + 0.1
+        frame_inventory:Close()
+    end)
+
     local nearvehicle = LocalPlayer():NearVehicle()
     if nearvehicle then
         local vehicleinv = DefaultButton( "Vehicle Inv", sheets:GetWide() - 248, 3, 80, 20, sheets, function()
