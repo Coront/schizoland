@@ -474,6 +474,71 @@ function VerifySlider( max, callback )
     end)
 end
 
+function ResPack()
+	if IsValid(frame_respack) then frame_respack:Close() end
+
+	frame_respack = vgui.Create("DFrame")
+	frame_respack:SetSize(300, 200)
+    frame_respack:Center()
+    frame_respack:MakePopup()
+    frame_respack:SetDraggable( false )
+    frame_respack:SetTitle( "" )
+    frame_respack:ShowCloseButton( true )
+    function frame_respack:Paint( w, h )
+        surface.SetDrawColor( COLHUD_SECONDARY )
+        surface.DrawRect( 0, 0, w, h )
+
+        surface.SetDrawColor( COLHUD_DEFAULT )
+        surface.DrawOutlinedRect( 0, 0, w, h, 1 )
+    end
+
+	local infotext = vgui.Create("DLabel", frame_respack)
+	infotext:SetText("Select an amount to drop.")
+	infotext:SizeToContents()
+	infotext:SetContentAlignment(5)
+	infotext:SetPos( frame_respack:GetWide() / 2 - infotext:GetWide() / 2, 40)
+
+	local scrap = vgui.Create("DNumSlider", frame_respack)
+	scrap:SetSize( 250, 20 )
+	scrap:SetPos( frame_respack:GetWide() / 2 - (scrap:GetWide() / 2), 75 )
+	scrap:SetText( "Scrap" )
+	scrap:SetValue( 0 )
+	scrap:SetMin( 0 )
+	scrap:SetMax( LocalPlayer():GetInventory()["misc_scrap"] )
+	scrap:SetDecimals( 0 )
+	scrap:SetDark( false )
+
+    local sp = vgui.Create("DNumSlider", frame_respack)
+	sp:SetSize( 250, 20 )
+	sp:SetPos( frame_respack:GetWide() / 2 - (sp:GetWide() / 2), 100 )
+	sp:SetText( "Small Parts" )
+	sp:SetValue( 0 )
+	sp:SetMin( 0 )
+	sp:SetMax( LocalPlayer():GetInventory()["misc_smallparts"] )
+	sp:SetDecimals( 0 )
+	sp:SetDark( false )
+
+    local chem = vgui.Create("DNumSlider", frame_respack)
+	chem:SetSize( 250, 20 )
+	chem:SetPos( frame_respack:GetWide() / 2 - (chem:GetWide() / 2), 125 )
+	chem:SetText( "Chemicals" )
+	chem:SetValue( 0 )
+	chem:SetMin( 0 )
+	chem:SetMax( LocalPlayer():GetInventory()["misc_chemical"] )
+	chem:SetDecimals( 0 )
+	chem:SetDark( false )
+
+    local width, height = 150, 20
+    DefaultButton( "Accept", frame_respack:GetWide() / 2 - (width / 2), frame_respack:GetTall() - height - 15, width, height, frame_respack, function()
+        net.Start("as_inventory_droprespack")
+            net.WriteUInt( scrap:GetValue(), NWSetting.ItemAmtBits )
+            net.WriteUInt( sp:GetValue(), NWSetting.ItemAmtBits )
+            net.WriteUInt( chem:GetValue(), NWSetting.ItemAmtBits )
+        net.SendToServer()
+		frame_respack:Close()
+    end)
+end
+
 function SimplePanel( parent, width, height, x, y, color )
     local panel = vgui.Create("DPanel", parent)
     panel:SetPos( x, y )
