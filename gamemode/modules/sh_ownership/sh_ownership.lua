@@ -20,7 +20,7 @@ end
 
 function EntityMeta:IsObjectOwnable()
     if self:GetNWBool( "NoObjectOwner", false ) then return false end
-    if self:GetClass() == "prop_door_rotating" or self:GetClass() == "func_door_rotating" or self:GetClass() == "func_door" or self:GetClass() == "prop_physics" then return true end
+    if self:GetClass() == "prop_door_rotating" or self:GetClass() == "func_door_rotating" or self:GetClass() == "func_door" or (not self.MapProp and self:GetClass() == "prop_physics") then return true end
     if self:GetClass() == "as_vendor_display" then return true end
     if self:GetNWBool( "AS_OwnableObject", false ) then return true end
     if self.AS_OwnableObject then return true end
