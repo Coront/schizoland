@@ -680,7 +680,7 @@ AS.AddBaseItem("misc_emptysodacan", {
     weight = 0.1,
     hidden = true,
     craft = {
-        ["misc_scrap"] = 3,
+        ["misc_scrap"] = 4,
         ["misc_smallparts"] = 0,
         ["misc_chemical"] = 0,
     }
