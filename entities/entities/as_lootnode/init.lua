@@ -50,7 +50,7 @@ function ENT:Initialize()
         if resourcetype == "Scrap" then
             _, model = table.Random( NOD.ScrapNodeModels )
         elseif resourcetype == "Chemical" then
-            if math.random( 0, 10 ) <= 7 then
+            if math.random( 0, 10 ) <= 6 then
                 model = "models/props_c17/oildrum001.mdl"
             else
                 model = "models/props/de_train/pallet_barrels.mdl"
