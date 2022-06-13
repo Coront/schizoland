@@ -17,6 +17,7 @@ end
 
 function PlayerMeta:SetSkillExperience( skill, amt ) --Set the experience for a single skill
     if not AS.Skills[skill] then AS.LuaError("Attempting to index a non-existant skill - " .. skill) return end
+    self.Skills = self.Skills or {}
     self.Skills[skill] = amt
 end
 
