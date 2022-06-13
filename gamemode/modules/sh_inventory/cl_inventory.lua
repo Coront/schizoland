@@ -564,18 +564,18 @@ function AS.Inventory.BuildInventory()
         model:SetTooltip(AS.Items[itemid].name)
 
         local ammoamt = vgui.Create("DLabel", ammoinfopanel)
-        ammoamt:SetPos( 1, model:GetY() + model:GetTall() )
+        ammoamt:SetPos( 1, model:GetY() + model:GetTall() - 15 )
         ammoamt:SetFont("TargetIDSmall")
         ammoamt:SetText( "x" .. v )
         ammoamt:SizeToContents()
 
         local amttopackage = math.floor(v / AS.Items[itemid].use.ammoamt)
         if amttopackage > 0 then
-            DefaultButton( "Unequip", 3, ammoinfopanel:GetTall() - 12, ammoinfopanel:GetWide() - 6, 18, ammoinfopanel, function( self )
+            DefaultButton( "Unequip", 3, ammoinfopanel:GetTall() - 9, ammoinfopanel:GetWide() - 6, 15, ammoinfopanel, function( self )
                 VerifySlider( amttopackage, function( amt )
                     if not LocalPlayer():CanUnequipAmmo( itemid, amt ) then return end
                     LocalPlayer():AddItemToInventory( itemid, amt )
-                    if IsValid(self:GetParent()) then
+                    if IsValid(self) and IsValid(self:GetParent()) then
                         self:GetParent():Remove()
                     end
                     net.Start("as_inventory_unequipammo")
@@ -585,6 +585,17 @@ function AS.Inventory.BuildInventory()
                 end)
             end)
         end
+        DefaultButton( "Drop", 3, ammoinfopanel:GetTall() - 24, ammoinfopanel:GetWide() - 6, 15, ammoinfopanel, function( self )
+            VerifySlider( v, function( amt )
+                if IsValid(self) and IsValid(self:GetParent()) then
+                    self:GetParent():Remove()
+                end
+                net.Start("as_inventory_dropammo")
+                    net.WriteString( itemid )
+                    net.WriteUInt( amt, NWSetting.ItemAmtBits )
+                net.SendToServer()
+            end)
+        end)
 
         weaponscroll:AddPanel( ammoinfopanel )
     end

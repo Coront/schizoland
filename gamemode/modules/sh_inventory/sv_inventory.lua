@@ -207,6 +207,7 @@ util.AddNetworkString("as_inventory_unequipitem")
 util.AddNetworkString("as_inventory_unequipammo")
 util.AddNetworkString("as_inventory_unequipatch")
 util.AddNetworkString("as_inventory_dropitem")
+util.AddNetworkString("as_inventory_dropammo")
 util.AddNetworkString("as_inventory_destroyitem")
 
 net.Receive("as_inventory_useitem", function( _, ply ) 
@@ -322,6 +323,34 @@ net.Receive("as_inventory_dropitem", function( _, ply )
     ply:DropItem( item, amt )
 
     plogs.PlayerLog(ply, "Items", ply:NameID() .. " dropped " .. AS.Items[item].name .. " (" .. amt .. ")", {
+        ["Name"] 	= ply:Name(),
+        ["SteamID"]	= ply:SteamID(),
+        ["Item"]	= AS.Items[item].name,
+    })
+end)
+
+net.Receive("as_inventory_dropammo", function( _, ply )
+    local item = net.ReadString()
+    local amt = net.ReadUInt( NWSetting.ItemAmtBits )
+
+    --Since we are dropping ammo, we need to make sure that they have that ammo and that they are dropping a valid amount of it.
+    if not ply:Alive() then ply:ChatPrint("You cannot drop ammo while being dead.") return end
+    if amt < 1 then amt = 1 end
+    if amt > ply:GetAmmoCount( AS.Items[item].use.ammotype ) then amt = ply:GetAmmoCount( item ) end
+    amt = math.Round( amt )
+    if amt == 0 then ply:ChatPrint("You do not have this ammo.") return end
+
+    local newamt = ply:GetAmmoCount(AS.Items[item].use.ammotype) - amt
+    ply:SetAmmo( newamt, AS.Items[item].use.ammotype )
+
+    local ent = ents.Create("as_spareammo")
+    ent:SetPos( ply:TracePosFromEyes(200) + Vector( 0, 0, 20 ) )
+    ent:SetModel( AS.Items[item].model )
+    ent:Spawn()
+    ent:SetAmmoType( AS.Items[item].use.ammotype )
+    ent:SetAmmoAmount( amt )
+
+    plogs.PlayerLog(ply, "Items", ply:NameID() .. " dropped unpacked ammo " .. AS.Items[item].name .. " (" .. amt .. ")", {
         ["Name"] 	= ply:Name(),
         ["SteamID"]	= ply:SteamID(),
         ["Item"]	= AS.Items[item].name,
