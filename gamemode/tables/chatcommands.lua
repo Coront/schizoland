@@ -144,10 +144,10 @@ AS.AddChatCommand("addowner", function( ply, args )
         return
     end
     if otherPly == ply then ply:ChatPrint("You cannot add yourself to a door that you already own!") return end
-    ply:ChatPrint("Added " .. otherPly:Nickname() .. " to this door as a co-owner.")
-
+    
     ent.CoOwners = ent.CoOwners or {}
     if not ent.CoOwners[otherPly] then
+        ply:ChatPrint("Added " .. otherPly:Nickname() .. " to this door as a co-owner.")
         ent.CoOwners[otherPly] = true
     else
         ply:ChatPrint( otherPly:Nickname() .. " is already a co-owner of this door. Use '/removeowner' to remove them.")
@@ -185,6 +185,27 @@ AS.AddChatCommand("removeowner", function( ply, args )
         ent.CoOwners[otherPly] = nil
     else
         ply:ChatPrint( otherPly:Nickname() .. " is not a co-owner.")
+    end
+end)
+
+AS.AddChatCommand("owners", function( ply, args )
+    local tr = ply:TraceFromEyes( 150 )
+    local ent = tr.Entity
+
+    if ent:GetClass() != "prop_door_rotating" and ent:GetClass() != "func_door_rotating" and ent:GetClass() != "func_door" then 
+        ply:ChatPrint("Please look at a door you own to view the owners.")
+        return 
+    end
+    if ent:GetObjectOwner() != ply then ply:ChatPrint("You do not own this door.") return end
+
+    if ent.CoOwners then
+        ply:ChatPrint("Co-owners of this door:")
+        for k, v in pairs( ent.CoOwners ) do
+            if not IsValid(k) then return end
+            ply:ChatPrint( k:Nickname() )
+        end
+    else
+        ply:ChatPrint("There are no current co-owners of this door.")
     end
 end)
 

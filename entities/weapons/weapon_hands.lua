@@ -108,7 +108,7 @@ function SWEP:PrimaryAttack()
         })
         local ent = trace.Entity
 		
-		if ent:GetObjectOwner() == self.Owner then
+		if ent:GetObjectOwner() == self:GetOwner() or ent.CoOwners and ent.CoOwners[self:GetOwner()] then
 			local ply = self.Owner
 			self:SetNextPrimaryFire( CurTime() + 1 )
 			if IsFirstTimePredicted() then
@@ -142,7 +142,7 @@ function SWEP:SecondaryAttack()
 	})
 	local ent = trace.Entity
 
-	if ent:GetObjectOwner() == self.Owner or ent.CoOwner[self:GetOwner()] then
+	if ent:GetObjectOwner() == self:GetOwner() or ent.CoOwners and ent.CoOwners[self:GetOwner()] then
 		local ply = self.Owner
 		self:SetNextSecondaryFire( CurTime() + 1 )
 		if SERVER then
