@@ -57,11 +57,12 @@ if ( SERVER ) then
 
     net.Receive("as_paper_requestinventory", function( _, ply )
         local ent = net.ReadEntity()
+        if not IsValid(ent) then return end
 
         net.Start("as_paper_sync")
             net.WriteEntity( ent )
-            net.WriteString( ent:GetTitle() )
-            net.WriteString( ent:GetParagraph() )
+            net.WriteString( (ent:GetTitle() or "") )
+            net.WriteString( (ent:GetParagraph() or "") )
         net.Send( ply )
     end)
 

@@ -16,4 +16,4 @@ ENT.Slots = {
 ENT.Food = "misc_herb"
 ENT.PruneMax = 200
 ENT.PruneLoss = 10
-ENT.GrowthLength = 100
+ENT.GrowthLength = 240

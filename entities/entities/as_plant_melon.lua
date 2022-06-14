@@ -13,4 +13,4 @@ ENT.Slots = {
 ENT.Food = "misc_fullmelon"
 ENT.PruneMax = 150
 ENT.PruneLoss = 20
-ENT.GrowthLength = 300
+ENT.GrowthLength = 360

@@ -54,6 +54,8 @@ PERM.PropBlacklist = { --Props that are forbidden from being spawned
     ["models/props_phx/misc/potato_launcher_explosive.mdl"] = true, --Explosive
     ["models/props_phx/ball.mdl"] = true, --Explosive
     ["models/props_building_details/Storefront_Template001a_Bars.mdl"] = true,
+    ["models/props_phx/huge/evildisc_corp.mdl"] = true,
+    ["models/props_phx/huge/tower.mdl"] = true,
 }
 PERM.ToolWhitelist = { --Tools that regular players can use
     ["precision"] = true,
@@ -74,6 +76,9 @@ PERM.ToolWhitelist = { --Tools that regular players can use
     ["rope"] = true,
     ["winch"] = true,
     ["slider"] = true,
+    ["ballsocket"] = true,
+    ["axis"] = true,
+    ["elastic"] = true,
     ["as_powerlinker"] = true,
 }
 PERM.VoiceDistance = 1500
