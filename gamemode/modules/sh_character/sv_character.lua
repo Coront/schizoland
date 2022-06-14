@@ -112,7 +112,7 @@ function FinishCharacter(len, ply)
 
     if string.len(name:lower()) < SET.MinNameLength then ply:Kick("You must have a longer name") return end
     if string.len(name:lower()) > SET.MaxNameLength then ply:Kick("Your name was too long") return end
-    if string.find(name:lower(), "[%/%\\%!%@%#%$%%%^%&%*%(%)%+%=%.%'%\"]") then ply:Kick("Your character's name cannot have special characters in it") return end
+    if string.find(name:lower(), "[%/%\\%!%@%#%$%%%^%&%*%(%)%+%=%.]") then ply:Kick("Your character's name cannot have special characters in it") return end
     for k, v in pairs(SET.BannedWords) do
         if string.find(name:lower(), v) then ply:Kick("Inappropriate name usage") return end
     end
