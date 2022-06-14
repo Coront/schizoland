@@ -23,6 +23,8 @@ function ENT:OnLootTableChanged( name, old, new )
 end
 
 function ENT:ShouldStopTimer()
+	if self:GetContainer() == "gunbox" then return end
+
 	for k, v in pairs( player.GetAll() ) do
 		if not v:IsLoaded() then continue end
 		if not v:Alive() then continue end
