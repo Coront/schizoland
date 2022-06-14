@@ -169,6 +169,7 @@ function AS.Storage.Menu( ent )
     bankweightlbl:SizeToContents()
     bankweightlbl:SetPos( weight:GetWide() / 2 - bankweightlbl:GetWide() / 2, 1 )
     function bankweightlbl:Think()
+        if ent:GetNWString("ASID", "") == "" then return end
         if LocalPlayer():GetBankWeight() <= LocalPlayer():MaxBankWeight( ent:GetNWString("ASID") ) then
             bankweightlbl:SetColor( Color( 255, 255, 255 ) )
         else
