@@ -30,7 +30,8 @@ AS.AddChatCommand("forcenamechange", function( ply, args )
             if k == 1 then continue end
             plys = plys .. ", " .. v:Nickname()
         end
-        ply:ChatPrint("Multiple people found by name of '" .. args[2] .. "';")
+        ply:ChatPrint("Multiple people found by name of '" .. args[2] .. "'; " .. plys)
+        return
     end
     local newName = args[3]
     for k, v in pairs( args ) do
@@ -118,6 +119,73 @@ AS.AddChatCommand("rename", function( ply, args )
     ply:ChatPrint("You have changed your name to " .. newName .. ".")
     ply:SetNWString( "as_name", newName )
     sql.Query("UPDATE as_characters SET name = " .. SQLStr( newName ) .. " WHERE pid = " .. ply:GetPID() )
+end)
+
+AS.AddChatCommand("addowner", function( ply, args )
+    local tr = ply:TraceFromEyes( 150 )
+    local ent = tr.Entity
+
+    if ent:GetClass() != "prop_door_rotating" and ent:GetClass() != "func_door_rotating" and ent:GetClass() != "func_door" then 
+        ply:ChatPrint("Please look at a door you own to add an owner.")
+        return 
+    end
+    if ent:GetObjectOwner() != ply then ply:ChatPrint("You do not own this door.") return end
+
+    if not args[2] then ply:ChatPrint("Please supply an argument (Co-Owner).") return end
+    local otherPly, multiple = FindPlayerByName( args[2] )
+    if not otherPly then ply:ChatPrint("Cannot find a player '" .. args[2] .. "'.") return end
+    if multiple then
+        local plys = otherPly[1]:Nickname()
+        for k, v in pairs( otherPly ) do
+            if k == 1 then continue end
+            plys = plys .. ", " .. v:Nickname()
+        end
+        ply:ChatPrint("Multiple people found by name of '" .. args[2] .. "'; " .. plys)
+        return
+    end
+    if otherPly == ply then ply:ChatPrint("You cannot add yourself to a door that you already own!") return end
+    ply:ChatPrint("Added " .. otherPly:Nickname() .. " to this door as a co-owner.")
+
+    ent.CoOwners = ent.CoOwners or {}
+    if not ent.CoOwners[otherPly] then
+        ent.CoOwners[otherPly] = true
+    else
+        ply:ChatPrint( otherPly:Nickname() .. " is already a co-owner of this door. Use '/removeowner' to remove them.")
+    end
+end)
+
+AS.AddChatCommand("removeowner", function( ply, args )
+    local tr = ply:TraceFromEyes( 150 )
+    local ent = tr.Entity
+
+    if ent:GetClass() != "prop_door_rotating" and ent:GetClass() != "func_door_rotating" and ent:GetClass() != "func_door" then 
+        ply:ChatPrint("Please look at a door you own to remove an owner.")
+        return 
+    end
+    if ent:GetObjectOwner() != ply then ply:ChatPrint("You do not own this door.") return end
+
+    if not args[2] then ply:ChatPrint("Please supply an argument (Co-Owner).") return end
+    local otherPly, multiple = FindPlayerByName( args[2] )
+    if not otherPly then ply:ChatPrint("Cannot find a player '" .. args[2] .. "'.") return end
+    if multiple then
+        local plys = otherPly[1]:Nickname()
+        for k, v in pairs( otherPly ) do
+            if k == 1 then continue end
+            plys = plys .. ", " .. v:Nickname()
+        end
+        ply:ChatPrint("Multiple people found by name of '" .. args[2] .. "'; " .. plys)
+        return
+    end
+    if otherPly == ply then ply:ChatPrint("You cannot remove yourself from a door that you own!") return end
+
+    local owners = ent.CoOwners or {}
+
+    if owners[otherPly] then
+        ply:ChatPrint("Removed " .. otherPly:Nickname() .. " from this door.")
+        ent.CoOwners[otherPly] = nil
+    else
+        ply:ChatPrint( otherPly:Nickname() .. " is not a co-owner.")
+    end
 end)
 
 AS.AddChatCommand("discord", function( ply, args )

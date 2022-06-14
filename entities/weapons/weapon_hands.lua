@@ -142,7 +142,7 @@ function SWEP:SecondaryAttack()
 	})
 	local ent = trace.Entity
 
-	if ent:GetObjectOwner() == self.Owner then
+	if ent:GetObjectOwner() == self.Owner or ent.CoOwner[self:GetOwner()] then
 		local ply = self.Owner
 		self:SetNextSecondaryFire( CurTime() + 1 )
 		if SERVER then
