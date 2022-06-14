@@ -1,8 +1,8 @@
 ENT.Type 			= "anim"
 ENT.Base 			= "base_entity"
-ENT.PrintName		= ""
+ENT.PrintName		= "Resource Pack"
 ENT.Author			= "Tampy"
-ENT.Purpose			= ""
+ENT.Purpose			= "Can hold multiple resources. Amazing!"
 ENT.Category		= "Aftershock"
 ENT.Spawnable		= false
 
