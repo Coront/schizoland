@@ -124,6 +124,22 @@ function EntityMeta:Alive()
     return false
 end
 
+function FindPlayerByName( name )
+    local options = {}
+    for k, v in pairs( player.GetAll() ) do
+        if not string.find( string.lower( v:Nickname() ), string.lower( name ) ) then continue end
+        options[#options + 1] = v
+    end
+
+    if #options > 1 then
+        return options, true --We'll return the options, but say there are too many.
+    elseif #options <= 0 then
+        return nil --We'll return nothing, because nothing was found.
+    else
+        return options[1] --Return the first and only option.
+    end
+end
+
 --  ██████╗ ██████╗ ███╗   ██╗███████╗ ██████╗ ██╗     ███████╗     ██████╗ ██████╗ ███╗   ███╗███╗   ███╗ █████╗ ███╗   ██╗██████╗ ███████╗
 -- ██╔════╝██╔═══██╗████╗  ██║██╔════╝██╔═══██╗██║     ██╔════╝    ██╔════╝██╔═══██╗████╗ ████║████╗ ████║██╔══██╗████╗  ██║██╔══██╗██╔════╝
 -- ██║     ██║   ██║██╔██╗ ██║███████╗██║   ██║██║     █████╗      ██║     ██║   ██║██╔████╔██║██╔████╔██║███████║██╔██╗ ██║██║  ██║███████╗
