@@ -1,6 +1,6 @@
 function PlayerMeta:ToggleDevmode()
     self.Devmode = self.Devmode or false --This is to make sure that it exists.
-    
+
     if self.Devmode then
         self:ChatPrint("Disabled Devmode.")
         self.Devmode = false

@@ -55,7 +55,7 @@ AS.AddBaseItem("armor_riot", {
     weight = 5,
     armor = {
         ["movemult"] = 0.94,
-        [DMG_BULLET] = 14,
+        [DMG_BULLET] = 16,
         [DMG_SLASH] = 22,
         [DMG_BURN] = 15,
         [DMG_ENERGYBEAM] = 6,

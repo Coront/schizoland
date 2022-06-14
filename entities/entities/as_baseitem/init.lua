@@ -10,7 +10,7 @@ function ENT:Initialize()
 	self:SetMoveType( MOVETYPE_VPHYSICS )
 	self:SetCollisionGroup( COLLISION_GROUP_WEAPON )
 
-	self:SetDespawnTime( 900 ) --Sets a timer for an item to be deleted.
+	self:SetDespawnTime( 14400 ) --Sets a timer for an item to be deleted.
 end
 
 function ENT:SetDespawnTime( time )

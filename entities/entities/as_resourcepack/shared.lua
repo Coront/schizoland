@@ -45,9 +45,9 @@ if ( SERVER ) then
     function ENT:ResyncResources()
         net.Start("as_resourcepack_resync")
             net.WriteEntity( self )
-            net.WriteUInt( self:GetScrap(), NWSetting.ItemAmtBits )
-            net.WriteUInt( self:GetSmallParts(), NWSetting.ItemAmtBits )
-            net.WriteUInt( self:GetChemicals(), NWSetting.ItemAmtBits )
+            net.WriteUInt( (self:GetScrap() or 0), NWSetting.ItemAmtBits )
+            net.WriteUInt( (self:GetSmallParts() or 0), NWSetting.ItemAmtBits )
+            net.WriteUInt( (self:GetChemicals() or 0), NWSetting.ItemAmtBits )
         net.Broadcast()
     end
 

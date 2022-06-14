@@ -16,7 +16,8 @@ util.AddNetworkString("as_characters_syncdata")
 
 function PlayerMeta:CreateCharacter( name, model, class )
     local characters = sql.Query( "SELECT * FROM as_characters WHERE steamid = " .. SQLStr(self:SteamID()) .. " AND deleted IS NULL" ) or {}
-    if #characters >= SET.MaxCharacters then self:ChatPrint("You have reached the character limit!") return end
+    local maxchars = self:IsAdmin() and SET.AdminMaxCharacters or SET.MaxCharacters
+    if #characters >= maxchars then self:ChatPrint("You have reached the character limit!") return end
 
     sql.Query( "INSERT INTO as_characters VALUES ( NULL, " .. SQLStr(self:SteamID()) .. ", " .. SQLStr(name) .. ", " .. SQLStr(model) .. ", " .. SQLStr(class) .. ", " .. SQLStr( os.date( "%m/%d/%y - %I:%M %p", os.time() ) ) .. ", NULL, NULL )" )
     local pids = sql.Query("SELECT pid FROM as_characters")

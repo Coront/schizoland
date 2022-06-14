@@ -120,6 +120,10 @@ AS.AddChatCommand("rename", function( ply, args )
     sql.Query("UPDATE as_characters SET name = " .. SQLStr( newName ) .. " WHERE pid = " .. ply:GetPID() )
 end)
 
+AS.AddChatCommand("discord", function( ply, args )
+    ply:SendLua("gui.OpenURL('" .. GAMEMODE.Discord .. "')")
+end)
+
 -- ██╗  ██╗ ██████╗  ██████╗ ██╗  ██╗███████╗
 -- ██║  ██║██╔═══██╗██╔═══██╗██║ ██╔╝██╔════╝
 -- ███████║██║   ██║██║   ██║█████╔╝ ███████╗

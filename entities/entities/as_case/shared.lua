@@ -105,7 +105,7 @@ if ( SERVER ) then
         for k, v in pairs( ents.FindByClass("as_case") ) do
             net.Start("as_case_syncinventory")
                 net.WriteEntity(v)
-                net.WriteInventory( v:GetInventory() )
+                net.WriteTable( v:GetInventory() )
             net.Send( ply )
         end
     end

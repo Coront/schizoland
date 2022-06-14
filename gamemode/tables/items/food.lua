@@ -308,9 +308,9 @@ AS.AddBaseItem("food_cooked_meat", {
     hidden = true,
     class = "cultivator",
     craft = {
-        ["misc_scrap"] = 5,
+        ["misc_scrap"] = 1,
         ["misc_smallparts"] = 0,
-        ["misc_chemical"] = 10,
+        ["misc_chemical"] = 8,
         ["food_meat"] = 1,
     }
 })
@@ -330,8 +330,8 @@ AS.AddBaseItem("food_cooked_antlion", {
     hidden = true,
     class = "cultivator",
     craft = {
-        ["misc_scrap"] = 5,
-        ["misc_smallparts"] = 5,
+        ["misc_scrap"] = 1,
+        ["misc_smallparts"] = 1,
         ["misc_chemical"] = 10,
         ["food_meat_antlion"] = 1,
     }
@@ -352,9 +352,9 @@ AS.AddBaseItem("food_cooked_guard", {
     hidden = true,
     class = "cultivator",
     craft = {
-        ["misc_scrap"] = 10,
-        ["misc_smallparts"] = 10,
-        ["misc_chemical"] = 25,
+        ["misc_scrap"] = 2,
+        ["misc_smallparts"] = 2,
+        ["misc_chemical"] = 15,
         ["food_meat_guard"] = 1,
     }
 })
@@ -370,9 +370,6 @@ AS.AddBaseItem("food_soup", {
     use = {
         hunger = 30,
         thirst = 20,
-        items = {
-            ["misc_emptybottle"] = 1,
-        },
         soundcs = "npc/barnacle/barnacle_gulp1.wav",
     },
     hidden = true,
@@ -381,7 +378,6 @@ AS.AddBaseItem("food_soup", {
         ["misc_scrap"] = 10,
         ["misc_smallparts"] = 5,
         ["misc_chemical"] = 20,
-        ["food_purified_water"] = 1,
     },
 })
 

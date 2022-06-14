@@ -12,6 +12,7 @@ ENT.CraftTable = {
     ["armor_riot"] = 1,
     ["armor_exo"] = 2,
     ["armor_combine"] = 3,
-    ["armor_elite"] = 4,
-    ["armor_juggernaut"] = 5,
+    ["armor_combat"] = 4,
+    ["armor_elite"] = 5,
+    ["armor_juggernaut"] = 6,
 }

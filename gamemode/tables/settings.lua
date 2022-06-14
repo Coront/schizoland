@@ -7,7 +7,8 @@ SET.RawResources = { --Raw resources table, functions will reference this when l
     ["misc_smallparts"] = true,
     ["misc_chemical"] = true,
 }
-SET.MaxCharacters = 5 --Maximum characters players are allowed to have.
+SET.MaxCharacters = 1 --Maximum characters players are allowed to have.
+SET.AdminMaxCharacters = 5 --Maximum characters for admins
 SET.MinNameLength = 3 --Minimal length of a players name.
 SET.MaxNameLength = 50 --Maximum length of a players name.
 SET.BankWeight = 1000 --Maximum weight a player's bank can hold.
@@ -52,6 +53,7 @@ PERM.PropBlacklist = { --Props that are forbidden from being spawned
     ["models/props_phx/misc/flakshell_big.mdl"] = true, --Explosive
     ["models/props_phx/misc/potato_launcher_explosive.mdl"] = true, --Explosive
     ["models/props_phx/ball.mdl"] = true, --Explosive
+    ["models/props_building_details/Storefront_Template001a_Bars.mdl"] = true,
 }
 PERM.ToolWhitelist = { --Tools that regular players can use
     ["precision"] = true,
@@ -72,6 +74,7 @@ PERM.ToolWhitelist = { --Tools that regular players can use
     ["rope"] = true,
     ["winch"] = true,
     ["slider"] = true,
+    ["as_powerlinker"] = true,
 }
 PERM.VoiceDistance = 1500
 PERM.ChatDistance = 500
@@ -292,7 +295,6 @@ SET.BannedWords = {
     "sneed",
     "fuck",
     "shit",
-    "ass",
     "balls",
     "testical",
     "cunt",
