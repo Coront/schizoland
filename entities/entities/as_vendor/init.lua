@@ -105,6 +105,7 @@ function PlayerMeta:PurchaseItem( ent, reqs, item, amt )
 	ent:TakeFromExistingSale( item, amt )
 	self:AddItemToInventory( item, amt )
 	ent:SaveSales()
+	ent:SaveResources()
 
 	ent:EmitSound( "buttons/lever7.wav" )
 	self:ChatPrint("You have purchased " .. AS.Items[item].name .. " (" .. amt .. ")")
