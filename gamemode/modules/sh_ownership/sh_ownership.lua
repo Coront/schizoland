@@ -16,6 +16,10 @@ end
 
 function EntityMeta:ClearObjectOwner()
     self:SetNWEntity( "as_owner", "nil" )
+
+    if self.CoOwners then
+        self.CoOwners = nil
+    end
 end
 
 function EntityMeta:IsObjectOwnable()
