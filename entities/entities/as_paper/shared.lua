@@ -45,6 +45,7 @@ end
 if ( SERVER ) then
 
     util.AddNetworkString("as_paper_sync")
+    util.AddNetworkString("as_paper_requestinventory")
 
     function ENT:ResyncText()
         net.Start("as_paper_sync")
@@ -53,7 +54,17 @@ if ( SERVER ) then
             net.WriteString( self:GetParagraph() )
         net.Broadcast()
     end
-    
+
+    net.Receive("as_paper_requestinventory", function( _, ply )
+        local ent = net.ReadEntity()
+
+        net.Start("as_paper_sync")
+            net.WriteEntity( ent )
+            net.WriteString( ent:GetTitle() )
+            net.WriteString( ent:GetParagraph() )
+        net.Send( ply )
+    end)
+
 elseif ( CLIENT ) then
 
     net.Receive("as_paper_sync", function()
@@ -64,6 +75,15 @@ elseif ( CLIENT ) then
 
         ent:SetTitle( title )
         ent:SetParagraph( str )
+    end)
+
+    timer.Create( "as_autoresync_papers", 3, 0, function()
+        for k, v in pairs( ents.FindByClass("as_paper") ) do
+            if not IsValid(v) then continue end
+            net.Start("as_paper_requestinventory") --Cases utilize the lootcontainer inventory system, so this isnt a concern.
+                net.WriteEntity(v)
+            net.SendToServer()
+        end
     end)
 
 end

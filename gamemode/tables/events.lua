@@ -30,7 +30,7 @@ AS.AddEvent( "antlion_nest", {
 
 AS.AddEvent( "zombie_horde", {
     name = "Zombie Horde",
-    enable = true,
+    enable = false,
     mintime = 1800,
     maxtime = 7200,
     max = 1,

@@ -345,7 +345,8 @@ function AS.CharacterSelect.BuildButtons(characters)
     end)
     addSpace()
 
-    if #characters >= SET.MaxCharacters then
+    local maxchars = LocalPlayer():IsAdmin() and SET.AdminMaxCharacters or SET.MaxCharacters
+    if #characters >= maxchars then
         Button( "Max Characters", xpos, ypos, width, height, frame_characters, function() end)
     else
         Button( "New Character", xpos, ypos, width, height, frame_characters, function()
