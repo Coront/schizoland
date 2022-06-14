@@ -22,7 +22,7 @@ end
 
 function GM:PlayerSpawnedProp( ply, model, ent )
     ent:SetObjectOwner( ply )
-    if not ply:IsAdmin() then
+    if not ply:IsAdmin() and not ent.AdvDupe2 then
         ent:SetCollisionGroup( COLLISION_GROUP_WORLD )
         ent:GetPhysicsObject():EnableMotion( false )
         ent:SetRenderMode( RENDERMODE_TRANSCOLOR )
