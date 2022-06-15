@@ -27,7 +27,8 @@ SET.PlyCombatLength = 30 --Player combat length
 SET.DefaultWeapons = {
     [1] = "weapon_hands",
     [2] = "weapon_physgun",
-    [3] = "gmod_tool",
+    [3] = "weapon_physcannon",
+    [4] = "gmod_tool",
 }
 --Permission Settings
 SET.PERM = {}
