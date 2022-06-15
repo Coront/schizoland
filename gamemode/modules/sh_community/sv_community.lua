@@ -106,6 +106,22 @@ end
 
 function community.DeleteRank( cid, rid )
     Communities[ cid ].ranks[ rid ] = nil
+
+    local defaultrankid = 2
+
+    for k, v in pairs( player.GetAll() ) do
+        if v:GetCommunity() != cid then continue end --Not in community
+        if v:GetRank() != rid then continue end --Rank is not our rank
+        v:SetRank( 2 )
+        v:ChatPrint("You rank has been set to recruit as the rank you were apart of was deleted.")
+    end
+
+    local members = community.GetMembers( cid )
+    for k, v in pairs( members ) do --Update database rank
+        if v.rank != rid then continue end
+        sql.Query( "UPDATE as_communities_members SET rank = 2 WHERE pid = " .. v.pid )
+    end
+
     community.Update( cid )
 end
 
@@ -244,6 +260,11 @@ end
 
 function community.GetRanks( cid )
     return Communities[ cid ].ranks
+end
+
+function community.GetMembers( cid )
+    local members = sql.Query( "SELECT * FROM as_communities_members WHERE cid = " .. cid )
+    return members
 end
 
 function community.Update( cid )
