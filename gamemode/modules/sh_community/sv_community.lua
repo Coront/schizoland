@@ -96,10 +96,8 @@ function community.NewRank( cid, rankName, perms )
 end
 
 function community.ModifyRank( cid, rid, rankName, perms )
-    Communities[ cid ].ranks[ rid ] = {
-        name = rankName,
-        permissions = perms,
-    }
+    Communities[ cid ].ranks[ rid ].name = rankName
+    Communities[ cid ].ranks[ rid ].permissions = perms
 
     community.Update( cid )
 end

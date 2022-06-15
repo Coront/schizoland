@@ -15,15 +15,10 @@ hook.Add("HUDPaint", "AS_CStockpile", function()
     local maxdist = 500
     local accessdist = 250
 
-    local trace = util.TraceLine({
-        start = EyePos(),
-        endpos = EyePos() + EyeAngles():Forward() * maxdist,
-        filter = ply,
-    })
-    local ent = trace.Entity
-    if ent and not IsValid(ent) then return end
+    for k, v in pairs( ents.FindByClass("as_community_stockpile") ) do
+        if LocalPlayer():GetPos():Distance(v:GetPos()) > maxdist then continue end
 
-    if ent:GetClass() == "as_community_stockpile" then
+        local ent = v
         local obbc = ent:OBBCenter():ToTable()
         local ang = ent:GetAngles()
         local entpos = ent:GetPos() + obbc[3] * ang:Up()
@@ -39,7 +34,7 @@ hook.Add("HUDPaint", "AS_CStockpile", function()
         local pickupkey = distance < accessdist and "[" .. string.upper(KEYBIND_USE) .. "] Pickup" or ""
         local col = COLHUD_DEFAULT:ToTable()
 
-        draw.SimpleTextOutlined( ent:GetCommunityName() .. " Community Stockpile", "TargetID", pos.x, pos.y, Color( col[1], col[2], col[3], opacity ), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 1, Color( 0, 0, 0, opacity ) )
+        draw.SimpleTextOutlined( ent:GetCommunityName() .. "'s Community Stockpile", "TargetID", pos.x, pos.y, Color( col[1], col[2], col[3], opacity ), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 1, Color( 0, 0, 0, opacity ) )
         if distance < accessdist then
             draw.SimpleTextOutlined( "[" .. string.upper(KEYBIND_USE) .. "] Access", "TargetID", pos.x, pos.y + 20, Color( col[1], col[2], col[3], opacity ), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 1, Color( 0, 0, 0, opacity ) )
         end

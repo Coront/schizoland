@@ -143,8 +143,8 @@ AS.AddMapData( "gm_fork", {
 })
 
 AS.AddMapData( "rp_mojave_v3_p", {
-    MobMult = 1.5,
-    NodeMult = 1.5,
+    MobMult = 1.4,
+    NodeMult = 1.3,
     Load = {
         pos = Vector( 2326.97, -7895.65, 64.11 ),
         ang = Angle( -3.17, 105.31 ),

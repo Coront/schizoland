@@ -32,7 +32,7 @@ end
 function ENT:RandomizeNode() --This will automatically select a type of resource node for us. It's basically scrap vs chems.
     local roll = math.random( 0, 10 )
 
-    if roll <= 7 then
+    if roll <= 5 then
         self:SetResourceType( "Scrap" ) --Scrap wins
         self:SetScavengesLeft( math.random( NOD.ScrapMinScavs, NOD.ScrapMaxScavs ) ) --Amount of times a player can scavenge it before despawning.
     else

@@ -90,6 +90,7 @@ if ( SERVER ) then
 
     util.AddNetworkString( "as_stockpile_synccommunity" )
     util.AddNetworkString( "as_stockpile_syncresources" )
+    util.AddNetworkString( "as_stockpile_requestinfo" )
 
     function ENT:ResyncCommunity()
         net.Start("as_stockpile_synccommunity")
@@ -106,14 +107,21 @@ if ( SERVER ) then
         net.Broadcast()
     end
 
-    function ENT:Think()
-        if CurTime() > (self.NextResync or 0) then
-            self.NextResync = CurTime() + 5
+    net.Receive("as_stockpile_requestinfo", function( _, ply )
+        local ent = net.ReadEntity()
+        if not IsValid(ent) then return end
 
-            self:ResyncCommunity()
-            self:ResyncResources()
-        end
-    end
+        net.Start("as_stockpile_synccommunity")
+            net.WriteEntity( ent )
+            net.WriteUInt( ent:GetCommunity(), NWSetting.CommunityAmtBits )
+            net.WriteString( ent:GetCommunityName() )
+        net.Send( ply )
+
+        net.Start("as_stockpile_syncresources")
+            net.WriteEntity( ent )
+            net.WriteInventory( ent:GetResources() )
+        net.Send( ply )
+    end)
 
 elseif ( CLIENT ) then
 
@@ -132,6 +140,15 @@ elseif ( CLIENT ) then
         local res = net.ReadInventory()
 
         ent:SetResources( res )
+    end)
+
+    timer.Create( "as_autoresync_stockpile", 3, 0, function()
+        for k, v in pairs( ents.FindByClass("as_community_stockpile") ) do
+            if not IsValid(v) then continue end
+            net.Start("as_stockpile_requestinfo") --Cases utilize the lootcontainer inventory system, so this isnt a concern.
+                net.WriteEntity(v)
+            net.SendToServer()
+        end
     end)
 
 end

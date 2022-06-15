@@ -229,6 +229,16 @@ hook.Add( "PlayerSay", "AS_ChatCommands", function( ply, txt, team )
         local newtxt = string.Replace(args[1], "/", "")
         args[1] = nil
         AS.ChatCommands[newtxt]( ply, args )
+
+        local str = ""
+        for k, v in pairs( args ) do
+            str = str .. v .. " "
+        end
+        plogs.PlayerLog(ply, "Chat", ply:NameID() .. " ran chat command " .. newtxt .. " with args " .. str, {
+            ["Name"] 	= ply:Name(),
+            ["SteamID"]	= ply:SteamID(),
+        })
+
         return ""
     end
 end)
