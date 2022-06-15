@@ -226,7 +226,7 @@ AS.AddBaseItem("armor_juggernaut", {
     category = "armor",
     model = "models/items/armor/juggernaut.mdl",
     wep = "armor_juggernaut",
-    color = Color( 160, 130, 0 ),
+    color = Color( 120, 40, 40 ),
     value = 35,
     weight = 30,
     armor = {
@@ -236,6 +236,64 @@ AS.AddBaseItem("armor_juggernaut", {
         [DMG_BURN] = 20, --Fire
         [DMG_ENERGYBEAM] = 35, --Pulse
         [DMG_BLAST] = 52, --Explosive
+    },
+    hidden = true,
+    class = "mercenary",
+    craft = {
+        ["misc_scrap"] = 600,
+        ["misc_smallparts"] = 550,
+        ["misc_chemical"] = 650,
+        ["misc_hide_antlion"] = 4,
+        ["misc_hide_guard"] = 2,
+        ["misc_heavyplate"] = 2,
+    },
+})
+
+AS.AddBaseItem("armor_assault", {
+    name = "Assault Armor",
+    desc = "A set of armor that has incredibly tough plating covering a majority of it. Has been constructed to maintain mobility while protecting the wearer.",
+    category = "armor",
+    model = "models/items/armor/assault.mdl",
+    wep = "armor_assault",
+    color = Color( 120, 40, 40 ),
+    value = 35,
+    weight = 20,
+    armor = {
+        ["movemult"] = 0.75, --Movespeed Mult
+        [DMG_BULLET] = 54, --Bullets
+        [DMG_SLASH] = 42, --Melee
+        [DMG_BURN] = 31, --Fire
+        [DMG_ENERGYBEAM] = 50, --Pulse
+        [DMG_BLAST] = 52, --Explosive
+    },
+    hidden = true,
+    class = "mercenary",
+    craft = {
+        ["misc_scrap"] = 600,
+        ["misc_smallparts"] = 550,
+        ["misc_chemical"] = 650,
+        ["misc_hide_antlion"] = 4,
+        ["misc_hide_guard"] = 2,
+        ["misc_heavyplate"] = 2,
+    },
+})
+
+AS.AddBaseItem("armor_hardsuit", {
+    name = "Hardsuit Armor",
+    desc = "A very heavy suit of armor that utilizes energy in order to allow the wearer to move properly. Has been covered with incredibly durable plating for maximum protection.",
+    category = "armor",
+    model = "models/items/armor/hardsuit.mdl",
+    wep = "armor_hardsuit",
+    color = Color( 160, 130, 0 ),
+    value = 35,
+    weight = 35,
+    armor = {
+        ["movemult"] = 0.65, --Movespeed Mult
+        [DMG_BULLET] = 67, --Bullets
+        [DMG_SLASH] = 70, --Melee
+        [DMG_BURN] = 33, --Fire
+        [DMG_ENERGYBEAM] = 60, --Pulse
+        [DMG_BLAST] = 70, --Explosive
     },
     hidden = true,
     class = "mercenary",
