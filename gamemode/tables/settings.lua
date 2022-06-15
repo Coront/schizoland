@@ -315,4 +315,5 @@ SET.BannedWords = {
     "condom",
     "tampon",
     "cunny",
+    "cock",
 }
