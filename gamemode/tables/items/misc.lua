@@ -479,9 +479,9 @@ AS.AddBaseItem("misc_gasoline", {
     weight = 4,
     class = "cultivator",
     craft = {
-        ["misc_scrap"] = 15,
+        ["misc_scrap"] = 10,
         ["misc_smallparts"] = 20,
-        ["misc_chemical"] = 35,
+        ["misc_chemical"] = 15,
     },
 })
 

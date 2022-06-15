@@ -57,6 +57,10 @@ PERM.PropBlacklist = { --Props that are forbidden from being spawned
     ["models/props_building_details/Storefront_Template001a_Bars.mdl"] = true,
     ["models/props_phx/huge/evildisc_corp.mdl"] = true,
     ["models/props_phx/huge/tower.mdl"] = true,
+    ["models/mini_borealis/mini_borealis.mdl"] = true,
+    ["models/props_explosive/explosive_butane_can02.mdl"] = true,
+    ["models/props_explosive/explosive_butane_can.mdl"] = true,
+    ["models/props_canal/canal_bridge01.mdl"] = true,
 }
 PERM.ToolWhitelist = { --Tools that regular players can use
     ["precision"] = true,
@@ -139,7 +143,7 @@ SKL.Farming = {
 }
 SKL.Mining = {
     incamt = 0.01,
-    decharvesttime = 0.03
+    decharvesttime = 0.04
 }
 --Satiation Settings
 SET.Satiation = {}

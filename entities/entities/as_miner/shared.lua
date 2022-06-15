@@ -14,7 +14,7 @@ ENT.Items = { --items that we will potentially produce over time.
     [1] = "misc_scrap",
     [2] = "misc_smallparts",
 }
-ENT.ProduceLength = 60 --Time it takes for us to randomly produce an item.
+ENT.ProduceLength = 30 --Time it takes for us to randomly produce an item.
 
 ENT.PowerNeeded = 75
 
