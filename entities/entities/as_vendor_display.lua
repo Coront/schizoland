@@ -38,7 +38,7 @@ function ENT:SetDisplayItem( item )
 end
 
 function ENT:GetDisplayItem()
-    return self.DItem or nil
+    return self.DItem or ""
 end
 
 function ENT:SetPackaged( bool )
@@ -73,13 +73,6 @@ end
 
 function ENT:Think()
     if ( SERVER ) then
-        if CurTime() > ( self.NextItemResync or 0 ) then
-            self.NextItemResync = CurTime() + 5
-            self:ResyncItem()
-            self:ResyncParent()
-            self:ResyncPackage()
-        end
-
         if not IsValid(self:GetParentVendor()) or (self:GetParentVendor() and not self:GetParentVendor():GetSales()[self:GetDisplayItem()]) then
             self:Remove()
         end
@@ -152,6 +145,7 @@ if ( SERVER ) then
     util.AddNetworkString( "as_vendor_display_syncitem" )
     util.AddNetworkString( "as_vendor_display_syncpackage" )
     util.AddNetworkString( "as_vendor_display_syncparent" )
+    util.AddNetworkString( "as_vendor_display_requestinventory" )
 
     function ENT:ResyncItem()
         net.Start("as_vendor_display_syncitem")
@@ -173,6 +167,26 @@ if ( SERVER ) then
             net.WriteEntity( self:GetParentVendor() )
         net.Broadcast()
     end
+
+    net.Receive( "as_vendor_display_requestinventory", function( _, ply )
+        local ent = net.ReadEntity()
+        if not IsValid(ent) then return end
+
+        net.Start("as_vendor_display_syncitem")
+            net.WriteEntity( ent )
+            net.WriteString( ent:GetDisplayItem() )
+        net.Send( ply )
+
+        net.Start("as_vendor_display_syncpackage")
+            net.WriteEntity( ent )
+            net.WriteBool( ent:GetPackaged() )
+        net.Send( ply )
+
+        net.Start("as_vendor_display_syncparent")
+            net.WriteEntity( ent )
+            net.WriteEntity( ent:GetParentVendor() )
+        net.Send( ply )
+    end)
 
 elseif ( CLIENT ) then
 
@@ -199,6 +213,15 @@ elseif ( CLIENT ) then
         if not IsValid(parent) then return end
 
         ent:SetParentVendor( parent )
+    end)
+
+    timer.Create( "as_autoresync_display", 3, 0, function()
+        for k, v in pairs( ents.FindByClass("as_vendor_display") ) do
+            if not IsValid(v) then continue end
+            net.Start("as_vendor_display_requestinventory")
+                net.WriteEntity(v)
+            net.SendToServer()
+        end
     end)
 
 end

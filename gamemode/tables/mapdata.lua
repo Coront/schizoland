@@ -51,6 +51,8 @@ AS.AddMapData( "gm_aftermath_day_v1_0", {
 })
 
 AS.AddMapData( "gm_valley", {
+    MobMult = 2,
+    NodeMult = 2.2,
     Load = {
         pos = Vector(4606.78, 1728.85, -2245.67),
         ang = Angle(-11.15, -123.28),
