@@ -878,6 +878,7 @@ function AS.Inventory.BuildStats()
     AddStat( "Items Salvaged", LocalPlayer():GetStat("item_salvage") )
     AddStat( "Items Crafted", LocalPlayer():GetStat("item_craft") )
     AddStat( "Antlion Mounds Destroyed", LocalPlayer():GetStat("mounds") )
+    AddStat( "Treatments Performed", LocalPlayer():GetStat("treatments") )
 
     return stats
 end

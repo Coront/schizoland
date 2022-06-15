@@ -75,6 +75,7 @@ hook.Add( "KeyPress", "AS_Treatment", function( ply, key )
         ent:EmitSound("items/medshot4.wav", 80, 100, 0.2)
         ply:AddStatus( "treatmentdelay", length )
         ply:ResyncStatuses()
+        ply:AddToStatistic( "treatments", 1 )
 
         local treatlength = 1
         treatlength = treatlength + (ply:GetSkillLevel("treatment") * SKL.Treatment.inceffectlength)
