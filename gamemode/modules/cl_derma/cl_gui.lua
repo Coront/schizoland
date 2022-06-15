@@ -344,6 +344,8 @@ function DefaultButton( text, x, y, width, height, parent, callback )
         end
         surface.DrawOutlinedRect( 0, 0, w, h, 1 )
     end
+
+    return button
 end
 
 function KeyBind( text, x, y, parent, convar )
