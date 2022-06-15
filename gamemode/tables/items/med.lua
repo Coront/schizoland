@@ -43,9 +43,9 @@ AS.AddBaseItem("med_vial", {
     },
     class = "scientist",
     craft = {
-        ["misc_scrap"] = 15,
-        ["misc_smallparts"] = 10,
-        ["misc_chemical"] = 20,
+        ["misc_scrap"] = 10,
+        ["misc_smallparts"] = 5,
+        ["misc_chemical"] = 15,
         ["misc_herb"] = 1
     },
 })
@@ -67,9 +67,9 @@ AS.AddBaseItem("med_kit", {
     },
     class = "scientist",
     craft = {
-        ["misc_scrap"] = 25,
-        ["misc_smallparts"] = 20,
-        ["misc_chemical"] = 35,
+        ["misc_scrap"] = 15,
+        ["misc_smallparts"] = 10,
+        ["misc_chemical"] = 25,
         ["misc_herb"] = 2,
     },
 })
@@ -175,6 +175,7 @@ AS.AddBaseItem("med_adrenaline", {
         ["misc_chemical"] = 45,
     }
 })
+
 AS.AddBaseItem("med_antidote", {
     name = "Antidote",
     desc = "A small dose of an antidote, useful for quickly treating any active poison in your body. Will nullify poison and provide regeneration for 10 seconds.",
