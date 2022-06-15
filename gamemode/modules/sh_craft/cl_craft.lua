@@ -68,6 +68,7 @@ function AS.Craft.BuildList( parent, category )
 
         local itemname = v.name or k .. "?name"
         local itemdesc = v.desc or k .. "?desc"
+        local itemweight = v.weight or k .. "?weight"
         local itemreqs = ""
         for k2, v2 in pairs( v.craft ) do
             if not AS.Items[k2] then AS.LuaError("Attmept to index an item that doens't exist via crafting - " .. k2) return end
@@ -126,6 +127,12 @@ function AS.Craft.BuildList( parent, category )
         desc:SetSize( scroll_desc:GetWide() - 15, scroll_desc:GetTall() )
         desc:SetWrap( true )
         desc:SetAutoStretchVertical( true )
+
+        local weight = vgui.Create("DLabel", panel)
+        weight:SetText( "Weight: " .. itemweight )
+        weight:SetContentAlignment(4)
+        weight:SizeToContents()
+        weight:SetPos( 85, panel:GetTall() - 20 )
 
         if isArmor then
             local armorpanel = vgui.Create("DPanel", panel)

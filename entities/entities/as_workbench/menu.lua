@@ -77,22 +77,42 @@ function Workbench.BuildRecipe( parent, itemid )
     local height = isArmor and 240 or 110
     item:SetSize(parent:GetWide() - 15, height)
     function item:Paint(w, h)
-        surface.SetDrawColor( COLHUD_PRIMARY )
+        local col = COLHUD_PRIMARY:ToTable()
+        surface.SetDrawColor( col[1], col[2], col[3], 100 )
         surface.DrawRect( 0, 0, w, h )
+
+        surface.SetDrawColor( COLHUD_DEFAULT )
+        surface.DrawOutlinedRect( 0, 0, w, h, 1 )
     end
 
     local itemname = id.name or item .. "?name"
     local itemdesc = id.desc or item .. "?desc"
+    local itemweight = id.weight or item .. "?weight"
     local itemreqs = ""
     for k2, v2 in pairs( id.craft ) do
         if not AS.Items[k2] then AS.LuaError("Attmept to index an item that doens't exist via crafting - " .. k2) return end
         itemreqs = itemreqs .. "\n" .. AS.Items[k2].name .. " (" .. v2 .. ")"
     end
 
-    local icon = vgui.Create( "SpawnIcon", item )
-    icon:SetSize( 75, 75 )
-    local ypos = isArmor and 5 or item:GetTall() / 2 - icon:GetTall() / 2
-    icon:SetPos( 5, ypos )
+    local iconpanel = vgui.Create( "DPanel", item )
+    iconpanel:SetSize( 60, 60 )
+    local ypos = isArmor and 15 or item:GetTall() / 2 - iconpanel:GetTall() / 2
+    iconpanel:SetPos( 5, ypos )
+    function iconpanel:Paint( w, h )
+        local col = id.color and id.color:ToTable() or COLHUD_PRIMARY:ToTable()
+        surface.SetDrawColor( col[1], col[2], col[3], 50 )
+        surface.DrawRect( 0, 0, w, h )
+
+        if id.color then
+            surface.SetDrawColor( id.color )
+        else
+            surface.SetDrawColor( COLHUD_PRIMARY )
+        end
+        surface.DrawOutlinedRect( 0, 0, w, h, 1 )
+    end
+
+    local icon = vgui.Create( "SpawnIcon", iconpanel )
+    icon:SetSize( iconpanel:GetWide(), iconpanel:GetTall() )
     icon:SetModel( id.model, id.skin or 0 )
     icon:SetTooltip( itemname .. "\n" .. itemdesc .. "\n\nRequirements:" .. itemreqs )
 
@@ -112,6 +132,12 @@ function Workbench.BuildRecipe( parent, itemid )
     desc:SetSize( scroll_desc:GetWide() - 15, scroll_desc:GetTall() )
     desc:SetWrap( true )
     desc:SetAutoStretchVertical( true )
+
+    local weight = vgui.Create("DLabel", item)
+    weight:SetText( "Weight: " .. itemweight )
+    weight:SetContentAlignment(4)
+    weight:SizeToContents()
+    weight:SetPos( 85, item:GetTall() - 20 )
 
     if isArmor then
         local armorpanel = vgui.Create("DPanel", item)
@@ -170,7 +196,7 @@ function Workbench.BuildRecipe( parent, itemid )
         classreq:SetText( "Class needed to craft: " .. translateClassNameID(id.class) )
         classreq:SetContentAlignment(4)
         classreq:SizeToContents()
-        classreq:SetPos( 100, item:GetTall() - (classreq:GetTall() + 5) )
+        classreq:SetPos( 240, item:GetTall() - (classreq:GetTall() + 7) )
         if LocalPlayer():GetASClass() == id.class then
             classreq:SetColor( COLHUD_GOOD )
         else
@@ -249,6 +275,28 @@ function Workbench.BuildRecipe( parent, itemid )
             net.WriteUInt( 1, NWSetting.ItemCraftBits )
         net.SendToServer()
         frame_workbench:Close()
+    end
+    function craft:Paint( w, h )
+        if self:IsEnabled() then
+            if self:IsHovered() then
+                surface.SetDrawColor( COLHUD_DEFAULT )
+                self:SetColor( COLHUD_SECONDARY )
+            else
+                surface.SetDrawColor( COLHUD_SECONDARY )
+                self:SetColor( COLHUD_DEFAULT )
+            end
+        else
+            surface.SetDrawColor( Color( 60, 60, 60 ) )
+            self:SetColor( COLHUD_BAD )
+        end
+        surface.DrawRect( 0, 0, w, h )
+
+        if self:IsEnabled() then
+            surface.SetDrawColor( COLHUD_DEFAULT )
+        else
+            surface.SetDrawColor( COLHUD_BAD )
+        end
+        surface.DrawOutlinedRect( 0, 0, w, h, 1 )
     end
 
     if LocalPlayer():CanCraftItem( itemid ) then
