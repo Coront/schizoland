@@ -91,6 +91,12 @@ function GM:PlayerDisconnected( ply )
 
     local tools = ply:GetAllTools()
     for k, v in pairs( tools ) do
+        if v:GetClass() == "as_healthstation" then
+            local inv = v:GetInventory()
+            for k, v in pairs( inv ) do
+                ply:AddItemToInventory( k, v )
+            end
+        end
         v:Remove()
     end
 
