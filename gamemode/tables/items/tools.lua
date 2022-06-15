@@ -247,7 +247,7 @@ AS.AddBaseItem("tool_grub", {
 
 AS.AddBaseItem("tool_miner", {
     name = "Automated Miner",
-    desc = "This thing will pound the ground to dig out usable resources for you. Would be incredibly useful if you had an army of them.",
+    desc = "This thing will pound the ground to dig out usable resources for you. Would be incredibly useful if you had an army of them. Requires 75 Electricity.",
     category = "tool",
     model = "models/props_combine/combinethumper001a.mdl",
     ent = "as_miner",
@@ -273,7 +273,7 @@ AS.AddBaseItem("tool_miner", {
 
 AS.AddBaseItem("tool_vendor", {
     name = "Vending Machine",
-    desc = "A vending machine. You can put junk in here that other players can buy.",
+    desc = "A vending machine. You can put junk in here that other players can buy. Requires 25 Electricity.",
     category = "tool",
     model = "models/props_interiors/vendingmachinesoda01a.mdl",
     ent = "as_vendor",
@@ -303,6 +303,24 @@ AS.AddBaseItem("tool_locker", {
         ["misc_scrap"] = 350,
         ["misc_smallparts"] = 200,
         ["misc_chemical"] = 250,
+    },
+})
+
+AS.AddBaseItem("tool_healthstation", {
+    name = "Health Station",
+    desc = "A station that allows you to load it with medicinal herbs, in which players can use to heal themself at a charged price.",
+    category = "tool",
+    model = "models/props_combine/health_charger001.mdl",
+    ent = "as_healthstation",
+    value = 10,
+    weight = 3,
+    class = "scientist",
+    craft = {
+        ["misc_scrap"] = 150,
+        ["misc_smallparts"] = 400,
+        ["misc_chemical"] = 300,
+        ["misc_servo"] = 2,
+        ["misc_emptybottle"] = 1,
     },
 })
 
