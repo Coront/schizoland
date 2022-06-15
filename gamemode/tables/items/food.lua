@@ -151,7 +151,7 @@ AS.AddBaseItem("food_milk", {
     },
     hidden = true,
     craft = {
-        ["misc_scrap"] = 2,
+        ["misc_scrap"] = 4,
         ["misc_smallparts"] = 0,
         ["misc_chemical"] = 1,
     }

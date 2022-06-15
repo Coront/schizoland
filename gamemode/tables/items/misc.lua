@@ -7,7 +7,7 @@
 -- Scrap items are raw resources. They will be used in almost everything.
 
 AS.AddBaseItem("misc_scrap", {
-    name = "Scrap Metal",
+    name = "Scrap",
     desc = "A piece of scrap. Used to craft items.",
     category = "misc",
     model = "models/gibs/scanner_gib02.mdl",
@@ -858,7 +858,7 @@ AS.AddBaseItem("misc_acid", {
     craft = {
         ["misc_scrap"] = 2,
         ["misc_smallparts"] = 0,
-        ["misc_chemical"] = 6,
+        ["misc_chemical"] = 8,
     }
 })
 
@@ -883,7 +883,7 @@ AS.AddBaseItem("misc_bleach", {
     craft = {
         ["misc_scrap"] = 2,
         ["misc_smallparts"] = 0,
-        ["misc_chemical"] = 7,
+        ["misc_chemical"] = 10,
     }
 })
 
@@ -915,6 +915,6 @@ AS.AddBaseItem("misc_chemicalbucket", {
     craft = {
         ["misc_scrap"] = 5,
         ["misc_smallparts"] = 2,
-        ["misc_chemical"] = 12,
+        ["misc_chemical"] = 15,
     }
 })
