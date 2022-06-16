@@ -89,8 +89,7 @@ AS.AddBaseItem("armor_exo", {
         [DMG_ENERGYBEAM] = 15,
         [DMG_BLAST] = 19,
     },
-    hidden = true,
-    class = "mercenary",
+    class = "scientist",
     craft = {
         ["misc_scrap"] = 300,
         ["misc_smallparts"] = 200,
@@ -147,8 +146,7 @@ AS.AddBaseItem("armor_recon", {
         [DMG_ENERGYBEAM] = 18,
         [DMG_BLAST] = 10,
     },
-    hidden = true,
-    class = "mercenary",
+    class = "scavenger",
     craft = {
         ["misc_scrap"] = 350,
         ["misc_smallparts"] = 250,

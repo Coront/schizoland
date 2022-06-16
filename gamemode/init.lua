@@ -74,6 +74,7 @@ local WorkshopFastDL = {
 	["579832711"] = "Sniper Scope Overlays",
 	["104691717"] = "PAC3",
 	["108424005"] = "Keypad Tool and Cracker with Wire Support",
+	["104815552"] = "SmartSnap",
 }
 
 local WorkshopFastDLMaps = {
