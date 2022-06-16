@@ -213,14 +213,16 @@ end)
 
 if (SERVER) then
     hook.Add( "InitPostEntity", "AS_Persists_Spawn", function()
-        local dataExists = sql.QueryValue( "SELECT * FROM as_persists WHERE map = " .. SQLStr(game.GetMap()) )
-        if not dataExists then
-            MsgC( Color(255,0,55), "[AS] There is no persist data for " .. game.GetMap() .. ", meaning the map likely doesn't have any perma propped contents.\n" )
-        else
-            MsgC( Color(0,0,255), "[AS] Loading persist data for " .. game.GetMap() .. "...\n" )
-            local totalpersists = AS_LoadPersists()
-            MsgC( Color(0,0,255), "[AS] Finished placing persists! Total of " .. totalpersists .. " object(s).\n" )
-        end
+        timer.Simple( 5, function() --COOL
+            local dataExists = sql.QueryValue( "SELECT * FROM as_persists WHERE map = " .. SQLStr(game.GetMap()) )
+            if not dataExists then
+                MsgC( Color(255,0,55), "[AS] There is no persist data for " .. game.GetMap() .. ", meaning the map likely doesn't have any perma propped contents.\n" )
+            else
+                MsgC( Color(0,0,255), "[AS] Loading persist data for " .. game.GetMap() .. "...\n" )
+                local totalpersists = AS_LoadPersists()
+                MsgC( Color(0,0,255), "[AS] Finished placing persists! Total of " .. totalpersists .. " object(s).\n" )
+            end
+        end)
     end)
 
     hook.Add( "PostCleanupMap", "AS_Persists_Spawn", function()

@@ -16,4 +16,6 @@ ENT.CraftTable = {
     ["armor_combat"] = 5,
     ["armor_elite"] = 6,
     ["armor_juggernaut"] = 7,
+    ["armor_assault"] = 8,
+    ["armor_hardsuit"] = 9,
 }

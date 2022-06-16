@@ -575,6 +575,36 @@ AS.AddBaseItem("misc_broken_elite", {
     }
 })
 
+AS.AddBaseItem("misc_broken_assault", {
+    name = "Broken Assault Armor",
+    desc = "A full set of destroyed assault armor. With the correct materials, it can be repaired to be usable again.",
+    category = "misc",
+    model = "models/items/armor/assault.mdl",
+    value = 150,
+    weight = 15,
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 45,
+        ["misc_smallparts"] = 40,
+        ["misc_chemical"] = 30,
+    }
+})
+
+AS.AddBaseItem("misc_broken_hardsuit", {
+    name = "Broken Hardsuit Armor",
+    desc = "A full set of destroyed hardsuit armor. With the correct materials, it can be repaired to be usable again.",
+    category = "misc",
+    model = "models/items/armor/hardsuit.mdl",
+    value = 150,
+    weight = 25,
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 50,
+        ["misc_smallparts"] = 45,
+        ["misc_chemical"] = 40,
+    }
+})
+
 AS.AddBaseItem("misc_gyro", {
     name = "Gyroscope",
     desc = "An extremely advanced piece of technology. Very rare, too. Used in crafting.",

@@ -250,7 +250,7 @@ AS.AddBaseItem("misc_expbook", {
             }
             for k, v in pairs( skills ) do --We're excluding all skills that are already maxed.
                 if ply:GetSkillLevel( v ) >= AS.Skills[v].max then
-                    skills[v] = nil
+                    table.RemoveByValue( skills, v )
                 end
             end
             local skill = table.Random( skills )
@@ -259,6 +259,7 @@ AS.AddBaseItem("misc_expbook", {
 
             ply:IncreaseSkillExperience( skill, amt )
             ply:ChatPrint( AS.Skills[skill].name .. " +" .. amt .. " experience" )
+            ply:EmitSound("friends/friend_online.wav", 60)
             ply:ResyncSkills()
         end,
     },

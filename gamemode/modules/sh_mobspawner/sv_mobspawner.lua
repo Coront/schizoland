@@ -387,6 +387,7 @@ function AS.Grid.SpawnNodes()
                 timer.Simple( 5, function()
                     if ent and IsValid(ent) then
                         physobj:EnableMotion( false )
+                        ent:SetMoveType( MOVETYPE_NONE )
                     end
                 end)
             elseif ent:GetResourceType() == "Chemical" then

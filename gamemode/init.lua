@@ -103,7 +103,6 @@ end
 
 function GM:InitPostEntity()
 	for k, v in pairs( ents.FindByClass("prop_physics*") ) do
-		v.MapProp = true
-		v:GetPhysicsObject():EnableMotion( false )
+		v:Remove()
 	end
 end
