@@ -15,6 +15,7 @@ function GM:PhysgunPickup( ply, ent )
     if ent:GetNWBool( "NoObjectOwner", false ) then return false end -- can have no owner
     if ent:GetPos():Distance(ply:GetPos()) > 2000 then return false end -- too far
     if ent:GetObjectOwner() != ply or ent.Owner and IsValid(ent.Owner) and ent.Owner != ply then return false end -- not owner
+    if ent:GetClass() == "prop_vehicle_jeep" then return false end
     ent:SetCollisionGroup( COLLISION_GROUP_WORLD )
 
     return true

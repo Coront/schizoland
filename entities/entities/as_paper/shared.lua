@@ -78,7 +78,7 @@ elseif ( CLIENT ) then
         ent:SetParagraph( str )
     end)
 
-    timer.Create( "as_autoresync_papers", 3, 0, function()
+    timer.Create( "as_autoresync_papers", 10, 0, function()
         for k, v in pairs( ents.FindByClass("as_paper") ) do
             if not IsValid(v) then continue end
             net.Start("as_paper_requestinventory") --Cases utilize the lootcontainer inventory system, so this isnt a concern.

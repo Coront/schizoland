@@ -117,6 +117,8 @@ function PlayerMeta:WithdrawResources( ent )
 		self:AddItemToInventory( k, v )
 		self:ChatPrint(AS.Items[k].name .. " (" .. v .. ") added to inventory.")
 	end
+
+	ent:SaveResources()
 end
 
 -- ███╗   ██╗███████╗████████╗██╗    ██╗ ██████╗ ██████╗ ██╗  ██╗██╗███╗   ██╗ ██████╗

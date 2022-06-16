@@ -77,7 +77,7 @@ elseif ( CLIENT ) then
         ent:SetChemicals( chemicals )
     end)
 
-    timer.Create( "as_autoresync_respack", 3, 0, function()
+    timer.Create( "as_autoresync_respack", 10, 0, function()
         for k, v in pairs( ents.FindByClass("as_resourcepack") ) do
             if not IsValid(v) then continue end
             net.Start("as_resourcepack_requestinventory") --Cases utilize the lootcontainer inventory system, so this isnt a concern.

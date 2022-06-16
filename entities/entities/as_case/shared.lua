@@ -131,7 +131,7 @@ else
         ent:SetInventory( inv )
     end)
 
-    timer.Create( "as_autoresync_cases", 3, 0, function()
+    timer.Create( "as_autoresync_cases", 10, 0, function()
         for k, v in pairs( ents.FindByClass("as_case") ) do
             if not IsValid(v) then continue end
             net.Start("as_case_requestinventory") --Cases utilize the lootcontainer inventory system, so this isnt a concern.

@@ -215,7 +215,7 @@ elseif ( CLIENT ) then
         ent:SetParentVendor( parent )
     end)
 
-    timer.Create( "as_autoresync_display", 3, 0, function()
+    timer.Create( "as_autoresync_display", 10, 0, function()
         for k, v in pairs( ents.FindByClass("as_vendor_display") ) do
             if not IsValid(v) then continue end
             net.Start("as_vendor_display_requestinventory")

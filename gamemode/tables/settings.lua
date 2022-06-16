@@ -61,6 +61,8 @@ PERM.PropBlacklist = { --Props that are forbidden from being spawned
     ["models/props_explosive/explosive_butane_can02.mdl"] = true,
     ["models/props_explosive/explosive_butane_can.mdl"] = true,
     ["models/props_canal/canal_bridge01.mdl"] = true,
+    ["models/props/cs_office/Crates_outdoor.mdl"] = true,
+    ["models/props/cs_office/Crates_indoor.mdl"] = true,
 }
 PERM.ToolWhitelist = { --Tools that regular players can use
     ["precision"] = true,

@@ -144,7 +144,7 @@ elseif ( CLIENT ) then
         ent:SetInventory( inv )
     end)
 
-    timer.Create( "as_autoresync_healthstations", 3, 0, function()
+    timer.Create( "as_autoresync_healthstations", 10, 0, function()
         for k, v in pairs( ents.FindByClass("as_healthstation") ) do
             if not IsValid(v) then continue end
             net.Start("as_healthstation_requestcharge")
@@ -153,7 +153,7 @@ elseif ( CLIENT ) then
         end
     end)
 
-    timer.Create( "as_autoresync_healthstationsinv", 3, 0, function()
+    timer.Create( "as_autoresync_healthstationsinv", 10, 0, function()
         for k, v in pairs( ents.FindByClass("as_healthstation") ) do
             if not IsValid(v) then continue end
             if not v:GetObjectOwner() == LocalPlayer() then continue end
