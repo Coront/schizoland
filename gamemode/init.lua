@@ -42,6 +42,7 @@ local function DatabaseCheck()
 	sql.Query("CREATE TABLE IF NOT EXISTS as_playerdata (steamid TEXT, name TEXT, ip TEXT, firstconnect TEXT)")
 	sql.Query("CREATE TABLE IF NOT EXISTS as_chatlog (steamid TEXT, name TEXT, str TEXT, time TEXT)")
 	sql.Query("CREATE TABLE IF NOT EXISTS plogs (steamid TEXT, type TEXT, str TEXT, time TEXT)")
+	sql.Query("CREATE TABLE IF NOT EXISTS pac_whitelist (steamid TEXT, date TEXT, admin TEXT)")
 	DATABASECHECKED = true --Don't see the purpose of reloading this multiple times, just restart the server, it's a new table anyways.
 end
 if not DATABASECHECKED then DatabaseCheck() end
@@ -104,5 +105,12 @@ end
 function GM:InitPostEntity()
 	for k, v in pairs( ents.FindByClass("prop_physics*") ) do
 		v:Remove()
+	end
+end
+
+function GM:ShutDown()
+	for k, v in pairs( player.GetAll() ) do
+		if not v:IsLoaded() then continue end
+		v:SaveCharacter()
 	end
 end

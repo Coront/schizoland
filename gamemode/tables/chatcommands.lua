@@ -213,6 +213,48 @@ AS.AddChatCommand("discord", function( ply, args )
     ply:SendLua("gui.OpenURL('" .. GAMEMODE.Discord .. "')")
 end)
 
+if pac then
+
+    AS.AddChatCommand("pacwhitelist", function( ply, args )
+        if not ply:IsAdmin() then ply:ChatPrint("You are not an admin.") return end
+        if not args[2] then ply:ChatPrint("Please supply an argument (Player).") return end
+        local otherPly, multiple = FindPlayerByName( args[2] )
+        if not otherPly then ply:ChatPrint("Cannot find a player '" .. args[2] .. "'.") return end
+        if multiple then
+            local plys = otherPly[1]:Nickname()
+            for k, v in pairs( otherPly ) do
+                if k == 1 then continue end
+                plys = plys .. ", " .. v:Nickname()
+            end
+            ply:ChatPrint("Multiple people found by name of '" .. args[2] .. "'; " .. plys)
+            return
+        end
+        if PACWhitelist[otherPly:SteamID()] then ply:ChatPrint("This person is already whitelisted.") return end
+        pac.AddToWhitelist( ply, otherPly:SteamID() )
+        ply:ChatPrint("Added " .. otherPly:Nickname() .. " to the PAC whitelist.")
+    end)
+
+    AS.AddChatCommand("pacunwhitelist", function( ply, args )
+        if not ply:IsAdmin() then ply:ChatPrint("You are not an admin.") return end
+        if not args[2] then ply:ChatPrint("Please supply an argument (Player).") return end
+        local otherPly, multiple = FindPlayerByName( args[2] )
+        if not otherPly then ply:ChatPrint("Cannot find a player '" .. args[2] .. "'.") return end
+        if multiple then
+            local plys = otherPly[1]:Nickname()
+            for k, v in pairs( otherPly ) do
+                if k == 1 then continue end
+                plys = plys .. ", " .. v:Nickname()
+            end
+            ply:ChatPrint("Multiple people found by name of '" .. args[2] .. "'; " .. plys)
+            return
+        end
+        if not PACWhitelist[otherPly:SteamID()] then ply:ChatPrint("This person is not whitelisted.") return end
+        pac.RemoveFromWhitelist( ply, otherPly:SteamID() )
+        ply:ChatPrint("Removed " .. otherPly:Nickname() .. " from the PAC whitelist.")
+    end)
+
+end
+
 -- ██╗  ██╗ ██████╗  ██████╗ ██╗  ██╗███████╗
 -- ██║  ██║██╔═══██╗██╔═══██╗██║ ██╔╝██╔════╝
 -- ███████║██║   ██║██║   ██║█████╔╝ ███████╗
