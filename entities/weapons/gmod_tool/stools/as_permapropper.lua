@@ -90,6 +90,8 @@ if (SERVER) then
                 physobj:EnableMotion( false )
             end
 
+            ent:SetMoveType( MOVETYPE_NONE )
+
             totalPersists = totalPersists + 1
         end
 
@@ -99,7 +101,6 @@ if (SERVER) then
 
         return totalPersists
     end
-    concommand.Add( "as_persist_load", AS_LoadPersists )
 
 end
 
