@@ -215,3 +215,20 @@ AS.AddMapData( "rp_outercanals_p", {
         Vector( -12681.79, -912.88, 0.03 )
     },
 })
+
+AS.AddMapData( "rp_pripyat_p", {
+    MobMult = 1,
+    NodeMult = 1,
+    Load = {
+        pos = Vector( 112.37, -5886, 503.35 ),
+        ang = Angle( 7.39, 113.18 ),
+    },
+    Spawns = {
+        Vector( -1857, -12714.61, 47 ),
+        Vector( -1948.69, -12714.61, 47 ),
+        Vector( -1857, -12617.27, 47 ),
+        Vector( -1948.69, -12617.27, 47 ),
+        Vector( -1857, -12500.27, 47 ),
+        Vector( -1948.69, -12500.27, 47 ),
+    },
+})

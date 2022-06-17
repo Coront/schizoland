@@ -74,7 +74,13 @@ function GM:PlayerSpawn( ply )
                 end
                 continue 
             end
-            ply:Give( AS.Items[k].wep )
+            if AS.Items[k].category == "misc" then
+                ply:AddItemToInventory( k, v )
+                continue
+            end
+            if AS.Items[k].wep then
+                ply:Give( AS.Items[k].wep )
+            end
         end
         ply.ItemReturns = nil
     end

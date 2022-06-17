@@ -32,7 +32,7 @@ AS.AddBaseItem("food_beans", {
     value = 2,
     weight = 0.2,
     use = {
-        hunger = 15,
+        hunger = 10,
         soundcs = "npc/headcrab/headbite.wav",
     },
     hidden = true,
@@ -237,9 +237,9 @@ AS.AddBaseItem("food_cooked_beans", {
     },
     hidden = true,
     craft = {
-        ["misc_scrap"] = 0,
+        ["misc_scrap"] = 1,
         ["misc_smallparts"] = 0,
-        ["misc_chemical"] = 2,
+        ["misc_chemical"] = 6,
         ["food_beans"] = 1,
     }
 })
@@ -263,7 +263,7 @@ AS.AddBaseItem("food_clean_water", {
     craft = {
         ["misc_scrap"] = 0,
         ["misc_smallparts"] = 0,
-        ["misc_chemical"] = 2,
+        ["misc_chemical"] = 3,
         ["food_dirty_water"] = 1,
     },
 })
@@ -331,7 +331,7 @@ AS.AddBaseItem("food_cooked_antlion", {
     class = "cultivator",
     craft = {
         ["misc_scrap"] = 1,
-        ["misc_smallparts"] = 1,
+        ["misc_smallparts"] = 0,
         ["misc_chemical"] = 10,
         ["food_meat_antlion"] = 1,
     }
@@ -352,9 +352,9 @@ AS.AddBaseItem("food_cooked_guard", {
     hidden = true,
     class = "cultivator",
     craft = {
-        ["misc_scrap"] = 2,
-        ["misc_smallparts"] = 2,
-        ["misc_chemical"] = 15,
+        ["misc_scrap"] = 1,
+        ["misc_smallparts"] = 1,
+        ["misc_chemical"] = 14,
         ["food_meat_guard"] = 1,
     }
 })
@@ -368,8 +368,8 @@ AS.AddBaseItem("food_soup", {
     value = 15,
     weight = 1,
     use = {
-        hunger = 30,
-        thirst = 20,
+        hunger = 35,
+        thirst = 25,
         soundcs = "npc/barnacle/barnacle_gulp1.wav",
     },
     hidden = true,
@@ -377,7 +377,7 @@ AS.AddBaseItem("food_soup", {
     craft = {
         ["misc_scrap"] = 10,
         ["misc_smallparts"] = 5,
-        ["misc_chemical"] = 20,
+        ["misc_chemical"] = 15,
     },
 })
 
@@ -391,14 +391,14 @@ AS.AddBaseItem("food_coffee", {
     weight = 0.6,
     use = {
         hunger = 20,
-        thirst = 25,
+        thirst = 30,
         soundcs = "npc/barnacle/barnacle_gulp1.wav",
     },
     hidden = true,
     class = "cultivator",
     craft = {
-        ["misc_scrap"] = 15,
-        ["misc_smallparts"] = 5,
-        ["misc_chemical"] = 15,
+        ["misc_scrap"] = 10,
+        ["misc_smallparts"] = 2,
+        ["misc_chemical"] = 10,
     },
 })
