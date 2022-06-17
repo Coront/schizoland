@@ -106,7 +106,7 @@ function AftershockHUD()
         surface.DrawOutlinedRect(barx, bary, width, height, outline) --Health bar outline
         surface.DrawRect(barx + 2, bary + 2, (health / maxhealth) * (width - 4), height - 4) --Health bar
 
-        local hp, amtx, amty, outline = (health), ((xpos + width + barx) + (5)), bary + (height / 2) - (2 * HUD_SCALE), (1)
+        local hp, amtx, amty, outline = (health), ((width + barx) + (5)), bary + (height / 2) - (2 * HUD_SCALE), (1)
         if ply.Devmode then
             surface.SetDrawColor( Color( 255, 255, 255, 255 ) )
             surface.SetMaterial( Material( "icon16/shield.png" ) )
