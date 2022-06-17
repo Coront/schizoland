@@ -87,6 +87,7 @@ local WorkshopFastDLMaps = {
 	["2220995823"] = "gm_disaster_v3_nodust",
 	["143547520"] = "rp_ineu_pass",
 	["2222705223"] = "rp_pripyat_p",
+	["428781078"] = "gm_aftermath",
 	["1572373847"] = "gm_boreas", --Event Map
 	["326332456"] = "gm_fork", --Event Map
 	["2595136841"] = "rp_asheville", --Event Map
