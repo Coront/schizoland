@@ -39,6 +39,15 @@ AS_ClientConVar( "as_hud_satiationbars_width", "100", true, false ) --Width
 AS_ClientConVar( "as_hud_satiationbars_height", "10", true, false ) --Height
 AS_ClientConVar( "as_hud_satiationbars_showwhenneeded", "1", true, false ) --Show only hunger or thirst needed?
 AS_ClientConVar( "as_hud_satiationbars_showindic", "1", true, false )
+-- Toxication Bar
+AS_ClientConVar( "as_hud_toxicationbar", "1", true, false ) --Enable?
+AS_ClientConVar( "as_hud_toxicationbar_amount", "0", true, false ) --Enable amount?
+AS_ClientConVar( "as_hud_toxicationbar_xadd", "0", true, false ) --X position add
+AS_ClientConVar( "as_hud_toxicationbar_yadd", "0", true, false ) --Y position add
+AS_ClientConVar( "as_hud_toxicationbar_width", "300", true, false ) --Width
+AS_ClientConVar( "as_hud_toxicationbar_height", "10", true, false ) --Height
+AS_ClientConVar( "as_hud_toxicationbar_showwhenneeded", "1", true, false ) --Show only hunger or thirst needed?
+AS_ClientConVar( "as_hud_toxicationbar_showindic", "1", true, false )
 -- Effects
 AS_ClientConVar( "as_hud_effects", "1", true, false ) --Enable
 AS_ClientConVar( "as_hud_effects_amount", "0", true, false ) --Enable amount
