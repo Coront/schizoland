@@ -33,6 +33,7 @@ AS.AddBaseItem("food_beans", {
     weight = 0.2,
     use = {
         hunger = 10,
+        toxic = 15,
         soundcs = "npc/headcrab/headbite.wav",
     },
     hidden = true,
@@ -52,6 +53,7 @@ AS.AddBaseItem("food_meat", {
     weight = 1,
     use = {
         hunger = 15,
+        toxic = 50,
         soundcs = "npc/headcrab/headbite.wav",
         stat = {
             [1] = {effect = "poison", length = 10, stack = true},
@@ -73,7 +75,8 @@ AS.AddBaseItem("food_meat_antlion", {
     value = 2,
     weight = 1.5,
     use = {
-        hunger = 15,
+        hunger = 20,
+        toxic = 80,
         soundcs = "npc/headcrab/headbite.wav",
         stat = {
             [1] = {effect = "poison", length = 15, stack = true},
@@ -96,6 +99,7 @@ AS.AddBaseItem("food_meat_guard", {
     weight = 4,
     use = {
         hunger = 40,
+        toxic = 150,
         soundcs = "npc/headcrab/headbite.wav",
         stat = {
             [1] = {effect = "poison", length = 30, stack = true},
@@ -119,6 +123,7 @@ AS.AddBaseItem("food_dirty_water", {
     weight = 1,
     use = {
         thirst = 20,
+        toxic = 30,
         soundcs = "npc/barnacle/barnacle_gulp1.wav",
         items = {
             ["misc_emptybottle"] = 1,
@@ -144,6 +149,7 @@ AS.AddBaseItem("food_milk", {
     weight = 0.9,
     use = {
         thirst = 15,
+        toxic = 10,
         soundcs = "npc/barnacle/barnacle_gulp1.wav",
         stat = {
             [1] = {effect = "poison", length = 4, stack = true},
@@ -165,7 +171,8 @@ AS.AddBaseItem("food_soda", {
     value = 2,
     weight = 0.2,
     use = {
-        thirst = 15,
+        thirst = 10,
+        toxic = 5,
         soundcs = "npc/barnacle/barnacle_gulp1.wav",
     },
     hidden = true,

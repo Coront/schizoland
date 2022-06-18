@@ -306,6 +306,30 @@ function AS.CLSettings.BuildHUD( parent )
     ValueSlider( "Satiation Bars Height", xpos, ypos, 5, 50, scroll, "as_hud_satiationbars_height" )
     addSpace( -20, 20 )
 
+    SectionLabel( "Toxicity Bar", xpos, ypos, scroll )
+    addSpace( 0, 35 )
+
+    ToggleButton("Enable Toxicity Bar", xpos, ypos, scroll, "as_hud_toxicationbar")
+    addSpace( 20, 20 )
+
+    ToggleButton("Only Show When Changed", xpos, ypos, scroll, "as_hud_toxicationbar_showwhenneeded")
+    addSpace( 0, 20 )
+
+    ToggleButton("Enable Toxicity Bar Amount", xpos, ypos, scroll, "as_hud_toxicationbar_amount")
+    addSpace( 0, 20 )
+
+    ValueSlider( "Toxicity Bar X-Pos", xpos, ypos, -2000, 2000, scroll, "as_hud_toxicationbar_xadd" )
+    addSpace( 0, 20 )
+
+    ValueSlider( "Toxicity Bar Y-Pos", xpos, ypos, -2000, 2000, scroll, "as_hud_toxicationbar_yadd" )
+    addSpace( 0, 20 )
+
+    ValueSlider( "Toxicity Bar Width", xpos, ypos, 5, 2000, scroll, "as_hud_toxicationbar_width" )
+    addSpace( 0, 20 )
+
+    ValueSlider( "Toxicity Bar Height", xpos, ypos, 5, 50, scroll, "as_hud_toxicationbar_height" )
+    addSpace( -20, 20 )
+
     SectionLabel( "Status Effects", xpos, ypos, scroll )
     addSpace( 0, 35 )
 

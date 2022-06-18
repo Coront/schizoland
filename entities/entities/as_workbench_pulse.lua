@@ -18,8 +18,9 @@ ENT.CraftTable = {
     --Medical
     ["med_bloodbag"] = 41,
     ["med_surgery"] = 42,
-    ["med_antidote"] = 43,
-    ["med_adrenaline"] = 44,
-    ["med_painkiller"] = 45,
-    ["med_suppression"] = 46,
+    ["med_toxinremovelarge"] = 43,
+    ["med_antidote"] = 44,
+    ["med_adrenaline"] = 45,
+    ["med_painkiller"] = 46,
+    ["med_suppression"] = 47,
 }

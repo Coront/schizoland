@@ -44,10 +44,9 @@ AS_ClientConVar( "as_hud_toxicationbar", "1", true, false ) --Enable?
 AS_ClientConVar( "as_hud_toxicationbar_amount", "0", true, false ) --Enable amount?
 AS_ClientConVar( "as_hud_toxicationbar_xadd", "0", true, false ) --X position add
 AS_ClientConVar( "as_hud_toxicationbar_yadd", "0", true, false ) --Y position add
-AS_ClientConVar( "as_hud_toxicationbar_width", "300", true, false ) --Width
-AS_ClientConVar( "as_hud_toxicationbar_height", "10", true, false ) --Height
-AS_ClientConVar( "as_hud_toxicationbar_showwhenneeded", "1", true, false ) --Show only hunger or thirst needed?
-AS_ClientConVar( "as_hud_toxicationbar_showindic", "1", true, false )
+AS_ClientConVar( "as_hud_toxicationbar_width", "350", true, false ) --Width
+AS_ClientConVar( "as_hud_toxicationbar_height", "15", true, false ) --Height
+AS_ClientConVar( "as_hud_toxicationbar_showwhenneeded", "1", true, false ) --Show only when needed?
 -- Effects
 AS_ClientConVar( "as_hud_effects", "1", true, false ) --Enable
 AS_ClientConVar( "as_hud_effects_amount", "0", true, false ) --Enable amount
@@ -204,6 +203,40 @@ function AftershockHUD()
         end
     end
 
+    Toxic_Alpha = Toxic_Alpha or 0
+    local toxication = tobool(GetConVar("as_hud_toxicationbar"):GetInt())
+    if toxication then
+        local toxic = ply:GetToxic()
+        local maxtoxic = ply:GetMaxToxic()
+        local showwhenneeded = tobool(GetConVar("as_hud_toxicationbar_showwhenneeded"):GetInt())
+        local xpos = GetConVar("as_hud_toxicationbar_xadd"):GetInt()
+        local ypos = GetConVar("as_hud_toxicationbar_yadd"):GetInt()
+        local width = GetConVar("as_hud_toxicationbar_width"):GetInt() * HUD_SCALE
+        local height = GetConVar("as_hud_toxicationbar_height"):GetInt() * HUD_SCALE
+        local barx, bary, width, height, outline = (xpos + (ScrW() - 100) - width), (ypos + (80)), (width), (height), (1)
+        local colbad = COLHUD_BAD:ToTable()
+
+        if not showwhenneeded or showwhenneeded and (showtoxic or 0) > CurTime() then
+            Toxic_Alpha = math.Approach( Toxic_Alpha, 255, FrameTime() * 300 )
+        else
+            Toxic_Alpha = math.Approach( Toxic_Alpha, 0, FrameTime() * -300 )
+        end
+
+        if Toxic_Alpha > 0 then
+            surface.SetDrawColor( colbad[1], colbad[2], colbad[3], Toxic_Alpha )
+            surface.DrawOutlinedRect( barx, bary, width, height, outline ) --Outline
+            surface.SetDrawColor( colbad[1], colbad[2], colbad[3], Toxic_Alpha )
+            local length = (toxic / maxtoxic) * width - 4
+            surface.DrawRect( barx + 2, bary + 2, length, height - 4)
+            draw.SimpleTextOutlined("Toxicity", "AftershockHUD", barx, bary, Color( colbad[1], colbad[2], colbad[3], Toxic_Alpha ), TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM, outline, Color(0,0,0,Toxic_Alpha))
+
+            local amt = tobool(GetConVar("as_hud_toxicationbar_amount"):GetInt())
+            if amt then
+                draw.SimpleTextOutlined(toxic, "AftershockHUDSmall", barx + (width / 2), bary - 1, Color( colbad[1], colbad[2], colbad[3], Toxic_Alpha ), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, outline, Color(0,0,0, Toxic_Alpha))
+            end
+        end
+    end
+
     local effect = tobool(GetConVar("as_hud_effects"):GetInt())
     if effect then
         local iconsize = GetConVar("as_hud_effects_iconsize"):GetInt() * HUD_SCALE
@@ -235,7 +268,7 @@ function AftershockHUD()
             surface.DrawRect( (barx + iconsize) - 1, bary - height - (GetConVar("as_hud_healthbar_height"):GetInt() * HUD_SCALE) + barspace, (time / time_max) * width - barspace, height - (barspace * 2) )
             --Name
             draw.SimpleTextOutlined(name, "AftershockHUDVerySmall", (barx + iconsize + 2), bary - (height + 2) - (GetConVar("as_hud_healthbar_height"):GetInt() * HUD_SCALE), color, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM, outline, Color(0,0,0))
-            
+
             local amt = tobool(GetConVar("as_hud_effects_amount"):GetInt())
             if amt then
                 draw.SimpleTextOutlined(math.Round(time, 1), "AftershockHUDVerySmall", barx + iconsize + width + 1, bary - (height / 2) - 1 - (GetConVar("as_hud_healthbar_height"):GetInt() * HUD_SCALE), color, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER, outline, Color(0,0,0))

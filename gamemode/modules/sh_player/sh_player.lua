@@ -11,6 +11,11 @@ function GM:Move( ply, mv ) --I'm intentionally overriding this so we don't use 
     --Stunned
     movespeed = ply:HasStatus( "stunned" ) and movespeed * 0.4 or movespeed
     sprintmovespeed = ply:HasStatus( "stunned" ) and sprintmovespeed * 0.4 or sprintmovespeed
+    --Toxication
+    local toxic, type = ply:IsToxicated()
+    local mult = type == "light" and 0.8 or type == "heavy" and 0.7
+    movespeed = toxic and movespeed * mult or movespeed
+    sprintmovespeed = toxic and sprintmovespeed * mult or sprintmovespeed
 
     ply:SetRunSpeed( sprintmovespeed )
     ply:SetWalkSpeed( movespeed )

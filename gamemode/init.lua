@@ -23,7 +23,7 @@ local function DatabaseCheck()
 	MsgC( Color(0,0,255), "[AS] Checking Databases...\n" )
 	--Character Information
 	sql.Query("CREATE TABLE IF NOT EXISTS as_characters (pid INTEGER PRIMARY KEY AUTOINCREMENT, steamid TEXT, name TEXT, model TEXT, class TEXT, created TEXT, laston TEXT, deleted TEXT)")
-	sql.Query("CREATE TABLE IF NOT EXISTS as_characters_stats (pid INTEGER, health INTEGER, hunger INTEGER, thirst INTEGER, playtime INTEGER)")
+	sql.Query("CREATE TABLE IF NOT EXISTS as_characters_stats (pid INTEGER, health INTEGER, hunger INTEGER, thirst INTEGER, toxic INTEGER, playtime INTEGER)")
 	sql.Query("CREATE TABLE IF NOT EXISTS as_characters_statistics (pid INTEGER, key TEXT, value INTEGER)") --fuck why didnt i choose a better name
 	sql.Query("CREATE TABLE IF NOT EXISTS as_characters_skills (pid INTEGER, skills TEXT)")
 	sql.Query("CREATE TABLE IF NOT EXISTS as_characters_inventory (pid INTEGER, inv TEXT, bank TEXT, atch TEXT, equipped TEXT)")

@@ -64,6 +64,13 @@ function PlayerMeta:UseItem( item )
             self:ResyncStatuses()
         end
     end
+    if use.toxic then
+        if use.toxic > 0 then
+            self:AddToxic( use.toxic )
+        else
+            self:TakeToxic( use.toxic )
+        end
+    end
     if use.sound then
         self:EmitSound( use.sound, 40 )
     end

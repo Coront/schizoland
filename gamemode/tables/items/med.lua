@@ -123,6 +123,54 @@ AS.AddBaseItem("med_surgery", {
     },
 })
 
+AS.AddBaseItem("med_toxinremove", {
+    name = "Toxin Remover",
+    desc = "A glass bottle that contains a strange liquid, which will help remove some of the toxicity in an individual. Removes 100 Toxicity.",
+    category = "med",
+    model = "models/props_junk/glassjug01.mdl",
+    color = Color( 0, 115, 70 ),
+    value = 175,
+    weight = 1,
+    use = {
+        sound = "physics/body/body_medium_impact_soft6.wav",
+        toxic = -100,
+        stat = {
+            [1] = {effect = "healingsickness", length = 5},
+        },
+    },
+    class = "scientist",
+    craft = {
+        ["misc_scrap"] = 15,
+        ["misc_smallparts"] = 10,
+        ["misc_chemical"] = 20,
+    },
+})
+
+AS.AddBaseItem("med_toxinremovelarge", {
+    name = "Toxin Removal Kit",
+    desc = "A kit that contains the proper tools for draining a majority of the toxicity from an individual's body. Removes 300 Toxicity.",
+    category = "med",
+    model = "models/props_c17/BriefCase001a.mdl",
+    color = Color( 0, 115, 70 ),
+    value = 175,
+    weight = 2,
+    use = {
+        sound = "physics/body/body_medium_impact_soft6.wav",
+        toxic = -300,
+        stat = {
+            [1] = {effect = "healingsickness", length = 10},
+        },
+    },
+    hidden = true,
+    class = "scientist",
+    craft = {
+        ["misc_scrap"] = 15,
+        ["misc_smallparts"] = 10,
+        ["misc_chemical"] = 35,
+        ["misc_herb"] = 1,
+    },
+})
+
 -- ██████╗ ██████╗ ██╗   ██╗ ██████╗ ███████╗
 -- ██╔══██╗██╔══██╗██║   ██║██╔════╝ ██╔════╝
 -- ██║  ██║██████╔╝██║   ██║██║  ███╗███████╗
@@ -186,6 +234,7 @@ AS.AddBaseItem("med_antidote", {
     weight = 0.5,
     use = {
         sound = "items/medshot4.wav",
+        toxic = -100,
         stat = {
             [1] = {effect = "poison", length = 0},
             [2] = {effect = "poisonsevere", length = 0}, --SHHHHHH
@@ -212,6 +261,7 @@ AS.AddBaseItem("med_suppression", {
     weight = 0.5,
     use = {
         sound = "items/medshot4.wav",
+        toxic = -50,
         stat = {
             [1] = {effect = "suppression", length = 300},
         },

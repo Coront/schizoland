@@ -25,7 +25,7 @@ function PlayerMeta:CreateCharacter( name, model, class )
     sql.Query( "INSERT INTO as_characters_inventory VALUES ( " .. newpid .. ", NULL, NULL, NULL, NULL )" )
     sql.Query( "INSERT INTO as_characters_skills VALUES ( " .. newpid .. ", NULL )" )
     local health = class == "scavenger" and SKL.Health * CLS.Scavenger.healthmult or class == "mercenary" and SKL.Health * CLS.Mercenary.healthmult or SKL.Health
-    sql.Query( "INSERT INTO as_characters_stats VALUES ( " .. newpid .. ", " .. health .. ", 100, 100, 0 )" )
+    sql.Query( "INSERT INTO as_characters_stats VALUES ( " .. newpid .. ", " .. health .. ", 100, 100, 0, 0 )" )
     sql.Query( "INSERT INTO as_cache_tools VALUES ( " .. newpid .. ", NULL )" )
     sql.Query( "INSERT INTO as_communities_members VALUES ( " .. newpid .. ", NULL, NULL, NULL )" )
 
@@ -61,7 +61,7 @@ function PlayerMeta:SaveCharacter()
     end
     sql.Query( "UPDATE as_characters_inventory SET inv = " .. SQLStr(util.TableToJSON( self:GetInventory(), true )) .. ", bank = " .. SQLStr(util.TableToJSON( self:GetBank(), true )) .. ", atch = " .. SQLStr(util.TableToJSON( self:GetAttachmentInventory(), true )) .. ", equipped = " .. SQLStr(util.TableToJSON( equipped, true )) .. " WHERE pid = " .. pid )
     sql.Query( "UPDATE as_characters_skills SET skills = " .. SQLStr(util.TableToJSON( self:GetSkills(), true )) .. " WHERE pid = " .. pid )
-    sql.Query( "UPDATE as_characters_stats SET health = " .. self:Health() .. ", hunger = " .. self:GetHunger() .. ", thirst = " .. self:GetThirst() .. ", playtime = " .. self:GetPlaytime() .. " WHERE pid = " .. pid )
+    sql.Query( "UPDATE as_characters_stats SET health = " .. self:Health() .. ", hunger = " .. self:GetHunger() .. ", thirst = " .. self:GetThirst() .. ", toxic = " .. self:GetToxic() .. ", playtime = " .. self:GetPlaytime() .. " WHERE pid = " .. pid )
     sql.Query( "UPDATE as_characters SET class = " .. SQLStr( self:GetASClass() ) .. ", laston = " .. SQLStr( os.date( "%m/%d/%y - %I:%M %p", os.time() ) ) .. " WHERE pid = " .. pid )
     sql.Query( "UPDATE as_communities_members SET cid = " .. self:GetCommunity() .. ", title = " .. SQLStr( self:GetTitle() ) .. ", rank = " .. self:GetRank() .. " WHERE pid = " .. pid )
     return true --Saving was successful.
