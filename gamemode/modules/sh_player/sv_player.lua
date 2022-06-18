@@ -268,6 +268,9 @@ hook.Add( "Think", "AS_PassiveHealing", function()
         if v:GetHunger() >= SAT.SatBuffs and v:GetThirst() >= SAT.SatBuffs then
             hpToHeal = hpToHeal + 1
         end
+        if v:IsSitting() then
+            hpToHeal = hpToHeal + 1
+        end
         for k2, v2 in pairs(ents.FindByClass("env_fire")) do
             if v:GetPos():Distance(v2:GetPos()) > 150 then continue end
             hpToHeal = hpToHeal + 1
@@ -349,6 +352,31 @@ hook.Add( "PlayerSay", "AS_PlayerChatLog", function( ply, text )
 	end
 end)
 
+function PlayerMeta:Sit()
+    if CurTime() < (self.NextSit or 0) then self:ChatPrint("Please wait before attempting to sit again!") return end
+    self.Sitting = true
+    net.Start("as_sitting")
+        net.WriteEntity( self )
+    net.Broadcast()
+
+    self:ResyncSit()
+end
+
+function PlayerMeta:Unsit()
+    self.Sitting = false
+    self.NextSit = CurTime() + 5
+    net.Start("as_sitting_end")
+        net.WriteEntity( self )
+    net.Broadcast()
+
+    self:ResyncSit()
+end
+
+function PlayerMeta:IsSitting()
+    if self.Sitting then return true end
+    return false
+end
+
 -- ███╗   ██╗███████╗████████╗██╗    ██╗ ██████╗ ██████╗ ██╗  ██╗██╗███╗   ██╗ ██████╗
 -- ████╗  ██║██╔════╝╚══██╔══╝██║    ██║██╔═══██╗██╔══██╗██║ ██╔╝██║████╗  ██║██╔════╝
 -- ██╔██╗ ██║█████╗     ██║   ██║ █╗ ██║██║   ██║██████╔╝█████╔╝ ██║██╔██╗ ██║██║  ███╗
@@ -358,3 +386,24 @@ end)
 
 util.AddNetworkString( "as_chatmessage" )
 util.AddNetworkString( "as_deathstinger" )
+util.AddNetworkString( "as_sitting" )
+util.AddNetworkString( "as_sitting_end" )
+util.AddNetworkString( "as_sitting_resync" )
+util.AddNetworkString( "as_sitting_request" )
+
+function PlayerMeta:ResyncSit()
+    net.Start("as_sitting_resync")
+        net.WriteEntity( self )
+        net.WriteBit( self.Sitting )
+    net.Broadcast()
+end
+
+net.Receive("as_sitting_request", function( _, ply )
+    local ent = net.ReadEntity()
+    if not IsValid( ent ) then return end
+
+    net.Start("as_sitting_resync")
+        net.WriteEntity( ent )
+        net.WriteBit( ent.Sitting )
+    net.Send( ply )
+end)

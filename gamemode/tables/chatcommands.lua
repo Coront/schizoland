@@ -213,6 +213,14 @@ AS.AddChatCommand("discord", function( ply, args )
     ply:SendLua("gui.OpenURL('" .. GAMEMODE.Discord .. "')")
 end)
 
+AS.AddChatCommand("sit", function( ply, args )
+    if ply.Sitting then
+        ply:Unsit()
+    else
+        ply:Sit()
+    end
+end)
+
 if pac then
 
     AS.AddChatCommand("pacwhitelist", function( ply, args )
