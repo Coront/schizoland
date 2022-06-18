@@ -71,8 +71,9 @@ if SERVER then
             health = health * CLS.Scavenger.healthmult
         end
         self:SetMaxHealth(health)
-        self:SetHunger(stats.hunger)
-        self:SetThirst(stats.thirst)
+        self:SetHunger( tonumber( stats.hunger ) )
+        self:SetThirst( tonumber( stats.thirst ) )
+        self:SetToxic( tonumber( stats.toxic ) )
         self:SetSkills(skills)
         self:SetInventory(inv)
         self:SetBank(bank)
@@ -104,6 +105,7 @@ if SERVER then
             net.WriteString(self:GetASClass())
             net.WriteUInt(self:GetHunger(), 8)
             net.WriteUInt(self:GetThirst(), 8)
+            net.WriteUInt(self:GetToxic(), 11)
             net.WriteUInt(self:GetPlaytime(), 32)
             net.WriteInventory(self:GetInventory())
             net.WriteInventory(self:GetBank())
@@ -126,6 +128,7 @@ elseif CLIENT then
         ply:SetASClass(net.ReadString())
         ply:SetHunger(net.ReadUInt(8))
         ply:SetThirst(net.ReadUInt(8))
+        ply:SetToxic(net.ReadUInt(11))
         ply:SetPlaytime(net.ReadUInt(32))
         ply:SetInventory(net.ReadInventory())
         ply:SetBank(net.ReadInventory())
