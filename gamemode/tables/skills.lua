@@ -70,7 +70,7 @@ AS.AddBaseSkill( "mining", {
     name = "Mining",
     desc = "Decreases the time it takes for a miner to produce resources. Leveled by miner production.",
     icon = "",
-    max = 5,
+    max = 10,
     basexp = 1,
     power = 1.85,
 } )

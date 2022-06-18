@@ -134,7 +134,7 @@ AS.AddBaseItem("food_dirty_water", {
     },
     hidden = true,
     craft = {
-        ["misc_scrap"] = 1,
+        ["misc_scrap"] = 4,
         ["misc_smallparts"] = 1,
         ["misc_chemical"] = 0,
     }
@@ -165,7 +165,7 @@ AS.AddBaseItem("food_milk", {
 
 AS.AddBaseItem("food_soda", {
     name = "Soda Can",
-    desc = "An aluminum can that contains soda, safe to drink too.",
+    desc = "An aluminum can that contains soda.",
     category = "food",
     model = "models/props_junk/PopCan01a.mdl",
     value = 2,
@@ -174,6 +174,9 @@ AS.AddBaseItem("food_soda", {
         thirst = 10,
         toxic = 5,
         soundcs = "npc/barnacle/barnacle_gulp1.wav",
+        items = {
+            ["misc_emptysodacan"] = 1,
+        },
     },
     hidden = true,
     craft = {

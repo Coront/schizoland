@@ -15,7 +15,7 @@ function GM:PlayerSpawnProp( ply, model )
         end
     end
     if TotalProps > PERM.MaxProps and not ply:IsAdmin() then ply:ChatPrint("You have reached the prop limit.") ply:SendLua("surface.PlaySound('" .. UICUE.DECLINE .. "')") return false end
-    if PERM.PropBlacklist[model] then ply:ChatPrint("This prop is blacklisted.") return false end
+    if PERM.PropBlacklist[model] and not ply:IsAdmin() then ply:ChatPrint("This prop is blacklisted.") return false end
 
     return true
 end
