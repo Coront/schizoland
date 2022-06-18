@@ -177,10 +177,13 @@ function CharacterIcon( model, x, y, width, height, parent, callback, bgcol )
 	Icon:SetSize(width - 2, height - 2)
 	Icon:SetFOV(5.6)
 	Icon:SetModel(model)
-    local eyepos = IsValid( Icon.Entity ) and Icon.Entity:LookupBone("ValveBiped.Bip01_Head1") != nil and Icon.Entity:GetBonePosition(Icon.Entity:LookupBone("ValveBiped.Bip01_Head1")) or Vector(0,0,0)
-	Icon:SetLookAt( eyepos )
-	Icon:SetCamPos( eyepos - Vector(-120,0,-10) )
-    Icon.Entity:SetEyeTarget(eyepos-Vector(0, -6, -2))
+    local bone = tonumber( Icon.Entity:LookupBone("ValveBiped.Bip01_Head1") )
+    if bone and isnumber( bone ) then
+        local eyepos = Icon.Entity:GetBonePosition(Icon.Entity:LookupBone("ValveBiped.Bip01_Head1"))
+        Icon:SetLookAt( eyepos )
+        Icon:SetCamPos( eyepos - Vector(-120,0,-10) )
+        Icon.Entity:SetEyeTarget(eyepos-Vector(0, -6, -2))
+    end
 	Icon:SetAnimated( false )
     function Icon:LayoutEntity() end
     if callback then
