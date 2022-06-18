@@ -97,7 +97,7 @@ AS.AddBaseItem("misc_gunpowder", {
 
 AS.AddBaseItem("misc_gunpowderten", {
     name = "Gunpowder 10x",
-    desc = "A large jar that contains significant amounts of gunpowder. Can be broken down into smaller amounts.",
+    desc = "A large jar that contains significant amounts of gunpowder. Can be used to be separated into smaller amounts.",
     category = "misc",
     model = "models/props_lab/jar01a.mdl",
     value = 50,
