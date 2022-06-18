@@ -27,6 +27,7 @@ function GM:PlayerSpawnedProp( ply, model, ent )
         ent:GetPhysicsObject():EnableMotion( false )
         ent:SetRenderMode( RENDERMODE_TRANSCOLOR )
         ent:SetColor( Color( 255, 255, 255, 230 ) )
+        ent:SetModelScale( 1 )
         ent.Owner = ply
         ent.NewSpawn = true
     end
