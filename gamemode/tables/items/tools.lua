@@ -245,6 +245,40 @@ AS.AddBaseItem("tool_grub", {
     },
 })
 
+AS.AddBaseItem("tool_grub_large", {
+    name = "Large Antlion Grub",
+    desc = "A large antlion grub. It harvests significantly more chemicals over time.",
+    category = "tool",
+    model = "models/antlion_grub.mdl",
+    ent = "as_grub_large",
+    value = 250,
+    weight = 40,
+    class = "cultivator",
+    craft = {
+        ["misc_scrap"] = 25,
+        ["misc_smallparts"] = 25,
+        ["misc_chemical"] = 100,
+        ["tool_grub"] = 10,
+    },
+})
+
+AS.AddBaseItem("tool_grub_king", {
+    name = "King Antlion Grub",
+    desc = "The king of grubs! Apart of everyone's dream!",
+    category = "tool",
+    model = "models/antlion_grub.mdl",
+    ent = "as_grub_king",
+    value = 250,
+    weight = 100,
+    class = "cultivator",
+    craft = {
+        ["misc_scrap"] = 50,
+        ["misc_smallparts"] = 50,
+        ["misc_chemical"] = 200,
+        ["tool_grub_large"] = 10,
+    },
+})
+
 AS.AddBaseItem("tool_miner", {
     name = "Automated Miner",
     desc = "This thing will pound the ground to dig out usable resources for you. Would be incredibly useful if you had an army of them. Requires 75 Electricity.",
