@@ -107,6 +107,10 @@ AS.AddChatCommand("rename", function( ply, args )
     if CurTime() < (ply.NextNameChange or 0) then ply:ChatPrint("You must wait " .. math.Round(ply.NextNameChange - CurTime()) .. " seconds before changing your name!") return end
     if not args[2] then ply:ChatPrint("Please supply an argument (New Name).") return end
     local newName = args[2]
+    for k, v in pairs( args ) do
+        if k < 4 then continue end
+        newName = newName .. " " .. v
+    end
 
     if string.len(newName:lower()) < SET.MinNameLength then ply:ChatPrint("Your name must be longer (" .. SET.MinNameLength .. " Characters).") return end
     if string.len(newName:lower()) > SET.MaxNameLength then ply:ChatPrint("Your name must be shorter (" .. SET.MaxNameLength .. " Characters).") return end
@@ -115,7 +119,7 @@ AS.AddChatCommand("rename", function( ply, args )
         if string.find(newName:lower(), v) then ply:Kick("Inappropriate name usage") return end
     end
 
-    ply.NextNameChange = CurTime() + 3600
+    ply.NextNameChange = CurTime() + 300
     ply:ChatPrint("You have changed your name to " .. newName .. ".")
     ply:SetNWString( "as_name", newName )
     sql.Query("UPDATE as_characters SET name = " .. SQLStr( newName ) .. " WHERE pid = " .. ply:GetPID() )
