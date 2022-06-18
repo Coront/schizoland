@@ -173,15 +173,18 @@ end)
 -- ██║  ██║╚██████╔╝╚██████╔╝██║  ██╗███████║
 -- ╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚══════╝
 
+local sitfreezeang = Angle()
+local tositang = Angle()
+
 hook.Add("CreateMove", "AS_Sitting", function(cmd)
 	if LocalPlayer().Sitting then
 		local ply = LocalPlayer()
-        local freezeang = LocalPlayer().sitfreezeang or Angle()
-        local sitang = sitang or Angle()
+        local freezeang = sitfreezeang or Angle()
+        local sitang = tositang or Angle()
 
 		if !ply:InVehicle() and ply:Alive() then
-            sitang.x = sitang.x + cmd:GetMouseY() * 0.05
-            sitang.y = sitang.y + -cmd:GetMouseX() *0.05
+            tositang.x = tositang.x + cmd:GetMouseY() * 0.05
+            tositang.y = tositang.y + -cmd:GetMouseX() *0.05
             ply.CustomView = sitang
 
             cmd:SetViewAngles( freezeang )
@@ -266,8 +269,11 @@ net.Receive( "as_sitting", function()
     local ent = net.ReadEntity()
     if not IsValid( ent ) then return end
     ent:AddVCDSequenceToGestureSlot( GESTURE_SLOT_CUSTOM, ent:LookupSequence( "sit_zen" ), 0, false )
-    ent.sitfreezeang = EyeAngles()
-    LocalPlayer():ChatPrint("You are now sitting. You can stand up by typing /sit again.")
+    
+    if ent == LocalPlayer() then
+        print("Here")
+        sitfreezeang = EyeAngles()
+    end
 end)
 
 net.Receive( "as_sitting_end", function()

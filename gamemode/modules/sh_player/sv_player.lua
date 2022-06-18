@@ -360,6 +360,7 @@ function PlayerMeta:Sit()
     net.Broadcast()
 
     self:ResyncSit()
+    self:ChatPrint("You are now sitting. You can type /sit to stand up.")
 end
 
 function PlayerMeta:Unsit()
