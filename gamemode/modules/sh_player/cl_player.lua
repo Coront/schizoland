@@ -112,12 +112,16 @@ hook.Add("PrePlayerDraw", "AS_PlayerHide", function( ply )
     if (ply:GetMoveType() == MOVETYPE_NOCLIP and not ply:InVehicle()) and not LocalPlayer():IsDeveloping() then 
         ply:DrawShadow( false )
         local wep = ply:GetActiveWeapon()
-        wep:DrawShadow( false )
+        if IsValid( wep ) then
+            wep:DrawShadow( false )
+        end
         return true 
     else
         ply:DrawShadow( true )
         local wep = ply:GetActiveWeapon()
-        wep:DrawShadow( true )
+        if IsValid( wep ) then
+            wep:DrawShadow( true )
+        end
     end
     if ply.HideDefault then
         ply:SetMaterial( "Models/effects/vol_light001" )

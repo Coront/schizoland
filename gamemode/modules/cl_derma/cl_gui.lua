@@ -473,7 +473,7 @@ function VerifySlider( max, callback )
     local width, height = 150, 20
     DefaultButton( "Accept", frame_verifyslider:GetWide() / 2 - (width / 2), frame_verifyslider:GetTall() - height - 15, width, height, frame_verifyslider, function()
 		if callback then
-			callback( slider:GetValue() )
+			callback( math.Round( slider:GetValue() ) )
 		end
 		frame_verifyslider:Close()
     end)

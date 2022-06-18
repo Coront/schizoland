@@ -15,6 +15,7 @@ function ENT:Use( ply )
 		local length = ply.Status and ply.Status["poison"] and (ply.Status["poison"].time - CurTime()) + 5 or 5
 		ply:AddStatus( "poison", length )
 		ply:AddThirst( 15 )
+		ply:AddToxic( 25 )
 		ply:ResyncSatiation()
 		ply:ResyncStatuses()
 		ply:EmitSound( "npc/barnacle/barnacle_gulp1.wav" )

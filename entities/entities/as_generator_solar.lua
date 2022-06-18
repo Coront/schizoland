@@ -13,7 +13,20 @@ ENT.Solar = true --Needs to trace the skybox to function.
 ENT.Sound = "" --Passive loop sound we play
 ENT.PowerProduced = 25 --The amount of potential electricity we will produce. Basically how much to make when turned on.
 
-if ( CLIENT ) then
+if ( SERVER ) then
+
+    function ENT:Initialize()
+        self:SetModel( self.Model )
+        self:PhysicsInit( SOLID_VPHYSICS )
+        self:SetUseType( SIMPLE_USE )
+        self:SetSolid( SOLID_VPHYSICS )
+        self:SetMoveType( MOVETYPE_VPHYSICS )
+        self:SetHealth( self.MaxHealth )
+        self:SetMaxHealth( self.MaxHealth )
+        self:SetMaterial( "models/tools/solar" )
+    end
+
+elseif ( CLIENT ) then
 
     function ENT:Draw()
         if LocalPlayer():GetPos():Distance(self:GetPos()) < GetConVar("as_entity_renderdist"):GetInt() then
