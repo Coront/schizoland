@@ -148,7 +148,7 @@ SWEP.DeployAnimSpeed = 0.75
 -- Firing related
 SWEP.Shots = 1
 SWEP.FireDelay = 60/250
-SWEP.Damage = 50
+SWEP.Damage = 45
 --SWEP.FireSound = Sound("FAS2_SR25")
 SWEP.FireSound = Sound("FAS2_SR25_S")
 
@@ -162,7 +162,7 @@ SWEP.AimFOV = 0
 
 -- Recoil related
 SWEP.Recoil = 1.8
-SWEP.RecoilHorizontal = 1.7
+SWEP.RecoilHorizontal = 1
 
 -- Reload related
 SWEP.ReloadTime = 2.6

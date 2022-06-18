@@ -117,7 +117,7 @@ SWEP.DeployTime = 0.45
 -- Firing related
 SWEP.Shots = 1
 SWEP.FireDelay = 60/400
-SWEP.Damage = 47
+SWEP.Damage = 42
 SWEP.FireSound = Sound("FAS2_M14")
 SWEP.FireSound_Suppressed = Sound("FAS2_M14_S")
 
@@ -131,7 +131,7 @@ SWEP.AimFOV = 0
 
 -- Recoil related
 SWEP.Recoil = 2
-SWEP.RecoilHorizontal = 0.75
+SWEP.RecoilHorizontal = 1.7
 
 -- Reload related
 SWEP.ReloadTime = 2.3
