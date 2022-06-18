@@ -145,7 +145,7 @@ end)
 hook.Add("CalcView", "AS_PlayerRagdollCamera", function( ply,pos, angle, lastfov, znear, zfar )
     if LocalPlayer():Alive() then return end --Not neccessary if player is alive.
 
-    local doll = ply:GetRagdollEntity()
+    local doll = ply:GetNWEntity( "Deathdoll" )
     if not IsValid(doll) then return end
 
     local bone = doll:LookupBone( "ValveBiped.Bip01_Head1" )
