@@ -177,8 +177,8 @@ function CharacterIcon( model, x, y, width, height, parent, callback, bgcol )
 	Icon:SetSize(width - 2, height - 2)
 	Icon:SetFOV(5.6)
 	Icon:SetModel(model)
-    local bone = tonumber( Icon.Entity:LookupBone("ValveBiped.Bip01_Head1") )
-    if bone and isnumber( bone ) then
+    local bone = Icon.Entity:LookupBone("ValveBiped.Bip01_Head1")
+    if bone and bone > 0 then
         local eyepos = Icon.Entity:GetBonePosition(Icon.Entity:LookupBone("ValveBiped.Bip01_Head1"))
         Icon:SetLookAt( eyepos )
         Icon:SetCamPos( eyepos - Vector(-120,0,-10) )

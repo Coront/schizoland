@@ -361,8 +361,8 @@ function AS.Inventory.BuildInventory()
     characterdisplay:SetSize( characterpanel:GetWide(), characterpanel:GetTall() )
     characterdisplay:SetFOV( 22 )
     characterdisplay:SetModel(LocalPlayer():GetModel())
-    local bone = tonumber( characterdisplay.Entity:LookupBone("ValveBiped.Bip01_Head1") )
-    if bone and isnumber( bone ) then
+    local bone = characterdisplay.Entity:LookupBone("ValveBiped.Bip01_Head1")
+    if bone and bone > 0 then
         local eyepos = characterdisplay.Entity:GetBonePosition(characterdisplay.Entity:LookupBone("ValveBiped.Bip01_Head1"))
         eyepos:Add(Vector(0,0,-23))
         characterdisplay:SetLookAt( eyepos )
