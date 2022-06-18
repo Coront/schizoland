@@ -111,7 +111,7 @@ AS.AddBaseItem("armor_combine", {
     weight = 12,
     armor = {
         ["movemult"] = 0.85,
-        [DMG_BULLET] = 35,
+        [DMG_BULLET] = 39,
         [DMG_SLASH] = 25,
         [DMG_BURN] = 20,
         [DMG_ENERGYBEAM] = 39,
@@ -170,7 +170,7 @@ AS.AddBaseItem("armor_combat", {
     weight = 15,
     armor = {
         ["movemult"] = 0.825, --Movespeed Mult
-        [DMG_BULLET] = 40, --Bullets
+        [DMG_BULLET] = 35, --Bullets
         [DMG_SLASH] = 30, --Melee
         [DMG_BURN] = 15, --Fire
         [DMG_ENERGYBEAM] = 35, --Pulse
@@ -179,12 +179,11 @@ AS.AddBaseItem("armor_combat", {
     hidden = true,
     class = "mercenary",
     craft = {
-        ["misc_scrap"] = 400,
-        ["misc_smallparts"] = 350,
-        ["misc_chemical"] = 375,
+        ["misc_scrap"] = 300,
+        ["misc_smallparts"] = 250,
+        ["misc_chemical"] = 350,
         ["misc_hide_antlion"] = 3,
         ["misc_hide_guard"] = 1,
-        ["misc_heavyplate"] = 1,
     },
 })
 
@@ -199,7 +198,7 @@ AS.AddBaseItem("armor_elite", {
     weight = 16,
     armor = {
         ["movemult"] = 0.75, --Movespeed Mult
-        [DMG_BULLET] = 46, --Bullets
+        [DMG_BULLET] = 50, --Bullets
         [DMG_SLASH] = 38, --Melee
         [DMG_BURN] = 26, --Fire
         [DMG_ENERGYBEAM] = 43, --Pulse
@@ -257,7 +256,7 @@ AS.AddBaseItem("armor_assault", {
     value = 35,
     weight = 20,
     armor = {
-        ["movemult"] = 0.75, --Movespeed Mult
+        ["movemult"] = 0.8, --Movespeed Mult
         [DMG_BULLET] = 54, --Bullets
         [DMG_SLASH] = 42, --Melee
         [DMG_BURN] = 31, --Fire

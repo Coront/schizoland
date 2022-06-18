@@ -14,13 +14,13 @@ end
 
 function PlayerMeta:AddToxic( int )
     local toxic = self:GetToxic()
-    toxic = toxic + int
+    toxic = math.Clamp( toxic + int, 0, SET.MaxToxicity )
     self:SetToxic( toxic )
 end
 
 function PlayerMeta:RemoveToxic( int )
     local toxic = self:GetToxic()
-    toxic = toxic - int
+    toxic = math.Clamp( toxic - int, 0, SET.MaxToxicity )
     self:SetToxic( toxic )
 end
 

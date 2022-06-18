@@ -68,7 +68,7 @@ function PlayerMeta:UseItem( item )
         if use.toxic > 0 then
             self:AddToxic( use.toxic )
         else
-            self:TakeToxic( use.toxic )
+            self:RemoveToxic( -use.toxic )
         end
     end
     if use.sound then
