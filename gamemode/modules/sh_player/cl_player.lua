@@ -109,7 +109,16 @@ hook.Add("PostDrawOpaqueRenderables", "AS_DeathDollArmor", function()
 end)
 
 hook.Add("PrePlayerDraw", "AS_PlayerHide", function( ply )
-    if (ply:GetMoveType() == MOVETYPE_NOCLIP and not ply:InVehicle()) and not LocalPlayer():IsDeveloping() then return true end
+    if (ply:GetMoveType() == MOVETYPE_NOCLIP and not ply:InVehicle()) and not LocalPlayer():IsDeveloping() then 
+        ply:DrawShadow( false )
+        local wep = ply:GetActiveWeapon()
+        wep:DrawShadow( false )
+        return true 
+    else
+        ply:DrawShadow( true )
+        local wep = ply:GetActiveWeapon()
+        wep:DrawShadow( true )
+    end
     if ply.HideDefault then
         ply:SetMaterial( "Models/effects/vol_light001" )
     else
