@@ -13,9 +13,15 @@ end
 
 function ENT:Use( ply )
 	self:Remove()
-	ply:AddItemToInventory( "misc_scrap", self:GetScrap() )
-	ply:AddItemToInventory( "misc_smallparts", self:GetSmallParts() )
-	ply:AddItemToInventory( "misc_chemical", self:GetChemicals() )
+	if self:GetScrap() > 0 then
+		ply:AddItemToInventory( "misc_scrap", self:GetScrap() )
+	end
+	if self:GetSmallParts() > 0 then
+		ply:AddItemToInventory( "misc_smallparts", self:GetSmallParts() )
+	end
+	if self:GetChemicals() > 0 then
+		ply:AddItemToInventory( "misc_chemical", self:GetChemicals() )
+	end
 	ply:EmitSound("entities/resources_" .. math.random( 1, 3 ) .. ".wav")
 
 	ply:ChatPrint("You have picked up " .. self:GetScrap() .. " Scrap, " .. self:GetSmallParts() .. " Small Parts, " .. self:GetChemicals() .. " Chemicals from this package.")
