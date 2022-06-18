@@ -143,14 +143,6 @@ if ( SERVER ) then
         sql.Query("UPDATE as_lockers SET items = " .. SQLStr( util.TableToJSON( self:GetInventory(), true ) ) .. " WHERE lid = " .. self:GetProfile())
     end
 
-    function ENT:Think()
-        if self:GetProfile() != 0 and CurTime() >= (self.NextResync or 0) then
-            self.NextResync = CurTime() + 5
-            self:ResyncProfile()
-            self:ResyncInventory()
-        end
-    end
-
 end
 
 -- ███╗   ██╗███████╗████████╗██╗    ██╗ ██████╗ ██████╗ ██╗  ██╗██╗███╗   ██╗ ██████╗
@@ -164,6 +156,7 @@ if ( SERVER ) then
 
     util.AddNetworkString("as_locker_syncprofile")
     util.AddNetworkString("as_locker_syncinventory")
+    util.AddNetworkString("as_locker_requestinv")
 
     function ENT:ResyncProfile()
         net.Start("as_locker_syncprofile")
@@ -179,6 +172,22 @@ if ( SERVER ) then
             net.WriteInventory( self:GetInventory() )
         net.Broadcast()
     end
+
+    net.Receive( "as_locker_requestinv", function()
+        local ent = net.ReadEntity()
+        if not IsValid( ent ) then return end
+
+        net.Start("as_locker_syncprofile")
+            net.WriteEntity( ent )
+            net.WriteUInt( ent:GetProfile(), NWSetting.ItemAmtBits )
+            net.WriteString( ent.name )
+        net.Broadcast()
+
+        net.Start("as_locker_syncinventory")
+            net.WriteEntity( ent )
+            net.WriteInventory( ent:GetInventory() )
+        net.Broadcast()
+    end)
 
 elseif ( CLIENT ) then
 
@@ -197,6 +206,15 @@ elseif ( CLIENT ) then
         local inv = net.ReadInventory()
 
         ent:SetInventory( inv )
+    end)
+
+    timer.Create( "as_autoresync_lockers", 10, 0, function()
+        for k, v in pairs( ents.FindByClass("as_locker") ) do
+            if not IsValid(v) then continue end
+            net.Start("as_locker_requestinv")
+                net.WriteEntity(v)
+            net.SendToServer()
+        end
     end)
 
 end
