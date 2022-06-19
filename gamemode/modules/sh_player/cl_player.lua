@@ -94,8 +94,8 @@ end)
 hook.Add("PostDrawOpaqueRenderables", "AS_DeathDollArmor", function()
     for k, v in pairs( player.GetAll() ) do
         if v:Alive() then continue end
-        if v:GetRagdollEntity() and IsValid(v:GetRagdollEntity()) and v.LastArmorModel then
-            local deathdoll = v:GetRagdollEntity()
+        if v:GetNWEntity("Deathdoll") and IsValid(v:GetNWEntity("Deathdoll")) and v.LastArmorModel then
+            local deathdoll = v:GetNWEntity("Deathdoll")
             if not deathdoll.ArmorOverlay then
                 deathdoll.ArmorOverlay = ClientsideModel( v.LastArmorModel )
                 deathdoll.ArmorOverlay:SetNoDraw( true )
