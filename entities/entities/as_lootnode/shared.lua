@@ -4,4 +4,4 @@ ENT.PrintName		= "Loot Node"
 ENT.Author			= "Tampy"
 ENT.Purpose			= "A loot node."
 ENT.Category		= "Aftershock"
-ENT.Spawnable		= true
+ENT.Spawnable		= false
