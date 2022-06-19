@@ -430,6 +430,7 @@ AS.AddBaseItem("misc_axel", {
     value = 10,
     weight = 5,
     hidden = true,
+    class = "engineer",
     craft = {
         ["misc_scrap"] = 20,
         ["misc_smallparts"] = 30,
