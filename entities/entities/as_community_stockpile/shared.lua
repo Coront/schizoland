@@ -111,16 +111,20 @@ if ( SERVER ) then
         local ent = net.ReadEntity()
         if not IsValid(ent) then return end
 
-        net.Start("as_stockpile_synccommunity")
-            net.WriteEntity( ent )
-            net.WriteUInt( ent:GetCommunity(), NWSetting.CommunityAmtBits )
-            net.WriteString( ent:GetCommunityName() )
-        net.Send( ply )
+        if ent.GetCommunity then
+            net.Start("as_stockpile_synccommunity")
+                net.WriteEntity( ent )
+                net.WriteUInt( ent:GetCommunity(), NWSetting.CommunityAmtBits )
+                net.WriteString( ent:GetCommunityName() )
+            net.Send( ply )
+        end
 
-        net.Start("as_stockpile_syncresources")
-            net.WriteEntity( ent )
-            net.WriteInventory( ent:GetResources() )
-        net.Send( ply )
+        if ent.GetResources then
+            net.Start("as_stockpile_syncresources")
+                net.WriteEntity( ent )
+                net.WriteInventory( ent:GetResources() )
+            net.Send( ply )
+        end
     end)
 
 elseif ( CLIENT ) then

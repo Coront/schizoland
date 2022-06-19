@@ -94,6 +94,9 @@ function PlayerMeta:CreateDisplayObject( vend, item )
 	ent:SetPackaged( true )
 	ent:SetDisplayItem( item )
 	ent:SetObjectOwner( self )
+    ent:ResyncParent()
+    ent:ResyncPackage()
+	ent:ResyncItem()
 end
 
 function PlayerMeta:PurchaseItem( ent, reqs, item, amt )

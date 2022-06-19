@@ -49,7 +49,7 @@ function ENT:SetPackaged( bool )
 end
 
 function ENT:GetPackaged()
-    return self.Packed or true
+    return self.Packed or false
 end
 
 function ENT:SetParentVendor( ent )
@@ -69,6 +69,10 @@ function ENT:Unpack()
     self:SetModel( AS.Items[self:GetDisplayItem()].model )
     self:PhysicsInit( SOLID_VPHYSICS )
     self:GetPhysicsObject():Wake()
+
+    self:ResyncItem()
+    self:ResyncPackage()
+    self:ResyncParent()
 end
 
 function ENT:Think()
@@ -97,7 +101,7 @@ if ( CLIENT ) then
             if not ent:GetPackaged() then
                 local item = ent:GetDisplayItem()
                 local vend = ent:GetParentVendor()
-                if IsValid(vend) then return end
+                if not IsValid(vend) then return end
                 if not vend:GetSales()[item] then return end
                 local scrap = vend:GetSales()[item].scrap
                 local sp = vend:GetSales()[item].smallp
