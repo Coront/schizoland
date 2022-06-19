@@ -690,3 +690,20 @@ AS.AddBaseItem("wep_breach", {
         ["misc_gunpowder"] = 2,
     },
 })
+
+AS.AddBaseItem("wep_defib", {
+    name = "Defibrillator",
+    desc = "A defibrillation kit. Useful for reviving dead allies.",
+    category = "weapon",
+    model = "models/weapons/w_defuser.mdl",
+    wep = "weapon_defib",
+    value = 80,
+    weight = 2,
+    class = "scientist",
+    craft = {
+        ["misc_scrap"] = 150,
+        ["misc_smallparts"] = 80,
+        ["misc_chemical"] = 120,
+        ["misc_electronicparts"] = 2,
+    },
+})

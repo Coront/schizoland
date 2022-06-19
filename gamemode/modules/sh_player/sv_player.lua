@@ -43,6 +43,10 @@ function GM:PlayerSpawn( ply )
         return
     end
 
+    if IsValid( ply:GetNWEntity( "Deathdoll" ) ) then
+        ply:GetNWEntity( "Deathdoll" ):Remove()
+    end
+
     --Everything else here will be ran if the player has loaded their character.
     if AS.Maps[game.GetMap()] and AS.Maps[game.GetMap()].Spawns then
         ply:SetPos( table.Random(AS.Maps[game.GetMap()].Spawns) )
@@ -121,20 +125,7 @@ function GM:OnPlayerHitGround( ply, water, floater, speed )
     end
 end
 
-function GM:PlayerDeath( victim, inflictor, attacker )
-    local length = tobool(GetConVar("as_respawnwait"):GetInt()) and SET.DeathWait or 1
-    victim:SetNWInt("AS_NextRespawn", CurTime() + length )
-    victim:SetNWInt("AS_LastDeath", CurTime() )
-end
-
-function GM:PlayerDeathThink( ply )
-    if CurTime() > (ply:GetNWInt("AS_NextRespawn") or 0) then
-        ply:Spawn()
-    end
-    return false
-end
-
-hook.Add( "DoPlayerDeath", "AS_PlayerDeath", function( ply, attacker, dmginfo )
+function GM:DoPlayerDeath( ply, attacker, dmg )
     ply:PlayCharacterSound( "Death", 95 )
     ply:ChatPrint("You died.")
 
@@ -238,13 +229,52 @@ hook.Add( "DoPlayerDeath", "AS_PlayerDeath", function( ply, attacker, dmginfo )
         attacker:AddToStatistic( "kills_player", 1 )
     end
 
+    --Rag
+    local rag = ents.Create("prop_ragdoll")
+    ply:SetNWEntity( "Deathdoll", rag )
+    rag.Owner = ply
+    rag:SetModel( ply:GetModel() )
+    rag:SetPos( ply:GetPos() )
+    rag:SetAngles( ply:GetAngles() )
+    rag:Spawn()
+    local bones = rag:GetPhysicsObjectCount()
+	for i=1,bones-1 do
+		local bone = rag:GetPhysicsObjectNum( i )
+		if bone then
+			local bonepos, boneang = ply:GetBonePosition( rag:TranslatePhysBoneToBone( i ) )
+			bone:SetPos( bonepos )
+			bone:SetAngles( boneang )
+		end
+	end
+    rag:SetCollisionGroup( COLLISION_GROUP_WEAPON )
+    timer.Simple( 60, function() 
+        if IsValid( rag ) then
+            rag:Remove()
+        end
+    end)
+
+    ply.LastDeathPos = ply:GetPos()
     ply:ClearAllStatuses()
     ply:ResyncStatuses()
     ply:SetHealth( 15 ) --This is just so it doesnt save 0 to the player's health in the database.
     ply:SaveCharacter()
 
     ply:AddToStatistic( "deaths", 1 )
-end)
+end
+
+function GM:PlayerDeath( victim, inflictor, attacker )
+    local length = tobool(GetConVar("as_respawnwait"):GetInt()) and SET.DeathWait or 1
+    victim:SetNWInt("AS_NextRespawn", CurTime() + length )
+    victim:SetNWInt("AS_LastDeath", CurTime() )
+end
+
+function GM:PlayerDeathThink( ply )
+    if CurTime() > (ply:GetNWInt("AS_NextRespawn") or 0) then
+        ply.NoDefib = 0
+        ply:Spawn()
+    end
+    return false
+end
 
 function GM:GetFallDamage( ply, speed )
     return math.max(1, ( speed - 526.5 ) * ( ply:GetMaxHealth() / 396 ))
