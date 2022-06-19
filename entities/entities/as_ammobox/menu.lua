@@ -41,10 +41,14 @@ net.Receive("as_ammobox_open", function()
         local id = AS.Items[k]
 
         local item = itemlist:Add("DPanel")
-        item:SetSize(itemlist:GetWide() - 15, 90)
+        item:SetSize(itemlist:GetWide() - 16, 90)
         function item:Paint(w, h)
-            surface.SetDrawColor( COLHUD_PRIMARY )
+            local col = COLHUD_PRIMARY:ToTable()
+            surface.SetDrawColor( col[1], col[2], col[3], 100 )
             surface.DrawRect( 0, 0, w, h )
+
+            surface.SetDrawColor( COLHUD_DEFAULT )
+            surface.DrawOutlinedRect( 0, 0, w, h, 1 )
         end
 
         local itemname = id.name or k .. "?name"
@@ -63,10 +67,22 @@ net.Receive("as_ammobox_open", function()
                 net.WriteString( k )
             net.SendToServer()
         end
+        function icon:Paint( w, h )
+            local col = id.color and id.color:ToTable() or COLHUD_PRIMARY:ToTable()
+            surface.SetDrawColor( col[1], col[2], col[3], 50 )
+            surface.DrawRect( 0, 0, w, h )
+
+            if id.color then
+                surface.SetDrawColor( id.color )
+            else
+                surface.SetDrawColor( COLHUD_PRIMARY )
+            end
+            surface.DrawOutlinedRect( 0, 0, w, h, 1 )
+        end
 
         local name = vgui.Create("DLabel", item)
         name:SetFont("TargetIDSmall")
-        name:SetText( itemname )
+        name:SetText( itemname .. " (" .. ent:GetAmount() .. ")" )
         name:SetContentAlignment(4)
         name:SizeToContents()
         name:SetPos( 85, 10 )

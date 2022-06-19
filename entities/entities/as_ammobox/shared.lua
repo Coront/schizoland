@@ -5,8 +5,19 @@ ENT.Author			= "Tampy"
 ENT.Purpose			= "Here dr freeman, gotta reload"
 ENT.Category		= "Aftershock"
 ENT.Spawnable		= true
+ENT.Editable        = true
 
-ENT.Amount = 4 --Amount of ammo boxes a player receives
+function ENT:SetupDataTables()
+    self:NetworkVar( "Int", 0, "Amount", {
+        KeyName = "Ammo Box Amount",
+        Edit = {
+            type = "Int",
+            min = 1,
+            max = 20,
+        }
+    } )
+end
+
 ENT.Items = { --Ammo type players can select (can be regular items too for whatever reason.)
     --Key is itemid, value is order (greatest to least)
     ["ammo_9mm"] = 1,

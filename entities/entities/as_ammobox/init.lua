@@ -42,12 +42,12 @@ net.Receive("as_ammobox_take", function( _, ply )
 	if ent:GetPlayers()[ply:SteamID()] then ply:ChatPrint("You have already redeemed your ammo resupply.") return end
 
 	ent:AddPlayer( ply:SteamID() )
-	ply:AddItemToInventory( ammo, ent.Amount )
-	ply:ChatPrint("You have taken " .. AS.Items[ammo].name .. " (" .. ent.Amount .. ") from the resupply box.")
+	ply:AddItemToInventory( ammo, ent:GetAmount() )
+	ply:ChatPrint("You have taken " .. AS.Items[ammo].name .. " (" .. ent:GetAmount() .. ") from the resupply box.")
 
-	plogs.PlayerLog(ply, "Items", ply:NameID() .. " took " .. AS.Items[ammo].name .. " (" .. ent.Amount .. ") from a resupply box.", {
+	plogs.PlayerLog(ply, "Items", ply:NameID() .. " took " .. AS.Items[ammo].name .. " (" .. ent:GetAmount() .. ") from a resupply box.", {
 		["Name"] 	= ply:Name(),
 		["SteamID"]	= ply:SteamID(),
-		["Item"]	= AS.Items[ammo].name .. " (" .. ent.Amount .. ")",
+		["Item"]	= AS.Items[ammo].name .. " (" .. ent:GetAmount() .. ")",
 	})
 end)
