@@ -49,7 +49,7 @@ function ENT:SetPackaged( bool )
 end
 
 function ENT:GetPackaged()
-    return self.Packed
+    return self.Packed or true
 end
 
 function ENT:SetParentVendor( ent )
@@ -97,7 +97,8 @@ if ( CLIENT ) then
             if not ent:GetPackaged() then
                 local item = ent:GetDisplayItem()
                 local vend = ent:GetParentVendor()
-                if not vend or not vend:GetSales()[item] then return end
+                if IsValid(vend) then return end
+                if not vend:GetSales()[item] then return end
                 local scrap = vend:GetSales()[item].scrap
                 local sp = vend:GetSales()[item].smallp
                 local chem = vend:GetSales()[item].chemical
@@ -172,20 +173,26 @@ if ( SERVER ) then
         local ent = net.ReadEntity()
         if not IsValid(ent) then return end
 
-        net.Start("as_vendor_display_syncitem")
-            net.WriteEntity( ent )
-            net.WriteString( ent:GetDisplayItem() )
-        net.Send( ply )
+        if ent.GetDisplayItem then
+            net.Start("as_vendor_display_syncitem")
+                net.WriteEntity( ent )
+                net.WriteString( ent:GetDisplayItem() )
+            net.Send( ply )
+        end
 
-        net.Start("as_vendor_display_syncpackage")
-            net.WriteEntity( ent )
-            net.WriteBool( ent:GetPackaged() )
-        net.Send( ply )
+        if ent.GetPackaged then
+            net.Start("as_vendor_display_syncpackage")
+                net.WriteEntity( ent )
+                net.WriteBool( ent:GetPackaged() )
+            net.Send( ply )
+        end
 
-        net.Start("as_vendor_display_syncparent")
-            net.WriteEntity( ent )
-            net.WriteEntity( ent:GetParentVendor() )
-        net.Send( ply )
+        if ent.GetParentVendor then
+            net.Start("as_vendor_display_syncparent")
+                net.WriteEntity( ent )
+                net.WriteEntity( ent:GetParentVendor() )
+            net.Send( ply )
+        end
     end)
 
 elseif ( CLIENT ) then

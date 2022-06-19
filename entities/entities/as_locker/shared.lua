@@ -39,7 +39,7 @@ function ENT:GetProfile()
 end
 
 function ENT:GetProfileName()
-    return self.name
+    return self.name or ""
 end
 
 function ENT:SetInventory( tbl )
@@ -162,7 +162,7 @@ if ( SERVER ) then
         net.Start("as_locker_syncprofile")
             net.WriteEntity( self )
             net.WriteUInt( self:GetProfile(), NWSetting.ItemAmtBits )
-            net.WriteString( self.name )
+            net.WriteString( self:GetProfileName() )
         net.Broadcast()
     end
 
@@ -173,20 +173,20 @@ if ( SERVER ) then
         net.Broadcast()
     end
 
-    net.Receive( "as_locker_requestinv", function()
+    net.Receive( "as_locker_requestinv", function( _, ply )
         local ent = net.ReadEntity()
         if not IsValid( ent ) then return end
 
         net.Start("as_locker_syncprofile")
             net.WriteEntity( ent )
             net.WriteUInt( ent:GetProfile(), NWSetting.ItemAmtBits )
-            net.WriteString( ent.name )
-        net.Broadcast()
+            net.WriteString( ent:GetProfileName() )
+        net.Send( ply )
 
         net.Start("as_locker_syncinventory")
             net.WriteEntity( ent )
             net.WriteInventory( ent:GetInventory() )
-        net.Broadcast()
+        net.Send( ply )
     end)
 
 elseif ( CLIENT ) then
