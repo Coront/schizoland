@@ -182,6 +182,12 @@ function SWEP:Think()
 						ParticleEffect((cl and cl or "blood_impact_red_01"), tr.HitPos, tr.HitNormal:Angle(), ent)
 					end
 					self:GetOwner():IncreaseSkillExperience( "strength", SKL.Strength.incamt )
+					if ent:IsPlayer() and self.StatusEffects and SERVER then
+						for k, v in pairs( self.StatusEffects ) do
+							ent:AddStatus( k, v )
+						end
+						ent:ResyncStatuses()
+					end
 				else
 					hit = true
 					tr2 = self.Owner:GetEyeTrace() -- separate trace for the decal, because decals don't like util.TraceHull :(

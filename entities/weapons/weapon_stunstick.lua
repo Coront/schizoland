@@ -43,3 +43,6 @@ SWEP.Damage = 20
 SWEP.HitRange = 75
 SWEP.NextSwing = 1
 SWEP.ImpactDelay = 0.1
+SWEP.StatusEffects = {
+	["stunned"] = 1.5,
+}
