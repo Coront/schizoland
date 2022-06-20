@@ -41,9 +41,9 @@ function PlayerMeta:ClearToxicated()
 end
 
 function PlayerMeta:IsToxicated()
-    local toxicated, type = self:GetToxicated()
+    local toxicated = self:GetToxicated()
     if toxicated != "none" then
-        return true, type
+        return true, toxicated
     end
     return false
 end

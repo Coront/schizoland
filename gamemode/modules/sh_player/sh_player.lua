@@ -14,7 +14,7 @@ function GM:Move( ply, mv ) --I'm intentionally overriding this so we don't use 
     --Toxication
     local toxic, type = ply:IsToxicated()
     if toxic then
-        local mult = type == "light" and 0.8 or type == "heavy" and 0.7 or 1
+        local mult = type == "light" and 0.9 or type == "heavy" and 0.75 or 1
         movespeed = toxic and movespeed * mult or movespeed
         sprintmovespeed = toxic and sprintmovespeed * mult or sprintmovespeed
     end
