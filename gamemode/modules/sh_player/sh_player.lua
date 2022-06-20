@@ -95,6 +95,9 @@ hook.Add( "KeyPress", "AS_Treatment", function( ply, key )
         local treatlength = 1
         treatlength = treatlength + (ply:GetSkillLevel("treatment") * SKL.Treatment.inceffectlength)
         ent:AddStatus( "treatment", treatlength ) --This needs to be serverside because we as players dont see other player's effects.
+        if ply:IsSkillMaxed( "treatment" ) then
+            ent:AddStatus( "treatmentdamagereduce", 5 )
+        end
         ent:ResyncStatuses()
     end
 end)

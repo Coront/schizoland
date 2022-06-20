@@ -71,6 +71,13 @@ AS.AddEffect( "treatment", {
     type = "positive",
 } )
 
+AS.AddEffect( "treatmentdamagereduce", {
+    name = "Damage Reduction",
+    desc = "Reduces incoming damage by 5%.",
+    icon = "icon16/shield_add.png",
+    type = "positive",
+} )
+
 AS.AddEffect( "medicalitem", {
     name = "Healing",
     desc = "Regain health over time.",
@@ -152,5 +159,11 @@ end)
 hook.Add( "EntityTakeDamage", "AS_Effect_Painkiller", function( target, dmginfo )
     if target:IsPlayer() and target:HasStatus( "painkillers" ) then
         dmginfo:SetDamage( dmginfo:GetDamage() * 0.9 )
+    end
+end)
+
+hook.Add( "EntityTakeDamage", "AS_Effect_TreatmentDamageReduce", function( target, dmginfo )
+    if target:IsPlayer() and target:HasStatus( "treatmentdamagereduce" ) then
+        dmginfo:SetDamage( dmginfo:GetDamage() * 0.95 )
     end
 end)

@@ -45,6 +45,11 @@ function PlayerMeta:GetSkillLevel( skill )
     return level
 end
 
+function PlayerMeta:IsSkillMaxed( skill )
+    if self:GetSkillLevel( skill ) >= AS.Skills[skill].max then return true end
+    return false
+end
+
 function PlayerMeta:IncreaseSkillExperience( skill, amt )
     if not AS.Skills[skill] then AS.LuaError("Attempting to index a non-existant skill - " .. skill) return end
     amt = amt > 0 and amt or 1
