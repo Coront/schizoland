@@ -33,7 +33,6 @@ hook.Add( "HUDPaint", "AS_AmmoBox", function()
         if distance > pickupdist then
             opacity = 255 * Lerp( (maxdist - distance) / diff, 0, 1 )
         end
-        local pickupkey = distance < pickupdist and "[" .. string.upper(KEYBIND_USE) .. "] Pickup" or ""
         local col = COLHUD_DEFAULT:ToTable()
     
         draw.SimpleTextOutlined( "Ammo Supply Box", "TargetID", pos.x, pos.y, Color( col[1], col[2], col[3], opacity ), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 1, Color( 0, 0, 0, opacity ) )

@@ -2,7 +2,7 @@ AddCSLuaFile()
 
 SWEP.PrintName = "Lockpick"
 SWEP.Category = "Aftershock"
-SWEP.Spawnable = true
+SWEP.Spawnable = false
 SWEP.Base = "fas2_base_melee"
 SWEP.Slot = 1
 

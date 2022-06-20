@@ -3,7 +3,7 @@ AddCSLuaFile()
 ENT.Type = "anim"
 ENT.Base = "base_gmodentity"
 ENT.PrintName = "Coalition Canister"
-ENT.Category = "Aftershock - Automated Events"
+ENT.Category = "Aftershock - Event Spawner"
 ENT.Spawnable = true 
 
 if ( SERVER ) then

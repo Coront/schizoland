@@ -3,7 +3,7 @@ ENT.Base 			= "base_entity"
 ENT.PrintName		= "Ammo Box"
 ENT.Author			= "Tampy"
 ENT.Purpose			= "Here dr freeman, gotta reload"
-ENT.Category		= "Aftershock"
+ENT.Category		= "Aftershock - Event"
 ENT.Spawnable		= true
 ENT.Editable        = true
 
