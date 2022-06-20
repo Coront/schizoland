@@ -10,8 +10,8 @@ ENT.PickupDelay     = 60
 
 ENT.ProfileCost = { --Cost of resources/items to make a profile
     ["misc_scrap"] = 100,
-    ["misc_smallparts"] = 150,
-    ["misc_chemical"] = 200,
+    ["misc_smallparts"] = 80,
+    ["misc_chemical"] = 75,
 }
 ENT.ProfileCapacity = 300
 
