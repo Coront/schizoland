@@ -213,6 +213,27 @@ AS.AddBaseItem("food_orange", {
     }
 })
 
+AS.AddBaseItem("food_toxicfruit", {
+    name = "Toxic Fruit",
+    desc = "A toxic fruit. You probably don't want to eat this.",
+    category = "food",
+    model = "models/props/de_inferno/crate_fruit_break_gib2.mdl",
+    value = 2,
+    weight = 0.15,
+    use = {
+        hunger = 3,
+        thirst = 8,
+        toxic = 100,
+        soundcs = "npc/headcrab/headbite.wav",
+    },
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 0,
+        ["misc_smallparts"] = 0,
+        ["misc_chemical"] = 4,
+    }
+})
+
 AS.AddBaseItem("food_melon", {
     name = "Melon Slice",
     desc = "A freshly cut melon that was grown recently.",

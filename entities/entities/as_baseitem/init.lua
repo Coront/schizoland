@@ -61,6 +61,21 @@ function ENT:Think()
 		self:SetItem("food_dirty_water")
 		self:EmitSound("ambient/water/water_spray" .. math.random( 1, 3 ) .. ".wav")
 	end
+
+	--Toxic Fruit
+	if IsValid(self) and self:GetItem() == "food_orange" and self:ToxicPresent() then
+		self:SetItem("food_toxicfruit")
+		self:EmitSound("physics/flesh/flesh_squishy_impact_hard" .. math.random( 1, 4 ) .. ".wav")
+	end
+end
+
+function ENT:ToxicPresent()
+	for k, v in pairs( ents.FindByClass("as_toxicrock") ) do
+		if self:GetPos():Distance(v:GetPos()) <= v:GetToxicDistance() then
+			return true
+		end
+	end
+	return false
 end
 
 function ENT:Touch( otherEnt )
