@@ -102,6 +102,14 @@ function ENT:CanMine()
         filter = {self},
     })
     if not tr.Hit then return false end
+
+    local tr2 = util.TraceLine({
+        start = self:GetPos(),
+        endpos = self:GetPos() + Vector( 0, 0, 99999 ),
+        filter = {self},
+    })
+    if not tr2.HitSky then return false end
+
     if self:GetPower() < 0 then return false end
     return true
 end
