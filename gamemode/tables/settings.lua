@@ -78,6 +78,8 @@ PERM.PropBlacklist = { --Props that are forbidden from being spawned
     ["models/props/CS_militia/footlocker01_closed.mdl"] = true,
     ["models/props_combine/combinethumper001a.mdl"] = true,
     ["models/props_combine/combinethumper002.mdl"] = true,
+    ["models/props_radiostation/radio_antenna01.mdl"] = true,
+    ["models/props_silo/silo_tower01.mdl"] = true,
 }
 PERM.ToolWhitelist = { --Tools that regular players can use
     ["precision"] = true,
