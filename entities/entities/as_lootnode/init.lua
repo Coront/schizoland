@@ -30,11 +30,18 @@ function ENT:GetScavengesLeft()
 end
 
 function ENT:RandomizeNode() --This will automatically select a type of resource node for us. It's basically scrap vs chems.
-    local roll = math.random( 0, 10 )
+    local curScrap = 0
+    for k, v in pairs( ents.FindByClass("as_lootnode") ) do
+        if v:GetResourceType() == "Scrap" then
+            curScrap = curScrap + 1
+        end
+    end
+    local maxnodes = math.floor( (NOD.Maximum * NOD.SpawnMult) * (AS.Maps[game.GetMap()] and AS.Maps[game.GetMap()].NodeMult or 1) )
+    local scrapToSpawn = (maxnodes - #ents.FindByClass("as_lootnode")) - math.Round(maxnodes * NOD.ChemRatio) + 1
 
-    if roll <= 7 then
+    if scrapToSpawn > 0 then
         self:SetResourceType( "Scrap" ) --Scrap wins
-        self:SetScavengesLeft( math.random( NOD.ScrapMinScavs, NOD.ScrapMaxScavs ) ) --Amount of times a player can scavenge it before despawning.
+        self:SetScavengesLeft( math.random( NOD.ScrapMinScavs, NOD.ScrapMaxScavs ) )
     else
         self:SetResourceType( "Chemical" )
         self:SetScavengesLeft( math.random( NOD.ChemMinScavs, NOD.ChemMaxScavs ) )
