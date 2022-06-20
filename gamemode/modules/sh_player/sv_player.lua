@@ -284,24 +284,28 @@ end)
 hook.Add( "Think", "AS_PassiveHealing", function()
     for k, v in pairs(player.GetAll()) do
         if not v:IsLoaded() then continue end --We skip players who arent loaded for this check.
-        if v:Health() >= v:GetMaxHealth() then continue end --Skip players at full hp, no reason for them to have this check.
-
-        local hpToHeal = 0
-        if v:GetHunger() >= SAT.SatBuffs and v:GetThirst() >= SAT.SatBuffs then
-            hpToHeal = hpToHeal + 1
-        end
-        if v:IsSitting() then
-            hpToHeal = hpToHeal + 1
-        end
-        for k2, v2 in pairs(ents.FindByClass("env_fire")) do
-            if v:GetPos():Distance(v2:GetPos()) > 150 then continue end
-            hpToHeal = hpToHeal + 1
-            break
-        end
-        if hpToHeal == 0 then continue end --We skip this player because they cannot be healed.
+        if v:Health() >= v:GetMaxHealth() and v:GetToxic() <= 0 then continue end --Skip players at full hp, no reason for them to have this check.
 
         if CurTime() > (v.NextHealthUpdate or 0) then
+            local hpToHeal = 0
+            if v:GetHunger() >= SAT.SatBuffs and v:GetThirst() >= SAT.SatBuffs then
+                hpToHeal = hpToHeal + 1
+            end
+            if v:IsSitting() then
+                hpToHeal = hpToHeal + 1
+            end
+            for k2, v2 in pairs(ents.FindByClass("env_fire")) do
+                if v:GetPos():Distance(v2:GetPos()) > 150 then continue end
+                hpToHeal = hpToHeal + 1
+                if v:GetToxic() > 0 then
+                    v:RemoveToxic( 1 )
+                end
+                break
+            end
+
             v.NextHealthUpdate = CurTime() + SET.HealthUpdating
+            if hpToHeal == 0 then continue end --We skip this player because they cannot be healed.
+
             v:SetHealth( v:Health() + hpToHeal )
             if v:Health() >= v:GetMaxHealth() then
                 v:SetHealth( v:GetMaxHealth() )
