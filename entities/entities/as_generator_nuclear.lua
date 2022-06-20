@@ -11,4 +11,4 @@ ENT.MaxHealth = 500 --Our health before being destroyed.
 ENT.Fuel = "misc_uranium" --What we need to be fueled.
 ENT.FuelLength = 60 --How long our fuel should last for each fuel item inserted (in seconds).
 ENT.Sound = "ambient/machines/combine_shield_loop3.wav" --Passive loop sound we play
-ENT.PowerProduced = 150 --The amount of potential electricity we will produce. Basically how much to make when turned on.
+ENT.PowerProduced = 250 --The amount of potential electricity we will produce. Basically how much to make when turned on.
