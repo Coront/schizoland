@@ -1,6 +1,6 @@
 AS.AddBaseItem("vehicle_firecrackerred", {
     name = "Red Fire Cracker",
-    desc = "Fast speed but terrible steering. Seats 4 people and can carry 80 pounds of items.",
+    desc = "Fast speed but terrible steering. Seats 4 people and can carry 150 pounds of items.",
     category = "vehicle",
     model = "models/source_vehicles/car001a_hatchback_skin0.mdl",
     ent = "car001a_skin0",
@@ -44,7 +44,7 @@ AS.AddBaseItem("vehicle_firecrackeryellow", {
 
 AS.AddBaseItem("vehicle_markswagon", {
     name = "Mark-S Wagon",
-    desc = "Average speed and controllable steering. Seats 2 people and can carry 150 pounds of items.",
+    desc = "Average speed and controllable steering. Seats 2 people and can carry 200 pounds of items.",
     category = "vehicle",
     model = "models/source_vehicles/car002a.mdl",
     ent = "car004a",
