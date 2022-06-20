@@ -114,6 +114,11 @@ if SERVER then
 
         self.FullyLoadedCharacter = true --Don't touch this, although it looks pointless it's a failsafe to prevent character's data from getting wiped should they ever encounter an error while loading.
 
+        for k, v in pairs( player.GetAll() ) do
+            if self == v then continue end
+            v:ChatPrint( self:Nickname() .. " has joined the server." )
+        end
+
         if self:InCommunity() and table.Count(Communities[self:GetCommunity()].wars) >= 1 then
             self:ChatPrint("You are currently at war with other communities. Keep your eyes peeled.")
         end

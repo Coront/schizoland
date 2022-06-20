@@ -9,14 +9,6 @@
 function GM:ShowHelp( ply ) ply:SendLua( "gui.OpenURL( GAMEMODE.Discord )" ) end --Discord
 function GM:ShowTeam( ply ) ply:ConCommand( "as_settings" ) end --Settings menu
 
-function GM:PlayerConnect( name, ip )
-    if (SERVER) then
-        for k, v in pairs( player.GetAll() ) do
-            v:ChatPrint( name .. " has joined the server." )
-        end
-    end
-end
-
 function GM:PlayerInitialSpawn( ply ) --Player's first spawn.
     ply:SetNWBool( "as_spawned", false ) --Player just loaded in, they have not selected their profile yet.
     if ply:GetInfoNum("as_acknowledgerules", 0) < 1 then
