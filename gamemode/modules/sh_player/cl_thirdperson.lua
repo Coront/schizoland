@@ -10,6 +10,7 @@ hook.Add( "CalcView", "AS_Thirdperson", function( ply, pos, angles, lastfov )
     if not Thirdperson.Enabled then return end
     if tobool(GetConVar("as_thirdperson_fpads"):GetInt()) and IsValid(ply:GetActiveWeapon()) and ply:GetActiveWeapon().dt and ply:GetActiveWeapon().dt.Status == FAS_STAT_ADS then return end
     if ply:InVehicle() then return end
+    if ply.Sitting then return end
     if not ply:Alive() then return end
 
     local dist, side, up = math.Clamp( GetConVar("as_thirdperson_distance"):GetInt(), -20, 200 ), math.Clamp( GetConVar("as_thirdperson_side"):GetInt(), -40, 40 ), math.Clamp( GetConVar("as_thirdperson_up"):GetInt(), -20, 40 )

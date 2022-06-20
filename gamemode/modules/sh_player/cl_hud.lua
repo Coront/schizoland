@@ -306,7 +306,6 @@ function AftershockHUD()
     local targetinfo = tobool(GetConVar("as_hud_targetinfo"):GetInt())
     local target = LocalPlayer():GetActiveTarget()
     if targetinfo and target and IsValid(target) and target:Alive() then
-
         local col = (target:IsNextBot() or target:IsNPC()) and (target.Hostile and target:Hostile() or false) and COLHUD_BAD:ToTable() or COLHUD_DEFAULT:ToTable()
         col = target:IsPlayer() and target:InCommunity() and (target:GetCommunity() == LocalPlayer():GetCommunity() or CommunityAllies[target:GetCommunity()]) and COLHUD_GOOD:ToTable() or col
         col = target:IsPlayer() and target:InCommunity() and (CommunityWars[target:GetCommunity()]) and COLHUD_BAD:ToTable() or col
@@ -475,7 +474,8 @@ hook.Add( "PlayerStartVoice", "AS_VoiceStart", function( ply )
     label:SizeToContents()
     label:SetColor( AS.Classes[ply:GetASClass()].color )
 
-    CharacterIcon( ply:GetModel(), 0, 0, 60, 60, panel, nil, Color( 0, 0, 0, 0 ))
+    local size = 60 * HUD_SCALE
+    CharacterIcon( ply:GetModel(), 0, 0, size, size, panel, nil, Color( 0, 0, 0, 0 ))
     HUD_TALKINGPLAYERSPANELS[ply] = panel
 
     return true --Hides the default voice UI
