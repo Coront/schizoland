@@ -74,6 +74,10 @@ PERM.PropBlacklist = { --Props that are forbidden from being spawned
     ["models/props_phx/huge/road_long.mdl"] = true,
     ["models/props_phx/huge/road_medium.mdl"] = true,
     ["models/props_phx/huge/road_short.mdl"] = true,
+    ["models/props_c17/Lockers001a.mdl"] = true,
+    ["models/props/CS_militia/footlocker01_closed.mdl"] = true,
+    ["models/props_combine/combinethumper001a.mdl"] = true,
+    ["models/props_combine/combinethumper002.mdl"] = true,
 }
 PERM.ToolWhitelist = { --Tools that regular players can use
     ["precision"] = true,
