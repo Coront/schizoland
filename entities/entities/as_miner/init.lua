@@ -57,7 +57,7 @@ util.AddNetworkString("as_miner_takeitems")
 
 net.Receive( "as_miner_togglepower", function( _, ply ) 
     local ent = net.ReadEntity()
-    if ent:GetClass() != "as_miner" then return end
+    if ent:GetClass() != "as_miner" and ent:GetClass() != "as_miner_large" then return end
     if ply:GetPos():Distance( ent:GetPos() ) > 300 then ply:ChatPrint("You are too far to toggle the state of this miner.") return end
     if ply:GetASClass() != "scavenger" then ply:ChatPrint("You must be a scavenger to manage this miner.") return end
     local state = ent:GetActiveState()
@@ -77,7 +77,7 @@ end)
 
 net.Receive( "as_miner_repair", function( _, ply )
     local ent = net.ReadEntity()
-    if ent:GetClass() != "as_miner" then return end
+    if ent:GetClass() != "as_miner" and ent:GetClass() != "as_miner_large" then return end
 
     if ent:Health() >= ent:GetMaxHealth() then ply:ChatPrint("This miner does not need to be repaired.") return end
     if ply:GetPos():Distance( ent:GetPos() ) > 300 then ply:ChatPrint("You are too far to repair this miner.") return end
@@ -88,7 +88,7 @@ end)
 
 net.Receive( "as_miner_takeitems", function( _, ply ) 
     local ent = net.ReadEntity()
-    if ent:GetClass() != "as_miner" then return end
+    if ent:GetClass() != "as_miner" and ent:GetClass() != "as_miner_large" then return end
 
     if ply:GetPos():Distance(ent:GetPos()) >= 300 then ply:ChatPrint("You are too far to collect from this miner.") return end
     if table.Count(ent:GetInventory()) <= 0 then return end

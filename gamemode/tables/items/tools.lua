@@ -283,7 +283,7 @@ AS.AddBaseItem("tool_miner", {
     name = "Automated Miner",
     desc = "This thing will pound the ground to dig out usable resources for you. Would be incredibly useful if you had an army of them. Requires 75 Electricity.",
     category = "tool",
-    model = "models/props_combine/combinethumper001a.mdl",
+    model = "models/props_combine/combinethumper002.mdl",
     ent = "as_miner",
     value = 300,
     weight = 15,
@@ -295,6 +295,23 @@ AS.AddBaseItem("tool_miner", {
         ["misc_sensorpod"] = 1,
         ["misc_electronicparts"] = 3,
         ["misc_servo"] = 4,
+    },
+})
+
+AS.AddBaseItem("tool_miner_large", {
+    name = "Large Automated Miner",
+    desc = "Drives the Antlions crazy. Requires 750 Electricity.",
+    category = "tool",
+    model = "models/props_combine/combinethumper001a.mdl",
+    ent = "as_miner_large",
+    value = 300,
+    weight = 100,
+    class = "scavenger",
+    craft = {
+        ["misc_scrap"] = 200,
+        ["misc_smallparts"] = 250,
+        ["misc_chemical"] = 100,
+        ["tool_miner"] = 10,
     },
 })
 
