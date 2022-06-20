@@ -665,7 +665,7 @@ AS.AddBaseItem("wep_lockpick", {
     wep = "weapon_lockpick",
     value = 80,
     weight = 1.5,
-    class = "scientist",
+    class = "engineer",
     craft = {
         ["misc_scrap"] = 50,
         ["misc_smallparts"] = 30,

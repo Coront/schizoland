@@ -38,7 +38,7 @@ function SWEP:CalcView(ply, pos, ang, fov)
 		self.CurFOVMod = Lerp(FT * 10, self.CurFOVMod, 0)
 	end
 	
-	fov = fov - self.CurFOVMod
+	fov = fov - (self.CurFOVMod * (self.CurFOVMod / 100))
 	
 	if intensity > 0 then -- don't calculate shit that's not on to save performance
 		vel = self.Owner:GetVelocity():Length()
@@ -68,7 +68,7 @@ function SWEP:AdjustMouseSensitivity()
 
 		if self.ScopeMat then
 			local fov = GetConVarNumber("fov_desired")
-			local diff = (fov - self.AimFOV)
+			local diff = (fov - (self.AimFOV * (self.AimFOV / 100)))
 			return 1 * (diff / fov)
 		end
 

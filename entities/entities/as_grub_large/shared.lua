@@ -12,7 +12,7 @@ ENT.Items = { --items that we will potentially produce over time.
     [1] = "misc_chemical",
 }
 ENT.ProduceLength = 60 --Time it takes for us to randomly produce an item.
-ENT.Capacity = 100 --Maximum chemicals that it can hold.
+ENT.Capacity = 1000 --Maximum chemicals that it can hold.
 
 function ENT:Initialize()
     if ( SERVER ) then

@@ -48,8 +48,10 @@ net.Receive( "as_healthstation_use", function( _, ply )
 		end
 
 		for k, v in pairs( cost ) do --This second one takes the items and adds it to the inventory
-			ply:TakeItemFromInventory( k, v )
-			ent:AddItemToInventory( k, v )
+			if v > 0 then
+				ply:TakeItemFromInventory( k, v )
+				ent:AddItemToInventory( k, v )
+			end
 		end
 	end
 

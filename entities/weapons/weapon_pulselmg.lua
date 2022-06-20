@@ -91,7 +91,7 @@ SWEP.FireSound_Suppressed = Sound("FAS2_AK47_S")
 
 -- Accuracy related
 SWEP.HipCone = 0.086
-SWEP.AimCone = 0.007
+SWEP.AimCone = 0.006
 SWEP.SpreadPerShot = 0.009
 SWEP.MaxSpreadInc = 0.1
 SWEP.SpreadCooldown = 0.18
@@ -99,7 +99,7 @@ SWEP.AimFOV = 0
 
 -- Recoil related
 SWEP.Recoil = 1.2
-SWEP.RecoilHorizontal = 1.3
+SWEP.RecoilHorizontal = 0.9
 
 -- Reload related
 SWEP.ReloadTime = 3.1

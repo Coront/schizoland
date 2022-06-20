@@ -71,8 +71,8 @@ AS.AddEvent( "raider_party", {
 AS.AddEvent( "combine_scout", {
     name = "Coalition Scout",
     enable = true,
-    mintime = 10800,
-    maxtime = 14400,
+    mintime = 7200,
+    maxtime = 10800,
     max = 1,
     minplayers = 10,
     eventspot = true,

@@ -13,9 +13,11 @@ function GM:Move( ply, mv ) --I'm intentionally overriding this so we don't use 
     sprintmovespeed = ply:HasStatus( "stunned" ) and sprintmovespeed * 0.4 or sprintmovespeed
     --Toxication
     local toxic, type = ply:IsToxicated()
-    local mult = type == "light" and 0.8 or type == "heavy" and 0.7
-    movespeed = toxic and movespeed * mult or movespeed
-    sprintmovespeed = toxic and sprintmovespeed * mult or sprintmovespeed
+    if toxic then
+        local mult = type == "light" and 0.8 or type == "heavy" and 0.7 or 1
+        movespeed = toxic and movespeed * mult or movespeed
+        sprintmovespeed = toxic and sprintmovespeed * mult or sprintmovespeed
+    end
 
     ply:SetRunSpeed( sprintmovespeed )
     ply:SetWalkSpeed( movespeed )
@@ -24,6 +26,14 @@ function GM:Move( ply, mv ) --I'm intentionally overriding this so we don't use 
     ply:SetJumpPower( 225 )
     ply:SetViewOffset( Vector( 0, 0, 61 ) )
     ply:SetViewOffsetDucked( Vector( 0, 0, 35 ) )
+end
+
+function GM:CanPlayerSuicide( ply )
+    return false
+end
+
+function GM:IsSpawnpointSuitable( ply, spawn, kill )
+    return true
 end
 
 hook.Add( "Think", "AS_Armor", function()

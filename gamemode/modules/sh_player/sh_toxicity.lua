@@ -33,7 +33,7 @@ function PlayerMeta:SetToxicated( str )
 end
 
 function PlayerMeta:GetToxicated()
-    return self.Toxicated
+    return self.Toxicated or "none"
 end
 
 function PlayerMeta:ClearToxicated()
@@ -41,7 +41,10 @@ function PlayerMeta:ClearToxicated()
 end
 
 function PlayerMeta:IsToxicated()
-    if self:GetToxicated() then return true, self:GetToxicated() end
+    local toxicated, type = self:GetToxicated()
+    if toxicated != "none" then
+        return true, type
+    end
     return false
 end
 
@@ -118,6 +121,7 @@ if ( SERVER ) then
     function PlayerMeta:ResyncToxic()
         net.Start( "as_toxic_resync" )
             net.WriteUInt( self:GetToxic(), NWSetting.ToxicBits )
+            net.WriteString( self:GetToxicated() )
         net.Send( self )
     end
 
@@ -125,7 +129,9 @@ elseif ( CLIENT ) then
 
     net.Receive( "as_toxic_resync", function()
         local toxic = net.ReadUInt( NWSetting.ToxicBits )
+        local toxicated = net.ReadString()
         LocalPlayer():SetToxic( toxic )
+        LocalPlayer():SetToxicated( toxicated )
     end)
 
 end

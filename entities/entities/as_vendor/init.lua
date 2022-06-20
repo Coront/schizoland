@@ -101,8 +101,10 @@ end
 
 function PlayerMeta:PurchaseItem( ent, reqs, item, amt )
 	for k, v in pairs( reqs ) do
-		self:TakeItemFromInventory( k, v )
-		ent:AddResource( k, v )
+		if v > 0 then
+			self:TakeItemFromInventory( k, v )
+			ent:AddResource( k, v )
+		end
 	end
 
 	ent:TakeFromExistingSale( item, amt )
@@ -396,14 +398,16 @@ net.Receive( "as_vendor_item_purchase", function( _, ply )
 	reqs["misc_chemical"] = ent:GetSales()[item].chemical * amt
 
 	for k, v in pairs( reqs ) do
-		if not ply:HasInInventory( k, v ) then
-			ply:ChatPrint("You do not have enough " .. AS.Items[k].name .. " to purchase this.")
-			return
-		end
+		if v > 0 then
+			if not ply:HasInInventory( k, v ) then
+				ply:ChatPrint("You do not have enough " .. AS.Items[k].name .. " to purchase this.")
+				return
+			end
 
-		if (ent:GetResources()[k] or 0) + v > ent.ResCapacity then
-			ply:ChatPrint("There are too many resources in the vendor for you to insert more. The owner must empty it first for you to purchase this.")
-			return
+			if (ent:GetResources()[k] or 0) + v > ent.ResCapacity then
+				ply:ChatPrint("There are too many resources in the vendor for you to insert more. The owner must empty it first for you to purchase this.")
+				return
+			end
 		end
 	end
 
