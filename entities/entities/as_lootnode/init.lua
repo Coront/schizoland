@@ -37,7 +37,7 @@ function ENT:RandomizeNode() --This will automatically select a type of resource
         end
     end
     local maxnodes = math.floor( (NOD.Maximum * NOD.SpawnMult) * (AS.Maps[game.GetMap()] and AS.Maps[game.GetMap()].NodeMult or 1) )
-    local scrapToSpawn = (maxnodes - #ents.FindByClass("as_lootnode")) - math.Round(maxnodes * NOD.ChemRatio) + 1
+    local scrapToSpawn = (maxnodes - curScrap) - math.Round(maxnodes * NOD.ChemRatio) + 1
 
     if scrapToSpawn > 0 then
         self:SetResourceType( "Scrap" ) --Scrap wins

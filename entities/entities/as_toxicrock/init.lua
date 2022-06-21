@@ -21,7 +21,9 @@ function ENT:Think()
 		local perc = Lerp( dist / self:GetToxicDistance(), 0, 1 )
 		local toxamt = math.ceil( self:GetToxicAmt() * (1 - perc) )
 
-		v:AddToxic( toxamt )
+		if not v:IsDeveloping() then
+			v:AddToxic( toxamt )
+		end
 		v:SendLua( "surface.PlaySound('player/geiger" .. math.random( 1, 3 ) .. ".wav')" )
 		v.NextToxTick = CurTime() + 1
 	end

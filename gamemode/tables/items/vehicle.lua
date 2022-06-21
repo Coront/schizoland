@@ -71,7 +71,7 @@ AS.AddBaseItem("vehicle_tuscan", {
     model = "models/source_vehicles/car005a.mdl",
     ent = "car005a",
     value = 175,
-    weight = 1,
+    weight = 175,
     nostore = true,
     novendor = true,
     class = "engineer",
