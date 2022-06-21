@@ -78,6 +78,35 @@ AS.AddBaseItem("armor_riot", {
     },
 })
 
+AS.AddBaseItem("armor_antitoxin", {
+    name = "Anti-Toxin Suit",
+    desc = "A suit that has significant resistance to any potential toxins. Useful if you're going to explore a zone with toxins.",
+    category = "armor",
+    model = "models/items/armor/sevasuit.mdl",
+    wep = "armor_antitoxin",
+    color = Color( 0, 70, 150 ),
+    value = 200,
+    weight = 5,
+    armor = {
+        ["movemult"] = 0.94,
+        ["carryinc"] = 0,
+        [DMG_BULLET] = 10,
+        [DMG_SLASH] = 9,
+        [DMG_BURN] = 30,
+        [DMG_ENERGYBEAM] = 6,
+        [DMG_BLAST] = 4,
+        [DMG_RADIATION] = 70,
+    },
+    class = "scientist",
+    craft = {
+        ["misc_scrap"] = 200,
+        ["misc_smallparts"] = 300,
+        ["misc_chemical"] = 225,
+        ["misc_hide_antlion"] = 4,
+        ["misc_hide_guard"] = 2,
+    },
+})
+
 AS.AddBaseItem("armor_exo", {
     name = "Exosuit Armor",
     desc = "A suit that has built in technology to support carrying of heavy objects. Increases overall carry weight.",
