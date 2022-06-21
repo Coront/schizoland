@@ -29,3 +29,8 @@ AS.AddDamageType( DMG_BLAST, {
     name = "Explosive Resistance",
     icon = "icon16/bomb.png",
 })
+
+AS.AddDamageType( DMG_RADIATION, {
+    name = "Toxin Threshold",
+    icon = "gui/aftershock/icon/toxin.png",
+})

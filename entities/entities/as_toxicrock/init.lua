@@ -21,8 +21,14 @@ function ENT:Think()
 		local perc = Lerp( dist / self:GetToxicDistance(), 0, 1 )
 		local toxamt = math.ceil( self:GetToxicAmt() * (1 - perc) )
 
-		v:AddToxic( toxamt )
-		v:SendLua( "surface.PlaySound('player/geiger" .. math.random( 1, 3 ) .. ".wav')" )
-		v.NextToxTick = CurTime() + 1
+		if v:HasArmor() then
+			toxamt = math.Clamp( toxamt - AS.Items[v:GetArmor()].armor[DMG_RADIATION], 0, 100 )
+		end
+
+		if toxamt > 0 then
+			v:AddToxic( toxamt )
+			v:SendLua( "surface.PlaySound('player/geiger" .. math.random( 1, 3 ) .. ".wav')" )
+			v.NextToxTick = CurTime() + 1
+		end
 	end
 end

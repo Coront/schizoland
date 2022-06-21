@@ -154,7 +154,7 @@ function Workbench.BuildRecipe( parent, itemid )
 
             local statbg = scroll_armorpanel:Add( "DPanel" )
             statbg:Dock( TOP )
-            statbg:DockMargin( 5, 7, 5, 0 )
+            statbg:DockMargin( 5, 3, 5, 0 )
             statbg:SetSize( 0, 20 )
             local TTtext = AS.DamageTypes[k2].name .. ": " .. v2 .. "%"
             statbg:SetTooltip( TTtext )
@@ -177,7 +177,7 @@ function Workbench.BuildRecipe( parent, itemid )
             end
 
             local icon = vgui.Create("DImageButton", statbg)
-            icon:SetPos( 5, 0 )
+            icon:SetPos( 3, 2 )
             icon:SetSize (16, 16)
             icon:SetImage( AS.DamageTypes[k2].icon )
             icon:SetColor(Color(255,255,255,255))

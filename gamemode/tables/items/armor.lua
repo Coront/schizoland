@@ -7,11 +7,14 @@ AS.AddBaseItem("armor_makeshift", {
     value = 35,
     weight = 3,
     armor = {
+        ["movemult"] = 1,
+        ["carryinc"] = 0,
         [DMG_BULLET] = 10,
         [DMG_SLASH] = 12,
         [DMG_BURN] = 5,
         [DMG_ENERGYBEAM] = 5,
         [DMG_BLAST] = 3,
+        [DMG_RADIATION] = 3,
     },
     craft = {
         ["misc_scrap"] = 50,
@@ -30,11 +33,13 @@ AS.AddBaseItem("armor_bandit", {
     weight = 3.2,
     armor = {
         ["movemult"] = 0.95, --Movespeed Mult
+        ["carryinc"] = 0,
         [DMG_BULLET] = 13, --Bullets
         [DMG_SLASH] = 14, --Melee
         [DMG_BURN] = 8, --Fire
         [DMG_ENERGYBEAM] = 4, --Pulse
         [DMG_BLAST] = 5, --Explosive
+        [DMG_RADIATION] = 10, --Toxin
     },
     class = "mercenary",
     craft = {
@@ -55,11 +60,13 @@ AS.AddBaseItem("armor_riot", {
     weight = 5,
     armor = {
         ["movemult"] = 0.94,
+        ["carryinc"] = 0,
         [DMG_BULLET] = 16,
         [DMG_SLASH] = 22,
         [DMG_BURN] = 15,
         [DMG_ENERGYBEAM] = 6,
         [DMG_BLAST] = 6,
+        [DMG_RADIATION] = 5,
     },
     hidden = true,
     class = "mercenary",
@@ -88,6 +95,7 @@ AS.AddBaseItem("armor_exo", {
         [DMG_BURN] = 16,
         [DMG_ENERGYBEAM] = 15,
         [DMG_BLAST] = 19,
+        [DMG_RADIATION] = 15,
     },
     class = "scientist",
     craft = {
@@ -111,11 +119,13 @@ AS.AddBaseItem("armor_combine", {
     weight = 12,
     armor = {
         ["movemult"] = 0.85,
+        ["carryinc"] = 0,
         [DMG_BULLET] = 39,
         [DMG_SLASH] = 25,
         [DMG_BURN] = 20,
         [DMG_ENERGYBEAM] = 39,
         [DMG_BLAST] = 25,
+        [DMG_RADIATION] = 12,
     },
     hidden = true,
     class = "mercenary",
@@ -140,11 +150,13 @@ AS.AddBaseItem("armor_recon", {
     weight = 7,
     armor = {
         ["movemult"] = 1.2,
+        ["carryinc"] = 0,
         [DMG_BULLET] = 25,
         [DMG_SLASH] = 18,
         [DMG_BURN] = 14,
         [DMG_ENERGYBEAM] = 18,
         [DMG_BLAST] = 10,
+        [DMG_RADIATION] = 8,
     },
     class = "scavenger",
     craft = {
@@ -170,11 +182,13 @@ AS.AddBaseItem("armor_combat", {
     weight = 15,
     armor = {
         ["movemult"] = 0.825, --Movespeed Mult
+        ["carryinc"] = 0,
         [DMG_BULLET] = 35, --Bullets
         [DMG_SLASH] = 30, --Melee
         [DMG_BURN] = 15, --Fire
         [DMG_ENERGYBEAM] = 35, --Pulse
         [DMG_BLAST] = 20, --Explosive
+        [DMG_RADIATION] = 0,
     },
     hidden = true,
     class = "mercenary",
@@ -198,11 +212,13 @@ AS.AddBaseItem("armor_elite", {
     weight = 16,
     armor = {
         ["movemult"] = 0.75, --Movespeed Mult
+        ["carryinc"] = 0,
         [DMG_BULLET] = 50, --Bullets
         [DMG_SLASH] = 38, --Melee
         [DMG_BURN] = 26, --Fire
         [DMG_ENERGYBEAM] = 43, --Pulse
         [DMG_BLAST] = 34, --Explosive
+        [DMG_RADIATION] = 14,
     },
     hidden = true,
     class = "mercenary",
@@ -228,11 +244,13 @@ AS.AddBaseItem("armor_juggernaut", {
     weight = 30,
     armor = {
         ["movemult"] = 0.6, --Movespeed Mult
+        ["carryinc"] = 0,
         [DMG_BULLET] = 71, --Bullets
         [DMG_SLASH] = 61, --Melee
         [DMG_BURN] = 20, --Fire
         [DMG_ENERGYBEAM] = 35, --Pulse
         [DMG_BLAST] = 52, --Explosive
+        [DMG_RADIATION] = 7,
     },
     hidden = true,
     class = "mercenary",
@@ -257,11 +275,13 @@ AS.AddBaseItem("armor_assault", {
     weight = 20,
     armor = {
         ["movemult"] = 0.8, --Movespeed Mult
+        ["carryinc"] = 0,
         [DMG_BULLET] = 54, --Bullets
         [DMG_SLASH] = 42, --Melee
         [DMG_BURN] = 31, --Fire
         [DMG_ENERGYBEAM] = 50, --Pulse
         [DMG_BLAST] = 52, --Explosive
+        [DMG_RADIATION] = 20,
     },
     hidden = true,
     class = "mercenary",
@@ -287,11 +307,13 @@ AS.AddBaseItem("armor_hardsuit", {
     weight = 35,
     armor = {
         ["movemult"] = 0.65, --Movespeed Mult
+        ["carryinc"] = 0,
         [DMG_BULLET] = 67, --Bullets
         [DMG_SLASH] = 70, --Melee
         [DMG_BURN] = 33, --Fire
         [DMG_ENERGYBEAM] = 60, --Pulse
         [DMG_BLAST] = 70, --Explosive
+        [DMG_RADIATION] = 25,
     },
     hidden = true,
     class = "mercenary",
