@@ -33,4 +33,5 @@ AS.AddDamageType( DMG_BLAST, {
 AS.AddDamageType( DMG_RADIATION, {
     name = "Toxin Threshold",
     icon = "gui/aftershock/icon/toxin.png",
+    color = Color( 0, 175, 25 )
 })
