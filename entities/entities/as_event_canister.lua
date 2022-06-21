@@ -13,8 +13,8 @@ if ( SERVER ) then
         self:StartCanister()
 
         self.NPCS = { --Modify this table if you need to change NPC values.
-            ["npc_as_soldier"] = 4, --Key is NPC, Value is amount
-            ["npc_as_scout"] = 1,
+            ["npc_as_soldier"] = 6, --Key is NPC, Value is amount
+            ["npc_as_scout"] = 2,
             ["npc_as_super"] = 1,
             ["npc_as_hunter"] = 2,
         }
@@ -58,7 +58,7 @@ if ( SERVER ) then
         for k, v in pairs( self.NPCS ) do --Loop though the NPC table
             for i = 1, v do --Spawn the amount of NPCs.
                 local npc = ents.Create(k)
-                npc:SetPos( pos + toAng:Forward() * 350 + Vector( 0, 0, 150 ) )
+                npc:SetPos( pos + toAng:Forward() * 350 + Vector( 0, 0, 100 ) )
                 npc:Spawn()
 
                 toAng = toAng + Angle( 0, 70, 0 )

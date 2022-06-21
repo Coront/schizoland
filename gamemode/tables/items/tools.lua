@@ -183,7 +183,7 @@ AS.AddBaseItem("tool_generator_engine", {
 
 AS.AddBaseItem("tool_generator_nuclear", {
     name = "Nuclear Generator",
-    desc = "A nuclear generator that utilizes uranium as a source to generate electricity. Produces 150 power.",
+    desc = "A nuclear generator that utilizes uranium as a source to generate electricity. Produces 250 power.",
     category = "tool",
     model = "models/props_canal/generator01.mdl",
     ent = "as_generator_nuclear",
@@ -203,7 +203,7 @@ AS.AddBaseItem("tool_generator_nuclear", {
 
 AS.AddBaseItem("tool_generator_fusion", {
     name = "Fusion Generator",
-    desc = "A fusion generator that is powered by deuterium fuel. Produces 250 power.",
+    desc = "A fusion generator that is powered by deuterium fuel. Produces 500 power.",
     category = "tool",
     model = "models/props_combine/combine_generator01.mdl",
     ent = "as_generator_fusion",

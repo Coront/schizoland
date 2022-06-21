@@ -149,7 +149,7 @@ function AS.Craft.BuildList( parent, category )
     
                 local statbg = scroll_armorpanel:Add( "DPanel" )
                 statbg:Dock( TOP )
-                statbg:DockMargin( 5, 7, 5, 0 )
+                statbg:DockMargin( 5, 3, 5, 0 )
                 statbg:SetSize( 0, 20 )
                 local TTtext = AS.DamageTypes[k2].name .. ": " .. v2 .. "%"
                 statbg:SetTooltip( TTtext )
@@ -172,17 +172,17 @@ function AS.Craft.BuildList( parent, category )
                 end
     
                 local icon = vgui.Create("DImageButton", statbg)
-                icon:SetPos( 5, 0 )
-                icon:SetSize (16, 16)
+                icon:SetPos( 3, 2 )
+                icon:SetSize(16, 16)
                 icon:SetImage( AS.DamageTypes[k2].icon )
-                icon:SetColor(Color(255,255,255,255))
+                local col = AS.DamageTypes[k2].color or Color( 255, 255, 255 )
+                icon:SetColor( col )
     
                 local amt = vgui.Create("DLabel", statbg)
                 amt:SetSize( 35, 20 )
                 amt:SetPos( 325 + amt:GetWide(), 0 )
                 amt:SetFont("TargetIDSmall")
                 amt:SetText( v2 .. "%" )
-    
             end
         end
 

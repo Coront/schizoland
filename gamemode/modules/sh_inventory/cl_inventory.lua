@@ -703,7 +703,7 @@ function AS.Inventory.BuildInventory()
 
             local statbg = scroll_stats:Add( "DPanel" )
             statbg:SetPos( 0, ypos )
-            statbg:SetSize( scroll_stats:GetWide(), 25 )
+            statbg:SetSize( scroll_stats:GetWide(), 20 )
             local TTtext = AS.DamageTypes[k].name .. ": " .. v .. "%"
             statbg:SetTooltip( TTtext )
             statbg.Paint = function(_,w,h)
@@ -715,27 +715,28 @@ function AS.Inventory.BuildInventory()
                 local length = (v / 100) * w
                 surface.DrawRect( 25, 0, length, h )
 
-                local xpos = 30
-                for i = 1, 21 do
+                local xpos = 25
+                for i = 1, 24 do
                     surface.SetDrawColor( COLHUD_PRIMARY )
                     surface.DrawRect( xpos, 0, 1, h )
-                    xpos = xpos + 9
+                    xpos = xpos + 8
                 end
             end
 
             local icon = vgui.Create("DImageButton", statbg)
-            icon:SetPos( 5, 4 )
+            icon:SetPos( 5, 2 )
             icon:SetSize (16, 16)
             icon:SetImage( AS.DamageTypes[k].icon )
-            icon:SetColor(Color(255,255,255,255))
+            local col = AS.DamageTypes[k].color or Color( 255, 255, 255 )
+            icon:SetColor( col )
 
             local amt = vgui.Create("DLabel", statbg)
             amt:SetSize( 35, 20 )
-            amt:SetPos( 220, 3 )
+            amt:SetPos( 220, 0 )
             amt:SetFont("TargetIDSmall")
             amt:SetText( v .. "%" )
 
-            ypos = ypos + 30
+            ypos = ypos + 25
         end
 
         local armormodel = vgui.Create("SpawnIcon", armor)
