@@ -22,8 +22,6 @@ function ENT:Think()
 		local toxamt = math.ceil( self:GetToxicAmt() * (1 - perc) )
 
 		if not v:IsDeveloping() then
-			v:SendLua( "surface.PlaySound('player/geiger" .. math.random( 1, 3 ) .. ".wav')" )
-			v.NextToxTick = CurTime() + 1
 			if v:HasArmor() then
 				toxamt = math.Clamp( toxamt - AS.Items[v:GetArmor()].armor[DMG_RADIATION], 0, 100 )
 			end

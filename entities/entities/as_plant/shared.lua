@@ -62,7 +62,7 @@ function ENT:Initialize()
         self:SetMoveType( MOVETYPE_VPHYSICS )
     end
 
-    self:SetPruneAmount( 20 )
+    self:SetPruneAmount( 0 )
     self:SetNextProduce( CurTime() + self.GrowthLength )
 end
 
