@@ -118,6 +118,7 @@ end
 if ( SERVER ) then
 
     util.AddNetworkString("as_generator_resync")
+    util.AddNetworkString("as_generator_requestinfo")
 
     function ENT:ResyncInfo()
         net.Start("as_generator_resync")
@@ -126,6 +127,17 @@ if ( SERVER ) then
             net.WriteBool( self:GetActiveState() )
         net.Broadcast()
     end
+
+    net.Receive( "as_generator_requestinfo", function( _, ply )
+        local ent = net.ReadEntity()
+        if not IsValid( ent ) then return end
+
+        net.Start("as_generator_resync")
+            net.WriteEntity( ent )
+            net.WriteUInt( ent:GetFuelAmount(), 16 )
+            net.WriteBool( ent:GetActiveState() )
+        net.Send( ply )
+    end)
 
 else
 
@@ -137,6 +149,16 @@ else
 
         ent:SetFuelAmount( amt )
         ent:SetActiveState( state )
+    end)
+
+    timer.Create( "as_autoresync_cases", 10, 0, function()
+        for k, v in pairs( ents.GetAll() ) do
+            if v.Base != "as_generator" then continue end
+            if not IsValid(v) then continue end
+            net.Start("as_generator_requestinfo") 
+                net.WriteEntity(v)
+            net.SendToServer()
+        end
     end)
 
 end
