@@ -82,7 +82,7 @@ AS.AddBaseItem("armor_antitoxin", {
     name = "Anti-Toxin Suit",
     desc = "A suit that has significant resistance to any potential toxins. Useful if you're going to explore a zone with toxins.",
     category = "armor",
-    model = "models/hunter/blocks/cube025x025x025.mdl",
+    model = "models/items/armor/sevasuit.mdl",
     wep = "armor_antitoxin",
     color = Color( 0, 70, 150 ),
     value = 200,
