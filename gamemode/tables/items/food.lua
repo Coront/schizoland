@@ -63,7 +63,7 @@ AS.AddBaseItem("food_meat", {
     craft = {
         ["misc_scrap"] = 2,
         ["misc_smallparts"] = 0,
-        ["misc_chemical"] = 1,
+        ["misc_chemical"] = 4,
     }
 })
 
