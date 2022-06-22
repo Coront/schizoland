@@ -22,7 +22,7 @@ end
 function PlayerMeta:IsAllied( cid )
     if self:InCommunity() then
         if ( SERVER ) then
-            if Communities[self:GetCID()].allies[cid] then
+            if self:InCommunity() and Communities[self:GetCommunity()].allies[cid] then
                 return true
             end
         elseif ( CLIENT ) then
