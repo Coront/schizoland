@@ -204,7 +204,7 @@ function GM:DoPlayerDeath( ply, attacker, dmg )
 
     --War
     if attacker:IsPlayer() and ply:IsPlayer() and CurTime() >= (attacker.NextWarRequest or 0) then
-        if not attacker == ply and attacker:InCommunity() and ply:InCommunity() and ply:GetCommunity() != attacker:GetCommunity() and not ply:IsAtWar( attacker:GetCommunity() ) then
+        if attacker != ply and attacker:InCommunity() and ply:InCommunity() and ply:GetCommunity() != attacker:GetCommunity() and not ply:IsAtWar( attacker:GetCommunity() ) then
             community.CreateDiplomacy( ply:GetCommunity(), "war", { --This create's a diplomacy of war, and we'll add some information.
                 cid = attacker:GetCommunity(),
                 cname = attacker:GetCommunityName(),
