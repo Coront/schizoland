@@ -19,6 +19,22 @@ function PlayerMeta:InCommunity()
     return false
 end
 
+function PlayerMeta:IsAllied( cid )
+    if self:InCommunity() then
+        if ( SERVER ) then
+            if Communities[self:GetCID()].allies[cid] then
+                return true
+            end
+        elseif ( CLIENT ) then
+            if CommunityAllies[cid] then
+                return true
+            end
+        end
+    end
+
+    return false
+end
+
 function PlayerMeta:HasPerm( perm )
     local com = self:GetCommunity()
     if Communities[com].ranks[self:GetRank()].permissions["admin"] then return true end
@@ -50,6 +66,8 @@ if ( SERVER ) then
     util.AddNetworkString("as_community_requestcommunitiesbyname")
     util.AddNetworkString("as_community_sendcommunities")
     util.AddNetworkString("as_community_sendranksmodify")
+    util.AddNetworkString("as_community_requestlookup")
+    util.AddNetworkString("as_community_sendlookup")
     util.AddNetworkString("as_community_syncallies")
     util.AddNetworkString("as_community_syncwars")
 
@@ -107,6 +125,23 @@ if ( SERVER ) then
 
         net.Start( "as_community_sendcommunities" )
             net.WriteTable( newtbl )
+        net.Send( ply )
+    end)
+
+    net.Receive("as_community_requestlookup", function( _, ply )
+        local cid = net.ReadUInt( NWSetting.UIDAmtBits )
+
+        local commdata = sql.Query( "SELECT data FROM as_communities WHERE cid = " .. SQLStr( cid ) )[1]
+        local cmemberinfo = sql.Query( "SELECT * FROM as_communities_members WHERE cid = " .. SQLStr( cid ) )
+        for k, v in pairs( cmemberinfo ) do
+            local charinfo = sql.Query( "SELECT * FROM as_characters WHERE pid = " .. SQLStr( v.pid ) )[1]
+            table.Merge( cmemberinfo[k], charinfo )
+        end
+
+        net.Start( "as_community_sendlookup" )
+            net.WriteUInt( cid, NWSetting.UIDAmtBits )
+            net.WriteTable( commdata )
+            net.WriteTable( cmemberinfo )
         net.Send( ply )
     end)
 

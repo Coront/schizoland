@@ -917,6 +917,7 @@ function AS.Inventory.BuildCommunity()
         y = y + height + 5
         DefaultButton( "Search existing communities", x, y, width, height, communitypanel, function()
             CommunitySearchWindow()
+            NextInventoryOpen = CurTime() + 0.2
             frame_inventory:Close()
         end)
 
