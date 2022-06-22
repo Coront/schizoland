@@ -135,16 +135,16 @@ SWEP.DeployAnimSpeed = 0.5
 -- Firing related
 SWEP.Shots = 5
 SWEP.FireDelay = 60/300
-SWEP.Damage = 24
+SWEP.Damage = 20
 SWEP.FireSound = Sound("FAS2_KS23")
 SWEP.CockAfterShot = true
 SWEP.Cocked = true
 
 -- Accuracy related
-SWEP.HipCone = 0.09
-SWEP.AimCone = 0.011
-SWEP.SpreadPerShot = 0.05
-SWEP.MaxSpreadInc = 0.09
+SWEP.HipCone = 0.15
+SWEP.AimCone = 0.015
+SWEP.SpreadPerShot = 0.2
+SWEP.MaxSpreadInc = 0.4
 SWEP.SpreadCooldown = 0.9
 SWEP.AimFOV = 0
 
@@ -162,7 +162,7 @@ SWEP.ReloadAdvanceTimeEmpty = 1.4
 SWEP.ReloadAdvanceTimeLast = 1.1
 SWEP.ReloadEndTime = 0.5
 SWEP.ReloadAbortTime = 0.7
-SWEP.CockTime = 0.9
+SWEP.CockTime = 1
 
 SWEP.InsertEmpty_Nomen = 2.1
 SWEP.InsertTime_Nomen = 0.75
