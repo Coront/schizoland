@@ -454,6 +454,11 @@ function PlayerMeta:DeployLocker()
     ent:SetCommunity( self:GetCommunity(), self:GetCommunityName() )
     ent:Spawn()
     ent:SetPos( self:TracePosFromEyes( 300 ) + Vector( 0, 0, 12 ))
+
+    timer.Simple( 1, function()
+        ent:ResyncCommunity()
+        ent:ResyncInventory()
+    end)
 end
 
 function PlayerMeta:DeployStockpile()
@@ -461,6 +466,11 @@ function PlayerMeta:DeployStockpile()
     ent:SetCommunity( self:GetCommunity(), self:GetCommunityName() )
     ent:Spawn()
     ent:SetPos( self:TracePosFromEyes( 300 ) + Vector( 0, 0, 80 ))
+
+    timer.Simple( 1, function()
+        ent:ResyncCommunity()
+        ent:ResyncResources()
+    end)
 end
 
 -- ██████╗ ██████╗ ███████╗    ██╗      ██████╗  █████╗ ██████╗ ███████╗██████╗
