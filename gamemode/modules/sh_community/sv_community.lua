@@ -134,6 +134,7 @@ function community.CreateDiplomacy( cid, dtype, desc )
     Communities[ cid ].pending[ diplos + 1 ] = {
         type = dtype,
         info = desc,
+        time = os.time(),
     }
     community.Update( cid )
 end
@@ -503,7 +504,7 @@ end)
 -- ██║  ██║╚██████╔╝╚██████╔╝██║  ██╗███████║
 -- ╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚══════╝
 
-hook.Add( "Think", "AS_Communities_WarTime", function()
+hook.Add( "Think", "AS_Communities_WarTime", function() --Will automatically calculate the time for which a war will end.
     for k, v in pairs( Communities ) do
         if table.Count(v.wars) <= 0 then continue end
         for k2, v2 in pairs( v.wars ) do
@@ -519,6 +520,18 @@ hook.Add( "Think", "AS_Communities_WarTime", function()
                     end
                     v3:ResyncWars()
                 end
+            end
+        end
+    end
+end)
+
+hook.Add( "Think", "AS_Communities_WarPending", function() --Calculates the time in which a war request will be valid.
+    for k, v in pairs( Communities ) do
+        if table.Count(v.pending) <= 0 then continue end
+        for k2, v2 in pairs(v.pending) do
+            if v2.type != "war" then continue end
+            if os.time() > (v2.time or 0) + SET.WarDiploLength then
+                community.DeleteDiplomacy( k, k2 )
             end
         end
     end

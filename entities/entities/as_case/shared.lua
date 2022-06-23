@@ -31,7 +31,7 @@ end
 function ENT:HasInAmmoInventory( itemid, amt )
     if not AS.Items[itemid] then AS.LuaError("Attempt to request a non-existant item in a container - " .. itemid) return end
     amt = amt and amt > 0 and math.Round(amt) or 1
-    local inv = self:GetInventory().ammo
+    local inv = self:GetInventory().ammo or {}
     if (inv[itemid] or 0) >= amt then return true end
     return false
 end

@@ -1,3 +1,19 @@
+function isPropBlacklisted( model )
+    for k, v in pairs( PERM.PropBlacklist ) do
+        if string.lower(k) == string.lower(model) then
+            return true
+        end
+    end
+
+    for k, v in pairs( PERM.PropBlacklistDirectory ) do
+        if string.find( string.lower(k), string.lower(model) ) then
+            return true
+        end
+    end
+
+    return false
+end
+
 function GM:PlayerSpawnProp( ply, model )
     if not ply:IsAdmin() and tobool(GetConVar("as_nosandbox"):GetInt()) then ply:ChatPrint("No Sandboxing is enabled. You cannot do this.") return false end
 
@@ -15,25 +31,13 @@ function GM:PlayerSpawnProp( ply, model )
         end
     end
     if TotalProps > PERM.MaxProps and not ply:IsAdmin() then ply:ChatPrint("You have reached the prop limit.") ply:SendLua("surface.PlaySound('" .. UICUE.DECLINE .. "')") return false end
-    if PERM.PropBlacklist[model] and not ply:IsAdmin() then ply:ChatPrint( model .. " is blacklisted.") return false end
-    for k, v in pairs( PERM.PropBlacklistDirectory ) do
-        if string.find( string.lower(model), string.lower(v) ) then
-            ply:ChatPrint( model .. " is blacklisted.")
-            return false
-        end
-    end
+    if isPropBlacklisted( model ) and not ply:IsAdmin() then ply:ChatPrint( model .. " is blacklisted.") return false end
 
     return true
 end
 
 function GM:PlayerSpawnedProp( ply, model, ent )
-    if PERM.PropBlacklist[model] and not ply:IsAdmin() then ply:ChatPrint( model .. " is blacklisted.") ent:Remove() return end
-    for k, v in pairs( PERM.PropBlacklistDirectory ) do
-        if string.find( string.lower(model), string.lower(v) ) then
-            ply:ChatPrint( model .. " is blacklisted.")
-            return false
-        end
-    end
+    if isPropBlacklisted( model ) and not ply:IsAdmin() then ply:ChatPrint( model .. " is blacklisted.") ent:Remove() return end
     ent:SetObjectOwner( ply )
     if not ply:IsAdmin() and not ent.AdvDupe2 then
         ent:SetCollisionGroup( COLLISION_GROUP_WORLD )

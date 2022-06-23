@@ -35,6 +35,11 @@ function PlayerMeta:IsAllied( cid )
     return false
 end
 
+function PlayerMeta:InWar()
+    if self:InCommunity() and #Communities[self:GetCommunity()].wars > 0 then return true end
+    return false
+end
+
 function PlayerMeta:HasPerm( perm )
     local com = self:GetCommunity()
     if Communities[com].ranks[self:GetRank()].permissions["admin"] then return true end

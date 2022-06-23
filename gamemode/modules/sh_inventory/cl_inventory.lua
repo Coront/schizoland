@@ -1358,8 +1358,21 @@ function AS.Inventory.BuildPlayers()
         panel:SetPos( xpos, ypos )
         panel:SetSize( scroll_players:GetWide() - (xpos * 2) - 15, 80 )
         function panel:Paint( w, h )
-            surface.SetDrawColor( COLHUD_PRIMARY )
+            local col = COLHUD_PRIMARY:ToTable()
+            if LocalPlayer() == v then
+                col = {[1] = 140, [2] = 140, [3] = 140}
+            elseif LocalPlayer():GetCommunity() == v:GetCommunity() then
+                col = COLHUD_COMMUNITY:ToTable()
+            elseif CommunityAllies[v:GetCommunity()] then
+                col = COLHUD_GOOD:ToTable()
+            elseif CommunityWars[v:GetCommunity()] then
+                col = COLHUD_BAD:ToTable()
+            end
+
+            surface.SetDrawColor( col[1], col[2], col[3], 100 )
             surface.DrawRect( 0, 0, w, h )
+            surface.SetDrawColor( col[1], col[2], col[3], 255 )
+            surface.DrawOutlinedRect( 0, 0, w, h, 1 )
         end
 
         CharacterIcon( v:GetModel(), 5, 5, panel:GetTall() - 10, panel:GetTall() - 10, panel, nil, AS.Classes[v:GetASClass()].color )

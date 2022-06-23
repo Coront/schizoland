@@ -134,7 +134,7 @@ SKL.DefaultCarryWeight = 74 --Player starts with 20 carry weight.
 SKL.Strength = {
     incamt = 0.025, --Amount to increase per melee impact
     dmgmultinc = 0.025, --(1+(level*dmgmultinc)) The number to mult overall damage by per level, as in higher means more damage per level.
-    carryweight = 1, --Max weight increase per level
+    carryweight = 2, --Max weight increase per level
 }
 SKL.Endurance = {
     updatetime = 1.5, --Every second until updates again
@@ -182,6 +182,7 @@ SAT.SatBuffs = 85 --The amount of hunger + thirst a player must remain above in 
 SET.MaxMembers = 30 --Maximum members a community can have.
 SET.MaxRanks = 8 --Maximum ranks a community can have.
 SET.WarLength = 172800 --Two days
+SET.WarDiploLength = 3600 --One hour
 SET.CommunitiesPerms = { --Permissions are hardcoded, so you'll have to manage the table here if you want to add any.
     ["admin"] = {name = "Admin", desc = "Provides access everything, and community management."},
     ["invite"] = {name = "Invite", desc = "Can invite players to the community."},

@@ -305,7 +305,7 @@ AS.AddBaseItem("tool_miner_large", {
     model = "models/props_combine/combinethumper001a.mdl",
     ent = "as_miner_large",
     value = 300,
-    weight = 100,
+    weight = 50,
     class = "scavenger",
     craft = {
         ["misc_scrap"] = 200,

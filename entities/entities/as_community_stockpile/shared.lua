@@ -143,6 +143,7 @@ elseif ( CLIENT ) then
         if not IsValid( ent ) then return end
         local res = net.ReadInventory()
 
+        print(ent.SetResources)
         ent:SetResources( res )
     end)
 

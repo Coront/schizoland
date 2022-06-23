@@ -186,7 +186,9 @@ else
         if not IsValid(ent) then return end
         local state = net.ReadBool()
 
-        ent:SetActiveState( state )
+        if ent.SetActiveState then
+            ent:SetActiveState( state )
+        end
     end)
 
     net.Receive( "as_miner_syncinventory", function()
@@ -194,7 +196,9 @@ else
         if not IsValid(ent) then return end
         local inv = net.ReadInventory()
 
-        ent:SetInventory( inv )
+        if ent.SetInventory then
+            ent:SetInventory( inv )
+        end
     end)
 
 end

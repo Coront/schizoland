@@ -37,7 +37,6 @@ end
 -- ╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝
 
 hook.Add( "PlayerEnteredVehicle", "AS_EnterVehicle", function( ply, ent, seat ) 
-    print( ply, ent )
     plogs.PlayerLog(ply, "Entities", ply:NameID() .. " entered a vehicle (" .. ent:GetClass() .. ")", {
         ["Name"] 	= ply:Name(),
         ["SteamID"]	= ply:SteamID(),
