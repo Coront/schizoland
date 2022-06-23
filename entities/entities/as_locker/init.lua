@@ -54,6 +54,10 @@ function ENT:Use( ply )
 				net.WriteTable( profiles )
 			net.Send( ply )
 		end
+		plogs.PlayerLog(ply, "Entities", ply:NameID() .. " interacted with a locker (" .. self:GetProfileName() .. ")", {
+			["Name"] 	= ply:Name(),
+			["SteamID"]	= ply:SteamID(),
+		})
 	end
 end
 

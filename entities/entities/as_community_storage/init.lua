@@ -67,6 +67,11 @@ function ENT:Use( ply )
 
             self:EmitSound( self.Sounds.Access, 60 )
 		end
+
+		plogs.PlayerLog(ply, "Entities", ply:NameID() .. " interacted with a community storage (" .. self:GetCommunityName() .. ")", {
+			["Name"] 	= ply:Name(),
+			["SteamID"]	= ply:SteamID(),
+		})
 	end
 end
 

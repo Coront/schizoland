@@ -6,6 +6,7 @@ if plogs then
     plogs.Register("Vehicles", false, Color( 0, 75, 180 ))
     plogs.Register("Storage", false, Color( 175, 95, 0 ))
     plogs.Register("Kills (NPC)", false)
+    plogs.Register("Entities", false)
     plogs.Register("Admin", true, Color( 175, 25, 0 ))
 
 end
