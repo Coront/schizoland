@@ -1,4 +1,5 @@
 COLHUD_DEFAULT = nil
+COLHUD_COMMUNITY = nil
 COLHUD_GOOD = nil
 COLHUD_BAD = nil
 HUD_SCALE = 1
@@ -15,6 +16,10 @@ AS_ClientConVar( "as_hud_scale", "1.0", true, false )
 AS_ClientConVar( "as_hud_color_default_r", "0", true, false )
 AS_ClientConVar( "as_hud_color_default_g", "105", true, false )
 AS_ClientConVar( "as_hud_color_default_b", "185", true, false )
+-- Community Colors
+AS_ClientConVar( "as_hud_color_community_r", "0", true, false )
+AS_ClientConVar( "as_hud_color_community_g", "205", true, false )
+AS_ClientConVar( "as_hud_color_community_b", "255", true, false )
 -- Good Colors
 AS_ClientConVar( "as_hud_color_good_r", "0", true, false )
 AS_ClientConVar( "as_hud_color_good_g", "145", true, false )
@@ -307,7 +312,8 @@ function AftershockHUD()
     local target = LocalPlayer():GetActiveTarget()
     if targetinfo and target and IsValid(target) and target:Alive() then
         local col = (target:IsNextBot() or target:IsNPC()) and (target.Hostile and target:Hostile() or false) and COLHUD_BAD:ToTable() or COLHUD_DEFAULT:ToTable()
-        col = target:IsPlayer() and target:InCommunity() and (target:GetCommunity() == LocalPlayer():GetCommunity() or CommunityAllies[target:GetCommunity()]) and COLHUD_GOOD:ToTable() or col
+        col = target:IsPlayer() and target:InCommunity() and target:GetCommunity() == LocalPlayer():GetCommunity() and COLHUD_COMMUNITY:ToTable() or col
+        col = target:IsPlayer() and target:InCommunity() and LocalPlayer():IsAllied( target:GetCommunity() ) and COLHUD_GOOD:ToTable() or col
         col = target:IsPlayer() and target:InCommunity() and (CommunityWars[target:GetCommunity()]) and COLHUD_BAD:ToTable() or col
         if (LocalPlayer():GetActiveTargetLength() - CurTime()) > 1.2 then
             Target_Alpha = math.Approach((Target_Alpha or 0), 255, FrameTime() * 300) or 0
@@ -606,6 +612,7 @@ end
 
 hook.Add( "HUDPaint", "AS_HUD", function()
     COLHUD_DEFAULT = Color(GetConVar("as_hud_color_default_r"):GetInt(), GetConVar("as_hud_color_default_g"):GetInt(), GetConVar("as_hud_color_default_b"):GetInt(), 255)
+    COLHUD_COMMUNITY = Color(GetConVar("as_hud_color_community_r"):GetInt(), GetConVar("as_hud_color_community_g"):GetInt(), GetConVar("as_hud_color_community_b"):GetInt(), 255)
     COLHUD_GOOD = Color(GetConVar("as_hud_color_good_r"):GetInt(), GetConVar("as_hud_color_good_g"):GetInt(), GetConVar("as_hud_color_good_b"):GetInt(), 255)
     COLHUD_BAD = Color(GetConVar("as_hud_color_bad_r"):GetInt(), GetConVar("as_hud_color_bad_g"):GetInt(), GetConVar("as_hud_color_bad_b"):GetInt(), 255)
     HUD_SCALE = GetConVar("as_hud_scale"):GetFloat() or 1

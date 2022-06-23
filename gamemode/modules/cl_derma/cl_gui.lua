@@ -297,7 +297,7 @@ function ValueSlider( text, x, y, min, max, parent, convar, color, decimals )
     label:SetPos(x, y)
     label:SizeToContents()
     label.Think = function()
-        local setcolor = color == "good" and COLHUD_GOOD or color == "default" and COLHUD_DEFAULT or color == "bad" and COLHUD_BAD or Color(200, 200, 200)
+        local setcolor = color == "good" and COLHUD_GOOD or color == "default" and COLHUD_DEFAULT or color == "bad" and COLHUD_BAD or color == "community" and COLHUD_COMMUNITY or Color(200, 200, 200)
         label:SetColor(setcolor)
     end
 end

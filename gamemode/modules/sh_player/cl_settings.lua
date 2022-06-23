@@ -167,6 +167,18 @@ function AS.CLSettings.BuildColors( parent )
     ValueSlider( "Blue", xpos, ypos, 0, 255, scroll, "as_hud_color_default_b", "default" )
     addSpace( 0, 20 )
 
+    SectionLabel( "Community Indication", xpos, ypos, scroll )
+    addSpace( 0, 35 )
+
+    ValueSlider( "Red", xpos, ypos, 0, 255, scroll, "as_hud_color_community_r", "community" )
+    addSpace( 0, 20 )
+
+    ValueSlider( "Green", xpos, ypos, 0, 255, scroll, "as_hud_color_community_g", "community" )
+    addSpace( 0, 20 )
+
+    ValueSlider( "Blue", xpos, ypos, 0, 255, scroll, "as_hud_color_community_b", "community" )
+    addSpace( 0, 20 )
+
     SectionLabel( "Good Indication", xpos, ypos, scroll )
     addSpace( 0, 35 )
 
