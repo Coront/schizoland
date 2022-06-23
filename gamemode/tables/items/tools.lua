@@ -252,7 +252,7 @@ AS.AddBaseItem("tool_grub_large", {
     model = "models/antlion_grub.mdl",
     ent = "as_grub_large",
     value = 250,
-    weight = 40,
+    weight = 10,
     class = "cultivator",
     craft = {
         ["misc_scrap"] = 25,
