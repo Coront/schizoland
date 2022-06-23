@@ -714,7 +714,7 @@ net.Receive( "as_community_sendcommunities", function()
     for k, v in pairs(community) do
         local panel = vgui.Create("DPanel", scroll_communities)
         panel:SetPos( xpos, ypos )
-        panel:SetSize( scroll_communities:GetWide() - 25, 50 )
+        panel:SetSize( scroll_communities:GetWide() - 25, 75 )
         function panel:Paint( w, h )
             surface.SetDrawColor( COLHUD_PRIMARY )
             surface.DrawRect( 0, 0, w, h )
@@ -729,18 +729,25 @@ net.Receive( "as_community_sendcommunities", function()
         local creator = vgui.Create("DLabel", panel)
         creator:SetFont( "TargetIDSmall" )
         creator:SetText( "Created by: " .. v.creator )
-        creator:SetPos( 5, 25 )
         creator:SizeToContents()
+        creator:SetPos( 5, panel:GetTall() - creator:GetTall() - 5 )
 
         local width, height = 80, 20
-        DefaultButton( "Offer Alliance", panel:GetWide() - (width + 5), 5, width, height, panel, function()
+        DefaultButton( "View", panel:GetWide() - (width + 5), 5, width, height, panel, function()
+            frame_communitysearch:Close()
+            net.Start("as_community_requestlookup")
+                net.WriteUInt( k, NWSetting.UIDAmtBits )
+            net.SendToServer()
+        end)
+
+        DefaultButton( "Offer Alliance", panel:GetWide() - (width + 5), 30, width, height, panel, function()
             frame_communitysearch:Close()
             net.Start("as_community_ally")
                 net.WriteUInt( k, NWSetting.UIDAmtBits )
             net.SendToServer()
         end)
 
-        DefaultButton( "Declare War", panel:GetWide() - (width + 5), 25, width, height, panel, function()
+        DefaultButton( "Declare War", panel:GetWide() - (width + 5), 50, width, height, panel, function()
             frame_communitysearch:Close()
             net.Start("as_community_war")
                 net.WriteUInt( k, NWSetting.UIDAmtBits )
@@ -750,3 +757,151 @@ net.Receive( "as_community_sendcommunities", function()
         ypos = ypos + panel:GetTall() + 5
     end
 end)
+
+net.Receive( "as_community_sendlookup", function()
+    local cid = net.ReadUInt( NWSetting.UIDAmtBits )
+    local commdata = net.ReadTable()
+    local memberdata = net.ReadTable()
+    commdata = util.JSONToTable(commdata.data)
+
+    frame_communityview = vgui.Create("DFrame")
+	frame_communityview:SetSize(700, 600)
+    frame_communityview:Center()
+    frame_communityview:MakePopup()
+    frame_communityview:SetDraggable( false )
+    frame_communityview:SetTitle( "" )
+    frame_communityview:ShowCloseButton( false )
+    function frame_communityview:Paint( w, h )
+        surface.SetDrawColor( COLHUD_PRIMARY )
+        surface.DrawRect( 0, 0, w, h )
+
+        surface.SetMaterial( Material("gui/aftershock/default.png") )
+        surface.SetDrawColor( Color( 255, 255, 255, 255 ) )
+        surface.DrawTexturedRect( 0, 0, w, h )
+    end
+
+    local cbuttonsize = 18
+    local closebutton = CreateCloseButton( frame_communityview, cbuttonsize, frame_communityview:GetWide() - cbuttonsize - 6, 3 )
+
+    local x, y = 34, 25
+    commviewsheets = CreateSheetPanel( frame_communityview, frame_communityview:GetWide() - x - 42, frame_communityview:GetTall() - y - 35, x, y )
+    function commviewsheets:Paint( w, h )
+        surface.SetDrawColor( COLHUD_SECONDARY )
+        surface.DrawRect( 0, 0, w, h )
+    end
+
+    commviewsheets:AddSheet("Members", CommunityViewMembers( commviewsheets, memberdata ), "icon16/user.png")
+    commviewsheets:AddSheet("Allies", CommunityViewAllies( commviewsheets, commdata.allies ), "icon16/flag_green.png")
+    commviewsheets:AddSheet("Wars", CommunityViewWars( commviewsheets, commdata.wars ), "icon16/flag_red.png")
+end)
+
+function CommunityViewMembers( parent, data )
+    local panel = vgui.Create("DPanel")
+    panel:SetSize( parent:GetWide(), parent:GetTall())
+    function panel:Paint( w, h ) end
+
+    local scroll_members = vgui.Create( "DScrollPanel", panel )
+    scroll_members:SetSize( panel:GetWide(), panel:GetTall() )
+    function panel:Paint( w, h ) end
+
+    local ypos = 0
+
+    for k, v in pairs( data ) do
+        local member = vgui.Create( "DPanel", scroll_members )
+        member:SetPos( 0, ypos )
+        member:SetSize( scroll_members:GetWide(), 100 )
+        function member:Paint( w, h )
+            surface.SetDrawColor( COLHUD_PRIMARY )
+            surface.DrawRect( 0, 0, w, h )
+        end
+
+        CharacterIcon( v.model, 5, 5, member:GetTall() - 10, member:GetTall() - 10, member, nil, AS.Classes[v.class].color )
+
+        local name = vgui.Create("DLabel", member)
+        name:SetFont( "TargetID" )
+        name:SetText( v.name .. " (" .. (AS.Classes[v.class].name or "") .. ")" )
+        name:SetPos( 100, 5 )
+        name:SizeToContents()
+        name:SetColor( AS.Classes[v.class].color )
+
+        local title = vgui.Create("DLabel", member)
+        title:SetFont( "TargetID" )
+        title:SetText( "Title: " .. v.title )
+        title:SetPos( 100, 25 )
+        title:SizeToContents()
+
+        local laston = vgui.Create("DLabel", member)
+        laston:SetFont( "TargetID" )
+        laston:SetText( "Last on: " .. v.laston )
+        laston:SetPos( 100, 80 )
+        laston:SizeToContents()
+
+        ypos = ypos + member:GetTall() + 5
+    end
+
+    return panel
+end
+
+function CommunityViewAllies( parent, data )
+    local panel = vgui.Create("DPanel")
+    panel:SetSize( parent:GetWide(), parent:GetTall())
+    function panel:Paint( w, h ) end
+
+    local scroll_allies = vgui.Create( "DScrollPanel", panel )
+    scroll_allies:SetSize( panel:GetWide(), panel:GetTall() )
+    function panel:Paint( w, h ) end
+
+    local ypos = 0
+
+    for k, v in pairs( data ) do
+        local ally = vgui.Create( "DPanel", scroll_allies )
+        ally:SetPos( 0, ypos )
+        ally:SetSize( scroll_allies:GetWide(), 30 )
+        function ally:Paint( w, h )
+            surface.SetDrawColor( COLHUD_PRIMARY )
+            surface.DrawRect( 0, 0, w, h )
+        end
+
+        local name = vgui.Create("DLabel", ally)
+        name:SetFont( "TargetID" )
+        name:SetText( v.name )
+        name:SetPos( 5, 5 )
+        name:SizeToContents()
+
+        ypos = ypos + ally:GetTall() + 5
+    end
+
+    return panel
+end
+
+function CommunityViewWars( parent, data )
+    local panel = vgui.Create("DPanel")
+    panel:SetSize( parent:GetWide(), parent:GetTall())
+    function panel:Paint( w, h ) end
+
+    local scroll_wars = vgui.Create( "DScrollPanel", panel )
+    scroll_wars:SetSize( panel:GetWide(), panel:GetTall() )
+    function panel:Paint( w, h ) end
+
+    local ypos = 0
+
+    for k, v in pairs( data ) do
+        local ally = vgui.Create( "DPanel", scroll_wars )
+        ally:SetPos( 0, ypos )
+        ally:SetSize( scroll_wars:GetWide(), 30 )
+        function ally:Paint( w, h )
+            surface.SetDrawColor( COLHUD_PRIMARY )
+            surface.DrawRect( 0, 0, w, h )
+        end
+
+        local name = vgui.Create("DLabel", ally)
+        name:SetFont( "TargetID" )
+        name:SetText( v.name )
+        name:SetPos( 5, 5 )
+        name:SizeToContents()
+
+        ypos = ypos + ally:GetTall() + 5
+    end
+
+    return panel
+end

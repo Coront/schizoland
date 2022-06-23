@@ -112,8 +112,8 @@ function SWEP:PrimaryAttack()
 			local ply = self.Owner
 			self:SetNextPrimaryFire( CurTime() + 1 )
 			if IsFirstTimePredicted() then
+				if ent:GetClass() != "prop_vehicle_jeep" and ent:GetClass() != "prop_door_rotating" and ent:GetClass() != "func_door_rotating" and ent:GetClass() != "func_door" then return end
 				if SERVER then
-					if ent:GetClass() != "prop_vehicle_jeep" and ent:GetClass() != "prop_door_rotating" and ent:GetClass() != "func_door_rotating" and ent:GetClass() != "func_door" then return end
 					ent:EmitSound("doors/door_locked2.wav")
 					ent:Fire( "lock", "", 0 )
 					if ent.VC_SeatTable and ent:IsVehicle() then
@@ -145,8 +145,8 @@ function SWEP:SecondaryAttack()
 	if ent:GetObjectOwner() == self:GetOwner() or ent.CoOwners and ent.CoOwners[self:GetOwner()] then
 		local ply = self.Owner
 		self:SetNextSecondaryFire( CurTime() + 1 )
+		if ent:GetClass() != "prop_vehicle_jeep" and ent:GetClass() != "prop_door_rotating" and ent:GetClass() != "func_door_rotating" and ent:GetClass() != "func_door" then return end
 		if SERVER then
-			if ent:GetClass() != "prop_vehicle_jeep" and ent:GetClass() != "prop_door_rotating" and ent:GetClass() != "func_door_rotating" and ent:GetClass() != "func_door" then return end
 			ent:EmitSound("doors/door_latch3.wav")
 			ent:Fire( "unlock", "", 0 )
 			if ent.VC_SeatTable and ent:IsVehicle() then
@@ -155,9 +155,7 @@ function SWEP:SecondaryAttack()
 				end
 			end
 			ply:ChatPrint("Unlocked.")
-		end
-
-		if CLIENT then
+		elseif CLIENT then
 			local seq = ply:LookupSequence("gesture_item_place")
 			ply:AddVCDSequenceToGestureSlot( 0, seq, 0, true )
 		end

@@ -149,7 +149,7 @@ elseif ( CLIENT ) then
     timer.Create( "as_autoresync_stockpile", 10, 0, function()
         for k, v in pairs( ents.FindByClass("as_community_stockpile") ) do
             if not IsValid(v) then continue end
-            net.Start("as_stockpile_requestinfo") --Cases utilize the lootcontainer inventory system, so this isnt a concern.
+            net.Start("as_stockpile_requestinfo")
                 net.WriteEntity(v)
             net.SendToServer()
         end

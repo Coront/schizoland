@@ -59,6 +59,7 @@ function community.Delete( cid )
     for k, v in pairs( player.GetAll() ) do --We'll go through all the players on the server and clear their community vars.
         if v:GetCommunity() != cid then continue end --ignore players not part of this community
         v:ClearCommunity()
+        v:ClearCommunityName()
         v:ClearRank()
         v:ClearTitle()
         v:ChatPrint( "Your community, " .. community.GetName( cid ) .. ", has been abandoned." )
@@ -297,6 +298,10 @@ function PlayerMeta:ClearCommunity()
     self:SetCommunity( 0 )
 end
 
+function PlayerMeta:ClearCommunityName()
+    self:SetNWString( "as_cname", "" )
+end
+
 function PlayerMeta:ClearRank()
     self:SetRank( -1 )
 end
@@ -340,6 +345,7 @@ end
 function PlayerMeta:LeaveCommunity()
     self:ChatPrint("You have left the community " .. Communities[self:GetCommunity()].name)
     self:ClearCommunity()
+    self:ClearCommunityName()
     self:ClearTitle()
     self:ClearRank()
 
@@ -351,6 +357,7 @@ function PlayerMeta:KickPlayer( pid )
     for k, v in pairs( player.GetAll() ) do
         if v.pid == pid then
             v:ClearCommunity()
+            v:ClearCommunityName()
             v:ClearTitle()
             v:ClearRank()
 
@@ -454,6 +461,11 @@ function PlayerMeta:DeployLocker()
     ent:SetCommunity( self:GetCommunity(), self:GetCommunityName() )
     ent:Spawn()
     ent:SetPos( self:TracePosFromEyes( 300 ) + Vector( 0, 0, 12 ))
+
+    timer.Simple( 1, function()
+        ent:ResyncCommunity()
+        ent:ResyncInventory()
+    end)
 end
 
 function PlayerMeta:DeployStockpile()
@@ -461,6 +473,11 @@ function PlayerMeta:DeployStockpile()
     ent:SetCommunity( self:GetCommunity(), self:GetCommunityName() )
     ent:Spawn()
     ent:SetPos( self:TracePosFromEyes( 300 ) + Vector( 0, 0, 80 ))
+
+    timer.Simple( 1, function()
+        ent:ResyncCommunity()
+        ent:ResyncResources()
+    end)
 end
 
 -- ██████╗ ██████╗ ███████╗    ██╗      ██████╗  █████╗ ██████╗ ███████╗██████╗

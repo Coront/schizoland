@@ -297,7 +297,7 @@ function ValueSlider( text, x, y, min, max, parent, convar, color, decimals )
     label:SetPos(x, y)
     label:SizeToContents()
     label.Think = function()
-        local setcolor = color == "good" and COLHUD_GOOD or color == "default" and COLHUD_DEFAULT or color == "bad" and COLHUD_BAD or Color(200, 200, 200)
+        local setcolor = color == "good" and COLHUD_GOOD or color == "default" and COLHUD_DEFAULT or color == "bad" and COLHUD_BAD or color == "community" and COLHUD_COMMUNITY or Color(200, 200, 200)
         label:SetColor(setcolor)
     end
 end
@@ -584,13 +584,29 @@ function SimpleSpawnIcon( parent, model, size, x, y, tooltip, callback )
 end
 
 function SimpleItemIcon( parent, item, size, x, y, tooltip, callback )
-    local spawnicon = vgui.Create("SpawnIcon", parent )
+    local panel = vgui.Create("DPanel", parent)
+    panel:SetPos( x, y )
+    panel:SetSize( size, size )
+    function panel:Paint( w, h )
+        local info = AS.Items[item]
+        local col = info.color and info.color:ToTable() or COLHUD_PRIMARY:ToTable()
+        surface.SetDrawColor( col[1], col[2], col[3], 50 )
+        surface.DrawRect( 0, 0, w, h )
+
+        if info.color then
+            surface.SetDrawColor( info.color )
+        else
+            surface.SetDrawColor( COLHUD_PRIMARY )
+        end
+        surface.DrawOutlinedRect( 0, 0, w, h, 1 )
+    end
+
+    local spawnicon = vgui.Create("SpawnIcon", panel )
     spawnicon:SetModel( AS.Items[item].model )
     spawnicon:SetSkin( AS.Items[item].skin or 0 )
-    spawnicon:SetPos( x, y )
-    spawnicon:SetSize( size, size )
+    spawnicon:SetSize( panel:GetWide(), panel:GetTall() )
     spawnicon:SetTooltip( tooltip )
-    spawnicon.DoClick = function()
+    function spawnicon:DoClick()
         if callback then
             surface.PlaySound("buttons/button15.wav")
             callback()
