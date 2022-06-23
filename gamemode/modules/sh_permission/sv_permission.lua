@@ -6,7 +6,7 @@ function isPropBlacklisted( model )
     end
 
     for k, v in pairs( PERM.PropBlacklistDirectory ) do
-        if string.find( string.lower(k), string.lower(model) ) then
+        if string.find( string.lower(model), string.lower(v) ) then
             return true
         end
     end
@@ -38,6 +38,13 @@ end
 
 function GM:PlayerSpawnedProp( ply, model, ent )
     if isPropBlacklisted( model ) and not ply:IsAdmin() then ply:ChatPrint( model .. " is blacklisted.") ent:Remove() return end
+    local TotalProps = 0
+    for k, v in pairs( ents.FindByClass("prop_physics") ) do
+        if v.Owner == ply then
+            TotalProps = TotalProps + 1
+        end
+    end
+    if TotalProps > PERM.MaxProps then ply:ChatPrint("You have reached the prop limit.") ent:Remove() return end
     ent:SetObjectOwner( ply )
     if not ply:IsAdmin() and not ent.AdvDupe2 then
         ent:SetCollisionGroup( COLLISION_GROUP_WORLD )

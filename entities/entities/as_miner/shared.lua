@@ -107,6 +107,7 @@ function ENT:CanMine()
         start = self:GetPos(),
         endpos = self:GetPos() + Vector( 0, 0, 99999 ),
         filter = {self},
+        mask = MASK_SOLID_BRUSHONLY,
     })
     if not tr2.HitSky then return false end
 

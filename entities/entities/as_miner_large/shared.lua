@@ -107,6 +107,7 @@ function ENT:CanMine()
         start = self:GetPos(),
         endpos = self:GetPos() + Vector( 0, 0, 99999 ),
         filter = {self},
+        mask = MASK_SOLID_BRUSHONLY,
     })
     if not tr2.HitSky then return false end
 
@@ -127,7 +128,7 @@ function ENT:Think()
             local item = table.Random( self.Items )
             self:AddItemToInventory( item, 10 )
             if self:GetObjectOwner():GetASClass() == "scavenger" then
-                self:GetObjectOwner():IncreaseSkillExperience("mining", SKL.Mining.incamt)
+                self:GetObjectOwner():IncreaseSkillExperience("mining", (SKL.Mining.incamt * 10))
             end
         end
 

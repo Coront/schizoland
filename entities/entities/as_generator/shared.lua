@@ -100,6 +100,7 @@ function ENT:Think()
                 start = self:GetPos(),
                 endpos = self:GetPos() + self:GetAngles():Up() * 999999, --stfu
                 filter = self,
+                mask = MASK_SOLID_BRUSHONLY,
             })
             if tr.MatType != MAT_DEFAULT then
                 self:TogglePower()

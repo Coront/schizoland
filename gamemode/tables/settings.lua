@@ -81,9 +81,13 @@ PERM.PropBlacklist = { --Props that are forbidden from being spawned
     ["models/props_radiostation/radio_antenna01.mdl"] = true,
     ["models/props_silo/silo_tower01.mdl"] = true,
     ["models/props_canal/locks_large_b.mdl"] = true,
+    ["models/props/hr_massive/radio_tower/radio_tower.mdl"] = true,
+    ["models/props_buildings/row_res_1_fullscale.mdl"] = true
 }
 PERM.PropBlacklistDirectory = {
-    "rp_asheville",
+    "/rp_asheville",
+    "/metro_2033",
+    "/props_buildings"
 }
 PERM.ToolWhitelist = { --Tools that regular players can use
     ["precision"] = true,
@@ -179,6 +183,11 @@ SAT.StarveDamage = 2 --How much damage starvation should deal on next hunger upd
 SAT.DehydratedDamage = 1 --How much damage dehydration should deal on next thirst update
 SAT.SatBuffs = 85 --The amount of hunger + thirst a player must remain above in order to receive the passive buffs.
 --Communities
+SET.MinCommLength = 3
+SET.MaxCommLength = 50
+SET.MinTitleLength = 3
+SET.MaxTitleLength = 50
+SET.MaxDescLength = 200
 SET.MaxMembers = 30 --Maximum members a community can have.
 SET.MaxRanks = 8 --Maximum ranks a community can have.
 SET.WarLength = 172800 --Two days

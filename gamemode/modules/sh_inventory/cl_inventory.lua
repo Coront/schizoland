@@ -1361,7 +1361,7 @@ function AS.Inventory.BuildPlayers()
             local col = COLHUD_PRIMARY:ToTable()
             if LocalPlayer() == v then
                 col = {[1] = 140, [2] = 140, [3] = 140}
-            elseif LocalPlayer():GetCommunity() == v:GetCommunity() then
+            elseif LocalPlayer():InCommunity() and LocalPlayer():GetCommunity() == v:GetCommunity() then
                 col = COLHUD_COMMUNITY:ToTable()
             elseif CommunityAllies[v:GetCommunity()] then
                 col = COLHUD_GOOD:ToTable()

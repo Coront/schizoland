@@ -571,10 +571,12 @@ net.Receive( "as_community_create", function( _, ply )
     local name = net.ReadString()
     local desc = net.ReadString()
 
-    if string.len(name) < SET.MinNameLength then ply:ChatPrint("Your community name is too short.") return end
+    if string.len( name ) < SET.MinCommLength then ply:ChatPrint("This title is too short.") return end
+    if string.len( name ) > SET.MaxCommLength then ply:ChatPrint("This title is too long.") return end
     for k, v in pairs(SET.BannedWords) do
         if string.find(name:lower(), v) then ply:Kick("Inappropriate name usage") return end
     end
+    if string.len( desc ) > SET.MaxDescLength then ply:ChatPrint("This description is too long.") return end
     if ply:InCommunity() then ply:ChatPrint("You cannot be in a community to make a new one.") return end
 
     ply:CreateCommunity( name, desc )
@@ -645,6 +647,8 @@ net.Receive( "as_community_changetitle", function( _, ply )
     local pid = tonumber( net.ReadUInt( NWSetting.UIDAmtBits ) )
     local title = net.ReadString()
 
+    if string.len( title ) < SET.MinTitleLength then ply:ChatPrint("This title is too short.") return end
+    if string.len( title ) > SET.MaxTitleLength then ply:ChatPrint("This title is too long.") return end
     if not ply:InCommunity() then ply:ChatPrint("You are not in a community.") return end
     if not ply:HasPerm( "title" ) then ply:ChatPrint("You must have the permission 'title' to change titles.") return end
     local inCommunity = tonumber(sql.QueryValue( "SELECT cid FROM as_communities_members WHERE pid = " .. pid ))
