@@ -18,6 +18,13 @@ hook.Add("HUDPaint", "AS_CStockpile", function()
     for k, v in pairs( ents.FindByClass("as_community_stockpile") ) do
         if LocalPlayer():GetPos():Distance(v:GetPos()) > maxdist then continue end
 
+        local trace = util.TraceLine({
+            start = EyePos(),
+            endpos = v:GetPos() + v:OBBCenter(),
+            filter = {LocalPlayer()}
+        })
+        if trace.Entity != v then continue end
+
         local ent = v
         local obbc = ent:OBBCenter():ToTable()
         local ang = ent:GetAngles()

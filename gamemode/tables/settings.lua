@@ -80,6 +80,10 @@ PERM.PropBlacklist = { --Props that are forbidden from being spawned
     ["models/props_combine/combinethumper002.mdl"] = true,
     ["models/props_radiostation/radio_antenna01.mdl"] = true,
     ["models/props_silo/silo_tower01.mdl"] = true,
+    ["models/props_canal/locks_large_b.mdl"] = true,
+}
+PERM.PropBlacklistDirectory = {
+    "rp_asheville",
 }
 PERM.ToolWhitelist = { --Tools that regular players can use
     ["precision"] = true,

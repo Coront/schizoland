@@ -34,6 +34,8 @@ SWEP.Secondary.DefaultClip = 0
 
 local lockpickEnts = {
 	["prop_door_rotating"] = true,
+	["func_door"] = true,
+	["func_door_rotating"] = true,
 }
 local lockpickSounds = {
 	"weapons/357/357_reload1.wav",

@@ -279,7 +279,7 @@ end)
 net.Receive( "as_sitting_end", function()
     local ent = net.ReadEntity()
     if not IsValid( ent ) then return end
-    ent:AddVCDSequenceToGestureSlot(GESTURE_SLOT_CUSTOM, ent:LookupSequence("idle"), 0, true)
+    ent:AnimResetGestureSlot(GESTURE_SLOT_CUSTOM, ent:LookupSequence("idle"), false)
 end)
 
 net.Receive( "as_sitting_resync", function()

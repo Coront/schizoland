@@ -16,12 +16,24 @@ function GM:PlayerSpawnProp( ply, model )
     end
     if TotalProps > PERM.MaxProps and not ply:IsAdmin() then ply:ChatPrint("You have reached the prop limit.") ply:SendLua("surface.PlaySound('" .. UICUE.DECLINE .. "')") return false end
     if PERM.PropBlacklist[model] and not ply:IsAdmin() then ply:ChatPrint( model .. " is blacklisted.") return false end
+    for k, v in pairs( PERM.PropBlacklistDirectory ) do
+        if string.find( string.lower(model), string.lower(v) ) then
+            ply:ChatPrint( model .. " is blacklisted.")
+            return false
+        end
+    end
 
     return true
 end
 
 function GM:PlayerSpawnedProp( ply, model, ent )
     if PERM.PropBlacklist[model] and not ply:IsAdmin() then ply:ChatPrint( model .. " is blacklisted.") ent:Remove() return end
+    for k, v in pairs( PERM.PropBlacklistDirectory ) do
+        if string.find( string.lower(model), string.lower(v) ) then
+            ply:ChatPrint( model .. " is blacklisted.")
+            return false
+        end
+    end
     ent:SetObjectOwner( ply )
     if not ply:IsAdmin() and not ent.AdvDupe2 then
         ent:SetCollisionGroup( COLLISION_GROUP_WORLD )
