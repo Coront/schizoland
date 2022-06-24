@@ -81,7 +81,7 @@ function GM:PlayerSpawn( ply )
         ply.ItemReturns = nil
     end
 
-    if ply:InCommunity() and table.Count(Communities[ply:GetCommunity()].wars) >= 1 then
+    if ply:InCommunity() and table.Count(Communities[ply:GetCommunity()].wars) >= 1 and not ply.WasDefibbed then
         ply:ChatPrint("Temporary Godmode Enabled (Reason: War).")
         ply:GodEnable()
         ply.DisableGodmodeIn = CurTime() + 20
@@ -189,10 +189,15 @@ function GM:DoPlayerDeath( ply, attacker, dmg )
             })
             ent:SetPos( trace.HitPos + (ent:OBBCenter() + Vector( 0, 0, 20 )) )
             ent:SetInventory( contents )
+            ent:SetLockedTimer( CurTime() + 10 )
             timer.Simple( 0.1, function() --im literally seetheing rn
                 ent:ResyncInventory()
+                ent:ResyncLockTimer()
             end)
             ent:Spawn()
+            ent:SetMaterial("models/debug/debugwhite")
+            ent:SetColor( Color( 255, 0, 0 ) )
+            ent.Locked = true
             local phys = ent:GetPhysicsObject()
             phys:EnableMotion( false )
             ent:SetNWString("owner", ply:Nickname())
@@ -229,6 +234,7 @@ function GM:DoPlayerDeath( ply, attacker, dmg )
     rag:SetPos( ply:GetPos() )
     rag:SetAngles( ply:GetAngles() )
     rag:Spawn()
+    rag:SetCollisionGroup( COLLISION_GROUP_WEAPON )
     local bones = rag:GetPhysicsObjectCount()
 	for i=1,bones-1 do
 		local bone = rag:GetPhysicsObjectNum( i )
@@ -238,7 +244,6 @@ function GM:DoPlayerDeath( ply, attacker, dmg )
 			bone:SetAngles( boneang )
 		end
 	end
-    rag:SetCollisionGroup( COLLISION_GROUP_WEAPON )
     timer.Simple( 60, function() 
         if IsValid( rag ) then
             rag:Remove()
