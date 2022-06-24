@@ -32,7 +32,7 @@ elseif ( CLIENT ) then
         if LocalPlayer():GetPos():Distance(self:GetPos()) < GetConVar("as_entity_renderdist"):GetInt() then
             self:DrawModel()
             self:DrawShadow(true)
-            if self:GetObjectOwner() == LocalPlayer() and LocalPlayer():GetActiveWeapon():GetClass() == "weapon_physgun" then
+            if LocalPlayer():Alive() and self:GetObjectOwner() == LocalPlayer() and LocalPlayer():GetActiveWeapon():GetClass() == "weapon_physgun" then
                 render.DrawLine( self:GetPos(), self:GetPos() + self:GetAngles():Up() * 20, COLHUD_DEFAULT, true )
             end
         else

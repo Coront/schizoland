@@ -43,6 +43,7 @@ util.AddNetworkString( "as_case_takeammo" )
 
 net.Receive( "as_case_takeammo", function(_, ply) 
 	local ent = net.ReadEntity()
+    if not IsValid(ent) then return end
     if ent:GetClass() != "as_case" then return end
 	local item = net.ReadString()
 	local amt = net.ReadUInt( 15 )

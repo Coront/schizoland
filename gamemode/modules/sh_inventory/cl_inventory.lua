@@ -1418,6 +1418,16 @@ function AS.Inventory.BuildPlayers()
             end
         end
 
+        if v:InCommunity() then
+            local width, height = 100, 20
+            DefaultButton( "View Community", panel:GetWide() - width - 5, 5, width, height, panel, function()
+                frame_inventory:Close()
+                NextInventoryOpen = CurTime() + 0.5
+                net.Start("as_community_requestlookup")
+                    net.WriteUInt( v:GetCommunity(), NWSetting.UIDAmtBits )
+                net.SendToServer()
+            end)
+        end
         if LocalPlayer():IsAdmin() then
             local width, height = 150, 20
             DefaultButton( "View Inventory (Admin)", panel:GetWide() - width - 5, panel:GetTall() - height - 5, width, height, panel, function()
