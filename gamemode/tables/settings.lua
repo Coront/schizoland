@@ -24,6 +24,7 @@ SET.CraftTime = 1 --Craft time per item (seconds)
 SET.DestroyPerc = 0.4 --Percentage of resources to receive from an item when breaking it down.
 SET.DeathResCost = 30 --Percentage of player's resources (scrap, smallparts, chemicals) that will be lost upon death.
 SET.DeathWait = 30 --How long a player must wait before respawning.
+SET.CaseLockLength = 10 --How long a player's case should be locked when they die
 SET.DefibWait = 1800 --How long a player must wait before being able to be defibbed again.
 SET.CombatLength = 10 --Default combat length
 SET.PlyCombatLength = 30 --Player combat length
