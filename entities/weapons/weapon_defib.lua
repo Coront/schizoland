@@ -33,7 +33,7 @@ SWEP.Primary.Automatic = true
 SWEP.Secondary.Automatic = true
 
 SWEP.MaxCharges = 5
-SWEP.ChargeWait = 3 --Time between charges
+SWEP.ChargeWait = 2 --Time between charges
 
 function SWEP:PrimaryAttack()
 	local ply = self:GetOwner()
@@ -56,13 +56,15 @@ function SWEP:PrimaryAttack()
 			self:SetCharges( 0 )
 
 			local otherPly = rag.Owner
+			otherPly.WasDefibbed = true
+			otherPly:SetNWFloat( "NoCollideTimer", CurTime() + 5 )
 			otherPly:Spawn()
 			otherPly:SetPos( otherPly.LastDeathPos )
 			otherPly:SetHealth( 15 )
 			otherPly:ChatPrint("You were defibrillated!")
 			otherPly:EmitSound( "ambient/energy/zap1.wav", 80 )
 			otherPly.NoDefib = CurTime() + SET.DefibWait
-			otherPly.NoCollision = CurTime() + 5
+			otherPly.WasDefibbed = false
 
 			plogs.PlayerLog(ply, "Items", ply:NameID() .. " defibrillated " .. otherPly:Nickname(), {
 				["Name"] 	= ply:Name(),
