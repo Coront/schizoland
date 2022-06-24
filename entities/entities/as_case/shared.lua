@@ -156,7 +156,6 @@ else
         local ent = net.ReadEntity()
         if not IsValid( ent ) then return end 
         local inv = net.ReadTable()
-        if not ent.SetInventory then return end
         ent:SetInventory( inv )
     end)
 

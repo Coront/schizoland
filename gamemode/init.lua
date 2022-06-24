@@ -75,6 +75,7 @@ local WorkshopFastDL = {
 	["104691717"] = "PAC3",
 	["108424005"] = "Keypad Tool and Cracker with Wire Support",
 	["104815552"] = "SmartSnap",
+	["2595136841"] = "rp_asheville", --Event Map
 }
 
 local WorkshopFastDLMaps = {
@@ -92,7 +93,6 @@ local WorkshopFastDLMaps = {
 	["105984257"] = "gm_atomic",
 	["1572373847"] = "gm_boreas", --Event Map
 	["326332456"] = "gm_fork", --Event Map
-	["2595136841"] = "rp_asheville", --Event Map
 }
 
 for k, v in pairs(WorkshopFastDLMaps) do
