@@ -262,16 +262,17 @@ end
 function GM:PlayerDeath( victim, inflictor, attacker )
     local length = tobool(GetConVar("as_respawnwait"):GetInt()) and SET.DeathWait or 1
     victim:SetNWInt("AS_NextRespawn", CurTime() + length )
+    victim:SetNWInt("AS_NextManualRespawn", CurTime() + SET.ManualRespawn )
     victim:SetNWInt("AS_LastDeath", CurTime() )
 end
 
-function GM:PlayerDeathThink( ply )
-    if CurTime() > (ply:GetNWInt("AS_NextRespawn") or 0) then
+hook.Add( "PlayerDeathThink", "AS_Respawn", function( ply )
+    if CurTime() < ply:GetNWInt("AS_NextManualRespawn", 0 ) then return false end
+    if CurTime() > ply:GetNWInt("AS_NextRespawn", 0 ) then
         ply.NoDefib = 0
         ply:Spawn()
     end
-    return false
-end
+end)
 
 function GM:GetFallDamage( ply, speed )
     return math.max(1, ( speed - 526.5 ) * ( ply:GetMaxHealth() / 396 ))

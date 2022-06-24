@@ -385,6 +385,10 @@ function AftershockHUDDeath()
     local length = tobool(GetConVar("as_respawnwait"):GetInt()) and SET.DeathWait or 1
     local percent = (CurTime() - (LocalPlayer():GetNWInt("AS_LastDeath") or 0)) / length
     surface.DrawRect(barx + 2, bary + 2, math.Clamp((percent * 200 - 4), 0, 200 - 4), height - 4) --Health bar
+
+    if CurTime() > LocalPlayer():GetNWInt("AS_NextManualRespawn", 0 ) then
+        draw.SimpleTextOutlined( "You can press space or click to respawn.", "AftershockHUD", barx + (width / 2), bary - 20, COLHUD_DEFAULT, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM, 1, Color( 0, 0, 0 ) )
+    end
 end
 
 function ConnectionInformation()
