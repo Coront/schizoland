@@ -41,7 +41,9 @@ hook.Add( "PlayerButtonDown", "AS_LootContainer", function( ply, button )
                 if not frame_container.ent:GetInventory()[itemid] then LocalPlayer():ChatPrint("This item isn't in the container.") frame_container.containeritemamtUpdate( itemid ) return end
                 if frame_container.ent:PlayerCanTakeItem( LocalPlayer(), itemid, frame_container.ent:GetInventory()[itemid] ) then
                     frame_container.ent:PlayerTakeItem( LocalPlayer(), itemid, frame_container.ent:GetInventory()[itemid] )
-                    surface.PlaySound( ITEMCUE.TAKE )
+                    if frame_container.ent:GetClass() != "as_case" then
+                        surface.PlaySound( ITEMCUE.TAKE )
+                    end
                     frame_container.containeritemamtUpdate( itemid )
 
                     net.Start("as_container_takeitem")
