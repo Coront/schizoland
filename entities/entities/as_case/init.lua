@@ -18,9 +18,20 @@ function ENT:Initialize()
 
 end
 
+function ENT:UnlockCase()
+    self:SetMaterial( "" )
+    self:SetColor( Color( 255, 255, 255 ) )
+    self:EmitSound("buttons/lightswitch2.wav", 60, 150)
+    self.Locked = false
+end
+
 function ENT:Think()
     if table.Count(self:GetInventory()) <= 0 then
         self:Remove()
+    end
+
+    if CurTime() > self:GetLockedTimer() and self.Locked then
+        self:UnlockCase()
     end
 
     if CurTime() > self.DeclaimTime and self:GetOwner() then --This will declaim any case with a claim stuck on it, generally from NPC kills.

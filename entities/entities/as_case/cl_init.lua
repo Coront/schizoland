@@ -14,7 +14,7 @@ end
 function ENT:Think()
     local ply = LocalPlayer()
 
-    if ply:GetEyeTrace().Entity == self and ply:GetPos():Distance(self:GetPos()) < 100 and self:GetInventory() != nil and LocalPlayer():Alive() then
+    if ply:GetEyeTrace().Entity == self and ply:GetPos():Distance(self:GetPos()) < 100 and self:GetInventory() != nil and LocalPlayer():Alive() and not self:IsLocked() then
         if IsValid(self:GetClaimer()) and LocalPlayer() == self:GetClaimer() or not IsValid(self:GetClaimer()) then
             if not IsValid( frame_container ) then
                 ContainerMenu( self )
@@ -38,7 +38,8 @@ hook.Add( "PreDrawHalos", "AS_Case_Indicator", function()
 
     local container = {}
     for k, v in pairs( ents.FindByClass("as_case") ) do
-        if LocalPlayer():GetPos():Distance(v:GetPos()) > 250 then continue end
+        if v:IsLocked() then continue end
+        if LocalPlayer():GetPos():Distance(v:GetPos()) > 300 then continue end
         if v and IsValid(v) and v.Inventory and table.Count(v.Inventory) > 0 then
             container[#container + 1] = v
         end
@@ -49,7 +50,7 @@ end)
 
 hook.Add("HUDPaint", "AS_Cases", function()
     for k, v in pairs( ents.FindByClass("as_case") ) do
-        if LocalPlayer():GetPos():Distance(v:GetPos()) > 250 then continue end
+        if LocalPlayer():GetPos():Distance(v:GetPos()) > 300 then continue end
 
         local trace = util.TraceLine({
             start = LocalPlayer():EyePos(),

@@ -8,10 +8,29 @@ ENT.Spawnable		= false
 
 function ENT:SetInventory( tbl )
     self.Inventory = tbl
+    if ( SERVER ) then
+        self:ResyncInventory()
+    end
 end
 
 function ENT:GetInventory()
     return self.Inventory or {}
+end
+
+function ENT:SetLockedTimer( len )
+    self.LockedLength = len
+    if ( SERVER ) then
+        self:ResyncLockTimer()
+    end
+end
+
+function ENT:GetLockedTimer()
+    return self.LockedLength or 0
+end
+
+function ENT:IsLocked()
+    if CurTime() < self:GetLockedTimer() then return true end
+    return false
 end
 
 function ENT:TakeItemFromInventory( itemid, amt )
@@ -38,6 +57,7 @@ end
 
 function ENT:PlayerCanTakeItem( ply, itemid, amt )
     if not ply:Alive() then return false end
+    if self:IsLocked() then ply:ChatPrint("This case is still locked.") return false end
     if IsValid(self:GetClaimer()) and ply != self:GetClaimer() then ply:ChatPrint("You are not the claimant of this case.") return false end
     if ply:GetPos():Distance( self:GetPos() ) > 200 then ply:ChatPrint("You are too far to take this item.") return false end
     if ply:GetCarryWeight() + (AS.Items[itemid].weight * amt) > ply:MaxCarryWeight() and not SET.RawResources[itemid] then ply:ChatPrint("You are too overweight to take this item.") return false end
@@ -53,6 +73,7 @@ end
 function ENT:PlayerTakeItem( ply, itemid, amt )
     self:TakeItemFromInventory( itemid, amt )
     if (SERVER) and self:GetNWString("owner", "") != "" then
+        ply:EmitSound( ITEMCUE.TAKE )
         ply:SetRecentInvDelay( CurTime() + SET.PlyCombatLength )
         ply:AddRecentInvItem( itemid, amt )
     end
@@ -92,6 +113,7 @@ end
 if ( SERVER ) then
 
     util.AddNetworkString("as_case_syncinventory")
+    util.AddNetworkString("as_case_synclocktimer")
     util.AddNetworkString("as_case_requestinventory")
 
     function ENT:ResyncInventory()
@@ -111,6 +133,13 @@ if ( SERVER ) then
     end
     concommand.Add("as_resynccases", ResyncAllCaseInventories)
 
+    function ENT:ResyncLockTimer()
+        net.Start("as_case_synclocktimer")
+            net.WriteEntity( self )
+            net.WriteFloat( self:GetLockedTimer() )
+        net.Broadcast()
+    end
+
     net.Receive("as_case_requestinventory", function( _, ply )
         local ent = net.ReadEntity()
         if not IsValid(ent) then return end
@@ -129,6 +158,13 @@ else
         local inv = net.ReadTable()
         if not ent.SetInventory then return end
         ent:SetInventory( inv )
+    end)
+
+    net.Receive("as_case_synclocktimer", function()
+        local ent = net.ReadEntity()
+        if not IsValid( ent ) then return end
+        local time = net.ReadFloat()
+        ent:SetLockedTimer( time )
     end)
 
     timer.Create( "as_autoresync_cases", 10, 0, function()
