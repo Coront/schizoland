@@ -90,7 +90,8 @@ hook.Add("StartCommand", "AS_CrouchJumpSpamBlock", function(ply, cmd)
 end)
 
 hook.Add("ShouldCollide", "AS_PlayerCollisions", function( ent1, ent2 )
-    if ent1:IsPlayer() and ent2:IsPlayer() and (ent1:GetMoveType() == MOVETYPE_NOCLIP or not tobool(GetConVar("as_collisions"):GetInt())) then
-        return false
-    end
+    if ent1:IsPlayer() and ent2:IsPlayer() and (ent1:GetMoveType() == MOVETYPE_NOCLIP or not tobool(GetConVar("as_collisions"):GetInt())) then return false end
+    if ent1:IsPlayer() and ent2:IsPlayer() and (CurTime() < ent1:GetNWFloat( "NoCollideTimer", 0 ) or CurTime() < ent2:GetNWFloat( "NoCollideTimer", 0 )) then return false end
+
+    return true
 end)
