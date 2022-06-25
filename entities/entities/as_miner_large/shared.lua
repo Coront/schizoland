@@ -98,10 +98,10 @@ end
 function ENT:CanMine()
     local tr = util.TraceLine({
         start = self:GetPos(),
-        endpos = self:GetPos() + Vector( 0, 0, -10 ),
+        endpos = self:GetPos() + Vector( 0, 0, -500 ),
         filter = {self},
     })
-    if not tr.Hit then return false end
+    if not tr.HitWorld then return false end
 
     local tr2 = util.TraceLine({
         start = self:GetPos(),
