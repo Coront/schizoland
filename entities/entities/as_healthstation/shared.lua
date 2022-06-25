@@ -138,7 +138,7 @@ elseif ( CLIENT ) then
     function ENT:Think()
         if CurTime() > (self:GetCreationTime() + NWSetting.PostCreationDelay) and CurTime() > (self.NextResync or 0) then
             self:Resync()
-            self.NextResync = CurTime() + 10
+            self.NextResync = CurTime() + NWSetting.EntUpdateLength
         end
     end
 

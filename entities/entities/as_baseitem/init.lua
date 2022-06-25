@@ -66,6 +66,7 @@ function ENT:Think()
 	if IsValid(self) and self:GetItem() == "food_orange" and self:ToxicPresent() then
 		self:SetItem("food_toxicfruit")
 		self:EmitSound("physics/flesh/flesh_squishy_impact_hard" .. math.random( 1, 4 ) .. ".wav")
+		self:SetModel( AS.Items["food_toxicfruit"].model )
 	end
 end
 

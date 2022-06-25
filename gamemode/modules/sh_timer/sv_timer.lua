@@ -23,6 +23,8 @@ hook.Add( "Think", "AS_TimedEvents", function()
     for k, v in pairs( player.GetAll() ) do
         if v:GetEventTime() == 0 then continue end --Player doesn't have an event.
 
+        if not v:Alive() then v:CancelTimedEvent() end --Cancel an event if the player is dead
+
         if v:GetEventTime() != 0 and CurTime() > v:GetEventTime() then --Basically after the first time think is called and the current time is more than event time
             v:SetEventTime( 0 ) --setting the timer to 0, because there is no event happening anymore
             local callback = v:GetEventCallback()
