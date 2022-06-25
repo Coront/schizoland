@@ -96,7 +96,7 @@ local WorkshopFastDLMaps = {
 }
 
 for k, v in pairs(WorkshopFastDLMaps) do
-	if game.GetMap() == v then
+	if string.find( string.lower( game.GetMap() ), string.lower( v ) ) then
 		WorkshopFastDL[k] = v
 		break
 	end
@@ -108,6 +108,10 @@ end
 
 function GM:InitPostEntity()
 	for k, v in pairs( ents.FindByClass("prop_physics*") ) do
+		v:Remove()
+	end
+
+	for k, v in pairs( ents.FindByClass("item*") ) do
 		v:Remove()
 	end
 end
