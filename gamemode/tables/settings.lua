@@ -87,9 +87,9 @@ PERM.PropBlacklist = { --Props that are forbidden from being spawned
     ["models/props_buildings/row_res_1_fullscale.mdl"] = true
 }
 PERM.PropBlacklistDirectory = {
-    "/rp_asheville",
-    "/metro_2033",
-    "/props_buildings"
+    "rp_asheville",
+    "metro_2033",
+    "props_buildings",
 }
 PERM.ToolWhitelist = { --Tools that regular players can use
     ["precision"] = true,

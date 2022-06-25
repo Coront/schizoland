@@ -217,7 +217,7 @@ net.Receive( "as_locker_setprofile", function( _, ply )
 	local profile = sql.Query("SELECT * FROM as_lockers WHERE lid = " .. lid)[1]
 	if tonumber(profile.pid) != ply.pid then ply:ChatPrint("You do not own this profile.") return end
 	if profile.deleted != "NULL" then ply:ChatPrint("This profile is deleted.") return end
-	for k, v in pairs( ents.FindByClass("as_lockers") ) do
+	for k, v in pairs( ents.FindByClass("as_locker") ) do
 		if v:GetProfile() == lid then
 			ply:ChatPrint("A locker with this profile is already active.")
 			return

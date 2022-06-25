@@ -178,7 +178,7 @@ function SWEP:PrimaryAttack()
 		nade:SetPos(pos)
 		nade:SetAngles(EA)
 		nade:SetOwner(self.Owner)
-		nade.BlastRadius = 612
+		nade.BlastRadius = 512
 		nade.BlastDamage = 180
 		nade:Spawn()
 		nade:GetPhysicsObject():SetVelocity((EA + Angle(self.CurCone * math.Rand(-25, 25), self.CurCone * math.Rand(-25, 25), 0)):Forward() * 5000)
