@@ -382,6 +382,24 @@ AS.AddBaseItem("wep_ak12", {
     },
 })
 
+AS.AddBaseItem("wep_ash12", {
+    name = "ASH-12",
+    desc = "Holds 20 rounds and uses 7.62x51mm ammo.",
+    category = "weapon",
+    model = "models/items/weapons/ash12.mdl",
+    wep = "weapon_ash12",
+    color = Color( 120, 40, 40 ),
+    value = 100,
+    weight = 8,
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 400,
+        ["misc_smallparts"] = 350,
+        ["misc_chemical"] = 275,
+        ["misc_weaponkit"] = 0,
+    },
+})
+
 AS.AddBaseItem("wep_pulserifle", {
     name = "Pulse Rifle",
     desc = "Holds 30 charges and uses Pulse Charges.",
@@ -606,6 +624,7 @@ AS.AddBaseItem("wep_m82", {
     category = "weapon",
     model = "models/items/weapons/m82.mdl",
     wep = "weapon_m82",
+    color = Color( 160, 130, 0 ),
     value = 100,
     weight = 12,
     hidden = true,
