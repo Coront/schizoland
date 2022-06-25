@@ -122,8 +122,6 @@ if SERVER then
         if self:InCommunity() and table.Count(Communities[self:GetCommunity()].wars) >= 1 then
             self:ChatPrint("You are currently at war with other communities. Keep your eyes peeled.")
         end
-
-        ResyncAllContainerInventories( self )
     end
 
 elseif CLIENT then

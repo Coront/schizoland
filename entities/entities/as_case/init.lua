@@ -60,8 +60,8 @@ net.Receive( "as_case_takeammo", function(_, ply)
 	local amt = net.ReadUInt( 15 )
 
 	--We are going to take ammo from a case. We need to make sure that the case actually CONTAINS the ammo, and the right amount.
-	if not AS.Items[item] then ply:ChatPrint("This isnt a valid item.") ply:ResyncInventory() ent:ResyncInventory() return end --Person might try an invalid item
-    if not ent:HasInAmmoInventory( item, amt ) then ply:ChatPrint("This item isn't in the container.") ply:ResyncInventory() ent:ResyncInventory() return end --Person might try running without the container actually having the item
+	if not AS.Items[item] then ply:ChatPrint("This isnt a valid item.") ply:ResyncInventory() ent:Resync() return end --Person might try an invalid item
+    if not ent:HasInAmmoInventory( item, amt ) then ply:ChatPrint("This item isn't in the container.") ply:Resync() ent:Resync() return end --Person might try running without the container actually having the item
     if not ent:PlayerCanTakeAmmo( ply ) then return end
     if amt < 1 then amt = 1 end --Person might try negative numbers
     local inv = ent:GetInventory().ammo
@@ -72,7 +72,7 @@ net.Receive( "as_case_takeammo", function(_, ply)
     ent:PlayerTakeAmmo( ply, item, amt )
 	ply:ChatPrint( AS.Items[item].name .. " (" .. amt .. ") Taken from case." )
 
-	ent:ResyncInventory() --We need to resync the inventory to all clients.
+	ent:Resync() --We need to resync the inventory to all clients.
 
     local name = ent:GetNWString("owner", "") != "" and ent:GetNWString("owner", "") or ent.class or "OWNER_UNK"
     plogs.PlayerLog(ply, "Cases", ply:NameID() .. " took " .. AS.Items[item].name .. " (" .. amt .. ") from " .. name .. "'s case.", {

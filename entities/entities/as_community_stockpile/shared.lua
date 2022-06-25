@@ -23,7 +23,7 @@ function ENT:SetCommunity( int, name )
     self.CID = int
     self.name = name
     if ( SERVER ) then
-        self:ResyncCommunity()
+        self:Resync()
     end
 end
 
@@ -38,7 +38,7 @@ end
 function ENT:SetResources( tbl )
     self.Resources = tbl
     if ( SERVER ) then
-        self:ResyncResources()
+        self:Resync()
         self:SaveResources()
     end
 end
@@ -85,75 +85,68 @@ end
 -- ██║ ╚████║███████╗   ██║   ╚███╔███╔╝╚██████╔╝██║  ██║██║  ██╗██║██║ ╚████║╚██████╔╝
 -- ╚═╝  ╚═══╝╚══════╝   ╚═╝    ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝ ╚═════╝
 
+function ENT:Resync()
+    if ( SERVER ) then
+        local cid = self:GetCommunity()
+        local cname = self:GetCommunityName()
+        local res = self:GetResources()
+
+        net.Start("as_stockpile_sync")
+            net.WriteEntity( self )
+            net.WriteUInt( cid, NWSetting.CommunityAmtBits )
+            net.WriteString( cname )
+            net.WriteInventory( res )
+        net.Broadcast()
+    elseif ( CLIENT ) then
+        net.Start("as_stockpile_requestsync")
+            net.WriteEntity( self )
+        net.SendToServer()
+    end
+end
 
 if ( SERVER ) then
 
-    util.AddNetworkString( "as_stockpile_synccommunity" )
-    util.AddNetworkString( "as_stockpile_syncresources" )
-    util.AddNetworkString( "as_stockpile_requestinfo" )
+    util.AddNetworkString( "as_stockpile_sync" )
+    util.AddNetworkString( "as_stockpile_requestsync" )
 
-    function ENT:ResyncCommunity()
-        net.Start("as_stockpile_synccommunity")
-            net.WriteEntity( self )
-            net.WriteUInt( self:GetCommunity(), NWSetting.CommunityAmtBits )
-            net.WriteString( self:GetCommunityName() )
-        net.Broadcast()
-    end
-
-    function ENT:ResyncResources()
-        net.Start("as_stockpile_syncresources")
-            net.WriteEntity( self )
-            net.WriteInventory( self:GetResources() )
-        net.Broadcast()
-    end
-
-    net.Receive("as_stockpile_requestinfo", function( _, ply )
+    net.Receive("as_stockpile_requestsync", function( _, ply )
         local ent = net.ReadEntity()
         if not IsValid(ent) then return end
 
-        if ent.GetCommunity then
-            net.Start("as_stockpile_synccommunity")
-                net.WriteEntity( ent )
-                net.WriteUInt( ent:GetCommunity(), NWSetting.CommunityAmtBits )
-                net.WriteString( ent:GetCommunityName() )
-            net.Send( ply )
-        end
+        local cid = ent:GetCommunity()
+        local cname = ent:GetCommunityName()
+        local res = ent:GetResources()
 
-        if ent.GetResources then
-            net.Start("as_stockpile_syncresources")
-                net.WriteEntity( ent )
-                net.WriteInventory( ent:GetResources() )
-            net.Send( ply )
-        end
+        net.Start("as_stockpile_sync")
+            net.WriteEntity( ent )
+            net.WriteUInt( cid, NWSetting.CommunityAmtBits )
+            net.WriteString( cname )
+            net.WriteInventory( res )
+        net.Send( ply )
     end)
 
 elseif ( CLIENT ) then
 
-    net.Receive( "as_stockpile_synccommunity", function()
+    net.Receive( "as_stockpile_sync", function()
         local ent = net.ReadEntity()
         if not IsValid(ent) then return end
         local cid = net.ReadUInt( NWSetting.CommunityAmtBits )
-        local name = net.ReadString()
-
-        ent:SetCommunity( cid, name )
-    end)
-
-    net.Receive( "as_stockpile_syncresources", function()
-        local ent = net.ReadEntity()
-        if not IsValid( ent ) then return end
+        local cname = net.ReadString()
         local res = net.ReadInventory()
 
-        print(ent.SetResources)
-        ent:SetResources( res )
-    end)
-
-    timer.Create( "as_autoresync_stockpile", 10, 0, function()
-        for k, v in pairs( ents.FindByClass("as_community_stockpile") ) do
-            if not IsValid(v) then continue end
-            net.Start("as_stockpile_requestinfo")
-                net.WriteEntity(v)
-            net.SendToServer()
+        if isfunction( ent.SetCommunity ) then
+            ent:SetCommunity( cid, cname )
+        end
+        if isfunction( ent.SetResources ) then
+            ent:SetResources( res )
         end
     end)
+
+    function ENT:Think()
+        if CurTime() > (self:GetCreationTime() + NWSetting.PostCreationDelay) and CurTime() > (self.NextResync or 0) then
+            self:Resync()
+            self.NextResync = CurTime() + 10
+        end
+    end
 
 end

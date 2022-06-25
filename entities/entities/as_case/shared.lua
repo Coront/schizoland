@@ -9,7 +9,7 @@ ENT.Spawnable		= false
 function ENT:SetInventory( tbl )
     self.Inventory = tbl
     if ( SERVER ) then
-        self:ResyncInventory()
+        self:Resync()
     end
 end
 
@@ -20,7 +20,7 @@ end
 function ENT:SetLockedTimer( len )
     self.LockedLength = len
     if ( SERVER ) then
-        self:ResyncLockTimer()
+        self:Resync()
     end
 end
 
@@ -72,10 +72,12 @@ end
 
 function ENT:PlayerTakeItem( ply, itemid, amt )
     self:TakeItemFromInventory( itemid, amt )
-    if (SERVER) and self:GetNWString("owner", "") != "" then
+    if (SERVER) then
         ply:EmitSound( ITEMCUE.TAKE )
-        ply:SetRecentInvDelay( CurTime() + SET.PlyCombatLength )
-        ply:AddRecentInvItem( itemid, amt )
+        if self:GetNWString("owner", "") != "" then
+            ply:SetRecentInvDelay( CurTime() + SET.PlyCombatLength )
+            ply:AddRecentInvItem( itemid, amt )
+        end
     end
     ply:AddItemToInventory( itemid, amt, true )
 end
@@ -110,69 +112,67 @@ end
 -- ██║ ╚████║███████╗   ██║   ╚███╔███╔╝╚██████╔╝██║  ██║██║  ██╗██║██║ ╚████║╚██████╔╝
 -- ╚═╝  ╚═══╝╚══════╝   ╚═╝    ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝ ╚═════╝
 
+function ENT:Resync()
+    if ( SERVER ) then
+        local inv = self:GetInventory()
+        local lock = self:GetLockedTimer()
+        net.Start("as_case_sync")
+            net.WriteEntity( self )
+            net.WriteTable( inv )
+            net.WriteFloat( lock )
+        net.Broadcast()
+    elseif ( CLIENT ) then
+        net.Start("as_case_requestsync")
+            net.WriteEntity( self )
+        net.SendToServer()
+    end
+end
+
 if ( SERVER ) then
 
-    util.AddNetworkString("as_case_syncinventory")
-    util.AddNetworkString("as_case_synclocktimer")
-    util.AddNetworkString("as_case_requestinventory")
+    util.AddNetworkString("as_case_sync")
+    util.AddNetworkString("as_case_requestsync")
 
-    function ENT:ResyncInventory()
-        net.Start("as_case_syncinventory")
-            net.WriteEntity( self )
-            net.WriteTable( self:GetInventory() )
-        net.Broadcast() --Everyone needs it
-    end
-
-    function ResyncAllCaseInventories( ply )
-        for k, v in pairs( ents.FindByClass("as_case") ) do
-            net.Start("as_case_syncinventory")
-                net.WriteEntity(v)
-                net.WriteTable( v:GetInventory() )
-            net.Send( ply )
-        end
-    end
-    concommand.Add("as_resynccases", ResyncAllCaseInventories)
-
-    function ENT:ResyncLockTimer()
-        net.Start("as_case_synclocktimer")
-            net.WriteEntity( self )
-            net.WriteFloat( self:GetLockedTimer() )
-        net.Broadcast()
-    end
-
-    net.Receive("as_case_requestinventory", function( _, ply )
+    net.Receive("as_case_requestsync", function( _, ply ) --This is for when a player requests information because their client needs to update the entity.
         local ent = net.ReadEntity()
-        if not IsValid(ent) then return end
-        if ent:GetClass() != "as_case" then return end
-        net.Start("as_case_syncinventory")
+        if not IsValid( ent ) then return end
+
+        local inv = ent:GetInventory()
+        local lock = ent:GetLockedTimer()
+
+        net.Start( "as_case_sync" )
             net.WriteEntity( ent )
-            net.WriteTable( ent:GetInventory() )
+            net.WriteTable( inv )
+            net.WriteFloat( lock )
         net.Send( ply )
     end)
 
-else
+    concommand.Add( "as_resynccases", function( ply )
+        for k, v in pairs( ents.FindByClass("as_case") ) do
+            local inv = v:GetInventory()
+            local lock = v:GetLockedTimer()
 
-    net.Receive("as_case_syncinventory", function()
-        local ent = net.ReadEntity()
-        if not IsValid( ent ) then return end 
-        local inv = net.ReadTable()
-        if not ent.SetInventory then return end
-        ent:SetInventory( inv )
+            net.Start( "as_case_sync" )
+                net.WriteEntity( v )
+                net.WriteTable( inv )
+                net.WriteFloat( lock )
+            net.Send( ply )
+        end
     end)
 
-    net.Receive("as_case_synclocktimer", function()
+elseif ( CLIENT ) then
+
+    net.Receive("as_case_sync", function()
         local ent = net.ReadEntity()
         if not IsValid( ent ) then return end
-        local time = net.ReadFloat()
-        ent:SetLockedTimer( time )
-    end)
+        local inv = net.ReadTable()
+        local lock = net.ReadFloat()
 
-    timer.Create( "as_autoresync_cases", 10, 0, function()
-        for k, v in pairs( ents.FindByClass("as_case") ) do
-            if not IsValid(v) then continue end
-            net.Start("as_case_requestinventory") --Cases utilize the lootcontainer inventory system, so this isnt a concern.
-                net.WriteEntity(v)
-            net.SendToServer()
+        if isfunction(ent.SetInventory) then
+            ent:SetInventory( inv )
+        end
+        if isfunction(ent.SetLockedTimer) then
+            ent:SetLockedTimer( lock )
         end
     end)
 

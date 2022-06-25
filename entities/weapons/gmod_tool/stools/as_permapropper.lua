@@ -95,10 +95,6 @@ if (SERVER) then
             totalPersists = totalPersists + 1
         end
 
-        for k, v in pairs( player.GetAll() ) do
-            ResyncAllContainerInventories( v )
-        end
-
         return totalPersists
     end
 

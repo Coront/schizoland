@@ -31,6 +31,9 @@ end
 
 function ENT:SetInventory( tbl )
     self.Inventory = tbl
+    if ( SERVER ) then
+        self:Resync()
+    end
 end
 
 function ENT:GetInventory()
@@ -124,11 +127,6 @@ function ENT:Think()
     end
 
     if ( SERVER ) then
-        if CurTime() > (self.NextResync or 0) then
-            self.NextResync = CurTime() + 5
-            self:ResyncInventory()
-        end
-
         if CurTime() > (self.NextSound or 0) then
             self.NextSound = CurTime() + math.random( 10, 20 )
             self:PlayGrubSound()
@@ -144,25 +142,56 @@ end
 -- ██║ ╚████║███████╗   ██║   ╚███╔███╔╝╚██████╔╝██║  ██║██║  ██╗██║██║ ╚████║╚██████╔╝
 -- ╚═╝  ╚═══╝╚══════╝   ╚═╝    ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝ ╚═════╝
 
+function ENT:Resync()
+    if ( SERVER ) then
+        local inv = self:GetInventory()
+
+        net.Start("as_grub_sync")
+            net.WriteEntity( self )
+            net.WriteInventory( inv )
+        net.Broadcast()
+    elseif ( CLIENT ) then
+        net.Start("as_grub_requestsync")
+            net.WriteEntity( self )
+        net.SendToServer()
+    end
+end
+
 if ( SERVER ) then
 
-    util.AddNetworkString( "as_grub_syncinventory" )
+    util.AddNetworkString( "as_grub_sync" )
+    util.AddNetworkString( "as_grub_requestsync" )
 
-    function ENT:ResyncInventory()
-        net.Start("as_grub_syncinventory")
-            net.WriteEntity( self )
-            net.WriteInventory( self:GetInventory() )
-        net.Broadcast()
-    end
+    net.Receive("as_grub_requestsync", function( _, ply )
+        local ent = net.ReadEntity()
+        if not IsValid( ent ) then return end
 
-else
+        local inv = ent:GetInventory()
 
-    net.Receive( "as_grub_syncinventory", function()
+        net.Start("as_grub_sync")
+            net.WriteEntity( ent )
+            net.WriteInventory( inv )
+        net.Send( ply )
+    end)
+
+elseif ( CLIENT ) then
+
+    net.Receive( "as_grub_sync", function()
         local ent = net.ReadEntity()
         if not IsValid(ent) then return end
+
         local inv = net.ReadInventory()
 
-        ent:SetInventory( inv )
+        if isfunction( ent.SetInventory ) then
+            ent:SetInventory( inv )
+        end
     end)
+
+    function ENT:Think()
+        if CurTime() > (self:GetCreationTime() + NWSetting.PostCreationDelay) and CurTime() > (self.NextResync or 0) then
+            self:Resync()
+            self.NextResync = CurTime() + 10
+        end
+    end
 
 end

@@ -116,27 +116,39 @@ end
 -- ██║ ╚████║███████╗   ██║   ╚███╔███╔╝╚██████╔╝██║  ██║██║  ██╗██║██║ ╚████║╚██████╔╝
 -- ╚═╝  ╚═══╝╚══════╝   ╚═╝    ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝ ╚═════╝
 
+function ENT:Resync()
+    if ( SERVER ) then
+        local fuel = self:GetFuelAmount()
+        local state = self:GetActiveState()
+
+        net.Start("as_generator_sync")
+            net.WriteEntity( self )
+            net.WriteUInt( fuel, 16 )
+            net.WriteBool( state )
+        net.Broadcast()
+    elseif ( CLIENT ) then
+        net.Start("as_generator_requestsync")
+            net.WriteEntity( self )
+        net.SendToServer()
+    end
+end
+
 if ( SERVER ) then
 
-    util.AddNetworkString("as_generator_resync")
-    util.AddNetworkString("as_generator_requestinfo")
+    util.AddNetworkString("as_generator_sync")
+    util.AddNetworkString("as_generator_requestsync")
 
-    function ENT:ResyncInfo()
-        net.Start("as_generator_resync")
-            net.WriteEntity( self )
-            net.WriteUInt( self:GetFuelAmount(), 16 )
-            net.WriteBool( self:GetActiveState() )
-        net.Broadcast()
-    end
-
-    net.Receive( "as_generator_requestinfo", function( _, ply )
+    net.Receive( "as_generator_requestsync", function( _, ply )
         local ent = net.ReadEntity()
         if not IsValid( ent ) then return end
 
-        net.Start("as_generator_resync")
+        local fuel = ent:GetFuelAmount()
+        local state = ent:GetActiveState()
+
+        net.Start("as_generator_sync")
             net.WriteEntity( ent )
-            net.WriteUInt( ent:GetFuelAmount(), 16 )
-            net.WriteBool( ent:GetActiveState() )
+            net.WriteUInt( fuel, 16 )
+            net.WriteBool( state )
         net.Send( ply )
     end)
 
@@ -145,21 +157,23 @@ else
     net.Receive( "as_generator_resync", function()
         local ent = net.ReadEntity()
         if not IsValid(ent) then return end
+
         local amt = net.ReadUInt( 16 )
         local state = net.ReadBool()
 
-        ent:SetFuelAmount( amt )
-        ent:SetActiveState( state )
-    end)
-
-    timer.Create( "as_autoresync_cases", 10, 0, function()
-        for k, v in pairs( ents.GetAll() ) do
-            if v.Base != "as_generator" then continue end
-            if not IsValid(v) then continue end
-            net.Start("as_generator_requestinfo") 
-                net.WriteEntity(v)
-            net.SendToServer()
+        if isfunction( ent.SetFuelAmount ) then
+            ent:SetFuelAmount( amt )
+        end
+        if isfunction( ent.SetActiveState ) then
+            ent:SetActiveState( state )
         end
     end)
+
+    function ENT:Think()
+        if CurTime() > (self:GetCreationTime() + NWSetting.PostCreationDelay) and CurTime() > (self.NextResync or 0) then
+            self:Resync()
+            self.NextResync = CurTime() + 10
+        end
+    end
 
 end

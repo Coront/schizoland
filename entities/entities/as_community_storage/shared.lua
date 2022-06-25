@@ -24,7 +24,7 @@ function ENT:SetCommunity( int, name )
     self.name = name
 
     if ( SERVER ) then
-        self:ResyncCommunity()
+        self:Resync()
     end
 end
 
@@ -39,7 +39,7 @@ end
 function ENT:SetInventory( tbl )
     self.Inventory = tbl
     if ( SERVER ) then
-        self:ResyncInventory()
+        self:Resync()
         self:SaveInventory()
     end
 end
@@ -130,69 +130,72 @@ end
 -- ██║ ╚████║███████╗   ██║   ╚███╔███╔╝╚██████╔╝██║  ██║██║  ██╗██║██║ ╚████║╚██████╔╝
 -- ╚═╝  ╚═══╝╚══════╝   ╚═╝    ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝ ╚═════╝
 
+function ENT:Resync()
+    if ( SERVER ) then
+        local cid = self:GetCommunity()
+        local cname = self:GetCommunityName()
+        local inv = self:GetInventory()
+
+        net.Start("as_cstorage_sync")
+            net.WriteEntity( self )
+            net.WriteUInt( cid, NWSetting.CommunityAmtBits )
+            net.WriteString( cname )
+            net.WriteInventory( inv )
+        net.Broadcast()
+    elseif ( CLIENT ) then
+        net.Start("as_cstorage_requestsync")
+            net.WriteEntity( self )
+        net.SendToServer()
+    end
+end
+
 if ( SERVER ) then
 
-    util.AddNetworkString("as_cstorage_synccommunity")
-    util.AddNetworkString("as_cstorage_syncinventory")
-    util.AddNetworkString("as_cstorage_requestinfo")
-
-    function ENT:ResyncCommunity()
-        net.Start("as_cstorage_synccommunity")
-            net.WriteEntity(self)
-            net.WriteUInt(self:GetCommunity(), NWSetting.CommunityAmtBits)
-            net.WriteString(self:GetCommunityName())
-        net.Broadcast()
-    end
-
-    function ENT:ResyncInventory()
-        net.Start("as_cstorage_syncinventory")
-            net.WriteEntity(self)
-            net.WriteInventory(self:GetInventory())
-        net.Broadcast()
-    end
+    util.AddNetworkString("as_cstorage_sync")
+    util.AddNetworkString("as_cstorage_requestsync")
 
     net.Receive( "as_cstorage_requestinfo", function( _, ply )
         local ent = net.ReadEntity()
         if not IsValid( ent ) then return end
 
-        net.Start("as_cstorage_synccommunity")
-            net.WriteEntity(ent)
-            net.WriteUInt(ent:GetCommunity(), NWSetting.CommunityAmtBits)
-            net.WriteString(ent:GetCommunityName())
-        net.Send( ply )
+        local cid = ent:GetCommunity()
+        local cname = ent:GetCommunityName()
+        local inv = ent:GetInventory()
 
-        net.Start("as_cstorage_syncinventory")
-            net.WriteEntity(ent)
-            net.WriteInventory(ent:GetInventory())
-            net.Send( ply )
+        net.Start("as_cstorage_sync")
+            net.WriteEntity( ent )
+            net.WriteUInt( cid, NWSetting.CommunityAmtBits )
+            net.WriteString( cname )
+            net.WriteInventory( inv )
+        net.Send( ply )
     end)
 
 elseif ( CLIENT ) then
 
-    net.Receive("as_cstorage_synccommunity", function()
+    net.Receive("as_cstorage_sync", function()
         local ent = net.ReadEntity()
         if not IsValid( ent ) then return end
+
         local cid = net.ReadUInt( NWSetting.CommunityAmtBits )
-        local name = net.ReadString()
-
-        ent:SetCommunity( cid, name )
-    end)
-
-    net.Receive("as_cstorage_syncinventory", function()
-        local ent = net.ReadEntity()
-        if not IsValid( ent ) then return end
+        local cname = net.ReadString()
         local inv = net.ReadInventory()
 
-        ent:SetInventory( inv )
-    end)
-
-    timer.Create( "as_autoresync_cstorage", 10, 0, function()
-        for k, v in pairs( ents.FindByClass("as_community_storage") ) do
-            if not IsValid(v) then continue end
-            net.Start("as_cstorage_requestinfo")
-                net.WriteEntity(v)
-            net.SendToServer()
+        if isfunction( ent.SetCommunity ) then
+            ent:SetCommunity( cid, cname )
+        end
+        if isfunction( ent.SetCommunityName ) then
+            ent:SetCommunityName( cname )
+        end
+        if isfunction( ent.SetInventory ) then
+            ent:SetInventory( inv )
         end
     end)
+
+    function ENT:Think()
+        if CurTime() > (self:GetCreationTime() + NWSetting.PostCreationDelay) and CurTime() > (self.NextResync or 0) then
+            self:Resync()
+            self.NextResync = CurTime() + 10
+        end
+    end
 
 end

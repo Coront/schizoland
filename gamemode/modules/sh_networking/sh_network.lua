@@ -19,6 +19,7 @@ NWSetting.ToxicBits = 11
 NWSetting.VendorPriceBits = 13
 NWSetting.CommunityAmtBits = 16 --How many communities you think there would be max
 NWSetting.UIDAmtBits = 16 --How many profiles you think there would be max (I KNOW IT SAYS LOCKER JUST ASSUME ITS FOR ALL ENTITIES WITH PROFILES)
+NWSetting.PostCreationDelay = 0.3 --How many seconds an entity should wait after it's creation before deciding to start sending information.
 
 -- ██╗    ██╗██████╗ ██╗████████╗██╗███╗   ██╗ ██████╗
 -- ██║    ██║██╔══██╗██║╚══██╔══╝██║████╗  ██║██╔════╝

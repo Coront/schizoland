@@ -10,6 +10,11 @@ function ENT:Draw()
 end
 
 function ENT:Think()
+    if CurTime() > (self:GetCreationTime() + NWSetting.PostCreationDelay) and CurTime() > (self.NextResync or 0) then
+        self:Resync()
+        self.NextResync = CurTime() + 10
+    end
+
     local ply = LocalPlayer()
 
     if ply:GetEyeTrace().Entity == self and ply:GetPos():Distance(self:GetPos()) < 100 and not ply:IsDeveloping() and table.Count(self:GetInventory()) > 0 then

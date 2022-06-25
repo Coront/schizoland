@@ -192,7 +192,7 @@ SET.MaxTitleLength = 50
 SET.MaxDescLength = 200
 SET.MaxMembers = 30 --Maximum members a community can have.
 SET.MaxRanks = 8 --Maximum ranks a community can have.
-SET.WarLength = 172800 --Two days
+SET.WarLength = 43200 --Two days
 SET.WarDiploLength = 3600 --One hour
 SET.CommunitiesPerms = { --Permissions are hardcoded, so you'll have to manage the table here if you want to add any.
     ["admin"] = {name = "Admin", desc = "Provides access everything, and community management."},

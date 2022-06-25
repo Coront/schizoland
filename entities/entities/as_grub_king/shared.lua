@@ -24,7 +24,7 @@ function ENT:Initialize()
         self:SetMoveType( MOVETYPE_STEP )
         self:SetHealth( self.MaxHealth )
         self:SetMaxHealth( self.MaxHealth )
-        self:SetModelScale( 4 )
+        self:SetModelScale( 2.75 )
     end
 
     self:SetNextProduce( CurTime() + self.ProduceLength )
@@ -77,9 +77,9 @@ function ENT:GetNextProduce()
 end
 
 function ENT:CanProduce()
-    for k, v in pairs( ents.FindByClass("as_grub") ) do
+    for k, v in pairs( ents.FindByClass("as_grub_king") ) do
         if v == self then continue end
-        if v:GetPos():Distance(self:GetPos()) <= 15 and v:GetObjectOwner() == self:GetObjectOwner() then
+        if v:GetPos():Distance(self:GetPos()) <= 100 and v:GetObjectOwner() == self:GetObjectOwner() then
             self:GetObjectOwner():ChatPrint("One of your grubs is too close to another in order to produce its own chemicals.")
             return false
         end
@@ -125,11 +125,6 @@ function ENT:Think()
     end
 
     if ( SERVER ) then
-        if CurTime() > (self.NextResync or 0) then
-            self.NextResync = CurTime() + 5
-            self:ResyncInventory()
-        end
-
         if CurTime() > (self.NextSound or 0) then
             self.NextSound = CurTime() + math.random( 10, 20 )
             self:PlayGrubSound()
@@ -145,25 +140,17 @@ end
 -- ██║ ╚████║███████╗   ██║   ╚███╔███╔╝╚██████╔╝██║  ██║██║  ██╗██║██║ ╚████║╚██████╔╝
 -- ╚═╝  ╚═══╝╚══════╝   ╚═╝    ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝ ╚═════╝
 
-if ( SERVER ) then
+function ENT:Resync()
+    if ( SERVER ) then
+        local inv = self:GetInventory()
 
-    util.AddNetworkString( "as_grub_syncinventory" )
-
-    function ENT:ResyncInventory()
-        net.Start("as_grub_syncinventory")
+        net.Start("as_grub_sync")
             net.WriteEntity( self )
-            net.WriteInventory( self:GetInventory() )
+            net.WriteInventory( inv )
         net.Broadcast()
+    elseif ( CLIENT ) then
+        net.Start("as_grub_requestsync")
+            net.WriteEntity( self )
+        net.SendToServer()
     end
-
-else
-
-    net.Receive( "as_grub_syncinventory", function()
-        local ent = net.ReadEntity()
-        if not IsValid(ent) then return end
-        local inv = net.ReadInventory()
-
-        ent:SetInventory( inv )
-    end)
-
 end
