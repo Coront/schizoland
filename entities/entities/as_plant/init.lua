@@ -25,7 +25,7 @@ function ENT:Prune( ply )
         ply.Pruning = false
         
         self:SetPruneAmount( self.PruneMax )
-        self:ResyncPrune()
+        self:Resync()
         ply:ChatPrint("You have finished pruning this plant.")
     end)
 end

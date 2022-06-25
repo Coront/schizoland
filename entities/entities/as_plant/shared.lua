@@ -138,10 +138,10 @@ if ( SERVER ) then
         local ent = net.ReadEntity()
         if not IsValid( ent ) then return end
 
-        local amt = self:GetPruneAmount()
+        local amt = ent:GetPruneAmount()
 
         net.Start("as_plant_sync")
-            net.WriteEntity( self )
+            net.WriteEntity( ent )
             net.WriteUInt( amt, 11 )
         net.Send( ply )
     end)

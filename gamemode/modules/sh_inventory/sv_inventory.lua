@@ -401,11 +401,6 @@ net.Receive("as_inventory_droprespack", function( _, ply )
     ent:SetSmallParts( sp )
     ent:SetChemicals( chem )
     ent:EmitSound(ITEMCUE.DROP)
-    timer.Simple( 0.1, function()
-        if IsValid( ent ) then
-            ent:ResyncResources()
-        end
-    end)
 
     plogs.PlayerLog(ply, "Items", ply:NameID() .. " dropped resource pack ( " .. scrap .. " Scrap, " .. sp .. " Small Parts, " .. chem .. " Chemicals )", {
         ["Name"] 	= ply:Name(),

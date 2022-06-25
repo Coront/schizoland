@@ -54,6 +54,10 @@ function ENT:GetProfile()
     return self.vid or 0
 end
 
+function ENT:GetProfileName()
+    return self.name or ""
+end
+
 function ENT:SetSales( tbl )
     self.Sales = tbl
     if ( SERVER ) then

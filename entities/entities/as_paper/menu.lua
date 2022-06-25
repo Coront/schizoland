@@ -99,7 +99,6 @@ net.Receive( "as_paper_open", function()
     title:SetSize( panel:GetWide() - 10, 16 )
     title:SetPlaceholderText("Title")
     title:SetText( curtitle )
-    title:SetMultiline( true )
 
     local text = vgui.Create("DTextEntry", panel)
     text:SetPos( 5, 25 )

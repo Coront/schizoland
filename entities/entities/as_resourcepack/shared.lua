@@ -50,7 +50,9 @@ function ENT:Resync()
             net.WriteUInt( c, NWSetting.ItemAmtBits )
         net.Broadcast()
     elseif ( CLIENT ) then
-
+        net.Start("as_resourcepack_requestsync")
+            net.WriteEntity( self )
+        net.SendToServer()
     end
 end
 

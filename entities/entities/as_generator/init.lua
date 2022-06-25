@@ -78,7 +78,7 @@ net.Receive( "as_generator_addfuel", function( _, ply )
 
     ply:ChatPrint("You've added " .. amt .. " " .. AS.Items[ent.Fuel].name .. "(s) to this generator for " .. math.Round( (ent.FuelLength * amt) / 60) .. " minutes.")
     ent:DepositFuel( ply, amt )
-    ent:ResyncInfo()
+    ent:Resync()
 end)
 
 net.Receive( "as_generator_removefuel", function( _, ply )
@@ -90,11 +90,11 @@ net.Receive( "as_generator_removefuel", function( _, ply )
     amt = math.Round(amt)
     if amt < 1 then amt = 1 end
     if amt > ent:CalcFuelInput() then amt = ent:CalcFuelInput() end
-    if amt == 0 then ply:ChatPrint("Nothing to withdraw.") ent:ResyncInfo() return end
+    if amt == 0 then ply:ChatPrint("Nothing to withdraw.") ent:Resync() return end
 
     ply:ChatPrint("You withdrew " .. amt .. " " .. AS.Items[ent.Fuel].name .. "(s) from this generator.")
     ent:WithdrawFuel( ply, amt )
-    ent:ResyncInfo()
+    ent:Resync()
 end)
 
 net.Receive( "as_generator_repair", function( _, ply )
