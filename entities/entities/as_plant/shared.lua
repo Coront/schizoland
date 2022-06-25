@@ -98,6 +98,13 @@ function ENT:Think()
     elseif self:GetPruneAmount() < self.PruneLoss then
         self:SetNextProduce( CurTime() + produceTime )
     end
+
+    if ( CLIENT ) then
+        if CurTime() > (self:GetCreationTime() + NWSetting.PostCreationDelay) and CurTime() > (self.NextResync or 0) then
+            self:Resync()
+            self.NextResync = CurTime() + 10
+        end
+    end
 end
 
 -- ███╗   ██╗███████╗████████╗██╗    ██╗ ██████╗ ██████╗ ██╗  ██╗██╗███╗   ██╗ ██████╗
@@ -107,26 +114,49 @@ end
 -- ██║ ╚████║███████╗   ██║   ╚███╔███╔╝╚██████╔╝██║  ██║██║  ██╗██║██║ ╚████║╚██████╔╝
 -- ╚═╝  ╚═══╝╚══════╝   ╚═╝    ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝ ╚═════╝
 
+function ENT:Resync()
+    if ( SERVER ) then
+        local amt = self:GetPruneAmount()
+
+        net.Start("as_plant_sync")
+            net.WriteEntity( self )
+            net.WriteUInt( amt, 11 )
+        net.Broadcast()
+    elseif ( CLIENT ) then
+        net.Start("as_plant_requestsync")
+            net.WriteEntity( self )
+        net.SendToServer()
+    end
+end
 
 if ( SERVER ) then
 
-    util.AddNetworkString( "as_plant_syncprune" )
+    util.AddNetworkString( "as_plant_sync" )
+    util.AddNetworkString( "as_plant_requestsync" )
 
-    function ENT:ResyncPrune()
-        net.Start("as_plant_syncprune")
+    net.Receive("as_plant_requestsync", function( _, ply )
+        local ent = net.ReadEntity()
+        if not IsValid( ent ) then return end
+
+        local amt = self:GetPruneAmount()
+
+        net.Start("as_plant_sync")
             net.WriteEntity( self )
-            net.WriteUInt( self:GetPruneAmount(), 11 )
-        net.Broadcast()
-    end
+            net.WriteUInt( amt, 11 )
+        net.Send( ply )
+    end)
 
 else
 
-    net.Receive( "as_plant_syncprune", function()
+    net.Receive( "as_plant_sync", function()
         local ent = net.ReadEntity()
         if not IsValid(ent) then return end
+
         local amt = net.ReadUInt( 11 )
 
-        ent:SetPruneAmount( amt )
+        if isfunction( ent.SetPruneAmount ) then
+            ent:SetPruneAmount( amt )
+        end
     end)
 
 end

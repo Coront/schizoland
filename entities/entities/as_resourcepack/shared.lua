@@ -37,53 +37,70 @@ end
 -- ██║ ╚████║███████╗   ██║   ╚███╔███╔╝╚██████╔╝██║  ██║██║  ██╗██║██║ ╚████║╚██████╔╝
 -- ╚═╝  ╚═══╝╚══════╝   ╚═╝    ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝ ╚═════╝
 
+function ENT:Resync()
+    if ( SERVER ) then
+        local s = self:GetScrap()
+        local sp = self:GetSmallParts()
+        local c = self:GetChemicals()
+
+        net.Start("as_resourcepack_sync")
+            net.WriteEntity( self )
+            net.WriteUInt( s, NWSetting.ItemAmtBits )
+            net.WriteUInt( sp, NWSetting.ItemAmtBits )
+            net.WriteUInt( c, NWSetting.ItemAmtBits )
+        net.Broadcast()
+    elseif ( CLIENT ) then
+
+    end
+end
+
 if ( SERVER ) then
 
-    util.AddNetworkString("as_resourcepack_resync")
-    util.AddNetworkString("as_resourcepack_requestinventory")
+    util.AddNetworkString("as_resourcepack_sync")
+    util.AddNetworkString("as_resourcepack_requestsync")
 
-    function ENT:ResyncResources()
-        net.Start("as_resourcepack_resync")
-            net.WriteEntity( self )
-            net.WriteUInt( (self:GetScrap() or 0), NWSetting.ItemAmtBits )
-            net.WriteUInt( (self:GetSmallParts() or 0), NWSetting.ItemAmtBits )
-            net.WriteUInt( (self:GetChemicals() or 0), NWSetting.ItemAmtBits )
-        net.Broadcast()
-    end
-
-    net.Receive("as_resourcepack_requestinventory", function( _, ply )
+    net.Receive("as_resourcepack_requestsync", function( _, ply )
         local ent = net.ReadEntity()
         if not IsValid(ent) then return end
 
-        net.Start("as_resourcepack_resync")
+        local s = ent:GetScrap()
+        local sp = ent:GetSmallParts()
+        local c = ent:GetChemicals()
+
+        net.Start("as_resourcepack_sync")
             net.WriteEntity( ent )
-            net.WriteUInt( ent:GetScrap(), NWSetting.ItemAmtBits )
-            net.WriteUInt( ent:GetSmallParts(), NWSetting.ItemAmtBits )
-            net.WriteUInt( ent:GetChemicals(), NWSetting.ItemAmtBits )
+            net.WriteUInt( s, NWSetting.ItemAmtBits )
+            net.WriteUInt( sp, NWSetting.ItemAmtBits )
+            net.WriteUInt( c, NWSetting.ItemAmtBits )
         net.Send( ply )
     end)
 
 elseif ( CLIENT ) then
 
-    net.Receive("as_resourcepack_resync", function()
+    net.Receive("as_resourcepack_sync", function()
         local ent = net.ReadEntity()
         if not IsValid( ent ) then return end
+
         local scrap = net.ReadUInt( NWSetting.ItemAmtBits )
         local smallparts = net.ReadUInt( NWSetting.ItemAmtBits )
         local chemicals = net.ReadUInt( NWSetting.ItemAmtBits )
 
-        ent:SetScrap( scrap )
-        ent:SetSmallParts( smallparts )
-        ent:SetChemicals( chemicals )
-    end)
-
-    timer.Create( "as_autoresync_respack", 10, 0, function()
-        for k, v in pairs( ents.FindByClass("as_resourcepack") ) do
-            if not IsValid(v) then continue end
-            net.Start("as_resourcepack_requestinventory") --Cases utilize the lootcontainer inventory system, so this isnt a concern.
-                net.WriteEntity(v)
-            net.SendToServer()
+        if isfunction( ent.SetScrap ) then
+            ent:SetScrap( scrap )
+        end
+        if isfunction( ent.SetSmallParts ) then
+            ent:SetSmallParts( smallparts )
+        end
+        if isfunction( ent.SetChemicals ) then
+            ent:SetChemicals( chemicals )
         end
     end)
+
+    function ENT:Think()
+        if CurTime() > (self:GetCreationTime() + NWSetting.PostCreationDelay) and CurTime() > (self.NextResync or 0) then
+            self:Resync()
+            self.NextResync = CurTime() + 10
+        end
+    end
 
 end 

@@ -142,11 +142,10 @@ function ENT:Think()
         self:SetNextHarvest( CurTime() + nextharvest )
     end
 
-    if ( SERVER ) then
-        if CurTime() > (self.NextResync or 0) then
-            self.NextResync = CurTime() + 5
-            self:ResyncStatus()
-            self:ResyncInventory()
+    if ( CLIENT ) then
+        if CurTime() > (self:GetCreationTime() + NWSetting.PostCreationDelay) and CurTime() > (self.NextResync or 0) then
+            self:Resync()
+            self.NextResync = CurTime() + 10
         end
     end
 
@@ -161,45 +160,19 @@ end
 -- ██║ ╚████║███████╗   ██║   ╚███╔███╔╝╚██████╔╝██║  ██║██║  ██╗██║██║ ╚████║╚██████╔╝
 -- ╚═╝  ╚═══╝╚══════╝   ╚═╝    ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝ ╚═════╝
 
-if ( SERVER ) then
-    
-    util.AddNetworkString( "as_miner_syncinventory" )
-    util.AddNetworkString( "as_miner_syncstatus" )
+function ENT:Resync()
+    if ( SERVER ) then
+        local state = self:GetActiveState()
+        local inv = self:GetInventory()
 
-    function ENT:ResyncStatus()
-        net.Start("as_miner_syncstatus")
+        net.Start("as_miner_sync")
             net.WriteEntity( self )
-            net.WriteBool( self:GetActiveState() )
+            net.WriteBool( state )
+            net.WriteInventory( inv )
         net.Broadcast()
-    end
-
-    function ENT:ResyncInventory()
-        net.Start("as_miner_syncinventory")
+    elseif ( CLIENT ) then
+        net.Start("as_miner_requestsync")
             net.WriteEntity( self )
-            net.WriteInventory( self:GetInventory() )
-        net.Broadcast()
+        net.SendToServer()
     end
-
-else
-
-    net.Receive( "as_miner_syncstatus", function()
-        local ent = net.ReadEntity()
-        if not IsValid(ent) then return end
-        local state = net.ReadBool()
-
-        if ent.SetActiveState then
-            ent:SetActiveState( state )
-        end
-    end)
-
-    net.Receive( "as_miner_syncinventory", function()
-        local ent = net.ReadEntity()
-        if not IsValid(ent) then return end
-        local inv = net.ReadInventory()
-
-        if ent.SetInventory then
-            ent:SetInventory( inv )
-        end
-    end)
-
 end

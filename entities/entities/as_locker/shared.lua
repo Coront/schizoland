@@ -30,7 +30,7 @@ function ENT:SetProfile( id, name )
     self.lid = id
     self.name = name
     if ( SERVER ) then
-        self:ResyncProfile()
+        self:Resync()
     end
 end
 
@@ -45,7 +45,7 @@ end
 function ENT:SetInventory( tbl )
     self.Inventory = tbl
     if ( SERVER ) then
-        self:ResyncInventory()
+        self:Resync()
     end
 end
 
@@ -152,69 +152,69 @@ end
 -- ██║ ╚████║███████╗   ██║   ╚███╔███╔╝╚██████╔╝██║  ██║██║  ██╗██║██║ ╚████║╚██████╔╝
 -- ╚═╝  ╚═══╝╚══════╝   ╚═╝    ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝ ╚═════╝
 
+function ENT:Resync()
+    if ( SERVER ) then
+        local profile = self:GetProfile()
+        local profname = self:GetProfileName()
+        local inv = self:GetInventory()
+
+        net.Start("as_locker_sync")
+            net.WriteEntity( self )
+            net.WriteUInt( profile, NWSetting.ItemAmtBits )
+            net.WriteString( profname )
+            net.WriteInventory( inv )
+        net.Broadcast()
+    elseif ( CLIENT ) then
+        net.Start("as_locker_requestsync")
+            net.WriteEntity( self )
+        net.SendToServer()
+    end
+end
+
 if ( SERVER ) then
 
-    util.AddNetworkString("as_locker_syncprofile")
-    util.AddNetworkString("as_locker_syncinventory")
-    util.AddNetworkString("as_locker_requestinv")
+    util.AddNetworkString("as_locker_sync")
+    util.AddNetworkString("as_locker_requestsync")
 
-    function ENT:ResyncProfile()
-        net.Start("as_locker_syncprofile")
-            net.WriteEntity( self )
-            net.WriteUInt( self:GetProfile(), NWSetting.ItemAmtBits )
-            net.WriteString( self:GetProfileName() )
-        net.Broadcast()
-    end
-
-    function ENT:ResyncInventory()
-        net.Start("as_locker_syncinventory")
-            net.WriteEntity( self )
-            net.WriteInventory( self:GetInventory() )
-        net.Broadcast()
-    end
-
-    net.Receive( "as_locker_requestinv", function( _, ply )
+    net.Receive("as_locker_requestsync", function( _, ply )
         local ent = net.ReadEntity()
         if not IsValid( ent ) then return end
 
-        net.Start("as_locker_syncprofile")
-            net.WriteEntity( ent )
-            net.WriteUInt( ent:GetProfile(), NWSetting.ItemAmtBits )
-            net.WriteString( ent:GetProfileName() )
-        net.Send( ply )
+        local profile = ent:GetProfile()
+        local profname = ent:GetProfileName()
+        local inv = ent:GetInventory()
 
-        net.Start("as_locker_syncinventory")
+        net.Start("as_locker_sync")
             net.WriteEntity( ent )
-            net.WriteInventory( ent:GetInventory() )
+            net.WriteUInt( profile, NWSetting.ItemAmtBits )
+            net.WriteString( profname )
+            net.WriteInventory( inv )
         net.Send( ply )
     end)
 
 elseif ( CLIENT ) then
 
-    net.Receive( "as_locker_syncprofile", function()
+    net.Receive("as_locker_sync", function()
         local ent = net.ReadEntity()
         if not IsValid( ent ) then return end
-        local profile = net.ReadUInt( NWSetting.ItemAmtBits )
+
+        local lid = net.ReadUInt( NWSetting.ItemAmtBits )
         local name = net.ReadString()
-
-        ent:SetProfile( profile, name )
-    end)
-
-    net.Receive( "as_locker_syncinventory", function()
-        local ent = net.ReadEntity()
-        if not IsValid( ent ) then return end
         local inv = net.ReadInventory()
 
-        ent:SetInventory( inv )
-    end)
-
-    timer.Create( "as_autoresync_lockers", 10, 0, function()
-        for k, v in pairs( ents.FindByClass("as_locker") ) do
-            if not IsValid(v) then continue end
-            net.Start("as_locker_requestinv")
-                net.WriteEntity(v)
-            net.SendToServer()
+        if isfunction( ent.SetProfile ) then
+            ent:SetProfile( lid, name )
+        end
+        if isfunction( ent.SetInventory ) then
+            ent:SetInventory( inv )
         end
     end)
+
+    function ENT:Think()
+        if CurTime() > (self:GetCreationTime() + NWSetting.PostCreationDelay) and CurTime() > (self.NextResync or 0) then
+            self:Resync()
+            self.NextResync = CurTime() + 10
+        end
+    end
 
 end
