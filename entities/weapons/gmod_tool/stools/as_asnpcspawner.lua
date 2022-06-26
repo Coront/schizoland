@@ -21,6 +21,7 @@ local Entities = {
     {class = "npc_as_raider_sniper", name = "Raider Sniper"},
     {class = "npc_as_soldier", name = "Soldier"},
     {class = "npc_as_super", name = "Super Soldier"},
+    {class = "npc_as_scout", name = "Scout"},
 }
 
 TOOL.ClientConVar["NPC"] = Entities[1].class --NPC Base
