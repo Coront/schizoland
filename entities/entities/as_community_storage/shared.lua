@@ -154,7 +154,7 @@ if ( SERVER ) then
     util.AddNetworkString("as_cstorage_sync")
     util.AddNetworkString("as_cstorage_requestsync")
 
-    net.Receive( "as_cstorage_requestinfo", function( _, ply )
+    net.Receive( "as_cstorage_requestsync", function( _, ply )
         local ent = net.ReadEntity()
         if not IsValid( ent ) then return end
 
@@ -182,9 +182,6 @@ elseif ( CLIENT ) then
 
         if isfunction( ent.SetCommunity ) then
             ent:SetCommunity( cid, cname )
-        end
-        if isfunction( ent.SetCommunityName ) then
-            ent:SetCommunityName( cname )
         end
         if isfunction( ent.SetInventory ) then
             ent:SetInventory( inv )
