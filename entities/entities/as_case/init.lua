@@ -61,7 +61,7 @@ net.Receive( "as_case_takeammo", function(_, ply)
 
 	--We are going to take ammo from a case. We need to make sure that the case actually CONTAINS the ammo, and the right amount.
 	if not AS.Items[item] then ply:ChatPrint("This isnt a valid item.") ply:ResyncInventory() ent:Resync() return end --Person might try an invalid item
-    if not ent:HasInAmmoInventory( item, amt ) then ply:ChatPrint("This item isn't in the container.") ply:Resync() ent:Resync() return end --Person might try running without the container actually having the item
+    if not ent:HasInAmmoInventory( item, amt ) then ply:ChatPrint("This item isn't in the container.") ply:ResyncInventory() ent:Resync() return end --Person might try running without the container actually having the item
     if not ent:PlayerCanTakeAmmo( ply ) then return end
     if amt < 1 then amt = 1 end --Person might try negative numbers
     local inv = ent:GetInventory().ammo

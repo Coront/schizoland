@@ -199,6 +199,7 @@ if ( SERVER ) then
     net.Receive("as_vendor_requestsync", function( _, ply )
         local ent = net.ReadEntity()
         if not IsValid( ent ) then return end
+        if ent:GetClass() != "as_vendor" then return end
 
         local id = ent:GetProfile()
         local name = ent:GetProfileName()

@@ -136,6 +136,7 @@ if ( SERVER ) then
     net.Receive("as_case_requestsync", function( _, ply ) --This is for when a player requests information because their client needs to update the entity.
         local ent = net.ReadEntity()
         if not IsValid( ent ) then return end
+        if ent:GetClass() != "as_case" then return end
 
         local inv = ent:GetInventory()
         local lock = ent:GetLockedTimer()
