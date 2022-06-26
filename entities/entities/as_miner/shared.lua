@@ -142,11 +142,10 @@ function ENT:Think()
         self:SetNextHarvest( CurTime() + nextharvest )
     end
 
-    if ( SERVER ) then
-        if CurTime() > (self.NextResync or 0) then
-            self.NextResync = CurTime() + 5
-            self:ResyncStatus()
-            self:ResyncInventory()
+    if ( CLIENT ) then
+        if CurTime() > (self:GetCreationTime() + NWSetting.PostCreationDelay) and CurTime() > (self.NextResync or 0) then
+            self:Resync()
+            self.NextResync = CurTime() + 10
         end
     end
 
@@ -161,41 +160,57 @@ end
 -- ██║ ╚████║███████╗   ██║   ╚███╔███╔╝╚██████╔╝██║  ██║██║  ██╗██║██║ ╚████║╚██████╔╝
 -- ╚═╝  ╚═══╝╚══════╝   ╚═╝    ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝ ╚═════╝
 
+function ENT:Resync()
+    if ( SERVER ) then
+        local state = self:GetActiveState()
+        local inv = self:GetInventory()
+
+        net.Start("as_miner_sync")
+            net.WriteEntity( self )
+            net.WriteBool( state )
+            net.WriteInventory( inv )
+        net.Broadcast()
+    elseif ( CLIENT ) then
+        net.Start("as_miner_requestsync")
+            net.WriteEntity( self )
+        net.SendToServer()
+    end
+end
+
 if ( SERVER ) then
-    
-    util.AddNetworkString( "as_miner_syncinventory" )
-    util.AddNetworkString( "as_miner_syncstatus" )
 
-    function ENT:ResyncStatus()
-        net.Start("as_miner_syncstatus")
-            net.WriteEntity( self )
-            net.WriteBool( self:GetActiveState() )
-        net.Broadcast()
-    end
+    util.AddNetworkString( "as_miner_sync" )
+    util.AddNetworkString( "as_miner_requestsync" )
 
-    function ENT:ResyncInventory()
-        net.Start("as_miner_syncinventory")
-            net.WriteEntity( self )
-            net.WriteInventory( self:GetInventory() )
-        net.Broadcast()
-    end
+    net.Receive("as_miner_requestsync", function( _, ply )
+        local ent = net.ReadEntity()
+        if not IsValid( ent ) then return end
+
+        local state = ent:GetActiveState()
+        local inv = ent:GetInventory()
+
+        net.Start("as_miner_sync")
+            net.WriteEntity( ent )
+            net.WriteBool( state )
+            net.WriteInventory( inv )
+        net.Send( ply )
+    end)
 
 else
 
-    net.Receive( "as_miner_syncstatus", function()
+    net.Receive( "as_miner_sync", function()
         local ent = net.ReadEntity()
         if not IsValid(ent) then return end
+
         local state = net.ReadBool()
-
-        ent:SetActiveState( state )
-    end)
-
-    net.Receive( "as_miner_syncinventory", function()
-        local ent = net.ReadEntity()
-        if not IsValid(ent) then return end
         local inv = net.ReadInventory()
 
-        ent:SetInventory( inv )
+        if isfunction( ent.SetActiveState ) then
+            ent:SetActiveState( state )
+        end
+        if isfunction( ent.SetInventory ) then
+            ent:SetInventory( inv )
+        end
     end)
 
 end

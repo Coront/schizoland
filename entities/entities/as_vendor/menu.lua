@@ -38,7 +38,7 @@ function Vendor.Menu()
         pickup:SetTooltip("Pickup the entity and place it in your inventory.")
     end
     function pickup:DoClick()
-        net.Start("as_storage_pickup")
+        net.Start("as_tool_pickup")
             net.WriteEntity( ent )
         net.SendToServer()
         frame_vendor:Close()

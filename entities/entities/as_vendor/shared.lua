@@ -46,7 +46,7 @@ function ENT:SetProfile( id, name )
     self.vid = id
     self.name = name
     if ( SERVER ) then
-        self:ResyncProfile()
+        self:Resync()
     end
 end
 
@@ -57,7 +57,7 @@ end
 function ENT:SetSales( tbl )
     self.Sales = tbl
     if ( SERVER ) then
-        self:ResyncSales()
+        self:Resync()
     end
 end
 
@@ -113,7 +113,7 @@ end
 function ENT:SetResources( tbl )
     self.Resources = tbl
     if ( SERVER ) then
-        self:ResyncResources()
+        self:Resync()
     end
 end
 
@@ -157,15 +157,6 @@ if ( SERVER ) then
         self:SaveResources()
     end
 
-    function ENT:Think()
-        if self:GetProfile() != 0 and CurTime() >= ( self.NextResync or 0 ) then
-            self.NextResync = CurTime() + 5
-            self:ResyncProfile()
-            self:ResyncSales()
-            self:ResyncResources()
-        end
-    end
-
 end
 
 -- ███╗   ██╗███████╗████████╗██╗    ██╗ ██████╗ ██████╗ ██╗  ██╗██╗███╗   ██╗ ██████╗
@@ -175,61 +166,77 @@ end
 -- ██║ ╚████║███████╗   ██║   ╚███╔███╔╝╚██████╔╝██║  ██║██║  ██╗██║██║ ╚████║╚██████╔╝
 -- ╚═╝  ╚═══╝╚══════╝   ╚═╝    ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝ ╚═════╝
 
+function ENT:Resync()
+    if ( SERVER ) then
+        local id = self:GetProfile()
+        local name = self:GetProfileName()
+        local sales = self:GetSales()
+        local res = self:GetResources()
+
+        net.Start("as_vendor_sync")
+            net.WriteEntity( self )
+            net.WriteUInt( id, NWSetting.UIDAmtBits )
+            net.WriteString( name )
+            net.WriteTable( sales )
+            net.WriteInventory( res )
+        net.Broadcast()
+    elseif ( CLIENT ) then
+        net.Start("as_vendor_requestsync")
+            net.WriteEntity( self )
+        net.SendToServer()
+    end
+end
+
 if ( SERVER ) then
 
-    util.AddNetworkString("as_vendor_syncprofile")
-    util.AddNetworkString("as_vendor_syncsales")
-    util.AddNetworkString("as_vendor_syncresource")
+    util.AddNetworkString("as_vendor_sync")
+    util.AddNetworkString("as_vendor_requestsync")
 
-    function ENT:ResyncProfile()
-        net.Start("as_vendor_syncprofile")
-            net.WriteEntity( self )
-            net.WriteUInt( self:GetProfile(), NWSetting.UIDAmtBits )
-            net.WriteString( self.name )
-        net.Broadcast()
-    end
+    net.Receive("as_vendor_requestsync", function( _, ply )
+        local ent = net.ReadEntity()
+        if not IsValid( ent ) then return end
 
-    function ENT:ResyncSales()
-        net.Start("as_vendor_syncsales")
-            net.WriteEntity( self )
-            net.WriteTable( self:GetSales() )
-        net.Broadcast()
-    end
+        local id = ent:GetProfile()
+        local name = ent:GetProfileName()
+        local sales = ent:GetSales()
+        local res = ent:GetResources()
 
-    function ENT:ResyncResources()
-        if IsValid(self:GetObjectOwner()) then
-            net.Start("as_vendor_syncresource")
-                net.WriteEntity( self )
-                net.WriteInventory( self:GetResources() )
-            net.Send( self:GetObjectOwner() )
-        end
-    end
+        net.Start("as_vendor_sync")
+            net.WriteEntity( ent )
+            net.WriteUInt( id, NWSetting.UIDAmtBits )
+            net.WriteString( name )
+            net.WriteTable( sales )
+            net.WriteInventory( res )
+        net.Send( ply )
+    end)
 
-else
+elseif ( CLIENT ) then
 
-    net.Receive( "as_vendor_syncprofile", function()
+    net.Receive( "as_vendor_sync", function()
         local ent = net.ReadEntity()
         if not IsValid(ent) then return end
+
         local prof = net.ReadUInt( NWSetting.UIDAmtBits )
         local name = net.ReadString()
-
-        ent:SetProfile( prof, name )
-    end)
-
-    net.Receive( "as_vendor_syncsales", function()
-        local ent = net.ReadEntity()
-        if not IsValid(ent) then return end
-        local inv = net.ReadTable()
-
-        ent:SetSales( inv )
-    end)
-
-    net.Receive( "as_vendor_syncresource", function()
-        local ent = net.ReadEntity()
-        if not IsValid(ent) then return end
+        local sales = net.ReadTable()
         local res = net.ReadInventory()
 
-        ent:SetResources( res )
+        if isfunction( ent.SetProfile ) then
+            ent:SetProfile( prof, name )
+        end
+        if isfunction( ent.SetSales ) then
+            ent:SetSales( sales )
+        end
+        if isfunction( ent.SetResources ) then
+            ent:SetResources( res )
+        end
     end)
+
+    function ENT:Think()
+        if CurTime() > (self:GetCreationTime() + NWSetting.PostCreationDelay) and CurTime() > (self.NextResync or 0) then
+            self:Resync()
+            self.NextResync = CurTime() + 10
+        end
+    end
 
 end

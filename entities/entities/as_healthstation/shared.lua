@@ -19,7 +19,7 @@ function ENT:SetChargePercent( int )
     self.Charge = int
 
     if ( SERVER ) then
-        self:ResyncCharge()
+        self:Resync()
     end
 end
 
@@ -34,7 +34,7 @@ function ENT:SetPrice( scrap, smallparts, chemicals )
     self.Price["misc_chemical"] = chemicals
 
     if ( SERVER ) then
-        self:ResyncCharge()
+        self:Resync()
     end
 end
 
@@ -82,85 +82,64 @@ end
 -- ██║ ╚████║███████╗   ██║   ╚███╔███╔╝╚██████╔╝██║  ██║██║  ██╗██║██║ ╚████║╚██████╔╝
 -- ╚═╝  ╚═══╝╚══════╝   ╚═╝    ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝ ╚═════╝
 
+function ENT:Resync()
+    if ( SERVER ) then
+        local perc = self:GetChargePercent()
+        local price = self:GetPrice()
+
+        net.Start("as_healthstation_sync")
+            net.WriteEntity( self )
+            net.WriteFloat( perc )
+            net.WriteInventory( price )
+        net.Broadcast()
+    elseif ( CLIENT ) then
+        net.Start("as_healthstation_requestsync")
+            net.WriteEntity( self )
+        net.SendToServer()
+    end
+end
+
 if ( SERVER ) then
 
-    util.AddNetworkString( "as_healthstation_resync" )
-    util.AddNetworkString( "as_healthstation_resyncinv" )
-    util.AddNetworkString( "as_healthstation_requestcharge" )
-    util.AddNetworkString( "as_healthstation_requestinv" )
+    util.AddNetworkString( "as_healthstation_sync" )
+    util.AddNetworkString( "as_healthstation_requestsync" )
 
-    function ENT:ResyncCharge()
-        net.Start("as_healthstation_resync")
-            net.WriteEntity( self )
-            net.WriteFloat( self:GetChargePercent() )
-            net.WriteInventory( self:GetPrice() )
-        net.Broadcast()
-    end
-
-    function ENT:ResyncInventory()
-        if not IsValid( self:GetObjectOwner() ) then return end
-
-        net.Start("as_healthstation_resyncinv")
-            net.WriteEntity( self )
-            net.WriteInventory( self:GetInventory() )
-        net.Send( self:GetObjectOwner() )
-    end
-
-    net.Receive( "as_healthstation_requestcharge", function( _, ply )
+    net.Receive("as_healthstation_requestsync", function( _, ply )
         local ent = net.ReadEntity()
         if not IsValid( ent ) then return end
 
-        net.Start("as_healthstation_resync")
+        local perc = ent:GetChargePercent()
+        local price = ent:GetPrice()
+
+        net.Start("as_healthstation_sync")
             net.WriteEntity( ent )
-            net.WriteFloat( ent:GetChargePercent() )
-            net.WriteInventory( ent:GetPrice() )
+            net.WriteFloat( perc )
+            net.WriteInventory( price )
         net.Send( ply )
-    end)
-
-    net.Receive( "as_healthstation_requestinv", function( _, ply ) 
-        local ent = net.ReadEntity()
-        if not IsValid( ent ) then return end
-
-        ent:ResyncInventory()
     end)
 
 elseif ( CLIENT ) then
 
-    net.Receive( "as_healthstation_resync", function()
+    net.Receive("as_healthstation_sync", function()
         local ent = net.ReadEntity()
-        if not IsValid(ent) then return end
-        local charge = net.ReadFloat()
+        if not IsValid( ent ) then return end
+
+        local perc = net.ReadFloat()
         local price = net.ReadInventory()
 
-        ent:SetChargePercent( charge )
-        ent:SetPrice( price["misc_scrap"], price["misc_smallparts"], price["misc_chemical"] )
-    end)
-
-    net.Receive( "as_healthstation_resyncinv", function()
-        local ent = net.ReadEntity()
-        if not IsValid(ent) then return end
-        local inv = net.ReadInventory()
-
-        ent:SetInventory( inv )
-    end)
-
-    timer.Create( "as_autoresync_healthstations", 10, 0, function()
-        for k, v in pairs( ents.FindByClass("as_healthstation") ) do
-            if not IsValid(v) then continue end
-            net.Start("as_healthstation_requestcharge")
-                net.WriteEntity(v)
-            net.SendToServer()
+        if isfunction( ent.SetChargePercent ) then
+            ent:SetChargePercent( perc )
+        end
+        if isfunction( ent.SetPrice ) then
+            ent:SetPrice( price["misc_scrap"], price["misc_smallparts"], price["misc_chemical"] )
         end
     end)
 
-    timer.Create( "as_autoresync_healthstationsinv", 10, 0, function()
-        for k, v in pairs( ents.FindByClass("as_healthstation") ) do
-            if not IsValid(v) then continue end
-            if not v:GetObjectOwner() == LocalPlayer() then continue end
-            net.Start("as_healthstation_requestinv")
-                net.WriteEntity(v)
-            net.SendToServer()
+    function ENT:Think()
+        if CurTime() > (self:GetCreationTime() + NWSetting.PostCreationDelay) and CurTime() > (self.NextResync or 0) then
+            self:Resync()
+            self.NextResync = CurTime() + 10
         end
-    end)
+    end
 
 end

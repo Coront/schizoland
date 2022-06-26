@@ -100,7 +100,7 @@ net.Receive( "as_miner_takeitems", function( _, ply )
         taketbl[AS.Items[k].name] = v
     end
 
-    ent:ResyncInventory()
+    ent:Resync()
     ply:ResyncInventory()
 
     ply:ChatPrint("You have taken everything from this miner:")

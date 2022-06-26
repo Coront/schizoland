@@ -33,7 +33,7 @@ end
 function ENT:SetDisplayItem( item )
     self.DItem = item
     if ( SERVER ) then
-        self:ResyncItem()
+        self:Resync()
     end
 end
 
@@ -44,7 +44,7 @@ end
 function ENT:SetPackaged( bool )
     self.Packed = bool
     if ( SERVER ) then
-        self:ResyncPackage()
+        self:Resync()
     end
 end
 
@@ -55,7 +55,7 @@ end
 function ENT:SetParentVendor( ent )
     self.Vendor = ent
     if ( SERVER ) then
-        self:ResyncParent()
+        self:Resync()
     end
 end
 
@@ -70,16 +70,23 @@ function ENT:Unpack()
     self:PhysicsInit( SOLID_VPHYSICS )
     self:GetPhysicsObject():Wake()
 
-    self:ResyncItem()
-    self:ResyncPackage()
-    self:ResyncParent()
+    self:Resync()
 end
 
 function ENT:Think()
     if ( SERVER ) then
+
         if not IsValid(self:GetParentVendor()) or (self:GetParentVendor() and not self:GetParentVendor():GetSales()[self:GetDisplayItem()]) then
             self:Remove()
         end
+
+    elseif ( CLIENT ) then
+
+        if CurTime() > (self:GetCreationTime() + NWSetting.PostCreationDelay) and CurTime() > (self.NextResync or 0) then
+            self:Resync()
+            self.NextResync = CurTime() + 10
+        end
+
     end
 end
 
@@ -144,94 +151,63 @@ end
 -- ██║ ╚████║███████╗   ██║   ╚███╔███╔╝╚██████╔╝██║  ██║██║  ██╗██║██║ ╚████║╚██████╔╝
 -- ╚═╝  ╚═══╝╚══════╝   ╚═╝    ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝ ╚═════╝
 
+function ENT:Resync()
+    if ( SERVER ) then
+        local item = self:GetDisplayItem()
+        local packaged = self:GetPackaged()
+        local parent = self:GetParentVendor()
+        net.Start("as_vendor_display_sync")
+            net.WriteEntity( self )
+            net.WriteString( item )
+            net.WriteBool( packaged )
+            net.WriteEntity( parent )
+        net.Broadcast()
+    elseif ( CLIENT ) then
+        net.Start("as_vendor_display_requestsync")
+            net.WriteEntity( self )
+        net.SendToServer()
+    end
+end
+
 if ( SERVER ) then
 
     util.AddNetworkString( "as_vendor_display_purchaseitem" )
-    util.AddNetworkString( "as_vendor_display_syncitem" )
-    util.AddNetworkString( "as_vendor_display_syncpackage" )
-    util.AddNetworkString( "as_vendor_display_syncparent" )
-    util.AddNetworkString( "as_vendor_display_requestinventory" )
+    util.AddNetworkString( "as_vendor_display_sync" )
+    util.AddNetworkString( "as_vendor_display_requestsync" )
 
-    function ENT:ResyncItem()
-        net.Start("as_vendor_display_syncitem")
-            net.WriteEntity( self )
-            net.WriteString( self:GetDisplayItem() )
-        net.Broadcast()
-    end
-
-    function ENT:ResyncPackage()
-        net.Start("as_vendor_display_syncpackage")
-            net.WriteEntity( self )
-            net.WriteBool( self:GetPackaged() )
-        net.Broadcast()
-    end
-
-    function ENT:ResyncParent()
-        net.Start("as_vendor_display_syncparent")
-            net.WriteEntity( self )
-            net.WriteEntity( self:GetParentVendor() )
-        net.Broadcast()
-    end
-
-    net.Receive( "as_vendor_display_requestinventory", function( _, ply )
+    net.Receive("as_vendor_display_requestsync", function( _, ply )
         local ent = net.ReadEntity()
-        if not IsValid(ent) then return end
+        if not IsValid( ent ) then return end
 
-        if ent.GetDisplayItem then
-            net.Start("as_vendor_display_syncitem")
-                net.WriteEntity( ent )
-                net.WriteString( ent:GetDisplayItem() )
-            net.Send( ply )
-        end
+        local item = ent:GetDisplayItem()
+        local packaged = ent:GetPackaged()
+        local parent = ent:GetParentVendor()
 
-        if ent.GetPackaged then
-            net.Start("as_vendor_display_syncpackage")
-                net.WriteEntity( ent )
-                net.WriteBool( ent:GetPackaged() )
-            net.Send( ply )
-        end
-
-        if ent.GetParentVendor then
-            net.Start("as_vendor_display_syncparent")
-                net.WriteEntity( ent )
-                net.WriteEntity( ent:GetParentVendor() )
-            net.Send( ply )
-        end
+        net.Start( "as_vendor_display_sync" )
+            net.WriteEntity( ent )
+            net.WriteString( item )
+            net.WriteBool( packaged )
+            net.WriteEntity( parent )
+        net.Send( ply )
     end)
 
 elseif ( CLIENT ) then
 
-    net.Receive( "as_vendor_display_syncitem", function()
+    net.Receive("as_vendor_display_sync", function()
         local ent = net.ReadEntity()
-        if not IsValid(ent) then return end
+        if not IsValid( ent ) then return end
         local item = net.ReadString()
-
-        ent:SetDisplayItem( item )
-    end)
-
-    net.Receive( "as_vendor_display_syncpackage", function()
-        local ent = net.ReadEntity()
-        if not IsValid(ent) then return end
         local packaged = net.ReadBool()
-
-        ent:SetPackaged( packaged )
-    end)
-
-    net.Receive( "as_vendor_display_syncparent", function()
-        local ent = net.ReadEntity()
-        if not IsValid(ent) then return end
         local parent = net.ReadEntity()
-        if not IsValid(parent) then return end
 
-        ent:SetParentVendor( parent )
-    end)
-
-    timer.Create( "as_autoresync_display", 10, 0, function()
-        for k, v in pairs( ents.FindByClass("as_vendor_display") ) do
-            if not IsValid(v) then continue end
-            net.Start("as_vendor_display_requestinventory")
-                net.WriteEntity(v)
-            net.SendToServer()
+        if isfunction( ent.SetDisplayItem ) then
+            ent:SetDisplayItem( item )
+        end
+        if isfunction( ent.SetPackaged ) then
+            ent:SetPackaged( packaged )
+        end
+        if isfunction( ent.SetParentVendor ) then
+            ent:SetParentVendor( parent )
         end
     end)
 

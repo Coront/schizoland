@@ -78,7 +78,7 @@ net.Receive( "as_grub_takeitems", function( _, ply )
     end
 
     ply:ResyncInventory()
-    ent:ResyncInventory()
+    ent:Resync()
 
     ply:ChatPrint("You have taken everything from this grub:")
     for k, v in pairs( taketbl ) do

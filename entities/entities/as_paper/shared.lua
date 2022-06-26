@@ -14,7 +14,7 @@ function ENT:SetTitle( str )
     self.Title = str
 
     if ( SERVER ) then
-        self:ResyncText()
+        self:Resync()
     end
 end
 
@@ -27,7 +27,7 @@ function ENT:SetParagraph( str )
     self.Text = str
 
     if ( SERVER ) then
-        self:ResyncText()
+        self:Resync()
     end
 end
 
@@ -42,28 +42,40 @@ end
 -- ██║ ╚████║███████╗   ██║   ╚███╔███╔╝╚██████╔╝██║  ██║██║  ██╗██║██║ ╚████║╚██████╔╝
 -- ╚═╝  ╚═══╝╚══════╝   ╚═╝    ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝ ╚═════╝
 
+function ENT:Resync()
+    if ( SERVER ) then
+        local title = self:GetTitle()
+        local para = self:GetParagraph()
+
+        net.Start("as_paper_sync")
+            net.WriteEntity( self )
+            net.WriteString( title )
+            net.WriteString( para )
+        net.Broadcast()
+    elseif ( CLIENT ) then
+        net.Start("as_paper_requestsync")
+            net.WriteEntity( self )
+        net.SendToServer()
+    end
+end
+
 if ( SERVER ) then
 
     util.AddNetworkString("as_paper_sync")
-    util.AddNetworkString("as_paper_requestinventory")
+    util.AddNetworkString("as_paper_requestsync")
 
-    function ENT:ResyncText()
-        net.Start("as_paper_sync")
-            net.WriteEntity( self )
-            net.WriteString( self:GetTitle() )
-            net.WriteString( self:GetParagraph() )
-        net.Broadcast()
-    end
-
-    net.Receive("as_paper_requestinventory", function( _, ply )
+    net.Receive("as_paper_requestsync", function( _, ply )
         local ent = net.ReadEntity()
         if not IsValid(ent) then return end
 
+        local title = ent:GetTitle()
+        local para = ent:GetParagraph()
+
         net.Start("as_paper_sync")
             net.WriteEntity( ent )
-            net.WriteString( (ent:GetTitle() or "") )
-            net.WriteString( (ent:GetParagraph() or "") )
-        net.Send( ply )
+            net.WriteString( title )
+            net.WriteString( para )
+        net.Broadcast()
     end)
 
 elseif ( CLIENT ) then
@@ -78,13 +90,11 @@ elseif ( CLIENT ) then
         ent:SetParagraph( str )
     end)
 
-    timer.Create( "as_autoresync_papers", 10, 0, function()
-        for k, v in pairs( ents.FindByClass("as_paper") ) do
-            if not IsValid(v) then continue end
-            net.Start("as_paper_requestinventory") --Cases utilize the lootcontainer inventory system, so this isnt a concern.
-                net.WriteEntity(v)
-            net.SendToServer()
+    function ENT:Think()
+        if CurTime() > (self:GetCreationTime() + NWSetting.PostCreationDelay) and CurTime() > (self.NextResync or 0) then
+            self:Resync()
+            self.NextResync = CurTime() + 10
         end
-    end)
+    end
 
 end

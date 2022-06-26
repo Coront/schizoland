@@ -126,5 +126,5 @@ net.Receive("as_healthstation_takeres", function( _, ply )
 		ply:ChatPrint( AS.Items[k].name .. " (" .. v .. ") added to inventory.")
 	end
 	ent:SetInventory( {} )
-	ent:ResyncInventory()
+	ent:Resync()
 end)
