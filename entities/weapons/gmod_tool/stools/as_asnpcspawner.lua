@@ -79,7 +79,9 @@ function TOOL:LeftClick( trace )
     local ang = ply:EyeAngles():ToTable()
     ent:SetAngles( Angle( 0, ang[2] + 180, 0 ) )
     ent:Spawn()
-    ent:SetWeapon( wep )
+    if not ent:IsMelee() then
+        ent:SetWeapon( wep )
+    end
 
     if name != "" then
         ent:SetNWString("Name", name)
