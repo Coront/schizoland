@@ -76,9 +76,25 @@ AS.AddBaseItem("wep_katana", {
 -- ██║     ██║███████║   ██║   ╚██████╔╝███████╗███████║
 -- ╚═╝     ╚═╝╚══════╝   ╚═╝    ╚═════╝ ╚══════╝╚══════╝
 
+AS.AddBaseItem("wep_pm", {
+    name = "Makarov",
+    desc = "Holds 8 rounds and uses 9x18mm ammo.",
+    category = "weapon",
+    model = "models/items/weapons/pm.mdl",
+    wep = "weapon_pm",
+    value = 25,
+    weight = 2,
+    class = "engineer",
+    craft = {
+        ["misc_scrap"] = 25,
+        ["misc_smallparts"] = 40,
+        ["misc_chemical"] = 35,
+    },
+})
+
 AS.AddBaseItem("wep_p226", {
     name = "P226",
-    desc = "Holds 13 rounds and uses 9x19mm ammo,",
+    desc = "Holds 13 rounds and uses 9x19mm ammo.",
     category = "weapon",
     model = "models/weapons/w_pist_p228.mdl",
     wep = "weapon_p226",
@@ -382,6 +398,40 @@ AS.AddBaseItem("wep_ak12", {
     },
 })
 
+AS.AddBaseItem("wep_vss", {
+    name = "VSS Vintorez",
+    desc = "Holds 20 rounds and uses 9x39mm ammo.",
+    category = "weapon",
+    model = "models/items/weapons/vss.mdl",
+    wep = "weapon_vss",
+    color = Color( 120, 40, 40 ),
+    value = 100,
+    weight = 7.5,
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 350,
+        ["misc_smallparts"] = 325,
+        ["misc_chemical"] = 300,
+    },
+})
+
+AS.AddBaseItem("wep_lr300", {
+    name = "LR-300",
+    desc = "Holds 30 rounds and uses 5.56x45mm ammo.",
+    category = "weapon",
+    model = "models/items/weapons/lr300.mdl",
+    wep = "weapon_lr300",
+    color = Color( 120, 40, 40 ),
+    value = 100,
+    weight = 8,
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 350,
+        ["misc_smallparts"] = 325,
+        ["misc_chemical"] = 300,
+    },
+})
+
 AS.AddBaseItem("wep_ash12", {
     name = "ASH-12",
     desc = "Holds 20 rounds and uses 7.62x51mm ammo.",
@@ -396,7 +446,6 @@ AS.AddBaseItem("wep_ash12", {
         ["misc_scrap"] = 400,
         ["misc_smallparts"] = 350,
         ["misc_chemical"] = 275,
-        ["misc_weaponkit"] = 0,
     },
 })
 

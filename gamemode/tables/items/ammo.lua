@@ -1,3 +1,24 @@
+AS.AddBaseItem("ammo_9x18mm", {
+    name = "9x18mm",
+    desc = "A box with 40 rounds of 9x18mm ammunition.",
+    category = "ammo",
+    model = "models/items/ammo/9x18mmbox.mdl",
+    value = 5,
+    weight = 0.4,
+    use = {
+        ammotype = "ar2altfire",
+        ammoamt = 40,
+    },
+    class = "engineer",
+    craft = {
+        ["misc_scrap"] = 10,
+        ["misc_smallparts"] = 0,
+        ["misc_chemical"] = 10,
+        ["misc_munitionpress"] = 0,
+        ["misc_gunpowder"] = 1,
+    },
+})
+
 AS.AddBaseItem("ammo_9mm", {
     name = "9x19mm",
     desc = "A box with 40 rounds of 9x19mm ammunition.",
@@ -104,6 +125,28 @@ AS.AddBaseItem("ammo_buckshot", {
         ["misc_chemical"] = 20,
         ["misc_munitionpress"] = 0,
         ["misc_gunpowder"] = 2,
+    },
+})
+
+AS.AddBaseItem("ammo_9x39mm", {
+    name = "9x39mm",
+    desc = "A box with 40 rounds of 9x39mm ammunition.",
+    category = "ammo",
+    model = "models/items/ammo/9x39mmbox.mdl",
+    value = 10,
+    weight = 0.8,
+    use = {
+        ammotype = "gravity",
+        ammoamt = 40,
+    },
+    hidden = true,
+    class = "engineer",
+    craft = {
+        ["misc_scrap"] = 20,
+        ["misc_smallparts"] = 0,
+        ["misc_chemical"] = 15,
+        ["misc_munitionpress"] = 0,
+        ["misc_gunpowder"] = 1,
     },
 })
 
