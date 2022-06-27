@@ -461,6 +461,10 @@ function AftershockHUDVoice()
 end
 
 hook.Add( "PlayerStartVoice", "AS_VoiceStart", function( ply )
+    if not tobool(GetConVar("as_voicechat"):GetInt()) and LocalPlayer() == ply and not LocalPlayer():IsAdmin() then
+        LocalPlayer():ChatPrint("Voice Chat is disabled.")
+    end
+
     HUD_TALKINGPLAYERS[ply] = true
 
     ASHUDVOICE_iconsize = 64 * HUD_SCALE
