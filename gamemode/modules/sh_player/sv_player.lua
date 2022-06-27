@@ -35,6 +35,9 @@ function GM:PlayerSpawn( ply )
         return
     end
 
+    if not (ply.WasDefibbed or false) then
+        ply.NoDefib = 0
+    end
     if IsValid( ply:GetNWEntity( "Deathdoll" ) ) then
         ply:GetNWEntity( "Deathdoll" ):Remove()
     end
@@ -263,9 +266,8 @@ function GM:PlayerDeath( victim, inflictor, attacker )
 end
 
 hook.Add( "PlayerDeathThink", "AS_Respawn", function( ply )
-    if CurTime() < ply:GetNWInt("AS_NextManualRespawn", 0 ) then return false end
+    if tobool(GetConVar("as_respawnwait"):GetInt()) and CurTime() < ply:GetNWInt("AS_NextManualRespawn", 0 ) then return false end
     if CurTime() > ply:GetNWInt("AS_NextRespawn", 0 ) then
-        ply.NoDefib = 0
         ply:Spawn()
     end
 end)
