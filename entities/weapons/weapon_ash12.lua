@@ -82,7 +82,7 @@ SWEP.WorldModel   = "models/items/weapons/ash12.mdl"
 SWEP.Primary.ClipSize        = 20
 SWEP.Primary.DefaultClip    = 0
 SWEP.Primary.Automatic       = true
-SWEP.Primary.Ammo             = "sniperround"
+SWEP.Primary.Ammo             = "combinecannon"
  
 -- Secondary Fire Attributes --
 SWEP.Secondary.ClipSize        = -1
