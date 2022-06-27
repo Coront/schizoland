@@ -147,7 +147,9 @@ end
 -- ╚██████╗╚██████╔╝██║ ╚████║███████║╚██████╔╝███████╗███████╗    ╚██████╗╚██████╔╝██║ ╚═╝ ██║██║ ╚═╝ ██║██║  ██║██║ ╚████║██████╔╝███████║
 --  ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝╚══════╝ ╚═════╝ ╚══════╝╚══════╝     ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝ ╚══════╝
 
-CreateConVar( "as_alltalk", "0", {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED}, "Enables all talk for players.", 0, 1 )
+CreateConVar( "as_voicechat", "1", {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED}, "Enables voice chat for players.", 0, 1 )
+CreateConVar( "as_voicealltalk", "0", {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED}, "Enables voice all talk for players.", 0, 1 )
+CreateConVar( "as_chatalltalk", "0", {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED}, "Enables chat all talk for players.", 0, 1 )
 CreateConVar( "as_pve", "0", {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED}, "Enables PvE only.", 0, 1 )
 CreateConVar( "as_nosandbox", "0", {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED}, "Enable satiation ticking.", 0, 1 )
 CreateConVar( "as_mobs", "1", {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED}, "Enable spawning of mobs.", 0, 1 )
@@ -157,6 +159,7 @@ CreateConVar( "as_satiation", "1", {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATE
 CreateConVar( "as_occupation", "1", {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED}, "Enable occupation zone spawners.", 0, 1 )
 CreateConVar( "as_collisions", "1", {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED}, "Enable collisions between players.", 0, 1 )
 CreateConVar( "as_respawnwait", "1", {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED}, "Enable respawn wait.", 0, 1 )
+CreateConVar( "as_defibwait", "1", {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED}, "Enable defib waiting.", 0, 1 )
 CreateConVar( "as_classchange", "1", {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED}, "Enable class changing.", 0, 1 )
 CreateConVar( "as_classchangecost", "1", {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED}, "Enable cost for class changing.", 0, 1 )
 CreateConVar( "as_stress", "1", {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED}, "Enable combat timer.", 0, 1 )
