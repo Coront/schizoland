@@ -91,6 +91,9 @@ local WorkshopFastDLMaps = {
 	["428781078"] = "gm_aftermath",
 	["132901080"] = "rp_salvation_2_stalker_snow",
 	["105984257"] = "gm_atomic",
+	["2826876381"] = "pn_vault121_v1_p3",
+	["2826879810"] = "gm_valley_f1",
+	["1996718112"] = "rp_cscdesert_v2_b1",
 	["1572373847"] = "gm_boreas", --Event Map
 	["326332456"] = "gm_fork", --Event Map
 }
