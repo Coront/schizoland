@@ -48,7 +48,7 @@ function SWEP:PrimaryAttack()
 		if ( SERVER ) then
 			self:SetNextPrimaryFire( CurTime() + 1 )
 
-			if CurTime() < (rag.Owner.NoDefib or 0) then
+			if tobool(GetConVar("as_defibwait"):GetInt()) and CurTime() < (rag.Owner.NoDefib or 0) then
 				ply:ChatPrint("This person was revived too recently.")
 				return
 			end
@@ -57,7 +57,7 @@ function SWEP:PrimaryAttack()
 
 			local otherPly = rag.Owner
 			otherPly.WasDefibbed = true
-			otherPly:SetNWFloat( "NoCollideTimer", CurTime() + 5 )
+			otherPly:SetNWFloat( "NoCollideTimer", CurTime() + 3 )
 			otherPly:Spawn()
 			otherPly:SetPos( otherPly.LastDeathPos )
 			otherPly:SetHealth( 15 )
