@@ -107,22 +107,22 @@ function ContainerMenu( ent )
             else
                 if IsValid( panel[key] ) then
                     panel[key]:Remove()
-                    noitem = true
-                    for k, v in SortedPairs( frame_container.ent:GetInventory() ) do
-                        if k == "ammo" then continue end
-                        noitem = false
-                        frame_container.selectedItem = {ID = k, amt = v}
-                        break
-                    end
-                    if noitem then
-                        if ent:GetInventory().ammo then
-                            for k, v in SortedPairs( ent:GetInventory().ammo ) do
-                                frame_container.selectedItem = {ID = k, amt = v, ammo = true}
-                                break
-                            end
-                        else
-                            frame_container.selectedItem = nil
+                end
+                noitem = true
+                for k, v in SortedPairs( frame_container.ent:GetInventory() ) do
+                    if k == "ammo" then continue end
+                    noitem = false
+                    frame_container.selectedItem = {ID = k, amt = v}
+                    break
+                end
+                if noitem then
+                    if ent:GetInventory().ammo then
+                        for k, v in SortedPairs( ent:GetInventory().ammo ) do
+                            frame_container.selectedItem = {ID = k, amt = v, ammo = true}
+                            break
                         end
+                    else
+                        frame_container.selectedItem = nil
                     end
                 end
             end
