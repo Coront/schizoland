@@ -67,7 +67,17 @@ if ( SERVER ) then
         end
     end
 
+    function ENT:HighestDamager()
+        for k, v in SortedPairsByValue( self.Damagers, true ) do
+            return k
+        end
+    end
+
     function ENT:OnTakeDamage( dmg )
+        self.Damagers = self.Damagers or {}
+
+        self.Damagers[dmg:GetAttacker()] = (self.Damagers[dmg:GetAttacker()] or 0) + dmg:GetDamage()
+
         self:SetHealth( self:Health() - dmg:GetDamage() )
 
         if dmg:GetDamageType() == DMG_SLASH then
@@ -77,9 +87,10 @@ if ( SERVER ) then
 
         if self:Health() <= 0 and not self.Destroyed then
             self:Destroy()
-            dmg:GetAttacker():AddToStatistic( "mounds", 1 )
-            dmg:GetAttacker():AddItemToInventory( "misc_expbook", 1 )
-            dmg:GetAttacker():ChatPrint( AS.Items["misc_expbook"].name .. " (1) added to inventory.")
+            local ply = self:HighestDamager()
+            ply:AddToStatistic( "mounds", 1 )
+            ply:AddItemToInventory( "misc_expbook", 1 )
+            ply:ChatPrint( AS.Items["misc_expbook"].name .. " (1) added to inventory.")
         end
     end
 
