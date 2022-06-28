@@ -334,7 +334,7 @@ hook.Add( "Think", "AS_Oxygen", function()
     for k, v in pairs( player.GetAll() ) do
         if not v:IsLoaded() then continue end
         if not v:Alive() then continue end
-        if CurTime() < v.NextOxygenUpdate then continue end
+        if CurTime() < (v.NextOxygenUpdate or 0) then continue end
 
         local oxygen = v.Oxygen or 100
 
@@ -353,6 +353,15 @@ hook.Add( "Think", "AS_Oxygen", function()
             end
         end
     end 
+end)
+
+hook.Add( "EntityTakeDamage", "AS_DamageHurt", function( victim, dmginfo ) 
+    if not victim:IsPlayer() then return end
+    local ply = victim
+
+    if dmginfo:GetAttacker():GetClass() == "trigger_hurt" then
+        dmginfo:SetDamage( 0 )
+    end
 end)
 
 hook.Add( "EntityTakeDamage", "AS_TempGodmode", function( victim, dmginfo ) 
