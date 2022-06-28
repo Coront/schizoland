@@ -19,5 +19,11 @@ function ENT:Use( ply )
 		ply:ChatPrint("You have enabled this checkpoint. Players will now automatically respawn here.")
 		self:EmitSound("buttons/blip1.wav")
 		self:SetColor( Color( 45, 150, 0 ) )
+
+		for k, v in pairs( ents.FindByClass("as_checkpoint") ) do
+			if v == self then continue end
+			v.Enabled = false 
+			v:SetColor( Color( 255, 255, 255 ) )
+		end
 	end
 end
