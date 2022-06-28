@@ -236,6 +236,29 @@ AS.AddBaseItem("ammo_762x51", {
     },
 })
 
+AS.AddBaseItem("ammo_127x55mm", {
+    name = "12.7x55mm",
+    desc = "A box with 20 rounds of 12.7x55mm ammunition.",
+    category = "ammo",
+    model = "models/Items/BoxSRounds.mdl",
+    color = Color( 120, 40, 40 ),
+    value = 25,
+    weight = 1.7,
+    use = {
+        ammotype = "combinecannon",
+        ammoamt = 20,
+    },
+    hidden = true,
+    class = "engineer",
+    craft = {
+        ["misc_scrap"] = 30,
+        ["misc_smallparts"] = 0,
+        ["misc_chemical"] = 30,
+        ["misc_munitionpress"] = 0,
+        ["misc_gunpowder"] = 2,
+    },
+})
+
 AS.AddBaseItem("ammo_50bmg", {
     name = ".50 BMG",
     desc = "A box with 20 rounds of .50 BMG.",

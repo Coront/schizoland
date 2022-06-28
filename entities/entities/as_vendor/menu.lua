@@ -515,8 +515,9 @@ function Vendor.ListItem( k )
 
     local panel = SimplePanel( frame, frame:GetWide() - 6, frame:GetTall() - 28, 3, 25, COLHUD_SECONDARY )
 
-    local icon = SimpleItemIcon( panel, k, 64, 0, 0, AS.Items[k].name )
-    local label = SimpleLabel( panel, AS.Items[k].name, icon:GetWide() + 5, 5, "TargetID" )
+    local icon = SimpleItemIcon( panel, k, 70, 0, 0, AS.Items[k].name )
+    local label = SimpleLabel( panel, AS.Items[k].name, icon:GetWide() + 2, 0, "TargetID" )
+    local craft = SimpleLabel( panel, "Default Crafting Price\nScrap: " .. (AS.Items[k].craft["misc_scrap"] or 0) .. "\nSmall Parts: " .. (AS.Items[k].craft["misc_smallparts"] or 0) .. "\nChemicals: " .. (AS.Items[k].craft["misc_chemical"] or 0), icon:GetWide() + 2, 18, "DermaDefault" )
 
     local width, height, x, y, space = panel:GetWide(), 20, 5, icon:GetTall() + 5, 20
     local amt = SimpleSlider( panel, "Amount for Sale", width, height, x, y, 1, LocalPlayer():GetInventory()[k] )

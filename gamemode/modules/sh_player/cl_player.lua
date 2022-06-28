@@ -109,6 +109,35 @@ hook.Add("PostDrawOpaqueRenderables", "AS_DeathDollArmor", function()
 end)
 
 hook.Add("PrePlayerDraw", "AS_PlayerHide", function( ply )
+    if not tobool(GetConVar("as_collisions"):GetInt()) then --Collisions turned off
+        local startdist = 150
+        local enddist = 50
+        if ply != LocalPlayer() and (ply:GetPos() + ply:OBBCenter()):Distance( EyePos() ) <= startdist then
+            local distance = EyePos():Distance( ply:GetPos() + ply:OBBCenter() )
+            local diff = startdist - enddist
+            local opacity = 255
+            opacity = math.Clamp(255 *  Lerp( (distance / startdist), 0, 1 ), 50, 255)
+            ply:SetRenderMode( RENDERMODE_TRANSCOLOR )
+            ply:SetColor( Color( 255, 255, 255, opacity ) )
+        else
+            ply:SetRenderMode( RENDERMODE_NORMAL )
+            ply:SetColor( Color( 255, 255, 255, 255 ) )
+            ply:DrawShadow( true )
+            local wep = ply:GetActiveWeapon()
+            if IsValid( wep ) then
+                wep:DrawShadow( true )
+            end
+        end
+    else
+        ply:SetRenderMode( RENDERMODE_NORMAL )
+        ply:SetColor( Color( 255, 255, 255, 255 ) )
+        ply:DrawShadow( true )
+        local wep = ply:GetActiveWeapon()
+        if IsValid( wep ) then
+            wep:DrawShadow( true )
+        end
+    end
+
     if (ply:GetMoveType() == MOVETYPE_NOCLIP and not ply:InVehicle()) and not LocalPlayer():IsDeveloping() then 
         ply:DrawShadow( false )
         local wep = ply:GetActiveWeapon()

@@ -35,16 +35,30 @@ function GM:PlayerSpawn( ply )
         return
     end
 
+    if not (ply.WasDefibbed or false) then
+        ply.NoDefib = 0
+    end
     if IsValid( ply:GetNWEntity( "Deathdoll" ) ) then
         ply:GetNWEntity( "Deathdoll" ):Remove()
     end
 
     --Everything else here will be ran if the player has loaded their character.
-    if AS.Maps[game.GetMap()] and AS.Maps[game.GetMap()].Spawns then
-        ply:SetPos( table.Random(AS.Maps[game.GetMap()].Spawns) )
-        ply:SetEyeAngles( Angle(0, 180, 0) )
+    local Checkpoint = nil
+    for k, v in pairs( ents.FindByClass("as_checkpoint") ) do
+        if not v.Enabled then continue end
+        Checkpoint = v
+    end
+
+    if not IsValid( Checkpoint ) then
+        if AS.Maps[game.GetMap()] and AS.Maps[game.GetMap()].Spawns then
+            ply:SetPos( table.Random(AS.Maps[game.GetMap()].Spawns) )
+            ply:SetEyeAngles( Angle( 0, 180, 0 ) )
+        else
+            if ply:IsAdmin() then ply:ChatPrint("[AS] There is no proper map data set up! Players will spawn at a random point!") end
+        end
     else
-        if ply:IsAdmin() then ply:ChatPrint("[AS] There is no proper map data set up! Players will spawn at a random point!") end
+        ply:SetPos( Checkpoint:GetPos() + Vector( 0, 0, 20 ) )
+        ply:SetEyeAngles( Angle( 0, 180, 0 ) )
     end
 
     local health = SKL.Health
@@ -263,9 +277,8 @@ function GM:PlayerDeath( victim, inflictor, attacker )
 end
 
 hook.Add( "PlayerDeathThink", "AS_Respawn", function( ply )
-    if CurTime() < ply:GetNWInt("AS_NextManualRespawn", 0 ) then return false end
+    if tobool(GetConVar("as_respawnwait"):GetInt()) and CurTime() < ply:GetNWInt("AS_NextManualRespawn", 0 ) then return false end
     if CurTime() > ply:GetNWInt("AS_NextRespawn", 0 ) then
-        ply.NoDefib = 0
         ply:Spawn()
     end
 end)
@@ -325,6 +338,40 @@ hook.Add( "Think", "AS_TempGodmode", function()
             v:GodDisable()
             v:ChatPrint("Temporary Godmode Disabled.")
         end
+    end
+end)
+
+hook.Add( "Think", "AS_Oxygen", function()
+    for k, v in pairs( player.GetAll() ) do
+        if not v:IsLoaded() then continue end
+        if not v:Alive() then continue end
+        if CurTime() < (v.NextOxygenUpdate or 0) then continue end
+
+        local oxygen = v.Oxygen or 100
+
+        v.NextOxygenUpdate = CurTime() + SET.OxygenUpdate
+        if v:WaterLevel() > 2 then
+            if oxygen > 0 then
+                v.Oxygen = (v.Oxygen or 100) - 1
+            else
+                v:TakeDamage( 10 )
+                v:EmitSound( "player/pl_drown" .. math.random( 2, 3 ) .. ".wav" )
+                v.NextOxygenUpdate = CurTime() + 3
+            end
+        else
+            if oxygen < 100 then
+                v.Oxygen = (v.Oxygen or 100) + 1
+            end
+        end
+    end 
+end)
+
+hook.Add( "EntityTakeDamage", "AS_DamageHurt", function( victim, dmginfo ) 
+    if not victim:IsPlayer() then return end
+    local ply = victim
+
+    if dmginfo:GetAttacker():GetClass() == "trigger_hurt" then
+        dmginfo:SetDamage( 0 )
     end
 end)
 
