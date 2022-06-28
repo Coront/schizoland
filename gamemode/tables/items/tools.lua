@@ -147,6 +147,7 @@ AS.AddBaseItem("tool_generator_solar", {
     desc = "A handmade solar panel. Absorbs the sun's energy to be converted to electricity. Produces 25 power.",
     category = "tool",
     model = "models/hunter/plates/plate1x2.mdl",
+    nomodelblacklist = true,
     ent = "as_generator_solar",
     value = 250,
     weight = 10,

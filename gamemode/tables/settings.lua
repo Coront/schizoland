@@ -60,6 +60,7 @@ PERM.PropBlacklist = { --Props that are forbidden from being spawned
     ["models/props_phx/misc/flakshell_big.mdl"] = true, --Explosive
     ["models/props_phx/misc/potato_launcher_explosive.mdl"] = true, --Explosive
     ["models/props_phx/ball.mdl"] = true, --Explosive
+    ["models/props_c17/canister02a.mdl"] = true, --Explosive
     ["models/props_building_details/storefront_template001a_bars.mdl"] = true,
     ["models/props_combine/combine_window001.mdl"] = true,
     ["models/props_combine/combine_fence01a.mdl"] = true,
@@ -85,7 +86,11 @@ PERM.PropBlacklist = { --Props that are forbidden from being spawned
     ["models/props_silo/silo_tower01.mdl"] = true,
     ["models/props_canal/locks_large_b.mdl"] = true,
     ["models/props/hr_massive/radio_tower/radio_tower.mdl"] = true,
-    ["models/props_buildings/row_res_1_fullscale.mdl"] = true
+    ["models/props_buildings/row_res_1_fullscale.mdl"] = true,
+    ["models/Cranes/crane_frame.mdl"] = true,
+    ["models/props_c17/column02a.mdl"] = true,
+    ["models/props_citizen_tech/windmill_blade002a.mdl"] = true,
+    ["models/props/CS_militia/footlocker01_closed.mdl"] = true,
 }
 PERM.PropBlacklistDirectory = {
     "rp_asheville",
