@@ -29,7 +29,7 @@ hook.Add( "CalcView", "AS_Thirdperson", function( ply, pos, angles, lastfov )
         start = ply:GetShootPos(), 
         endpos = view.origin,
         filter = ply,
-        mask = MASK_SOLID_BRUSHONLY
+        mask = MASK_SOLID
     })
 
     if trace.Hit then
