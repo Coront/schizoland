@@ -1,7 +1,7 @@
 AddCSLuaFile()
 
 ENT.Type 			= "anim"
-ENT.Base 			= "base_entity"
+ENT.Base 			= "base_anim"
 ENT.PrintName		= "Display Item"
 ENT.Author			= "Tampy"
 ENT.Purpose			= "A display item."
