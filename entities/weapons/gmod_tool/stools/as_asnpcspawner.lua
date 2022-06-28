@@ -22,6 +22,9 @@ local Entities = {
     {class = "npc_as_soldier", name = "Soldier"},
     {class = "npc_as_super", name = "Super Soldier"},
     {class = "npc_as_scout", name = "Scout"},
+    {class = "npc_as_conglosoldier", name = "Conglomerate Soldier"},
+    {class = "npc_as_congloassaulter", name = "Conglomerate Assaulter"},
+    {class = "npc_as_conglocommander", name = "Conglomerate Commander"},
 }
 
 TOOL.ClientConVar["NPC"] = Entities[1].class --NPC Base
@@ -81,6 +84,7 @@ function TOOL:LeftClick( trace )
     ent:Spawn()
     if not ent:IsMelee() then
         ent:SetWeapon( wep )
+        ent:SetMagazine( ent:GetWeaponInfo().clip )
     end
 
     if name != "" then
