@@ -12,6 +12,7 @@ SET.AdminMaxCharacters = 5 --Maximum characters for admins
 SET.MinNameLength = 3 --Minimal length of a players name.
 SET.MaxNameLength = 50 --Maximum length of a players name.
 SET.HealthUpdating = 3 --Seconds until passive health updates
+SET.OxygenUpdate = 0.1 --Seconds until oxygen update
 SET.MaxToxicity = 1000 --Maximum Toxicity a player can sustain
 SET.ToxicDebuff = 350 --Amount of Toxication for debuff
 SET.ToxicDebuffHeavy = 700 --Amount of Toxication for heavy debuff

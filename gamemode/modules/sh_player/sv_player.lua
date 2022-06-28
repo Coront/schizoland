@@ -330,6 +330,31 @@ hook.Add( "Think", "AS_TempGodmode", function()
     end
 end)
 
+hook.Add( "Think", "AS_Oxygen", function()
+    for k, v in pairs( player.GetAll() ) do
+        if not v:IsLoaded() then continue end
+        if not v:Alive() then continue end
+        if CurTime() < v.NextOxygenUpdate then continue end
+
+        local oxygen = v.Oxygen or 100
+
+        v.NextOxygenUpdate = CurTime() + SET.OxygenUpdate
+        if v:WaterLevel() > 2 then
+            if oxygen > 0 then
+                v.Oxygen = (v.Oxygen or 100) - 1
+            else
+                v:TakeDamage( 10 )
+                v:EmitSound( "player/pl_drown" .. math.random( 2, 3 ) .. ".wav" )
+                v.NextOxygenUpdate = CurTime() + 3
+            end
+        else
+            if oxygen < 100 then
+                v.Oxygen = (v.Oxygen or 100) + 1
+            end
+        end
+    end 
+end)
+
 hook.Add( "EntityTakeDamage", "AS_TempGodmode", function( victim, dmginfo ) 
     if not victim:IsPlayer() then return end
     local ply = victim
