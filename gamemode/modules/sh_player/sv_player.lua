@@ -43,11 +43,22 @@ function GM:PlayerSpawn( ply )
     end
 
     --Everything else here will be ran if the player has loaded their character.
-    if AS.Maps[game.GetMap()] and AS.Maps[game.GetMap()].Spawns then
-        ply:SetPos( table.Random(AS.Maps[game.GetMap()].Spawns) )
-        ply:SetEyeAngles( Angle(0, 180, 0) )
+    local Checkpoint = nil
+    for k, v in pairs( ents.FindByClass("as_checkpoint") ) do
+        if not v.Enabled then continue end
+        Checkpoint = v
+    end
+
+    if not IsValid( Checkpoint ) then
+        if AS.Maps[game.GetMap()] and AS.Maps[game.GetMap()].Spawns then
+            ply:SetPos( table.Random(AS.Maps[game.GetMap()].Spawns) )
+            ply:SetEyeAngles( Angle( 0, 180, 0 ) )
+        else
+            if ply:IsAdmin() then ply:ChatPrint("[AS] There is no proper map data set up! Players will spawn at a random point!") end
+        end
     else
-        if ply:IsAdmin() then ply:ChatPrint("[AS] There is no proper map data set up! Players will spawn at a random point!") end
+        ply:SetPos( Checkpoint:GetPos() + Vector( 0, 0, 20 ) )
+        ply:SetEyeAngles( Angle( 0, 180, 0 ) )
     end
 
     local health = SKL.Health
