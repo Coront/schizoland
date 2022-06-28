@@ -277,7 +277,7 @@ function Vendor.BuildShop( parent, sales )
             surface.SetDrawColor( COLHUD_DEFAULT )
             surface.DrawOutlinedRect( 0, 0, w, h, 1 )
         end
-        local icon = SimpleItemIcon( panel, k, panel:GetTall() - 10, 5, 5, AS.Items[k].name .. "\nAmount: " .. v.amt .. "\nScrap: " .. v.scrap .. "\nSmall Parts: " .. v.smallp .. "\nChemicals: " .. v.chemical)
+        local icon = SimpleItemIcon( panel, k, panel:GetTall() - 10, 5, 5, AS.Items[k].name .. "\nWeight: " .. AS.Items[k].weight .. "\nAmount: " .. v.amt .. "\nScrap: " .. v.scrap .. "\nSmall Parts: " .. v.smallp .. "\nChemicals: " .. v.chemical)
         local name = SimpleLabel( panel, AS.Items[k].name, icon:GetWide() + 10, icon:GetY() + 5, "TargetIDSmall" )
         local scroll_desc = vgui.Create("DScrollPanel", panel)
         scroll_desc:SetSize( 400, 50 )
