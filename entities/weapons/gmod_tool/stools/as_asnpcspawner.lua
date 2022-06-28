@@ -215,7 +215,7 @@ function TOOL.BuildCPanel(panel)
 	})
 
     panel:AddControl("Slider", {
-        Label = "Aggrovation Distance", 
+        Label = "Aggravation Distance", 
         Type = "Integer",
         Min = "1",
         Max = "100000",
