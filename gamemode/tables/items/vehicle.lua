@@ -110,7 +110,7 @@ AS.AddBaseItem("vehicle_roadrunner", {
 
 AS.AddBaseItem("vehicle_gaz", {
     name = "GAZ-27",
-    desc = "Above average speed and controllable steering. Seats 5 people and can carry 175 pounds of items.",
+    desc = "Above average speed and controllable steering. Seats 4 people and can carry 175 pounds of items.",
     category = "vehicle",
     model = "models/source_vehicles/car004a.mdl",
     ent = "car004a",
@@ -259,7 +259,7 @@ AS.AddBaseItem("vehicle_apc", {
         ["misc_carbattery"] = 4,
         ["misc_axel"] = 3,
         ["misc_wheel"] = 6,
-        ["misc_heavyplate"] = 5,
+        ["misc_heavyplate"] = 3,
     },
 })
 
@@ -282,9 +282,9 @@ AS.AddBaseItem("vehicle_m80yellow", {
     novendor = true,
     class = "engineer",
     craft = {
-        ["misc_scrap"] = 900,
-        ["misc_smallparts"] = 800,
-        ["misc_chemical"] = 750,
+        ["misc_scrap"] = 250,
+        ["misc_smallparts"] = 350,
+        ["misc_chemical"] = 200,
         ["vehicle_firecrackeryellow"] = 1
     },
 })
@@ -301,9 +301,9 @@ AS.AddBaseItem("vehicle_m80red", {
     novendor = true,
     class = "engineer",
     craft = {
-        ["misc_scrap"] = 900,
-        ["misc_smallparts"] = 800,
-        ["misc_chemical"] = 750,
+        ["misc_scrap"] = 250,
+        ["misc_smallparts"] = 350,
+        ["misc_chemical"] = 200,
         ["vehicle_firecrackerred"] = 1
     },
 })
@@ -320,9 +320,9 @@ AS.AddBaseItem("vehicle_marksinternational", {
     novendor = true,
     class = "engineer",
     craft = {
-        ["misc_scrap"] = 750,
-        ["misc_smallparts"] = 850,
-        ["misc_chemical"] = 600,
+        ["misc_scrap"] = 350,
+        ["misc_smallparts"] = 400,
+        ["misc_chemical"] = 200,
         ["vehicle_markswagon"] = 1,
     },
 })
@@ -339,9 +339,9 @@ AS.AddBaseItem("vehicle_tuscanlegacy", {
     novendor = true,
     class = "engineer",
     craft = {
-        ["misc_scrap"] = 750,
-        ["misc_smallparts"] = 850,
-        ["misc_chemical"] = 650,
+        ["misc_scrap"] = 300,
+        ["misc_smallparts"] = 350,
+        ["misc_chemical"] = 250,
         ["vehicle_tuscan"] = 1,
     },
 })
@@ -350,7 +350,7 @@ AS.AddBaseItem("vehicle_tuscanforce", {
     name = "Tuscan Force",
     desc = "An upgraded version of the Tuscan-350. Seats 4 people and can carry 225 pounds of items.",
     category = "vehicle",
-    model = "models/source_vehicles/car005b/vehicle.mdl",
+    model = "models/source_vehicles/car005b_armored/vehicle.mdl",
     ent = "car005b_armored",
     value = 500,
     weight = 225,
@@ -358,9 +358,9 @@ AS.AddBaseItem("vehicle_tuscanforce", {
     novendor = true,
     class = "engineer",
     craft = {
-        ["misc_scrap"] = 750,
-        ["misc_smallparts"] = 850,
-        ["misc_chemical"] = 650,
+        ["misc_scrap"] = 300,
+        ["misc_smallparts"] = 350,
+        ["misc_chemical"] = 250,
         ["vehicle_tuscan"] = 1,
     },
 })
@@ -377,16 +377,16 @@ AS.AddBaseItem("vehicle_roadrunnercaddy", {
     novendor = true,
     class = "engineer",
     craft = {
-        ["misc_scrap"] = 650,
-        ["misc_smallparts"] = 850,
-        ["misc_chemical"] = 600,
+        ["misc_scrap"] = 350,
+        ["misc_smallparts"] = 300,
+        ["misc_chemical"] = 250,
         ["vehicle_roadrunner"] = 1,
     },
 })
 
 AS.AddBaseItem("vehicle_gaztt", {
     name = "GAZ-27 TT",
-    desc = "An upgraded version of the GAZ-27. Seats 5 people and can carry 225 pounds of items.",
+    desc = "An upgraded version of the GAZ-27. Seats 4 people and can carry 225 pounds of items.",
     category = "vehicle",
     model = "models/source_vehicles/car004b/vehicle.mdl",
     ent = "car004b",
@@ -396,9 +396,9 @@ AS.AddBaseItem("vehicle_gaztt", {
     novendor = true,
     class = "engineer",
     craft = {
-        ["misc_scrap"] = 850,
-        ["misc_smallparts"] = 900,
-        ["misc_chemical"] = 700,
+        ["misc_scrap"] = 300,
+        ["misc_smallparts"] = 400,
+        ["misc_chemical"] = 350,
         ["vehicle_gaz"] = 1,
     },
 })
@@ -415,9 +415,9 @@ AS.AddBaseItem("vehicle_rebelvan", {
     novendor = true,
     class = "engineer",
     craft = {
-        ["misc_scrap"] = 1000,
-        ["misc_smallparts"] = 950,
-        ["misc_chemical"] = 800,
+        ["misc_scrap"] = 350,
+        ["misc_smallparts"] = 450,
+        ["misc_chemical"] = 400,
         ["vehicle_van"] = 1,
     },
 })
