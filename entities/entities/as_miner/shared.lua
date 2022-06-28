@@ -127,7 +127,7 @@ function ENT:Think()
 
             local item = table.Random( self.Items )
             self:AddItemToInventory( item, 1 )
-            if self:GetObjectOwner():GetASClass() == "scavenger" then
+            if IsValid( self:GetObjectOwner() ) and self:GetObjectOwner():GetASClass() == "scavenger" then
                 self:GetObjectOwner():IncreaseSkillExperience("mining", SKL.Mining.incamt)
             end
         end
