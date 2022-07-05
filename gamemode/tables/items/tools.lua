@@ -231,7 +231,7 @@ AS.AddBaseItem("tool_generator_fusion", {
 
 AS.AddBaseItem("tool_grub", {
     name = "Antlion Grub",
-    desc = "A small antlion grub, can produce chemicals over time.",
+    desc = "(Raidable) A small antlion grub, can produce chemicals over time.",
     category = "tool",
     model = "models/antlion_grub.mdl",
     ent = "as_grub",
@@ -248,7 +248,7 @@ AS.AddBaseItem("tool_grub", {
 
 AS.AddBaseItem("tool_grub_large", {
     name = "Large Antlion Grub",
-    desc = "A large antlion grub. It harvests significantly more chemicals over time.",
+    desc = "(Raidable) A large antlion grub. It harvests significantly more chemicals over time.",
     category = "tool",
     model = "models/antlion_grub.mdl",
     ent = "as_grub_large",
@@ -265,7 +265,7 @@ AS.AddBaseItem("tool_grub_large", {
 
 AS.AddBaseItem("tool_grub_king", {
     name = "King Antlion Grub",
-    desc = "The king of grubs! Apart of everyone's dream!",
+    desc = "(Raidable) The king of grubs! Apart of everyone's dream!",
     category = "tool",
     model = "models/antlion_grub.mdl",
     ent = "as_grub_king",
@@ -282,7 +282,7 @@ AS.AddBaseItem("tool_grub_king", {
 
 AS.AddBaseItem("tool_miner", {
     name = "Automated Miner",
-    desc = "This thing will pound the ground to dig out usable resources for you. Would be incredibly useful if you had an army of them. Requires 75 Electricity.",
+    desc = "(Raidable) This thing will pound the ground to dig out usable resources for you. Would be incredibly useful if you had an army of them. Requires 75 Electricity.",
     category = "tool",
     model = "models/props_combine/combinethumper002.mdl",
     ent = "as_miner",
@@ -301,7 +301,7 @@ AS.AddBaseItem("tool_miner", {
 
 AS.AddBaseItem("tool_miner_large", {
     name = "Large Automated Miner",
-    desc = "Drives the Antlions crazy. Requires 750 Electricity.",
+    desc = "(Raidable) Drives the Antlions crazy. Requires 750 Electricity.",
     category = "tool",
     model = "models/props_combine/combinethumper001a.mdl",
     ent = "as_miner_large",
@@ -343,13 +343,13 @@ AS.AddBaseItem("tool_vendor", {
 })
 
 AS.AddBaseItem("tool_locker", {
-    name = "Personal Locker",
-    desc = "It's a personal storage locker. You can place belongings in here that you don't want to carry everywhere else.",
+    name = "Personal Storage Locker",
+    desc = "(Raidable) It's a personal storage locker. You can place belongings in here that you don't want to carry everywhere else.",
     category = "tool",
     model = "models/props_c17/Lockers001a.mdl",
     ent = "as_locker",
     value = 10,
-    weight = 4,
+    weight = 1,
     novendor = true,
     craft = {
         ["misc_scrap"] = 350,

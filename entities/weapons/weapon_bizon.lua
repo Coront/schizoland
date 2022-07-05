@@ -95,7 +95,7 @@ SWEP.WorldModel   = "models/items/weapons/bizon.mdl"
 SWEP.Primary.ClipSize        = 64
 SWEP.Primary.DefaultClip    = 0
 SWEP.Primary.Automatic       = true    
-SWEP.Primary.Ammo             = "pistol"
+SWEP.Primary.Ammo             = "ar2altfire"
  
 -- Secondary Fire Attributes --
 SWEP.Secondary.ClipSize        = -1

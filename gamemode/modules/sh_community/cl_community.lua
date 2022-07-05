@@ -797,7 +797,7 @@ end)
 
 function CommunityViewMembers( parent, data )
     local panel = vgui.Create("DPanel")
-    panel:SetSize( parent:GetWide(), parent:GetTall())
+    panel:SetSize( parent:GetWide() - 15, parent:GetTall() - 35)
     function panel:Paint( w, h ) end
 
     local scroll_members = vgui.Create( "DScrollPanel", panel )

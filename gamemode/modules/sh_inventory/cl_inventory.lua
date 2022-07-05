@@ -995,6 +995,7 @@ function AS.Inventory.LoadCommunity( communitydata, memberdata )
     end
 
     DefaultButton( "Leave Community", x, y, width, height, communitypanel, function()
+        NextInventoryOpen = CurTime() + 1
         frame_inventory:Close()
         Verify( function()
             net.Start( "as_community_leave" )
@@ -1005,6 +1006,7 @@ function AS.Inventory.LoadCommunity( communitydata, memberdata )
 
     if myPerms["admin"] then
         DefaultButton( "Disband Community", x, y, width, height, communitypanel, function()
+            NextInventoryOpen = CurTime() + 1
             frame_inventory:Close()
             Verify( function()
                 net.Start( "as_community_delete" )

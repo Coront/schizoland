@@ -108,7 +108,7 @@ AS.AddChatCommand("rename", function( ply, args )
     if not args[2] then ply:ChatPrint("Please supply an argument (New Name).") return end
     local newName = args[2]
     for k, v in pairs( args ) do
-        if k < 4 then continue end
+        if k < 3 then continue end
         newName = newName .. " " .. v
     end
 

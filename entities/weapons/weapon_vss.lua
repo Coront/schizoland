@@ -104,7 +104,7 @@ SWEP.DeployAnimSpeed = 0.75
 -- Firing related
 SWEP.Shots = 1
 SWEP.FireDelay = 60/1300
-SWEP.Damage = 24
+SWEP.Damage = 22
 SWEP.FireSound = Sound("weapon/vss_fire.wav")
 SWEP.FireSound_Suppressed = Sound("weapon/vss_fire.wav")
 

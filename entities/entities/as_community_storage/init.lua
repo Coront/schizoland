@@ -121,17 +121,17 @@ util.AddNetworkString( "as_cstorage_hide" )
 
 net.Receive( "as_cstorage_deposititem", function( _, ply )
 	local ent = net.ReadEntity()
-	if not IsValid( ent ) then ply:ResyncInventory() ent:ResyncInventory() return end
-	if ent:GetClass() != "as_community_storage" then ply:ResyncInventory() ent:ResyncInventory() return end
-	if ent:GetCommunity() != ply:GetCommunity() and not ent.Broken then ply:ResyncInventory() ent:ResyncInventory() return end
-	if ent:GetPos():Distance(ply:GetPos()) > 300 then ply:ChatPrint("You're too far to deposit.") ply:ResyncInventory() ent:ResyncInventory() return end
+	if not IsValid( ent ) then ply:ResyncInventory() ent:Resync() return end
+	if ent:GetClass() != "as_community_storage" then ply:ResyncInventory() ent:Resync() return end
+	if ent:GetCommunity() != ply:GetCommunity() and not ent.Broken then ply:ResyncInventory() ent:Resync() return end
+	if ent:GetPos():Distance(ply:GetPos()) > 300 then ply:ChatPrint("You're too far to deposit.") ply:ResyncInventory() ent:Resync() return end
 
 
 	local item = net.ReadString()
 	local amt = net.ReadUInt( NWSetting.ItemAmtBits )
 	if amt <= 0 then amt = 1 end
 	if amt > ply:GetItemCount( item ) then amt = ply:GetItemCount( item ) end
-	if amt == 0 then ply:ChatPrint("You dont have this.") ply:ResyncInventory() ent:ResyncInventory() return end
+	if amt == 0 then ply:ChatPrint("You dont have this.") ply:ResyncInventory() ent:Resync() return end
 
 	if not ent:CanStoreItem( ply, item, amt ) then return end
 
@@ -141,16 +141,16 @@ end)
 
 net.Receive( "as_cstorage_withdrawitem", function( _, ply )
 	local ent = net.ReadEntity()
-	if not IsValid( ent ) then ply:ResyncInventory() ent:ResyncInventory() return end
-	if ent:GetClass() != "as_community_storage" then ply:ResyncInventory() ent:ResyncInventory() return end
-	if ent:GetCommunity() != ply:GetCommunity() and not ent.Broken then ply:ResyncInventory() ent:ResyncInventory() return end
-	if ent:GetPos():Distance(ply:GetPos()) > 300 then ply:ChatPrint("You're too far to withdraw.") ply:ResyncInventory() ent:ResyncInventory() return end
+	if not IsValid( ent ) then ply:ResyncInventory() ent:Resync() return end
+	if ent:GetClass() != "as_community_storage" then ply:ResyncInventory() ent:Resync() return end
+	if ent:GetCommunity() != ply:GetCommunity() and not ent.Broken then ply:ResyncInventory() ent:Resync() return end
+	if ent:GetPos():Distance(ply:GetPos()) > 300 then ply:ChatPrint("You're too far to withdraw.") ply:ResyncInventory() ent:Resync() return end
 
 	local item = net.ReadString()
 	local amt = net.ReadUInt( NWSetting.ItemAmtBits )
 	if amt <= 0 then amt = 1 end
 	if amt > ent:GetItemCount( item ) then amt = ent:GetItemCount( item ) end
-	if amt == 0 then ply:ChatPrint("Item doesn't exist in locker.") ply:ResyncInventory() ent:ResyncInventory() return end
+	if amt == 0 then ply:ChatPrint("Item doesn't exist in locker.") ply:ResyncInventory() ent:Resync() return end
 
 	if not ent:CanWithdrawItem( ply, item, amt ) then return end
 

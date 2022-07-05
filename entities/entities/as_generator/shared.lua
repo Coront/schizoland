@@ -141,6 +141,7 @@ if ( SERVER ) then
     net.Receive( "as_generator_requestsync", function( _, ply )
         local ent = net.ReadEntity()
         if not IsValid( ent ) then return end
+        if ent:GetClass() != "as_generator" then return end
 
         local fuel = ent:GetFuelAmount()
         local state = ent:GetActiveState()

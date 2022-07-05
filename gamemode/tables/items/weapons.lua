@@ -219,8 +219,8 @@ AS.AddBaseItem("wep_mp5", {
 })
 
 AS.AddBaseItem("wep_bizon", {
-    name = "PP-19 Bizon",
-    desc = "Holds 64 rounds and uses 9x19mm ammo.",
+    name = "PP-18 Bizon",
+    desc = "Holds 64 rounds and uses 9x18mm ammo.",
     category = "weapon",
     model = "models/items/weapons/bizon.mdl",
     wep = "weapon_bizon",

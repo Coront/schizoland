@@ -50,16 +50,19 @@ AS.AddMapData( "gm_aftermath_day_v1_0", {
     },
 })
 
-AS.AddMapData( "gm_valley", {
+AS.AddMapData( "gm_valley_f1", {
     MobMult = 2,
     NodeMult = 2.2,
     Load = {
-        pos = Vector(4606.78, 1728.85, -2245.67),
-        ang = Angle(-11.15, -123.28),
+        pos = Vector(-4221.46, -1957.71, 589.17),
+        ang = Angle(-17.71, -58.39),
     },
     Spawns = {
-        Vector(-4508.03, -3881.11, 163.04),
-        Vector(-4508.03, -3779.64, 163.04),
+        Vector( -4534.95, -4237.95, 99.03 ),
+        Vector( -4540.66, -4124.08, 99.03 ),
+        Vector( -4538.72, -4012.95, 99.03 ),
+        Vector( -4536.43, -3867.87, 99.03 ),
+        Vector( -4535.17, -3735.06, 99.03 ),
     },
 })
 

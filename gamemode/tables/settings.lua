@@ -265,6 +265,7 @@ NOD.ScavItems = { --Table containing potential items that will spawn if a item i
     ["wep_katana"] = 75,
     --Ammo
     ["ammo_9mm"] = 150,
+    ["ammo_9x18mm"] = 160,
     --Med
     ["med_bag"] = 250,
     --Food
