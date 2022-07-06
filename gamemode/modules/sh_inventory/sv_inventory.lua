@@ -196,8 +196,66 @@ end
 -- ██████╔╝██║  ██║   ██║   ██║  ██║██████╔╝██║  ██║███████║███████╗
 -- ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═════╝ ╚═╝  ╚═╝╚══════╝╚══════╝
 
+function PlayerMeta:InventoryDataTableCheck()
+    local data = sql.Query( "SELECT * FROM as_characters_inventory WHERE pid = " .. self:GetPID() )
+    if not data then
+        sql.Query( "INSERT INTO as_characters_inventory VALUES ( " .. self:GetPID() .. ", NULL, NULL, NULL, NULL )" )
+    else
+        local inv = util.JSONToTable( sql.QueryValue( "SELECT inv FROM as_characters_inventory WHERE pid = " .. self:GetPID() ) )
+        local veh = util.JSONToTable( sql.QueryValue( "SELECT bank FROM as_characters_inventory WHERE pid = " .. self:GetPID() ) )
+        local atch = util.JSONToTable( sql.QueryValue( "SELECT atch FROM as_characters_inventory WHERE pid = " .. self:GetPID() ) )
+        local equip = util.JSONToTable( sql.QueryValue( "SELECT equipped FROM as_characters_inventory WHERE pid = " .. self:GetPID() ) )
+        local toolcache = util.JSONToTable( sql.QueryValue( "SELECT tools FROM as_cache_tools WHERE pid = " .. self:GetPID() ) ) or {}
+
+        self:SetInventory( inv )
+        self:SetBank( veh )
+        self:SetAttachmentInventory( atch )
+
+        if equip then
+            if equip.weps then
+                for k, v in pairs(equip.weps) do
+                    self:Give( v )
+                end
+            end
+            if equip.ammo then
+                for k, v in pairs(equip.ammo) do
+                    self:GiveAmmo( v, k )
+                end
+            end
+        end
+
+        for k, v in pairs(toolcache) do
+            self:AddItemToInventory( k, v, true )
+        end
+        self:SetToolCache( {} )
+        self:SaveToolCache()
+    end
+end
+
 function PlayerMeta:SaveInventory()
     sql.Query("UPDATE as_characters_inventory SET inv = " .. SQLStr( util.TableToJSON( self:GetInventory(), true ) ) .. " WHERE pid = " .. self:GetPID() )
+end
+
+function PlayerMeta:SaveEquipped()
+    local equipped = {}
+    for k, v in pairs(self:GetAmmo()) do
+        equipped.ammo = equipped.ammo or {}
+        if AS.Items[translateAmmoNameID( game.GetAmmoName( k ) )] then
+            equipped.ammo[string.lower(game.GetAmmoName( k ))] = v
+        end
+    end
+    for k, v in pairs(self:GetWeapons()) do
+        equipped.weps = equipped.weps or {}
+        if v.ASID then
+            equipped.weps[#equipped.weps + 1] = v:GetClass()
+            if v:Clip1() > 0 then
+                equipped.ammo = equipped.ammo or {}
+                equipped.ammo[string.lower(game.GetAmmoName(v:GetPrimaryAmmoType()))] = (equipped.ammo[string.lower(game.GetAmmoName(v:GetPrimaryAmmoType()))] or 0) + v:Clip1()
+            end
+        end
+    end
+
+    sql.Query( "UPDATE as_characters_inventory SET equipped = " .. SQLStr(util.TableToJSON( equipped, true )) .. " WHERE pid = " .. self:GetPID() )
 end
 
 -- ███╗   ██╗███████╗████████╗██╗    ██╗ ██████╗ ██████╗ ██╗  ██╗██╗███╗   ██╗ ██████╗

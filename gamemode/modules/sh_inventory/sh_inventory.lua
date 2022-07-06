@@ -8,7 +8,7 @@ function PlayerMeta:SetInventory( tbl, noupdate )
 end
 
 function PlayerMeta:GetInventory()
-    return self.Inventory
+    return self.Inventory or {}
 end
 
 function PlayerMeta:AddItemToInventory( item, amt, noupdate )

@@ -87,24 +87,20 @@ end
 -- ██████╔╝██║  ██║   ██║   ██║  ██║██████╔╝██║  ██║███████║███████╗
 -- ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═════╝ ╚═╝  ╚═╝╚══════╝╚══════╝
 
-if ( SERVER ) then
+function ENT:DataTableCheck()
+	local data = sql.Query( "SELECT * FROM as_communities_storage WHERE cid = " .. self:GetCommunity() )
+	if not data then
+		sql.Query( "INSERT INTO as_communities_storage VALUES ( " .. self:GetCommunity() .. ", NULL, NULL )" )
+	else
+		local inv = sql.QueryValue( "SELECT inv FROM as_communities_storage WHERE cid = " .. self:GetCommunity() )
+		inv = util.JSONToTable( inv )
 
-    function ENT:DataTableCheck()
-        local data = sql.Query( "SELECT * FROM as_communities_storage WHERE cid = " .. self:GetCommunity() )
-        if not data then
-            sql.Query( "INSERT INTO as_communities_storage VALUES ( " .. self:GetCommunity() .. ", NULL, NULL )" )
-        else
-            local inv = sql.QueryValue( "SELECT inv FROM as_communities_storage WHERE cid = " .. self:GetCommunity() )
-            inv = util.JSONToTable( inv )
+		self:SetInventory( inv )
+	end
+end
 
-            self:SetInventory( inv )
-        end
-    end
-
-    function ENT:SaveInventory()
-        sql.Query( "UPDATE as_communities_storage SET inv = " .. SQLStr( util.TableToJSON( self:GetInventory(), true ) ) .. " WHERE cid = " .. self:GetCommunity() )
-    end
-
+function ENT:SaveInventory()
+	sql.Query( "UPDATE as_communities_storage SET inv = " .. SQLStr( util.TableToJSON( self:GetInventory(), true ) ) .. " WHERE cid = " .. self:GetCommunity() )
 end
 
 -- ███╗   ██╗███████╗████████╗██╗    ██╗ ██████╗ ██████╗ ██╗  ██╗██╗███╗   ██╗ ██████╗

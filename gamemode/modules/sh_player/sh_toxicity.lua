@@ -84,8 +84,9 @@ if ( SERVER ) then
             end
 
             if toxic >= SET.MaxToxicity then
-                v:Kill()
                 v:SetToxic( SET.MaxToxicity - 100 )
+                v:Kill()
+                v:ChatPrint("You died to toxicity.")
             end
 
         end

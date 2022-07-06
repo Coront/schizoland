@@ -88,24 +88,20 @@ end
 -- ██████╔╝██║  ██║   ██║   ██║  ██║██████╔╝██║  ██║███████║███████╗
 -- ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═════╝ ╚═╝  ╚═╝╚══════╝╚══════╝
 
-if ( SERVER ) then
+function ENT:DataTableCheck()
+    local data = sql.Query( "SELECT * FROM as_communities_storage WHERE cid = " .. self:GetCommunity() )
+    if not data then
+        sql.Query( "INSERT INTO as_communities_storage VALUES ( " .. self:GetCommunity() .. ", NULL, NULL )" )
+    else
+        local res = sql.QueryValue( "SELECT res FROM as_communities_storage WHERE cid = " .. self:GetCommunity() )
+        res = util.JSONToTable( res )
 
-    function ENT:DataTableCheck()
-        local data = sql.Query( "SELECT * FROM as_communities_storage WHERE cid = " .. self:GetCommunity() )
-        if not data then
-            sql.Query( "INSERT INTO as_communities_storage VALUES ( " .. self:GetCommunity() .. ", NULL, NULL )" )
-        else
-            local res = sql.QueryValue( "SELECT res FROM as_communities_storage WHERE cid = " .. self:GetCommunity() )
-            res = util.JSONToTable( res )
-
-            self:SetResources( res )
-        end
+        self:SetResources( res )
     end
+end
 
-    function ENT:SaveResources()
-        sql.Query( "UPDATE as_communities_storage SET res = " .. SQLStr( util.TableToJSON( self:GetResources(), true ) ) .. " WHERE cid = " .. self:GetCommunity() )
-    end
-
+function ENT:SaveResources()
+    sql.Query( "UPDATE as_communities_storage SET res = " .. SQLStr( util.TableToJSON( self:GetResources(), true ) ) .. " WHERE cid = " .. self:GetCommunity() )
 end
 
 -- ███╗   ██╗███████╗████████╗██╗    ██╗ ██████╗ ██████╗ ██╗  ██╗██╗███╗   ██╗ ██████╗

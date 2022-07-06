@@ -34,6 +34,8 @@ if SERVER then
         self:UnSpectate()
         self:AllowFlashlight( true )
         self.pid = playerid
+
+        --Basic Information (I know this is coded horribly.)
         local name = sql.QueryValue("SELECT name FROM as_characters WHERE pid = " .. self:GetPID())
         local model = sql.QueryValue("SELECT model FROM as_characters WHERE pid = " .. self:GetPID())
         local _, classbackup = table.Random(AS.Classes)
@@ -46,12 +48,7 @@ if SERVER then
                 statistics[v.key] = v.value
             end
         end
-        local skills = util.JSONToTable(sql.QueryValue("SELECT skills FROM as_characters_skills WHERE pid = " .. self:GetPID())) or {}
-        local inv = util.JSONToTable(sql.QueryValue("SELECT inv FROM as_characters_inventory WHERE pid = " .. self:GetPID())) or {}
-        local toolcache = util.JSONToTable(sql.QueryValue("SELECT tools FROM as_cache_tools WHERE pid = " .. self:GetPID())) or {}
-        local atch = util.JSONToTable(sql.QueryValue("SELECT atch FROM as_characters_inventory WHERE pid = " .. self:GetPID())) or {}
-        local bank = util.JSONToTable(sql.QueryValue("SELECT bank FROM as_characters_inventory WHERE pid = " .. self:GetPID())) or {}
-        local equipment = util.JSONToTable(sql.QueryValue("SELECT equipped FROM as_characters_inventory WHERE pid = " .. self:GetPID())) or {}
+        --Community
         local community = tonumber(sql.QueryValue("SELECT cid FROM as_communities_members WHERE pid = " .. self:GetPID())) or 0
         local rank = tonumber(sql.QueryValue("SELECT rank FROM as_communities_members WHERE pid = " .. self:GetPID())) or -1
         local title = sql.QueryValue("SELECT title FROM as_communities_members WHERE pid = " .. self:GetPID()) or ""
@@ -61,9 +58,9 @@ if SERVER then
 
         self:SetNWString( "as_name", name )
         self:SetNWString( "as_referencemodel", model )
+        self:SetHealth(stats.health)
         self:SetModel(model)
         self:SetASClass(class)
-        self:SetHealth(stats.health)
         local health = SKL.Health
         if self:GetASClass() == "mercenary" then
             health = health * CLS.Mercenary.healthmult
@@ -71,45 +68,29 @@ if SERVER then
             health = health * CLS.Scavenger.healthmult
         end
         self:SetMaxHealth(health)
+
+        --Table Checks, these are separate functions, just compressed.
+        self:InventoryDataTableCheck()
+        self:SkillsDataTableCheck()
+        self:MissionDataTableCheck()
+
+        --Stats
         self:SetHunger( tonumber( stats.hunger ) )
         self:SetThirst( tonumber( stats.thirst ) )
         self:SetToxic( tonumber( stats.toxic ) )
-        self:SetSkills(skills)
-        self:SetInventory(inv)
-        self:SetBank(bank)
-        self:SetAttachmentInventory( atch )
-        for k, v in pairs(toolcache) do --Player apparently had deployed tools when they disconnected. We'll give them back.
-            self:AddItemToInventory( k, v, true )
-        end
-        self:SetToolCache({}) --This will erase the cache
-        self:SaveToolCache() --Then save it to the database
-        if equipment and equipment.weps then
-            for k, v in pairs(equipment.weps) do
-                self:Give( v )
-            end
-        end
-        if equipment and equipment.ammo then
-            for k, v in pairs(equipment.ammo) do
-                self:GiveAmmo( v, k )
-            end
-        end
-        self:SetPlaytime(stats.playtime)
-        self:SetStatistics( statistics )
+        self:SetPlaytime( tonumber( stats.playtime ) )
         self:SetCommunity( tonumber(community) )
         self:SetRank( rank )
         self:SetTitle( title )
+        self:SetStatistics( statistics )
+
         self:ValidateInventory()
         self:ValidateStorage()
 
         net.Start("as_characters_syncdata")
-            net.WriteString(self:GetASClass())
             net.WriteUInt(self:GetHunger(), 8)
             net.WriteUInt(self:GetThirst(), 8)
-            net.WriteUInt(self:GetToxic(), 11)
             net.WriteUInt(self:GetPlaytime(), 32)
-            net.WriteInventory(self:GetInventory())
-            net.WriteInventory(self:GetBank())
-            net.WriteTable(self:GetSkills())
         net.Send(self)
 
         self.FullyLoadedCharacter = true --Don't touch this, although it looks pointless it's a failsafe to prevent character's data from getting wiped should they ever encounter an error while loading.
@@ -128,14 +109,9 @@ elseif CLIENT then
 
     net.Receive("as_characters_syncdata", function()
         local ply = LocalPlayer()
-        ply:SetASClass(net.ReadString())
         ply:SetHunger(net.ReadUInt(8))
         ply:SetThirst(net.ReadUInt(8))
-        ply:SetToxic(net.ReadUInt(11))
         ply:SetPlaytime(net.ReadUInt(32))
-        ply:SetInventory(net.ReadInventory())
-        ply:SetBank(net.ReadInventory())
-        ply:SetSkills(net.ReadTable())
 
         timer.Simple( 3, function() --gmod gamer moment
             if IsValid( ply ) and ply:Alive() then

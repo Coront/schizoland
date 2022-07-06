@@ -3,8 +3,10 @@
 local PlayerMeta = FindMetaTable("Player")
 
 function PlayerMeta:SetBank( tbl )
-    tbl = tbl or {}
     self.Bank = tbl
+    if ( SERVER ) then
+        self:ResyncBank()
+    end
 end
 
 function PlayerMeta:GetBank()

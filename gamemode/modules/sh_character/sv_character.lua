@@ -42,28 +42,17 @@ function PlayerMeta:SaveCharacter()
     if not pid then return false end
     if not (self.FullyLoadedCharacter or false) then print("Stopped " .. self:Nickname() .. "'s data from saving, encountered an error while loading profile.") return false end
 
-    local equipped = {}
-    for k, v in pairs(self:GetAmmo()) do
-        equipped.ammo = equipped.ammo or {}
-        if AS.Items[translateAmmoNameID( game.GetAmmoName( k ) )] then
-            equipped.ammo[string.lower(game.GetAmmoName( k ))] = v
-        end
-    end
-    for k, v in pairs(self:GetWeapons()) do
-        equipped.weps = equipped.weps or {}
-        if v.ASID then
-            equipped.weps[#equipped.weps + 1] = v:GetClass()
-            if v:Clip1() > 0 then
-                equipped.ammo = equipped.ammo or {}
-                equipped.ammo[string.lower(game.GetAmmoName(v:GetPrimaryAmmoType()))] = (equipped.ammo[string.lower(game.GetAmmoName(v:GetPrimaryAmmoType()))] or 0) + v:Clip1()
-            end
-        end
-    end
-    sql.Query( "UPDATE as_characters_inventory SET inv = " .. SQLStr(util.TableToJSON( self:GetInventory(), true )) .. ", bank = " .. SQLStr(util.TableToJSON( self:GetBank(), true )) .. ", atch = " .. SQLStr(util.TableToJSON( self:GetAttachmentInventory(), true )) .. ", equipped = " .. SQLStr(util.TableToJSON( equipped, true )) .. " WHERE pid = " .. pid )
-    sql.Query( "UPDATE as_characters_skills SET skills = " .. SQLStr(util.TableToJSON( self:GetSkills(), true )) .. " WHERE pid = " .. pid )
-    sql.Query( "UPDATE as_characters_stats SET health = " .. self:Health() .. ", hunger = " .. self:GetHunger() .. ", thirst = " .. self:GetThirst() .. ", toxic = " .. self:GetToxic() .. ", playtime = " .. self:GetPlaytime() .. " WHERE pid = " .. pid )
     sql.Query( "UPDATE as_characters SET class = " .. SQLStr( self:GetASClass() ) .. ", laston = " .. SQLStr( os.date( "%m/%d/%y - %I:%M %p", os.time() ) ) .. " WHERE pid = " .. pid )
+    sql.Query( "UPDATE as_characters_stats SET health = " .. self:Health() .. ", hunger = " .. self:GetHunger() .. ", thirst = " .. self:GetThirst() .. ", toxic = " .. self:GetToxic() .. ", playtime = " .. self:GetPlaytime() .. " WHERE pid = " .. pid )
     sql.Query( "UPDATE as_communities_members SET cid = " .. self:GetCommunity() .. ", title = " .. SQLStr( self:GetTitle() ) .. ", rank = " .. self:GetRank() .. " WHERE pid = " .. pid )
+    self:SaveInventory()
+    self:SaveVehicleInv()
+    self:SaveAttachmentInventory()
+    self:SaveEquipped()
+    self:SaveSkills()
+    self:SaveToolCache()
+    self:SaveMissions()
+
     return true --Saving was successful.
 end
 
