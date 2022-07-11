@@ -5,4 +5,3 @@ ENT.Author			= "Tampy"
 ENT.Purpose			= ""
 ENT.Category		= "Aftershock"
 ENT.Spawnable		= false
---ENT.AS_OwnableObject = true

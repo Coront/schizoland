@@ -55,7 +55,7 @@ AS.AddMapData( "gm_valley_f1", {
     NodeMult = 2.2,
     Load = {
         pos = Vector(-4221.46, -1957.71, 589.17),
-        ang = Angle(-17.71, -58.39),
+        ang = Angle(17.71, -58.39),
     },
     Spawns = {
         Vector( -4534.95, -4237.95, 99.03 ),

@@ -11,4 +11,19 @@ function ENT:Initialize()
 	self:SetMoveType( MOVETYPE_VPHYSICS )
 end
 
---If you're unsure what this entity is for, I just use it as a copy-paste format when I make new entities. Makes life easier.
+function ENT:Use( ply )
+	net.Start("as_missiongiver_open")
+		net.WriteEntity( self )
+	net.Send( ply )
+end
+
+-- ███╗   ██╗███████╗████████╗██╗    ██╗ ██████╗ ██████╗ ██╗  ██╗██╗███╗   ██╗ ██████╗
+-- ████╗  ██║██╔════╝╚══██╔══╝██║    ██║██╔═══██╗██╔══██╗██║ ██╔╝██║████╗  ██║██╔════╝
+-- ██╔██╗ ██║█████╗     ██║   ██║ █╗ ██║██║   ██║██████╔╝█████╔╝ ██║██╔██╗ ██║██║  ███╗
+-- ██║╚██╗██║██╔══╝     ██║   ██║███╗██║██║   ██║██╔══██╗██╔═██╗ ██║██║╚██╗██║██║   ██║
+-- ██║ ╚████║███████╗   ██║   ╚███╔███╔╝╚██████╔╝██║  ██║██║  ██╗██║██║ ╚████║╚██████╔╝
+-- ╚═╝  ╚═══╝╚══════╝   ╚═╝    ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝ ╚═════╝
+
+util.AddNetworkString( "as_missiongiver_open" )
+util.AddNetworkString( "as_missiongiver_acceptmission" )
+util.AddNetworkString( "as_missiongiver_finishmission" )

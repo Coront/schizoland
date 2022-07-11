@@ -34,7 +34,7 @@ local function DatabaseCheck()
 	--Item Deployment Cache
 	sql.Query("CREATE TABLE IF NOT EXISTS as_cache_tools (pid INTEGER, tools TEXT)")
 	--Missions
-	sql.Query("CREATE TABLE IF NOT EXISTS as_missions (pid INTEGER, data TEXT)")
+	sql.Query("CREATE TABLE IF NOT EXISTS as_missions (pid INTEGER, active TEXT, completed TEXT)")
 	--Other Profiles
 	sql.Query("CREATE TABLE IF NOT EXISTS as_vendors (vid INTEGER PRIMARY KEY AUTOINCREMENT, pid INTEGER, name TEXT, sale TEXT, res TEXT, deleted TEXT)")
 	sql.Query("CREATE TABLE IF NOT EXISTS as_lockers (lid INTEGER PRIMARY KEY AUTOINCREMENT, pid INTEGER, name TEXT, items TEXT, deleted TEXT)")
