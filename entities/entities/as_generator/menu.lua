@@ -44,7 +44,7 @@ function Generator.Menu()
     end
     pickup.DoClick = function()
         Derma_Query(
-        "Are you sure you want to pick up your generator? Doing so will result you in losing the fuel you put in it!",
+        "Are you sure you want to pick up your generator? You will loose the fuel you put in it!",
         "Pick Up Generator",
         "Yes",
         function() net.Start("as_tool_pickup") net.WriteEntity( ent ) net.SendToServer() frame_generator:Close() end,
