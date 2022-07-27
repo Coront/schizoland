@@ -50,6 +50,21 @@ AS.AddBaseItem("misc_chemical", {
 -- ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝       ╚═╝   ╚═╝   ╚══════╝╚═╝     ╚═╝╚══════╝
 -- Part items are items that are generally required in crafting of other items, usually the player will have to scavenge these.
 
+AS.AddBaseItem("misc_oldworld_money", {
+    name = "Old World Money",
+    desc = "Currency from the things way were. I am sure someone would find this valuable...",
+    category = "misc",
+    model = "models/props/cs_assault/Dollar.mdl",
+    value = 0,
+    weight = 0,
+    hidden = true,
+    craft = {
+        ["misc_scrap"] = 0,
+        ["misc_smallparts"] = 0,
+        ["misc_chemical"] = 0,
+    }
+})
+
 AS.AddBaseItem("misc_hide_antlion", {
     name = "Antlion Hide",
     desc = "Hide that has been carefully cut from a dead antlion. Useful in making armors.",

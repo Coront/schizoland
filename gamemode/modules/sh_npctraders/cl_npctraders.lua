@@ -2,21 +2,21 @@
 local traderEntity = nil
 local traderName = ""
 local stockItems = ""
-local restockTime = ""
+local restockTime = 10
 local currencyItem = ""
 local currencySymbol = ""
 local currencyLocation = ""
-local defaultCurrencyAmount = ""
+local defaultCurrencyAmount = -1
 
 local function setNPCTraderVars(npctrader_entityObj)
     traderEntity = npctrader_entityObj
-    traderName = npctrader_entityObj:GetNWString("traderName")
-    stockItems = npctrader_entityObj:GetNWString("stockItems")
-    restockTime = npctrader_entityObj:GetNWString("restockTime")
-    currencyItem = npctrader_entityObj:GetNWString("currencyItem")
-    currencySymbol = npctrader_entityObj:GetNWString("currencySymbol")
-    currencyLocation = npctrader_entityObj:GetNWString("currencyLocation")
-    defaultCurrencyAmount = npctrader_entityObj:GetNWString("defaultCurrencyAmount")
+    traderName = npctrader_entityObj:GetNWString("traderName", "")
+    stockItems = npctrader_entityObj:GetNWString("stockItems", "")
+    restockTime = npctrader_entityObj:GetNWInt("restockTime", 10)
+    currencyItem = npctrader_entityObj:GetNWString("currencyItem", "")
+    currencySymbol = npctrader_entityObj:GetNWString("currencySymbol", "")
+    currencyLocation = npctrader_entityObj:GetNWString("currencyLocation", "")
+    defaultCurrencyAmount = npctrader_entityObj:GetNWString("defaultCurrencyAmount", 0)
 end
 
 // Set NW vars for clientside NPC Shop menu
@@ -36,7 +36,7 @@ end)
 function NPCTraderMenu(npctrader_entity)
     if IsValid(frameNPCTraderShop) then frameNPCTraderShop:Close() end
 
-    timer.Create("AutoRefreshNPCTraderGUI", restockTime, 0, function()
+    timer.Create("AutoRefreshNPCTraderGUI", tonumber(restockTime), 0, function()
         if IsValid(LocalPlayer()) and IsValid(frameNPCTraderShop) and LocalPlayer():GetPos():Distance(npctrader_entity:GetPos()) < 100 then
             frameNPCTraderShop:Clear()
             NPCTraderMenu(npctrader_entity)

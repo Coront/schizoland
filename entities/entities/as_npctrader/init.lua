@@ -17,17 +17,20 @@ function ENT:Initialize()
 
 
 	-- Setting NPC Trader variables
-	self.traderName = "" // Trader's name that players will see
-	self.stockItems = {} // Table of items that the trader has in stock
-	self.alwaysCarryItems = {} // Items that the trader will restock over time
-	self.restockTime = -1 // How long it takes for trader to restock his alwaysCarryItems
-	self.currencyItem = "" // The type of currency the trader uses to buy and sell items
-	self.currencySymbol = "" // The symbol that the trader uses to represent his currency
-	self.currencyLocation = "" // The location of the trader's currency in the menu (left or right)
+	-- NOTE: Timer is used so server has time to initialize data server sided with perma propper.
+	-- 		 Prevents race conditions.
+	timer.Simple(1, function()
+		self:SetNWString("traderID", self.traderID) -- Not really used for anything at the moment
+		self:SetNWString("traderName", self.traderName)
+		self:SetNWString("stockItems", self.stockItems)
+		self:SetNWString("alwaysCarryItems", self.alwaysCarryItems)
+		self:SetNWInt("restockTime", self.restockTime)
+		self:SetNWString("currencyItem", self.currencyItem)
+		self:SetNWString("currencySymbol", self.currencySymbol)
+		self:SetNWString("currencyLocation", self.currencyLocation)
+	end)
 
-	
-
-	local npcTraderRestockTimerIdentifier =  self.traderName .. "(" .. self:EntIndex().. ")" .. "_restock"
+	local npcTraderRestockTimerIdentifier =  "(" .. self:EntIndex().. ")" .. "_restock"
 	timer.Create(npcTraderRestockTimerIdentifier, 3, 0, function()
 		if !IsValid(self) then timer.Destroy(npcTraderRestockTimerIdentifier) return end
 
