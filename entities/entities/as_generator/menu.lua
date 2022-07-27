@@ -43,10 +43,13 @@ function Generator.Menu()
         pickup:SetTooltip("Pickup the entity and place it in your inventory.")
     end
     pickup.DoClick = function()
-        net.Start("as_tool_pickup")
-            net.WriteEntity( ent )
-        net.SendToServer()
-        frame_generator:Close()
+        Derma_Query(
+        "Are you sure you want to pick up your generator? Doing so will result you in losing the fuel you put in it!",
+        "Pick Up Generator",
+        "Yes",
+        function() net.Start("as_tool_pickup") net.WriteEntity( ent ) net.SendToServer() frame_generator:Close() end,
+        "No",
+        function() end)
     end
 
     local panel = vgui.Create("DPanel", frame_generator)
