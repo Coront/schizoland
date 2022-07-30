@@ -35,22 +35,11 @@ AS.AddMission( "tutorial", "tutorial_basics1", {
 AS.AddMission( "tutorial", "tutorial_basics2", {
     name = "The Basics - 2",
     desc = "Eat the Can of Beans that I gave to you.",
-    initial = {
-        ["food_beans"] = 2,
+    requirements = {
+        missions = {
+            ["tutorial_basics1"] = 1
+        },
     },
-    data = {
-        {type = "useitem", item = "food_beans", amt = 1},
-    },
-    reward = {
-        ["misc_scrap"] = 5,
-        ["misc_smallparts"] = 5,
-        ["misc_chemical"] = 5,
-    },
-} )
-
-AS.AddMission( "tutorial", "tutorial_basics2", {
-    name = "The Basics - 2",
-    desc = "Eat the Can of Beans that I gave to you.",
     initial = {
         ["food_beans"] = 2,
     },

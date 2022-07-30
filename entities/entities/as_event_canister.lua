@@ -13,10 +13,11 @@ if ( SERVER ) then
         self:StartCanister()
 
         self.NPCS = { --Modify this table if you need to change NPC values.
-            ["npc_as_soldier"] = 6, --Key is NPC, Value is amount
-            ["npc_as_scout"] = 2,
-            ["npc_as_super"] = 1,
-            ["npc_as_hunter"] = 2,
+            --min is the minimal amount of npcs to spawn. It will use it as a reference base. Max is maximum amount. plyamtinc is the amount of players that should be on the server to increase its value.
+            ["npc_as_soldier"] = {min = 3, max = 6, plyamtinc = 7},
+            ["npc_as_scout"] = {min = 1, max = 2, plyamtinc = 10},
+            ["npc_as_super"] = {min = 1, max = 2, plyamtinc = 12},
+            ["npc_as_hunter"] = {min = 2, max = 3, plyamtinc = 10},
         }
     end
 
@@ -56,7 +57,11 @@ if ( SERVER ) then
         local toAng = self:GetAngles()
 
         for k, v in pairs( self.NPCS ) do --Loop though the NPC table
-            for i = 1, v do --Spawn the amount of NPCs.
+            local amttospawn = v.min
+            local plycount = #player.GetAll()
+            amttospawn = math.Clamp( amttospawn + math.floor( plycount / v.plyamtinc ), v.min, v.max )
+
+            for i = 1, amttospawn do --Spawn the amount of NPCs.
                 local npc = ents.Create(k)
                 npc:SetPos( pos + toAng:Forward() * 350 + Vector( 0, 0, 100 ) )
                 npc:Spawn()

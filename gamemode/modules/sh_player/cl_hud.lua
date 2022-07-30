@@ -72,6 +72,14 @@ AS_ClientConVar( "as_hud_targetinfo_xadd", "0", true, false )
 AS_ClientConVar( "as_hud_targetinfo_yadd", "0", true, false )
 AS_ClientConVar( "as_hud_targetinfo_width", "150", true, false )
 AS_ClientConVar( "as_hud_targetinfo_height", "20", true, false )
+-- Mission Info
+AS_ClientConVar( "as_hud_missioninfo", "1", true, false )
+AS_ClientConVar( "as_hud_missioninfo_amount", "1", true, false )
+AS_ClientConVar( "as_hud_missioninfo_xadd", "0", true, false )
+AS_ClientConVar( "as_hud_missioninfo_yadd", "0", true, false )
+AS_ClientConVar( "as_hud_missioninfo_width", "250", true, false )
+AS_ClientConVar( "as_hud_missioninfo_height", "15", true, false )
+AS_ClientConVar( "as_hud_missioninfo_barspacing", "5", true, false )
 -- Ownership Info
 AS_ClientConVar( "as_hud_ownership", "1", true, false )
 -- Stress
@@ -233,6 +241,8 @@ function AftershockHUD()
             surface.SetDrawColor( colbad[1], colbad[2], colbad[3], Toxic_Alpha )
             local length = (toxic / maxtoxic) * width - 4
             surface.DrawRect( barx + 2, bary + 2, length, height - 4)
+            surface.DrawRect( (barx + (width / LocalPlayer():GetMaxToxic()) * SET.ToxicDebuff), bary, 1, height - 2)
+            surface.DrawRect( (barx + (width / LocalPlayer():GetMaxToxic()) * SET.ToxicDebuffHeavy), bary, 1, height - 2)
             draw.SimpleTextOutlined("Toxicity", "AftershockHUD", barx, bary, Color( colbad[1], colbad[2], colbad[3], Toxic_Alpha ), TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM, outline, Color(0,0,0,Toxic_Alpha))
 
             local amt = tobool(GetConVar("as_hud_toxicationbar_amount"):GetInt())
@@ -352,6 +362,41 @@ function AftershockHUD()
     end
     if not target and (Target_Alpha or 0) > 0 then
         Target_Alpha = 0
+    end
+
+    local missioninfo = tobool(GetConVar("as_hud_missioninfo"):GetInt())
+    if missioninfo then
+        local amounts = tobool( GetConVar("as_hud_missioninfo_amount"):GetInt() )
+        local width, height, xadd, yadd, space = (GetConVar("as_hud_missioninfo_width"):GetInt() * HUD_SCALE), (GetConVar("as_hud_missioninfo_height"):GetInt() * HUD_SCALE), GetConVar("as_hud_missioninfo_xadd"):GetInt(), GetConVar("as_hud_missioninfo_yadd"):GetInt(), GetConVar("as_hud_missioninfo_barspacing"):GetInt()
+        local x, y, outline = ((ScrW() * 0.935) + xadd) - width, (100 + yadd), (1 * HUD_SCALE)
+        local indent = 20 --task Indentation
+        local titletaskspace = 25 --Space between title and tasks
+        local typebarspace = 15 --Space between task type and bar
+
+        for k, v in pairs( LocalPlayer():GetMissions() ) do
+            local minfo = FetchMissionInfo( k )
+            draw.SimpleTextOutlined( minfo.name, "AftershockHUD", x, y, COLHUD_DEFAULT, TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP, outline, Color(0,0,0,255) )
+
+            x = x + (indent * HUD_SCALE)
+            y = y + (titletaskspace * HUD_SCALE)
+            for k2, v2 in pairs( minfo.data ) do
+                local col = COLHUD_DEFAULT
+                if (v[k2] or 0) >= v2.amt then col = COLHUD_GOOD end
+                draw.SimpleTextOutlined( TranslateTaskToShortText( v2.type, (v2.targetname or v2.target) ), "AftershockHUDSmall", x, y, col, TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP, outline, Color(0,0,0,255) )
+                y = y + (typebarspace * HUD_SCALE)
+                surface.SetDrawColor( col )
+                surface.DrawOutlinedRect( x, y, width, height, outline )
+                surface.DrawRect( x + 2, y + 2, ( (v[k2] or 0) / v2.amt * width ) - 4, height - 4 )
+                if amounts then
+                    draw.SimpleTextOutlined( ( v[k2] or 0) .. " / " .. v2.amt, "AftershockHUDSmall", x + (width / 2), y + (height / 2), col, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, outline, Color(0,0,0,255) )
+                end
+                y = y - (typebarspace * HUD_SCALE)
+                
+                y = y + (height + (typebarspace * HUD_SCALE)) + space
+            end
+            y = y + (height - (typebarspace * HUD_SCALE)) - space
+            x = x - (indent * HUD_SCALE)
+        end
     end
 
     local ownership = tobool(GetConVar("as_hud_ownership"):GetInt())
@@ -629,7 +674,7 @@ hook.Add( "HUDPaint", "AS_HUD", function()
     ASHUDVOICE_height = 85 * HUD_SCALE
     ASHUDVOICE_width = 150 * HUD_SCALE
     ASHUDVOICE_spacing = 2 * HUD_SCALE
-    ASHUDVOICE_xadd = 0
+    ASHUDVOICE_xadd = tobool(GetConVar("as_hud_missioninfo"):GetInt()) and table.Count( LocalPlayer():GetMissions() ) > 0 and -(GetConVar("as_hud_missioninfo_width"):GetInt() * HUD_SCALE - 50) or 0
     ASHUDVOICE_yadd = 0
     ASHUDVOICE_xpos, ASHUDVOICE_ypos = (ASHUDVOICE_xadd + ScrW() * 0.9 - ASHUDVOICE_width), (ASHUDVOICE_yadd + 150)
 

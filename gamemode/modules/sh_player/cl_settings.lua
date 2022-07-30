@@ -402,6 +402,30 @@ function AS.CLSettings.BuildHUD( parent )
     ValueSlider( "Target Info Height", xpos, ypos, 5, 50, scroll, "as_hud_targetinfo_height" )
     addSpace( -20, 20 )
 
+    SectionLabel( "Mission Information", xpos, ypos, scroll )
+    addSpace( 0, 35 )
+
+    ToggleButton( "Enable Mission Info", xpos, ypos, scroll, "as_hud_missioninfo" )
+    addSpace( 20, 20 )
+
+    ToggleButton( "Enable Mission Info Amounts", xpos, ypos, scroll, "as_hud_missioninfo_amount" )
+    addSpace( 0, 20 )
+
+    ValueSlider( "Mission Info X-Pos", xpos, ypos, -2000, 2000, scroll, "as_hud_missioninfo_xadd" )
+    addSpace( 0, 20 )
+
+    ValueSlider( "Mission Info Y-Pos", xpos, ypos, -2000, 2000, scroll, "as_hud_missioninfo_yadd" )
+    addSpace( 0, 20 )
+
+    ValueSlider( "Mission Info Width", xpos, ypos, 5, 2000, scroll, "as_hud_missioninfo_width" )
+    addSpace( 0, 20 )
+
+    ValueSlider( "Mission Info Height", xpos, ypos, 5, 50, scroll, "as_hud_missioninfo_height" )
+    addSpace( 0, 20 )
+
+    ValueSlider( "Space Between Tasks", xpos, ypos, 0, 50, scroll, "as_hud_missioninfo_barspacing" )
+    addSpace( -20, 20 )
+
     SectionLabel( "Combat Warning", xpos, ypos, scroll )
     addSpace( 0, 35 )
 

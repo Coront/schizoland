@@ -112,11 +112,13 @@ function ENT:Use( ply )
             self:IncreaseSalvageSkill( ply )
             local roll = math.random( 0, 100 )
             ply:AddToStatistic( "scavenges", 1 )
+            hook.Call( "OnNodeScavenged", GAMEMODE, ply )
             if roll > (NOD.ScavengeChance + (SKL.Salvaging.incscavsuccess * ply:GetSkillLevel("salvaging"))) then return end --Player failed to find anything this time
             if self:GetScavengesLeft() <= 0 then
                 self:Remove()
                 ply:AddToStatistic( "depletions", 1 )
             end
+
 
             --Canister Special
             if self:GetResourceType() == "Canister" then

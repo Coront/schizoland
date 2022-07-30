@@ -295,10 +295,11 @@ NOD.ScavItems = { --Table containing potential items that will spawn if a item i
     ["misc_emptybottle"] = 800,
 }
 SET.Credits = {
-    [1] = {player = "Tampster - Programmer", profile = "https://steamcommunity.com/id/xXSaltLord420Xx/"},
-    [2] = {player = "ZJEX - Modeler", profile = "https://steamcommunity.com/id/Zjex72"},
-    [3] = {player = "Bizz - UI Designs (from Fallout: Decay)", profile = "https://steamcommunity.com/id/BizzPDX"},
-    [4] = {player = "Eldarstorm - Gamemode Concept (PostnukeRP)", profile = "https://steamcommunity.com/id/eldarstorm"},
+    {player = "Tampster - Main Programmer", profile = "https://steamcommunity.com/id/xXSaltLord420Xx/"},
+    {player = "EFEX03 - Programmer", profile = "https://steamcommunity.com/id/efexisherenow/"},
+    {player = "ZJEX - Modeler", profile = "https://steamcommunity.com/id/Zjex72"},
+    {player = "Bizz - UI Designs (from Fallout: Decay)", profile = "https://steamcommunity.com/id/BizzPDX"},
+    {player = "Eldarstorm - Gamemode Concept (PostnukeRP)", profile = "https://steamcommunity.com/id/eldarstorm"},
 }
 
 

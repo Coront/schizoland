@@ -583,6 +583,22 @@ function SimpleSpawnIcon( parent, model, size, x, y, tooltip, callback )
     return spawnicon
 end
 
+function SimpleMatIcon( parent, mat, size, x, y, tooltip )
+    local panel = vgui.Create("DPanel", parent)
+    panel:SetPos( x, y )
+    panel:SetSize( size, size )
+    if tooltip then
+        panel:SetTooltip( tooltip )
+    end
+    function panel:Paint( w, h ) 
+        surface.SetMaterial( Material( mat ) )
+        surface.SetDrawColor( Color( 255, 255, 255, 255 ) )
+        surface.DrawTexturedRect( 0, 0, w, h )
+    end
+
+    return panel
+end
+
 function SimpleItemIcon( parent, item, size, x, y, tooltip, callback )
     local panel = vgui.Create("DPanel", parent)
     panel:SetPos( x, y )
